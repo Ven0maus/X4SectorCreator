@@ -108,6 +108,7 @@ namespace X4SectorCreator
 
         private void BtnShowSectorMap_Click(object sender, EventArgs e)
         {
+            SectorMapForm.GateSectorSelection = false;
             SectorMapForm.BtnSelectLocation.Enabled = false;
             SectorMapForm.ControlPanel.Size = new Size(204, 106);
             SectorMapForm.BtnSelectLocation.Hide();
@@ -477,6 +478,30 @@ namespace X4SectorCreator
             ZoneForm.BtnCreate.Text = "Update";
             ZoneForm.TxtName.Text = string.Empty;
             ZoneForm.Show();
+        }
+        #endregion
+
+        #region Connections
+        private void BtnNewGate_Click(object sender, EventArgs e)
+        {
+            var selectedZoneName = ZonesListBox.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedZoneName))
+            {
+                MessageBox.Show("Please select a zone first.", "Zone selection required");
+                return;
+            }
+
+            var selectedClusterName = ClustersListBox.SelectedItem as string;
+            var selectedSectorName = SectorsListBox.SelectedItem as string;
+            var cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            var sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+            var zone = sector.Zones.First(a => a.Name.Equals(selectedZoneName, StringComparison.OrdinalIgnoreCase));
+
+            GateForm.Reset();
+            GateForm.SourceCluster = cluster.Value;
+            GateForm.SourceSector = sector;
+            GateForm.SourceZone = zone;
+            GateForm.Show();
         }
         #endregion
     }

@@ -1,10 +1,14 @@
 ﻿using System.Text.Json;
 using X4SectorCreator.Objects;
+using System.ComponentModel;
 
 namespace X4SectorCreator
 {
     public partial class SectorMapForm : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool GateSectorSelection { get; set; } = false;
+
         private readonly Dictionary<(int, int), Hexagon> _hexagons = [];
         private readonly Dictionary<(int, int), Cluster> _clusterMapping;
         private readonly Dictionary<string, Color> _colorMapping;
@@ -16,6 +20,7 @@ namespace X4SectorCreator
         private PointF _offset;
         private bool _dragging = false;
         private Point _lastMousePos, _mouseDownPos;
+        private int? _selectedChildHexIndex, _previousSelectedChildHexIndex;
         private (int, int)? _selectedHex, _previousSelectedHex;
         private float _zoom = 1.2f; // 1.0 means 100% scale
 
@@ -140,6 +145,28 @@ namespace X4SectorCreator
 
                 foreach (var hex in _hexagons)
                 {
+                    if (GateSectorSelection)
+                    {
+                        // Allow selecting child hex too
+                        if (hex.Value.Children != null)
+                        {
+                            int index = 0;
+                            foreach (var child in hex.Value.Children)
+                            {
+                                if (IsPointInPolygon(child.Points, adjustedMousePos))
+                                {
+                                    if (hex.Key == _selectedHex && _selectedChildHexIndex == index)
+                                        DeselectHex();
+                                    else
+                                        SelectHex(hex.Key, index);
+                                    return;
+                                }
+                                index++;
+                            }
+                        }
+                    }
+
+                    // Check main hex
                     if (IsPointInPolygon(hex.Value.Points, adjustedMousePos))
                     {
                         if (hex.Key == _selectedHex)
@@ -154,12 +181,14 @@ namespace X4SectorCreator
             }
         }
 
-        private void SelectHex((int, int) pos)
+        private void SelectHex((int, int) pos, int? childIndex = null)
         {
             if (!BtnSelectLocation.Visible) return;
-            if (_previousSelectedHex != _selectedHex || _selectedHex == null)
+            if (_previousSelectedHex != _selectedHex || _previousSelectedChildHexIndex != _selectedChildHexIndex || _selectedHex == null)
             {
                 _previousSelectedHex = _selectedHex;
+                _previousSelectedChildHexIndex = childIndex;
+                _selectedChildHexIndex = childIndex;
                 _selectedHex = pos;
                 BtnSelectLocation.Enabled = true;
                 Invalidate();
@@ -171,6 +200,7 @@ namespace X4SectorCreator
             if (_selectedHex != null)
             {
                 _selectedHex = null;
+                _selectedChildHexIndex = null;
                 BtnSelectLocation.Enabled = false;
                 Invalidate();
             }
@@ -324,6 +354,10 @@ namespace X4SectorCreator
             {
                 using SolidBrush brush = new(Color.Cyan);
                 var hexc = _hexagons[_selectedHex.Value];
+                if (_selectedChildHexIndex != null)
+                {
+                    hexc = hexc.Children[_selectedChildHexIndex.Value];
+                }
                 e.Graphics.FillPolygon(brush, hexc.Points);
             }
         }
@@ -554,10 +588,43 @@ namespace X4SectorCreator
 
         private void BtnSelectLocation_Click(object sender, EventArgs e)
         {
-            // Set coordinate value in text
-            MainForm.Instance.ClusterForm.TxtLocation.Text = _selectedHex.Value.ToString();
+            var position = _selectedHex.Value;
+
+            if (GateSectorSelection)
+            {
+                if (!MainForm.Instance.CustomClusters.TryGetValue(position, out var cluster))
+                {
+                    // Either it's not a custom cluster or not a valid cluster that exists
+                    // TODO: Check base game clusters and find the right cluster
+                    // (for developer) Also make sure all the base game clusters are instantiated with atleast one zone in each sector.
+
+                    // Verify if cluster has atleast one sector and one zone
+                    if (cluster == null || cluster.Sectors.Count == 0 || cluster.Sectors.All(a => a.Zones.Count == 0))
+                        MessageBox.Show("Invalid cluster selected, must be an existing cluster with atleast one sector and one zone.");
+                    return;
+                }
+
+                // Find selected sector in cluster
+                Sector selectedSector;
+                if (_selectedChildHexIndex != null)
+                {
+                    selectedSector = cluster.Sectors[_selectedChildHexIndex.Value];
+                }
+                else
+                {
+                    selectedSector = cluster.Sectors.First();
+                }
+
+                MainForm.Instance.GateForm.txtTargetSector.Text = selectedSector.Name;
+                MainForm.Instance.GateForm.txtTargetSectorLocation.Text = position.ToString() + $" [{_selectedChildHexIndex?.ToString() ?? "0"}]";
+            }
+            else
+            {
+                MainForm.Instance.ClusterForm.TxtLocation.Text = position.ToString();
+            }
+
             DeselectHex();
-            Hide();
+            Close();
         }
 
         private void ChkShowCoordinates_CheckedChanged(object sender, EventArgs e)

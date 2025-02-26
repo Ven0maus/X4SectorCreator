@@ -16,6 +16,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnPick_Click(object sender, EventArgs e)
         {
+            MainForm.Instance.SectorMapForm.GateSectorSelection = false;
             MainForm.Instance.SectorMapForm.BtnSelectLocation.Enabled = false;
             MainForm.Instance.SectorMapForm.ControlPanel.Size = new Size(204, 144);
             MainForm.Instance.SectorMapForm.BtnSelectLocation.Show();
@@ -139,5 +140,8 @@ namespace X4SectorCreator.Forms
     {
         [GeneratedRegex(@"\((-?\d+),\s*(-?\d+)\)")]
         public static partial Regex TupleLocationRegex();
+
+        [GeneratedRegex(@"\((-?\d+),\s*(-?\d+)\)\s*\[(\d+)\]")]
+        public static partial Regex TupleLocationChildIndexRegex();
     }
 }

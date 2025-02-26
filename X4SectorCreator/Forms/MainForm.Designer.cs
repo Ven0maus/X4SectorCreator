@@ -192,6 +192,7 @@
             BtnNewGate.TabIndex = 22;
             BtnNewGate.Text = "New";
             BtnNewGate.UseVisualStyleBackColor = true;
+            BtnNewGate.Click += BtnNewGate_Click;
             // 
             // GatesListBox
             // 
@@ -207,9 +208,9 @@
             lblGates.Font = new Font("Segoe UI", 15F);
             lblGates.Location = new Point(336, 276);
             lblGates.Name = "lblGates";
-            lblGates.Size = new Size(61, 28);
+            lblGates.Size = new Size(120, 28);
             lblGates.TabIndex = 20;
-            lblGates.Text = "Gates";
+            lblGates.Text = "Connections";
             // 
             // BtnRemoveGate
             // 

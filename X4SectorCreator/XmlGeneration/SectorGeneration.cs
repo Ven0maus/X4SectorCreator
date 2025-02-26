@@ -7,7 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            XDocument xmlDocument = new XDocument(
+            XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("macros",
                     GenerateSectors(modPrefix, clusters)
