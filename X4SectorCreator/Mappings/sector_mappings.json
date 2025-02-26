@@ -1,0 +1,1747 @@
+﻿{
+  "FactionColors": {
+    "None": "#b3b3b3",
+    "Argon": "#001eff",
+    "Antigone": "#0073ff",
+    "Teladi": "#ddff00",
+    "Paranid": "#9500ff",
+    "HolyOrder": "#ff82cf",
+    "Terran": "#bdebff",
+    "Segaris": "#286d7a",
+    "Zyarth": "#b87811",
+    "FreeFam": "#8c5906",
+    "Hatikvah": "#00f2ff",
+    "Xenon": "#ff0000",
+    "Riptide": "#031f57",
+    "Boron": "#00aeff",
+    "Vigor": "#a19958",
+    "Quettanauts": "#baa079"
+  },
+  "Clusters": [
+    {
+      "Name": "Grand Exchange",
+      "Sectors": [
+        {
+          "Name": "Grand Exchange IV",
+          "Owner": "Teladi"
+        },
+        {
+          "Name": "Grand Exchange I",
+          "Owner": "Teladi"
+        },
+        {
+          "Name": "Grand Exchange III",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
+    },
+    {
+      "Name": "Path to Profit",
+      "Sectors": [
+        {
+          "Name": "Path to Profit",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 0,
+        "Y": -2
+      }
+    },
+    {
+      "Name": "Black Hole Sun",
+      "Sectors": [
+        {
+          "Name": "Black Hole Sun IV",
+          "Owner": "Argon"
+        },
+        {
+          "Name": "Black Hole Sun V",
+          "Owner": "Argon"
+        }
+      ],
+      "Position": {
+        "X": -1,
+        "Y": -1
+      }
+    },
+    {
+      "Name": "Second Contact II Flashpoint",
+      "Sectors": [
+        {
+          "Name": "Second Contact II Flashpoint",
+          "Owner": "Antigone"
+        }
+      ],
+      "Position": {
+        "X": -2,
+        "Y": 0
+      }
+    },
+    {
+      "Name": "Second Contact VII",
+      "Sectors": [
+        {
+          "Name": "Second Contact VII",
+          "Owner": "Antigone"
+        }
+      ],
+      "Position": {
+        "X": -3,
+        "Y": -1
+      }
+    },
+    {
+      "Name": "Second Contact XI",
+      "Sectors": [
+        {
+          "Name": "Second Contact XI",
+          "Owner": "Antigone"
+        }
+      ],
+      "Position": {
+        "X": -3,
+        "Y": 1
+      }
+    },
+    {
+      "Name": "Windfall IV Aurora's Dream",
+      "Sectors": [
+        {
+          "Name": "Windfall IV Aurora's Dream",
+          "Owner": "Vigor"
+        }
+      ],
+      "Position": {
+        "X": -1,
+        "Y": 1
+      }
+    },
+    {
+      "Name": "Windfall III The Hoard",
+      "Sectors": [
+        {
+          "Name": "Windfall III The Hoard",
+          "Owner": "Vigor"
+        }
+      ],
+      "Position": {
+        "X": -1,
+        "Y": 3
+      }
+    },
+    {
+      "Name": "Windfall I Union Summit",
+      "Sectors": [
+        {
+          "Name": "Windfall I Union Summit",
+          "Owner": "Vigor"
+        }
+      ],
+      "Position": {
+        "X": 0,
+        "Y": 4
+      }
+    },
+    {
+      "Name": "Avarice",
+      "Sectors": [
+        {
+          "Name": "Avarice I",
+          "Owner": "Riptide"
+        },
+        {
+          "Name": "Avarice V Dead End",
+          "Owner": "Riptide"
+        },
+        {
+          "Name": "Avarice IV",
+          "Owner": "Riptide"
+        }
+      ],
+      "Position": {
+        "X": 0,
+        "Y": 2
+      }
+    },
+    {
+      "Name": "Eighteen Billion",
+      "Sectors": [
+        {
+          "Name": "Eighteen Billion",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 1,
+        "Y": 3
+      }
+    },
+    {
+      "Name": "Unknown System",
+      "Sectors": [
+        {
+          "Name": "Unknown System",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 1,
+        "Y": 1
+      }
+    },
+    {
+      "Name": "Memory of Profit IX",
+      "Sectors": [
+        {
+          "Name": "Memory of Profit IX",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 2,
+        "Y": 2
+      }
+    },
+    {
+      "Name": "Memory of Profit X",
+      "Sectors": [
+        {
+          "Name": "Memory of Profit X",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 2,
+        "Y": 0
+      }
+    },
+    {
+      "Name": "Nopileos Fortune",
+      "Sectors": [
+        {
+          "Name": "Nopileos Fortune II",
+          "Owner": "None"
+        },
+        {
+          "Name": "Nopileos Fortune VI",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 2,
+        "Y": -2
+      }
+    },
+    {
+      "Name": "CEO's Doubt",
+      "Sectors": [
+        {
+          "Name": "CEO's Doubt",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 3,
+        "Y": -1
+      }
+    },
+    {
+      "Name": "Trinity Sanctum VII",
+      "Sectors": [
+        {
+          "Name": "Trinity Sanctum VII",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": 3,
+        "Y": 1
+      }
+    },
+    {
+      "Name": "Trinity Sanctum III",
+      "Sectors": [
+        {
+          "Name": "Trinity Sanctum III",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": 4,
+        "Y": 0
+      }
+    },
+    {
+      "Name": "Unholy Retribution",
+      "Sectors": [
+        {
+          "Name": "Unholy Retribution",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": 4,
+        "Y": -2
+      }
+    },
+    {
+      "Name": "Loomanckstrat's Legacy",
+      "Sectors": [
+        {
+          "Name": "Loomanckstrat's Legacy",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 4,
+        "Y": -4
+      }
+    },
+    {
+      "Name": "Mi Ton's Refuge",
+      "Sectors": [
+        {
+          "Name": "Mi Ton's Refuge",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 5,
+        "Y": -5
+      }
+    },
+    {
+      "Name": "Moo-Kye's Revenge",
+      "Sectors": [
+        {
+          "Name": "Moo-Kye's Revenge",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 5,
+        "Y": -7
+      }
+    },
+    {
+      "Name": "Pious Mists II",
+      "Sectors": [
+        {
+          "Name": "Pious Mists II",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": 2,
+        "Y": -4
+      }
+    },
+    {
+      "Name": "Pious Mists IV",
+      "Sectors": [
+        {
+          "Name": "Pious Mists IV",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": 3,
+        "Y": -5
+      }
+    },
+    {
+      "Name": "Pious Mists XI",
+      "Sectors": [
+        {
+          "Name": "Pious Mists XI",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": 2,
+        "Y": -6
+      }
+    },
+    {
+      "Name": "Sacred Relic",
+      "Sectors": [
+        {
+          "Name": "Sacred Relic",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": 3,
+        "Y": -7
+      }
+    },
+    {
+      "Name": "Cardinal's Domain",
+      "Sectors": [
+        {
+          "Name": "Cardinal's Domain",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": 3,
+        "Y": -9
+      }
+    },
+    {
+      "Name": "Hewa's Twin C1",
+      "Sectors": [
+        {
+          "Name": "Hewa's Twin II",
+          "Owner": "Teladi"
+        },
+        {
+          "Name": "Hewa's Twin I",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 5,
+        "Y": -1
+      }
+    },
+    {
+      "Name": "Company Regard",
+      "Sectors": [
+        {
+          "Name": "Company Regard",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 6,
+        "Y": -2
+      }
+    },
+    {
+      "Name": "Hewa's Twin C2",
+      "Sectors": [
+        {
+          "Name": "Hewa's Twin III",
+          "Owner": "Teladi"
+        },
+        {
+          "Name": "Hewa's Twin IV The Cove",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 6,
+        "Y": 0
+      }
+    },
+    {
+      "Name": "Scale Plate Green",
+      "Sectors": [
+        {
+          "Name": "Scale Plate Green VII",
+          "Owner": "Xenon"
+        },
+        {
+          "Name": "Scale Plate Green I",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": 6,
+        "Y": -4
+      }
+    },
+    {
+      "Name": "Turquoise Sea",
+      "Sectors": [
+        {
+          "Name": "Turquoise Sea IX",
+          "Owner": "None"
+        },
+        {
+          "Name": "Turquoise Sea X",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 7,
+        "Y": -3
+      }
+    },
+    {
+      "Name": "Hewa's Twin V",
+      "Sectors": [
+        {
+          "Name": "Hewa's Twin V",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 6,
+        "Y": 2
+      }
+    },
+    {
+      "Name": "Ianamus Zura",
+      "Sectors": [
+        {
+          "Name": "Ianamus Zura VII",
+          "Owner": "Teladi"
+        },
+        {
+          "Name": "Ianamus Zura IV",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 7,
+        "Y": 3
+      }
+    },
+    {
+      "Name": "Mitsuno's Revelation",
+      "Sectors": [
+        {
+          "Name": "Mitsuno's Revelation",
+          "Owner": "Quettanauts"
+        }
+      ],
+      "Position": {
+        "X": 8,
+        "Y": 2
+      }
+    },
+    {
+      "Name": "Mitsuno's Defiance",
+      "Sectors": [
+        {
+          "Name": "Mitsuno's Defiance",
+          "Owner": "Quettanauts"
+        }
+      ],
+      "Position": {
+        "X": 9,
+        "Y": 1
+      }
+    },
+    {
+      "Name": "Mitsuno's Sacrifice",
+      "Sectors": [
+        {
+          "Name": "Mitsuno's Sacrifice",
+          "Owner": "Quettanauts"
+        }
+      ],
+      "Position": {
+        "X": 9,
+        "Y": -1
+      }
+    },
+    {
+      "Name": "Thuruk's Demise II First Impact",
+      "Sectors": [
+        {
+          "Name": "Thuruk's Demise II First Impact",
+          "Owner": "FreeFam"
+        },
+        {
+          "Name": "Thuruk's Demise III",
+          "Owner": "FreeFam"
+        }
+      ],
+      "Position": {
+        "X": 8,
+        "Y": 4
+      }
+    },
+    {
+      "Name": "Family Tkr",
+      "Sectors": [
+        {
+          "Name": "Family Tkr",
+          "Owner": "FreeFam"
+        }
+      ],
+      "Position": {
+        "X": 8,
+        "Y": 6
+      }
+    },
+    {
+      "Name": "Matrix #451",
+      "Sectors": [
+        {
+          "Name": "Matrix #451",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": 7,
+        "Y": 5
+      }
+    },
+    {
+      "Name": "Matrix #9",
+      "Sectors": [
+        {
+          "Name": "Matrix #9",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": 6,
+        "Y": 6
+      }
+    },
+    {
+      "Name": "Fires of Defeat",
+      "Sectors": [
+        {
+          "Name": "Fires of Defeat",
+          "Owner": "FreeFam"
+        }
+      ],
+      "Position": {
+        "X": 8,
+        "Y": 8
+      }
+    },
+    {
+      "Name": "Tharka's Ravine XXIV",
+      "Sectors": [
+        {
+          "Name": "Tharka's Ravine XXIV",
+          "Owner": "FreeFam"
+        }
+      ],
+      "Position": {
+        "X": 9,
+        "Y": 7
+      }
+    },
+    {
+      "Name": "Tharka's Ravine XVI",
+      "Sectors": [
+        {
+          "Name": "Tharka's Ravine XVI",
+          "Owner": "FreeFam"
+        }
+      ],
+      "Position": {
+        "X": 10,
+        "Y": 8
+      }
+    },
+    {
+      "Name": "Tharka's Ravine VIII",
+      "Sectors": [
+        {
+          "Name": "Tharka's Ravine VIII",
+          "Owner": "FreeFam"
+        }
+      ],
+      "Position": {
+        "X": 11,
+        "Y": 7
+      }
+    },
+    {
+      "Name": "Tharka's Ravine IV Tharka's Fall",
+      "Sectors": [
+        {
+          "Name": "Tharka's Ravine IV Tharka's Fall",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": 12,
+        "Y": 8
+      }
+    },
+    {
+      "Name": "Heart of Acrimony II",
+      "Sectors": [
+        {
+          "Name": "Heart of Acrimony II",
+          "Owner": "FreeFam"
+        }
+      ],
+      "Position": {
+        "X": 10,
+        "Y": 10
+      }
+    },
+    {
+      "Name": "Heart of Acrimony I The Boneyard",
+      "Sectors": [
+        {
+          "Name": "Heart of Acrimony I The Boneyard",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 9,
+        "Y": 11
+      }
+    },
+    {
+      "Name": "Bright Promise",
+      "Sectors": [
+        {
+          "Name": "Bright Promise",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 4,
+        "Y": 4
+      }
+    },
+    {
+      "Name": "Profit Center Alpha",
+      "Sectors": [
+        {
+          "Name": "Profit Center Alpha",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 3,
+        "Y": 5
+      }
+    },
+    {
+      "Name": "Two Grand",
+      "Sectors": [
+        {
+          "Name": "Two Grand",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 4,
+        "Y": 8
+      }
+    },
+    {
+      "Name": "Open Market",
+      "Sectors": [
+        {
+          "Name": "Open Market",
+          "Owner": "Teladi"
+        }
+      ],
+      "Position": {
+        "X": 3,
+        "Y": 9
+      }
+    },
+    {
+      "Name": "Family Nhuut",
+      "Sectors": [
+        {
+          "Name": "Family Nhuut",
+          "Owner": "Zyarth"
+        }
+      ],
+      "Position": {
+        "X": 2,
+        "Y": 10
+      }
+    },
+    {
+      "Name": "Zyarth's Dominion IV",
+      "Sectors": [
+        {
+          "Name": "Zyarth's Dominion IV",
+          "Owner": "Zyarth"
+        }
+      ],
+      "Position": {
+        "X": 3,
+        "Y": 11
+      }
+    },
+    {
+      "Name": "Zyarth's Dominion I",
+      "Sectors": [
+        {
+          "Name": "Zyarth's Dominion I",
+          "Owner": "Zyarth"
+        }
+      ],
+      "Position": {
+        "X": 2,
+        "Y": 12
+      }
+    },
+    {
+      "Name": "Zyarth's Dominion X",
+      "Sectors": [
+        {
+          "Name": "Zyarth's Dominion X",
+          "Owner": "Zyarth"
+        }
+      ],
+      "Position": {
+        "X": 3,
+        "Y": 13
+      }
+    },
+    {
+      "Name": "Eleventh Hour",
+      "Sectors": [
+        {
+          "Name": "Eleventh Hour",
+          "Owner": "Argon"
+        }
+      ],
+      "Position": {
+        "X": 5,
+        "Y": 15
+      }
+    },
+    {
+      "Name": "Guiding Star",
+      "Sectors": [
+        {
+          "Name": "Guiding Star VII",
+          "Owner": "Argon"
+        },
+        {
+          "Name": "Guiding Star V",
+          "Owner": "Argon"
+        }
+      ],
+      "Position": {
+        "X": 5,
+        "Y": 11
+      }
+    },
+    {
+      "Name": "President's End",
+      "Sectors": [
+        {
+          "Name": "President's End",
+          "Owner": "Argon"
+        }
+      ],
+      "Position": {
+        "X": 1,
+        "Y": 5
+      }
+    },
+    {
+      "Name": "Silent Witness I",
+      "Sectors": [
+        {
+          "Name": "Silent Witness I",
+          "Owner": "Argon"
+        }
+      ],
+      "Position": {
+        "X": 0,
+        "Y": 6
+      }
+    },
+    {
+      "Name": "Silent Witness XI",
+      "Sectors": [
+        {
+          "Name": "Silent Witness XI",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 1,
+        "Y": 7
+      }
+    },
+    {
+      "Name": "Silent Witness XII",
+      "Sectors": [
+        {
+          "Name": "Silent Witness XII",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 0,
+        "Y": 8
+      }
+    },
+    {
+      "Name": "Matrix #101",
+      "Sectors": [
+        {
+          "Name": "Matrix #101",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": -1,
+        "Y": 7
+      }
+    },
+    {
+      "Name": "Tharka's Cascade",
+      "Sectors": [
+        {
+          "Name": "Tharka's Cascade XVII",
+          "Owner": "Xenon"
+        },
+        {
+          "Name": "Tharka's Cascade XV",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": -2,
+        "Y": 8
+      }
+    },
+    {
+      "Name": "Matrix #79B",
+      "Sectors": [
+        {
+          "Name": "Matrix #79B",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": -3,
+        "Y": 9
+      }
+    },
+    {
+      "Name": "Family Zhin",
+      "Sectors": [
+        {
+          "Name": "Family Zhin",
+          "Owner": "Zyarth"
+        }
+      ],
+      "Position": {
+        "X": -2,
+        "Y": 10
+      }
+    },
+    {
+      "Name": "Family Kritt",
+      "Sectors": [
+        {
+          "Name": "Family Kritt",
+          "Owner": "Zyarth"
+        }
+      ],
+      "Position": {
+        "X": -2,
+        "Y": 12
+      }
+    },
+    {
+      "Name": "Rhy's Defiance",
+      "Sectors": [
+        {
+          "Name": "Rhy's Defiance",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": -2,
+        "Y": 14
+      }
+    },
+    {
+      "Name": "Matrix #59B",
+      "Sectors": [
+        {
+          "Name": "Matrix #59B",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": -1,
+        "Y": 15
+      }
+    },
+    {
+      "Name": "Wretched Skies IV Family Valka",
+      "Sectors": [
+        {
+          "Name": "Wretched Skies IV Family Valka",
+          "Owner": "Zyarth"
+        }
+      ],
+      "Position": {
+        "X": -4,
+        "Y": 10
+      }
+    },
+    {
+      "Name": "Wretched Skies V Family Phi",
+      "Sectors": [
+        {
+          "Name": "Wretched Skies V Family Phi",
+          "Owner": "Zyarth"
+        }
+      ],
+      "Position": {
+        "X": -5,
+        "Y": 9
+      }
+    },
+    {
+      "Name": "Wretched Skies X",
+      "Sectors": [
+        {
+          "Name": "Wretched Skies X",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": -6,
+        "Y": 10
+      }
+    },
+    {
+      "Name": "Litany of Fury",
+      "Sectors": [
+        {
+          "Name": "Litany of Fury XII",
+          "Owner": "Paranid"
+        },
+        {
+          "Name": "Litany of Fury IX",
+          "Owner": "Paranid"
+        }
+      ],
+      "Position": {
+        "X": -8,
+        "Y": 10
+      }
+    },
+    {
+      "Name": "Emperor's Pride",
+      "Sectors": [
+        {
+          "Name": "Emperor's Pride VI",
+          "Owner": "Xenon"
+        },
+        {
+          "Name": "Emperor's Pride IV",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": -9,
+        "Y": 11
+      }
+    },
+    {
+      "Name": "Hatikvah's Choice",
+      "Sectors": [
+        {
+          "Name": "Hatikvah's Choice III",
+          "Owner": "Argon"
+        },
+        {
+          "Name": "Hatikvah's Choice I",
+          "Owner": "Hatikvah"
+        }
+      ],
+      "Position": {
+        "X": -2,
+        "Y": 4
+      }
+    },
+    {
+      "Name": "Morning Star III",
+      "Sectors": [
+        {
+          "Name": "Morning Star III",
+          "Owner": "Argon"
+        }
+      ],
+      "Position": {
+        "X": -3,
+        "Y": 5
+      }
+    },
+    {
+      "Name": "Morning Star IV",
+      "Sectors": [
+        {
+          "Name": "Morning Star IV",
+          "Owner": "Argon"
+        }
+      ],
+      "Position": {
+        "X": -3,
+        "Y": 7
+      }
+    },
+    {
+      "Name": "Argon Prime",
+      "Sectors": [
+        {
+          "Name": "Argon Prime",
+          "Owner": "Argon"
+        }
+      ],
+      "Position": {
+        "X": -3,
+        "Y": 3
+      }
+    },
+    {
+      "Name": "The Reach",
+      "Sectors": [
+        {
+          "Name": "The Reach",
+          "Owner": "Argon"
+        }
+      ],
+      "Position": {
+        "X": -4,
+        "Y": 4
+      }
+    },
+    {
+      "Name": "Heretic's End",
+      "Sectors": [
+        {
+          "Name": "Heretic's End",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -5,
+        "Y": 7
+      }
+    },
+    {
+      "Name": "Savage Spur",
+      "Sectors": [
+        {
+          "Name": "Savage Spur I",
+          "Owner": "Xenon"
+        },
+        {
+          "Name": "Savage Spur II",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": -5,
+        "Y": 5
+      }
+    },
+    {
+      "Name": "Getsu Fune",
+      "Sectors": [
+        {
+          "Name": "Getsu Fune",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -6,
+        "Y": 4
+      }
+    },
+    {
+      "Name": "Nopileos' Memorial",
+      "Sectors": [
+        {
+          "Name": "Nopileos' Memorial",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -5,
+        "Y": 3
+      }
+    },
+    {
+      "Name": "Hatikvah's Faith",
+      "Sectors": [
+        {
+          "Name": "Hatikvah's Faith",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -4,
+        "Y": 2
+      }
+    },
+    {
+      "Name": "The Void",
+      "Sectors": [
+        {
+          "Name": "The Void",
+          "Owner": "Antigone"
+        }
+      ],
+      "Position": {
+        "X": -6,
+        "Y": 2
+      }
+    },
+    {
+      "Name": "Antigone Memorial",
+      "Sectors": [
+        {
+          "Name": "Antigone Memorial",
+          "Owner": "Antigone"
+        }
+      ],
+      "Position": {
+        "X": -7,
+        "Y": 1
+      }
+    },
+    {
+      "Name": "Third Redemption",
+      "Sectors": [
+        {
+          "Name": "Third Redemption",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -6,
+        "Y": 0
+      }
+    },
+    {
+      "Name": "Frontier Edge",
+      "Sectors": [
+        {
+          "Name": "Frontier Edge",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -5,
+        "Y": -1
+      }
+    },
+    {
+      "Name": "Ore Belt",
+      "Sectors": [
+        {
+          "Name": "Ore Belt",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -6,
+        "Y": -2
+      }
+    },
+    {
+      "Name": "Atiya's Misfortune",
+      "Sectors": [
+        {
+          "Name": "Atiya's Misfortune I",
+          "Owner": "Xenon"
+        },
+        {
+          "Name": "Atiya's Misfortune III",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": -4,
+        "Y": -6
+      }
+    },
+    {
+      "Name": "Mists of Artemis",
+      "Sectors": [
+        {
+          "Name": "Mists of Artemis",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -4,
+        "Y": -8
+      }
+    },
+    {
+      "Name": "Sanctum Verge",
+      "Sectors": [
+        {
+          "Name": "Sanctum Verge",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -5,
+        "Y": -9
+      }
+    },
+    {
+      "Name": "Faulty Logic",
+      "Sectors": [
+        {
+          "Name": "Faulty Logic I",
+          "Owner": "Xenon"
+        },
+        {
+          "Name": "Faulty Logic VII",
+          "Owner": "Xenon"
+        }
+      ],
+      "Position": {
+        "X": -2,
+        "Y": -6
+      }
+    },
+    {
+      "Name": "True Sight",
+      "Sectors": [
+        {
+          "Name": "True Sight",
+          "Owner": "HolyOrder"
+        }
+      ],
+      "Position": {
+        "X": -2,
+        "Y": -4
+      }
+    },
+    {
+      "Name": "Holy Vision",
+      "Sectors": [
+        {
+          "Name": "Holy Vision",
+          "Owner": "HolyOrder"
+        }
+      ],
+      "Position": {
+        "X": -1,
+        "Y": -5
+      }
+    },
+    {
+      "Name": "Cardinal's Redress",
+      "Sectors": [
+        {
+          "Name": "Cardinal's Redress",
+          "Owner": "HolyOrder"
+        }
+      ],
+      "Position": {
+        "X": -1,
+        "Y": -7
+      }
+    },
+    {
+      "Name": "Pontifex's Claim",
+      "Sectors": [
+        {
+          "Name": "Pontifex's Claim",
+          "Owner": "HolyOrder"
+        }
+      ],
+      "Position": {
+        "X": 0,
+        "Y": -6
+      }
+    },
+    {
+      "Name": "Lasting Vengeance",
+      "Sectors": [
+        {
+          "Name": "Lasting Vengeance",
+          "Owner": "HolyOrder"
+        }
+      ],
+      "Position": {
+        "X": 0,
+        "Y": -8
+      }
+    },
+    {
+      "Name": "Freedom's Reach",
+      "Sectors": [
+        {
+          "Name": "Freedom's Reach",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -1,
+        "Y": -9
+      }
+    },
+    {
+      "Name": "Tempting Fumes",
+      "Sectors": [
+        {
+          "Name": "Tempting Fumes",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": 0,
+        "Y": -12
+      }
+    },
+    {
+      "Name": "Watchful Gaze",
+      "Sectors": [
+        {
+          "Name": "Watchful Gaze",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -7,
+        "Y": 7
+      }
+    },
+    {
+      "Name": "Barren Shores",
+      "Sectors": [
+        {
+          "Name": "Barren Shores",
+          "Owner": "Boron"
+        }
+      ],
+      "Position": {
+        "X": -8,
+        "Y": 6
+      }
+    },
+    {
+      "Name": "Great Reef",
+      "Sectors": [
+        {
+          "Name": "Great Reef",
+          "Owner": "Boron"
+        }
+      ],
+      "Position": {
+        "X": -9,
+        "Y": 5
+      }
+    },
+    {
+      "Name": "Ocean of Fantasy",
+      "Sectors": [
+        {
+          "Name": "Ocean of Fantasy",
+          "Owner": "Boron"
+        }
+      ],
+      "Position": {
+        "X": -9,
+        "Y": 3
+      }
+    },
+    {
+      "Name": "Sanctuary of Darkness",
+      "Sectors": [
+        {
+          "Name": "Sanctuary of Darkness",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -10,
+        "Y": 8
+      }
+    },
+    {
+      "Name": "Kingdom End",
+      "Sectors": [
+        {
+          "Name": "Kingdom End I",
+          "Owner": "Boron"
+        },
+        {
+          "Name": "Towering Wave",
+          "Owner": "Boron"
+        },
+        {
+          "Name": "Reflected Stars",
+          "Owner": "Boron"
+        }
+      ],
+      "Position": {
+        "X": -12,
+        "Y": 10
+      }
+    },
+    {
+      "Name": "Rolk's Demise",
+      "Sectors": [
+        {
+          "Name": "Rolk's Demise",
+          "Owner": "Boron"
+        }
+      ],
+      "Position": {
+        "X": -13,
+        "Y": 9
+      }
+    },
+    {
+      "Name": "Atreus' Clouds",
+      "Sectors": [
+        {
+          "Name": "Atreus' Clouds",
+          "Owner": "Boron"
+        }
+      ],
+      "Position": {
+        "X": -12,
+        "Y": 8
+      }
+    },
+    {
+      "Name": "Menelaus' Oasis",
+      "Sectors": [
+        {
+          "Name": "Menelaus' Oasis",
+          "Owner": "Boron"
+        }
+      ],
+      "Position": {
+        "X": -13,
+        "Y": 7
+      }
+    },
+    {
+      "Name": "Segaris",
+      "Sectors": [
+        {
+          "Name": "Segaris",
+          "Owner": "Segaris"
+        }
+      ],
+      "Position": {
+        "X": -7,
+        "Y": -7
+      }
+    },
+    {
+      "Name": "Gaian Prophecy",
+      "Sectors": [
+        {
+          "Name": "Gaian Prophecy",
+          "Owner": "Segaris"
+        }
+      ],
+      "Position": {
+        "X": -8,
+        "Y": -8
+      }
+    },
+    {
+      "Name": "Brennan's Triumph",
+      "Sectors": [
+        {
+          "Name": "Brennan's Triumph",
+          "Owner": "Segaris"
+        }
+      ],
+      "Position": {
+        "X": -9,
+        "Y": -7
+      }
+    },
+    {
+      "Name": "Circle of Deceit",
+      "Sectors": [
+        {
+          "Name": "Circle of Deceit",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -10,
+        "Y": -10
+      }
+    },
+    {
+      "Name": "Neptune",
+      "Sectors": [
+        {
+          "Name": "Neptune",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -12,
+        "Y": -6
+      }
+    },
+    {
+      "Name": "Pluto",
+      "Sectors": [
+        {
+          "Name": "Pluto",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -13,
+        "Y": -7
+      }
+    },
+    {
+      "Name": "Oort Cloud",
+      "Sectors": [
+        {
+          "Name": "Oort Cloud",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -14,
+        "Y": -8
+      }
+    },
+    {
+      "Name": "Uranus",
+      "Sectors": [
+        {
+          "Name": "Uranus",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -13,
+        "Y": -5
+      }
+    },
+    {
+      "Name": "Saturn",
+      "Sectors": [
+        {
+          "Name": "Saturn 2",
+          "Owner": "Terran"
+        },
+        {
+          "Name": "Saturn 1",
+          "Owner": "Terran"
+        },
+        {
+          "Name": "Titan",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -12,
+        "Y": -4
+      }
+    },
+    {
+      "Name": "Jupiter",
+      "Sectors": [
+        {
+          "Name": "Jupiter",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -11,
+        "Y": -3
+      }
+    },
+    {
+      "Name": "Asteroid Belt",
+      "Sectors": [
+        {
+          "Name": "Asteroid Belt",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -10,
+        "Y": 0
+      }
+    },
+    {
+      "Name": "Mars",
+      "Sectors": [
+        {
+          "Name": "Mars",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -11,
+        "Y": 1
+      }
+    },
+    {
+      "Name": "Venus",
+      "Sectors": [
+        {
+          "Name": "Venus",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -12,
+        "Y": 2
+      }
+    },
+    {
+      "Name": "Mercury",
+      "Sectors": [
+        {
+          "Name": "Mercury",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -12,
+        "Y": 4
+      }
+    },
+    {
+      "Name": "Earth",
+      "Sectors": [
+        {
+          "Name": "Earth",
+          "Owner": "Terran"
+        },
+        {
+          "Name": "The Moon",
+          "Owner": "Terran"
+        }
+      ],
+      "Position": {
+        "X": -11,
+        "Y": 3
+      }
+    },
+    {
+      "Name": "Adventure's Promise",
+      "Sectors": [
+        {
+          "Name": "Adventure's Promise",
+          "Owner": "None"
+        }
+      ],
+      "Position": {
+        "X": -14,
+        "Y": 0
+      }
+    }
+  ]
+}
