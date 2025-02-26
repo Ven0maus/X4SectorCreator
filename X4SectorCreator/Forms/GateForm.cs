@@ -338,7 +338,12 @@ namespace X4SectorCreator.Forms
             targetZone.Gates.Add(targetGate);
             #endregion
 
-            // TODO: Add source / destination + their paths to source / target gate
+            // SourceGate source / destination
+            sourceGate.Source = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{SourceZone.Id:D3}";
+            sourceGate.Destination = $"c{targetCluster.Id:D3}_s{targetCluster.Id:D3}_z{targetCluster.Id:D3}";
+            // TargetGate source / destination
+            targetGate.Source = $"c{targetCluster.Id:D3}_s{targetSector.Id:D3}_z{targetZone.Id:D3}";
+            targetGate.Destination = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{SourceZone.Id:D3}";
 
             // TODO: Add target gate to source listbox
             sourceGate.DestinationSectorName = targetSector.Name;
