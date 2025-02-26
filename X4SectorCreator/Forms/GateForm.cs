@@ -1,6 +1,7 @@
 ﻿using System.Drawing.Drawing2D;
 using X4SectorCreator.Objects;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace X4SectorCreator.Forms
 {
@@ -16,8 +17,27 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster SourceCluster { get; set; }
 
+        private Sector _sourceSector;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Sector SourceSector { get; set; }
+        public Sector SourceSector
+        {
+            get => _sourceSector;
+            set
+            {
+                _sourceSector = value;
+                if (_sourceSector == null)
+                {
+                    txtSourceSector.ResetText();
+                    txtSourceSectorLocation.ResetText();
+                }
+                else
+                {
+                    txtSourceSector.Text = _sourceSector.Name;
+                    var sectorIndex = SourceCluster.Sectors.IndexOf(_sourceSector);
+                    txtSourceSectorLocation.Text = (SourceCluster.Position.X, SourceCluster.Position.Y).ToString() + $" [{sectorIndex}]";
+                }
+            }
+        }
 
         private Zone _sourceZone;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -40,8 +60,14 @@ namespace X4SectorCreator.Forms
 
             // Create and define hexagon
             _hexagonPoints = new PointF[6];
-            _hexRadius = (int)Math.Min(SourceSectorHexagon.Width / 2, SourceSectorHexagon.Height / (float)(Math.Sqrt(3)));
+            _hexRadius = (int)Math.Min(SourceSectorHexagon.Width / 2, SourceSectorHexagon.Height / (float)Math.Sqrt(3));
+
+            // Init hexagon
             InitializeHexagon();
+
+            // Set inital position
+            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
+            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
 
             // Attach events
             SourceSectorHexagon.Paint += SourceSectorHexagon_Paint;
@@ -57,12 +83,29 @@ namespace X4SectorCreator.Forms
 
         public void Reset()
         {
-            txtSourceGatePosition.ResetText();
-            txtSourceGatePitch.ResetText();
-            txtSourceGateRoll.ResetText();
-            txtSourceGateYaw.ResetText();
+            // Source gate
+            txtSourceGatePitch.Text = "0";
+            txtSourceGateRoll.Text = "0";
+            txtSourceGateYaw.Text = "0";
+
+            // Target gate
+            txtTargetGatePitch.Text = "0";
+            txtTargetGateRoll.Text = "0";
+            txtTargetGateYaw.Text = "0";
+
+            // Sectors
             txtTargetSector.ResetText();
             txtTargetSectorLocation.ResetText();
+            txtSourceSector.ResetText();
+            txtSourceSectorLocation.ResetText();
+
+            // Reset dot position
+            _sourceDotPosition = SourceSectorHexagon.ClientRectangle.Center();
+            _targetDotPosition = TargetSectorHexagon.ClientRectangle.Center();
+
+            // Reset gate positions
+            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
+            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
 
             // Reset objects, make sure to call reset BEFORE assigning not after
             SourceCluster = null;
@@ -218,6 +261,7 @@ namespace X4SectorCreator.Forms
             Gate sourceGate = new()
             {
                 Id = SourceZone.Gates.Count + 1,
+                ParentSectorName = SourceSector.Name,
                 Type = selectedSourceType.Equals("Gate", StringComparison.OrdinalIgnoreCase) ?
                     Gate.GateType.props_gates_anc_gate_macro : Gate.GateType.props_gates_orb_accelerator_01_macro,
                 Yaw = int.Parse(txtSourceGateYaw.Text),
@@ -259,6 +303,14 @@ namespace X4SectorCreator.Forms
             // Always take the first zone as the target
             var targetZone = targetSector.Zones.First();
 
+            // Validate that target sector != source sector
+            if (targetSector == SourceSector)
+            {
+                SourceZone.Gates.Remove(sourceGate);
+                MessageBox.Show("Target sector cannot be the same as the source sector.");
+                return;
+            }
+
             // Create a new gate connection in the target
             var targetGatePosMatch = RegexHelper.TupleLocationRegex().Match(txtTargetGatePosition.Text);
             if (!targetGatePosMatch.Success)
@@ -274,6 +326,8 @@ namespace X4SectorCreator.Forms
             Gate targetGate = new()
             {
                 Id = targetZone.Gates.Count + 1,
+                ParentSectorName = targetSector.Name,
+                DestinationSectorName = SourceSector.Name,
                 Type = selectedTargetType.Equals("Gate", StringComparison.OrdinalIgnoreCase) ?
                     Gate.GateType.props_gates_anc_gate_macro : Gate.GateType.props_gates_orb_accelerator_01_macro,
                 Yaw = int.Parse(txtTargetGateYaw.Text),
@@ -285,6 +339,14 @@ namespace X4SectorCreator.Forms
             #endregion
 
             // TODO: Add source / destination + their paths to source / target gate
+
+            // TODO: Add target gate to source listbox
+            sourceGate.DestinationSectorName = targetSector.Name;
+            MainForm.Instance.GatesListBox.Items.Add(targetGate);
+            MainForm.Instance.GatesListBox.SelectedItem = targetGate;
+
+            Reset();
+            Close();
         }
 
         private void BtnSelectSector_Click(object sender, EventArgs e)

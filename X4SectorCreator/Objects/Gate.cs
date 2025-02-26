@@ -3,6 +3,8 @@
     public class Gate
     {
         public int Id { get; set; }
+        public string ParentSectorName { get; set; }
+        public string DestinationSectorName { get; set; }
         public string Source { get; set; } // format: c000_s000_z000
         public string Destination { get; set; } // format: c000_s000_z000
         public string SourcePath { get; private set; } // format: prefix_c000_connection/prefix_c000_s000_connection/prefix_c000_s000_z000_connection/prefix_g000_source_destination_connection
@@ -69,6 +71,11 @@
             props_gates_anc_gate_macro,
             // Accelerator
             props_gates_orb_accelerator_01_macro
+        }
+
+        public override string ToString()
+        {
+            return ParentSectorName;
         }
     }
 }

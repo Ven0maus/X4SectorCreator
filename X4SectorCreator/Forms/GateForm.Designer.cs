@@ -148,9 +148,9 @@
             // 
             txtSourceGateYaw.Location = new Point(155, 493);
             txtSourceGateYaw.Name = "txtSourceGateYaw";
-            txtSourceGateYaw.PlaceholderText = "0";
             txtSourceGateYaw.Size = new Size(203, 23);
             txtSourceGateYaw.TabIndex = 9;
+            txtSourceGateYaw.Text = "0";
             txtSourceGateYaw.TextAlign = HorizontalAlignment.Center;
             // 
             // label5
@@ -177,18 +177,18 @@
             // 
             txtSourceGatePitch.Location = new Point(155, 526);
             txtSourceGatePitch.Name = "txtSourceGatePitch";
-            txtSourceGatePitch.PlaceholderText = "0";
             txtSourceGatePitch.Size = new Size(203, 23);
             txtSourceGatePitch.TabIndex = 13;
+            txtSourceGatePitch.Text = "0";
             txtSourceGatePitch.TextAlign = HorizontalAlignment.Center;
             // 
             // txtSourceGateRoll
             // 
             txtSourceGateRoll.Location = new Point(155, 556);
             txtSourceGateRoll.Name = "txtSourceGateRoll";
-            txtSourceGateRoll.PlaceholderText = "0";
             txtSourceGateRoll.Size = new Size(203, 23);
             txtSourceGateRoll.TabIndex = 14;
+            txtSourceGateRoll.Text = "0";
             txtSourceGateRoll.TextAlign = HorizontalAlignment.Center;
             // 
             // BtnCreateConnection
@@ -241,18 +241,18 @@
             // 
             txtTargetGateRoll.Location = new Point(517, 556);
             txtTargetGateRoll.Name = "txtTargetGateRoll";
-            txtTargetGateRoll.PlaceholderText = "0";
             txtTargetGateRoll.Size = new Size(203, 23);
             txtTargetGateRoll.TabIndex = 27;
+            txtTargetGateRoll.Text = "0";
             txtTargetGateRoll.TextAlign = HorizontalAlignment.Center;
             // 
             // txtTargetGatePitch
             // 
             txtTargetGatePitch.Location = new Point(517, 526);
             txtTargetGatePitch.Name = "txtTargetGatePitch";
-            txtTargetGatePitch.PlaceholderText = "0";
             txtTargetGatePitch.Size = new Size(203, 23);
             txtTargetGatePitch.TabIndex = 26;
+            txtTargetGatePitch.Text = "0";
             txtTargetGatePitch.TextAlign = HorizontalAlignment.Center;
             // 
             // label9
@@ -279,9 +279,9 @@
             // 
             txtTargetGateYaw.Location = new Point(517, 493);
             txtTargetGateYaw.Name = "txtTargetGateYaw";
-            txtTargetGateYaw.PlaceholderText = "0";
             txtTargetGateYaw.Size = new Size(203, 23);
             txtTargetGateYaw.TabIndex = 23;
+            txtTargetGateYaw.Text = "0";
             txtTargetGateYaw.TextAlign = HorizontalAlignment.Center;
             // 
             // label11

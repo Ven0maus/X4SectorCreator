@@ -152,6 +152,7 @@
             ZonesListBox.Name = "ZonesListBox";
             ZonesListBox.Size = new Size(156, 169);
             ZonesListBox.TabIndex = 16;
+            ZonesListBox.SelectedIndexChanged += ZonesListBox_SelectedIndexChanged;
             ZonesListBox.DoubleClick += ZonesListBox_DoubleClick;
             // 
             // Clusters
@@ -220,6 +221,7 @@
             BtnRemoveGate.TabIndex = 19;
             BtnRemoveGate.Text = "Remove";
             BtnRemoveGate.UseVisualStyleBackColor = true;
+            BtnRemoveGate.Click += BtnRemoveGate_Click;
             // 
             // lblSelectionInfo
             // 

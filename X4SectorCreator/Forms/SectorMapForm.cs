@@ -612,7 +612,12 @@ namespace X4SectorCreator
                 }
                 else
                 {
-                    selectedSector = cluster.Sectors.First();
+                    selectedSector = cluster.Sectors.FirstOrDefault();
+                    if (selectedSector == null)
+                    {
+                        MessageBox.Show("Invalid cluster selected, must be an existing cluster with atleast one sector and one zone.");
+                        return;
+                    }
                 }
 
                 MainForm.Instance.GateForm.txtTargetSector.Text = selectedSector.Name;

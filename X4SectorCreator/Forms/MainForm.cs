@@ -306,10 +306,33 @@ namespace X4SectorCreator
             if (string.IsNullOrWhiteSpace(selectedClusterName)) return;
 
             var cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+
+            foreach (var sector in cluster.Value.Sectors)
+            {
+                foreach (var zone in sector.Zones)
+                {
+                    // Remove gate connections
+                    foreach (var selectedGate in zone.Gates)
+                    {
+                        var sourceSector = CustomClusters.Values
+                            .SelectMany(a => a.Sectors)
+                            .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+                        var sourceZone = sourceSector.Zones
+                            .First(a => a.Gates
+                                .Any(a => a.DestinationSectorName
+                                    .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
+                        var sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                        sourceZone.Gates.Remove(sourceGate);
+                    }
+                }
+            }
+
             CustomClusters.Remove(cluster.Key);
             ClustersListBox.Items.Remove(ClustersListBox.SelectedItem);
+            ClustersListBox.SelectedItem = null;
             ZonesListBox.Items.Clear();
             SectorsListBox.Items.Clear();
+            GatesListBox.Items.Clear();
         }
 
         private void ClustersListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -317,6 +340,12 @@ namespace X4SectorCreator
             // Reset current sectors to empty
             SectorsListBox.Items.Clear();
             SectorsListBox.SelectedItem = null;
+
+            ZonesListBox.Items.Clear();
+            ZonesListBox.SelectedItem = null;
+
+            GatesListBox.Items.Clear();
+            GatesListBox.SelectedItem = null;
 
             var selectedClusterName = ClustersListBox.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedClusterName)) return;
@@ -376,10 +405,30 @@ namespace X4SectorCreator
             var selectedClusterName = ClustersListBox.SelectedItem as string;
             var cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             var sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+
+            foreach (var zone in sector.Zones)
+            {
+                // Remove gate connections
+                foreach (var selectedGate in zone.Gates)
+                {
+                    var sourceSector = CustomClusters.Values
+                        .SelectMany(a => a.Sectors)
+                        .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+                    var sourceZone = sourceSector.Zones
+                        .First(a => a.Gates
+                            .Any(a => a.DestinationSectorName
+                                .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
+                    var sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                    sourceZone.Gates.Remove(sourceGate);
+                }
+            }
+
             cluster.Value.Sectors.Remove(sector);
 
             ZonesListBox.Items.Clear();
+            GatesListBox.Items.Clear();
             SectorsListBox.Items.Remove(SectorsListBox.SelectedItem);
+            SectorsListBox.SelectedItem = null;
         }
 
         private void SectorsListBox_DoubleClick(object sender, EventArgs e)
@@ -402,6 +451,9 @@ namespace X4SectorCreator
         private void SectorsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ZonesListBox.Items.Clear();
+            ZonesListBox.SelectedItem = null;
+            GatesListBox.Items.Clear();
+            GatesListBox.SelectedItem = null;
 
             var selectedClusterName = ClustersListBox.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedClusterName)) return;
@@ -454,9 +506,26 @@ namespace X4SectorCreator
             var cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             var sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
             var zone = sector.Zones.First(a => a.Name.Equals(selectedZoneName, StringComparison.OrdinalIgnoreCase));
+
+            // Remove gate connections
+            foreach (var selectedGate in zone.Gates)
+            {
+                var sourceSector = CustomClusters.Values
+                    .SelectMany(a => a.Sectors)
+                    .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+                var sourceZone = sourceSector.Zones
+                    .First(a => a.Gates
+                        .Any(a => a.DestinationSectorName
+                            .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
+                var sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                sourceZone.Gates.Remove(sourceGate);
+            }
+
             sector.Zones.Remove(zone);
 
             ZonesListBox.Items.Remove(selectedZoneName);
+            ZonesListBox.SelectedItem = null;
+            GatesListBox.Items.Clear();
         }
 
         private void ZonesListBox_DoubleClick(object sender, EventArgs e)
@@ -478,6 +547,41 @@ namespace X4SectorCreator
             ZoneForm.BtnCreate.Text = "Update";
             ZoneForm.TxtName.Text = string.Empty;
             ZoneForm.Show();
+        }
+
+        private void ZonesListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Adjust gates
+            GatesListBox.Items.Clear();
+            GatesListBox.SelectedItem = null;
+
+            var selectedZoneName = ZonesListBox.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedZoneName)) return;
+
+            var selectedSectorName = SectorsListBox.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedSectorName)) return;
+
+            var selectedClusterName = ClustersListBox.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedClusterName)) return;
+
+            var cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            var sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+            var zone = sector.Zones.First(a => a.Name.Equals(selectedZoneName, StringComparison.OrdinalIgnoreCase));
+
+            // Add destination gates
+            foreach (var gate in zone.Gates)
+            {
+                var destSector = CustomClusters.Values
+                .SelectMany(a => a.Sectors)
+                .First(a => a.Name.Equals(gate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+                var destZone = destSector.Zones
+                    .First(a => a.Gates
+                        .Any(a => a.DestinationSectorName
+                            .Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
+                var destGate = destZone.Gates.First(a => a.DestinationSectorName.Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+
+                GatesListBox.Items.Add(destGate);
+            }
         }
         #endregion
 
@@ -502,6 +606,42 @@ namespace X4SectorCreator
             GateForm.SourceSector = sector;
             GateForm.SourceZone = zone;
             GateForm.Show();
+        }
+
+        private void BtnRemoveGate_Click(object sender, EventArgs e)
+        {
+            if (GatesListBox.SelectedItem is not Gate selectedGate)
+            {
+                MessageBox.Show("Please select a gate first.", "Gate selection required");
+                return;
+            }
+
+            var selectedSectorName = SectorsListBox.SelectedItem as string;
+
+            // Delete target connection
+            var targetSector = CustomClusters.Values
+                .SelectMany(a => a.Sectors)
+                .First(a => a.Name.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+            var targetZone = targetSector.Zones
+                .First(a => a.Gates
+                    .Any(a => a.DestinationSectorName
+                        .Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase)));
+            targetZone.Gates.Remove(selectedGate);
+
+            // Delete source connection
+            var sourceSector = CustomClusters.Values
+                .SelectMany(a => a.Sectors)
+                .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+            var sourceZone = sourceSector.Zones
+                .First(a => a.Gates
+                    .Any(a => a.DestinationSectorName
+                        .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
+            var sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+            sourceZone.Gates.Remove(sourceGate);
+
+            // Remove from listbox
+            GatesListBox.Items.Remove(selectedGate);
+            GatesListBox.SelectedItem = null;
         }
         #endregion
     }
