@@ -340,10 +340,17 @@ namespace X4SectorCreator.Forms
 
             // SourceGate source / destination
             sourceGate.Source = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{SourceZone.Id:D3}";
-            sourceGate.Destination = $"c{targetCluster.Id:D3}_s{targetCluster.Id:D3}_z{targetCluster.Id:D3}";
+            sourceGate.Destination = $"c{targetCluster.Id:D3}_s{targetSector.Id:D3}_z{targetZone.Id:D3}";
+
             // TargetGate source / destination
             targetGate.Source = $"c{targetCluster.Id:D3}_s{targetSector.Id:D3}_z{targetZone.Id:D3}";
             targetGate.Destination = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{SourceZone.Id:D3}";
+
+            // Paths must be set at the end
+            targetGate.SetSourcePath("PREFIX", targetCluster, targetSector, targetZone);
+            sourceGate.SetSourcePath("PREFIX", SourceCluster, SourceSector, SourceZone);
+            sourceGate.SetDestinationPath("PREFIX", targetCluster, targetSector, targetZone, targetGate);
+            targetGate.SetDestinationPath("PREFIX", SourceCluster, SourceSector, SourceZone, sourceGate);
 
             // Add target gate to listbox
             sourceGate.DestinationSectorName = targetSector.Name;

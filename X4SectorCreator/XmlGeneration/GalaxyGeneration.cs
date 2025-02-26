@@ -46,6 +46,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateGateConnections(string modPrefix, List<Cluster> clusters)
         {
+            var destinationGatesToBeSkipped = new HashSet<Gate>();
             foreach (var cluster in clusters)
             {
                 foreach (var sector in cluster.Sectors.OrderBy(a => a.Id))
@@ -54,17 +55,28 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         foreach (var gate in zone.Gates.OrderBy(a => a.Id))
                         {
+                            if (destinationGatesToBeSkipped.Contains(gate)) continue;
                             if (string.IsNullOrWhiteSpace(gate.SourcePath) ||
                                 string.IsNullOrWhiteSpace(gate.DestinationPath))
                                 throw new Exception($"Gate \"{cluster.Name}/{sector.Name}/{zone.Name}/g{gate.Id:D3}\" source/destination path is not set.");
 
+                            var sourceSector = clusters
+                                .SelectMany(a => a.Sectors)
+                                .First(a => a.Name.Equals(gate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+                            var sourceZone = sourceSector.Zones
+                                .First(a => a.Gates
+                                    .Any(a => a.DestinationSectorName
+                                        .Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
+                            var sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                            destinationGatesToBeSkipped.Add(sourceGate);
+
                             yield return new XElement("connection",
                                 new XAttribute("name", $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection"),
                                 new XAttribute("ref", "destination"),
-                                new XAttribute("path", $"../{gate.SourcePath}"),
+                                new XAttribute("path", $"../{gate.SourcePath.Replace("PREFIX", modPrefix)}"),
                                 new XElement("macro",
                                     new XAttribute("connection", "destination"),
-                                    new XAttribute("path", $"../../../../../{gate.DestinationPath}")
+                                    new XAttribute("path", $"../../../../../{gate.DestinationPath.Replace("PREFIX", modPrefix)}")
                                 )
                             );
                         }

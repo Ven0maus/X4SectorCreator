@@ -38,12 +38,12 @@
         /// <param name="cluster"></param>
         /// <param name="sector"></param>
         /// <param name="zone"></param>
-        public void SetDestinationPath(string modPrefix, Cluster cluster, Sector sector, Zone zone)
+        public void SetDestinationPath(string modPrefix, Cluster cluster, Sector sector, Zone zone, Gate gate)
         {
             string clusterConnection = $"{modPrefix}_CL_c{cluster.Id:D3}_connection";
             string sectorConnection = $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection";
             string zoneConnection = $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_connection";
-            string gateConnection = $"{modPrefix}_GA_g{Id:D3}_{Source}_{Destination}_connection";
+            string gateConnection = $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection";
             DestinationPath = $"{clusterConnection}/{sectorConnection}/{zoneConnection}/{gateConnection}";
         }
 
