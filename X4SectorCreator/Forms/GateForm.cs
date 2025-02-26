@@ -345,7 +345,7 @@ namespace X4SectorCreator.Forms
             targetGate.Source = $"c{targetCluster.Id:D3}_s{targetSector.Id:D3}_z{targetZone.Id:D3}";
             targetGate.Destination = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{SourceZone.Id:D3}";
 
-            // TODO: Add target gate to source listbox
+            // Add target gate to listbox
             sourceGate.DestinationSectorName = targetSector.Name;
             MainForm.Instance.GatesListBox.Items.Add(targetGate);
             MainForm.Instance.GatesListBox.SelectedItem = targetGate;
