@@ -330,8 +330,10 @@
             Controls.Add(ClustersListBox);
             Controls.Add(lblClusters);
             Controls.Add(BtnRemoveCluster);
+            MaximizeBox = false;
             Name = "MainForm";
             Text = "X4 Sector Creator";
+            Load += MainForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

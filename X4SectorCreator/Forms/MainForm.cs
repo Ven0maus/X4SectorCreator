@@ -15,6 +15,7 @@ namespace X4SectorCreator
         private SectorForm _sectorForm;
         private ZoneForm _zoneForm;
         private GateForm _gateForm;
+        private VersionUpdateForm _versionUpdateForm;
 
         public readonly Dictionary<(int, int), Cluster> CustomClusters = [];
 
@@ -78,6 +79,16 @@ namespace X4SectorCreator
                 if (_gateForm != null && !_gateForm.IsDisposed)
                     return _gateForm;
                 return _gateForm = new GateForm();
+            }
+        }
+
+        public VersionUpdateForm VersionUpdateForm
+        {
+            get
+            {
+                if (_versionUpdateForm != null && !_versionUpdateForm.IsDisposed)
+                    return _versionUpdateForm;
+                return _versionUpdateForm = new VersionUpdateForm();
             }
         }
 
@@ -157,6 +168,25 @@ namespace X4SectorCreator
 
             // Show succes message
             MessageBox.Show("XML Files were succesfully generated in the xml folder.");
+        }
+
+        private async void MainForm_Load(object sender, EventArgs e)
+        {
+            var versionChecker = new VersionChecker();
+
+            // Set form title
+            Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
+
+            // Check for update
+            var result = await versionChecker.CheckForUpdatesAsync();
+            if (result.NewVersionAvailable)
+            {
+                VersionUpdateForm.txtCurrentVersion.Text = $"v{versionChecker.CurrentVersion}";
+                VersionUpdateForm.txtCurrentX4Version.Text = $"v{versionChecker.TargetGameVersion}";
+                VersionUpdateForm.txtUpdateVersion.Text = $"v{result.VersionInfo.AppVersion}";
+                VersionUpdateForm.txtUpdateX4Version.Text = $"v{result.VersionInfo.X4Version}";
+                VersionUpdateForm.Show();
+            }
         }
 
         #region Configuration

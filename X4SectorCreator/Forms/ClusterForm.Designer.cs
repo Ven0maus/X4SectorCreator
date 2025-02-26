@@ -114,6 +114,8 @@
             Controls.Add(TxtName);
             Controls.Add(BtnCancel);
             Controls.Add(BtnCreate);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "ClusterForm";
             Text = "X4 Sector Creator";
             ResumeLayout(false);

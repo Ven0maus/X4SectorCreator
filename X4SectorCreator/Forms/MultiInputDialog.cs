@@ -71,5 +71,18 @@ namespace X4SectorCreator.Forms
                 return form.ShowDialog() == DialogResult.OK ? form.InputValues : null;
             }
         }
+
+        private void InitializeComponent()
+        {
+            SuspendLayout();
+            // 
+            // MultiInputDialog
+            // 
+            ClientSize = new Size(284, 261);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "MultiInputDialog";
+            ResumeLayout(false);
+        }
     }
 }
