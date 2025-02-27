@@ -49,6 +49,10 @@
             BtnReset = new Button();
             BtnShowSectorMap = new Button();
             BtnOpenFolder = new Button();
+            BtnNewRegion = new Button();
+            RegionsListBox = new ListBox();
+            label1 = new Label();
+            BtnRemoveRegion = new Button();
             SuspendLayout();
             // 
             // BtnRemoveCluster
@@ -259,11 +263,53 @@
             BtnOpenFolder.UseVisualStyleBackColor = true;
             BtnOpenFolder.Click += BtnOpenFolder_Click;
             // 
+            // BtnNewRegion
+            // 
+            BtnNewRegion.Enabled = false;
+            BtnNewRegion.Location = new Point(335, 482);
+            BtnNewRegion.Name = "BtnNewRegion";
+            BtnNewRegion.Size = new Size(75, 23);
+            BtnNewRegion.TabIndex = 38;
+            BtnNewRegion.Text = "New";
+            BtnNewRegion.UseVisualStyleBackColor = true;
+            // 
+            // RegionsListBox
+            // 
+            RegionsListBox.FormattingEnabled = true;
+            RegionsListBox.Location = new Point(335, 307);
+            RegionsListBox.Name = "RegionsListBox";
+            RegionsListBox.Size = new Size(156, 169);
+            RegionsListBox.TabIndex = 37;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 15F);
+            label1.Location = new Point(335, 276);
+            label1.Name = "label1";
+            label1.Size = new Size(81, 28);
+            label1.TabIndex = 36;
+            label1.Text = "Regions";
+            // 
+            // BtnRemoveRegion
+            // 
+            BtnRemoveRegion.Enabled = false;
+            BtnRemoveRegion.Location = new Point(416, 482);
+            BtnRemoveRegion.Name = "BtnRemoveRegion";
+            BtnRemoveRegion.Size = new Size(75, 23);
+            BtnRemoveRegion.TabIndex = 35;
+            BtnRemoveRegion.Text = "Remove";
+            BtnRemoveRegion.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(503, 570);
+            Controls.Add(BtnNewRegion);
+            Controls.Add(RegionsListBox);
+            Controls.Add(label1);
+            Controls.Add(BtnRemoveRegion);
             Controls.Add(BtnOpenFolder);
             Controls.Add(BtnShowSectorMap);
             Controls.Add(BtnReset);
@@ -316,5 +362,9 @@
         internal ListBox SectorsListBox;
         internal ListBox GatesListBox;
         private Button BtnOpenFolder;
+        private Button BtnNewRegion;
+        internal ListBox RegionsListBox;
+        private Label label1;
+        private Button BtnRemoveRegion;
     }
 }

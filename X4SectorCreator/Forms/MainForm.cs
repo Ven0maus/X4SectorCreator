@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Text;
 using System.Text.Json;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
@@ -360,16 +361,19 @@ namespace X4SectorCreator
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
 
             // Show new sectors and zones
-            bool selected = false;
-            foreach (Sector item in cluster.Value.Sectors)
+            Sector selectedSector = null;
+            foreach (Sector sector in cluster.Value.Sectors)
             {
-                _ = SectorsListBox.Items.Add(item.Name);
-                if (!selected)
+                _ = SectorsListBox.Items.Add(sector.Name);
+                if (selectedSector == null)
                 {
-                    SectorsListBox.SelectedItem = item.Name;
-                    selected = true;
+                    SectorsListBox.SelectedItem = sector.Name;
+                    selectedSector = sector;
                 }
             }
+
+            // Set details
+            SetDetailsText(cluster.Value, selectedSector);
         }
 
         private void ClustersListBox_DoubleClick(object sender, EventArgs e)
@@ -508,6 +512,12 @@ namespace X4SectorCreator
             GatesListBox.Items.Clear();
             GatesListBox.SelectedItem = null;
 
+            string selectedClusterName = ClustersListBox.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedClusterName))
+            {
+                return;
+            }
+
             string selectedSectorName = SectorsListBox.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedSectorName))
             {
@@ -526,6 +536,12 @@ namespace X4SectorCreator
             {
                 _ = GatesListBox.Items.Add(gate);
             }
+
+            var cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            var sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+
+            // Set details
+            SetDetailsText(cluster.Value, sector);
         }
         #endregion
 
@@ -630,6 +646,24 @@ namespace X4SectorCreator
             {
                 throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
             }
+        }
+
+        private void SetDetailsText(Cluster cluster, Sector sector)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"[Cluster]: {cluster.Name}");
+            sb.AppendLine("Location: " + (cluster.Position.X, cluster.Position.Y));
+            sb.AppendLine();
+            if (sector != null)
+            {
+                sb.AppendLine($"[Sector]: {sector.Name}");
+                sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}");
+                sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}");
+                sb.AppendLine($"Security: {(int)(sector.Security * 100f)}");
+                sb.AppendLine($"Tags: {sector.Tags}");
+                sb.AppendLine($"Allow Anomalies: {sector.AllowRandomAnomalies}");
+            }
+            LblDetails.Text = sb.ToString();
         }
     }
 }
