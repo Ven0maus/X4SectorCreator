@@ -574,13 +574,6 @@ namespace X4SectorCreator
                 tZone.Id = ++count;
             }
 
-            // Re-order gate ids if needed
-            count = 0;
-            foreach (var tGate in targetZone.Gates.OrderBy(a => a.Id))
-            {
-                tGate.Id = ++count;
-            }
-
             // Delete source connection
             Sector sourceSector = AllClusters.Values
                 .SelectMany(a => a.Sectors)
@@ -601,13 +594,6 @@ namespace X4SectorCreator
             foreach (var sZone in sourceSector.Zones.OrderBy(a => a.Id))
             {
                 sZone.Id = ++count;
-            }
-
-            // Re-order gate ids if needed
-            count = 0;
-            foreach (var sGate in sourceZone.Gates.OrderBy(a => a.Id))
-            {
-                sGate.Id = ++count;
             }
 
             // Remove from listbox
