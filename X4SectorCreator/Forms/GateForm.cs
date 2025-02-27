@@ -51,8 +51,8 @@ namespace X4SectorCreator.Forms
             InitializeHexagon();
 
             // Set inital position
-            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, ref _sourceYaw, txtSourceGateYaw);
-            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, ref _targetYaw, txtTargetGateYaw);
+            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
+            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
 
             // Attach events
             SourceSectorHexagon.Paint += SourceSectorHexagon_Paint;
@@ -91,8 +91,8 @@ namespace X4SectorCreator.Forms
             _targetDotPosition = TargetSectorHexagon.ClientRectangle.Center();
 
             // Reset gate positions
-            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, ref _sourceYaw, txtSourceGateYaw);
-            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, ref _targetYaw, txtTargetGateYaw);
+            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
+            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
 
             // Reset objects, make sure to call reset BEFORE assigning not after
             SourceCluster = null;
@@ -157,15 +157,12 @@ namespace X4SectorCreator.Forms
                 {
                     _sourceDotPosition = e.Location;
                     SourceSectorHexagon.Invalidate();
-                    UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, ref _sourceYaw, txtSourceGateYaw);
+                    UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
                 }
             }
             else if (_rotating) // If right-click is held, adjust yaw
             {
-                int centerX = SourceSectorHexagon.Width / 2;
-                int centerY = SourceSectorHexagon.Height / 2;
-
-                _sourceYaw = (float)(Math.Atan2(e.Y - centerY, e.X - centerX) * (180.0 / Math.PI));
+                _sourceYaw = (float)(Math.Atan2(e.Y - _sourceDotPosition.Y, e.X - _sourceDotPosition.X) * (180.0 / Math.PI)) + 90;
                 if (_sourceYaw < 0) _sourceYaw += 360;
 
                 txtSourceGateYaw.Text = $"{_sourceYaw:0}°";
@@ -185,14 +182,11 @@ namespace X4SectorCreator.Forms
             {
                 _sourceDotPosition = e.Location;
                 SourceSectorHexagon.Invalidate();
-                UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, ref _sourceYaw, txtSourceGateYaw);
+                UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
             }
             else if (e.Button == MouseButtons.Right)
             {
-                int centerX = SourceSectorHexagon.Width / 2;
-                int centerY = SourceSectorHexagon.Height / 2;
-
-                _sourceYaw = (float)(Math.Atan2(e.Y - centerY, e.X - centerX) * (180.0 / Math.PI));
+                _sourceYaw = (float)(Math.Atan2(e.Y - _sourceDotPosition.Y, e.X - _sourceDotPosition.X) * (180.0 / Math.PI)) + 90;
                 if (_sourceYaw < 0) _sourceYaw += 360;
 
                 txtSourceGateYaw.Text = $"{_sourceYaw:0}°";
@@ -239,15 +233,12 @@ namespace X4SectorCreator.Forms
                 {
                     _targetDotPosition = e.Location;
                     TargetSectorHexagon.Invalidate();
-                    UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, ref _targetYaw, txtTargetGateYaw);
+                    UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
                 }
             }
             else if (_rotating) // If right-click is held, adjust yaw
             {
-                int centerX = TargetSectorHexagon.Width / 2;
-                int centerY = TargetSectorHexagon.Height / 2;
-
-                _targetYaw = (float)(Math.Atan2(e.Y - centerY, e.X - centerX) * (180.0 / Math.PI));
+                _targetYaw = (float)(Math.Atan2(e.Y - _targetDotPosition.Y, e.X - _targetDotPosition.X) * (180.0 / Math.PI)) + 90;
                 if (_targetYaw < 0) _targetYaw += 360;
 
                 txtTargetGateYaw.Text = $"{_targetYaw:0}°";
@@ -267,14 +258,11 @@ namespace X4SectorCreator.Forms
             {
                 _targetDotPosition = e.Location;
                 TargetSectorHexagon.Invalidate();
-                UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, ref _targetYaw, txtTargetGateYaw);
+                UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
             }
             else if (e.Button == MouseButtons.Right)
             {
-                int centerX = TargetSectorHexagon.Width / 2;
-                int centerY = TargetSectorHexagon.Height / 2;
-
-                _targetYaw = (float)(Math.Atan2(e.Y - centerY, e.X - centerX) * (180.0 / Math.PI));
+                _targetYaw = (float)(Math.Atan2(e.Y - _targetDotPosition.Y, e.X - _targetDotPosition.X) * (180.0 / Math.PI)) + 90;
                 if (_targetYaw < 0) _targetYaw += 360;
 
                 txtTargetGateYaw.Text = $"{_targetYaw:0}°";
@@ -282,7 +270,7 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private void UpdateGatePosition(PictureBox sectorHexagon, TextBox positionTextBox, Point dotPosition, ref float yaw, TextBox yawTextBox)
+        private void UpdateGatePosition(PictureBox sectorHexagon, TextBox positionTextBox, Point dotPosition)
         {
             int centerX = sectorHexagon.Width / 2;
             int centerY = sectorHexagon.Height / 2;
@@ -294,19 +282,11 @@ namespace X4SectorCreator.Forms
             float worldY = normalizedY * _worldRadius / 2;
 
             positionTextBox.Text = $"({worldX:0}, {worldY:0})";
-
-            // Calculate yaw (angle in degrees)
-            yaw = (float)(Math.Atan2(dotPosition.Y - centerY, dotPosition.X - centerX) * (180.0 / Math.PI));
-
-            // Normalize angle to 0-360 degrees
-            if (yaw < 0) yaw += 360;
-
-            yawTextBox.Text = $"{yaw:0}";
         }
 
         private static void DrawArrow(Graphics g, Point dotPosition, float angleDegrees)
         {
-            double angleRadians = angleDegrees * (Math.PI / 180.0);
+            double angleRadians = (angleDegrees - 90) * (Math.PI / 180.0); // Adjust for new system
             int arrowLength = 20; // Adjust length
 
             Point arrowEnd = new Point(
