@@ -6,10 +6,14 @@ namespace X4SectorCreator.Objects
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string BaseGameMapping { get; set; }
         public List<Sector> Sectors { get; set; }
         public Point Position { get; set; }
 
         [JsonIgnore]
         public Hexagon Hexagon { get; set; }
+
+        [JsonIgnore]
+        public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);
     }
 }

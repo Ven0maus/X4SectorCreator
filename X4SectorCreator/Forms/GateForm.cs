@@ -285,10 +285,11 @@ namespace X4SectorCreator.Forms
                 int.Parse(targetSectorLocationMatch.Groups[3].Value));
 
             // Find target cluster / sector
-            if (!MainForm.Instance.CustomClusters.TryGetValue((targetSectorX, targetSectorY), out Cluster targetCluster))
+            if (!MainForm.Instance.AllClusters.TryGetValue((targetSectorX, targetSectorY), out Cluster targetCluster))
             {
-                // Must be a base game sector, look there
-                // TODO: Add maybe all base sectors there, with a flag "IsBaseGameSector" or something?
+                _ = SourceSector.Zones.Remove(sourceZone);
+                _ = MessageBox.Show("Invalid sector selection.");
+                return;
             }
 
             // Find sector

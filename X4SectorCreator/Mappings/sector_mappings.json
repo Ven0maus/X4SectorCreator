@@ -20,6 +20,7 @@
   "Clusters": [
     {
       "Name": "Grand Exchange",
+      "BaseGameMapping": "cluster_01",
       "Sectors": [
         {
           "Name": "Grand Exchange IV",
@@ -41,6 +42,7 @@
     },
     {
       "Name": "Path to Profit",
+      "BaseGameMapping": "cluster_05",
       "Sectors": [
         {
           "Name": "Path to Profit",
@@ -54,6 +56,7 @@
     },
     {
       "Name": "Black Hole Sun",
+      "BaseGameMapping": "cluster_06",
       "Sectors": [
         {
           "Name": "Black Hole Sun IV",
@@ -71,6 +74,7 @@
     },
     {
       "Name": "Second Contact II Flashpoint",
+      "BaseGameMapping": "cluster_13",
       "Sectors": [
         {
           "Name": "Second Contact II Flashpoint",
@@ -84,6 +88,7 @@
     },
     {
       "Name": "Second Contact VII",
+      "BaseGameMapping": "cluster_40",
       "Sectors": [
         {
           "Name": "Second Contact VII",
@@ -97,6 +102,7 @@
     },
     {
       "Name": "Second Contact XI",
+      "BaseGameMapping": "cluster_41",
       "Sectors": [
         {
           "Name": "Second Contact XI",
@@ -110,6 +116,7 @@
     },
     {
       "Name": "Windfall IV Aurora's Dream",
+      "BaseGameMapping": "cluster_503",
       "Sectors": [
         {
           "Name": "Windfall IV Aurora's Dream",
@@ -123,6 +130,7 @@
     },
     {
       "Name": "Windfall III The Hoard",
+      "BaseGameMapping": "cluster_502",
       "Sectors": [
         {
           "Name": "Windfall III The Hoard",
@@ -136,6 +144,7 @@
     },
     {
       "Name": "Windfall I Union Summit",
+      "BaseGameMapping": "cluster_501",
       "Sectors": [
         {
           "Name": "Windfall I Union Summit",
@@ -149,6 +158,7 @@
     },
     {
       "Name": "Avarice",
+      "BaseGameMapping": "cluster_500",
       "Sectors": [
         {
           "Name": "Avarice I",
@@ -170,6 +180,7 @@
     },
     {
       "Name": "Eighteen Billion",
+      "BaseGameMapping": "cluster_02",
       "Sectors": [
         {
           "Name": "Eighteen Billion",
@@ -183,6 +194,7 @@
     },
     {
       "Name": "Unknown System",
+      "BaseGameMapping": "cluster_504",
       "Sectors": [
         {
           "Name": "Unknown System",
@@ -196,6 +208,7 @@
     },
     {
       "Name": "Memory of Profit IX",
+      "BaseGameMapping": "cluster_03",
       "Sectors": [
         {
           "Name": "Memory of Profit IX",
@@ -209,6 +222,7 @@
     },
     {
       "Name": "Memory of Profit X",
+      "BaseGameMapping": "cluster_39",
       "Sectors": [
         {
           "Name": "Memory of Profit X",
@@ -222,6 +236,7 @@
     },
     {
       "Name": "Nopileos Fortune",
+      "BaseGameMapping": "cluster_04",
       "Sectors": [
         {
           "Name": "Nopileos Fortune II",
@@ -239,6 +254,7 @@
     },
     {
       "Name": "CEO's Doubt",
+      "BaseGameMapping": "cluster_713",
       "Sectors": [
         {
           "Name": "CEO's Doubt",
@@ -252,6 +268,7 @@
     },
     {
       "Name": "Trinity Sanctum VII",
+      "BaseGameMapping": "cluster_47",
       "Sectors": [
         {
           "Name": "Trinity Sanctum VII",
@@ -265,6 +282,7 @@
     },
     {
       "Name": "Trinity Sanctum III",
+      "BaseGameMapping": "cluster_18",
       "Sectors": [
         {
           "Name": "Trinity Sanctum III",
@@ -278,6 +296,7 @@
     },
     {
       "Name": "Unholy Retribution",
+      "BaseGameMapping": "cluster_10",
       "Sectors": [
         {
           "Name": "Unholy Retribution",
@@ -291,6 +310,7 @@
     },
     {
       "Name": "Loomanckstrat's Legacy",
+      "BaseGameMapping": "cluster_712",
       "Sectors": [
         {
           "Name": "Loomanckstrat's Legacy",
@@ -304,6 +324,7 @@
     },
     {
       "Name": "Mi Ton's Refuge",
+      "BaseGameMapping": "cluster_711",
       "Sectors": [
         {
           "Name": "Mi Ton's Refuge",
@@ -317,6 +338,7 @@
     },
     {
       "Name": "Moo-Kye's Revenge",
+      "BaseGameMapping": "cluster_710",
       "Sectors": [
         {
           "Name": "Moo-Kye's Revenge",
@@ -330,6 +352,7 @@
     },
     {
       "Name": "Pious Mists II",
+      "BaseGameMapping": "cluster_22",
       "Sectors": [
         {
           "Name": "Pious Mists II",
@@ -343,6 +366,7 @@
     },
     {
       "Name": "Pious Mists IV",
+      "BaseGameMapping": "cluster_37",
       "Sectors": [
         {
           "Name": "Pious Mists IV",
@@ -356,6 +380,7 @@
     },
     {
       "Name": "Pious Mists XI",
+      "BaseGameMapping": "cluster_38",
       "Sectors": [
         {
           "Name": "Pious Mists XI",
@@ -369,6 +394,7 @@
     },
     {
       "Name": "Sacred Relic",
+      "BaseGameMapping": "cluster_23",
       "Sectors": [
         {
           "Name": "Sacred Relic",
@@ -382,6 +408,7 @@
     },
     {
       "Name": "Cardinal's Domain",
+      "BaseGameMapping": "cluster_709",
       "Sectors": [
         {
           "Name": "Cardinal's Domain",
@@ -395,6 +422,7 @@
     },
     {
       "Name": "Hewa's Twin C1",
+      "BaseGameMapping": "cluster_19",
       "Sectors": [
         {
           "Name": "Hewa's Twin II",
@@ -412,6 +440,7 @@
     },
     {
       "Name": "Company Regard",
+      "BaseGameMapping": "cluster_20",
       "Sectors": [
         {
           "Name": "Company Regard",
@@ -425,6 +454,7 @@
     },
     {
       "Name": "Hewa's Twin C2",
+      "BaseGameMapping": "cluster_42",
       "Sectors": [
         {
           "Name": "Hewa's Twin III",
@@ -442,6 +472,7 @@
     },
     {
       "Name": "Scale Plate Green",
+      "BaseGameMapping": "cluster_21",
       "Sectors": [
         {
           "Name": "Scale Plate Green VII",
@@ -459,6 +490,7 @@
     },
     {
       "Name": "Turquoise Sea",
+      "BaseGameMapping": "cluster_50",
       "Sectors": [
         {
           "Name": "Turquoise Sea IX",
@@ -476,6 +508,7 @@
     },
     {
       "Name": "Hewa's Twin V",
+      "BaseGameMapping": "cluster_43",
       "Sectors": [
         {
           "Name": "Hewa's Twin V",
@@ -489,6 +522,7 @@
     },
     {
       "Name": "Ianamus Zura",
+      "BaseGameMapping": "cluster_15",
       "Sectors": [
         {
           "Name": "Ianamus Zura VII",
@@ -506,6 +540,7 @@
     },
     {
       "Name": "Mitsuno's Revelation",
+      "BaseGameMapping": "cluster_701",
       "Sectors": [
         {
           "Name": "Mitsuno's Revelation",
@@ -519,6 +554,7 @@
     },
     {
       "Name": "Mitsuno's Defiance",
+      "BaseGameMapping": "cluster_702",
       "Sectors": [
         {
           "Name": "Mitsuno's Defiance",
@@ -532,6 +568,7 @@
     },
     {
       "Name": "Mitsuno's Sacrifice",
+      "BaseGameMapping": "cluster_703",
       "Sectors": [
         {
           "Name": "Mitsuno's Sacrifice",
@@ -545,6 +582,7 @@
     },
     {
       "Name": "Thuruk's Demise II First Impact",
+      "BaseGameMapping": "cluster_408",
       "Sectors": [
         {
           "Name": "Thuruk's Demise II First Impact",
@@ -562,6 +600,7 @@
     },
     {
       "Name": "Family Tkr",
+      "BaseGameMapping": "cluster_407",
       "Sectors": [
         {
           "Name": "Family Tkr",
@@ -575,6 +614,7 @@
     },
     {
       "Name": "Matrix #451",
+      "BaseGameMapping": "cluster_16",
       "Sectors": [
         {
           "Name": "Matrix #451",
@@ -588,6 +628,7 @@
     },
     {
       "Name": "Matrix #9",
+      "BaseGameMapping": "cluster_17",
       "Sectors": [
         {
           "Name": "Matrix #9",
@@ -601,6 +642,7 @@
     },
     {
       "Name": "Fires of Defeat",
+      "BaseGameMapping": "cluster_421",
       "Sectors": [
         {
           "Name": "Fires of Defeat",
@@ -614,6 +656,7 @@
     },
     {
       "Name": "Tharka's Ravine XXIV",
+      "BaseGameMapping": "cluster_409",
       "Sectors": [
         {
           "Name": "Tharka's Ravine XXIV",
@@ -627,6 +670,7 @@
     },
     {
       "Name": "Tharka's Ravine XVI",
+      "BaseGameMapping": "cluster_410",
       "Sectors": [
         {
           "Name": "Tharka's Ravine XVI",
@@ -640,6 +684,7 @@
     },
     {
       "Name": "Tharka's Ravine VIII",
+      "BaseGameMapping": "cluster_412",
       "Sectors": [
         {
           "Name": "Tharka's Ravine VIII",
@@ -653,6 +698,7 @@
     },
     {
       "Name": "Tharka's Ravine IV Tharka's Fall",
+      "BaseGameMapping": "cluster_413",
       "Sectors": [
         {
           "Name": "Tharka's Ravine IV Tharka's Fall",
@@ -666,6 +712,7 @@
     },
     {
       "Name": "Heart of Acrimony II",
+      "BaseGameMapping": "cluster_411",
       "Sectors": [
         {
           "Name": "Heart of Acrimony II",
@@ -679,6 +726,7 @@
     },
     {
       "Name": "Heart of Acrimony I The Boneyard",
+      "BaseGameMapping": "cluster_425",
       "Sectors": [
         {
           "Name": "Heart of Acrimony I The Boneyard",
@@ -692,6 +740,7 @@
     },
     {
       "Name": "Bright Promise",
+      "BaseGameMapping": "cluster_09",
       "Sectors": [
         {
           "Name": "Bright Promise",
@@ -705,6 +754,7 @@
     },
     {
       "Name": "Profit Center Alpha",
+      "BaseGameMapping": "cluster_34",
       "Sectors": [
         {
           "Name": "Profit Center Alpha",
@@ -718,6 +768,7 @@
     },
     {
       "Name": "Two Grand",
+      "BaseGameMapping": "cluster_420",
       "Sectors": [
         {
           "Name": "Two Grand",
@@ -731,6 +782,7 @@
     },
     {
       "Name": "Open Market",
+      "BaseGameMapping": "cluster_419",
       "Sectors": [
         {
           "Name": "Open Market",
@@ -744,6 +796,7 @@
     },
     {
       "Name": "Family Nhuut",
+      "BaseGameMapping": "cluster_418",
       "Sectors": [
         {
           "Name": "Family Nhuut",
@@ -757,6 +810,7 @@
     },
     {
       "Name": "Zyarth's Dominion IV",
+      "BaseGameMapping": "cluster_405",
       "Sectors": [
         {
           "Name": "Zyarth's Dominion IV",
@@ -770,6 +824,7 @@
     },
     {
       "Name": "Zyarth's Dominion I",
+      "BaseGameMapping": "cluster_404",
       "Sectors": [
         {
           "Name": "Zyarth's Dominion I",
@@ -783,6 +838,7 @@
     },
     {
       "Name": "Zyarth's Dominion X",
+      "BaseGameMapping": "cluster_406",
       "Sectors": [
         {
           "Name": "Zyarth's Dominion X",
@@ -796,6 +852,7 @@
     },
     {
       "Name": "Eleventh Hour",
+      "BaseGameMapping": "cluster_417",
       "Sectors": [
         {
           "Name": "Eleventh Hour",
@@ -809,6 +866,7 @@
     },
     {
       "Name": "Guiding Star",
+      "BaseGameMapping": "cluster_416",
       "Sectors": [
         {
           "Name": "Guiding Star VII",
@@ -826,6 +884,7 @@
     },
     {
       "Name": "President's End",
+      "BaseGameMapping": "cluster_704",
       "Sectors": [
         {
           "Name": "President's End",
@@ -839,6 +898,7 @@
     },
     {
       "Name": "Silent Witness I",
+      "BaseGameMapping": "cluster_08",
       "Sectors": [
         {
           "Name": "Silent Witness I",
@@ -852,6 +912,7 @@
     },
     {
       "Name": "Silent Witness XI",
+      "BaseGameMapping": "cluster_44",
       "Sectors": [
         {
           "Name": "Silent Witness XI",
@@ -865,6 +926,7 @@
     },
     {
       "Name": "Silent Witness XII",
+      "BaseGameMapping": "cluster_45",
       "Sectors": [
         {
           "Name": "Silent Witness XII",
@@ -878,6 +940,7 @@
     },
     {
       "Name": "Matrix #101",
+      "BaseGameMapping": "cluster_708",
       "Sectors": [
         {
           "Name": "Matrix #101",
@@ -891,6 +954,7 @@
     },
     {
       "Name": "Tharka's Cascade",
+      "BaseGameMapping": "cluster_32",
       "Sectors": [
         {
           "Name": "Tharka's Cascade XVII",
@@ -908,6 +972,7 @@
     },
     {
       "Name": "Matrix #79B",
+      "BaseGameMapping": "cluster_33",
       "Sectors": [
         {
           "Name": "Matrix #79B",
@@ -921,6 +986,7 @@
     },
     {
       "Name": "Family Zhin",
+      "BaseGameMapping": "cluster_401",
       "Sectors": [
         {
           "Name": "Family Zhin",
@@ -934,6 +1000,7 @@
     },
     {
       "Name": "Family Kritt",
+      "BaseGameMapping": "cluster_402",
       "Sectors": [
         {
           "Name": "Family Kritt",
@@ -947,6 +1014,7 @@
     },
     {
       "Name": "Rhy's Defiance",
+      "BaseGameMapping": "cluster_414",
       "Sectors": [
         {
           "Name": "Rhy's Defiance",
@@ -959,10 +1027,11 @@
       }
     },
     {
-      "Name": "Matrix #59B",
+      "Name": "Matrix #598",
+      "BaseGameMapping": "cluster_415",
       "Sectors": [
         {
-          "Name": "Matrix #59B",
+          "Name": "Matrix #598",
           "Owner": "Xenon"
         }
       ],
@@ -973,6 +1042,7 @@
     },
     {
       "Name": "Wretched Skies IV Family Valka",
+      "BaseGameMapping": "cluster_400",
       "Sectors": [
         {
           "Name": "Wretched Skies IV Family Valka",
@@ -986,6 +1056,7 @@
     },
     {
       "Name": "Wretched Skies V Family Phi",
+      "BaseGameMapping": "cluster_403",
       "Sectors": [
         {
           "Name": "Wretched Skies V Family Phi",
@@ -999,6 +1070,7 @@
     },
     {
       "Name": "Wretched Skies X",
+      "BaseGameMapping": "cluster_422",
       "Sectors": [
         {
           "Name": "Wretched Skies X",
@@ -1012,6 +1084,7 @@
     },
     {
       "Name": "Litany of Fury",
+      "BaseGameMapping": "cluster_423",
       "Sectors": [
         {
           "Name": "Litany of Fury XII",
@@ -1029,6 +1102,7 @@
     },
     {
       "Name": "Emperor's Pride",
+      "BaseGameMapping": "cluster_424",
       "Sectors": [
         {
           "Name": "Emperor's Pride VI",
@@ -1046,6 +1120,7 @@
     },
     {
       "Name": "Hatikvah's Choice",
+      "BaseGameMapping": "cluster_29",
       "Sectors": [
         {
           "Name": "Hatikvah's Choice III",
@@ -1063,6 +1138,7 @@
     },
     {
       "Name": "Morning Star III",
+      "BaseGameMapping": "cluster_30",
       "Sectors": [
         {
           "Name": "Morning Star III",
@@ -1076,6 +1152,7 @@
     },
     {
       "Name": "Morning Star IV",
+      "BaseGameMapping": "cluster_46",
       "Sectors": [
         {
           "Name": "Morning Star IV",
@@ -1089,6 +1166,7 @@
     },
     {
       "Name": "Argon Prime",
+      "BaseGameMapping": "cluster_14",
       "Sectors": [
         {
           "Name": "Argon Prime",
@@ -1102,6 +1180,7 @@
     },
     {
       "Name": "The Reach",
+      "BaseGameMapping": "cluster_07",
       "Sectors": [
         {
           "Name": "The Reach",
@@ -1115,6 +1194,7 @@
     },
     {
       "Name": "Heretic's End",
+      "BaseGameMapping": "cluster_31",
       "Sectors": [
         {
           "Name": "Heretic's End",
@@ -1128,6 +1208,7 @@
     },
     {
       "Name": "Savage Spur",
+      "BaseGameMapping": "cluster_112",
       "Sectors": [
         {
           "Name": "Savage Spur I",
@@ -1145,6 +1226,7 @@
     },
     {
       "Name": "Getsu Fune",
+      "BaseGameMapping": "cluster_48",
       "Sectors": [
         {
           "Name": "Getsu Fune",
@@ -1158,6 +1240,7 @@
     },
     {
       "Name": "Nopileos' Memorial",
+      "BaseGameMapping": "cluster_705",
       "Sectors": [
         {
           "Name": "Nopileos' Memorial",
@@ -1171,6 +1254,7 @@
     },
     {
       "Name": "Hatikvah's Faith",
+      "BaseGameMapping": "cluster_706",
       "Sectors": [
         {
           "Name": "Hatikvah's Faith",
@@ -1184,6 +1268,7 @@
     },
     {
       "Name": "The Void",
+      "BaseGameMapping": "cluster_27",
       "Sectors": [
         {
           "Name": "The Void",
@@ -1197,6 +1282,7 @@
     },
     {
       "Name": "Antigone Memorial",
+      "BaseGameMapping": "cluster_28",
       "Sectors": [
         {
           "Name": "Antigone Memorial",
@@ -1210,6 +1296,7 @@
     },
     {
       "Name": "Third Redemption",
+      "BaseGameMapping": "cluster_730",
       "Sectors": [
         {
           "Name": "Third Redemption",
@@ -1223,6 +1310,7 @@
     },
     {
       "Name": "Frontier Edge",
+      "BaseGameMapping": "cluster_49",
       "Sectors": [
         {
           "Name": "Frontier Edge",
@@ -1236,6 +1324,7 @@
     },
     {
       "Name": "Ore Belt",
+      "BaseGameMapping": "cluster_720",
       "Sectors": [
         {
           "Name": "Ore Belt",
@@ -1249,6 +1338,7 @@
     },
     {
       "Name": "Atiya's Misfortune",
+      "BaseGameMapping": "cluster_26",
       "Sectors": [
         {
           "Name": "Atiya's Misfortune I",
@@ -1266,6 +1356,7 @@
     },
     {
       "Name": "Mists of Artemis",
+      "BaseGameMapping": "cluster_715",
       "Sectors": [
         {
           "Name": "Mists of Artemis",
@@ -1279,6 +1370,7 @@
     },
     {
       "Name": "Sanctum Verge",
+      "BaseGameMapping": "cluster_722",
       "Sectors": [
         {
           "Name": "Sanctum Verge",
@@ -1292,6 +1384,7 @@
     },
     {
       "Name": "Faulty Logic",
+      "BaseGameMapping": "cluster_25",
       "Sectors": [
         {
           "Name": "Faulty Logic I",
@@ -1309,6 +1402,7 @@
     },
     {
       "Name": "True Sight",
+      "BaseGameMapping": "cluster_12",
       "Sectors": [
         {
           "Name": "True Sight",
@@ -1322,6 +1416,7 @@
     },
     {
       "Name": "Holy Vision",
+      "BaseGameMapping": "cluster_24",
       "Sectors": [
         {
           "Name": "Holy Vision",
@@ -1335,6 +1430,7 @@
     },
     {
       "Name": "Cardinal's Redress",
+      "BaseGameMapping": "cluster_36",
       "Sectors": [
         {
           "Name": "Cardinal's Redress",
@@ -1348,6 +1444,7 @@
     },
     {
       "Name": "Pontifex's Claim",
+      "BaseGameMapping": "cluster_11",
       "Sectors": [
         {
           "Name": "Pontifex's Claim",
@@ -1361,6 +1458,7 @@
     },
     {
       "Name": "Lasting Vengeance",
+      "BaseGameMapping": "cluster_35",
       "Sectors": [
         {
           "Name": "Lasting Vengeance",
@@ -1374,6 +1472,7 @@
     },
     {
       "Name": "Freedom's Reach",
+      "BaseGameMapping": "cluster_714",
       "Sectors": [
         {
           "Name": "Freedom's Reach",
@@ -1387,6 +1486,7 @@
     },
     {
       "Name": "Tempting Fumes",
+      "BaseGameMapping": "cluster_723",
       "Sectors": [
         {
           "Name": "Tempting Fumes",
@@ -1400,6 +1500,7 @@
     },
     {
       "Name": "Watchful Gaze",
+      "BaseGameMapping": "cluster_601",
       "Sectors": [
         {
           "Name": "Watchful Gaze",
@@ -1413,6 +1514,7 @@
     },
     {
       "Name": "Barren Shores",
+      "BaseGameMapping": "cluster_602",
       "Sectors": [
         {
           "Name": "Barren Shores",
@@ -1426,6 +1528,7 @@
     },
     {
       "Name": "Great Reef",
+      "BaseGameMapping": "cluster_603",
       "Sectors": [
         {
           "Name": "Great Reef",
@@ -1439,6 +1542,7 @@
     },
     {
       "Name": "Ocean of Fantasy",
+      "BaseGameMapping": "cluster_604",
       "Sectors": [
         {
           "Name": "Ocean of Fantasy",
@@ -1452,6 +1556,7 @@
     },
     {
       "Name": "Sanctuary of Darkness",
+      "BaseGameMapping": "cluster_605",
       "Sectors": [
         {
           "Name": "Sanctuary of Darkness",
@@ -1465,6 +1570,7 @@
     },
     {
       "Name": "Kingdom End",
+      "BaseGameMapping": "cluster_606",
       "Sectors": [
         {
           "Name": "Kingdom End I",
@@ -1486,6 +1592,7 @@
     },
     {
       "Name": "Rolk's Demise",
+      "BaseGameMapping": "cluster_607",
       "Sectors": [
         {
           "Name": "Rolk's Demise",
@@ -1499,6 +1606,7 @@
     },
     {
       "Name": "Atreus' Clouds",
+      "BaseGameMapping": "cluster_608",
       "Sectors": [
         {
           "Name": "Atreus' Clouds",
@@ -1512,6 +1620,7 @@
     },
     {
       "Name": "Menelaus' Oasis",
+      "BaseGameMapping": "cluster_609",
       "Sectors": [
         {
           "Name": "Menelaus' Oasis",
@@ -1525,6 +1634,7 @@
     },
     {
       "Name": "Segaris",
+      "BaseGameMapping": "cluster_113",
       "Sectors": [
         {
           "Name": "Segaris",
@@ -1538,6 +1648,7 @@
     },
     {
       "Name": "Gaian Prophecy",
+      "BaseGameMapping": "cluster_114",
       "Sectors": [
         {
           "Name": "Gaian Prophecy",
@@ -1551,6 +1662,7 @@
     },
     {
       "Name": "Brennan's Triumph",
+      "BaseGameMapping": "cluster_115",
       "Sectors": [
         {
           "Name": "Brennan's Triumph",
@@ -1564,6 +1676,7 @@
     },
     {
       "Name": "Circle of Deceit",
+      "BaseGameMapping": "cluster_724",
       "Sectors": [
         {
           "Name": "Circle of Deceit",
@@ -1577,6 +1690,7 @@
     },
     {
       "Name": "Neptune",
+      "BaseGameMapping": "cluster_110",
       "Sectors": [
         {
           "Name": "Neptune",
@@ -1590,6 +1704,7 @@
     },
     {
       "Name": "Pluto",
+      "BaseGameMapping": "cluster_111",
       "Sectors": [
         {
           "Name": "Pluto",
@@ -1603,6 +1718,7 @@
     },
     {
       "Name": "Oort Cloud",
+      "BaseGameMapping": "cluster_116",
       "Sectors": [
         {
           "Name": "Oort Cloud",
@@ -1616,6 +1732,7 @@
     },
     {
       "Name": "Uranus",
+      "BaseGameMapping": "cluster_109",
       "Sectors": [
         {
           "Name": "Uranus",
@@ -1629,6 +1746,7 @@
     },
     {
       "Name": "Saturn",
+      "BaseGameMapping": "cluster_108",
       "Sectors": [
         {
           "Name": "Saturn 2",
@@ -1650,6 +1768,7 @@
     },
     {
       "Name": "Jupiter",
+      "BaseGameMapping": "cluster_107",
       "Sectors": [
         {
           "Name": "Jupiter",
@@ -1663,6 +1782,7 @@
     },
     {
       "Name": "Asteroid Belt",
+      "BaseGameMapping": "cluster_100",
       "Sectors": [
         {
           "Name": "Asteroid Belt",
@@ -1676,6 +1796,7 @@
     },
     {
       "Name": "Mars",
+      "BaseGameMapping": "cluster_101",
       "Sectors": [
         {
           "Name": "Mars",
@@ -1689,6 +1810,7 @@
     },
     {
       "Name": "Venus",
+      "BaseGameMapping": "cluster_102",
       "Sectors": [
         {
           "Name": "Venus",
@@ -1702,6 +1824,7 @@
     },
     {
       "Name": "Mercury",
+      "BaseGameMapping": "cluster_106",
       "Sectors": [
         {
           "Name": "Mercury",
@@ -1715,6 +1838,7 @@
     },
     {
       "Name": "Earth",
+      "BaseGameMapping": "cluster_104",
       "Sectors": [
         {
           "Name": "Earth",
@@ -1732,6 +1856,7 @@
     },
     {
       "Name": "Adventure's Promise",
+      "BaseGameMapping": "cluster_721",
       "Sectors": [
         {
           "Name": "Adventure's Promise",

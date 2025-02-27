@@ -34,7 +34,7 @@ namespace X4SectorCreator.Forms
             }
 
             // Check if name already exists
-            if (MainForm.Instance.CustomClusters.Values.Any(a =>
+            if (MainForm.Instance.AllClusters.Values.Any(a =>
             {
                 // Skip the cluster we're updating
                 return (Cluster == null || !Cluster.Name.Equals(a.Name, StringComparison.OrdinalIgnoreCase))
@@ -56,7 +56,7 @@ namespace X4SectorCreator.Forms
             if (match.Success)
             {
                 (int X, int Y) coordinate = (X: int.Parse(match.Groups[1].Value), Y: int.Parse(match.Groups[2].Value));
-                if (MainForm.Instance.CustomClusters.TryGetValue(coordinate, out Cluster cluster))
+                if (MainForm.Instance.AllClusters.TryGetValue(coordinate, out Cluster cluster))
                 {
                     if (Cluster == null || !cluster.Name.Equals(Cluster.Name, StringComparison.OrdinalIgnoreCase))
                     {
@@ -69,9 +69,9 @@ namespace X4SectorCreator.Forms
                 {
                     case "Create":
                         // Add new custom cluster
-                        MainForm.Instance.CustomClusters.Add(coordinate, cluster = new Cluster
+                        MainForm.Instance.AllClusters.Add(coordinate, cluster = new Cluster
                         {
-                            Id = MainForm.Instance.CustomClusters.Values.Count + 1,
+                            Id = MainForm.Instance.AllClusters.Values.Count(a => !a.IsBaseGame) + 1,
                             Name = name,
                             Position = new Point(coordinate.X, coordinate.Y),
                             Sectors = []
@@ -96,10 +96,10 @@ namespace X4SectorCreator.Forms
                         Point oldPosition = Cluster.Position;
 
                         // Re-map
-                        _ = MainForm.Instance.CustomClusters.Remove((oldPosition.X, oldPosition.Y));
+                        _ = MainForm.Instance.AllClusters.Remove((oldPosition.X, oldPosition.Y));
                         Cluster.Position = new Point(coordinate.X, coordinate.Y);
                         Cluster.Name = name;
-                        MainForm.Instance.CustomClusters.Add(coordinate, Cluster);
+                        MainForm.Instance.AllClusters.Add(coordinate, Cluster);
 
                         // Update listbox
                         MainForm.Instance.ClustersListBox.Items.Remove(oldName);

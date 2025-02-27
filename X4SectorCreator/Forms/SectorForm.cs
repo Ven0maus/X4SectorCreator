@@ -30,7 +30,7 @@ namespace X4SectorCreator.Forms
             }
 
             // Check if name already exists
-            foreach (Cluster cluster in MainForm.Instance.CustomClusters.Values)
+            foreach (Cluster cluster in MainForm.Instance.AllClusters.Values)
             {
                 foreach (Sector sector in cluster.Sectors)
                 {
@@ -48,7 +48,7 @@ namespace X4SectorCreator.Forms
                 }
             }
 
-            KeyValuePair<(int, int), Cluster> selectedCluster = MainForm.Instance.CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<(int, int), Cluster> selectedCluster = MainForm.Instance.AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
 
             switch (BtnCreate.Text)
             {

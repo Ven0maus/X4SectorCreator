@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Text.Json;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
@@ -16,7 +18,8 @@ namespace X4SectorCreator
         private GateForm _gateForm;
         private VersionUpdateForm _versionUpdateForm;
 
-        public readonly Dictionary<(int, int), Cluster> CustomClusters = [];
+        public readonly Dictionary<(int, int), Cluster> AllClusters;
+        public readonly Dictionary<string, Color> FactionColorMapping;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static MainForm Instance { get; private set; }
@@ -45,6 +48,28 @@ namespace X4SectorCreator
             }
 
             Instance = this;
+
+            // Initializes the full X4 map from JSON data
+            const string filePath = "Mappings/sector_mappings.json";
+
+            string json = File.ReadAllText(filePath);
+            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
+
+            // Create lookups
+            AllClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
+            // Init all collections
+            foreach (var cluster in AllClusters)
+            {
+                foreach (var sector in cluster.Value.Sectors)
+                {
+                    sector.Zones ??= [];
+                    foreach (var zone in sector.Zones)
+                    {
+                        zone.Gates ??= [];
+                    }
+                }
+            }
+            FactionColorMapping = clusterCollection.FactionColors.ToDictionary(a => a.Key, a => HexToColor(a.Value), StringComparer.OrdinalIgnoreCase);
         }
 
         private void BtnSectorCreationGuide_Click(object sender, EventArgs e)
@@ -88,7 +113,7 @@ namespace X4SectorCreator
                 return;
             }
 
-            List<Cluster> clusters = [.. CustomClusters.Values];
+            List<Cluster> clusters = [.. AllClusters.Values.Where(a => !a.IsBaseGame)];
 
             // Generate each xml file
             string folder = Path.Combine(Application.StartupPath, "GeneratedXml");
@@ -143,8 +168,12 @@ namespace X4SectorCreator
         #region Configuration
         private void BtnReset_Click(object sender, EventArgs e)
         {
+            // Remove custom clusters
+            var toBeRemoved = AllClusters.Where(a => !a.Value.IsBaseGame).ToArray();
+            foreach (var cluster in toBeRemoved)
+                AllClusters.Remove(cluster.Key);
+
             LblDetails.Text = string.Empty;
-            CustomClusters.Clear();
             ClustersListBox.Items.Clear();
             SectorsListBox.Items.Clear();
             GatesListBox.Items.Clear();
@@ -164,7 +193,7 @@ namespace X4SectorCreator
 
                 try
                 {
-                    string jsonContent = ConfigSerializer.Serialize([.. CustomClusters.Values]);
+                    string jsonContent = ConfigSerializer.Serialize([.. AllClusters.Values.Where(a => !a.IsBaseGame)]);
                     File.WriteAllText(filePath, jsonContent);
                     _ = MessageBox.Show($"Configuration exported succesfully.", "Success");
                 }
@@ -200,7 +229,7 @@ namespace X4SectorCreator
                         foreach (Cluster cluster in clusters)
                         {
                             // Set custom clusters
-                            CustomClusters.Add((cluster.Position.X, cluster.Position.Y), cluster);
+                            AllClusters.Add((cluster.Position.X, cluster.Position.Y), cluster);
 
                             // Setup listboxes
                             _ = ClustersListBox.Items.Add(cluster.Name);
@@ -260,7 +289,7 @@ namespace X4SectorCreator
                 return;
             }
 
-            KeyValuePair<(int, int), Cluster> cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
 
             foreach (Sector sector in cluster.Value.Sectors)
             {
@@ -269,7 +298,7 @@ namespace X4SectorCreator
                     // Remove gate connections
                     foreach (Gate selectedGate in zone.Gates)
                     {
-                        Sector sourceSector = CustomClusters.Values
+                        Sector sourceSector = AllClusters.Values
                             .SelectMany(a => a.Sectors)
                             .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
                         Zone sourceZone = sourceSector.Zones
@@ -282,7 +311,7 @@ namespace X4SectorCreator
                 }
             }
 
-            _ = CustomClusters.Remove(cluster.Key);
+            _ = AllClusters.Remove(cluster.Key);
             ClustersListBox.Items.Remove(ClustersListBox.SelectedItem);
             ClustersListBox.SelectedItem = null;
             SectorsListBox.Items.Clear();
@@ -304,7 +333,7 @@ namespace X4SectorCreator
                 return;
             }
 
-            KeyValuePair<(int, int), Cluster> cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
 
             // Show new sectors and zones
             bool selected = false;
@@ -327,7 +356,7 @@ namespace X4SectorCreator
                 return;
             }
 
-            KeyValuePair<(int, int), Cluster> cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
 
             ClusterForm.Cluster = cluster.Value;
             ClusterForm.BtnCreate.Text = "Update";
@@ -363,7 +392,7 @@ namespace X4SectorCreator
 
             // Remove sector from cluster
             string selectedClusterName = ClustersListBox.SelectedItem as string;
-            KeyValuePair<(int, int), Cluster> cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
             foreach (Zone zone in sector.Zones)
@@ -371,7 +400,7 @@ namespace X4SectorCreator
                 // Remove gate connections
                 foreach (Gate selectedGate in zone.Gates)
                 {
-                    Sector sourceSector = CustomClusters.Values
+                    Sector sourceSector = AllClusters.Values
                         .SelectMany(a => a.Sectors)
                         .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
                     Zone sourceZone = sourceSector.Zones
@@ -404,7 +433,7 @@ namespace X4SectorCreator
                 return;
             }
 
-            KeyValuePair<(int, int), Cluster> cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
             SectorForm.Sector = sector;
@@ -425,10 +454,10 @@ namespace X4SectorCreator
             }
 
             // Show all gates that point to the selected sector
-            Gate[] gates = CustomClusters
+            Gate[] gates = AllClusters
                 .SelectMany(a => a.Value.Sectors)
-                .SelectMany(a => a.Zones)
-                .SelectMany(a => a.Gates)
+                .SelectMany(a => a.Zones ?? [])
+                .SelectMany(a => a.Gates ?? [])
                 .Where(a => a.DestinationSectorName.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase))
                 .ToArray();
 
@@ -444,7 +473,7 @@ namespace X4SectorCreator
         {
             string selectedClusterName = ClustersListBox.SelectedItem as string;
             string selectedSectorName = SectorsListBox.SelectedItem as string;
-            KeyValuePair<(int, int), Cluster> cluster = CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
             GateForm.Reset();
@@ -464,7 +493,7 @@ namespace X4SectorCreator
             string selectedSectorName = SectorsListBox.SelectedItem as string;
 
             // Delete target connection
-            Sector targetSector = CustomClusters.Values
+            Sector targetSector = AllClusters.Values
                 .SelectMany(a => a.Sectors)
                 .First(a => a.Name.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
             Zone targetZone = targetSector.Zones
@@ -474,7 +503,7 @@ namespace X4SectorCreator
             _ = targetZone.Gates.Remove(selectedGate);
 
             // Delete source connection
-            Sector sourceSector = CustomClusters.Values
+            Sector sourceSector = AllClusters.Values
                 .SelectMany(a => a.Sectors)
                 .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
             Zone sourceZone = sourceSector.Zones
@@ -489,5 +518,35 @@ namespace X4SectorCreator
             GatesListBox.SelectedItem = null;
         }
         #endregion
+
+        private static Color HexToColor(string hexstring)
+        {
+            // Remove '#' if present
+            if (hexstring.StartsWith('#'))
+            {
+                hexstring = hexstring[1..];
+            }
+
+            // Convert hex to RGB
+            if (hexstring.Length == 6)
+            {
+                int r = Convert.ToInt32(hexstring[..2], 16);
+                int g = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                return Color.FromArgb(r, g, b);
+            }
+            else if (hexstring.Length == 8) // If it includes alpha (ARGB)
+            {
+                int a = Convert.ToInt32(hexstring[..2], 16);
+                int r = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int g = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(6, 2), 16);
+                return Color.FromArgb(a, r, g, b);
+            }
+            else
+            {
+                throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
+            }
+        }
     }
 }

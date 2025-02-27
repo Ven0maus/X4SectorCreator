@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Text.Json;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator
@@ -10,8 +9,9 @@ namespace X4SectorCreator
         public bool GateSectorSelection { get; set; } = false;
 
         private readonly Dictionary<(int, int), Hexagon> _hexagons = [];
-        private readonly Dictionary<(int, int), Cluster> _clusterMapping;
-        private readonly Dictionary<string, Color> _colorMapping;
+        private Dictionary<(int, int), Cluster> _baseGameClusters;
+        private Cluster[] _customClusters;
+
         private readonly int _hexSize = 100;
 
         // How many extra rows and cols will be "open" around the base game sectors + custom sectors for the user to select
@@ -36,16 +36,6 @@ namespace X4SectorCreator
             Paint += DrawHexGrid;
             Resize += HandleResize;
             MouseWheel += HandleMouseWheel;
-
-            // Initializes the full X4 map from JSON data
-            const string filePath = "Mappings/sector_mappings.json";
-
-            string json = File.ReadAllText(filePath);
-            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
-
-            // Create lookups
-            _clusterMapping = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
-            _colorMapping = clusterCollection.FactionColors.ToDictionary(a => a.Key, a => HexToColor(a.Value), StringComparer.OrdinalIgnoreCase);
         }
 
         public void Reset()
@@ -53,14 +43,19 @@ namespace X4SectorCreator
             _zoom = 1.2f;
             _offset = new PointF(0, 0);
 
-            Cluster[] clusters = _clusterMapping.Values
-                .Concat(MainForm.Instance.CustomClusters.Values)
-                .DefaultIfEmpty()
+            _baseGameClusters = MainForm.Instance.AllClusters
+                .Where(a => a.Value.IsBaseGame)
+                .ToDictionary(a => a.Key, a => a.Value);
+
+            _customClusters = MainForm.Instance.AllClusters.Values
+                .Where(a => !a.IsBaseGame)
                 .ToArray();
 
+            var allClusters = MainForm.Instance.AllClusters.Values;
+
             // Determine size of hex grid based on cluster mapping + custom sector
-            _cols = ((Math.Max(Math.Abs(clusters.Max(a => a.Position.X)), Math.Abs(clusters.Min(a => a.Position.X))) + _minExpansionRoom) * 2) + 1;
-            _rows = ((int)((Math.Max(Math.Abs(clusters.Max(b => b.Position.Y)), Math.Abs(clusters.Min(b => b.Position.Y))) + (_minExpansionRoom / 2)) * 1.5f)) + 1;
+            _cols = ((Math.Max(Math.Abs(allClusters.Max(a => a.Position.X)), Math.Abs(allClusters.Min(a => a.Position.X))) + _minExpansionRoom) * 2) + 1;
+            _rows = ((int)((Math.Max(Math.Abs(allClusters.Max(b => b.Position.Y)), Math.Abs(allClusters.Min(b => b.Position.Y))) + (_minExpansionRoom / 2)) * 1.5f)) + 1;
 
             GenerateHexagons();
             Invalidate();
@@ -245,8 +240,7 @@ namespace X4SectorCreator
 
                     // Define how many sectors should be in this cluster
                     int children = 1;
-                    if (_clusterMapping.TryGetValue(translatedCoordinate, out Cluster cluster) ||
-                        MainForm.Instance.CustomClusters.TryGetValue(translatedCoordinate, out cluster))
+                    if (MainForm.Instance.AllClusters.TryGetValue(translatedCoordinate, out Cluster cluster))
                     {
                         children = cluster.Sectors.Count;
                     }
@@ -351,32 +345,32 @@ namespace X4SectorCreator
             if (chkShowX4Sectors.Checked)
             {
                 // Next step render the game clusters on top
-                foreach (Cluster cluster in _clusterMapping.Values)
+                foreach (Cluster cluster in _baseGameClusters.Values)
                 {
-                    RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon), _clusterMapping);
-                }
-
-                if (chkShowCustomSectors.Checked)
-                {
-                    // Next step render the custom clusters
-                    foreach (Cluster cluster in MainForm.Instance.CustomClusters.Values)
-                    {
-                        // Always overwrite the hexagon as it can change between sessions
-                        cluster.Hexagon = _hexagons[(cluster.Position.X, cluster.Position.Y)];
-                        RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon), MainForm.Instance.CustomClusters);
-                    }
-
-                    // Next step render names
-                    foreach (Cluster cluster in MainForm.Instance.CustomClusters.Values)
-                    {
-                        RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon), MainForm.Instance.CustomClusters);
-                    }
+                    RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
 
                 // Next step render names
-                foreach (Cluster cluster in _clusterMapping.Values)
+                foreach (Cluster cluster in _baseGameClusters.Values)
                 {
-                    RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon), _clusterMapping);
+                    RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                }
+            }
+
+            if (chkShowCustomSectors.Checked)
+            {
+                // Next step render the custom clusters
+                foreach (Cluster cluster in _customClusters)
+                {
+                    // Always overwrite the hexagon as it can change between sessions
+                    cluster.Hexagon = _hexagons[(cluster.Position.X, cluster.Position.Y)];
+                    RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                }
+
+                // Next step render names
+                foreach (Cluster cluster in _customClusters)
+                {
+                    RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
             }
 
@@ -396,7 +390,7 @@ namespace X4SectorCreator
         private void RenderNonSectorGrid(PaintEventArgs e, Color nonExistantHexColor, KeyValuePair<(int, int), Hexagon> hex)
         {
             // Render each non-existant hex first
-            if (!_clusterMapping.TryGetValue(hex.Key, out Cluster cluster) || !chkShowX4Sectors.Checked)
+            if (!_baseGameClusters.TryGetValue(hex.Key, out Cluster cluster) || !chkShowX4Sectors.Checked)
             {
                 using SolidBrush mainBrush = new(Color.Black);
                 using Pen mainPen = new(nonExistantHexColor, 2);
@@ -427,9 +421,9 @@ namespace X4SectorCreator
             }
         }
 
-        private void RenderClusters(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex, Dictionary<(int, int), Cluster> lookupTable)
+        private void RenderClusters(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex)
         {
-            Cluster cluster = lookupTable[hex.Key];
+            Cluster cluster = MainForm.Instance.AllClusters[hex.Key];
             if (cluster.Sectors.Count == 0)
             {
                 return;
@@ -437,14 +431,14 @@ namespace X4SectorCreator
 
             // If all sectors are the "same" owner, then the main hex becomes that color
             // If not the main hex is considered "unclaimed" until all sectors within are owned by the same faction
-            Color color = _colorMapping["None"];
+            Color color = MainForm.Instance.FactionColorMapping["None"];
             Sector firstSector = cluster.Sectors.FirstOrDefault();
             if (firstSector != null)
             {
                 string owner = firstSector.Owner;
                 if (cluster.Sectors.All(a => a.Owner.Equals(owner, StringComparison.OrdinalIgnoreCase)))
                 {
-                    color = !_colorMapping.TryGetValue(owner, out Color value) ? _colorMapping["None"] : value;
+                    color = !MainForm.Instance.FactionColorMapping.TryGetValue(owner, out Color value) ? MainForm.Instance.FactionColorMapping["None"] : value;
                 }
             }
 
@@ -465,7 +459,8 @@ namespace X4SectorCreator
                 foreach (Hexagon child in hex.Value.Children)
                 {
                     Sector sector = cluster.Sectors[index];
-                    Color ownerColor = !_colorMapping.TryGetValue(sector.Owner, out Color value) ? _colorMapping["None"] : value;
+                    Color ownerColor = !MainForm.Instance.FactionColorMapping.TryGetValue(sector.Owner, out Color value) ? 
+                        MainForm.Instance.FactionColorMapping["None"] : value;
                     using Pen pen = new(ownerColor, 2);
                     using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
                     e.Graphics.FillPolygon(brush, child.Points);
@@ -494,9 +489,9 @@ namespace X4SectorCreator
             }
         }
 
-        private void RenderHexNames(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex, Dictionary<(int, int), Cluster> lookupTable)
+        private void RenderHexNames(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex)
         {
-            Cluster cluster = lookupTable[hex.Key];
+            Cluster cluster = MainForm.Instance.AllClusters[hex.Key];
             if (cluster.Sectors.Count == 0)
             {
                 return;
@@ -648,18 +643,16 @@ namespace X4SectorCreator
 
             if (GateSectorSelection)
             {
-                if (!MainForm.Instance.CustomClusters.TryGetValue(position, out Cluster cluster))
+                if (!MainForm.Instance.AllClusters.TryGetValue(position, out Cluster cluster))
                 {
-                    // Either it's not a custom cluster or not a valid cluster that exists
-                    // TODO: Check base game clusters and find the right cluster
-                    // (for developer) Also make sure all the base game clusters are instantiated with atleast one zone in each sector.
+                    _ = MessageBox.Show("Invalid cluster selected.");
+                    return;
+                }
 
-                    // Verify if cluster has atleast one sector and one zone
-                    if (cluster == null || cluster.Sectors.Count == 0 || cluster.Sectors.All(a => a.Zones.Count == 0))
-                    {
-                        _ = MessageBox.Show("Invalid cluster selected, must be an existing cluster with atleast one sector and one zone.");
-                    }
-
+                // Verify if cluster has atleast one sector and one zone
+                if (cluster.Sectors.Count == 0)
+                {
+                    _ = MessageBox.Show("The selected cluster must have atleast one sector.");
                     return;
                 }
 
