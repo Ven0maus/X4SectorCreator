@@ -46,14 +46,16 @@ namespace X4SectorCreator.XmlGeneration
         {
             foreach (var gate in zone.Gates.OrderBy(a => a.Id))
             {
+                // TODO: Move gate positioning in the sector's zone position instead of gate position
+                // General rule: don't place anything more than 50km away within a zone
                 yield return new XElement("connection",
                     new XAttribute("name", $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection"),
                     new XAttribute("ref", "gates"),
                     new XElement("offset",
                         new XElement("position",
-                            new XAttribute("x", gate.Position.X),
+                            new XAttribute("x", 0),
                             new XAttribute("y", 500), // 500 possibly to avoid highways?
-                            new XAttribute("z", gate.Position.Y)
+                            new XAttribute("z", 0)
                         ),
                         new XElement("rotation",
                             new XAttribute("yaw", gate.Yaw),

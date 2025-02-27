@@ -150,7 +150,6 @@ namespace X4SectorCreator
                     Directory.Delete(folder, true);
 
                 // Generate all xml files
-                ComponentsGeneration.Generate(folder, modPrefix, clusters);
                 MacrosGeneration.Generate(folder, modName, modPrefix, clusters);
                 MapDefaultsGeneration.Generate(folder, modPrefix, clusters);
                 GalaxyGeneration.Generate(folder, modPrefix, clusters);
