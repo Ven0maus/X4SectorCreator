@@ -45,9 +45,9 @@
             string path;
             if (isBaseGame)
             {
-                string clusterConnection = $"{cluster.BaseGameMapping}_connection";
-                string sectorConnection = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_connection";
-                string zoneConnection = $"{modPrefix}_ZO_{cluster.BaseGameMapping.Replace("_", "")}_{sector.BaseGameMapping.Replace("_", "")}_z{zone.Id:D3}_connection";
+                string clusterConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection";
+                string sectorConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_connection";
+                string zoneConnection = $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_connection";
                 string gateConnection = $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection";
                 path = $"{clusterConnection}/{sectorConnection}/{zoneConnection}/{gateConnection}";
             }

@@ -366,12 +366,12 @@ namespace X4SectorCreator.Forms
         {
             string value = string.Empty;
             if (cluster.IsBaseGame)
-                value += $"{cluster.BaseGameMapping.Replace("_", "")}";
+                value += $"{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}";
             else
                 value += $"c{cluster.Id:D3}";
 
             if (sector.IsBaseGame)
-                value += $"_{sector.BaseGameMapping.Replace("_", "")}";
+                value += $"_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}";
             else
                 value += $"_s{sector.Id:D3}";
 

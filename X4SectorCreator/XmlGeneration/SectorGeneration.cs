@@ -82,7 +82,7 @@ namespace X4SectorCreator.XmlGeneration
                     if (sector.Zones.Count == 0) continue;
 
                     yield return new XElement("add",
-                        new XAttribute("sel", $"//macros/macro[@name='{cluster.BaseGameMapping}_{sector.BaseGameMapping}_macro']/connections"),
+                        new XAttribute("sel", $"//macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"),
                         GenerateExistingSectorZoneConnections(modPrefix, cluster, sector, sector.Zones)
                     );
                 }
@@ -94,7 +94,7 @@ namespace X4SectorCreator.XmlGeneration
             foreach (var zone in zones.OrderBy(a => a.Id))
             {
                 yield return new XElement("connection",
-                    new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.Replace("_", "")}_{sector.BaseGameMapping.Replace("_", "")}_z{zone.Id:D3}_connection"),
+                    new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_connection"),
                     new XAttribute("ref", "zones"),
                     new XElement("offset",
                         new XElement("position",
@@ -104,7 +104,7 @@ namespace X4SectorCreator.XmlGeneration
                         )
                     ),
                     new XElement("macro",
-                        new XAttribute("ref", $"{modPrefix}_ZO_{cluster.BaseGameMapping.Replace("_", "")}_{sector.BaseGameMapping.Replace("_", "")}_z{zone.Id:D3}_macro"),
+                        new XAttribute("ref", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_macro"),
                         new XAttribute("connection", "sector")
                     )
                 );

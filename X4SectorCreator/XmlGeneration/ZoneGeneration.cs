@@ -98,7 +98,7 @@ namespace X4SectorCreator.XmlGeneration
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
                         yield return new XElement("macro",
-                            new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.Replace("_", "")}_{sector.BaseGameMapping.Replace("_", "")}_z{zone.Id:D3}_macro"),
+                            new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_macro"),
                             new XAttribute("class", "zone"),
                             new XElement("component", new XAttribute("ref", "standardzone")),
                             new XElement("connections",
