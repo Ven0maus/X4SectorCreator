@@ -58,11 +58,13 @@ namespace X4SectorCreator.Forms
             SourceSectorHexagon.MouseDown += SourceSectorHexagon_MouseDown;
             SourceSectorHexagon.MouseMove += SourceSectorHexagon_MouseMove;
             SourceSectorHexagon.MouseUp += SourceSectorHexagon_MouseUp;
+            SourceSectorHexagon.MouseClick += SourceSectorHexagon_MouseClick;
 
             TargetSectorHexagon.Paint += TargetSectorHexagon_Paint;
             TargetSectorHexagon.MouseDown += TargetSectorHexagon_MouseDown;
             TargetSectorHexagon.MouseMove += TargetSectorHexagon_MouseMove;
             TargetSectorHexagon.MouseUp += TargetSectorHexagon_MouseUp;
+            TargetSectorHexagon.MouseClick += TargetSectorHexagon_MouseClick;
         }
 
         public void Reset()
@@ -157,6 +159,16 @@ namespace X4SectorCreator.Forms
             _dragging = false;
         }
 
+        private void SourceSectorHexagon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (IsPointInsideHexagon(e.Location))
+            {
+                _sourceDotPosition = e.Location;
+                SourceSectorHexagon.Invalidate();
+                UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
+            }
+        }
+
         private void TargetSectorHexagon_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -197,6 +209,16 @@ namespace X4SectorCreator.Forms
         private void TargetSectorHexagon_MouseUp(object sender, MouseEventArgs e)
         {
             _dragging = false;
+        }
+
+        private void TargetSectorHexagon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (IsPointInsideHexagon(e.Location))
+            {
+                _targetDotPosition = e.Location;
+                TargetSectorHexagon.Invalidate();
+                UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
+            }
         }
 
         private void UpdateGatePosition(PictureBox sectorHexagon, TextBox textBox, Point dotPosition)
