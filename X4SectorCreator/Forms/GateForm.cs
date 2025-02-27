@@ -289,7 +289,7 @@ namespace X4SectorCreator.Forms
             double angleRadians = (angleDegrees - 90) * (Math.PI / 180.0); // Adjust for new system
             int arrowLength = 20; // Adjust length
 
-            Point arrowEnd = new Point(
+            Point arrowEnd = new(
                 (int)(dotPosition.X + arrowLength * Math.Cos(angleRadians)),
                 (int)(dotPosition.Y + arrowLength * Math.Sin(angleRadians))
             );
