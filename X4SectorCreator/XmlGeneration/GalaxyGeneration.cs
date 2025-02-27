@@ -33,7 +33,7 @@ namespace X4SectorCreator.XmlGeneration
                         new XElement("position",
                             new XAttribute("x", cluster.Position.X * 15000 * 1000),
                             new XAttribute("y", 0),
-                            new XAttribute("z", cluster.Position.Y * 8860 * 1000)
+                            new XAttribute("z", cluster.Position.Y * 8660 * 1000)
                         )
                     ),
                     new XElement("macro",
