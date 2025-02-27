@@ -71,8 +71,6 @@
             chkShowCoordinates.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             chkShowCoordinates.AutoSize = true;
             chkShowCoordinates.BackColor = Color.Transparent;
-            chkShowCoordinates.Checked = true;
-            chkShowCoordinates.CheckState = CheckState.Checked;
             chkShowCoordinates.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             chkShowCoordinates.ForeColor = SystemColors.ButtonFace;
             chkShowCoordinates.Location = new Point(7, 72);
