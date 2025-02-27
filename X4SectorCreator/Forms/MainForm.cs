@@ -401,7 +401,6 @@ namespace X4SectorCreator
 
             SectorForm.Sector = null;
             SectorForm.BtnCreate.Text = "Create";
-            SectorForm.TxtName.Text = string.Empty;
             SectorForm.Show();
         }
 
@@ -499,7 +498,6 @@ namespace X4SectorCreator
 
             SectorForm.Sector = sector;
             SectorForm.BtnCreate.Text = "Update";
-            SectorForm.TxtName.Text = selectedSectorName;
             SectorForm.Show();
         }
 
