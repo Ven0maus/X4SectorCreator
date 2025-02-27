@@ -7,6 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
+            // Save new sectors in custom clusters
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("macros",
@@ -15,6 +16,17 @@ namespace X4SectorCreator.XmlGeneration
             );
 
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/{modPrefix}_sectors.xml")));
+
+            // Save new zones in existing sectors
+
+            var xmlSectorDiff = new XDocument(
+                new XDeclaration("1.0", "utf-8", null),
+                new XElement("diff",
+                    GenerateSectorAdds(modPrefix, clusters)
+                )
+            );
+
+            xmlSectorDiff.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/sectors.xml")));
         }
 
         private static IEnumerable<XElement> GenerateSectors(string modPrefix, List<Cluster> clusters)
@@ -53,6 +65,46 @@ namespace X4SectorCreator.XmlGeneration
                     ),
                     new XElement("macro",
                         new XAttribute("ref", $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro"),
+                        new XAttribute("connection", "sector")
+                    )
+                );
+            }
+        }
+
+        private static IEnumerable<XElement> GenerateSectorAdds(string modPrefix, List<Cluster> clusters)
+        {
+            foreach (var cluster in clusters)
+            {
+                if (!cluster.IsBaseGame) continue;
+
+                foreach (var sector in cluster.Sectors)
+                {
+                    if (sector.Zones.Count == 0) continue;
+
+                    yield return new XElement("add",
+                        new XAttribute("sel", $"//macros/macro[@name='{cluster.BaseGameMapping}_{sector.BaseGameMapping}_macro']/connections"),
+                        GenerateExistingSectorZoneConnections(modPrefix, cluster, sector, sector.Zones)
+                    );
+                }
+            }
+        }
+
+        private static IEnumerable<XElement> GenerateExistingSectorZoneConnections(string modPrefix, Cluster cluster, Sector sector, List<Zone> zones)
+        {
+            foreach (var zone in zones.OrderBy(a => a.Id))
+            {
+                yield return new XElement("connection",
+                    new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.Replace("_", "")}_{sector.BaseGameMapping.Replace("_", "")}_z{zone.Id:D3}_connection"),
+                    new XAttribute("ref", "zones"),
+                    new XElement("offset",
+                        new XElement("position",
+                            new XAttribute("x", zone.Position.X),
+                            new XAttribute("y", 0),
+                            new XAttribute("z", zone.Position.Y)
+                        )
+                    ),
+                    new XElement("macro",
+                        new XAttribute("ref", $"{modPrefix}_ZO_{cluster.BaseGameMapping.Replace("_", "")}_{sector.BaseGameMapping.Replace("_", "")}_z{zone.Id:D3}_macro"),
                         new XAttribute("connection", "sector")
                     )
                 );

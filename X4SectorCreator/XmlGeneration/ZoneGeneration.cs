@@ -7,6 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
+            // Save new zones in custom sectors
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("macros",
@@ -17,19 +18,32 @@ namespace X4SectorCreator.XmlGeneration
             );
 
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/{modPrefix}_zones.xml")));
+
+            // Save new zones in existing sectors
+            var xmlDiffDocument = new XDocument(
+                new XDeclaration("1.0", "utf-8", null),
+                new XElement("diff",
+                    new XElement("add",
+                        new XAttribute("sel", "/macros"),
+                        GenerateExistingSectorZones(modPrefix, clusters)
+                    )
+                )
+            );
+
+            xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/zones.xml")));
         }
 
         private static IEnumerable<XElement> GenerateZones(string modPrefix, List<Cluster> clusters)
         {
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
+                // Handle zone's in base game sectors in a seperate DIFF xml correctly in the base zones.xml
+                if (cluster.IsBaseGame) continue;
+
                 foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
                 {
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
-                        // TODO: Handle zone's in base game sectors in a seperate DIFF xml correctly in the base zones.xml
-                        if (cluster.IsBaseGame) continue;
-
                         yield return new XElement("macro",
                             new XAttribute("name", $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro"),
                             new XAttribute("class", "zone"),
@@ -67,6 +81,57 @@ namespace X4SectorCreator.XmlGeneration
                     ),
                     new XElement("macro",
                         new XAttribute("ref", gate.Type.ToString()),
+                        new XAttribute("connection", "space")
+                    )
+                );
+            }
+        }
+
+        private static IEnumerable<XElement> GenerateExistingSectorZones(string modPrefix, List<Cluster> clusters)
+        {
+            foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
+            {
+                if (!cluster.IsBaseGame) continue;
+
+                foreach (Sector sector in cluster.Sectors)
+                {
+                    foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
+                    {
+                        yield return new XElement("macro",
+                            new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.Replace("_", "")}_{sector.BaseGameMapping.Replace("_", "")}_z{zone.Id:D3}_macro"),
+                            new XAttribute("class", "zone"),
+                            new XElement("component", new XAttribute("ref", "standardzone")),
+                            new XElement("connections",
+                                GenerateExistingSectorGates(modPrefix, zone)
+                            )
+                        );
+                    }
+                }
+            }
+        }
+
+        private static IEnumerable<XElement> GenerateExistingSectorGates(string modPrefix, Zone zone)
+        {
+            foreach (var gate in zone.Gates.OrderBy(a => a.Id))
+            {
+                // General rule: don't place anything more than 50km away within a zone
+                yield return new XElement("connection",
+                    new XAttribute("name", $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection"),
+                    new XAttribute("ref", "gates"),
+                    new XElement("offset",
+                        new XElement("position",
+                            new XAttribute("x", 0),
+                            new XAttribute("y", 1000),
+                            new XAttribute("z", 0)
+                        ),
+                        new XElement("rotation",
+                            new XAttribute("yaw", gate.Yaw),
+                            new XAttribute("pitch", gate.Pitch),
+                            new XAttribute("roll", gate.Roll)
+                        )
+                    ),
+                    new XElement("macro",
+                        new XAttribute("ref", "props_gates_anc_gate_macro"),
                         new XAttribute("connection", "space")
                     )
                 );
