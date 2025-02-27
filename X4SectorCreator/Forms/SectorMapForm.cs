@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.ComponentModel;
+using System.Text.Json;
 using X4SectorCreator.Objects;
-using System.ComponentModel;
 
 namespace X4SectorCreator
 {
@@ -15,7 +15,7 @@ namespace X4SectorCreator
         private readonly int _hexSize = 100;
 
         // How many extra rows and cols will be "open" around the base game sectors + custom sectors for the user to select
-        private const int _minExpansionRoom = 20; 
+        private const int _minExpansionRoom = 20;
         private int _cols, _rows;
         private PointF _offset;
         private bool _dragging = false;
@@ -40,8 +40,8 @@ namespace X4SectorCreator
             // Initializes the full X4 map from JSON data
             const string filePath = "Mappings/sector_mappings.json";
 
-            var json = File.ReadAllText(filePath);
-            var clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
+            string json = File.ReadAllText(filePath);
+            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
 
             // Create lookups
             _clusterMapping = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
@@ -53,14 +53,14 @@ namespace X4SectorCreator
             _zoom = 1.2f;
             _offset = new PointF(0, 0);
 
-            var clusters = _clusterMapping.Values
+            Cluster[] clusters = _clusterMapping.Values
                 .Concat(MainForm.Instance.CustomClusters.Values)
                 .DefaultIfEmpty()
                 .ToArray();
 
             // Determine size of hex grid based on cluster mapping + custom sector
-            _cols = (Math.Max(Math.Abs(clusters.Max(a => a.Position.X)), Math.Abs(clusters.Min(a => a.Position.X))) + _minExpansionRoom) * 2 + 1;
-            _rows = ((int)((Math.Max(Math.Abs(clusters.Max(b => b.Position.Y)), Math.Abs(clusters.Min(b => b.Position.Y))) + _minExpansionRoom / 2) * 1.5f)) + 1;
+            _cols = ((Math.Max(Math.Abs(clusters.Max(a => a.Position.X)), Math.Abs(clusters.Min(a => a.Position.X))) + _minExpansionRoom) * 2) + 1;
+            _rows = ((int)((Math.Max(Math.Abs(clusters.Max(b => b.Position.Y)), Math.Abs(clusters.Min(b => b.Position.Y))) + (_minExpansionRoom / 2)) * 1.5f)) + 1;
 
             GenerateHexagons();
             Invalidate();
@@ -72,9 +72,13 @@ namespace X4SectorCreator
             float oldZoom = _zoom;
 
             if (e.Delta > 0)
+            {
                 _zoom *= zoomFactor; // Zoom in
+            }
             else
+            {
                 _zoom /= zoomFactor; // Zoom out
+            }
 
             _zoom = Math.Clamp(_zoom, 0.25f, 2.0f); // Limit zoom between 50% and 200%
 
@@ -100,8 +104,8 @@ namespace X4SectorCreator
                 // Recalculate the offset to keep (0,0) in the center
                 if (_hexagons.TryGetValue((0, 0), out Hexagon zeroHex))
                 {
-                    var center = GetHexCenter(zeroHex.Points);
-                    _offset = new PointF(ClientSize.Width / 2 - center.X, ClientSize.Height / 2 - center.Y);
+                    PointF center = GetHexCenter(zeroHex.Points);
+                    _offset = new PointF((ClientSize.Width / 2) - center.X, (ClientSize.Height / 2) - center.Y);
                 }
 
                 Invalidate(); // Force redraw
@@ -143,7 +147,7 @@ namespace X4SectorCreator
                     (e.Location.Y - _offset.Y) / _zoom
                 );
 
-                foreach (var hex in _hexagons)
+                foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
                 {
                     if (GateSectorSelection)
                     {
@@ -151,14 +155,19 @@ namespace X4SectorCreator
                         if (hex.Value.Children != null)
                         {
                             int index = 0;
-                            foreach (var child in hex.Value.Children)
+                            foreach (Hexagon child in hex.Value.Children)
                             {
                                 if (IsPointInPolygon(child.Points, adjustedMousePos))
                                 {
                                     if (hex.Key == _selectedHex && _selectedChildHexIndex == index)
+                                    {
                                         DeselectHex();
+                                    }
                                     else
+                                    {
                                         SelectHex(hex.Key, index);
+                                    }
+
                                     return;
                                 }
                                 index++;
@@ -170,9 +179,14 @@ namespace X4SectorCreator
                     if (IsPointInPolygon(hex.Value.Points, adjustedMousePos))
                     {
                         if (hex.Key == _selectedHex)
+                        {
                             DeselectHex();
+                        }
                         else
+                        {
                             SelectHex(hex.Key);
+                        }
+
                         return;
                     }
                 }
@@ -183,7 +197,11 @@ namespace X4SectorCreator
 
         private void SelectHex((int, int) pos, int? childIndex = null)
         {
-            if (!BtnSelectLocation.Visible) return;
+            if (!BtnSelectLocation.Visible)
+            {
+                return;
+            }
+
             if (_previousSelectedHex != _selectedHex || _previousSelectedChildHexIndex != _selectedChildHexIndex || _selectedHex == null)
             {
                 _previousSelectedHex = _selectedHex;
@@ -208,7 +226,7 @@ namespace X4SectorCreator
 
         private static (int x, int y) TranslateCoordinate(int q, int r)
         {
-            return (q, -(r * 2 + (q & 1)));
+            return (q, -((r * 2) + (q & 1)));
         }
 
         private void GenerateHexagons()
@@ -216,23 +234,25 @@ namespace X4SectorCreator
             _hexagons.Clear();
 
             float hexHeight = (float)(Math.Sqrt(3) * _hexSize); // Height for flat-top hexes
-            var halfRow = _rows / 2;
-            var halfCol = _cols / 2;
+            int halfRow = _rows / 2;
+            int halfCol = _cols / 2;
 
             for (int r = -halfRow; r <= halfRow; r++)
             {
                 for (int q = -halfCol; q <= halfCol; q++)
                 {
-                    var translatedCoordinate = TranslateCoordinate(q, r);
+                    (int x, int y) translatedCoordinate = TranslateCoordinate(q, r);
 
                     // Define how many sectors should be in this cluster
                     int children = 1;
-                    if (_clusterMapping.TryGetValue(translatedCoordinate, out var cluster) ||
+                    if (_clusterMapping.TryGetValue(translatedCoordinate, out Cluster cluster) ||
                         MainForm.Instance.CustomClusters.TryGetValue(translatedCoordinate, out cluster))
+                    {
                         children = cluster.Sectors.Count;
+                    }
 
                     // Determine hex information
-                    var hex = GenerateHexagonWithChildren(hexHeight, r, q, ClientSize.Width / 2, ClientSize.Height / 2, _zoom, children);
+                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, ClientSize.Width / 2, ClientSize.Height / 2, _zoom, children);
                     _hexagons[translatedCoordinate] = hex;
                 }
             }
@@ -247,7 +267,10 @@ namespace X4SectorCreator
             // Positioning parent hex
             float xOffset = col * (width * 0.75f);
             float yOffset = row * height;
-            if (col % 2 != 0) yOffset += height / 2;
+            if (col % 2 != 0)
+            {
+                yOffset += height / 2;
+            }
 
             xOffset += centerX;
             yOffset += centerY;
@@ -256,11 +279,11 @@ namespace X4SectorCreator
             PointF[] parentHex =
             [
                 new PointF(xOffset, yOffset),
-                new PointF(xOffset + width * 0.25f, yOffset - height / 2),
-                new PointF(xOffset + width * 0.75f, yOffset - height / 2),
+                new PointF(xOffset + (width * 0.25f), yOffset - (height / 2)),
+                new PointF(xOffset + (width * 0.75f), yOffset - (height / 2)),
                 new PointF(xOffset + width, yOffset),
-                new PointF(xOffset + width * 0.75f, yOffset + height / 2),
-                new PointF(xOffset + width * 0.25f, yOffset + height / 2),
+                new PointF(xOffset + (width * 0.75f), yOffset + (height / 2)),
+                new PointF(xOffset + (width * 0.25f), yOffset + (height / 2)),
             ];
 
             // Child hexes are 50% of parent size
@@ -276,8 +299,8 @@ namespace X4SectorCreator
                 // Child hex centers for top-left, bottom-right
                 childCenters =
                 [
-                    new PointF(xOffset + width * 0.125f, yOffset - childHeight * 0.5f), // Top-left
-                    new PointF(xOffset + width * 0.375f, yOffset + childHeight * 0.5f), // Bottom-right
+                    new PointF(xOffset + (width * 0.125f), yOffset - (childHeight * 0.5f)), // Top-left
+                    new PointF(xOffset + (width * 0.375f), yOffset + (childHeight * 0.5f)), // Bottom-right
                 ];
             }
             else if (children == 3)
@@ -285,8 +308,8 @@ namespace X4SectorCreator
                 // Child hex centers for top-right, bottom-right, and middle-left
                 childCenters =
                 [
-                    new PointF(xOffset + width * 0.375f, yOffset - childHeight * 0.5f), // Top-left
-                    new PointF(xOffset + width * 0.375f, yOffset + childHeight * 0.5f), // Bottom-right
+                    new PointF(xOffset + (width * 0.375f), yOffset - (childHeight * 0.5f)), // Top-left
+                    new PointF(xOffset + (width * 0.375f), yOffset + (childHeight * 0.5f)), // Bottom-right
                     new PointF(xOffset, yOffset) // Middle-left
                 ];
             }
@@ -296,16 +319,16 @@ namespace X4SectorCreator
                 childCenters = [];
             }
 
-            foreach (var childCenter in childCenters)
+            foreach (PointF childCenter in childCenters)
             {
                 childHexes.Add(
                 [
                     new PointF(childCenter.X, childCenter.Y),
-                    new PointF(childCenter.X + childWidth * 0.25f, childCenter.Y - childHeight / 2),
-                    new PointF(childCenter.X + childWidth * 0.75f, childCenter.Y - childHeight / 2),
+                    new PointF(childCenter.X + (childWidth * 0.25f), childCenter.Y - (childHeight / 2)),
+                    new PointF(childCenter.X + (childWidth * 0.75f), childCenter.Y - (childHeight / 2)),
                     new PointF(childCenter.X + childWidth, childCenter.Y),
-                    new PointF(childCenter.X + childWidth * 0.75f, childCenter.Y + childHeight / 2),
-                    new PointF(childCenter.X + childWidth * 0.25f, childCenter.Y + childHeight / 2),
+                    new PointF(childCenter.X + (childWidth * 0.75f), childCenter.Y + (childHeight / 2)),
+                    new PointF(childCenter.X + (childWidth * 0.25f), childCenter.Y + (childHeight / 2)),
                 ]);
             }
 
@@ -319,20 +342,24 @@ namespace X4SectorCreator
             e.Graphics.ScaleTransform(_zoom, _zoom);
 
             // First step render non existant hexagons
-            var nonExistantHexColor = HexToColor("#121212");
-            foreach (var hex in _hexagons)
+            Color nonExistantHexColor = HexToColor("#121212");
+            foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
+            {
                 RenderNonSectorGrid(e, nonExistantHexColor, hex);
+            }
 
             if (chkShowX4Sectors.Checked)
             {
                 // Next step render the game clusters on top
-                foreach (var cluster in _clusterMapping.Values)
+                foreach (Cluster cluster in _clusterMapping.Values)
+                {
                     RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon), _clusterMapping);
+                }
 
                 if (chkShowCustomSectors.Checked)
                 {
                     // Next step render the custom clusters
-                    foreach (var cluster in MainForm.Instance.CustomClusters.Values)
+                    foreach (Cluster cluster in MainForm.Instance.CustomClusters.Values)
                     {
                         // Always overwrite the hexagon as it can change between sessions
                         cluster.Hexagon = _hexagons[(cluster.Position.X, cluster.Position.Y)];
@@ -340,20 +367,24 @@ namespace X4SectorCreator
                     }
 
                     // Next step render names
-                    foreach (var cluster in MainForm.Instance.CustomClusters.Values)
+                    foreach (Cluster cluster in MainForm.Instance.CustomClusters.Values)
+                    {
                         RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon), MainForm.Instance.CustomClusters);
+                    }
                 }
 
                 // Next step render names
-                foreach (var cluster in _clusterMapping.Values)
+                foreach (Cluster cluster in _clusterMapping.Values)
+                {
                     RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon), _clusterMapping);
+                }
             }
 
             // Highlight selected hex
             if (_selectedHex != null)
             {
                 using SolidBrush brush = new(Color.Cyan);
-                var hexc = _hexagons[_selectedHex.Value];
+                Hexagon hexc = _hexagons[_selectedHex.Value];
                 if (_selectedChildHexIndex != null)
                 {
                     hexc = hexc.Children[_selectedChildHexIndex.Value];
@@ -365,7 +396,7 @@ namespace X4SectorCreator
         private void RenderNonSectorGrid(PaintEventArgs e, Color nonExistantHexColor, KeyValuePair<(int, int), Hexagon> hex)
         {
             // Render each non-existant hex first
-            if (!_clusterMapping.TryGetValue(hex.Key, out var cluster) || !chkShowX4Sectors.Checked)
+            if (!_clusterMapping.TryGetValue(hex.Key, out Cluster cluster) || !chkShowX4Sectors.Checked)
             {
                 using SolidBrush mainBrush = new(Color.Black);
                 using Pen mainPen = new(nonExistantHexColor, 2);
@@ -377,16 +408,16 @@ namespace X4SectorCreator
                 SizeF textSize;
                 if (chkShowCoordinates.Checked)
                 {
-                    var hexCenter = GetHexCenter(hex.Value.Points);
-                    var hexSize = GetHexSize(hex.Value.Points);
+                    PointF hexCenter = GetHexCenter(hex.Value.Points);
+                    SizeF hexSize = GetHexSize(hex.Value.Points);
 
-                    using var fBold = new Font(Font, FontStyle.Bold);
+                    using Font fBold = new(Font, FontStyle.Bold);
                     (int x, int y) = hex.Key;
                     string coordText = $"({x}, {y})";
                     textSize = e.Graphics.MeasureString(coordText, fBold);
                     e.Graphics.DrawString(coordText, fBold, Brushes.White,
-                        hexCenter.X - hexSize.Width * 0.25f,            // Align to the left
-                        hexCenter.Y + hexSize.Height / 2 - textSize.Height); // Align to the bottom
+                        hexCenter.X - (hexSize.Width * 0.25f),            // Align to the left
+                        hexCenter.Y + (hexSize.Height / 2) - textSize.Height); // Align to the bottom
                 }
             }
             else
@@ -398,13 +429,16 @@ namespace X4SectorCreator
 
         private void RenderClusters(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex, Dictionary<(int, int), Cluster> lookupTable)
         {
-            var cluster = lookupTable[hex.Key];
-            if (cluster.Sectors.Count == 0) return;
+            Cluster cluster = lookupTable[hex.Key];
+            if (cluster.Sectors.Count == 0)
+            {
+                return;
+            }
 
             // If all sectors are the "same" owner, then the main hex becomes that color
             // If not the main hex is considered "unclaimed" until all sectors within are owned by the same faction
             Color color = _colorMapping["None"];
-            var firstSector = cluster.Sectors.FirstOrDefault();
+            Sector firstSector = cluster.Sectors.FirstOrDefault();
             if (firstSector != null)
             {
                 string owner = firstSector.Owner;
@@ -419,17 +453,19 @@ namespace X4SectorCreator
             using (Pen mainPen = new(color, 2))
             {
                 if (cluster.Sectors.Count > 1)
+                {
                     color = Color.Black;
+                }
 
                 // Fill with darker color
                 using SolidBrush mainBrush = new(LerpColor(color, Color.Black, 0.85f));
                 e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
 
                 // Draw child hex outlines
-                foreach (var child in hex.Value.Children)
+                foreach (Hexagon child in hex.Value.Children)
                 {
-                    var sector = cluster.Sectors[index];
-                    var ownerColor = !_colorMapping.TryGetValue(sector.Owner, out Color value) ? _colorMapping["None"] : value;
+                    Sector sector = cluster.Sectors[index];
+                    Color ownerColor = !_colorMapping.TryGetValue(sector.Owner, out Color value) ? _colorMapping["None"] : value;
                     using Pen pen = new(ownerColor, 2);
                     using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
                     e.Graphics.FillPolygon(brush, child.Points);
@@ -442,61 +478,64 @@ namespace X4SectorCreator
             }
 
             // Render the coordinates
-            var hexCenter = GetHexCenter(hex.Value.Points);
-            var hexSize = GetHexSize(hex.Value.Points);
+            PointF hexCenter = GetHexCenter(hex.Value.Points);
+            SizeF hexSize = GetHexSize(hex.Value.Points);
 
             SizeF textSize;
             if (chkShowCoordinates.Checked)
             {
-                using var fBold = new Font(Font, FontStyle.Bold);
+                using Font fBold = new(Font, FontStyle.Bold);
                 (int x, int y) = hex.Key;
                 string coordText = $"({x}, {y})";
                 textSize = e.Graphics.MeasureString(coordText, fBold);
                 e.Graphics.DrawString(coordText, fBold, Brushes.White,
-                    hexCenter.X - hexSize.Width * 0.25f,                 // Align to the left
-                    hexCenter.Y + hexSize.Height / 2 - textSize.Height); // Align to the bottom
+                    hexCenter.X - (hexSize.Width * 0.25f),                 // Align to the left
+                    hexCenter.Y + (hexSize.Height / 2) - textSize.Height); // Align to the bottom
             }
         }
 
         private void RenderHexNames(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex, Dictionary<(int, int), Cluster> lookupTable)
         {
-            var cluster = lookupTable[hex.Key];
-            if (cluster.Sectors.Count == 0) return;
+            Cluster cluster = lookupTable[hex.Key];
+            if (cluster.Sectors.Count == 0)
+            {
+                return;
+            }
 
-            using var fBoldAndUnderlined = new Font(Font, FontStyle.Bold | FontStyle.Underline);
+            using Font fBoldAndUnderlined = new(Font, FontStyle.Bold | FontStyle.Underline);
 
-            var hexCenter = GetHexCenter(hex.Value.Points);
-            var hexSize = GetHexSize(hex.Value.Points);
+            PointF hexCenter = GetHexCenter(hex.Value.Points);
+            SizeF hexSize = GetHexSize(hex.Value.Points);
 
             // Draw child names
             int index = 0; // reset for name rendering
-            foreach (var child in hex.Value.Children)
+            foreach (Hexagon child in hex.Value.Children)
             {
                 // Render child sector name
-                var sector = cluster.Sectors[index];
-                var childHexCenter = GetHexCenter(child.Points);
-                var childHexSize = GetHexSize(child.Points);
-                var childTextSize = e.Graphics.MeasureString(sector.Name, fBoldAndUnderlined);
+                Sector sector = cluster.Sectors[index];
+                PointF childHexCenter = GetHexCenter(child.Points);
+                SizeF childHexSize = GetHexSize(child.Points);
+                SizeF childTextSize = e.Graphics.MeasureString(sector.Name, fBoldAndUnderlined);
                 e.Graphics.DrawString(sector.Name, fBoldAndUnderlined, Brushes.White,
-                    childHexCenter.X - childTextSize.Width / 2,  // Center horizontally
-                    childHexCenter.Y - childHexSize.Height * 0.3f - childTextSize.Height); // Place above the hex
+                    childHexCenter.X - (childTextSize.Width / 2),  // Center horizontally
+                    childHexCenter.Y - (childHexSize.Height * 0.3f) - childTextSize.Height); // Place above the hex
                 index++;
             }
 
             // Render main hex sector name if no children
             if (hex.Value.Children.Count == 0 && cluster != null)
             {
-                var textSize = e.Graphics.MeasureString(cluster.Sectors[index].Name, fBoldAndUnderlined);
+                SizeF textSize = e.Graphics.MeasureString(cluster.Sectors[index].Name, fBoldAndUnderlined);
                 e.Graphics.DrawString(cluster.Sectors[index].Name, fBoldAndUnderlined, Brushes.White,
-                    hexCenter.X - textSize.Width / 2,  // Center horizontally
-                    hexCenter.Y - hexSize.Height * 0.37f - textSize.Height); // Place above the hex
+                    hexCenter.X - (textSize.Width / 2),  // Center horizontally
+                    hexCenter.Y - (hexSize.Height * 0.37f) - textSize.Height); // Place above the hex
             }
         }
 
         private static PointF GetHexCenter(PointF[] hex)
         {
             float centerX = 0, centerY = 0;
-            foreach (var point in hex)
+            foreach (PointF point in hex)
             {
                 centerX += point.X;
                 centerY += point.Y;
@@ -507,17 +546,34 @@ namespace X4SectorCreator
         private static SizeF GetHexSize(PointF[] hex)
         {
             if (hex == null || hex.Length < 6)
+            {
                 throw new ArgumentException("Hexagon must have at least 6 points.");
+            }
 
             float minX = float.MaxValue, maxX = float.MinValue;
             float minY = float.MaxValue, maxY = float.MinValue;
 
-            foreach (var point in hex)
+            foreach (PointF point in hex)
             {
-                if (point.X < minX) minX = point.X;
-                if (point.X > maxX) maxX = point.X;
-                if (point.Y < minY) minY = point.Y;
-                if (point.Y > maxY) maxY = point.Y;
+                if (point.X < minX)
+                {
+                    minX = point.X;
+                }
+
+                if (point.X > maxX)
+                {
+                    maxX = point.X;
+                }
+
+                if (point.Y < minY)
+                {
+                    minY = point.Y;
+                }
+
+                if (point.Y > maxY)
+                {
+                    maxY = point.Y;
+                }
             }
 
             float width = maxX - minX;
@@ -534,7 +590,7 @@ namespace X4SectorCreator
             for (i = 0; i < polygon.Length; i++)
             {
                 if (((polygon[i].Y > point.Y) != (polygon[j].Y > point.Y)) &&
-                    (point.X < (polygon[j].X - polygon[i].X) * (point.Y - polygon[i].Y) / (polygon[j].Y - polygon[i].Y) + polygon[i].X))
+                    (point.X < ((polygon[j].X - polygon[i].X) * (point.Y - polygon[i].Y) / (polygon[j].Y - polygon[i].Y)) + polygon[i].X))
                 {
                     inside = !inside;
                 }
@@ -578,21 +634,21 @@ namespace X4SectorCreator
             // Clamp t between 0 and 1
             t = Math.Max(0, Math.Min(1, t));
 
-            int r = (int)(color1.R + (color2.R - color1.R) * t);
-            int g = (int)(color1.G + (color2.G - color1.G) * t);
-            int b = (int)(color1.B + (color2.B - color1.B) * t);
-            int a = (int)(color1.A + (color2.A - color1.A) * t);
+            int r = (int)(color1.R + ((color2.R - color1.R) * t));
+            int g = (int)(color1.G + ((color2.G - color1.G) * t));
+            int b = (int)(color1.B + ((color2.B - color1.B) * t));
+            int a = (int)(color1.A + ((color2.A - color1.A) * t));
 
             return Color.FromArgb(a, r, g, b);
         }
 
         private void BtnSelectLocation_Click(object sender, EventArgs e)
         {
-            var position = _selectedHex.Value;
+            (int, int) position = _selectedHex.Value;
 
             if (GateSectorSelection)
             {
-                if (!MainForm.Instance.CustomClusters.TryGetValue(position, out var cluster))
+                if (!MainForm.Instance.CustomClusters.TryGetValue(position, out Cluster cluster))
                 {
                     // Either it's not a custom cluster or not a valid cluster that exists
                     // TODO: Check base game clusters and find the right cluster
@@ -600,7 +656,10 @@ namespace X4SectorCreator
 
                     // Verify if cluster has atleast one sector and one zone
                     if (cluster == null || cluster.Sectors.Count == 0 || cluster.Sectors.All(a => a.Zones.Count == 0))
-                        MessageBox.Show("Invalid cluster selected, must be an existing cluster with atleast one sector and one zone.");
+                    {
+                        _ = MessageBox.Show("Invalid cluster selected, must be an existing cluster with atleast one sector and one zone.");
+                    }
+
                     return;
                 }
 
@@ -615,7 +674,7 @@ namespace X4SectorCreator
                     selectedSector = cluster.Sectors.FirstOrDefault();
                     if (selectedSector == null)
                     {
-                        MessageBox.Show("Invalid cluster selected, must be an existing cluster with atleast one sector and one zone.");
+                        _ = MessageBox.Show("Invalid cluster selected, must be an existing cluster with atleast one sector and one zone.");
                         return;
                     }
                 }

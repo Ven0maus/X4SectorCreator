@@ -26,10 +26,10 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
-            var name = TxtName.Text;
+            string name = TxtName.Text;
             if (string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("Please select a valid (non empty / non whitespace) name.");
+                _ = MessageBox.Show("Please select a valid (non empty / non whitespace) name.");
                 return;
             }
 
@@ -37,31 +37,30 @@ namespace X4SectorCreator.Forms
             if (MainForm.Instance.CustomClusters.Values.Any(a =>
             {
                 // Skip the cluster we're updating
-                if (Cluster != null && Cluster.Name.Equals(a.Name, StringComparison.OrdinalIgnoreCase))
-                    return false;
-                return a.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
+                return (Cluster == null || !Cluster.Name.Equals(a.Name, StringComparison.OrdinalIgnoreCase))
+&& a.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
             }))
             {
-                MessageBox.Show($"A cluster with the name \"{name}\" already exists, please choose another name.");
+                _ = MessageBox.Show($"A cluster with the name \"{name}\" already exists, please choose another name.");
                 return;
             }
 
-            var location = TxtLocation.Text;
+            string location = TxtLocation.Text;
             if (string.IsNullOrWhiteSpace(location))
             {
-                MessageBox.Show("Please select a valid location on the map by using the \"Pick\" button.");
+                _ = MessageBox.Show("Please select a valid location on the map by using the \"Pick\" button.");
                 return;
             }
 
-            var match = RegexHelper.TupleLocationRegex().Match(location);
+            Match match = RegexHelper.TupleLocationRegex().Match(location);
             if (match.Success)
             {
-                var coordinate = (X: int.Parse(match.Groups[1].Value), Y: int.Parse(match.Groups[2].Value));
-                if (MainForm.Instance.CustomClusters.TryGetValue(coordinate, out var cluster))
+                (int X, int Y) coordinate = (X: int.Parse(match.Groups[1].Value), Y: int.Parse(match.Groups[2].Value));
+                if (MainForm.Instance.CustomClusters.TryGetValue(coordinate, out Cluster cluster))
                 {
                     if (Cluster == null || !cluster.Name.Equals(Cluster.Name, StringComparison.OrdinalIgnoreCase))
                     {
-                        MessageBox.Show($"The selected coordinate already contains a custom cluster \"{cluster.Name}\".");
+                        _ = MessageBox.Show($"The selected coordinate already contains a custom cluster \"{cluster.Name}\".");
                         return;
                     }
                 }
@@ -96,23 +95,23 @@ namespace X4SectorCreator.Forms
                         });
 
                         // Add to listbox and select it
-                        MainForm.Instance.ClustersListBox.Items.Add(name);
+                        _ = MainForm.Instance.ClustersListBox.Items.Add(name);
                         MainForm.Instance.ClustersListBox.SelectedItem = name;
                         break;
                     case "Update":
                         // Update cluster
-                        var oldName = Cluster.Name;
-                        var oldPosition = Cluster.Position;
+                        string oldName = Cluster.Name;
+                        Point oldPosition = Cluster.Position;
 
                         // Re-map
-                        MainForm.Instance.CustomClusters.Remove((oldPosition.X, oldPosition.Y));
+                        _ = MainForm.Instance.CustomClusters.Remove((oldPosition.X, oldPosition.Y));
                         Cluster.Position = new Point(coordinate.X, coordinate.Y);
                         Cluster.Name = name;
                         MainForm.Instance.CustomClusters.Add(coordinate, Cluster);
 
                         // Update listbox
                         MainForm.Instance.ClustersListBox.Items.Remove(oldName);
-                        MainForm.Instance.ClustersListBox.Items.Add(name);
+                        _ = MainForm.Instance.ClustersListBox.Items.Add(name);
                         MainForm.Instance.ClustersListBox.SelectedItem = name;
                         break;
                 }

@@ -7,7 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            XDocument xmlDocument = new XDocument(
+            XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("macros",
                     new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
@@ -21,11 +21,11 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateZones(string modPrefix, List<Cluster> clusters)
         {
-            foreach (var cluster in clusters.OrderBy(a => a.Id))
+            foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
-                foreach (var sector in cluster.Sectors.OrderBy(a => a.Id))
+                foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
                 {
-                    foreach (var zone in sector.Zones.OrderBy(a => a.Id))
+                    foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
                         yield return new XElement("macro",
                             new XAttribute("name", $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro"),
@@ -44,7 +44,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateGates(string modPrefix, Zone zone)
         {
-            foreach (var gate in zone.Gates.OrderBy(a => a.Id))
+            foreach (Gate gate in zone.Gates.OrderBy(a => a.Id))
             {
                 // General rule: don't place anything more than 50km away within a zone
                 yield return new XElement("connection",
@@ -74,7 +74,10 @@ namespace X4SectorCreator.XmlGeneration
         {
             string directoryPath = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(directoryPath))
-                Directory.CreateDirectory(directoryPath);
+            {
+                _ = Directory.CreateDirectory(directoryPath);
+            }
+
             return filePath;
         }
     }

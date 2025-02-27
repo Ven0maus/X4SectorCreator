@@ -7,7 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            XDocument xmlDocument = new XDocument(
+            XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("macros",
                     GenerateClusters(modPrefix, clusters)
@@ -19,7 +19,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateClusters(string modPrefix, List<Cluster> clusters)
         {
-            foreach (var cluster in clusters.OrderBy(a => a.Id))
+            foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
                 yield return new XElement("macro",
                     new XAttribute("name", $"{modPrefix}_CL_c{cluster.Id:D3}_macro"),
@@ -36,7 +36,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateConnections(string modPrefix, Cluster cluster)
         {
-            foreach (var sector in cluster.Sectors.OrderBy(a => a.Id))
+            foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
             {
                 yield return new XElement("connection",
                     new XAttribute("name", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection"),
@@ -64,7 +64,10 @@ namespace X4SectorCreator.XmlGeneration
         {
             string directoryPath = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(directoryPath))
-                Directory.CreateDirectory(directoryPath);
+            {
+                _ = Directory.CreateDirectory(directoryPath);
+            }
+
             return filePath;
         }
     }

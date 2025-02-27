@@ -7,7 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modName, string modPrefix, List<Cluster> clusters)
         {
-            XDocument xmlDocument = new XDocument(
+            XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("index",
                     new XElement("entry",
@@ -32,7 +32,10 @@ namespace X4SectorCreator.XmlGeneration
         {
             string directoryPath = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(directoryPath))
-                Directory.CreateDirectory(directoryPath);
+            {
+                _ = Directory.CreateDirectory(directoryPath);
+            }
+
             return filePath;
         }
     }

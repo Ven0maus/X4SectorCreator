@@ -15,16 +15,16 @@ namespace X4SectorCreator.Configuration
         public static string Serialize(List<Cluster> clusters)
         {
             // First order everything correctly before exporting
-            clusters = clusters.OrderBy(a => a.Id).ToList();
-            foreach (var cluster in clusters)
+            clusters = [.. clusters.OrderBy(a => a.Id)];
+            foreach (Cluster cluster in clusters)
             {
-                cluster.Sectors = cluster.Sectors.OrderBy(a => a.Id).ToList();
-                foreach (var sector in cluster.Sectors)
+                cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];
+                foreach (Sector sector in cluster.Sectors)
                 {
-                    sector.Zones = sector.Zones.OrderBy(a => a.Id).ToList();
-                    foreach (var zone in sector.Zones)
+                    sector.Zones = [.. sector.Zones.OrderBy(a => a.Id)];
+                    foreach (Zone zone in sector.Zones)
                     {
-                        zone.Gates = zone.Gates.OrderBy(a => a.Id).ToList();
+                        zone.Gates = [.. zone.Gates.OrderBy(a => a.Id)];
                     }
                 }
             }
@@ -34,19 +34,19 @@ namespace X4SectorCreator.Configuration
 
         public static List<Cluster> Deserialize(string filePath)
         {
-            var clusters = JsonSerializer.Deserialize<List<Cluster>>(filePath, _serializerOptions);
+            List<Cluster> clusters = JsonSerializer.Deserialize<List<Cluster>>(filePath, _serializerOptions);
 
             // First order everything correctly before returning
-            clusters = clusters.OrderBy(a => a.Id).ToList();
-            foreach (var cluster in clusters)
+            clusters = [.. clusters.OrderBy(a => a.Id)];
+            foreach (Cluster cluster in clusters)
             {
-                cluster.Sectors = cluster.Sectors.OrderBy(a => a.Id).ToList();
-                foreach (var sector in cluster.Sectors)
+                cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];
+                foreach (Sector sector in cluster.Sectors)
                 {
-                    sector.Zones = sector.Zones.OrderBy(a => a.Id).ToList();
-                    foreach (var zone in sector.Zones)
+                    sector.Zones = [.. sector.Zones.OrderBy(a => a.Id)];
+                    foreach (Zone zone in sector.Zones)
                     {
-                        zone.Gates = zone.Gates.OrderBy(a => a.Id).ToList();
+                        zone.Gates = [.. zone.Gates.OrderBy(a => a.Id)];
                     }
                 }
             }

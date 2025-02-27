@@ -17,7 +17,7 @@ namespace X4SectorCreator.Forms
         private void BtnNavigate_Click(object sender, EventArgs e)
         {
             // Navigate to releases page
-            Process.Start(new ProcessStartInfo
+            _ = Process.Start(new ProcessStartInfo
             {
                 FileName = "https://github.com/Ven0maus/X4SectorCreator/releases",
                 UseShellExecute = true

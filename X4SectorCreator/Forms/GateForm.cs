@@ -32,7 +32,7 @@ namespace X4SectorCreator.Forms
                 else
                 {
                     txtSourceSector.Text = _sourceSector.Name;
-                    var sectorIndex = SourceCluster.Sectors.IndexOf(_sourceSector);
+                    int sectorIndex = SourceCluster.Sectors.IndexOf(_sourceSector);
                     txtSourceSectorLocation.Text = (SourceCluster.Position.X, SourceCluster.Position.Y).ToString() + $" [{sectorIndex}]";
                 }
             }
@@ -105,8 +105,8 @@ namespace X4SectorCreator.Forms
             {
                 double angle = Math.PI / 3 * i;
                 _hexagonPoints[i] = new PointF(
-                    centerX + _hexRadius * (float)Math.Cos(angle),
-                    centerY + _hexRadius * (float)Math.Sin(angle)
+                    centerX + (_hexRadius * (float)Math.Cos(angle)),
+                    centerY + (_hexRadius * (float)Math.Sin(angle))
                 );
             }
 
@@ -223,22 +223,22 @@ namespace X4SectorCreator.Forms
         private void BtnCreateConnection_Click(object sender, EventArgs e)
         {
             #region Source Gate Connection
-            var selectedSourceType = cmbSourceType.SelectedItem as string;
+            string selectedSourceType = cmbSourceType.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedSourceType))
             {
-                MessageBox.Show("Please select a valid Source Gate Type.");
+                _ = MessageBox.Show("Please select a valid Source Gate Type.");
                 return;
             }
 
-            var sourceGatePosMatch = RegexHelper.TupleLocationRegex().Match(txtSourceGatePosition.Text);
+            System.Text.RegularExpressions.Match sourceGatePosMatch = RegexHelper.TupleLocationRegex().Match(txtSourceGatePosition.Text);
             if (!sourceGatePosMatch.Success)
             {
-                MessageBox.Show("Unable to parse source gate position.");
+                _ = MessageBox.Show("Unable to parse source gate position.");
                 return;
             }
 
             // Gate Position
-            var (GatePosX, GatePosY) = (int.Parse(sourceGatePosMatch.Groups[1].Value), int.Parse(sourceGatePosMatch.Groups[2].Value));
+            (int GatePosX, int GatePosY) = (int.Parse(sourceGatePosMatch.Groups[1].Value), int.Parse(sourceGatePosMatch.Groups[2].Value));
 
             // Create a new gate connection in the source
             Gate sourceGate = new()
@@ -253,65 +253,65 @@ namespace X4SectorCreator.Forms
             };
 
             // Create a new source zone
-            var sourceZone = new Zone
+            Zone sourceZone = new()
             {
                 Id = SourceSector.Zones.Count + 1,
                 Name = "Zone " + SourceSector.Zones.Count + 1,
                 Position = new Point(GatePosX, GatePosY),
-                Gates = [ sourceGate ]
+                Gates = [sourceGate]
             };
             SourceSector.Zones.Add(sourceZone);
             #endregion
 
             #region Target Gate Connection
-            var targetSectorLocationMatch = RegexHelper.TupleLocationChildIndexRegex().Match(txtTargetSectorLocation.Text);
+            System.Text.RegularExpressions.Match targetSectorLocationMatch = RegexHelper.TupleLocationChildIndexRegex().Match(txtTargetSectorLocation.Text);
             if (!targetSectorLocationMatch.Success)
             {
-                SourceSector.Zones.Remove(sourceZone);
-                MessageBox.Show($"Invalid sector selected, cannot properly parse \"{txtTargetSectorLocation.Text}\".");
+                _ = SourceSector.Zones.Remove(sourceZone);
+                _ = MessageBox.Show($"Invalid sector selected, cannot properly parse \"{txtTargetSectorLocation.Text}\".");
                 return;
             }
 
-            var selectedTargetType = cmbTargetType.SelectedItem as string;
+            string selectedTargetType = cmbTargetType.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedTargetType))
             {
-                SourceSector.Zones.Remove(sourceZone);
-                MessageBox.Show("Please select a valid Target Gate Type.");
+                _ = SourceSector.Zones.Remove(sourceZone);
+                _ = MessageBox.Show("Please select a valid Target Gate Type.");
                 return;
             }
 
-            var (targetSectorX, targetSectorY, targetSectorIndex) = (int.Parse(targetSectorLocationMatch.Groups[1].Value), 
-                int.Parse(targetSectorLocationMatch.Groups[2].Value), 
+            (int targetSectorX, int targetSectorY, int targetSectorIndex) = (int.Parse(targetSectorLocationMatch.Groups[1].Value),
+                int.Parse(targetSectorLocationMatch.Groups[2].Value),
                 int.Parse(targetSectorLocationMatch.Groups[3].Value));
 
             // Find target cluster / sector
-            if (!MainForm.Instance.CustomClusters.TryGetValue((targetSectorX, targetSectorY), out var targetCluster))
+            if (!MainForm.Instance.CustomClusters.TryGetValue((targetSectorX, targetSectorY), out Cluster targetCluster))
             {
                 // Must be a base game sector, look there
                 // TODO: Add maybe all base sectors there, with a flag "IsBaseGameSector" or something?
             }
 
             // Find sector
-            var targetSector = targetCluster.Sectors[targetSectorIndex];
+            Sector targetSector = targetCluster.Sectors[targetSectorIndex];
 
 
             // Validate that target sector != source sector
             if (targetSector == SourceSector)
             {
-                SourceSector.Zones.Remove(sourceZone);
-                MessageBox.Show("Target sector cannot be the same as the source sector.");
+                _ = SourceSector.Zones.Remove(sourceZone);
+                _ = MessageBox.Show("Target sector cannot be the same as the source sector.");
                 return;
             }
 
             // Create a new gate connection in the target
-            var targetGatePosMatch = RegexHelper.TupleLocationRegex().Match(txtTargetGatePosition.Text);
+            System.Text.RegularExpressions.Match targetGatePosMatch = RegexHelper.TupleLocationRegex().Match(txtTargetGatePosition.Text);
             if (!targetGatePosMatch.Success)
             {
-                SourceSector.Zones.Remove(sourceZone);
-                MessageBox.Show("Unable to parse target gate position.");
+                _ = SourceSector.Zones.Remove(sourceZone);
+                _ = MessageBox.Show("Unable to parse target gate position.");
                 return;
             }
-            
+
             // Gate Position
             (GatePosX, GatePosY) = (int.Parse(targetGatePosMatch.Groups[1].Value), int.Parse(targetGatePosMatch.Groups[2].Value));
 
@@ -329,7 +329,7 @@ namespace X4SectorCreator.Forms
             };
 
             // Create new target zone
-            var targetZone = new Zone
+            Zone targetZone = new()
             {
                 Id = targetSector.Zones.Count + 1,
                 Name = "Zone " + targetSector.Zones.Count + 1,
@@ -355,7 +355,7 @@ namespace X4SectorCreator.Forms
 
             // Add target gate to listbox
             sourceGate.DestinationSectorName = targetSector.Name;
-            MainForm.Instance.GatesListBox.Items.Add(targetGate);
+            _ = MainForm.Instance.GatesListBox.Items.Add(targetGate);
             MainForm.Instance.GatesListBox.SelectedItem = targetGate;
 
             Reset();

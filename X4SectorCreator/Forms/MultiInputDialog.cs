@@ -4,7 +4,7 @@ namespace X4SectorCreator.Forms
 {
     internal class MultiInputDialog : Form
     {
-        private readonly Dictionary<string, TextBox> _inputs = new();
+        private readonly Dictionary<string, TextBox> _inputs = [];
         private readonly Button _btnOk;
         private readonly Button _btnCancel;
 
@@ -24,9 +24,9 @@ namespace X4SectorCreator.Forms
 
             using (Graphics g = CreateGraphics())
             {
-                foreach (var label in labels)
+                foreach (string label in labels)
                 {
-                    int labelWidth = (int)g.MeasureString(label, this.Font).Width;
+                    int labelWidth = (int)g.MeasureString(label, Font).Width;
                     maxLabelWidth = Math.Max(maxLabelWidth, labelWidth);
                 }
             }
@@ -37,10 +37,10 @@ namespace X4SectorCreator.Forms
             Width = formWidth;
             int y = 20;
 
-            foreach (var label in labels)
+            foreach (string label in labels)
             {
-                var lbl = new Label() { Text = label, Left = 10, Top = y, Width = maxLabelWidth };
-                var txtBox = new TextBox() { Left = maxLabelWidth + 10, Top = y, Width = textBoxWidth };
+                Label lbl = new() { Text = label, Left = 10, Top = y, Width = maxLabelWidth };
+                TextBox txtBox = new() { Left = maxLabelWidth + 10, Top = y, Width = textBoxWidth };
                 _inputs[label] = txtBox;
                 Controls.Add(lbl);
                 Controls.Add(txtBox);
@@ -56,9 +56,12 @@ namespace X4SectorCreator.Forms
 
             _btnOk.Click += (sender, e) =>
             {
-                InputValues = new Dictionary<string, string>();
-                foreach (var kvp in _inputs)
+                InputValues = [];
+                foreach (KeyValuePair<string, TextBox> kvp in _inputs)
+                {
                     InputValues[kvp.Key] = kvp.Value.Text;
+                }
+
                 DialogResult = DialogResult.OK;
                 Close();
             };
@@ -66,10 +69,8 @@ namespace X4SectorCreator.Forms
 
         public static Dictionary<string, string> Show(string title, params string[] labels)
         {
-            using (var form = new MultiInputDialog(title, labels))
-            {
-                return form.ShowDialog() == DialogResult.OK ? form.InputValues : null;
-            }
+            using MultiInputDialog form = new(title, labels);
+            return form.ShowDialog() == DialogResult.OK ? form.InputValues : null;
         }
 
         private void InitializeComponent()

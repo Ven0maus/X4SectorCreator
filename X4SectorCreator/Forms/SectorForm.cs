@@ -15,44 +15,47 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
-            var name = TxtName.Text;
+            string name = TxtName.Text;
             if (string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("Please select a valid (non empty / non whitespace) name.");
+                _ = MessageBox.Show("Please select a valid (non empty / non whitespace) name.");
                 return;
             }
 
-            var selectedClusterName = MainForm.Instance.ClustersListBox.SelectedItem as string;
+            string selectedClusterName = MainForm.Instance.ClustersListBox.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedClusterName))
             {
-                MessageBox.Show("Please select a cluster in the main window.");
+                _ = MessageBox.Show("Please select a cluster in the main window.");
                 return;
             }
 
             // Check if name already exists
-            foreach (var cluster in MainForm.Instance.CustomClusters.Values)
+            foreach (Cluster cluster in MainForm.Instance.CustomClusters.Values)
             {
-                foreach (var sector in cluster.Sectors)
+                foreach (Sector sector in cluster.Sectors)
                 {
                     // Skip the one we are modifying
                     if (Sector != null && Sector.Name.Equals(sector.Name, StringComparison.OrdinalIgnoreCase))
+                    {
                         continue;
+                    }
+
                     if (sector.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                     {
-                        MessageBox.Show($"A sector with the name \"{name}\" already exists in cluster \"{cluster.Name}\", please choose another name.");
+                        _ = MessageBox.Show($"A sector with the name \"{name}\" already exists in cluster \"{cluster.Name}\", please choose another name.");
                         return;
                     }
                 }
             }
 
-            var selectedCluster = MainForm.Instance.CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<(int, int), Cluster> selectedCluster = MainForm.Instance.CustomClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
 
             switch (BtnCreate.Text)
             {
                 case "Create":
                     if (selectedCluster.Value.Sectors.Count == 3)
                     {
-                        MessageBox.Show($"Reached maximum allowed sectors for cluster \"{selectedCluster.Value.Name}\".");
+                        _ = MessageBox.Show($"Reached maximum allowed sectors for cluster \"{selectedCluster.Value.Name}\".");
                         return;
                     }
 
@@ -74,20 +77,20 @@ namespace X4SectorCreator.Forms
                     });
 
                     // Add sector to listbox and select it
-                    MainForm.Instance.SectorsListBox.Items.Add(name);
+                    _ = MainForm.Instance.SectorsListBox.Items.Add(name);
                     MainForm.Instance.SectorsListBox.SelectedItem = name;
                     break;
 
                 case "Update":
-                    var selectedSector = MainForm.Instance.SectorsListBox.SelectedItem as string;
+                    string selectedSector = MainForm.Instance.SectorsListBox.SelectedItem as string;
                     if (string.IsNullOrEmpty(selectedSector))
                     {
                         ResetAndHide();
                         return;
                     }
-                    var sector = selectedCluster.Value.Sectors.First(a => a.Name.Equals(selectedSector));
+                    Sector sector = selectedCluster.Value.Sectors.First(a => a.Name.Equals(selectedSector));
                     sector.Name = name;
-                    var index = MainForm.Instance.SectorsListBox.SelectedIndex;
+                    int index = MainForm.Instance.SectorsListBox.SelectedIndex;
                     MainForm.Instance.SectorsListBox.Items[index] = name;
                     MainForm.Instance.SectorsListBox.SelectedItem = name;
                     break;

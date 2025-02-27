@@ -25,7 +25,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             List<XElement> elements = [];
 
-            foreach (var cluster in clusters)
+            foreach (Cluster cluster in clusters)
             {
                 // Add Cluster XML
                 elements.Add(
@@ -43,17 +43,21 @@ namespace X4SectorCreator.XmlGeneration
                 );
 
                 // Add each Sector inside its Cluster
-                foreach (var sector in cluster.Sectors)
+                foreach (Sector sector in cluster.Sectors)
                 {
                     if (sector.AllowRandomAnomalies)
                     {
                         if (string.IsNullOrWhiteSpace(sector.Tags))
+                        {
                             sector.Tags = "allowrandomanomaly";
+                        }
                         else if (!sector.Tags.Contains("allowrandomanomaly"))
+                        {
                             sector.Tags = sector.Tags.TrimEnd() + " allowrandomanomaly";
+                        }
                     }
 
-                    var areaElement = !string.IsNullOrWhiteSpace(sector.Tags) ?
+                    XElement areaElement = !string.IsNullOrWhiteSpace(sector.Tags) ?
                                 new XElement("area",
                                     new XAttribute("sunlight", sector.Sunlight.ToString("0.0", CultureInfo.InvariantCulture)),
                                     new XAttribute("economy", sector.Economy.ToString("0.0", CultureInfo.InvariantCulture)),
@@ -90,7 +94,10 @@ namespace X4SectorCreator.XmlGeneration
         {
             string directoryPath = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(directoryPath))
-                Directory.CreateDirectory(directoryPath);
+            {
+                _ = Directory.CreateDirectory(directoryPath);
+            }
+
             return filePath;
         }
     }
