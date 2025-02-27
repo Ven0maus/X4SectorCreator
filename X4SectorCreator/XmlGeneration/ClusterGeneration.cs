@@ -54,7 +54,7 @@ namespace X4SectorCreator.XmlGeneration
                 new XElement("macro",
                     new XElement("component",
                         new XAttribute("connection", "space"),
-                        new XAttribute("ref", $"{modPrefix}_CL_{cluster.Id:D3}")
+                        new XAttribute("ref", $"{modPrefix}_CL_c{cluster.Id:D3}")
                     )
                 )
             );

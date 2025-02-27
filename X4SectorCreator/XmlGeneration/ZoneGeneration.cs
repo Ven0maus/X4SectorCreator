@@ -47,7 +47,7 @@ namespace X4SectorCreator.XmlGeneration
             foreach (var gate in zone.Gates.OrderBy(a => a.Id))
             {
                 yield return new XElement("connection",
-                    new XAttribute("name", $"{modPrefix}_GA_g:{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection"),
+                    new XAttribute("name", $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection"),
                     new XAttribute("ref", "gates"),
                     new XElement("offset",
                         new XElement("position",
