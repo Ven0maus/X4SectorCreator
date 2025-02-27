@@ -11,7 +11,8 @@ namespace X4SectorCreator.Forms
 
         private readonly int _worldRadius = 400000;
         private Point _sourceDotPosition, _targetDotPosition;
-        private bool _dragging = false;
+        private bool _dragging = false, _rotating = false;
+        private float _sourceYaw, _targetYaw;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster SourceCluster { get; set; }
@@ -50,8 +51,8 @@ namespace X4SectorCreator.Forms
             InitializeHexagon();
 
             // Set inital position
-            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
-            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
+            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, ref _sourceYaw, txtSourceGateYaw);
+            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, ref _targetYaw, txtTargetGateYaw);
 
             // Attach events
             SourceSectorHexagon.Paint += SourceSectorHexagon_Paint;
@@ -90,8 +91,8 @@ namespace X4SectorCreator.Forms
             _targetDotPosition = TargetSectorHexagon.ClientRectangle.Center();
 
             // Reset gate positions
-            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
-            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
+            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, ref _sourceYaw, txtSourceGateYaw);
+            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, ref _targetYaw, txtTargetGateYaw);
 
             // Reset objects, make sure to call reset BEFORE assigning not after
             SourceCluster = null;
@@ -131,13 +132,20 @@ namespace X4SectorCreator.Forms
             // Draw draggable dot
             using Brush brush = new SolidBrush(Color.Red);
             g.FillEllipse(brush, _sourceDotPosition.X - 5, _sourceDotPosition.Y - 5, 10, 10);
+
+            // Draw direction indicator (arrow)
+            DrawArrow(g, _sourceDotPosition, _sourceYaw);
         }
 
         private void SourceSectorHexagon_MouseDown(object sender, MouseEventArgs e)
         {
-            if (IsPointInsideHexagon(e.Location))
+            if (e.Button == MouseButtons.Left && IsPointInsideHexagon(e.Location))
             {
                 _dragging = true;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                _rotating = true;
             }
         }
 
@@ -149,23 +157,46 @@ namespace X4SectorCreator.Forms
                 {
                     _sourceDotPosition = e.Location;
                     SourceSectorHexagon.Invalidate();
-                    UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
+                    UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, ref _sourceYaw, txtSourceGateYaw);
                 }
+            }
+            else if (_rotating) // If right-click is held, adjust yaw
+            {
+                int centerX = SourceSectorHexagon.Width / 2;
+                int centerY = SourceSectorHexagon.Height / 2;
+
+                _sourceYaw = (float)(Math.Atan2(e.Y - centerY, e.X - centerX) * (180.0 / Math.PI));
+                if (_sourceYaw < 0) _sourceYaw += 360;
+
+                txtSourceGateYaw.Text = $"{_sourceYaw:0}°";
+                SourceSectorHexagon.Invalidate();
             }
         }
 
         private void SourceSectorHexagon_MouseUp(object sender, MouseEventArgs e)
         {
             _dragging = false;
+            _rotating = false;
         }
 
         private void SourceSectorHexagon_MouseClick(object sender, MouseEventArgs e)
         {
-            if (IsPointInsideHexagon(e.Location))
+            if (e.Button == MouseButtons.Left && IsPointInsideHexagon(e.Location))
             {
                 _sourceDotPosition = e.Location;
                 SourceSectorHexagon.Invalidate();
-                UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
+                UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, ref _sourceYaw, txtSourceGateYaw);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                int centerX = SourceSectorHexagon.Width / 2;
+                int centerY = SourceSectorHexagon.Height / 2;
+
+                _sourceYaw = (float)(Math.Atan2(e.Y - centerY, e.X - centerX) * (180.0 / Math.PI));
+                if (_sourceYaw < 0) _sourceYaw += 360;
+
+                txtSourceGateYaw.Text = $"{_sourceYaw:0}°";
+                SourceSectorHexagon.Invalidate();
             }
         }
 
@@ -183,13 +214,20 @@ namespace X4SectorCreator.Forms
             // Draw draggable dot
             using Brush brush = new SolidBrush(Color.Red);
             g.FillEllipse(brush, _targetDotPosition.X - 5, _targetDotPosition.Y - 5, 10, 10);
+
+            // Draw direction indicator (arrow)
+            DrawArrow(g, _targetDotPosition, _targetYaw);
         }
 
         private void TargetSectorHexagon_MouseDown(object sender, MouseEventArgs e)
         {
-            if (IsPointInsideHexagon(e.Location))
+            if (e.Button == MouseButtons.Left && IsPointInsideHexagon(e.Location))
             {
                 _dragging = true;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                _rotating = true;
             }
         }
 
@@ -201,27 +239,50 @@ namespace X4SectorCreator.Forms
                 {
                     _targetDotPosition = e.Location;
                     TargetSectorHexagon.Invalidate();
-                    UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
+                    UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, ref _targetYaw, txtTargetGateYaw);
                 }
+            }
+            else if (_rotating) // If right-click is held, adjust yaw
+            {
+                int centerX = TargetSectorHexagon.Width / 2;
+                int centerY = TargetSectorHexagon.Height / 2;
+
+                _targetYaw = (float)(Math.Atan2(e.Y - centerY, e.X - centerX) * (180.0 / Math.PI));
+                if (_targetYaw < 0) _targetYaw += 360;
+
+                txtTargetGateYaw.Text = $"{_targetYaw:0}°";
+                TargetSectorHexagon.Invalidate();
             }
         }
 
         private void TargetSectorHexagon_MouseUp(object sender, MouseEventArgs e)
         {
             _dragging = false;
+            _rotating = false;
         }
 
         private void TargetSectorHexagon_MouseClick(object sender, MouseEventArgs e)
         {
-            if (IsPointInsideHexagon(e.Location))
+            if (e.Button == MouseButtons.Left && IsPointInsideHexagon(e.Location))
             {
                 _targetDotPosition = e.Location;
                 TargetSectorHexagon.Invalidate();
-                UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
+                UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, ref _targetYaw, txtTargetGateYaw);
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                int centerX = TargetSectorHexagon.Width / 2;
+                int centerY = TargetSectorHexagon.Height / 2;
+
+                _targetYaw = (float)(Math.Atan2(e.Y - centerY, e.X - centerX) * (180.0 / Math.PI));
+                if (_targetYaw < 0) _targetYaw += 360;
+
+                txtTargetGateYaw.Text = $"{_targetYaw:0}°";
+                TargetSectorHexagon.Invalidate();
             }
         }
 
-        private void UpdateGatePosition(PictureBox sectorHexagon, TextBox textBox, Point dotPosition)
+        private void UpdateGatePosition(PictureBox sectorHexagon, TextBox positionTextBox, Point dotPosition, ref float yaw, TextBox yawTextBox)
         {
             int centerX = sectorHexagon.Width / 2;
             int centerY = sectorHexagon.Height / 2;
@@ -232,7 +293,29 @@ namespace X4SectorCreator.Forms
             float worldX = normalizedX * _worldRadius / 2;
             float worldY = normalizedY * _worldRadius / 2;
 
-            textBox.Text = $"({worldX:0}, {worldY:0})";
+            positionTextBox.Text = $"({worldX:0}, {worldY:0})";
+
+            // Calculate yaw (angle in degrees)
+            yaw = (float)(Math.Atan2(dotPosition.Y - centerY, dotPosition.X - centerX) * (180.0 / Math.PI));
+
+            // Normalize angle to 0-360 degrees
+            if (yaw < 0) yaw += 360;
+
+            yawTextBox.Text = $"{yaw:0}";
+        }
+
+        private static void DrawArrow(Graphics g, Point dotPosition, float angleDegrees)
+        {
+            double angleRadians = angleDegrees * (Math.PI / 180.0);
+            int arrowLength = 20; // Adjust length
+
+            Point arrowEnd = new Point(
+                (int)(dotPosition.X + arrowLength * Math.Cos(angleRadians)),
+                (int)(dotPosition.Y + arrowLength * Math.Sin(angleRadians))
+            );
+
+            using Pen arrowPen = new(Color.Blue, 2);
+            g.DrawLine(arrowPen, dotPosition, arrowEnd);
         }
 
         private bool IsPointInsideHexagon(Point point)
