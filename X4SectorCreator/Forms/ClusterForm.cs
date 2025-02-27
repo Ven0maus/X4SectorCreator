@@ -75,6 +75,7 @@ namespace X4SectorCreator.Forms
                                 .Where(a => !a.IsBaseGame)
                                 .DefaultIfEmpty(new Cluster()).Max(a => a.Id) + 1,
                             Name = name,
+                            Description = txtDescription.Text,
                             Position = new Point(coordinate.X, coordinate.Y),
                             Sectors = []
                         });
@@ -101,6 +102,7 @@ namespace X4SectorCreator.Forms
                         _ = MainForm.Instance.AllClusters.Remove((oldPosition.X, oldPosition.Y));
                         Cluster.Position = new Point(coordinate.X, coordinate.Y);
                         Cluster.Name = name;
+                        Cluster.Description = txtDescription.Text;
                         MainForm.Instance.AllClusters.Add(coordinate, Cluster);
 
                         // Update listbox

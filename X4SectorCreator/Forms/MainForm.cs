@@ -292,6 +292,7 @@ namespace X4SectorCreator
             ClusterForm.Cluster = null;
             ClusterForm.BtnCreate.Text = "Create";
             ClusterForm.TxtName.Text = string.Empty;
+            ClusterForm.txtDescription.Text = string.Empty;
             ClusterForm.TxtLocation.Text = string.Empty;
             ClusterForm.Show();
         }
@@ -384,6 +385,7 @@ namespace X4SectorCreator
             ClusterForm.Cluster = cluster.Value;
             ClusterForm.BtnCreate.Text = "Update";
             ClusterForm.TxtName.Text = selectedClusterName;
+            ClusterForm.txtDescription.Text = cluster.Value.Description;
             ClusterForm.TxtLocation.Text = cluster.Key.ToString();
             ClusterForm.Show();
         }

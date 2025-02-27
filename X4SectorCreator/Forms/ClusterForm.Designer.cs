@@ -35,11 +35,13 @@
             label2 = new Label();
             BtnPick = new Button();
             TxtLocation = new TextBox();
+            label3 = new Label();
+            txtDescription = new TextBox();
             SuspendLayout();
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(83, 96);
+            BtnCreate.Location = new Point(110, 119);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(105, 30);
             BtnCreate.TabIndex = 0;
@@ -49,7 +51,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(194, 96);
+            BtnCancel.Location = new Point(221, 119);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(105, 30);
             BtnCancel.TabIndex = 1;
@@ -59,7 +61,7 @@
             // 
             // TxtName
             // 
-            TxtName.Location = new Point(83, 25);
+            TxtName.Location = new Point(112, 25);
             TxtName.Name = "TxtName";
             TxtName.Size = new Size(216, 23);
             TxtName.TabIndex = 2;
@@ -68,7 +70,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(29, 25);
+            label1.Location = new Point(49, 25);
             label1.Name = "label1";
             label1.Size = new Size(55, 21);
             label1.TabIndex = 3;
@@ -78,7 +80,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(12, 63);
+            label2.Location = new Point(32, 84);
             label2.Name = "label2";
             label2.Size = new Size(72, 21);
             label2.TabIndex = 4;
@@ -86,7 +88,7 @@
             // 
             // BtnPick
             // 
-            BtnPick.Location = new Point(194, 60);
+            BtnPick.Location = new Point(221, 83);
             BtnPick.Name = "BtnPick";
             BtnPick.Size = new Size(105, 26);
             BtnPick.TabIndex = 5;
@@ -97,16 +99,35 @@
             // TxtLocation
             // 
             TxtLocation.Enabled = false;
-            TxtLocation.Location = new Point(83, 63);
+            TxtLocation.Location = new Point(112, 86);
             TxtLocation.Name = "TxtLocation";
             TxtLocation.Size = new Size(105, 23);
             TxtLocation.TabIndex = 6;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F);
+            label3.Location = new Point(12, 54);
+            label3.Name = "label3";
+            label3.Size = new Size(92, 21);
+            label3.TabIndex = 8;
+            label3.Text = "Description:";
+            // 
+            // txtDescription
+            // 
+            txtDescription.Location = new Point(110, 54);
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(216, 23);
+            txtDescription.TabIndex = 7;
             // 
             // ClusterForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(309, 135);
+            ClientSize = new Size(340, 159);
+            Controls.Add(label3);
+            Controls.Add(txtDescription);
             Controls.Add(TxtLocation);
             Controls.Add(BtnPick);
             Controls.Add(label2);
@@ -130,5 +151,7 @@
         internal TextBox TxtLocation;
         internal Button BtnCreate;
         internal TextBox TxtName;
+        private Label label3;
+        internal TextBox txtDescription;
     }
 }

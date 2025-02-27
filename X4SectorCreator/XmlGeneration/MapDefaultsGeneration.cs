@@ -34,7 +34,7 @@ namespace X4SectorCreator.XmlGeneration
                         new XElement("properties",
                             new XElement("identification",
                                 new XAttribute("name", cluster.Name),
-                                new XAttribute("description", string.Empty),
+                                new XAttribute("description", cluster.Description),
                                 new XAttribute("image", "enc_cluster01") // By default point to img of cluster01
                             ),
                             new XElement("system")
