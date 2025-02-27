@@ -256,7 +256,7 @@ namespace X4SectorCreator.Forms
             Zone sourceZone = new()
             {
                 Id = SourceSector.Zones.Count + 1,
-                Name = "Zone " + SourceSector.Zones.Count + 1,
+                Name = "Zone " + (SourceSector.Zones.Count + 1),
                 Position = new Point(GatePosX, GatePosY),
                 Gates = [sourceGate]
             };
@@ -332,7 +332,7 @@ namespace X4SectorCreator.Forms
             Zone targetZone = new()
             {
                 Id = targetSector.Zones.Count + 1,
-                Name = "Zone " + targetSector.Zones.Count + 1,
+                Name = "Zone " + (targetSector.Zones.Count + 1),
                 Position = new Point(GatePosX, GatePosY),
                 Gates = [targetGate]
             };

@@ -83,15 +83,7 @@ namespace X4SectorCreator.Forms
                             Id = 1,
                             Name = name,
                             Owner = "None",
-                            Zones =
-                            [
-                                new Zone
-                                {
-                                    Id = 1,
-                                    Name = "Zone 1",
-                                    Gates = []
-                                }
-                            ]
+                            Zones = [ ]
                         });
 
                         // Add to listbox and select it

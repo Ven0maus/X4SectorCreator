@@ -65,15 +65,7 @@ namespace X4SectorCreator.Forms
                         Id = selectedCluster.Value.Sectors.Count + 1,
                         Name = name,
                         Owner = "None",
-                        Zones =
-                        [
-                            new Zone
-                            {
-                                Id = 1,
-                                Name = "Zone 1",
-                                Gates = []
-                            }
-                        ]
+                        Zones = [ ]
                     });
 
                     // Add sector to listbox and select it
