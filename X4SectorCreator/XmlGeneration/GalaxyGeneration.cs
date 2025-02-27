@@ -7,7 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            List<Cluster> orderedClusters = clusters.OrderBy(a => a.Id).ToList();
+            List<Cluster> orderedClusters = [.. clusters.OrderBy(a => a.Id)];
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("diff",
@@ -24,7 +24,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateClusters(string modPrefix, List<Cluster> clusters)
         {
-            foreach (Cluster cluster in clusters)
+            foreach (Cluster cluster in clusters.Where(a => !a.IsBaseGame))
             {
                 yield return new XElement("connection",
                     new XAttribute("name", $"{modPrefix}_CL_c{cluster.Id:D3}_connection"),
@@ -47,7 +47,7 @@ namespace X4SectorCreator.XmlGeneration
         private static IEnumerable<XElement> GenerateGateConnections(string modPrefix, List<Cluster> clusters)
         {
             HashSet<Gate> destinationGatesToBeSkipped = [];
-            foreach (Cluster cluster in clusters)
+            foreach (Cluster cluster in clusters.Where(a => !a.IsBaseGame))
             {
                 foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
                 {

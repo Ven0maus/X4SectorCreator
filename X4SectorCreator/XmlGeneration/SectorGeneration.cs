@@ -19,7 +19,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateSectors(string modPrefix, List<Cluster> clusters)
         {
-            foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
+            foreach (Cluster cluster in clusters.Where(a => !a.IsBaseGame).OrderBy(a => a.Id))
             {
                 foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
                 {

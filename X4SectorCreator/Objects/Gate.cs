@@ -7,8 +7,8 @@
         public string DestinationSectorName { get; set; }
         public string Source { get; set; } // format: c000_s000_z000
         public string Destination { get; set; } // format: c000_s000_z000
-        public string SourcePath { get; private set; } // format: prefix_c000_connection/prefix_c000_s000_connection/prefix_c000_s000_z000_connection/prefix_g000_source_destination_connection
-        public string DestinationPath { get; private set; } // format: prefix_c000_connection/prefix_c000_s000_connection/prefix_c000_s000_z000_connection/prefix_g000_source_destination_connection
+        public string SourcePath { get; set; } // format: prefix_c000_connection/prefix_c000_s000_connection/prefix_c000_s000_z000_connection/prefix_g000_source_destination_connection
+        public string DestinationPath { get; set; } // format: prefix_c000_connection/prefix_c000_s000_connection/prefix_c000_s000_z000_connection/prefix_g000_source_destination_connection
         public int Yaw { get; set; }
         public int Pitch { get; set; }
         public int Roll { get; set; }

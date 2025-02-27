@@ -5,7 +5,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class MacrosGeneration
     {
-        public static void Generate(string folder, string modName, string modPrefix, List<Cluster> clusters)
+        public static void Generate(string folder, string modName, string modPrefix)
         {
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),

@@ -21,6 +21,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateZones(string modPrefix, List<Cluster> clusters)
         {
+            // This one needs to include base game, because they don't have zones initialized, only the ones with gates do
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
                 foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))

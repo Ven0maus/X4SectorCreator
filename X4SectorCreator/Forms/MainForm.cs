@@ -113,7 +113,7 @@ namespace X4SectorCreator
                 return;
             }
 
-            List<Cluster> clusters = [.. AllClusters.Values.Where(a => !a.IsBaseGame)];
+            List<Cluster> clusters = [.. AllClusters.Values];
 
             // Generate each xml file
             string folder = Path.Combine(Application.StartupPath, "GeneratedXml");
@@ -126,7 +126,7 @@ namespace X4SectorCreator
                 }
 
                 // Generate all xml files
-                MacrosGeneration.Generate(folder, modName, modPrefix, clusters);
+                MacrosGeneration.Generate(folder, modName, modPrefix);
                 MapDefaultsGeneration.Generate(folder, modPrefix, clusters);
                 GalaxyGeneration.Generate(folder, modPrefix, clusters);
                 ClusterGeneration.Generate(folder, modPrefix, clusters);
@@ -139,7 +139,7 @@ namespace X4SectorCreator
                 Directory.Delete(folder, true);
                 _ = MessageBox.Show("Something went wrong during xml generation, please create an issue on github with the stacktrace: " + ex.ToString(),
                     "Error in XML Generation", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                throw;
             }
 
             // Show succes message
@@ -193,7 +193,15 @@ namespace X4SectorCreator
 
                 try
                 {
-                    string jsonContent = ConfigSerializer.Serialize([.. AllClusters.Values.Where(a => !a.IsBaseGame)]);
+                    var allModifiedClusters = AllClusters.Values
+                        .Where(a => !a.IsBaseGame)
+                        .Concat(AllClusters.Values
+                            .Where(a => a.IsBaseGame && a.Sectors
+                                .SelectMany(a => a.Zones)
+                                .Any()))
+                        .ToList();
+
+                    string jsonContent = ConfigSerializer.Serialize(allModifiedClusters);
                     File.WriteAllText(filePath, jsonContent);
                     _ = MessageBox.Show($"Configuration exported succesfully.", "Success");
                 }
@@ -228,15 +236,17 @@ namespace X4SectorCreator
                         // Import new configuration
                         foreach (Cluster cluster in clusters)
                         {
+                            // Contains also base game clusters that have zones for exported gate connections
                             // Set custom clusters
-                            AllClusters.Add((cluster.Position.X, cluster.Position.Y), cluster);
+                            AllClusters[(cluster.Position.X, cluster.Position.Y)] = cluster;
 
                             // Setup listboxes
-                            _ = ClustersListBox.Items.Add(cluster.Name);
+                            if (!cluster.IsBaseGame)
+                                _ = ClustersListBox.Items.Add(cluster.Name);
                         }
 
                         // Select first one so sector and zones populate automatically
-                        ClustersListBox.SelectedItem = clusters.FirstOrDefault()?.Name ?? null;
+                        ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
 
                         _ = MessageBox.Show($"Configuration imported succesfully.", "Success");
                     }

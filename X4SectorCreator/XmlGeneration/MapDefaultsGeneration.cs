@@ -25,7 +25,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             List<XElement> elements = [];
 
-            foreach (Cluster cluster in clusters)
+            foreach (Cluster cluster in clusters.Where(a => !a.IsBaseGame))
             {
                 // Add Cluster XML
                 elements.Add(

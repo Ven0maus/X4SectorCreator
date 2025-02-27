@@ -295,7 +295,6 @@ namespace X4SectorCreator.Forms
             // Find sector
             Sector targetSector = targetCluster.Sectors[targetSectorIndex];
 
-
             // Validate that target sector != source sector
             if (targetSector == SourceSector)
             {
