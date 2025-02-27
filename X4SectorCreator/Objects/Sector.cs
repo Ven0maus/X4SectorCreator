@@ -15,6 +15,7 @@ namespace X4SectorCreator.Objects
         public bool AllowRandomAnomalies { get; set; } = true;
         public string Tags { get; set; }
         public List<Zone> Zones { get; set; }
+        public Point Offset { get; set; }
 
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);

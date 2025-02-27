@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Text.Json;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
@@ -326,6 +327,14 @@ namespace X4SectorCreator
             }
 
             _ = AllClusters.Remove(cluster.Key);
+
+            // Re-align ids
+            int count = 0;
+            foreach (var clust in AllClusters.Values.Where(a => !a.IsBaseGame).OrderBy(a => a.Id))
+            {
+                clust.Id = ++count;
+            }
+
             ClustersListBox.Items.Remove(ClustersListBox.SelectedItem);
             ClustersListBox.SelectedItem = null;
             SectorsListBox.Items.Clear();
@@ -428,9 +437,47 @@ namespace X4SectorCreator
 
             _ = cluster.Value.Sectors.Remove(sector);
 
+            // Re-align ids before re-calculate
+            int count = 0;
+            foreach (var sect in cluster.Value.Sectors.OrderBy(a => a.Id))
+            {
+                sect.Id = ++count;
+            }
+
+            RecalculateSectorOffsets(cluster.Value);
+
             GatesListBox.Items.Clear();
             SectorsListBox.Items.Remove(SectorsListBox.SelectedItem);
             SectorsListBox.SelectedItem = null;
+        }
+
+        private static void RecalculateSectorOffsets(Cluster cluster)
+        {
+            var sectors = new List<Sector>();
+            foreach (var sector in cluster.Sectors.OrderBy(a => a.Id))
+            {
+                int offSetX, offsetY;
+                if (sectors.Count == 0)
+                {
+                    offSetX = 0;
+                    offsetY = 0;
+                }
+                if (sectors.Count == 1)
+                {
+                    // Down
+                    offSetX = 0;
+                    offsetY = -1000000;
+                }
+                else
+                {
+                    // Right
+                    offSetX = 1000000;
+                    offsetY = -500000;
+                }
+
+                sector.Offset = new Point(offSetX, offsetY);
+                sectors.Add(sector);
+            }
         }
 
         private void SectorsListBox_DoubleClick(object sender, EventArgs e)
@@ -516,6 +563,24 @@ namespace X4SectorCreator
                         .Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase)));
             _ = targetZone.Gates.Remove(selectedGate);
 
+            // Check to remove zone if empty
+            if (targetZone.Gates.Count == 0)
+                targetSector.Zones.Remove(targetZone);
+
+            // Re-order zone ids if needed
+            int count = 0;
+            foreach (var tZone in targetSector.Zones.OrderBy(a => a.Id))
+            {
+                tZone.Id = ++count;
+            }
+
+            // Re-order gate ids if needed
+            count = 0;
+            foreach (var tGate in targetZone.Gates.OrderBy(a => a.Id))
+            {
+                tGate.Id = ++count;
+            }
+
             // Delete source connection
             Sector sourceSector = AllClusters.Values
                 .SelectMany(a => a.Sectors)
@@ -526,6 +591,24 @@ namespace X4SectorCreator
                         .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
             Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
             _ = sourceZone.Gates.Remove(sourceGate);
+
+            // Check to remove zone if empty
+            if (sourceZone.Gates.Count == 0)
+                sourceSector.Zones.Remove(sourceZone);
+
+            // Re-order zone ids if needed
+            count = 0;
+            foreach (var sZone in sourceSector.Zones.OrderBy(a => a.Id))
+            {
+                sZone.Id = ++count;
+            }
+
+            // Re-order gate ids if needed
+            count = 0;
+            foreach (var sGate in sourceZone.Gates.OrderBy(a => a.Id))
+            {
+                sGate.Id = ++count;
+            }
 
             // Remove from listbox
             GatesListBox.Items.Remove(selectedGate);

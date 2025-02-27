@@ -38,7 +38,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(14, 18);
+            label1.Location = new Point(17, 17);
             label1.Name = "label1";
             label1.Size = new Size(55, 21);
             label1.TabIndex = 10;
@@ -46,16 +46,16 @@
             // 
             // TxtName
             // 
-            TxtName.Location = new Point(68, 18);
+            TxtName.Location = new Point(78, 17);
             TxtName.Name = "TxtName";
-            TxtName.Size = new Size(216, 23);
+            TxtName.Size = new Size(196, 23);
             TxtName.TabIndex = 9;
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(179, 47);
+            BtnCancel.Location = new Point(17, 46);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(105, 30);
+            BtnCancel.Size = new Size(55, 30);
             BtnCancel.TabIndex = 8;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
@@ -63,9 +63,9 @@
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(68, 47);
+            BtnCreate.Location = new Point(78, 46);
             BtnCreate.Name = "BtnCreate";
-            BtnCreate.Size = new Size(105, 30);
+            BtnCreate.Size = new Size(196, 30);
             BtnCreate.TabIndex = 7;
             BtnCreate.Text = "Create";
             BtnCreate.UseVisualStyleBackColor = true;
@@ -75,7 +75,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(297, 86);
+            ClientSize = new Size(286, 88);
             Controls.Add(label1);
             Controls.Add(TxtName);
             Controls.Add(BtnCancel);

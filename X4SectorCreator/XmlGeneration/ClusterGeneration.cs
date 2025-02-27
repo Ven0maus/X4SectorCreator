@@ -41,6 +41,13 @@ namespace X4SectorCreator.XmlGeneration
                 yield return new XElement("connection",
                     new XAttribute("name", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection"),
                     new XAttribute("ref", "sectors"),
+                    new XElement("offset",
+                        new XElement("position",
+                            new XAttribute("x", sector.Offset.X),
+                            new XAttribute("y", 0),
+                            new XAttribute("z", sector.Offset.Y)
+                        )
+                    ),
                     new XElement("macro",
                         new XAttribute("ref", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro"),
                         new XAttribute("connection", "cluster")

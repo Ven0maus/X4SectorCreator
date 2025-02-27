@@ -299,12 +299,12 @@ namespace X4SectorCreator
             }
             else if (children == 3)
             {
-                // Child hex centers for top-right, bottom-right, and middle-left
+                // Child hex centers for top-left, bottom-left, and middle-right
                 childCenters =
                 [
-                    new PointF(xOffset + (width * 0.375f), yOffset - (childHeight * 0.5f)), // Top-left
-                    new PointF(xOffset + (width * 0.375f), yOffset + (childHeight * 0.5f)), // Bottom-right
-                    new PointF(xOffset, yOffset) // Middle-left
+                    new PointF(xOffset + (width * 0.125f), yOffset - (childHeight * 0.5f)), // Top-left
+                    new PointF(xOffset + (width * 0.125f), yOffset + (childHeight * 0.5f)), // Bottom-left
+                    new PointF(xOffset  + (width * 0.5f), yOffset) // Middle-right
                 ];
             }
             else
@@ -458,6 +458,9 @@ namespace X4SectorCreator
                 // Draw child hex outlines
                 foreach (Hexagon child in hex.Value.Children)
                 {
+                    // First child hex: up
+                    // Second child hex: down
+                    // Third child hex: right
                     Sector sector = cluster.Sectors[index];
                     Color ownerColor = !MainForm.Instance.FactionColorMapping.TryGetValue(sector.Owner, out Color value) ? 
                         MainForm.Instance.FactionColorMapping["None"] : value;

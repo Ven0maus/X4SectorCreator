@@ -38,7 +38,7 @@ namespace X4SectorCreator.Forms
             {
                 // Skip the cluster we're updating
                 return (Cluster == null || !Cluster.Name.Equals(a.Name, StringComparison.OrdinalIgnoreCase))
-&& a.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
+                    && a.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
             }))
             {
                 _ = MessageBox.Show($"A cluster with the name \"{name}\" already exists, please choose another name.");
@@ -71,7 +71,9 @@ namespace X4SectorCreator.Forms
                         // Add new custom cluster
                         MainForm.Instance.AllClusters.Add(coordinate, cluster = new Cluster
                         {
-                            Id = MainForm.Instance.AllClusters.Values.Count(a => !a.IsBaseGame) + 1,
+                            Id = MainForm.Instance.AllClusters.Values
+                                .Where(a => !a.IsBaseGame)
+                                .DefaultIfEmpty(new Cluster()).Max(a => a.Id) + 1,
                             Name = name,
                             Position = new Point(coordinate.X, coordinate.Y),
                             Sectors = []

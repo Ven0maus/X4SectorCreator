@@ -53,7 +53,25 @@ namespace X4SectorCreator.Forms
             switch (BtnCreate.Text)
             {
                 case "Create":
-                    if (selectedCluster.Value.Sectors.Count == 3)
+                    int offSetX, offsetY;
+                    if (selectedCluster.Value.Sectors.Count == 0)
+                    {
+                        offSetX = 0;
+                        offsetY = 0;
+                    }
+                    if (selectedCluster.Value.Sectors.Count == 1)
+                    {
+                        // Down
+                        offSetX = 0;
+                        offsetY = -1000000;
+                    }
+                    else if (selectedCluster.Value.Sectors.Count == 2)
+                    {
+                        // Right
+                        offSetX = 1000000;
+                        offsetY = -500000;
+                    }
+                    else
                     {
                         _ = MessageBox.Show($"Reached maximum allowed sectors for cluster \"{selectedCluster.Value.Name}\".");
                         return;
@@ -62,14 +80,15 @@ namespace X4SectorCreator.Forms
                     // Create new sector in selected cluster
                     selectedCluster.Value.Sectors.Add(new Sector
                     {
-                        Id = selectedCluster.Value.Sectors.Count + 1,
+                        Id = selectedCluster.Value.Sectors.DefaultIfEmpty(new Sector()).Max(a => a.Id) + 1,
                         Name = name,
                         Owner = "None",
-                        Zones = [ ]
+                        Offset = new Point(offSetX, offsetY),
+                        Zones = []
                     });
 
-                    // Add sector to listbox and select it
-                    _ = MainForm.Instance.SectorsListBox.Items.Add(name);
+                    // Add to sector listbox
+                    MainForm.Instance.SectorsListBox.Items.Add(name);
                     MainForm.Instance.SectorsListBox.SelectedItem = name;
                     break;
 

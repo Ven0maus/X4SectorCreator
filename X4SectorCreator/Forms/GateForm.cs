@@ -165,7 +165,7 @@ namespace X4SectorCreator.Forms
                 _sourceYaw = (float)(Math.Atan2(e.Y - _sourceDotPosition.Y, e.X - _sourceDotPosition.X) * (180.0 / Math.PI)) + 90;
                 if (_sourceYaw < 0) _sourceYaw += 360;
 
-                txtSourceGateYaw.Text = $"{_sourceYaw:0}°";
+                txtSourceGateYaw.Text = $"{_sourceYaw:0}";
                 SourceSectorHexagon.Invalidate();
             }
         }
@@ -189,7 +189,7 @@ namespace X4SectorCreator.Forms
                 _sourceYaw = (float)(Math.Atan2(e.Y - _sourceDotPosition.Y, e.X - _sourceDotPosition.X) * (180.0 / Math.PI)) + 90;
                 if (_sourceYaw < 0) _sourceYaw += 360;
 
-                txtSourceGateYaw.Text = $"{_sourceYaw:0}°";
+                txtSourceGateYaw.Text = $"{_sourceYaw:0}";
                 SourceSectorHexagon.Invalidate();
             }
         }
@@ -241,7 +241,7 @@ namespace X4SectorCreator.Forms
                 _targetYaw = (float)(Math.Atan2(e.Y - _targetDotPosition.Y, e.X - _targetDotPosition.X) * (180.0 / Math.PI)) + 90;
                 if (_targetYaw < 0) _targetYaw += 360;
 
-                txtTargetGateYaw.Text = $"{_targetYaw:0}°";
+                txtTargetGateYaw.Text = $"{_targetYaw:0}";
                 TargetSectorHexagon.Invalidate();
             }
         }
@@ -265,7 +265,7 @@ namespace X4SectorCreator.Forms
                 _targetYaw = (float)(Math.Atan2(e.Y - _targetDotPosition.Y, e.X - _targetDotPosition.X) * (180.0 / Math.PI)) + 90;
                 if (_targetYaw < 0) _targetYaw += 360;
 
-                txtTargetGateYaw.Text = $"{_targetYaw:0}°";
+                txtTargetGateYaw.Text = $"{_targetYaw:0}";
                 TargetSectorHexagon.Invalidate();
             }
         }
@@ -340,7 +340,7 @@ namespace X4SectorCreator.Forms
             // Create a new source zone
             Zone sourceZone = new()
             {
-                Id = SourceSector.Zones.Count + 1,
+                Id = SourceSector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
                 Name = "Zone " + (SourceSector.Zones.Count + 1),
                 Position = new Point(GatePosX, GatePosY),
                 Gates = [sourceGate]
@@ -416,7 +416,7 @@ namespace X4SectorCreator.Forms
             // Create new target zone
             Zone targetZone = new()
             {
-                Id = targetSector.Zones.Count + 1,
+                Id = targetSector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
                 Name = "Zone " + (targetSector.Zones.Count + 1),
                 Position = new Point(GatePosX, GatePosY),
                 Gates = [targetGate]
