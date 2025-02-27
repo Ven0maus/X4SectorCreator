@@ -10,7 +10,7 @@ namespace X4SectorCreator.XmlGeneration
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("macros",
-                    GenerateClusters(modPrefix, clusters)
+                    GenerateClusters(modPrefix, clusters.Where(a => !a.IsBaseGame).ToList())
                 )
             );
 

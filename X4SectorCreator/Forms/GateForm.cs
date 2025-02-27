@@ -340,12 +340,12 @@ namespace X4SectorCreator.Forms
             #endregion
 
             // SourceGate source / destination
-            sourceGate.Source = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{sourceZone.Id:D3}";
-            sourceGate.Destination = $"c{targetCluster.Id:D3}_s{targetSector.Id:D3}_z{targetZone.Id:D3}";
+            sourceGate.Source = ConvertToPath(SourceCluster, SourceSector, sourceZone);
+            sourceGate.Destination = ConvertToPath(targetCluster, targetSector, targetZone);
 
             // TargetGate source / destination
-            targetGate.Source = $"c{targetCluster.Id:D3}_s{targetSector.Id:D3}_z{targetZone.Id:D3}";
-            targetGate.Destination = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{sourceZone.Id:D3}";
+            targetGate.Source = sourceGate.Destination;
+            targetGate.Destination = sourceGate.Source;
 
             // Paths must be set at the end
             targetGate.SetSourcePath("PREFIX", targetCluster, targetSector, targetZone);
@@ -360,6 +360,24 @@ namespace X4SectorCreator.Forms
 
             Reset();
             Close();
+        }
+
+        private static string ConvertToPath(Cluster cluster, Sector sector, Zone zone)
+        {
+            string value = string.Empty;
+            if (cluster.IsBaseGame)
+                value += $"{cluster.BaseGameMapping.Replace("_", "")}";
+            else
+                value += $"c{cluster.Id:D3}";
+
+            if (sector.IsBaseGame)
+                value += $"_{sector.BaseGameMapping.Replace("_", "")}";
+            else
+                value += $"_s{sector.Id:D3}";
+
+            value += $"_z{zone.Id:D3}";
+
+            return value;
         }
 
         private void BtnSelectSector_Click(object sender, EventArgs e)

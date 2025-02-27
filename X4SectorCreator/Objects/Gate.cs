@@ -23,11 +23,7 @@
         /// <param name="zone"></param>
         public void SetSourcePath(string modPrefix, Cluster cluster, Sector sector, Zone zone)
         {
-            string clusterConnection = $"{modPrefix}_CL_c{cluster.Id:D3}_connection";
-            string sectorConnection = $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection";
-            string zoneConnection = $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_connection";
-            string gateConnection = $"{modPrefix}_GA_g{Id:D3}_{Source}_{Destination}_connection";
-            SourcePath = $"{clusterConnection}/{sectorConnection}/{zoneConnection}/{gateConnection}";
+            SourcePath = ConvertToPath(modPrefix, cluster, sector, zone, this);
         }
 
         /// <summary>
@@ -39,29 +35,32 @@
         /// <param name="zone"></param>
         public void SetDestinationPath(string modPrefix, Cluster cluster, Sector sector, Zone zone, Gate gate)
         {
-            string clusterConnection = $"{modPrefix}_CL_c{cluster.Id:D3}_connection";
-            string sectorConnection = $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection";
-            string zoneConnection = $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_connection";
-            string gateConnection = $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection";
-            DestinationPath = $"{clusterConnection}/{sectorConnection}/{zoneConnection}/{gateConnection}";
+            DestinationPath = ConvertToPath(modPrefix, cluster, sector, zone, gate);
         }
 
-        /// <summary>
-        /// Used to make a connection with existing sectors.
-        /// </summary>
-        /// <param name="path"></param>
-        public void SetCustomSourcePath(string path)
+        private static string ConvertToPath(string modPrefix, Cluster cluster, Sector sector, Zone zone, Gate gate)
         {
-            SourcePath = path;
-        }
+            var isBaseGame = cluster.IsBaseGame;
 
-        /// <summary>
-        /// Used to make a connection with existing sectors.
-        /// </summary>
-        /// <param name="path"></param>
-        public void SetCustomDestinationPath(string path)
-        {
-            DestinationPath = path;
+            string path;
+            if (isBaseGame)
+            {
+                string clusterConnection = $"{cluster.BaseGameMapping}_connection";
+                string sectorConnection = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_connection";
+                string zoneConnection = $"{modPrefix}_ZO_{cluster.BaseGameMapping.Replace("_", "")}_{sector.BaseGameMapping.Replace("_", "")}_z{zone.Id:D3}_connection";
+                string gateConnection = $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection";
+                path = $"{clusterConnection}/{sectorConnection}/{zoneConnection}/{gateConnection}";
+            }
+            else
+            {
+                string clusterConnection = $"{modPrefix}_CL_c{cluster.Id:D3}_connection";
+                string sectorConnection = $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection";
+                string zoneConnection = $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_connection";
+                string gateConnection = $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection";
+                path = $"{clusterConnection}/{sectorConnection}/{zoneConnection}/{gateConnection}";
+            }
+
+            return path;
         }
 
         public enum GateType

@@ -24,15 +24,18 @@
       "Sectors": [
         {
           "Name": "Grand Exchange IV",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "BaseGameMapping": "sector003"
         },
         {
           "Name": "Grand Exchange I",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Grand Exchange III",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -60,11 +63,13 @@
       "Sectors": [
         {
           "Name": "Black Hole Sun IV",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Black Hole Sun V",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -162,15 +167,18 @@
       "Sectors": [
         {
           "Name": "Avarice I",
-          "Owner": "Riptide"
+          "Owner": "Riptide",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Avarice V Dead End",
-          "Owner": "Riptide"
+          "Owner": "Riptide",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Avarice IV",
-          "Owner": "Riptide"
+          "Owner": "Riptide",
+          "BaseGameMapping": "sector003"
         }
       ],
       "Position": {
@@ -240,11 +248,13 @@
       "Sectors": [
         {
           "Name": "Nopileos Fortune II",
-          "Owner": "None"
+          "Owner": "None",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Nopileos Fortune VI",
-          "Owner": "None"
+          "Owner": "None",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -426,11 +436,13 @@
       "Sectors": [
         {
           "Name": "Hewa's Twin II",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Hewa's Twin I",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "BaseGameMapping": "sector001"
         }
       ],
       "Position": {
@@ -458,11 +470,13 @@
       "Sectors": [
         {
           "Name": "Hewa's Twin III",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Hewa's Twin IV The Cove",
-          "Owner": "None"
+          "Owner": "None",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -476,11 +490,13 @@
       "Sectors": [
         {
           "Name": "Scale Plate Green VII",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Scale Plate Green I",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector001"
         }
       ],
       "Position": {
@@ -494,11 +510,13 @@
       "Sectors": [
         {
           "Name": "Turquoise Sea IX",
-          "Owner": "None"
+          "Owner": "None",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Turquoise Sea X",
-          "Owner": "None"
+          "Owner": "None",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -526,11 +544,13 @@
       "Sectors": [
         {
           "Name": "Ianamus Zura VII",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Ianamus Zura IV",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "BaseGameMapping": "sector001"
         }
       ],
       "Position": {
@@ -586,11 +606,13 @@
       "Sectors": [
         {
           "Name": "Thuruk's Demise II First Impact",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Thuruk's Demise III",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "BaseGameMapping": "sector001"
         }
       ],
       "Position": {
@@ -870,11 +892,13 @@
       "Sectors": [
         {
           "Name": "Guiding Star VII",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Guiding Star V",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "BaseGameMapping": "sector001"
         }
       ],
       "Position": {
@@ -958,11 +982,13 @@
       "Sectors": [
         {
           "Name": "Tharka's Cascade XVII",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Tharka's Cascade XV",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector001"
         }
       ],
       "Position": {
@@ -1088,11 +1114,13 @@
       "Sectors": [
         {
           "Name": "Litany of Fury XII",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Litany of Fury IX",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "BaseGameMapping": "sector001"
         }
       ],
       "Position": {
@@ -1106,11 +1134,13 @@
       "Sectors": [
         {
           "Name": "Emperor's Pride VI",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Emperor's Pride IV",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector001"
         }
       ],
       "Position": {
@@ -1124,11 +1154,13 @@
       "Sectors": [
         {
           "Name": "Hatikvah's Choice III",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "BaseGameMapping": "sector002"
         },
         {
           "Name": "Hatikvah's Choice I",
-          "Owner": "Hatikvah"
+          "Owner": "Hatikvah",
+          "BaseGameMapping": "sector001"
         }
       ],
       "Position": {
@@ -1212,11 +1244,13 @@
       "Sectors": [
         {
           "Name": "Savage Spur I",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Savage Spur II",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -1342,11 +1376,13 @@
       "Sectors": [
         {
           "Name": "Atiya's Misfortune I",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Atiya's Misfortune III",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -1388,11 +1424,13 @@
       "Sectors": [
         {
           "Name": "Faulty Logic I",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Faulty Logic VII",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -1574,15 +1612,18 @@
       "Sectors": [
         {
           "Name": "Kingdom End I",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Towering Wave",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "BaseGameMapping": "sector003"
         },
         {
           "Name": "Reflected Stars",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -1750,15 +1791,18 @@
       "Sectors": [
         {
           "Name": "Saturn 2",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "BaseGameMapping": "sector003"
         },
         {
           "Name": "Saturn 1",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "Titan",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {
@@ -1842,11 +1886,13 @@
       "Sectors": [
         {
           "Name": "Earth",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "BaseGameMapping": "sector001"
         },
         {
           "Name": "The Moon",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "BaseGameMapping": "sector002"
         }
       ],
       "Position": {

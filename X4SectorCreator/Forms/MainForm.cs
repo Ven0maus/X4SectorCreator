@@ -62,6 +62,10 @@ namespace X4SectorCreator
             {
                 foreach (var sector in cluster.Value.Sectors)
                 {
+                    // Init regular sectors
+                    if (cluster.Value.IsBaseGame && string.IsNullOrWhiteSpace(sector.BaseGameMapping))
+                        sector.BaseGameMapping = "sector001";
+
                     sector.Zones ??= [];
                     foreach (var zone in sector.Zones)
                     {

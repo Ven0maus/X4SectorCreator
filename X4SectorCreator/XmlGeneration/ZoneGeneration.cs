@@ -21,13 +21,15 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateZones(string modPrefix, List<Cluster> clusters)
         {
-            // This one needs to include base game, because they don't have zones initialized, only the ones with gates do
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
                 foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
                 {
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
+                        // TODO: Handle zone's in base game sectors in a seperate DIFF xml correctly in the base zones.xml
+                        if (cluster.IsBaseGame) continue;
+
                         yield return new XElement("macro",
                             new XAttribute("name", $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro"),
                             new XAttribute("class", "zone"),
