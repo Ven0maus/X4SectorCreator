@@ -36,10 +36,6 @@
             SectorsListBox = new ListBox();
             lblSectors = new Label();
             BtnRemoveSector = new Button();
-            BtnNewZone = new Button();
-            ZonesListBox = new ListBox();
-            Clusters = new Label();
-            BtnRemoveZone = new Button();
             BtnGenerateDiffs = new Button();
             BtnNewGate = new Button();
             GatesListBox = new ListBox();
@@ -135,46 +131,6 @@
             BtnRemoveSector.UseVisualStyleBackColor = true;
             BtnRemoveSector.Click += BtnRemoveSector_Click;
             // 
-            // BtnNewZone
-            // 
-            BtnNewZone.Location = new Point(336, 250);
-            BtnNewZone.Name = "BtnNewZone";
-            BtnNewZone.Size = new Size(75, 23);
-            BtnNewZone.TabIndex = 17;
-            BtnNewZone.Text = "New";
-            BtnNewZone.UseVisualStyleBackColor = true;
-            BtnNewZone.Click += BtnNewZone_Click;
-            // 
-            // ZonesListBox
-            // 
-            ZonesListBox.FormattingEnabled = true;
-            ZonesListBox.Location = new Point(336, 75);
-            ZonesListBox.Name = "ZonesListBox";
-            ZonesListBox.Size = new Size(156, 169);
-            ZonesListBox.TabIndex = 16;
-            ZonesListBox.SelectedIndexChanged += ZonesListBox_SelectedIndexChanged;
-            ZonesListBox.DoubleClick += ZonesListBox_DoubleClick;
-            // 
-            // Clusters
-            // 
-            Clusters.AutoSize = true;
-            Clusters.Font = new Font("Segoe UI", 15F);
-            Clusters.Location = new Point(336, 44);
-            Clusters.Name = "Clusters";
-            Clusters.Size = new Size(64, 28);
-            Clusters.TabIndex = 15;
-            Clusters.Text = "Zones";
-            // 
-            // BtnRemoveZone
-            // 
-            BtnRemoveZone.Location = new Point(417, 250);
-            BtnRemoveZone.Name = "BtnRemoveZone";
-            BtnRemoveZone.Size = new Size(75, 23);
-            BtnRemoveZone.TabIndex = 14;
-            BtnRemoveZone.Text = "Remove";
-            BtnRemoveZone.UseVisualStyleBackColor = true;
-            BtnRemoveZone.Click += BtnRemoveZone_Click;
-            // 
             // BtnGenerateDiffs
             // 
             BtnGenerateDiffs.Location = new Point(336, 511);
@@ -187,7 +143,7 @@
             // 
             // BtnNewGate
             // 
-            BtnNewGate.Location = new Point(336, 482);
+            BtnNewGate.Location = new Point(336, 250);
             BtnNewGate.Name = "BtnNewGate";
             BtnNewGate.Size = new Size(75, 23);
             BtnNewGate.TabIndex = 22;
@@ -198,7 +154,7 @@
             // GatesListBox
             // 
             GatesListBox.FormattingEnabled = true;
-            GatesListBox.Location = new Point(336, 307);
+            GatesListBox.Location = new Point(336, 75);
             GatesListBox.Name = "GatesListBox";
             GatesListBox.Size = new Size(156, 169);
             GatesListBox.TabIndex = 21;
@@ -207,7 +163,7 @@
             // 
             lblGates.AutoSize = true;
             lblGates.Font = new Font("Segoe UI", 15F);
-            lblGates.Location = new Point(336, 276);
+            lblGates.Location = new Point(336, 44);
             lblGates.Name = "lblGates";
             lblGates.Size = new Size(120, 28);
             lblGates.TabIndex = 20;
@@ -215,7 +171,7 @@
             // 
             // BtnRemoveGate
             // 
-            BtnRemoveGate.Location = new Point(417, 482);
+            BtnRemoveGate.Location = new Point(417, 250);
             BtnRemoveGate.Name = "BtnRemoveGate";
             BtnRemoveGate.Size = new Size(75, 23);
             BtnRemoveGate.TabIndex = 19;
@@ -321,10 +277,6 @@
             Controls.Add(lblGates);
             Controls.Add(BtnRemoveGate);
             Controls.Add(BtnGenerateDiffs);
-            Controls.Add(BtnNewZone);
-            Controls.Add(ZonesListBox);
-            Controls.Add(Clusters);
-            Controls.Add(BtnRemoveZone);
             Controls.Add(BtnNewSector);
             Controls.Add(SectorsListBox);
             Controls.Add(lblSectors);
@@ -350,9 +302,6 @@
         private Button BtnNewSector;
         private Label lblSectors;
         private Button BtnRemoveSector;
-        private Button BtnNewZone;
-        private Label Clusters;
-        private Button BtnRemoveZone;
         private Button BtnGenerateDiffs;
         private Button BtnNewGate;
         private Label lblGates;
@@ -365,7 +314,6 @@
         private Button BtnShowSectorMap;
         internal ListBox ClustersListBox;
         internal ListBox SectorsListBox;
-        internal ListBox ZonesListBox;
         internal ListBox GatesListBox;
         private Button BtnOpenFolder;
     }

@@ -1,7 +1,6 @@
-﻿using System.Drawing.Drawing2D;
+﻿using System.ComponentModel;
+using System.Drawing.Drawing2D;
 using X4SectorCreator.Objects;
-using System.ComponentModel;
-using System.Globalization;
 
 namespace X4SectorCreator.Forms
 {
@@ -10,7 +9,7 @@ namespace X4SectorCreator.Forms
         private readonly int _hexRadius;
         private readonly PointF[] _hexagonPoints;
 
-        private int _worldRadius;
+        private readonly int _worldRadius = 400000;
         private Point _sourceDotPosition, _targetDotPosition;
         private bool _dragging = false;
 
@@ -36,21 +35,6 @@ namespace X4SectorCreator.Forms
                     var sectorIndex = SourceCluster.Sectors.IndexOf(_sourceSector);
                     txtSourceSectorLocation.Text = (SourceCluster.Position.X, SourceCluster.Position.Y).ToString() + $" [{sectorIndex}]";
                 }
-            }
-        }
-
-        private Zone _sourceZone;
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Zone SourceZone
-        {
-            get => _sourceZone;
-            set
-            {
-                _sourceZone = value;
-                if (_sourceZone != null)
-                    _worldRadius = _sourceZone.Radius * 1000;
-                else
-                    _worldRadius = 400000; // default: 400km
             }
         }
 
@@ -110,7 +94,6 @@ namespace X4SectorCreator.Forms
             // Reset objects, make sure to call reset BEFORE assigning not after
             SourceCluster = null;
             SourceSector = null;
-            SourceZone = null;
         }
 
         private void InitializeHexagon()
@@ -260,22 +243,31 @@ namespace X4SectorCreator.Forms
             // Create a new gate connection in the source
             Gate sourceGate = new()
             {
-                Id = SourceZone.Gates.Count + 1,
+                Id = 1,
                 ParentSectorName = SourceSector.Name,
                 Type = selectedSourceType.Equals("Gate", StringComparison.OrdinalIgnoreCase) ?
                     Gate.GateType.props_gates_anc_gate_macro : Gate.GateType.props_gates_orb_accelerator_01_macro,
                 Yaw = int.Parse(txtSourceGateYaw.Text),
                 Pitch = int.Parse(txtSourceGatePitch.Text),
-                Roll = int.Parse(txtSourceGateRoll.Text),
-                Position = new Point(GatePosX, GatePosY)
+                Roll = int.Parse(txtSourceGateRoll.Text)
             };
-            SourceZone.Gates.Add(sourceGate);
+
+            // Create a new source zone
+            var sourceZone = new Zone
+            {
+                Id = SourceSector.Zones.Count + 1,
+                Name = "Zone " + SourceSector.Zones.Count + 1,
+                Position = new Point(GatePosX, GatePosY),
+                Gates = [ sourceGate ]
+            };
+            SourceSector.Zones.Add(sourceZone);
             #endregion
 
             #region Target Gate Connection
             var targetSectorLocationMatch = RegexHelper.TupleLocationChildIndexRegex().Match(txtTargetSectorLocation.Text);
             if (!targetSectorLocationMatch.Success)
             {
+                SourceSector.Zones.Remove(sourceZone);
                 MessageBox.Show($"Invalid sector selected, cannot properly parse \"{txtTargetSectorLocation.Text}\".");
                 return;
             }
@@ -283,6 +275,7 @@ namespace X4SectorCreator.Forms
             var selectedTargetType = cmbTargetType.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedTargetType))
             {
+                SourceSector.Zones.Remove(sourceZone);
                 MessageBox.Show("Please select a valid Target Gate Type.");
                 return;
             }
@@ -300,13 +293,12 @@ namespace X4SectorCreator.Forms
 
             // Find sector
             var targetSector = targetCluster.Sectors[targetSectorIndex];
-            // Always take the first zone as the target
-            var targetZone = targetSector.Zones.First();
+
 
             // Validate that target sector != source sector
             if (targetSector == SourceSector)
             {
-                SourceZone.Gates.Remove(sourceGate);
+                SourceSector.Zones.Remove(sourceZone);
                 MessageBox.Show("Target sector cannot be the same as the source sector.");
                 return;
             }
@@ -315,6 +307,7 @@ namespace X4SectorCreator.Forms
             var targetGatePosMatch = RegexHelper.TupleLocationRegex().Match(txtTargetGatePosition.Text);
             if (!targetGatePosMatch.Success)
             {
+                SourceSector.Zones.Remove(sourceZone);
                 MessageBox.Show("Unable to parse target gate position.");
                 return;
             }
@@ -325,32 +318,40 @@ namespace X4SectorCreator.Forms
             // Create a new gate connection in the target
             Gate targetGate = new()
             {
-                Id = targetZone.Gates.Count + 1,
+                Id = 1,
                 ParentSectorName = targetSector.Name,
                 DestinationSectorName = SourceSector.Name,
                 Type = selectedTargetType.Equals("Gate", StringComparison.OrdinalIgnoreCase) ?
                     Gate.GateType.props_gates_anc_gate_macro : Gate.GateType.props_gates_orb_accelerator_01_macro,
                 Yaw = int.Parse(txtTargetGateYaw.Text),
                 Pitch = int.Parse(txtTargetGatePitch.Text),
-                Roll = int.Parse(txtTargetGateRoll.Text),
-                Position = new Point(GatePosX, GatePosY)
+                Roll = int.Parse(txtTargetGateRoll.Text)
             };
-            targetZone.Gates.Add(targetGate);
+
+            // Create new target zone
+            var targetZone = new Zone
+            {
+                Id = targetSector.Zones.Count + 1,
+                Name = "Zone " + targetSector.Zones.Count + 1,
+                Position = new Point(GatePosX, GatePosY),
+                Gates = [targetGate]
+            };
+            targetSector.Zones.Add(targetZone);
             #endregion
 
             // SourceGate source / destination
-            sourceGate.Source = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{SourceZone.Id:D3}";
+            sourceGate.Source = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{sourceZone.Id:D3}";
             sourceGate.Destination = $"c{targetCluster.Id:D3}_s{targetSector.Id:D3}_z{targetZone.Id:D3}";
 
             // TargetGate source / destination
             targetGate.Source = $"c{targetCluster.Id:D3}_s{targetSector.Id:D3}_z{targetZone.Id:D3}";
-            targetGate.Destination = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{SourceZone.Id:D3}";
+            targetGate.Destination = $"c{SourceCluster.Id:D3}_s{SourceSector.Id:D3}_z{sourceZone.Id:D3}";
 
             // Paths must be set at the end
             targetGate.SetSourcePath("PREFIX", targetCluster, targetSector, targetZone);
-            sourceGate.SetSourcePath("PREFIX", SourceCluster, SourceSector, SourceZone);
+            sourceGate.SetSourcePath("PREFIX", SourceCluster, SourceSector, sourceZone);
             sourceGate.SetDestinationPath("PREFIX", targetCluster, targetSector, targetZone, targetGate);
-            targetGate.SetDestinationPath("PREFIX", SourceCluster, SourceSector, SourceZone, sourceGate);
+            targetGate.SetDestinationPath("PREFIX", SourceCluster, SourceSector, sourceZone, sourceGate);
 
             // Add target gate to listbox
             sourceGate.DestinationSectorName = targetSector.Name;

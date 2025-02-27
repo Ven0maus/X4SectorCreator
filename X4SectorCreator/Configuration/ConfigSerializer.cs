@@ -6,14 +6,14 @@ namespace X4SectorCreator.Configuration
 {
     internal static class ConfigSerializer
     {
+        private static readonly JsonSerializerOptions _serializerOptions = new()
+        {
+            WriteIndented = true,
+            Converters = { new JsonStringEnumConverter() }
+        };
+
         public static string Serialize(List<Cluster> clusters)
         {
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                Converters = { new JsonStringEnumConverter() }
-            };
-
             // First order everything correctly before exporting
             clusters = clusters.OrderBy(a => a.Id).ToList();
             foreach (var cluster in clusters)
@@ -29,12 +29,12 @@ namespace X4SectorCreator.Configuration
                 }
             }
 
-            return JsonSerializer.Serialize(clusters, options);
+            return JsonSerializer.Serialize(clusters, _serializerOptions);
         }
 
         public static List<Cluster> Deserialize(string filePath)
         {
-            var clusters = JsonSerializer.Deserialize<List<Cluster>>(filePath);
+            var clusters = JsonSerializer.Deserialize<List<Cluster>>(filePath, _serializerOptions);
 
             // First order everything correctly before returning
             clusters = clusters.OrderBy(a => a.Id).ToList();
