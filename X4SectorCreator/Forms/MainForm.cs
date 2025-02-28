@@ -144,9 +144,8 @@ namespace X4SectorCreator
             {
                 // Clear up corrupted xml
                 Directory.Delete(mainFolder, true);
-                _ = MessageBox.Show("Something went wrong during xml generation, please create an issue on github with the stacktrace: " + ex.ToString(),
+                _ = MessageBox.Show("Something went wrong during xml generation: " + ex.Message,
                     "Error in XML Generation", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
             }
 
             // Show succes message
