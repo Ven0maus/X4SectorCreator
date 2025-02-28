@@ -175,7 +175,7 @@ namespace X4SectorCreator.Forms
         {
             Sector = null;
             TxtName.Text = string.Empty;
-            Hide();
+            Close();
         }
     }
 }

@@ -329,6 +329,7 @@ namespace X4SectorCreator
             ClusterForm.BtnCreate.Text = "Create";
             ClusterForm.TxtName.Text = string.Empty;
             ClusterForm.txtDescription.Text = string.Empty;
+            ClusterForm.cmbBackgroundVisual.SelectedItem = ClusterForm.cmbBackgroundVisual.Items[0];
             ClusterForm.TxtLocation.Text = string.Empty;
             ClusterForm.Show();
         }
@@ -425,6 +426,7 @@ namespace X4SectorCreator
             ClusterForm.BtnCreate.Text = "Update";
             ClusterForm.TxtName.Text = selectedClusterName;
             ClusterForm.txtDescription.Text = cluster.Value.Description;
+            ClusterForm.cmbBackgroundVisual.SelectedItem = ClusterForm.FindBackgroundVisualMappingByCode(cluster.Value.BackgroundVisualMapping);
             ClusterForm.TxtLocation.Text = cluster.Key.ToString();
             ClusterForm.Show();
         }

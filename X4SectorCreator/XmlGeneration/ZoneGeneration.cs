@@ -20,17 +20,21 @@ namespace X4SectorCreator.XmlGeneration
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/{modPrefix}_zones.xml")));
 
             // Save new zones in existing sectors
-            var xmlDiffDocument = new XDocument(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("diff",
-                    new XElement("add",
-                        new XAttribute("sel", "/macros"),
-                        GenerateExistingSectorZones(modPrefix, clusters)
+            var diffData = GenerateExistingSectorZones(modPrefix, clusters).ToList();
+            if (diffData.Count > 0)
+            {
+                var xmlDiffDocument = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("diff",
+                        new XElement("add",
+                            new XAttribute("sel", "/macros"),
+                            GenerateExistingSectorZones(modPrefix, clusters)
+                        )
                     )
-                )
-            );
+                );
 
-            xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/zones.xml")));
+                xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/zones.xml")));
+            }
         }
 
         private static IEnumerable<XElement> GenerateZones(string modPrefix, List<Cluster> clusters)

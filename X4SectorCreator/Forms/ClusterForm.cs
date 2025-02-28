@@ -9,9 +9,20 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster Cluster { get; set; }
 
+        private readonly Dictionary<string, string> _backgroundVisualMapping;
+
         public ClusterForm()
         {
             InitializeComponent();
+
+            // Init background visual mapping
+            _backgroundVisualMapping = MainForm.Instance.AllClusters
+                .Where(a => a.Value.IsBaseGame)
+                .Where(a => !string.IsNullOrWhiteSpace(a.Value.BaseGameMapping))
+                .ToDictionary(a => a.Value.Name, a => a.Value.BaseGameMapping);
+
+            foreach (var mapping in _backgroundVisualMapping)
+                cmbBackgroundVisual.Items.Add(mapping.Key);
         }
 
         private void BtnPick_Click(object sender, EventArgs e)
@@ -52,6 +63,14 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            var selectedBackgroundVisual = cmbBackgroundVisual.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedBackgroundVisual))
+            {
+                _ = MessageBox.Show("Please select a valid visual background for the cluster.");
+                return;
+            }
+            var backgroundVisualMapping = _backgroundVisualMapping[selectedBackgroundVisual];
+
             Match match = RegexHelper.TupleLocationRegex().Match(location);
             if (match.Success)
             {
@@ -76,6 +95,7 @@ namespace X4SectorCreator.Forms
                                 .DefaultIfEmpty(new Cluster()).Max(a => a.Id) + 1,
                             Name = name,
                             Description = txtDescription.Text,
+                            BackgroundVisualMapping = backgroundVisualMapping,
                             Position = new Point(coordinate.X, coordinate.Y),
                             Sectors = []
                         });
@@ -103,6 +123,7 @@ namespace X4SectorCreator.Forms
                         Cluster.Position = new Point(coordinate.X, coordinate.Y);
                         Cluster.Name = name;
                         Cluster.Description = txtDescription.Text;
+                        Cluster.BackgroundVisualMapping = backgroundVisualMapping;
                         MainForm.Instance.AllClusters.Add(coordinate, Cluster);
 
                         // Update listbox
@@ -116,6 +137,14 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        public string FindBackgroundVisualMappingByCode(string mappingCode)
+        {
+            return _backgroundVisualMapping
+                .Where(a => a.Value.Equals(mappingCode))
+                .First()
+                .Key;
+        }
+
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             ResetAndHide();
@@ -127,7 +156,7 @@ namespace X4SectorCreator.Forms
             TxtName.Text = string.Empty;
             TxtLocation.Text = string.Empty;
             BtnCreate.Text = "Create";
-            Hide();
+            Close();
         }
     }
 
