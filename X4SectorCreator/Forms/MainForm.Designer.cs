@@ -162,6 +162,7 @@
             GatesListBox.Name = "GatesListBox";
             GatesListBox.Size = new Size(156, 169);
             GatesListBox.TabIndex = 21;
+            GatesListBox.DoubleClick += GatesListBox_DoubleClick;
             // 
             // lblGates
             // 

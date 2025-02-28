@@ -215,6 +215,55 @@ namespace X4SectorCreator
             }
         }
 
+        private static Color HexToColor(string hexstring)
+        {
+            // Remove '#' if present
+            if (hexstring.StartsWith('#'))
+            {
+                hexstring = hexstring[1..];
+            }
+
+            // Convert hex to RGB
+            if (hexstring.Length == 6)
+            {
+                int r = Convert.ToInt32(hexstring[..2], 16);
+                int g = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                return Color.FromArgb(r, g, b);
+            }
+            else if (hexstring.Length == 8) // If it includes alpha (ARGB)
+            {
+                int a = Convert.ToInt32(hexstring[..2], 16);
+                int r = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int g = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(6, 2), 16);
+                return Color.FromArgb(a, r, g, b);
+            }
+            else
+            {
+                throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
+            }
+        }
+
+        private void SetDetailsText(Cluster cluster, Sector sector)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"[Cluster]: {cluster.Name}");
+            sb.AppendLine("Location: " + (cluster.Position.X, cluster.Position.Y));
+            sb.AppendLine();
+            if (sector != null)
+            {
+                sb.AppendLine($"[Sector]: {sector.Name}");
+                sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}");
+                sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}");
+                sb.AppendLine($"Security: {(int)(sector.Security * 100f)}");
+                sb.AppendLine($"Tags: {sector.Tags}");
+                sb.AppendLine($"Allow Anomalies: {sector.AllowRandomAnomalies}");
+                sb.AppendLine($"FactionLogic Disabled: {sector.DisableFactionLogic}");
+            }
+            LblDetails.Text = sb.ToString();
+        }
+
         #region Configuration
         private void BtnReset_Click(object sender, EventArgs e)
         {
@@ -681,54 +730,11 @@ namespace X4SectorCreator
             GatesListBox.Items.Remove(selectedGate);
             GatesListBox.SelectedItem = null;
         }
+
+        private void GatesListBox_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
         #endregion
-
-        private static Color HexToColor(string hexstring)
-        {
-            // Remove '#' if present
-            if (hexstring.StartsWith('#'))
-            {
-                hexstring = hexstring[1..];
-            }
-
-            // Convert hex to RGB
-            if (hexstring.Length == 6)
-            {
-                int r = Convert.ToInt32(hexstring[..2], 16);
-                int g = Convert.ToInt32(hexstring.Substring(2, 2), 16);
-                int b = Convert.ToInt32(hexstring.Substring(4, 2), 16);
-                return Color.FromArgb(r, g, b);
-            }
-            else if (hexstring.Length == 8) // If it includes alpha (ARGB)
-            {
-                int a = Convert.ToInt32(hexstring[..2], 16);
-                int r = Convert.ToInt32(hexstring.Substring(2, 2), 16);
-                int g = Convert.ToInt32(hexstring.Substring(4, 2), 16);
-                int b = Convert.ToInt32(hexstring.Substring(6, 2), 16);
-                return Color.FromArgb(a, r, g, b);
-            }
-            else
-            {
-                throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
-            }
-        }
-
-        private void SetDetailsText(Cluster cluster, Sector sector)
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"[Cluster]: {cluster.Name}");
-            sb.AppendLine("Location: " + (cluster.Position.X, cluster.Position.Y));
-            sb.AppendLine();
-            if (sector != null)
-            {
-                sb.AppendLine($"[Sector]: {sector.Name}");
-                sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}");
-                sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}");
-                sb.AppendLine($"Security: {(int)(sector.Security * 100f)}");
-                sb.AppendLine($"Tags: {sector.Tags}");
-                sb.AppendLine($"Allow Anomalies: {sector.AllowRandomAnomalies}");
-            }
-            LblDetails.Text = sb.ToString();
-        }
     }
 }
