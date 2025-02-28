@@ -46,6 +46,7 @@
             label7 = new Label();
             label8 = new Label();
             label9 = new Label();
+            chkDisableFactionLogic = new CheckBox();
             SuspendLayout();
             // 
             // label1
@@ -67,7 +68,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(15, 322);
+            BtnCancel.Location = new Point(15, 343);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(97, 30);
             BtnCancel.TabIndex = 8;
@@ -77,7 +78,7 @@
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(118, 322);
+            BtnCreate.Location = new Point(118, 343);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(196, 30);
             BtnCreate.TabIndex = 7;
@@ -120,7 +121,7 @@
             chkAllowRandomAnomalies.AutoSize = true;
             chkAllowRandomAnomalies.Checked = true;
             chkAllowRandomAnomalies.CheckState = CheckState.Checked;
-            chkAllowRandomAnomalies.Location = new Point(118, 297);
+            chkAllowRandomAnomalies.Location = new Point(15, 297);
             chkAllowRandomAnomalies.Name = "chkAllowRandomAnomalies";
             chkAllowRandomAnomalies.Size = new Size(199, 19);
             chkAllowRandomAnomalies.TabIndex = 14;
@@ -216,11 +217,22 @@
             label9.TabIndex = 24;
             label9.Text = "%";
             // 
+            // chkDisableFactionLogic
+            // 
+            chkDisableFactionLogic.AutoSize = true;
+            chkDisableFactionLogic.Location = new Point(15, 318);
+            chkDisableFactionLogic.Name = "chkDisableFactionLogic";
+            chkDisableFactionLogic.Size = new Size(303, 19);
+            chkDisableFactionLogic.TabIndex = 25;
+            chkDisableFactionLogic.Text = "Disable Faction Logic (factions can't take ownership)";
+            chkDisableFactionLogic.UseVisualStyleBackColor = true;
+            // 
             // SectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(337, 358);
+            ClientSize = new Size(337, 385);
+            Controls.Add(chkDisableFactionLogic);
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -267,5 +279,6 @@
         private Label label8;
         private Label label9;
         private TextBox TxtName;
+        private CheckBox chkDisableFactionLogic;
     }
 }

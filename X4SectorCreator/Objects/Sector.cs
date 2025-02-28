@@ -8,6 +8,7 @@ namespace X4SectorCreator.Objects
         public string Name { get; set; }
         public string Description { get; set; }
         public string BaseGameMapping { get; set; }
+        public bool DisableFactionLogic { get; set; } = false;
         public string Owner { get; set; }
         public float Sunlight { get; set; } = 1.0f;
         public float Economy { get; set; } = 1.0f;

@@ -27,6 +27,7 @@ namespace X4SectorCreator.XmlGeneration
 
             foreach (Cluster cluster in clusters.Where(a => !a.IsBaseGame))
             {
+                var clusterFactionLogicTag = AddFactionLogic(cluster: cluster);
                 // Add Cluster XML
                 elements.Add(
                     new XElement("dataset",
@@ -37,6 +38,7 @@ namespace X4SectorCreator.XmlGeneration
                                 new XAttribute("description", cluster.Description ?? string.Empty),
                                 new XAttribute("image", "enc_cluster01") // By default point to img of cluster01
                             ),
+                            clusterFactionLogicTag,
                             new XElement("system")
                         )
                     )
@@ -57,18 +59,13 @@ namespace X4SectorCreator.XmlGeneration
                         }
                     }
 
-                    XElement areaElement = !string.IsNullOrWhiteSpace(sector.Tags) ?
-                                new XElement("area",
-                                    new XAttribute("sunlight", sector.Sunlight.ToString("0.0", CultureInfo.InvariantCulture)),
-                                    new XAttribute("economy", sector.Economy.ToString("0.0", CultureInfo.InvariantCulture)),
-                                    new XAttribute("security", sector.Security.ToString("0.0", CultureInfo.InvariantCulture)),
-                                    new XAttribute("tags", sector.Tags)
-                                ) :
-                                new XElement("area",
-                                    new XAttribute("sunlight", sector.Sunlight.ToString("0.0", CultureInfo.InvariantCulture)),
-                                    new XAttribute("economy", sector.Economy.ToString("0.0", CultureInfo.InvariantCulture)),
-                                    new XAttribute("security", sector.Security.ToString("0.0", CultureInfo.InvariantCulture))
-                                );
+                    XElement areaElement = new("area",
+                        new XAttribute("sunlight", sector.Sunlight.ToString("0.0", CultureInfo.InvariantCulture)),
+                        new XAttribute("economy", sector.Economy.ToString("0.0", CultureInfo.InvariantCulture)),
+                        new XAttribute("security", sector.Security.ToString("0.0", CultureInfo.InvariantCulture)),
+                        clusterFactionLogicTag == null ? AddFactionLogic(sector: sector) : null,
+                        string.IsNullOrWhiteSpace(sector.Tags) ? null : new XAttribute("tags", sector.Tags)
+                    );
 
                     elements.Add(
                         new XElement("dataset",
@@ -88,6 +85,26 @@ namespace X4SectorCreator.XmlGeneration
             }
 
             return elements;
+        }
+
+        private static XObject AddFactionLogic(Cluster cluster = null, Sector sector = null)
+        {
+            if (cluster != null)
+            {
+                if (cluster.Sectors.All(a => a.DisableFactionLogic) || 
+                    cluster.Sectors.All(a => !a.DisableFactionLogic))
+                {
+                    var disableFactionLogic = cluster.Sectors[0].DisableFactionLogic;
+                    return new XElement("area",
+                        new XAttribute("factionlogic", (!disableFactionLogic).ToString().ToLower())
+                    );
+                }
+            }
+            else if (sector != null)
+            {
+                return new XAttribute("factionlogic", (!sector.DisableFactionLogic).ToString().ToLower());
+            }
+            return null;
         }
 
         private static string EnsureDirectoryExists(string filePath)

@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics.Metrics;
-using System.Xml.Linq;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -24,6 +22,7 @@ namespace X4SectorCreator.Forms
                     txtSecurity.Text = ((int)(_sector.Security * 100)).ToString();
                     txtCustomTags.Text = _sector.Tags;
                     chkAllowRandomAnomalies.Checked = _sector.AllowRandomAnomalies;
+                    chkDisableFactionLogic.Checked = _sector.DisableFactionLogic;
                 }
                 else
                 {
@@ -34,6 +33,7 @@ namespace X4SectorCreator.Forms
                     txtSecurity.Text = "100";
                     txtCustomTags.Text = string.Empty;
                     chkAllowRandomAnomalies.Checked = true;
+                    chkDisableFactionLogic.Checked = false;
                 }
             }
         }
@@ -129,6 +129,7 @@ namespace X4SectorCreator.Forms
                         Security = (float)Math.Round(security / 100f, 2),
                         Tags = txtCustomTags.Text,
                         AllowRandomAnomalies = chkAllowRandomAnomalies.Checked,
+                        DisableFactionLogic = chkDisableFactionLogic.Checked,
                         Offset = new Point(offSetX, offsetY),
                         Zones = []
                     });
@@ -155,6 +156,7 @@ namespace X4SectorCreator.Forms
                     sector.Security = (float)Math.Round(security / 100f, 2);
                     sector.Tags = txtCustomTags.Text;
                     sector.AllowRandomAnomalies = chkAllowRandomAnomalies.Checked;
+                    sector.DisableFactionLogic = chkDisableFactionLogic.Checked;
 
                     int index = MainForm.Instance.SectorsListBox.SelectedIndex;
                     MainForm.Instance.SectorsListBox.Items[index] = name;
@@ -174,7 +176,6 @@ namespace X4SectorCreator.Forms
         private void ResetAndHide()
         {
             Sector = null;
-            TxtName.Text = string.Empty;
             Close();
         }
     }
