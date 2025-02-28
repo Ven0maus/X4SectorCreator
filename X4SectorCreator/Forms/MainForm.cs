@@ -679,7 +679,12 @@ namespace X4SectorCreator
             string selectedClusterName = ClustersListBox.SelectedItem as string;
             string selectedSectorName = SectorsListBox.SelectedItem as string;
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
-            Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Value.Sectors.FirstOrDefault(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+            if (sector == null)
+            {
+                _ = MessageBox.Show("Please select a sector first.");
+                return;
+            }
 
             GateForm.Reset();
             GateForm.SourceCluster = cluster.Value;
