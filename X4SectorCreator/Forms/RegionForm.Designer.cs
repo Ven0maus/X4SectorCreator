@@ -121,7 +121,7 @@
             lblRegionProperties.Name = "lblRegionProperties";
             lblRegionProperties.Size = new Size(230, 215);
             lblRegionProperties.TabIndex = 44;
-            lblRegionProperties.Text = "lblRegionProperties";
+            lblRegionProperties.Text = "Density: 0\r\nRotation: 0\r\nSeed: 0\r\nNoiseScale: 0\r\nMinNoiseValue: 0\r\nMaxNoiseValue: 0";
             // 
             // TabControlFalloff
             // 
@@ -227,12 +227,14 @@
             // 
             // cmbBoundaryType
             // 
+            cmbBoundaryType.Font = new Font("Segoe UI", 11F);
             cmbBoundaryType.FormattingEnabled = true;
-            cmbBoundaryType.Items.AddRange(new object[] { "cylinder", "sphere" });
+            cmbBoundaryType.Items.AddRange(new object[] { "Cylinder", "Sphere" });
             cmbBoundaryType.Location = new Point(248, 33);
             cmbBoundaryType.Name = "cmbBoundaryType";
-            cmbBoundaryType.Size = new Size(204, 23);
+            cmbBoundaryType.Size = new Size(204, 28);
             cmbBoundaryType.TabIndex = 52;
+            cmbBoundaryType.Text = "Cylinder";
             // 
             // ListBoxResources
             // 
