@@ -20,6 +20,8 @@ namespace X4SectorCreator
         private GateForm _gateForm;
         private VersionUpdateForm _versionUpdateForm;
 
+        private string _currentX4Version;
+
         private readonly string _sectorMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/sector_mappings.json");
 
         public readonly Dictionary<(int, int), Cluster> AllClusters;
@@ -137,6 +139,7 @@ namespace X4SectorCreator
                 ClusterGeneration.Generate(folder, modPrefix, clusters);
                 SectorGeneration.Generate(folder, modPrefix, clusters);
                 ZoneGeneration.Generate(folder, modPrefix, clusters);
+                ContentGeneration.Generate(folder, modName, _currentX4Version.Replace(".", string.Empty) + "0", dependencies: null);
             }
             catch (Exception ex)
             {
@@ -157,6 +160,7 @@ namespace X4SectorCreator
 
             // Set form title
             Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
+            _currentX4Version = versionChecker.TargetGameVersion;
 
             // Check for update
             (bool NewVersionAvailable, VersionInfo VersionInfo) result = await versionChecker.CheckForUpdatesAsync();
@@ -190,6 +194,7 @@ namespace X4SectorCreator
 
                             // Update title text with new version
                             Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
+                            _currentX4Version = versionChecker.TargetGameVersion;
 
                             MessageBox.Show($"Your cluster mapping has been automatically updated with the latest X4 version ({result.VersionInfo.X4Version}).");
                         }
