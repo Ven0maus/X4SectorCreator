@@ -16,19 +16,19 @@ namespace X4SectorCreator.Forms
 
             public override string ToString()
             {
-                return $"[pos=\"{Position.ToString(CultureInfo.InvariantCulture)}\" val=\"{Value.ToString(CultureInfo.InvariantCulture)}\"]";
+                return $"[pos=\"{Position}\" val=\"{Value}\"]";
             }
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtPosition.Text) || !float.TryParse(txtPosition.Text, CultureInfo.InvariantCulture, out var posValue))
+            if (string.IsNullOrWhiteSpace(txtPosition.Text) || !float.TryParse(txtPosition.Text, out var posValue))
             {
                 _ = MessageBox.Show("Please enter a valid numerical \"position\".");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(txtValue.Text) || !float.TryParse(txtValue.Text, CultureInfo.InvariantCulture, out var valueValue))
+            if (string.IsNullOrWhiteSpace(txtValue.Text) || !float.TryParse(txtValue.Text, out var valueValue))
             {
                 _ = MessageBox.Show("Please enter a valid numerical \"value\".");
                 return;
