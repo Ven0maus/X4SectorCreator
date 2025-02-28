@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
-using System.Linq;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
