@@ -433,6 +433,7 @@
             Controls.Add(txtTargetSector);
             Controls.Add(label1);
             Controls.Add(BtnSelectSector);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "GateForm";

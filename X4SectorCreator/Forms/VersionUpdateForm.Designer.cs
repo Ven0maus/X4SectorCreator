@@ -168,6 +168,7 @@
             Controls.Add(txtCurrentVersion);
             Controls.Add(BtnOk);
             Controls.Add(BtnNavigate);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "VersionUpdateForm";

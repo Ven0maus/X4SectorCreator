@@ -16,6 +16,7 @@ namespace X4SectorCreator
         private ClusterForm _clusterForm;
         private SectorForm _sectorForm;
         private GateForm _gateForm;
+        private RegionForm _regionForm;
         private VersionUpdateForm _versionUpdateForm;
 
         private string _currentX4Version;
@@ -28,19 +29,16 @@ namespace X4SectorCreator
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static MainForm Instance { get; private set; }
 
+        // Lazy forms
         public GuideForm GuideForm => _guideForm != null && !_guideForm.IsDisposed ? _guideForm : (_guideForm = new GuideForm());
-
         public SectorMapForm SectorMapForm => _sectorMapForm != null && !_sectorMapForm.IsDisposed ? _sectorMapForm : (_sectorMapForm = new SectorMapForm());
-
         public ClusterForm ClusterForm => _clusterForm != null && !_clusterForm.IsDisposed ? _clusterForm : (_clusterForm = new ClusterForm());
-
         public SectorForm SectorForm => _sectorForm != null && !_sectorForm.IsDisposed ? _sectorForm : (_sectorForm = new SectorForm());
-
         public GateForm GateForm => _gateForm != null && !_gateForm.IsDisposed ? _gateForm : (_gateForm = new GateForm());
-
+        public RegionForm RegionForm => _regionForm != null && !_regionForm.IsDisposed ? _regionForm : (_regionForm = new RegionForm());
         public VersionUpdateForm VersionUpdateForm => _versionUpdateForm != null && !_versionUpdateForm.IsDisposed
-                    ? _versionUpdateForm
-                    : (_versionUpdateForm = new VersionUpdateForm());
+            ? _versionUpdateForm
+            : (_versionUpdateForm = new VersionUpdateForm());
 
         public MainForm()
         {
@@ -678,11 +676,11 @@ namespace X4SectorCreator
         {
             string selectedClusterName = ClustersListBox.SelectedItem as string;
             string selectedSectorName = SectorsListBox.SelectedItem as string;
-            if (string.IsNullOrEmpty(selectedClusterName) || 
+            if (string.IsNullOrEmpty(selectedClusterName) ||
                 string.IsNullOrWhiteSpace(selectedSectorName))
             {
                 _ = MessageBox.Show("Please select a sector first.");
-                return; 
+                return;
             }
 
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
@@ -796,5 +794,10 @@ namespace X4SectorCreator
             GateForm.Show();
         }
         #endregion
+
+        private void BtnNewRegion_Click(object sender, EventArgs e)
+        {
+            RegionForm.Show();
+        }
     }
 }

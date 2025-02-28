@@ -251,6 +251,7 @@
             Controls.Add(TxtName);
             Controls.Add(BtnCancel);
             Controls.Add(BtnCreate);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SectorForm";
