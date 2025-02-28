@@ -61,7 +61,7 @@ namespace X4SectorCreator.XmlGeneration
                 new XElement("macro",
                     new XElement("component",
                         new XAttribute("connection", "space"),
-                        new XAttribute("ref", $"Cluster_01") // TODO: Allow picking any base game cluster here
+                        new XAttribute("ref", cluster.BackgroundVisualMapping.CapitalizeFirstLetter())
                     )
                 )
             );

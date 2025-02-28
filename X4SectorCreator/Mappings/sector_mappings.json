@@ -122,6 +122,7 @@
     {
       "Name": "Windfall IV Aurora's Dream",
       "BaseGameMapping": "cluster_503",
+      "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Windfall IV Aurora's Dream",
@@ -136,6 +137,7 @@
     {
       "Name": "Windfall III The Hoard",
       "BaseGameMapping": "cluster_502",
+      "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Windfall III The Hoard",
@@ -150,6 +152,7 @@
     {
       "Name": "Windfall I Union Summit",
       "BaseGameMapping": "cluster_501",
+      "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Windfall I Union Summit",
@@ -164,6 +167,7 @@
     {
       "Name": "Avarice",
       "BaseGameMapping": "cluster_500",
+      "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Avarice I",
@@ -203,6 +207,7 @@
     {
       "Name": "Unknown System",
       "BaseGameMapping": "cluster_504",
+      "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Unknown System",
@@ -265,6 +270,7 @@
     {
       "Name": "CEO's Doubt",
       "BaseGameMapping": "cluster_713",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "CEO's Doubt",
@@ -321,6 +327,7 @@
     {
       "Name": "Loomanckstrat's Legacy",
       "BaseGameMapping": "cluster_712",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Loomanckstrat's Legacy",
@@ -335,6 +342,7 @@
     {
       "Name": "Mi Ton's Refuge",
       "BaseGameMapping": "cluster_711",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Mi Ton's Refuge",
@@ -349,6 +357,7 @@
     {
       "Name": "Moo-Kye's Revenge",
       "BaseGameMapping": "cluster_710",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Moo-Kye's Revenge",
@@ -419,6 +428,7 @@
     {
       "Name": "Cardinal's Domain",
       "BaseGameMapping": "cluster_709",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Cardinal's Domain",
@@ -561,6 +571,7 @@
     {
       "Name": "Mitsuno's Revelation",
       "BaseGameMapping": "cluster_701",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Mitsuno's Revelation",
@@ -575,6 +586,7 @@
     {
       "Name": "Mitsuno's Defiance",
       "BaseGameMapping": "cluster_702",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Mitsuno's Defiance",
@@ -589,6 +601,7 @@
     {
       "Name": "Mitsuno's Sacrifice",
       "BaseGameMapping": "cluster_703",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Mitsuno's Sacrifice",
@@ -603,6 +616,7 @@
     {
       "Name": "Thuruk's Demise II First Impact",
       "BaseGameMapping": "cluster_408",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Thuruk's Demise II First Impact",
@@ -623,6 +637,7 @@
     {
       "Name": "Family Tkr",
       "BaseGameMapping": "cluster_407",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Family Tkr",
@@ -665,6 +680,7 @@
     {
       "Name": "Fires of Defeat",
       "BaseGameMapping": "cluster_421",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Fires of Defeat",
@@ -679,6 +695,7 @@
     {
       "Name": "Tharka's Ravine XXIV",
       "BaseGameMapping": "cluster_409",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Tharka's Ravine XXIV",
@@ -693,6 +710,7 @@
     {
       "Name": "Tharka's Ravine XVI",
       "BaseGameMapping": "cluster_410",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Tharka's Ravine XVI",
@@ -707,6 +725,7 @@
     {
       "Name": "Tharka's Ravine VIII",
       "BaseGameMapping": "cluster_412",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Tharka's Ravine VIII",
@@ -721,6 +740,7 @@
     {
       "Name": "Tharka's Ravine IV Tharka's Fall",
       "BaseGameMapping": "cluster_413",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Tharka's Ravine IV Tharka's Fall",
@@ -735,6 +755,7 @@
     {
       "Name": "Heart of Acrimony II",
       "BaseGameMapping": "cluster_411",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Heart of Acrimony II",
@@ -749,6 +770,7 @@
     {
       "Name": "Heart of Acrimony I The Boneyard",
       "BaseGameMapping": "cluster_425",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Heart of Acrimony I The Boneyard",
@@ -791,6 +813,7 @@
     {
       "Name": "Two Grand",
       "BaseGameMapping": "cluster_420",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Two Grand",
@@ -805,6 +828,7 @@
     {
       "Name": "Open Market",
       "BaseGameMapping": "cluster_419",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Open Market",
@@ -819,6 +843,7 @@
     {
       "Name": "Family Nhuut",
       "BaseGameMapping": "cluster_418",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Family Nhuut",
@@ -833,6 +858,7 @@
     {
       "Name": "Zyarth's Dominion IV",
       "BaseGameMapping": "cluster_405",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Zyarth's Dominion IV",
@@ -847,6 +873,7 @@
     {
       "Name": "Zyarth's Dominion I",
       "BaseGameMapping": "cluster_404",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Zyarth's Dominion I",
@@ -861,6 +888,7 @@
     {
       "Name": "Zyarth's Dominion X",
       "BaseGameMapping": "cluster_406",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Zyarth's Dominion X",
@@ -875,6 +903,7 @@
     {
       "Name": "Eleventh Hour",
       "BaseGameMapping": "cluster_417",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Eleventh Hour",
@@ -889,6 +918,7 @@
     {
       "Name": "Guiding Star",
       "BaseGameMapping": "cluster_416",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Guiding Star VII",
@@ -909,6 +939,7 @@
     {
       "Name": "President's End",
       "BaseGameMapping": "cluster_704",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "President's End",
@@ -965,6 +996,7 @@
     {
       "Name": "Matrix #101",
       "BaseGameMapping": "cluster_708",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Matrix #101",
@@ -1013,6 +1045,7 @@
     {
       "Name": "Family Zhin",
       "BaseGameMapping": "cluster_401",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Family Zhin",
@@ -1027,6 +1060,7 @@
     {
       "Name": "Family Kritt",
       "BaseGameMapping": "cluster_402",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Family Kritt",
@@ -1041,6 +1075,7 @@
     {
       "Name": "Rhy's Defiance",
       "BaseGameMapping": "cluster_414",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Rhy's Defiance",
@@ -1055,6 +1090,7 @@
     {
       "Name": "Matrix #598",
       "BaseGameMapping": "cluster_415",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Matrix #598",
@@ -1069,6 +1105,7 @@
     {
       "Name": "Wretched Skies IV Family Valka",
       "BaseGameMapping": "cluster_400",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Wretched Skies IV Family Valka",
@@ -1083,6 +1120,7 @@
     {
       "Name": "Wretched Skies V Family Phi",
       "BaseGameMapping": "cluster_403",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Wretched Skies V Family Phi",
@@ -1097,6 +1135,7 @@
     {
       "Name": "Wretched Skies X",
       "BaseGameMapping": "cluster_422",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Wretched Skies X",
@@ -1111,6 +1150,7 @@
     {
       "Name": "Litany of Fury",
       "BaseGameMapping": "cluster_423",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Litany of Fury XII",
@@ -1131,6 +1171,7 @@
     {
       "Name": "Emperor's Pride",
       "BaseGameMapping": "cluster_424",
+      "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Emperor's Pride VI",
@@ -1241,6 +1282,7 @@
     {
       "Name": "Savage Spur",
       "BaseGameMapping": "cluster_112",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Savage Spur I",
@@ -1275,6 +1317,7 @@
     {
       "Name": "Nopileos' Memorial",
       "BaseGameMapping": "cluster_705",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Nopileos' Memorial",
@@ -1289,6 +1332,7 @@
     {
       "Name": "Hatikvah's Faith",
       "BaseGameMapping": "cluster_706",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Hatikvah's Faith",
@@ -1331,6 +1375,7 @@
     {
       "Name": "Third Redemption",
       "BaseGameMapping": "cluster_730",
+      "Dlc": "ego_dlc_mini_01",
       "Sectors": [
         {
           "Name": "Third Redemption",
@@ -1359,6 +1404,7 @@
     {
       "Name": "Ore Belt",
       "BaseGameMapping": "cluster_720",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Ore Belt",
@@ -1393,6 +1439,7 @@
     {
       "Name": "Mists of Artemis",
       "BaseGameMapping": "cluster_715",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Mists of Artemis",
@@ -1407,6 +1454,7 @@
     {
       "Name": "Sanctum Verge",
       "BaseGameMapping": "cluster_722",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Sanctum Verge",
@@ -1511,6 +1559,7 @@
     {
       "Name": "Freedom's Reach",
       "BaseGameMapping": "cluster_714",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Freedom's Reach",
@@ -1525,6 +1574,7 @@
     {
       "Name": "Tempting Fumes",
       "BaseGameMapping": "cluster_723",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Tempting Fumes",
@@ -1539,6 +1589,7 @@
     {
       "Name": "Watchful Gaze",
       "BaseGameMapping": "cluster_601",
+      "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Watchful Gaze",
@@ -1553,6 +1604,7 @@
     {
       "Name": "Barren Shores",
       "BaseGameMapping": "cluster_602",
+      "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Barren Shores",
@@ -1567,6 +1619,7 @@
     {
       "Name": "Great Reef",
       "BaseGameMapping": "cluster_603",
+      "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Great Reef",
@@ -1581,6 +1634,7 @@
     {
       "Name": "Ocean of Fantasy",
       "BaseGameMapping": "cluster_604",
+      "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Ocean of Fantasy",
@@ -1595,6 +1649,7 @@
     {
       "Name": "Sanctuary of Darkness",
       "BaseGameMapping": "cluster_605",
+      "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Sanctuary of Darkness",
@@ -1609,6 +1664,7 @@
     {
       "Name": "Kingdom End",
       "BaseGameMapping": "cluster_606",
+      "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Kingdom End I",
@@ -1634,6 +1690,7 @@
     {
       "Name": "Rolk's Demise",
       "BaseGameMapping": "cluster_607",
+      "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Rolk's Demise",
@@ -1648,6 +1705,7 @@
     {
       "Name": "Atreus' Clouds",
       "BaseGameMapping": "cluster_608",
+      "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Atreus' Clouds",
@@ -1662,6 +1720,7 @@
     {
       "Name": "Menelaus' Oasis",
       "BaseGameMapping": "cluster_609",
+      "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Menelaus' Oasis",
@@ -1676,6 +1735,7 @@
     {
       "Name": "Segaris",
       "BaseGameMapping": "cluster_113",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Segaris",
@@ -1690,6 +1750,7 @@
     {
       "Name": "Gaian Prophecy",
       "BaseGameMapping": "cluster_114",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Gaian Prophecy",
@@ -1704,6 +1765,7 @@
     {
       "Name": "Brennan's Triumph",
       "BaseGameMapping": "cluster_115",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Brennan's Triumph",
@@ -1718,6 +1780,7 @@
     {
       "Name": "Circle of Deceit",
       "BaseGameMapping": "cluster_724",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Circle of Deceit",
@@ -1732,6 +1795,7 @@
     {
       "Name": "Neptune",
       "BaseGameMapping": "cluster_110",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Neptune",
@@ -1746,6 +1810,7 @@
     {
       "Name": "Pluto",
       "BaseGameMapping": "cluster_111",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Pluto",
@@ -1760,6 +1825,7 @@
     {
       "Name": "Oort Cloud",
       "BaseGameMapping": "cluster_116",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Oort Cloud",
@@ -1774,6 +1840,7 @@
     {
       "Name": "Uranus",
       "BaseGameMapping": "cluster_109",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Uranus",
@@ -1788,6 +1855,7 @@
     {
       "Name": "Saturn",
       "BaseGameMapping": "cluster_108",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Saturn 2",
@@ -1813,6 +1881,7 @@
     {
       "Name": "Jupiter",
       "BaseGameMapping": "cluster_107",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Jupiter",
@@ -1827,6 +1896,7 @@
     {
       "Name": "Asteroid Belt",
       "BaseGameMapping": "cluster_100",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Asteroid Belt",
@@ -1841,6 +1911,7 @@
     {
       "Name": "Mars",
       "BaseGameMapping": "cluster_101",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Mars",
@@ -1855,6 +1926,7 @@
     {
       "Name": "Venus",
       "BaseGameMapping": "cluster_102",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Venus",
@@ -1869,6 +1941,7 @@
     {
       "Name": "Mercury",
       "BaseGameMapping": "cluster_106",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Mercury",
@@ -1883,6 +1956,7 @@
     {
       "Name": "Earth",
       "BaseGameMapping": "cluster_104",
+      "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Earth",
@@ -1903,6 +1977,7 @@
     {
       "Name": "Adventure's Promise",
       "BaseGameMapping": "cluster_721",
+      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Adventure's Promise",

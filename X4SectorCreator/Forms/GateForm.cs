@@ -469,7 +469,7 @@ namespace X4SectorCreator.Forms
         {
             MainForm.Instance.SectorMapForm.GateSectorSelection = true;
             MainForm.Instance.SectorMapForm.BtnSelectLocation.Enabled = false;
-            MainForm.Instance.SectorMapForm.ControlPanel.Size = new Size(204, 144);
+            MainForm.Instance.SectorMapForm.ControlPanel.Size = new Size(176, 250);
             MainForm.Instance.SectorMapForm.BtnSelectLocation.Show();
             MainForm.Instance.SectorMapForm.Reset();
             MainForm.Instance.SectorMapForm.Show();

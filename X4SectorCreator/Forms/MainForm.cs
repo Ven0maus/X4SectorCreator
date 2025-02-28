@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.Json;
 using X4SectorCreator.Configuration;
@@ -88,7 +86,7 @@ namespace X4SectorCreator
         {
             SectorMapForm.GateSectorSelection = false;
             SectorMapForm.BtnSelectLocation.Enabled = false;
-            SectorMapForm.ControlPanel.Size = new Size(204, 106);
+            SectorMapForm.ControlPanel.Size = new Size(176, 215);
             SectorMapForm.BtnSelectLocation.Hide();
             SectorMapForm.Reset();
             SectorMapForm.Show();
@@ -96,6 +94,17 @@ namespace X4SectorCreator
 
         private void BtnGenerateDiffs_Click(object sender, EventArgs e)
         {
+            // Validate if all clusters have atleast one sector
+            var invalidClusters = AllClusters.Values
+                .Where(a => a.Sectors == null || a.Sectors.Count == 0)
+                .ToArray();
+            if (invalidClusters.Length != 0)
+            {
+                _ = MessageBox.Show($"Following clusters have no sectors, please fix these first:\n- " +
+                    string.Join("\n- ", invalidClusters.Select(a => a.Name)));
+                return;
+            }
+
             const string lblModName = "Please enter the full name of your mod's folder:";
             const string lblModPrefix = "Please enter the prefix you'd like to use for your mod:";
             Dictionary<string, string> modInfo = MultiInputDialog.Show("Mod information",
@@ -122,32 +131,32 @@ namespace X4SectorCreator
 
             List<Cluster> clusters = [.. AllClusters.Values];
 
-            // Generate each xml file
-            string folder = Path.Combine(Application.StartupPath, "GeneratedXml");
+            // Generate each xml
+            string mainFolder = Path.Combine(Application.StartupPath, "GeneratedXml");
+            string modFolder = Path.Combine(Application.StartupPath, "GeneratedXml", modName);
             try
             {
                 // Clear up any previous xml
-                if (Directory.Exists(folder))
+                if (Directory.Exists(mainFolder))
                 {
-                    Directory.Delete(folder, true);
+                    Directory.Delete(mainFolder, true);
                 }
 
                 // Generate all xml files
-                MacrosGeneration.Generate(folder, modName, modPrefix);
-                MapDefaultsGeneration.Generate(folder, modPrefix, clusters);
-                GalaxyGeneration.Generate(folder, modPrefix, clusters);
-                ClusterGeneration.Generate(folder, modPrefix, clusters);
-                SectorGeneration.Generate(folder, modPrefix, clusters);
-                ZoneGeneration.Generate(folder, modPrefix, clusters);
-                ContentGeneration.Generate(folder, modName, _currentX4Version.Replace(".", string.Empty) + "0", dependencies: null);
+                MacrosGeneration.Generate(modFolder, modName, modPrefix);
+                MapDefaultsGeneration.Generate(modFolder, modPrefix, clusters);
+                GalaxyGeneration.Generate(modFolder, modPrefix, clusters);
+                ClusterGeneration.Generate(modFolder, modPrefix, clusters);
+                SectorGeneration.Generate(modFolder, modPrefix, clusters);
+                ZoneGeneration.Generate(modFolder, modPrefix, clusters);
+                ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", clusters);
             }
             catch (Exception ex)
             {
                 // Clear up corrupted xml
-                Directory.Delete(folder, true);
-                _ = MessageBox.Show("Something went wrong during xml generation, please create an issue on github with the stacktrace: " + ex.ToString(),
+                Directory.Delete(mainFolder, true);
+                _ = MessageBox.Show("Something went wrong during xml generation: " + ex.Message,
                     "Error in XML Generation", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
             }
 
             // Show succes message
@@ -215,6 +224,55 @@ namespace X4SectorCreator
                     VersionUpdateForm.Show();
                 }
             }
+        }
+
+        private static Color HexToColor(string hexstring)
+        {
+            // Remove '#' if present
+            if (hexstring.StartsWith('#'))
+            {
+                hexstring = hexstring[1..];
+            }
+
+            // Convert hex to RGB
+            if (hexstring.Length == 6)
+            {
+                int r = Convert.ToInt32(hexstring[..2], 16);
+                int g = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                return Color.FromArgb(r, g, b);
+            }
+            else if (hexstring.Length == 8) // If it includes alpha (ARGB)
+            {
+                int a = Convert.ToInt32(hexstring[..2], 16);
+                int r = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int g = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(6, 2), 16);
+                return Color.FromArgb(a, r, g, b);
+            }
+            else
+            {
+                throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
+            }
+        }
+
+        private void SetDetailsText(Cluster cluster, Sector sector)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"[Cluster]: {cluster.Name}");
+            sb.AppendLine("Location: " + (cluster.Position.X, cluster.Position.Y));
+            sb.AppendLine();
+            if (sector != null)
+            {
+                sb.AppendLine($"[Sector]: {sector.Name}");
+                sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}");
+                sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}");
+                sb.AppendLine($"Security: {(int)(sector.Security * 100f)}");
+                sb.AppendLine($"Tags: {sector.Tags}");
+                sb.AppendLine($"Allow Anomalies: {sector.AllowRandomAnomalies}");
+                sb.AppendLine($"FactionLogic Disabled: {sector.DisableFactionLogic}");
+            }
+            LblDetails.Text = sb.ToString();
         }
 
         #region Configuration
@@ -292,10 +350,16 @@ namespace X4SectorCreator
                             // Set custom clusters
                             AllClusters[(cluster.Position.X, cluster.Position.Y)] = cluster;
 
+                            // Apply support additions for new versions
+                            Import_Support_NewVersions(cluster);
+
                             // Setup listboxes
                             if (!cluster.IsBaseGame)
                                 _ = ClustersListBox.Items.Add(cluster.Name);
                         }
+
+                        // No longer needed
+                        _clusterDlcLookup = null;
 
                         // Select first one so sector and zones populate automatically
                         ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
@@ -315,21 +379,34 @@ namespace X4SectorCreator
             }
         }
 
-        private void BtnOpenFolder_Click(object sender, EventArgs e)
+        private Dictionary<(int, int), Cluster> _clusterDlcLookup;
+        private void Import_Support_NewVersions(Cluster cluster)
         {
-            string folder = EnsureDirectoryExists(Path.Combine(Application.StartupPath, "GeneratedXml"));
-            _ = Process.Start("explorer.exe", folder);
+            if (string.IsNullOrWhiteSpace(cluster.BackgroundVisualMapping))
+                cluster.BackgroundVisualMapping = "cluster_01";
+
+            // Re-check DLCs
+            if (cluster.Dlc == null)
+            {
+                if (_clusterDlcLookup == null)
+                {
+                    // Create new lookup table
+                    string json = File.ReadAllText(_sectorMappingFilePath);
+                    ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
+                    _clusterDlcLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
+                }
+
+                if (_clusterDlcLookup.TryGetValue((cluster.Position.X, cluster.Position.Y), out var lookupCluster))
+                    cluster.Dlc = lookupCluster.Dlc;
+            }
         }
 
-        private static string EnsureDirectoryExists(string filePath)
+        private void BtnOpenFolder_Click(object sender, EventArgs e)
         {
-            string directoryPath = Path.GetDirectoryName(filePath);
+            var directoryPath = Path.Combine(Application.StartupPath, "GeneratedXml");
             if (!Directory.Exists(directoryPath))
-            {
-                _ = Directory.CreateDirectory(directoryPath);
-            }
-
-            return filePath;
+                Directory.CreateDirectory(directoryPath);
+            _ = Process.Start("explorer.exe", directoryPath);
         }
         #endregion
 
@@ -340,6 +417,7 @@ namespace X4SectorCreator
             ClusterForm.BtnCreate.Text = "Create";
             ClusterForm.TxtName.Text = string.Empty;
             ClusterForm.txtDescription.Text = string.Empty;
+            ClusterForm.cmbBackgroundVisual.SelectedItem = ClusterForm.cmbBackgroundVisual.Items[0];
             ClusterForm.TxtLocation.Text = string.Empty;
             ClusterForm.Show();
         }
@@ -436,6 +514,7 @@ namespace X4SectorCreator
             ClusterForm.BtnCreate.Text = "Update";
             ClusterForm.TxtName.Text = selectedClusterName;
             ClusterForm.txtDescription.Text = cluster.Value.Description;
+            ClusterForm.cmbBackgroundVisual.SelectedItem = ClusterForm.FindBackgroundVisualMappingByCode(cluster.Value.BackgroundVisualMapping);
             ClusterForm.TxtLocation.Text = cluster.Key.ToString();
             ClusterForm.Show();
         }
@@ -500,6 +579,9 @@ namespace X4SectorCreator
             GatesListBox.Items.Clear();
             SectorsListBox.Items.Remove(SectorsListBox.SelectedItem);
             SectorsListBox.SelectedItem = null;
+
+            // Set details
+            SetDetailsText(cluster.Value, null);
         }
 
         private static void RecalculateSectorOffsets(Cluster cluster)
@@ -597,7 +679,12 @@ namespace X4SectorCreator
             string selectedClusterName = ClustersListBox.SelectedItem as string;
             string selectedSectorName = SectorsListBox.SelectedItem as string;
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
-            Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Value.Sectors.FirstOrDefault(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+            if (sector == null)
+            {
+                _ = MessageBox.Show("Please select a sector first.");
+                return;
+            }
 
             GateForm.Reset();
             GateForm.SourceCluster = cluster.Value;
@@ -662,54 +749,11 @@ namespace X4SectorCreator
             GatesListBox.Items.Remove(selectedGate);
             GatesListBox.SelectedItem = null;
         }
+
+        private void GatesListBox_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
         #endregion
-
-        private static Color HexToColor(string hexstring)
-        {
-            // Remove '#' if present
-            if (hexstring.StartsWith('#'))
-            {
-                hexstring = hexstring[1..];
-            }
-
-            // Convert hex to RGB
-            if (hexstring.Length == 6)
-            {
-                int r = Convert.ToInt32(hexstring[..2], 16);
-                int g = Convert.ToInt32(hexstring.Substring(2, 2), 16);
-                int b = Convert.ToInt32(hexstring.Substring(4, 2), 16);
-                return Color.FromArgb(r, g, b);
-            }
-            else if (hexstring.Length == 8) // If it includes alpha (ARGB)
-            {
-                int a = Convert.ToInt32(hexstring[..2], 16);
-                int r = Convert.ToInt32(hexstring.Substring(2, 2), 16);
-                int g = Convert.ToInt32(hexstring.Substring(4, 2), 16);
-                int b = Convert.ToInt32(hexstring.Substring(6, 2), 16);
-                return Color.FromArgb(a, r, g, b);
-            }
-            else
-            {
-                throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
-            }
-        }
-
-        private void SetDetailsText(Cluster cluster, Sector sector)
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine($"[Cluster]: {cluster.Name}");
-            sb.AppendLine("Location: " + (cluster.Position.X, cluster.Position.Y));
-            sb.AppendLine();
-            if (sector != null)
-            {
-                sb.AppendLine($"[Sector]: {sector.Name}");
-                sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}");
-                sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}");
-                sb.AppendLine($"Security: {(int)(sector.Security * 100f)}");
-                sb.AppendLine($"Tags: {sector.Tags}");
-                sb.AppendLine($"Allow Anomalies: {sector.AllowRandomAnomalies}");
-            }
-            LblDetails.Text = sb.ToString();
-        }
     }
 }

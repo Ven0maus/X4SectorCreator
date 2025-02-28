@@ -18,15 +18,18 @@ namespace X4SectorCreator.XmlGeneration
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/{modPrefix}_sectors.xml")));
 
             // Save new zones in existing sectors
+            var diffData = GenerateSectorAdds(modPrefix, clusters).ToList();
+            if (diffData.Count > 0)
+            {
+                var xmlSectorDiff = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("diff",
+                        diffData
+                    )
+                );
 
-            var xmlSectorDiff = new XDocument(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("diff",
-                    GenerateSectorAdds(modPrefix, clusters)
-                )
-            );
-
-            xmlSectorDiff.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/sectors.xml")));
+                xmlSectorDiff.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/sectors.xml")));
+            }
         }
 
         private static IEnumerable<XElement> GenerateSectors(string modPrefix, List<Cluster> clusters)

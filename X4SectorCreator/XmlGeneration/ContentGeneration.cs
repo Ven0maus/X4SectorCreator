@@ -1,10 +1,11 @@
 ﻿using System.Xml.Linq;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
 {
     internal static class ContentGeneration
     {
-        public static void Generate(string folder, string modName, string depVersion, IEnumerable<(string code, string name)> dependencies = null)
+        public static void Generate(string folder, string modName, string depVersion, List<Cluster> clusters)
         {
             XElement content = new XElement("content",
                 new XAttribute("id", $"{modName.Replace(" ", "_")}"),
@@ -15,13 +16,47 @@ namespace X4SectorCreator.XmlGeneration
                 new XAttribute("date", DateTime.Today.ToString("d")),
                 new XAttribute("save", "0"),
                 new XAttribute("enabled", "1"),
-                GenerateDependencies(dependencies),
+                GenerateDependencies(CollectDependencies(clusters)),
                 new XElement("dependency", new XAttribute("version", depVersion)),
                 GenerateTranslations(modName)
             );
 
             XDocument doc = new XDocument(new XDeclaration("1.0", "utf-8", null), content);
             doc.Save(EnsureDirectoryExists(Path.Combine(folder, $"content.xml")));
+        }
+
+        private static IEnumerable<(string code, string name)> CollectDependencies(List<Cluster> clusters)
+        {
+            var dlcDependencies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var cluster in clusters)
+            {
+                if (!cluster.IsBaseGame) continue;
+
+                foreach (var sector in cluster.Sectors)
+                {
+                    if (sector.Zones.Count == 0) continue;
+
+                    // Each base game cluster, by default has no zones.
+                    // So if zones are present, it means a gate connection was added to a custom sector
+                    // This means this cluster is eligible for dependency check
+                    if (!string.IsNullOrWhiteSpace(cluster.Dlc))
+                    {
+                        if (dlcDependencies.Contains(cluster.Dlc)) 
+                            break;
+
+                        dlcDependencies.Add(cluster.Dlc);
+                        break;
+                    }
+                }
+            }
+
+            // Convert to a pair
+            return dlcDependencies.Select(a =>
+            {
+                var pair = SectorMapForm.DlcMapping.First(b => b.Value.Equals(a, StringComparison.OrdinalIgnoreCase));
+                return (pair.Value, pair.Key);
+            });
         }
 
         private static IEnumerable<XElement> GenerateDependencies(IEnumerable<(string code, string name)> dependencies)
