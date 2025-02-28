@@ -367,6 +367,7 @@
             txtDensity.Name = "txtDensity";
             txtDensity.Size = new Size(230, 23);
             txtDensity.TabIndex = 68;
+            txtDensity.Text = "1.5";
             // 
             // label9
             // 
@@ -384,6 +385,7 @@
             txtRotation.Name = "txtRotation";
             txtRotation.Size = new Size(230, 23);
             txtRotation.TabIndex = 70;
+            txtRotation.Text = "0";
             // 
             // label10
             // 
@@ -401,6 +403,7 @@
             txtSeed.Name = "txtSeed";
             txtSeed.Size = new Size(230, 23);
             txtSeed.TabIndex = 72;
+            txtSeed.Text = "1337";
             // 
             // label11
             // 
@@ -418,6 +421,7 @@
             txtNoiseScale.Name = "txtNoiseScale";
             txtNoiseScale.Size = new Size(230, 23);
             txtNoiseScale.TabIndex = 74;
+            txtNoiseScale.Text = "10000";
             // 
             // label12
             // 
@@ -435,6 +439,7 @@
             txtMinNoiseValue.Name = "txtMinNoiseValue";
             txtMinNoiseValue.Size = new Size(230, 23);
             txtMinNoiseValue.TabIndex = 76;
+            txtMinNoiseValue.Text = "0.15";
             // 
             // label13
             // 
@@ -452,6 +457,7 @@
             txtMaxNoiseValue.Name = "txtMaxNoiseValue";
             txtMaxNoiseValue.Size = new Size(230, 23);
             txtMaxNoiseValue.TabIndex = 78;
+            txtMaxNoiseValue.Text = "1";
             // 
             // RegionForm
             // 
