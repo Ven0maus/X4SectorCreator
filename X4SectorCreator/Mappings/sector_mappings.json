@@ -270,7 +270,6 @@
     {
       "Name": "CEO's Doubt",
       "BaseGameMapping": "cluster_713",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "CEO's Doubt",
@@ -327,7 +326,6 @@
     {
       "Name": "Loomanckstrat's Legacy",
       "BaseGameMapping": "cluster_712",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Loomanckstrat's Legacy",
@@ -342,7 +340,6 @@
     {
       "Name": "Mi Ton's Refuge",
       "BaseGameMapping": "cluster_711",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Mi Ton's Refuge",
@@ -357,7 +354,6 @@
     {
       "Name": "Moo-Kye's Revenge",
       "BaseGameMapping": "cluster_710",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Moo-Kye's Revenge",
@@ -428,7 +424,6 @@
     {
       "Name": "Cardinal's Domain",
       "BaseGameMapping": "cluster_709",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Cardinal's Domain",
@@ -1404,7 +1399,6 @@
     {
       "Name": "Ore Belt",
       "BaseGameMapping": "cluster_720",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Ore Belt",
@@ -1439,7 +1433,6 @@
     {
       "Name": "Mists of Artemis",
       "BaseGameMapping": "cluster_715",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Mists of Artemis",
@@ -1454,7 +1447,6 @@
     {
       "Name": "Sanctum Verge",
       "BaseGameMapping": "cluster_722",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Sanctum Verge",
@@ -1559,7 +1551,6 @@
     {
       "Name": "Freedom's Reach",
       "BaseGameMapping": "cluster_714",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Freedom's Reach",
@@ -1574,7 +1565,6 @@
     {
       "Name": "Tempting Fumes",
       "BaseGameMapping": "cluster_723",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Tempting Fumes",
@@ -1780,7 +1770,6 @@
     {
       "Name": "Circle of Deceit",
       "BaseGameMapping": "cluster_724",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Circle of Deceit",
@@ -1977,7 +1966,6 @@
     {
       "Name": "Adventure's Promise",
       "BaseGameMapping": "cluster_721",
-      "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "Adventure's Promise",
