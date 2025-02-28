@@ -33,7 +33,11 @@
             chkShowCoordinates = new CheckBox();
             chkShowCustomSectors = new CheckBox();
             ControlPanel = new Panel();
+            DlcListBox = new CheckedListBox();
+            panel1 = new Panel();
+            label1 = new Label();
             ControlPanel.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // chkShowX4Sectors
@@ -43,11 +47,11 @@
             chkShowX4Sectors.BackColor = Color.Transparent;
             chkShowX4Sectors.Checked = true;
             chkShowX4Sectors.CheckState = CheckState.Checked;
-            chkShowX4Sectors.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            chkShowX4Sectors.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             chkShowX4Sectors.ForeColor = SystemColors.ButtonFace;
-            chkShowX4Sectors.Location = new Point(7, 7);
+            chkShowX4Sectors.Location = new Point(4, 3);
             chkShowX4Sectors.Name = "chkShowX4Sectors";
-            chkShowX4Sectors.Size = new Size(153, 25);
+            chkShowX4Sectors.Size = new Size(138, 23);
             chkShowX4Sectors.TabIndex = 0;
             chkShowX4Sectors.Text = "Show X4 Sectors";
             chkShowX4Sectors.UseVisualStyleBackColor = false;
@@ -58,9 +62,9 @@
             BtnSelectLocation.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnSelectLocation.Enabled = false;
             BtnSelectLocation.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            BtnSelectLocation.Location = new Point(7, 103);
+            BtnSelectLocation.Location = new Point(4, 214);
             BtnSelectLocation.Name = "BtnSelectLocation";
-            BtnSelectLocation.Size = new Size(192, 30);
+            BtnSelectLocation.Size = new Size(167, 30);
             BtnSelectLocation.TabIndex = 1;
             BtnSelectLocation.Text = "Select Location";
             BtnSelectLocation.UseVisualStyleBackColor = true;
@@ -71,11 +75,11 @@
             chkShowCoordinates.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             chkShowCoordinates.AutoSize = true;
             chkShowCoordinates.BackColor = Color.Transparent;
-            chkShowCoordinates.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            chkShowCoordinates.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             chkShowCoordinates.ForeColor = SystemColors.ButtonFace;
-            chkShowCoordinates.Location = new Point(7, 72);
+            chkShowCoordinates.Location = new Point(4, 61);
             chkShowCoordinates.Name = "chkShowCoordinates";
-            chkShowCoordinates.Size = new Size(167, 25);
+            chkShowCoordinates.Size = new Size(149, 23);
             chkShowCoordinates.TabIndex = 2;
             chkShowCoordinates.Text = "Show Coordinates";
             chkShowCoordinates.UseVisualStyleBackColor = false;
@@ -88,11 +92,11 @@
             chkShowCustomSectors.BackColor = Color.Transparent;
             chkShowCustomSectors.Checked = true;
             chkShowCustomSectors.CheckState = CheckState.Checked;
-            chkShowCustomSectors.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            chkShowCustomSectors.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             chkShowCustomSectors.ForeColor = SystemColors.ButtonFace;
-            chkShowCustomSectors.Location = new Point(7, 41);
+            chkShowCustomSectors.Location = new Point(4, 32);
             chkShowCustomSectors.Name = "chkShowCustomSectors";
-            chkShowCustomSectors.Size = new Size(192, 25);
+            chkShowCustomSectors.Size = new Size(171, 23);
             chkShowCustomSectors.TabIndex = 3;
             chkShowCustomSectors.Text = "Show Custom Sectors";
             chkShowCustomSectors.UseVisualStyleBackColor = false;
@@ -103,20 +107,57 @@
             ControlPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ControlPanel.BackColor = Color.Black;
             ControlPanel.BorderStyle = BorderStyle.FixedSingle;
+            ControlPanel.Controls.Add(DlcListBox);
             ControlPanel.Controls.Add(BtnSelectLocation);
             ControlPanel.Controls.Add(chkShowCustomSectors);
             ControlPanel.Controls.Add(chkShowCoordinates);
             ControlPanel.Controls.Add(chkShowX4Sectors);
-            ControlPanel.Location = new Point(484, 12);
+            ControlPanel.Location = new Point(512, 12);
             ControlPanel.Name = "ControlPanel";
-            ControlPanel.Size = new Size(204, 106);
+            ControlPanel.Size = new Size(176, 250);
             ControlPanel.TabIndex = 4;
+            // 
+            // DlcListBox
+            // 
+            DlcListBox.BackColor = SystemColors.MenuText;
+            DlcListBox.CheckOnClick = true;
+            DlcListBox.ForeColor = Color.White;
+            DlcListBox.FormattingEnabled = true;
+            DlcListBox.Location = new Point(4, 116);
+            DlcListBox.Name = "DlcListBox";
+            DlcListBox.ScrollAlwaysVisible = true;
+            DlcListBox.Size = new Size(167, 94);
+            DlcListBox.TabIndex = 4;
+            DlcListBox.ItemCheck += DlcListBox_ItemCheck;
+            // 
+            // panel1
+            // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            panel1.BackColor = Color.DimGray;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label1);
+            panel1.Location = new Point(512, 103);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(176, 20);
+            panel1.TabIndex = 5;
+            // 
+            // label1
+            // 
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(-1, -2);
+            label1.Name = "label1";
+            label1.Size = new Size(180, 23);
+            label1.TabIndex = 0;
+            label1.Text = "Game DLCs";
+            label1.TextAlign = ContentAlignment.TopCenter;
             // 
             // SectorMapForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 569);
+            Controls.Add(panel1);
             Controls.Add(ControlPanel);
             MinimizeBox = false;
             Name = "SectorMapForm";
@@ -125,6 +166,7 @@
             WindowState = FormWindowState.Maximized;
             ControlPanel.ResumeLayout(false);
             ControlPanel.PerformLayout();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -135,5 +177,8 @@
         private CheckBox chkShowCustomSectors;
         internal Button BtnSelectLocation;
         internal Panel ControlPanel;
+        internal Panel panel1;
+        private Label label1;
+        private CheckedListBox DlcListBox;
     }
 }

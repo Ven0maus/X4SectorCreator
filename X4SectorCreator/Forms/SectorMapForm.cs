@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator
@@ -24,6 +25,19 @@ namespace X4SectorCreator
         private (int, int)? _selectedHex, _previousSelectedHex;
         private float _zoom = 1.2f; // 1.0 means 100% scale
 
+        public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
+        private readonly static Dictionary<string, string> _dlcMapping = new()
+        {
+            { "Split Vendetta", "ego_dlc_split" },
+            { "Tides Of Avarice", "ego_dlc_pirate" },
+            { "Cradle Of Humanity", "ego_dlc_terran" },
+            { "Kingdom End", "ego_dlc_boron" },
+            { "Timelines", "ego_dlc_timelines" },
+            { "Hyperion Pack", "ego_dlc_mini_01" }
+        };
+        private readonly static Dictionary<int, bool> _dlcsSelected = [];
+        private readonly static List<string> _dlcIndexOrder = [];
+
         public SectorMapForm()
         {
             InitializeComponent();
@@ -36,6 +50,21 @@ namespace X4SectorCreator
             Paint += DrawHexGrid;
             Resize += HandleResize;
             MouseWheel += HandleMouseWheel;
+
+            // Init dlcs
+            for (int i = 0; i < _dlcMapping.Count; i++)
+            {
+                if (!_dlcsSelected.TryGetValue(i, out var value))
+                {
+                    // If not yet initialized, it will be by default selected
+                    _dlcsSelected[i] = value = true;
+                }
+
+                // Init listbox values and pre-check the cached selected dlcs
+                _dlcIndexOrder.Add(_dlcMapping.Keys.ElementAt(i));
+                DlcListBox.Items.Add(_dlcIndexOrder[i]);
+                DlcListBox.SetItemChecked(i, value);
+            }
         }
 
         public void Reset()
@@ -347,12 +376,16 @@ namespace X4SectorCreator
                 // Next step render the game clusters on top
                 foreach (Cluster cluster in _baseGameClusters.Values)
                 {
+                    // Check if the dlc is selected
+                    if (!IsSelectedDlcCluster(cluster)) continue;
                     RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
 
                 // Next step render names
                 foreach (Cluster cluster in _baseGameClusters.Values)
                 {
+                    // Check if the dlc is selected
+                    if (!IsSelectedDlcCluster(cluster)) continue;
                     RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
             }
@@ -390,7 +423,10 @@ namespace X4SectorCreator
         private void RenderNonSectorGrid(PaintEventArgs e, Color nonExistantHexColor, KeyValuePair<(int, int), Hexagon> hex)
         {
             // Render each non-existant hex first
-            if (!_baseGameClusters.TryGetValue(hex.Key, out Cluster cluster) || !chkShowX4Sectors.Checked)
+            if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) || 
+                !IsSelectedDlcCluster(cluster) || 
+                (!chkShowX4Sectors.Checked && cluster.IsBaseGame) ||
+                (!chkShowCustomSectors.Checked && !cluster.IsBaseGame))
             {
                 using SolidBrush mainBrush = new(Color.Black);
                 using Pen mainPen = new(nonExistantHexColor, 2);
@@ -419,6 +455,17 @@ namespace X4SectorCreator
                 // Set for later
                 cluster.Hexagon = hex.Value;
             }
+        }
+
+        private static bool IsSelectedDlcCluster(Cluster cluster)
+        {
+            // If no dlc, its selected by default
+            if (string.IsNullOrWhiteSpace(cluster.Dlc)) return true;
+
+            // Check if the dlc is selected
+            var key = _dlcMapping.First(a => a.Value.Equals(cluster.Dlc, StringComparison.OrdinalIgnoreCase)).Key;
+            var dlcIndex = _dlcIndexOrder.IndexOf(key);
+            return _dlcsSelected[dlcIndex];
         }
 
         private void RenderClusters(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex)
@@ -462,7 +509,7 @@ namespace X4SectorCreator
                     // Second child hex: down
                     // Third child hex: right
                     Sector sector = cluster.Sectors[index];
-                    Color ownerColor = !MainForm.Instance.FactionColorMapping.TryGetValue(sector.Owner, out Color value) ? 
+                    Color ownerColor = !MainForm.Instance.FactionColorMapping.TryGetValue(sector.Owner, out Color value) ?
                         MainForm.Instance.FactionColorMapping["None"] : value;
                     using Pen pen = new(ownerColor, 2);
                     using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
@@ -699,6 +746,12 @@ namespace X4SectorCreator
 
         private void ChkShowCustomSectors_CheckedChanged(object sender, EventArgs e)
         {
+            Invalidate();
+        }
+
+        private void DlcListBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            _dlcsSelected[e.Index] = e.NewValue == CheckState.Checked;
             Invalidate();
         }
     }

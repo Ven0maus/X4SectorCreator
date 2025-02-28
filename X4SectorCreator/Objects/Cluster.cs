@@ -9,6 +9,7 @@ namespace X4SectorCreator.Objects
         public string Description { get; set; }
         public string BackgroundVisualMapping { get; set; }
         public string BaseGameMapping { get; set; }
+        public string Dlc { get; set; }
         public List<Sector> Sectors { get; set; }
         public Point Position { get; set; }
 

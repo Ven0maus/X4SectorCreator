@@ -86,7 +86,7 @@ namespace X4SectorCreator
         {
             SectorMapForm.GateSectorSelection = false;
             SectorMapForm.BtnSelectLocation.Enabled = false;
-            SectorMapForm.ControlPanel.Size = new Size(204, 106);
+            SectorMapForm.ControlPanel.Size = new Size(176, 215);
             SectorMapForm.BtnSelectLocation.Hide();
             SectorMapForm.Reset();
             SectorMapForm.Show();
@@ -138,7 +138,7 @@ namespace X4SectorCreator
                 ClusterGeneration.Generate(modFolder, modPrefix, clusters);
                 SectorGeneration.Generate(modFolder, modPrefix, clusters);
                 ZoneGeneration.Generate(modFolder, modPrefix, clusters);
-                ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", dependencies: null);
+                ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", clusters);
             }
             catch (Exception ex)
             {
@@ -291,10 +291,16 @@ namespace X4SectorCreator
                             // Set custom clusters
                             AllClusters[(cluster.Position.X, cluster.Position.Y)] = cluster;
 
+                            // Apply support additions for new versions
+                            Import_Support_NewVersions(cluster);
+
                             // Setup listboxes
                             if (!cluster.IsBaseGame)
                                 _ = ClustersListBox.Items.Add(cluster.Name);
                         }
+
+                        // No longer needed
+                        _clusterDlcLookup = null;
 
                         // Select first one so sector and zones populate automatically
                         ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
@@ -311,6 +317,28 @@ namespace X4SectorCreator
                     _ = MessageBox.Show($"Invalid JSON content in file, please try another file: {ex.Message}",
                         "Invalid JSON Content", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private Dictionary<(int, int), Cluster> _clusterDlcLookup;
+        private void Import_Support_NewVersions(Cluster cluster)
+        {
+            if (string.IsNullOrWhiteSpace(cluster.BackgroundVisualMapping))
+                cluster.BackgroundVisualMapping = "cluster_01";
+
+            // Re-check DLCs
+            if (cluster.Dlc == null)
+            {
+                if (_clusterDlcLookup == null)
+                {
+                    // Create new lookup table
+                    string json = File.ReadAllText(_sectorMappingFilePath);
+                    ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
+                    _clusterDlcLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
+                }
+
+                if (_clusterDlcLookup.TryGetValue((cluster.Position.X, cluster.Position.Y), out var lookupCluster))
+                    cluster.Dlc = lookupCluster.Dlc;
             }
         }
 
