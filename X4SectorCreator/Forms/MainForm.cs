@@ -94,6 +94,17 @@ namespace X4SectorCreator
 
         private void BtnGenerateDiffs_Click(object sender, EventArgs e)
         {
+            // Validate if all clusters have atleast one sector
+            var invalidClusters = AllClusters.Values
+                .Where(a => a.Sectors == null || a.Sectors.Count == 0)
+                .ToArray();
+            if (invalidClusters.Length != 0)
+            {
+                _ = MessageBox.Show($"Following clusters have no sectors, please fix these first:\n- " +
+                    string.Join("\n- ", invalidClusters.Select(a => a.Name)));
+                return;
+            }
+
             const string lblModName = "Please enter the full name of your mod's folder:";
             const string lblModPrefix = "Please enter the prefix you'd like to use for your mod:";
             Dictionary<string, string> modInfo = MultiInputDialog.Show("Mod information",
@@ -568,6 +579,9 @@ namespace X4SectorCreator
             GatesListBox.Items.Clear();
             SectorsListBox.Items.Remove(SectorsListBox.SelectedItem);
             SectorsListBox.SelectedItem = null;
+
+            // Set details
+            SetDetailsText(cluster.Value, null);
         }
 
         private static void RecalculateSectorOffsets(Cluster cluster)
