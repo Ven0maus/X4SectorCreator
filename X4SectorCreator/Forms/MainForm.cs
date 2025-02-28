@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.Json;
 using X4SectorCreator.Configuration;
@@ -317,19 +315,10 @@ namespace X4SectorCreator
 
         private void BtnOpenFolder_Click(object sender, EventArgs e)
         {
-            string folder = EnsureDirectoryExists(Path.Combine(Application.StartupPath, "GeneratedXml"));
-            _ = Process.Start("explorer.exe", folder);
-        }
-
-        private static string EnsureDirectoryExists(string filePath)
-        {
-            string directoryPath = Path.GetDirectoryName(filePath);
+            var directoryPath = Path.Combine(Application.StartupPath, "GeneratedXml");
             if (!Directory.Exists(directoryPath))
-            {
-                _ = Directory.CreateDirectory(directoryPath);
-            }
-
-            return filePath;
+                Directory.CreateDirectory(directoryPath);
+            _ = Process.Start("explorer.exe", directoryPath);
         }
         #endregion
 
