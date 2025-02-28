@@ -7,10 +7,15 @@ namespace X4SectorCreator.Forms
 {
     public partial class RegionForm : Form
     {
-        private RegionResourcesForm _regionPropertiesForm;
-        public RegionResourcesForm RegionPropertiesForm => _regionPropertiesForm != null && !_regionPropertiesForm.IsDisposed
-            ? _regionPropertiesForm
-            : (_regionPropertiesForm = new RegionResourcesForm());
+        private RegionResourcesForm _regionResourcesForm;
+        public RegionResourcesForm RegionResourcesForm => _regionResourcesForm != null && !_regionResourcesForm.IsDisposed
+            ? _regionResourcesForm
+            : (_regionResourcesForm = new RegionResourcesForm());
+
+        private RegionFalloffForm _regionFalloffForm;
+        public RegionFalloffForm RegionFalloffForm => _regionFalloffForm != null && !_regionFalloffForm.IsDisposed
+            ? _regionFalloffForm
+            : (_regionFalloffForm = new RegionFalloffForm());
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster Cluster { get; set; }
@@ -20,7 +25,7 @@ namespace X4SectorCreator.Forms
         public Sector Sector
         {
             get => _sector;
-            set 
+            set
             {
                 _sector = value;
                 if (_sector != null)
@@ -32,7 +37,7 @@ namespace X4SectorCreator.Forms
         private readonly int _hexRadius;
         private readonly PointF[] _hexagonPoints;
         private Point _circlePosition, _lastMousePos;
-        private int _circleRadius = 250;
+        private int _circleRadius = 200;
         private bool _dragging = false, _resizing = false;
         #endregion
 
@@ -52,21 +57,6 @@ namespace X4SectorCreator.Forms
 
             // Init hexagon
             InitializeHexagon();
-        }
-
-        private void InitSectorValues()
-        {
-
-        }
-
-        private void BtnCreateRegion_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void BtnUpdateRegionProperties_Click(object sender, EventArgs e)
-        {
-            RegionPropertiesForm.Show();
         }
 
         #region Hexagon Methods
@@ -172,7 +162,7 @@ namespace X4SectorCreator.Forms
             for (int i = 0; i < steps; i++)
             {
                 double angle = i * angleStep;
-                Point edgePoint = new Point(
+                Point edgePoint = new(
                     center.X + (int)(radius / 2 * Math.Cos(angle)),
                     center.Y + (int)(radius / 2 * Math.Sin(angle))
                 );
@@ -186,5 +176,82 @@ namespace X4SectorCreator.Forms
             return true; // If all edge points are inside, it's fully inside
         }
         #endregion
+
+        private void InitSectorValues()
+        {
+
+        }
+
+        private void BtnCreateRegion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnResourcesAdd_Click(object sender, EventArgs e)
+        {
+            RegionResourcesForm.Show();
+        }
+
+        private void BtnResourcesDel_Click(object sender, EventArgs e)
+        {
+            if (ListBoxResources.SelectedItem is not RegionResourcesForm.Resource selectedResource) return;
+            ListBoxResources.Items.Remove(selectedResource);
+            ListBoxResources.SelectedItem = null;
+        }
+
+        private void BtnFalloffAdd_Click(object sender, EventArgs e)
+        {
+            RegionFalloffForm.Show();
+        }
+
+        private void BtnFalloffDel_Click(object sender, EventArgs e)
+        {
+            var listBox = GetActiveFalloffListbox();
+            if (listBox.SelectedItem is not RegionFalloffForm.StepObj lateral) return;
+            listBox.Items.Remove(lateral);
+            listBox.SelectedItem = null;
+        }
+
+        private void BtnFalloffUp_Click(object sender, EventArgs e)
+        {
+            // Determine which tab is active
+            var listBox = GetActiveFalloffListbox();
+            int index = listBox.SelectedIndex;
+            if (index > 0) // Ensure it's not already at the top
+            {
+                var item = listBox.Items[index];
+                listBox.Items.RemoveAt(index);
+                listBox.Items.Insert(index - 1, item);
+                listBox.SelectedIndex = index - 1; // Keep selection
+            }
+        }
+
+        private void BtnFalloffDown_Click(object sender, EventArgs e)
+        {
+            // Determine which tab is active
+            var listBox = GetActiveFalloffListbox();
+            int index = listBox.SelectedIndex;
+            if (index < listBox.Items.Count - 1 && index >= 0) // Ensure it's not already at the bottom
+            {
+                var item = listBox.Items[index];
+                listBox.Items.RemoveAt(index);
+                listBox.Items.Insert(index + 1, item);
+                listBox.SelectedIndex = index + 1; // Keep selection
+            }
+        }
+
+        private ListBox GetActiveFalloffListbox()
+        {
+            // Determine which tab is active
+            var sT = TabControlFalloff.SelectedTab;
+            switch (sT.Name)
+            {
+                case "tabLateral":
+                    return ListBoxLateral;
+                case "tabRadial":
+                    return ListBoxRadial;
+            }
+            throw new NotSupportedException(sT.Name);
+        }
     }
 }

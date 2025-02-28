@@ -125,12 +125,11 @@
             // 
             // ListBoxLateral
             // 
-            ListBoxLateral.DrawMode = DrawMode.OwnerDrawVariable;
+            ListBoxLateral.Dock = DockStyle.Fill;
             ListBoxLateral.FormattingEnabled = true;
-            ListBoxLateral.Items.AddRange(new object[] { "step 0 | position: 1.0 | value: 1.2" });
-            ListBoxLateral.Location = new Point(0, 0);
+            ListBoxLateral.Location = new Point(3, 3);
             ListBoxLateral.Name = "ListBoxLateral";
-            ListBoxLateral.Size = new Size(242, 216);
+            ListBoxLateral.Size = new Size(236, 211);
             ListBoxLateral.TabIndex = 47;
             // 
             // tabRadial
@@ -146,12 +145,11 @@
             // 
             // ListBoxRadial
             // 
-            ListBoxRadial.DrawMode = DrawMode.OwnerDrawVariable;
+            ListBoxRadial.Dock = DockStyle.Fill;
             ListBoxRadial.FormattingEnabled = true;
-            ListBoxRadial.Items.AddRange(new object[] { "step 0 | position: 1.0 | value: 1.2" });
-            ListBoxRadial.Location = new Point(0, 0);
+            ListBoxRadial.Location = new Point(3, 3);
             ListBoxRadial.Name = "ListBoxRadial";
-            ListBoxRadial.Size = new Size(242, 216);
+            ListBoxRadial.Size = new Size(236, 211);
             ListBoxRadial.TabIndex = 48;
             // 
             // BtnFalloffAdd
@@ -162,6 +160,7 @@
             BtnFalloffAdd.TabIndex = 47;
             BtnFalloffAdd.Text = "Add";
             BtnFalloffAdd.UseVisualStyleBackColor = true;
+            BtnFalloffAdd.Click += BtnFalloffAdd_Click;
             // 
             // BtnFalloffDel
             // 
@@ -171,6 +170,7 @@
             BtnFalloffDel.TabIndex = 48;
             BtnFalloffDel.Text = "Del";
             BtnFalloffDel.UseVisualStyleBackColor = true;
+            BtnFalloffDel.Click += BtnFalloffDel_Click;
             // 
             // BtnFalloffDown
             // 
@@ -181,6 +181,7 @@
             BtnFalloffDown.TabIndex = 49;
             BtnFalloffDown.Text = "V";
             BtnFalloffDown.UseVisualStyleBackColor = true;
+            BtnFalloffDown.Click += BtnFalloffDown_Click;
             // 
             // BtnFalloffUp
             // 
@@ -191,6 +192,7 @@
             BtnFalloffUp.TabIndex = 50;
             BtnFalloffUp.Text = "^";
             BtnFalloffUp.UseVisualStyleBackColor = true;
+            BtnFalloffUp.Click += BtnFalloffUp_Click;
             // 
             // label3
             // 
@@ -239,6 +241,7 @@
             BtnResourcesDel.TabIndex = 56;
             BtnResourcesDel.Text = "Delete resource";
             BtnResourcesDel.UseVisualStyleBackColor = true;
+            BtnResourcesDel.Click += BtnResourcesDel_Click;
             // 
             // BtnResourcesAdd
             // 
@@ -248,6 +251,7 @@
             BtnResourcesAdd.TabIndex = 55;
             BtnResourcesAdd.Text = "Add resource";
             BtnResourcesAdd.UseVisualStyleBackColor = true;
+            BtnResourcesAdd.Click += BtnResourcesAdd_Click;
             // 
             // label2
             // 
@@ -289,7 +293,7 @@
             // 
             // BtnFieldsDel
             // 
-            BtnFieldsDel.Location = new Point(12, 612);
+            BtnFieldsDel.Location = new Point(12, 613);
             BtnFieldsDel.Name = "BtnFieldsDel";
             BtnFieldsDel.Size = new Size(88, 31);
             BtnFieldsDel.TabIndex = 62;
@@ -298,7 +302,7 @@
             // 
             // BtnFieldsAdd
             // 
-            BtnFieldsAdd.Location = new Point(106, 612);
+            BtnFieldsAdd.Location = new Point(106, 613);
             BtnFieldsAdd.Name = "BtnFieldsAdd";
             BtnFieldsAdd.Size = new Size(90, 31);
             BtnFieldsAdd.TabIndex = 61;
@@ -312,6 +316,7 @@
             txtRegionPosition.Name = "txtRegionPosition";
             txtRegionPosition.Size = new Size(173, 23);
             txtRegionPosition.TabIndex = 63;
+            txtRegionPosition.TextAlign = HorizontalAlignment.Center;
             // 
             // label7
             // 
@@ -340,6 +345,7 @@
             txtRegionRadius.Name = "txtRegionRadius";
             txtRegionRadius.Size = new Size(173, 23);
             txtRegionRadius.TabIndex = 65;
+            txtRegionRadius.TextAlign = HorizontalAlignment.Center;
             // 
             // BtnCreateRegion
             // 
@@ -519,18 +525,14 @@
         private PictureBox SectorHexagon;
         private TextBox txtRegionName;
         private Label label14;
-        private TabControl TabControlFalloff;
         private TabPage tabLateral;
         private TabPage tabRadial;
-        private ListBox ListBoxLateral;
-        private ListBox ListBoxRadial;
         private Button BtnFalloffAdd;
         private Button BtnFalloffDel;
         private Button BtnFalloffDown;
         private Button BtnFalloffUp;
         private Label label3;
         private ComboBox cmbBoundaryType;
-        private ListBox ListBoxResources;
         private Label label4;
         private Button BtnResourcesDel;
         private Button BtnResourcesAdd;
@@ -557,5 +559,9 @@
         private TextBox txtMinNoiseValue;
         private Label label13;
         private TextBox txtMaxNoiseValue;
+        internal ListBox ListBoxResources;
+        internal TabControl TabControlFalloff;
+        internal ListBox ListBoxLateral;
+        internal ListBox ListBoxRadial;
     }
 }
