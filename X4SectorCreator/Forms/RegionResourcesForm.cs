@@ -1,8 +1,8 @@
 ﻿namespace X4SectorCreator.Forms
 {
-    public partial class RegionPropertiesForm : Form
+    public partial class RegionResourcesForm : Form
     {
-        public RegionPropertiesForm()
+        public RegionResourcesForm()
         {
             InitializeComponent();
         }

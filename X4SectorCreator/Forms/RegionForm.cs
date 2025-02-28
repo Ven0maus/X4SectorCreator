@@ -5,10 +5,10 @@ namespace X4SectorCreator.Forms
 {
     public partial class RegionForm : Form
     {
-        private RegionPropertiesForm _regionPropertiesForm;
-        public RegionPropertiesForm RegionPropertiesForm => _regionPropertiesForm != null && !_regionPropertiesForm.IsDisposed
+        private RegionResourcesForm _regionPropertiesForm;
+        public RegionResourcesForm RegionPropertiesForm => _regionPropertiesForm != null && !_regionPropertiesForm.IsDisposed
             ? _regionPropertiesForm
-            : (_regionPropertiesForm = new RegionPropertiesForm());
+            : (_regionPropertiesForm = new RegionResourcesForm());
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster Cluster { get; set; }

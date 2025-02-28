@@ -31,9 +31,6 @@
             SectorHexagon = new PictureBox();
             txtRegionName = new TextBox();
             label14 = new Label();
-            BtnUpdateRegionProperties = new Button();
-            label1 = new Label();
-            lblRegionProperties = new Label();
             TabControlFalloff = new TabControl();
             tabLateral = new TabPage();
             ListBoxLateral = new ListBox();
@@ -60,6 +57,18 @@
             label8 = new Label();
             txtRegionRadius = new TextBox();
             BtnCreateRegion = new Button();
+            label1 = new Label();
+            txtDensity = new TextBox();
+            label9 = new Label();
+            txtRotation = new TextBox();
+            label10 = new Label();
+            txtSeed = new TextBox();
+            label11 = new Label();
+            txtNoiseScale = new TextBox();
+            label12 = new Label();
+            txtMinNoiseValue = new TextBox();
+            label13 = new Label();
+            txtMaxNoiseValue = new TextBox();
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).BeginInit();
             TabControlFalloff.SuspendLayout();
             tabLateral.SuspendLayout();
@@ -87,41 +96,9 @@
             label14.Font = new Font("Segoe UI", 12F);
             label14.Location = new Point(12, 9);
             label14.Name = "label14";
-            label14.Size = new Size(108, 21);
+            label14.Size = new Size(105, 21);
             label14.TabIndex = 40;
-            label14.Text = "Region Name:";
-            // 
-            // BtnUpdateRegionProperties
-            // 
-            BtnUpdateRegionProperties.Location = new Point(12, 312);
-            BtnUpdateRegionProperties.Name = "BtnUpdateRegionProperties";
-            BtnUpdateRegionProperties.Size = new Size(230, 31);
-            BtnUpdateRegionProperties.TabIndex = 41;
-            BtnUpdateRegionProperties.Text = "Update Region Properties";
-            BtnUpdateRegionProperties.UseVisualStyleBackColor = true;
-            BtnUpdateRegionProperties.Click += BtnUpdateRegionProperties_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(12, 59);
-            label1.Name = "label1";
-            label1.Size = new Size(168, 28);
-            label1.TabIndex = 43;
-            label1.Text = "Region properties";
-            // 
-            // lblRegionProperties
-            // 
-            lblRegionProperties.BackColor = Color.White;
-            lblRegionProperties.BorderStyle = BorderStyle.FixedSingle;
-            lblRegionProperties.Font = new Font("Segoe UI", 11F);
-            lblRegionProperties.ForeColor = SystemColors.ControlText;
-            lblRegionProperties.Location = new Point(12, 92);
-            lblRegionProperties.Name = "lblRegionProperties";
-            lblRegionProperties.Size = new Size(230, 215);
-            lblRegionProperties.TabIndex = 44;
-            lblRegionProperties.Text = "Density: 0\r\nRotation: 0\r\nSeed: 0\r\nNoiseScale: 0\r\nMinNoiseValue: 0\r\nMaxNoiseValue: 0";
+            label14.Text = "Region name:";
             // 
             // TabControlFalloff
             // 
@@ -303,9 +280,9 @@
             // label6
             // 
             label6.Font = new Font("Segoe UI", 15F);
-            label6.Location = new Point(12, 346);
+            label6.Location = new Point(246, 346);
             label6.Name = "label6";
-            label6.Size = new Size(436, 28);
+            label6.Size = new Size(202, 28);
             label6.TabIndex = 60;
             label6.Text = "Region Fields";
             label6.TextAlign = ContentAlignment.MiddleCenter;
@@ -374,11 +351,125 @@
             BtnCreateRegion.UseVisualStyleBackColor = true;
             BtnCreateRegion.Click += BtnCreateRegion_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(12, 59);
+            label1.Name = "label1";
+            label1.Size = new Size(116, 21);
+            label1.TabIndex = 69;
+            label1.Text = "Region density:";
+            // 
+            // txtDensity
+            // 
+            txtDensity.Location = new Point(12, 83);
+            txtDensity.Name = "txtDensity";
+            txtDensity.Size = new Size(230, 23);
+            txtDensity.TabIndex = 68;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F);
+            label9.Location = new Point(12, 109);
+            label9.Name = "label9";
+            label9.Size = new Size(121, 21);
+            label9.TabIndex = 71;
+            label9.Text = "Region rotation:";
+            // 
+            // txtRotation
+            // 
+            txtRotation.Location = new Point(12, 133);
+            txtRotation.Name = "txtRotation";
+            txtRotation.Size = new Size(230, 23);
+            txtRotation.TabIndex = 70;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 12F);
+            label10.Location = new Point(12, 159);
+            label10.Name = "label10";
+            label10.Size = new Size(98, 21);
+            label10.TabIndex = 73;
+            label10.Text = "Region seed:";
+            // 
+            // txtSeed
+            // 
+            txtSeed.Location = new Point(12, 183);
+            txtSeed.Name = "txtSeed";
+            txtSeed.Size = new Size(230, 23);
+            txtSeed.TabIndex = 72;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 12F);
+            label11.Location = new Point(12, 209);
+            label11.Name = "label11";
+            label11.Size = new Size(137, 21);
+            label11.TabIndex = 75;
+            label11.Text = "Region noisescale:";
+            // 
+            // txtNoiseScale
+            // 
+            txtNoiseScale.Location = new Point(12, 233);
+            txtNoiseScale.Name = "txtNoiseScale";
+            txtNoiseScale.Size = new Size(230, 23);
+            txtNoiseScale.TabIndex = 74;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 12F);
+            label12.Location = new Point(12, 259);
+            label12.Name = "label12";
+            label12.Size = new Size(167, 21);
+            label12.TabIndex = 77;
+            label12.Text = "Region minnoisevalue:";
+            // 
+            // txtMinNoiseValue
+            // 
+            txtMinNoiseValue.Location = new Point(12, 283);
+            txtMinNoiseValue.Name = "txtMinNoiseValue";
+            txtMinNoiseValue.Size = new Size(230, 23);
+            txtMinNoiseValue.TabIndex = 76;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 12F);
+            label13.Location = new Point(12, 309);
+            label13.Name = "label13";
+            label13.Size = new Size(169, 21);
+            label13.TabIndex = 79;
+            label13.Text = "Region maxnoisevalue:";
+            // 
+            // txtMaxNoiseValue
+            // 
+            txtMaxNoiseValue.Location = new Point(12, 333);
+            txtMaxNoiseValue.Name = "txtMaxNoiseValue";
+            txtMaxNoiseValue.Size = new Size(230, 23);
+            txtMaxNoiseValue.TabIndex = 78;
+            // 
             // RegionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(763, 656);
+            Controls.Add(label13);
+            Controls.Add(txtMaxNoiseValue);
+            Controls.Add(label12);
+            Controls.Add(txtMinNoiseValue);
+            Controls.Add(label11);
+            Controls.Add(txtNoiseScale);
+            Controls.Add(label10);
+            Controls.Add(txtSeed);
+            Controls.Add(label9);
+            Controls.Add(txtRotation);
+            Controls.Add(label1);
+            Controls.Add(txtDensity);
             Controls.Add(BtnCreateRegion);
             Controls.Add(label8);
             Controls.Add(txtRegionRadius);
@@ -401,9 +492,6 @@
             Controls.Add(BtnFalloffDel);
             Controls.Add(BtnFalloffAdd);
             Controls.Add(TabControlFalloff);
-            Controls.Add(lblRegionProperties);
-            Controls.Add(label1);
-            Controls.Add(BtnUpdateRegionProperties);
             Controls.Add(label14);
             Controls.Add(txtRegionName);
             Controls.Add(SectorHexagon);
@@ -425,9 +513,6 @@
         private PictureBox SectorHexagon;
         private TextBox txtRegionName;
         private Label label14;
-        private Button BtnUpdateRegionProperties;
-        private Label label1;
-        private Label lblRegionProperties;
         private TabControl TabControlFalloff;
         private TabPage tabLateral;
         private TabPage tabRadial;
@@ -454,5 +539,17 @@
         private Label label8;
         private TextBox txtRegionRadius;
         private Button BtnCreateRegion;
+        private Label label1;
+        private TextBox txtDensity;
+        private Label label9;
+        private TextBox txtRotation;
+        private Label label10;
+        private TextBox txtSeed;
+        private Label label11;
+        private TextBox txtNoiseScale;
+        private Label label12;
+        private TextBox txtMinNoiseValue;
+        private Label label13;
+        private TextBox txtMaxNoiseValue;
     }
 }
