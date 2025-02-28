@@ -263,9 +263,9 @@ namespace X4SectorCreator
             if (sector != null)
             {
                 sb.AppendLine($"[Sector]: {sector.Name}");
-                sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}");
-                sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}");
-                sb.AppendLine($"Security: {(int)(sector.Security * 100f)}");
+                sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}%");
+                sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}%");
+                sb.AppendLine($"Security: {(int)(sector.Security * 100f)}%");
                 sb.AppendLine($"Tags: {sector.Tags}");
                 sb.AppendLine($"Allow Anomalies: {sector.AllowRandomAnomalies}");
                 sb.AppendLine($"FactionLogic Disabled: {sector.DisableFactionLogic}");
