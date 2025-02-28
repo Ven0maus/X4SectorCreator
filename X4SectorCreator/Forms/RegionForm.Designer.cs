@@ -299,6 +299,7 @@
             BtnFieldsDel.TabIndex = 62;
             BtnFieldsDel.Text = "Delete Field";
             BtnFieldsDel.UseVisualStyleBackColor = true;
+            BtnFieldsDel.Click += BtnFieldsDel_Click;
             // 
             // BtnFieldsAdd
             // 
@@ -308,6 +309,7 @@
             BtnFieldsAdd.TabIndex = 61;
             BtnFieldsAdd.Text = "Add Field";
             BtnFieldsAdd.UseVisualStyleBackColor = true;
+            BtnFieldsAdd.Click += BtnFieldsAdd_Click;
             // 
             // txtRegionPosition
             // 
@@ -538,7 +540,6 @@
         private Button BtnResourcesAdd;
         private Label label2;
         private Label label5;
-        private ListBox ListBoxFields;
         private Label label6;
         private Button BtnFieldsDel;
         private Button BtnFieldsAdd;
@@ -563,5 +564,6 @@
         internal TabControl TabControlFalloff;
         internal ListBox ListBoxLateral;
         internal ListBox ListBoxRadial;
+        internal ListBox ListBoxFields;
     }
 }

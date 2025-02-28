@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -16,6 +15,11 @@ namespace X4SectorCreator.Forms
         public RegionFalloffForm RegionFalloffForm => _regionFalloffForm != null && !_regionFalloffForm.IsDisposed
             ? _regionFalloffForm
             : (_regionFalloffForm = new RegionFalloffForm());
+
+        private RegionFieldsForm _regionFieldsForm;
+        public RegionFieldsForm RegionFieldsForm => _regionFieldsForm != null && !_regionFieldsForm.IsDisposed
+            ? _regionFieldsForm
+            : (_regionFieldsForm = new RegionFieldsForm());
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster Cluster { get; set; }
@@ -244,14 +248,22 @@ namespace X4SectorCreator.Forms
         {
             // Determine which tab is active
             var sT = TabControlFalloff.SelectedTab;
-            switch (sT.Name)
+            return sT.Name switch
             {
-                case "tabLateral":
-                    return ListBoxLateral;
-                case "tabRadial":
-                    return ListBoxRadial;
-            }
-            throw new NotSupportedException(sT.Name);
+                "tabLateral" => ListBoxLateral,
+                "tabRadial" => ListBoxRadial,
+                _ => throw new NotSupportedException(sT.Name),
+            };
+        }
+
+        private void BtnFieldsAdd_Click(object sender, EventArgs e)
+        {
+            RegionFieldsForm.Show();
+        }
+
+        private void BtnFieldsDel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
