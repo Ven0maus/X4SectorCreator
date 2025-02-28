@@ -5,15 +5,16 @@ namespace X4SectorCreator
 {
     internal class VersionChecker
     {
+        private readonly string _versionFilePath = Path.Combine(Application.StartupPath, "version.json");
         private const string _versionUrl = "https://raw.githubusercontent.com/Ven0maus/X4SectorCreator/main/X4SectorCreator/version.json";
+        private const string _sectorMappingUrl = "https://raw.githubusercontent.com/Ven0maus/X4SectorCreator/main/X4SectorCreator/Mappings/sector_mappings.json";
 
         public string CurrentVersion { get; }
-        public string TargetGameVersion { get; }
+        public string TargetGameVersion { get; private set; }
 
         public VersionChecker()
         {
-            string versionFilePath = Path.Combine(Application.StartupPath, "version.json");
-            string versionContent = File.ReadAllText(versionFilePath);
+            string versionContent = File.ReadAllText(_versionFilePath);
             VersionInfo versionInfo = JsonSerializer.Deserialize<VersionInfo>(versionContent);
 
             CurrentVersion = versionInfo.AppVersion;
@@ -28,7 +29,8 @@ namespace X4SectorCreator
                 string response = await client.GetStringAsync(_versionUrl);
 
                 VersionInfo versionInfo = JsonSerializer.Deserialize<VersionInfo>(response);
-                return versionInfo != null && IsNewVersionAvailable(versionInfo.AppVersion) ? ((bool NewVersionAvailable, VersionInfo VersionInfo))(true, versionInfo) : ((bool NewVersionAvailable, VersionInfo VersionInfo))(false, versionInfo);
+                return versionInfo != null && (IsNewVersionAvailable(versionInfo.AppVersion, CurrentVersion) || IsNewVersionAvailable(versionInfo.X4Version, TargetGameVersion)) ? 
+                    ((bool NewVersionAvailable, VersionInfo VersionInfo))(true, versionInfo) : ((bool NewVersionAvailable, VersionInfo VersionInfo))(false, versionInfo);
             }
             catch (Exception)
             {
@@ -36,11 +38,44 @@ namespace X4SectorCreator
             }
         }
 
-        private bool IsNewVersionAvailable(string latestVersion)
+        public async Task<string> GetUpdatedSectorMappingAsync()
+        {
+            try
+            {
+                using HttpClient client = new();
+                return await client.GetStringAsync(_sectorMappingUrl);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public void UpdateX4Version(VersionInfo versionInfo)
+        {
+            if (CurrentVersion.Equals(versionInfo.AppVersion))
+            {
+                if (!TargetGameVersion.Equals(versionInfo.X4Version))
+                {
+                    // Adjust target version
+                    TargetGameVersion = versionInfo.X4Version;
+
+                    // Save it to disk
+                    var newVersionInfo = new VersionInfo
+                    {
+                        AppVersion = CurrentVersion,
+                        X4Version = versionInfo.X4Version,
+                    };
+                    var json = JsonSerializer.Serialize(newVersionInfo);
+                    File.WriteAllText(_versionFilePath, json);
+                }
+            }
+        }
+
+        private static bool IsNewVersionAvailable(string latestVersion, string version)
         {
             return Version.TryParse(latestVersion, out Version latest) &&
-                Version.TryParse(CurrentVersion, out Version current)
-&& latest > current;
+                Version.TryParse(version, out Version current) && latest > current;
         }
     }
 }

@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <None Update="Mappings\sector_mappings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="version.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

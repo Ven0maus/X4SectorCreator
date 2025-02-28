@@ -20,6 +20,8 @@ namespace X4SectorCreator
         private GateForm _gateForm;
         private VersionUpdateForm _versionUpdateForm;
 
+        private readonly string _sectorMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/sector_mappings.json");
+
         public readonly Dictionary<(int, int), Cluster> AllClusters;
         public readonly Dictionary<string, Color> FactionColorMapping;
 
@@ -51,10 +53,7 @@ namespace X4SectorCreator
 
             Instance = this;
 
-            // Initializes the full X4 map from JSON data
-            const string filePath = "Mappings/sector_mappings.json";
-
-            string json = File.ReadAllText(filePath);
+            string json = File.ReadAllText(_sectorMappingFilePath);
             ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
 
             // Create lookups
@@ -163,11 +162,53 @@ namespace X4SectorCreator
             (bool NewVersionAvailable, VersionInfo VersionInfo) result = await versionChecker.CheckForUpdatesAsync();
             if (result.NewVersionAvailable)
             {
-                VersionUpdateForm.txtCurrentVersion.Text = $"v{versionChecker.CurrentVersion}";
-                VersionUpdateForm.txtCurrentX4Version.Text = $"v{versionChecker.TargetGameVersion}";
-                VersionUpdateForm.txtUpdateVersion.Text = $"v{result.VersionInfo.AppVersion}";
-                VersionUpdateForm.txtUpdateX4Version.Text = $"v{result.VersionInfo.X4Version}";
-                VersionUpdateForm.Show();
+                // If the app version remains the same, but the X4 version is different
+                // That means only the mapping was updated, we can automatically update this.
+                if (result.VersionInfo.AppVersion.Equals(versionChecker.CurrentVersion))
+                {
+                    var newSectorMappingJson = await versionChecker.GetUpdatedSectorMappingAsync();
+                    var oldSectorMappingJson = File.ReadAllText(_sectorMappingFilePath);
+                    if (!oldSectorMappingJson.Equals(newSectorMappingJson))
+                    {
+                        try
+                        {
+                            // Update mapping file
+                            File.WriteAllText(_sectorMappingFilePath, newSectorMappingJson);
+                            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(newSectorMappingJson);
+
+                            // Replace clusters
+                            var newClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
+                            if (newClusters.Count > 0)
+                            {
+                                AllClusters.Clear();
+                                foreach (var cluster in newClusters)
+                                    AllClusters[cluster.Key] = cluster.Value;
+                            }
+
+                            // Update X4 version file
+                            versionChecker.UpdateX4Version(result.VersionInfo);
+
+                            // Update title text with new version
+                            Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
+
+                            MessageBox.Show($"Your cluster mapping has been automatically updated with the latest X4 version ({result.VersionInfo.X4Version}).");
+                        }
+                        catch (Exception)
+                        {
+                            // Don't do anything
+                            MessageBox.Show($"A new cluster mapping is available for X4 version ({result.VersionInfo.X4Version}) but was unable to download it, please update manually.");
+                        }
+                    }
+                }
+                else
+                {
+                    // Show update form when a new app version is available
+                    VersionUpdateForm.txtCurrentVersion.Text = $"v{versionChecker.CurrentVersion}";
+                    VersionUpdateForm.txtCurrentX4Version.Text = $"v{versionChecker.TargetGameVersion}";
+                    VersionUpdateForm.txtUpdateVersion.Text = $"v{result.VersionInfo.AppVersion}";
+                    VersionUpdateForm.txtUpdateX4Version.Text = $"v{result.VersionInfo.X4Version}";
+                    VersionUpdateForm.Show();
+                }
             }
         }
 
