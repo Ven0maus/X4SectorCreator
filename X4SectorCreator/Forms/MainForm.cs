@@ -120,29 +120,30 @@ namespace X4SectorCreator
 
             List<Cluster> clusters = [.. AllClusters.Values];
 
-            // Generate each xml file
-            string folder = Path.Combine(Application.StartupPath, "GeneratedXml");
+            // Generate each xml
+            string mainFolder = Path.Combine(Application.StartupPath, "GeneratedXml");
+            string modFolder = Path.Combine(Application.StartupPath, "GeneratedXml", modName);
             try
             {
                 // Clear up any previous xml
-                if (Directory.Exists(folder))
+                if (Directory.Exists(mainFolder))
                 {
-                    Directory.Delete(folder, true);
+                    Directory.Delete(mainFolder, true);
                 }
 
                 // Generate all xml files
-                MacrosGeneration.Generate(folder, modName, modPrefix);
-                MapDefaultsGeneration.Generate(folder, modPrefix, clusters);
-                GalaxyGeneration.Generate(folder, modPrefix, clusters);
-                ClusterGeneration.Generate(folder, modPrefix, clusters);
-                SectorGeneration.Generate(folder, modPrefix, clusters);
-                ZoneGeneration.Generate(folder, modPrefix, clusters);
-                ContentGeneration.Generate(folder, modName, _currentX4Version.Replace(".", string.Empty) + "0", dependencies: null);
+                MacrosGeneration.Generate(modFolder, modName, modPrefix);
+                MapDefaultsGeneration.Generate(modFolder, modPrefix, clusters);
+                GalaxyGeneration.Generate(modFolder, modPrefix, clusters);
+                ClusterGeneration.Generate(modFolder, modPrefix, clusters);
+                SectorGeneration.Generate(modFolder, modPrefix, clusters);
+                ZoneGeneration.Generate(modFolder, modPrefix, clusters);
+                ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", dependencies: null);
             }
             catch (Exception ex)
             {
                 // Clear up corrupted xml
-                Directory.Delete(folder, true);
+                Directory.Delete(mainFolder, true);
                 _ = MessageBox.Show("Something went wrong during xml generation, please create an issue on github with the stacktrace: " + ex.ToString(),
                     "Error in XML Generation", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw;
