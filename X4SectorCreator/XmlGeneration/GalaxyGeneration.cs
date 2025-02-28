@@ -63,7 +63,7 @@ namespace X4SectorCreator.XmlGeneration
                             if (string.IsNullOrWhiteSpace(gate.SourcePath) ||
                                 string.IsNullOrWhiteSpace(gate.DestinationPath))
                             {
-                                throw new Exception($"Gate \"{cluster.Name}/{sector.Name}/{zone.Name}/g{gate.Id:D3}\" source/destination path is not set.");
+                                throw new Exception($"Gate \"{cluster.Name}/{sector.Name}/z{zone.Id}/g{gate.Id:D3}\" source/destination path is not set.");
                             }
 
                             Sector sourceSector = clusters

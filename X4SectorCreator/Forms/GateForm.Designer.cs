@@ -456,7 +456,6 @@
         private Label label6;
         private TextBox txtSourceGatePitch;
         private TextBox txtSourceGateRoll;
-        private Button BtnCreateConnection;
         private PictureBox SourceSectorHexagon;
         internal TextBox txtTargetSector;
         internal TextBox txtTargetSectorLocation;
@@ -479,5 +478,6 @@
         private Label label16;
         private ComboBox cmbTargetType;
         private ComboBox cmbSourceType;
+        internal Button BtnCreateConnection;
     }
 }

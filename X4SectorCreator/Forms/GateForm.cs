@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -39,6 +40,21 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public UpdateInfo UpdateInfoObject { get; set; }
+
+        public class UpdateInfo
+        {
+            public Gate SourceGate { get; set; }
+            public Zone SourceZone { get; set; }
+            public Sector SourceSector { get; set; }
+            public Cluster SourceCluster { get; set; }
+            public Gate TargetGate { get; set; }
+            public Zone TargetZone { get; set; }
+            public Sector TargetSector { get; set; }
+            public Cluster TargetCluster { get; set; }
+        }
+
         public GateForm()
         {
             InitializeComponent();
@@ -68,35 +84,57 @@ namespace X4SectorCreator.Forms
             TargetSectorHexagon.MouseClick += TargetSectorHexagon_MouseClick;
         }
 
-        public void Reset()
+        public void PrepareForUpdate()
         {
             // Source gate
-            txtSourceGatePitch.Text = "0";
-            txtSourceGateRoll.Text = "0";
-            txtSourceGateYaw.Text = "0";
+            txtSourceGatePitch.Text = UpdateInfoObject.SourceGate.Pitch.ToString();
+            txtSourceGateRoll.Text = UpdateInfoObject.SourceGate.Roll.ToString();
+            txtSourceGateYaw.Text = UpdateInfoObject.SourceGate.Yaw.ToString();
 
             // Target gate
-            txtTargetGatePitch.Text = "0";
-            txtTargetGateRoll.Text = "0";
-            txtTargetGateYaw.Text = "0";
+            txtTargetGatePitch.Text = UpdateInfoObject.TargetGate.Pitch.ToString();
+            txtTargetGateRoll.Text = UpdateInfoObject.TargetGate.Roll.ToString();
+            txtTargetGateYaw.Text = UpdateInfoObject.TargetGate.Yaw.ToString();
 
             // Sectors
-            txtTargetSector.ResetText();
-            txtTargetSectorLocation.ResetText();
-            txtSourceSector.ResetText();
-            txtSourceSectorLocation.ResetText();
+            txtTargetSector.Text = UpdateInfoObject.TargetSector.Name;
+            var targetIndex = UpdateInfoObject.TargetCluster.Sectors.IndexOf(UpdateInfoObject.TargetSector);
+            txtTargetSectorLocation.Text = (UpdateInfoObject.TargetCluster.Position.X, UpdateInfoObject.TargetCluster.Position.Y).ToString() + $" [{targetIndex}]";
+            txtSourceSector.Text = UpdateInfoObject.SourceSector.Name;
+            var sourceIndex = UpdateInfoObject.SourceCluster.Sectors.IndexOf(UpdateInfoObject.SourceSector);
+            txtSourceSectorLocation.Text = (UpdateInfoObject.SourceCluster.Position.X, UpdateInfoObject.SourceCluster.Position.Y).ToString() + $" [{sourceIndex}]";
 
-            // Reset dot position
-            _sourceDotPosition = SourceSectorHexagon.ClientRectangle.Center();
-            _targetDotPosition = TargetSectorHexagon.ClientRectangle.Center();
+            // Revert dot positions from world coordinates
+            _sourceDotPosition = ConvertFromWorldCoordinate(UpdateInfoObject.SourceZone.Position);
+            _targetDotPosition = ConvertFromWorldCoordinate(UpdateInfoObject.TargetZone.Position);
+
+            // Set rotation of dot
+            _sourceYaw = UpdateInfoObject.SourceGate.Yaw;
+            _targetYaw = UpdateInfoObject.TargetGate.Yaw;
 
             // Reset gate positions
-            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
-            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
+            txtSourceGatePosition.Text = $"({UpdateInfoObject.SourceZone.Position.X:0}, {UpdateInfoObject.SourceZone.Position.Y:0})";
+            txtTargetGatePosition.Text = $"({UpdateInfoObject.TargetZone.Position.X:0}, {UpdateInfoObject.TargetZone.Position.Y:0})";
 
-            // Reset objects, make sure to call reset BEFORE assigning not after
-            SourceCluster = null;
-            SourceSector = null;
+            // Invalidate
+            SourceSectorHexagon.Invalidate();
+            TargetSectorHexagon.Invalidate();
+        }
+
+        private Point ConvertFromWorldCoordinate(Point coordinate)
+        {
+            int centerX = SourceSectorHexagon.Width / 2;
+            int centerY = SourceSectorHexagon.Height / 2;
+
+            // Reverse world scaling
+            float normalizedX = (coordinate.X * 2f) / _worldRadius;
+            float normalizedY = (coordinate.Y * 2f) / _worldRadius;
+
+            // Reverse normalization and centering
+            float screenX = (normalizedX * _hexRadius) + centerX;
+            float screenY = (-normalizedY * _hexRadius) + centerY; // Correct Y-axis negation
+
+            return new Point((int)Math.Round(screenX), (int)Math.Round(screenY));
         }
 
         private void InitializeHexagon()
@@ -305,6 +343,146 @@ namespace X4SectorCreator.Forms
             return path.IsVisible(point);
         }
 
+        private void BtnUpdateConnection_Click()
+        {
+            // Validate if the select target is still the same
+            System.Text.RegularExpressions.Match targetSectorLocationMatch = RegexHelper.TupleLocationChildIndexRegex().Match(txtTargetSectorLocation.Text);
+            if (!targetSectorLocationMatch.Success)
+            {
+                _ = MessageBox.Show($"Invalid sector selected, cannot properly parse \"{txtTargetSectorLocation.Text}\".");
+                return;
+            }
+
+            string selectedTargetType = cmbTargetType.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedTargetType))
+            {
+                _ = MessageBox.Show("Please select a valid Target Gate Type.");
+                return;
+            }
+
+            string selectedSourceType = cmbSourceType.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedTargetType))
+            {
+                _ = MessageBox.Show("Please select a valid Source Gate Type.");
+                return;
+            }
+
+            (int targetSectorX, int targetSectorY, int targetSectorIndex) = (int.Parse(targetSectorLocationMatch.Groups[1].Value),
+                int.Parse(targetSectorLocationMatch.Groups[2].Value),
+                int.Parse(targetSectorLocationMatch.Groups[3].Value));
+
+            // Find target cluster / sector
+            if (!MainForm.Instance.AllClusters.TryGetValue((targetSectorX, targetSectorY), out Cluster targetCluster))
+            {
+                _ = MessageBox.Show("Invalid sector selection.");
+                return;
+            }
+
+            // Find sector
+            Sector targetSector = targetCluster.Sectors[targetSectorIndex];
+
+            // Validate that target sector != source sector
+            if (targetSector == SourceSector)
+            {
+                _ = MessageBox.Show("Target sector cannot be the same as the source sector.");
+                return;
+            }
+
+            System.Text.RegularExpressions.Match targetGatePosMatch = RegexHelper.TupleLocationRegex().Match(txtTargetGatePosition.Text);
+            if (!targetGatePosMatch.Success)
+            {
+                _ = MessageBox.Show("Unable to parse target gate position.");
+                return;
+            }
+
+            System.Text.RegularExpressions.Match sourceGatePosMatch = RegexHelper.TupleLocationRegex().Match(txtSourceGatePosition.Text);
+            if (!sourceGatePosMatch.Success)
+            {
+                _ = MessageBox.Show("Unable to parse source gate position.");
+                return;
+            }
+
+            // Gate Position
+            var (GatePosX, GatePosY) = (int.Parse(targetGatePosMatch.Groups[1].Value), int.Parse(targetGatePosMatch.Groups[2].Value));
+
+            var targetGate = UpdateInfoObject.TargetGate;
+            var targetZone = UpdateInfoObject.TargetZone;
+
+            if (targetSector == UpdateInfoObject.TargetSector)
+            {
+                // No Target sector change, just update the target gate properties
+                targetGate.Type = selectedTargetType.Equals("Gate", StringComparison.OrdinalIgnoreCase) ?
+                    Gate.GateType.props_gates_anc_gate_macro : Gate.GateType.props_gates_orb_accelerator_01_macro;
+                targetGate.Yaw = int.Parse(txtTargetGateYaw.Text);
+                targetGate.Pitch = int.Parse(txtTargetGatePitch.Text);
+                targetGate.Roll = int.Parse(txtTargetGateRoll.Text);
+                targetZone.Position = new Point(GatePosX, GatePosY);
+            }
+            else
+            {
+                // Target Sector was changed, remove the target zone + gate, and create a new target gate
+                UpdateInfoObject.TargetSector.Zones.Remove(targetZone);
+                UpdateInfoObject.TargetSector = targetSector; // Update to new prevent confusion and mistakes
+                UpdateInfoObject.TargetCluster = targetCluster;
+
+                UpdateInfoObject.TargetGate = new()
+                {
+                    Id = 1,
+                    ParentSectorName = targetSector.Name,
+                    DestinationSectorName = UpdateInfoObject.SourceSector.Name,
+                    Type = selectedTargetType.Equals("Gate", StringComparison.OrdinalIgnoreCase) ?
+                    Gate.GateType.props_gates_anc_gate_macro : Gate.GateType.props_gates_orb_accelerator_01_macro,
+                    Yaw = int.Parse(txtTargetGateYaw.Text),
+                    Pitch = int.Parse(txtTargetGatePitch.Text),
+                    Roll = int.Parse(txtTargetGateRoll.Text)
+                };
+
+                UpdateInfoObject.TargetZone = new()
+                {
+                    Id = targetSector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
+                    Position = new Point(GatePosX, GatePosY),
+                    Gates = [UpdateInfoObject.TargetGate]
+                };
+
+                // Add to the new zone
+                UpdateInfoObject.TargetSector.Zones.Add(UpdateInfoObject.TargetZone);
+
+                // Set paths correctly
+                UpdateInfoObject.TargetGate.Source = UpdateInfoObject.SourceGate.Destination;
+                UpdateInfoObject.TargetGate.Destination = UpdateInfoObject.SourceGate.Source;
+                UpdateInfoObject.TargetGate.SetDestinationPath("PREFIX", UpdateInfoObject.SourceCluster, 
+                    UpdateInfoObject.SourceSector, UpdateInfoObject.SourceZone, UpdateInfoObject.SourceGate);
+
+                // Make sure soure gate points to new destination sector name
+                UpdateInfoObject.SourceGate.SetDestinationPath("PREFIX", UpdateInfoObject.TargetCluster, UpdateInfoObject.TargetSector, UpdateInfoObject.TargetZone, UpdateInfoObject.TargetGate);
+                UpdateInfoObject.SourceGate.DestinationSectorName = UpdateInfoObject.TargetSector.Name;
+
+                // Remove old target gate
+                MainForm.Instance.GatesListBox.Items.Remove(targetGate);
+                // Add new gate
+                _ = MainForm.Instance.GatesListBox.Items.Add(UpdateInfoObject.TargetGate);
+                MainForm.Instance.GatesListBox.SelectedItem = UpdateInfoObject.TargetGate;
+            }
+
+            // Set source gate info
+            (GatePosX, GatePosY) = (int.Parse(sourceGatePosMatch.Groups[1].Value), int.Parse(sourceGatePosMatch.Groups[2].Value));
+
+            var sourceGate = UpdateInfoObject.SourceGate;
+            var sourceZone = UpdateInfoObject.SourceZone;
+
+            // Update source gate properties
+            // No sector change, just update the target gate properties
+            sourceGate.Type = selectedSourceType.Equals("Gate", StringComparison.OrdinalIgnoreCase) ?
+                Gate.GateType.props_gates_anc_gate_macro : Gate.GateType.props_gates_orb_accelerator_01_macro;
+            sourceGate.Yaw = int.Parse(txtSourceGateYaw.Text);
+            sourceGate.Pitch = int.Parse(txtSourceGatePitch.Text);
+            sourceGate.Roll = int.Parse(txtSourceGateRoll.Text);
+            sourceZone.Position = new Point(GatePosX, GatePosY);
+
+            UpdateInfoObject = null;
+            Close();
+        }
+
         private void BtnCreateConnection_Click(object sender, EventArgs e)
         {
             #region Source Gate Connection
@@ -319,6 +497,13 @@ namespace X4SectorCreator.Forms
             if (!sourceGatePosMatch.Success)
             {
                 _ = MessageBox.Show("Unable to parse source gate position.");
+                return;
+            }
+
+            // Redirect to update method
+            if (UpdateInfoObject != null)
+            {
+                BtnUpdateConnection_Click();
                 return;
             }
 
@@ -341,7 +526,6 @@ namespace X4SectorCreator.Forms
             Zone sourceZone = new()
             {
                 Id = SourceSector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
-                Name = "Zone " + (SourceSector.Zones.Count + 1),
                 Position = new Point(GatePosX, GatePosY),
                 Gates = [sourceGate]
             };
@@ -417,7 +601,6 @@ namespace X4SectorCreator.Forms
             Zone targetZone = new()
             {
                 Id = targetSector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
-                Name = "Zone " + (targetSector.Zones.Count + 1),
                 Position = new Point(GatePosX, GatePosY),
                 Gates = [targetGate]
             };
@@ -443,7 +626,6 @@ namespace X4SectorCreator.Forms
             _ = MainForm.Instance.GatesListBox.Items.Add(targetGate);
             MainForm.Instance.GatesListBox.SelectedItem = targetGate;
 
-            Reset();
             Close();
         }
 

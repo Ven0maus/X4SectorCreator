@@ -678,15 +678,17 @@ namespace X4SectorCreator
         {
             string selectedClusterName = ClustersListBox.SelectedItem as string;
             string selectedSectorName = SectorsListBox.SelectedItem as string;
-            KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
-            Sector sector = cluster.Value.Sectors.FirstOrDefault(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
-            if (sector == null)
+            if (string.IsNullOrEmpty(selectedClusterName) || 
+                string.IsNullOrWhiteSpace(selectedSectorName))
             {
                 _ = MessageBox.Show("Please select a sector first.");
-                return;
+                return; 
             }
 
-            GateForm.Reset();
+            KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+
+            GateForm.BtnCreateConnection.Text = "Create Connection";
             GateForm.SourceCluster = cluster.Value;
             GateForm.SourceSector = sector;
             GateForm.Show();
@@ -752,7 +754,46 @@ namespace X4SectorCreator
 
         private void GatesListBox_DoubleClick(object sender, EventArgs e)
         {
+            // Collect target gate data
+            var targetGate = GatesListBox.SelectedItem as Gate;
 
+            var targetQueryResult = AllClusters.Values
+                .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
+                .First(pair => pair.sector.Name.Equals(targetGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+
+            Cluster targetCluster = targetQueryResult.cluster;
+            Sector targetSector = targetQueryResult.sector;
+            Zone targetZone = targetSector.Zones.First(a => a.Gates.Contains(targetGate));
+
+            // Collect the source gate datz
+            var sourceQueryResult = AllClusters.Values
+                .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
+                .First(pair => pair.sector.Name.Equals(targetGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+
+            Cluster sourceCluster = sourceQueryResult.cluster;
+            Sector sourceSector = sourceQueryResult.sector;
+            Zone sourceZone = sourceSector.Zones
+                .First(a => a.Gates
+                    .Any(a => a.DestinationSectorName
+                        .Equals(targetGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
+            Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(targetGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+
+            // Set gates to be updated
+            GateForm.UpdateInfoObject = new GateForm.UpdateInfo
+            {
+                SourceGate = sourceGate,
+                SourceZone = sourceZone,
+                SourceSector = sourceSector,
+                SourceCluster = sourceCluster,
+
+                TargetGate = targetGate,
+                TargetZone = targetZone,
+                TargetSector = targetSector,
+                TargetCluster = targetCluster
+            };
+            GateForm.BtnCreateConnection.Text = "Update Connection";
+            GateForm.PrepareForUpdate();
+            GateForm.Show();
         }
         #endregion
     }
