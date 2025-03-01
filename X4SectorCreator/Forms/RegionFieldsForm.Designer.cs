@@ -68,6 +68,18 @@
             lblFactor = new Label();
             txtFactor = new TextBox();
             label1 = new Label();
+            lblUniformDensity = new Label();
+            txtUniformDensity = new TextBox();
+            lblLocalDensity = new Label();
+            txtLocalDensity = new TextBox();
+            lblUniformRGB = new Label();
+            txtUniformRGB = new TextBox();
+            lblLocalRGB = new Label();
+            txtLocalRgb = new TextBox();
+            lblResources = new Label();
+            txtResources = new TextBox();
+            lblBackgroundFog = new Label();
+            txtBackgroundFog = new TextBox();
             SuspendLayout();
             // 
             // cmbFieldType
@@ -95,7 +107,7 @@
             // 
             BtnAdd.Location = new Point(152, 428);
             BtnAdd.Name = "BtnAdd";
-            BtnAdd.Size = new Size(445, 45);
+            BtnAdd.Size = new Size(642, 45);
             BtnAdd.TabIndex = 2;
             BtnAdd.Text = "Add";
             BtnAdd.UseVisualStyleBackColor = true;
@@ -420,17 +432,138 @@
             // label1
             // 
             label1.Font = new Font("Segoe UI", 10F);
-            label1.Location = new Point(12, 359);
+            label1.Location = new Point(12, 349);
             label1.Name = "label1";
-            label1.Size = new Size(579, 66);
+            label1.Size = new Size(782, 76);
             label1.TabIndex = 38;
             label1.Text = resources.GetString("label1.Text");
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // lblUniformDensity
+            // 
+            lblUniformDensity.AutoSize = true;
+            lblUniformDensity.Font = new Font("Segoe UI", 12F);
+            lblUniformDensity.Location = new Point(603, 180);
+            lblUniformDensity.Name = "lblUniformDensity";
+            lblUniformDensity.Size = new Size(123, 21);
+            lblUniformDensity.TabIndex = 50;
+            lblUniformDensity.Text = "UniformDensity:";
+            // 
+            // txtUniformDensity
+            // 
+            txtUniformDensity.Font = new Font("Segoe UI", 10F);
+            txtUniformDensity.Location = new Point(603, 207);
+            txtUniformDensity.Name = "txtUniformDensity";
+            txtUniformDensity.Size = new Size(191, 25);
+            txtUniformDensity.TabIndex = 49;
+            // 
+            // lblLocalDensity
+            // 
+            lblLocalDensity.AutoSize = true;
+            lblLocalDensity.Font = new Font("Segoe UI", 12F);
+            lblLocalDensity.Location = new Point(603, 124);
+            lblLocalDensity.Name = "lblLocalDensity";
+            lblLocalDensity.Size = new Size(101, 21);
+            lblLocalDensity.TabIndex = 48;
+            lblLocalDensity.Text = "LocalDensity:";
+            // 
+            // txtLocalDensity
+            // 
+            txtLocalDensity.Font = new Font("Segoe UI", 10F);
+            txtLocalDensity.Location = new Point(603, 151);
+            txtLocalDensity.Name = "txtLocalDensity";
+            txtLocalDensity.Size = new Size(191, 25);
+            txtLocalDensity.TabIndex = 47;
+            // 
+            // lblUniformRGB
+            // 
+            lblUniformRGB.AutoSize = true;
+            lblUniformRGB.Font = new Font("Segoe UI", 12F);
+            lblUniformRGB.Location = new Point(603, 67);
+            lblUniformRGB.Name = "lblUniformRGB";
+            lblUniformRGB.Size = new Size(101, 21);
+            lblUniformRGB.TabIndex = 46;
+            lblUniformRGB.Text = "UniformRGB:";
+            // 
+            // txtUniformRGB
+            // 
+            txtUniformRGB.Font = new Font("Segoe UI", 10F);
+            txtUniformRGB.Location = new Point(603, 94);
+            txtUniformRGB.Name = "txtUniformRGB";
+            txtUniformRGB.Size = new Size(191, 25);
+            txtUniformRGB.TabIndex = 45;
+            // 
+            // lblLocalRGB
+            // 
+            lblLocalRGB.AutoSize = true;
+            lblLocalRGB.Font = new Font("Segoe UI", 12F);
+            lblLocalRGB.Location = new Point(603, 10);
+            lblLocalRGB.Name = "lblLocalRGB";
+            lblLocalRGB.Size = new Size(79, 21);
+            lblLocalRGB.TabIndex = 44;
+            lblLocalRGB.Text = "LocalRGB:";
+            // 
+            // txtLocalRgb
+            // 
+            txtLocalRgb.Font = new Font("Segoe UI", 10F);
+            txtLocalRgb.Location = new Point(603, 37);
+            txtLocalRgb.Name = "txtLocalRgb";
+            txtLocalRgb.Size = new Size(191, 25);
+            txtLocalRgb.TabIndex = 43;
+            // 
+            // lblResources
+            // 
+            lblResources.AutoSize = true;
+            lblResources.Font = new Font("Segoe UI", 12F);
+            lblResources.Location = new Point(603, 294);
+            lblResources.Name = "lblResources";
+            lblResources.Size = new Size(84, 21);
+            lblResources.TabIndex = 42;
+            lblResources.Text = "Resources:";
+            // 
+            // txtResources
+            // 
+            txtResources.Font = new Font("Segoe UI", 10F);
+            txtResources.Location = new Point(603, 321);
+            txtResources.Name = "txtResources";
+            txtResources.Size = new Size(191, 25);
+            txtResources.TabIndex = 41;
+            // 
+            // lblBackgroundFog
+            // 
+            lblBackgroundFog.AutoSize = true;
+            lblBackgroundFog.Font = new Font("Segoe UI", 12F);
+            lblBackgroundFog.Location = new Point(603, 237);
+            lblBackgroundFog.Name = "lblBackgroundFog";
+            lblBackgroundFog.Size = new Size(122, 21);
+            lblBackgroundFog.TabIndex = 40;
+            lblBackgroundFog.Text = "BackgroundFog:";
+            // 
+            // txtBackgroundFog
+            // 
+            txtBackgroundFog.Font = new Font("Segoe UI", 10F);
+            txtBackgroundFog.Location = new Point(603, 264);
+            txtBackgroundFog.Name = "txtBackgroundFog";
+            txtBackgroundFog.Size = new Size(191, 25);
+            txtBackgroundFog.TabIndex = 39;
             // 
             // RegionFieldsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(603, 478);
+            ClientSize = new Size(801, 478);
+            Controls.Add(lblUniformDensity);
+            Controls.Add(txtUniformDensity);
+            Controls.Add(lblLocalDensity);
+            Controls.Add(txtLocalDensity);
+            Controls.Add(lblUniformRGB);
+            Controls.Add(txtUniformRGB);
+            Controls.Add(lblLocalRGB);
+            Controls.Add(txtLocalRgb);
+            Controls.Add(lblResources);
+            Controls.Add(txtResources);
+            Controls.Add(lblBackgroundFog);
+            Controls.Add(txtBackgroundFog);
             Controls.Add(label1);
             Controls.Add(lblFactor);
             Controls.Add(txtFactor);
@@ -521,5 +654,17 @@
         private Label lblFactor;
         private TextBox txtFactor;
         private Label label1;
+        private Label lblUniformDensity;
+        private TextBox txtUniformDensity;
+        private Label lblLocalDensity;
+        private TextBox txtLocalDensity;
+        private Label lblUniformRGB;
+        private TextBox txtUniformRGB;
+        private Label lblLocalRGB;
+        private TextBox txtLocalRgb;
+        private Label lblResources;
+        private TextBox txtResources;
+        private Label lblBackgroundFog;
+        private TextBox txtBackgroundFog;
     }
 }

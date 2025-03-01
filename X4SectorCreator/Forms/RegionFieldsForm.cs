@@ -42,6 +42,8 @@
             IsValidFloat(invalidFields, txtSeed, out var seed);
             IsValidFloat(invalidFields, txtSize, out var size);
             IsValidFloat(invalidFields, txtSizeVariation, out var sizeVariation);
+            IsValidFloat(invalidFields, txtLocalDensity, out var localDensity);
+            IsValidFloat(invalidFields, txtUniformDensity, out var uniformDensity);
 
             // Strings
             IsValidString(invalidFields, txtRef, out var tRef);
@@ -50,6 +52,14 @@
             IsValidString(invalidFields, txtLodRule, out var lodRule);
             IsValidString(invalidFields, txtGroupRef, out var groupRef);
             IsValidString(invalidFields, cmbFieldType, out var fieldType);
+            IsValidString(invalidFields, txtResources, out var resources);
+
+            // Exceptional cases
+            IsValidString(invalidFields, txtLocalRgb, out _);
+            IsValidString(invalidFields, txtUniformRGB, out _);
+
+            // Bools
+            IsValidBool(invalidFields, txtBackgroundFog, out var backgroundFog);
 
             if (invalidFields.Count != 0)
             {
@@ -57,6 +67,9 @@
                 fieldObj = null;
                 return false;
             }
+
+            var localRgbSucces = SeperateRGB(txtLocalRgb.Text, out int lr, out int lg, out int lb);
+            var uniformRgbSucces = SeperateRGB(txtUniformRGB.Text, out int ur, out int ug, out int ub);
 
             fieldObj = new FieldObj
             {
@@ -77,22 +90,62 @@
                 Size = size,
                 SizeVariation = sizeVariation,
                 Texture = texture,
-                Type = fieldType
+                Type = fieldType,
+                LocalBlue = localRgbSucces ? lb : null,
+                LocalGreen = localRgbSucces ? lg : null,
+                LocalRed = localRgbSucces ? lr : null,
+                LocalDensity = localDensity,
+                UniformBlue = uniformRgbSucces ? ub : null,
+                UniformGreen = uniformRgbSucces ? ug : null,
+                UniformRed = uniformRgbSucces ? ur : null,
+                UniformDensity = uniformDensity,
+                BackgroundFog = backgroundFog,
+                Resources = resources
             };
 
             return true;
         }
 
+        private static void IsValidBool(HashSet<string> invalidFields, Control control, out bool? b)
+        {
+            b = null;
+            if (string.IsNullOrEmpty(control.Text)) return;
+            if (!bool.TryParse(control.Text, out var boolValue))
+            {
+                invalidFields.Add(control.Name.Replace("txt", string.Empty).Replace("cmb", string.Empty));
+                return;
+            }
+            b = boolValue;
+        }
+
         private static void IsValidString(HashSet<string> invalidFields, Control control, out string s)
         {
+            var cName = control.Name.Replace("txt", string.Empty).Replace("cmb", string.Empty);
             s = control.Text;
             if (control is ComboBox cmb)
             {
                 var text = cmb.SelectedItem as string;
                 if (string.IsNullOrWhiteSpace(text))
-                    invalidFields.Add(control.Name.Replace("txt", string.Empty).Replace("cmb", string.Empty));
+                    invalidFields.Add(cName);
                 else
                     s = text;
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(control.Text))
+                    return;
+
+                // Special cases
+                switch(control.Name)
+                {
+                    case "txtLocalRGB":
+                    case "txtUniformRGB":
+                        if (!SeperateRGB(control.Text, out _, out _, out _))
+                            invalidFields.Add(cName);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -107,6 +160,19 @@
                 return;
             }
             f = fl;
+        }
+
+        private static bool SeperateRGB(string rgb, out int r, out int g, out int b)
+        {
+            r = 0; g = 0; b = 0;
+            var split = rgb.Split(',');
+            if (split.Length != 3) 
+                return false;
+            if (!int.TryParse(split[0], out r) || 
+                !int.TryParse(split[1], out g) || 
+                !int.TryParse(split[2], out b)) 
+                return false;
+            return true;
         }
 
         public class FieldObj
@@ -133,6 +199,22 @@
             public string Ref { get; set; }
             public float? Factor { get; set; }
 
+            // Nebulas
+            // Map these as one field LocalRGB
+            public int? LocalRed { get; set; }
+            public int? LocalGreen { get; set; }
+            public int? LocalBlue { get; set; }
+            public float? LocalDensity { get; set; }
+
+            // Map these as one field UniformRGB
+            public int? UniformRed { get; set; }
+            public int? UniformGreen { get; set; }
+            public int? UniformBlue { get; set; }
+            public float? UniformDensity { get; set; }
+
+            public bool? BackgroundFog { get; set; }
+            public string Resources { get; set; }
+
             public override string ToString()
             {
                 if (!string.IsNullOrWhiteSpace(Medium))
@@ -140,7 +222,11 @@
                 if (!string.IsNullOrWhiteSpace(GroupRef))
                     return $"{Type}=\"{GroupRef}\"";
                 if (!string.IsNullOrWhiteSpace(Ref))
+                {
+                    if (!string.IsNullOrWhiteSpace(Resources))
+                        return $"{Type}=\"{Ref}\"=\"{Resources}\"";
                     return $"{Type}=\"{Ref}\"";
+                }
                 return Type;
             }
         }

@@ -53,6 +53,11 @@
             ResetAllExcept(cmbPositional);
         }
 
+        private void CmbDebris_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ResetAllExcept(cmbDebris);
+        }
+
         private void ResetAllExcept(ComboBox cmb)
         {
             if (_suppressEvents) return;

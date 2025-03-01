@@ -42,6 +42,8 @@
             cmbPositional = new ComboBox();
             BtnAdd = new Button();
             BtnCancel = new Button();
+            label7 = new Label();
+            cmbDebris = new ComboBox();
             SuspendLayout();
             // 
             // cmbAsteroids
@@ -166,7 +168,7 @@
             // 
             // BtnAdd
             // 
-            BtnAdd.Location = new Point(137, 346);
+            BtnAdd.Location = new Point(138, 401);
             BtnAdd.Name = "BtnAdd";
             BtnAdd.Size = new Size(201, 36);
             BtnAdd.TabIndex = 12;
@@ -176,7 +178,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(11, 346);
+            BtnCancel.Location = new Point(12, 401);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(120, 36);
             BtnCancel.TabIndex = 13;
@@ -184,11 +186,33 @@
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 12F);
+            label7.Location = new Point(12, 343);
+            label7.Name = "label7";
+            label7.Size = new Size(55, 21);
+            label7.TabIndex = 15;
+            label7.Text = "Debris";
+            // 
+            // cmbDebris
+            // 
+            cmbDebris.Font = new Font("Segoe UI", 11F);
+            cmbDebris.FormattingEnabled = true;
+            cmbDebris.Location = new Point(11, 367);
+            cmbDebris.Name = "cmbDebris";
+            cmbDebris.Size = new Size(328, 28);
+            cmbDebris.TabIndex = 14;
+            cmbDebris.SelectedIndexChanged += CmbDebris_SelectedIndexChanged;
+            // 
             // RegionPredefinedFieldsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(351, 390);
+            ClientSize = new Size(351, 444);
+            Controls.Add(label7);
+            Controls.Add(cmbDebris);
             Controls.Add(BtnCancel);
             Controls.Add(BtnAdd);
             Controls.Add(label6);
@@ -228,5 +252,7 @@
         private ComboBox cmbPositional;
         private Button BtnAdd;
         private Button BtnCancel;
+        private Label label7;
+        private ComboBox cmbDebris;
     }
 }
