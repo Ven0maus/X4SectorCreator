@@ -1,12 +1,10 @@
-﻿using X4SectorCreator.Forms;
-
-namespace X4SectorCreator.Objects
+﻿namespace X4SectorCreator.Objects
 {
     public class Region
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
+        public string BoundaryType { get; set; }
         public string Density { get; set; }
         public string Rotation { get; set; }
         public string NoiseScale { get; set; }
@@ -20,5 +18,10 @@ namespace X4SectorCreator.Objects
         public List<FieldObj> Fields { get; set; } = [];
         public List<Resource> Resources { get; set; } = [];
         public List<StepObj> Falloff { get; set; } = [];
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

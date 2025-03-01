@@ -65,6 +65,7 @@ namespace X4SectorCreator
                     if (cluster.Value.IsBaseGame && string.IsNullOrWhiteSpace(sector.BaseGameMapping))
                         sector.BaseGameMapping = "sector001";
 
+                    sector.Regions ??= [];
                     sector.Zones ??= [];
                     foreach (var zone in sector.Zones)
                     {
@@ -148,6 +149,7 @@ namespace X4SectorCreator
                 SectorGeneration.Generate(modFolder, modPrefix, clusters);
                 ZoneGeneration.Generate(modFolder, modPrefix, clusters);
                 ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", clusters);
+                RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters);
             }
             catch (Exception ex)
             {
@@ -635,6 +637,8 @@ namespace X4SectorCreator
 
         private void SectorsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            RegionsListBox.Items.Clear();
+            RegionsListBox.SelectedItem = null;
             GatesListBox.Items.Clear();
             GatesListBox.SelectedItem = null;
 
@@ -665,6 +669,12 @@ namespace X4SectorCreator
 
             var cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             var sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+
+            // Show all regions
+            foreach (var region in sector.Regions)
+            {
+                _ = RegionsListBox.Items.Add(region);
+            }
 
             // Set details
             SetDetailsText(cluster.Value, sector);

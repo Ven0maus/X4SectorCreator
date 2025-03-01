@@ -305,10 +305,14 @@ namespace X4SectorCreator.Forms
             region.Resources.AddRange(ListBoxResources.Items.Cast<Resource>());
 
             // Assign ID
-            region.Id = Sector.Regions.DefaultIfEmpty().Max(a => a.Id) + 1;
+            region.Id = Sector.Regions.DefaultIfEmpty(new Region()).Max(a => a.Id) + 1;
 
             // Add region to sector
             Sector.Regions.Add(region);
+
+            MainForm.Instance.RegionsListBox.Items.Add(region);
+            MainForm.Instance.RegionsListBox.SelectedItem = region;
+            Close();
         }
 
         private bool ValidationChecks(out Region region)
@@ -364,7 +368,7 @@ namespace X4SectorCreator.Forms
                 NoiseScale = noiseScale.ToString(),
                 Seed = seed.ToString(),
                 Name = txtRegionName.Text,
-                Type = selectedBoundaryType,
+                BoundaryType = selectedBoundaryType,
             };
 
             return true;

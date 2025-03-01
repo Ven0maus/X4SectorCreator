@@ -28,7 +28,8 @@ namespace X4SectorCreator.XmlGeneration
                         new XAttribute("ref", "standardcluster")
                     ),
                     new XElement("connections",
-                        GenerateConnections(modPrefix, cluster)
+                        GenerateConnections(modPrefix, cluster),
+                        GenerateRegions(modPrefix, cluster)
                     )
                 );
             }
@@ -65,6 +66,39 @@ namespace X4SectorCreator.XmlGeneration
                     )
                 )
             );
+        }
+
+        private static IEnumerable<XElement> GenerateRegions(string modPrefix, Cluster cluster)
+        {
+            foreach (var sector in cluster.Sectors)
+            {
+                foreach (var region in sector.Regions)
+                {
+                    yield return new XElement("connection",
+                        new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}_connection"),
+                        new XAttribute("ref", "regions"),
+                        new XElement("offset",
+                            new XElement("position",
+                                new XAttribute("x", sector.Offset.X + region.Position.X),
+                                new XAttribute("y", 0),
+                                new XAttribute("z", sector.Offset.Y + region.Position.Y)
+                            )
+                        ),
+                        new XElement("macro",
+                            new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}_macro"),
+                            new XElement("component",
+                                new XAttribute("connection", "cluster"),
+                                new XAttribute("ref", "standardregion")
+                            ),
+                            new XElement("properties",
+                                new XElement("region",
+                                    new XAttribute("ref", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}")
+                                )
+                            )
+                        )
+                    );
+                }
+            }
         }
 
         private static string EnsureDirectoryExists(string filePath)
