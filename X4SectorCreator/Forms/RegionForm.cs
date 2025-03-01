@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -21,6 +20,11 @@ namespace X4SectorCreator.Forms
         public RegionFieldsForm RegionFieldsForm => _regionFieldsForm != null && !_regionFieldsForm.IsDisposed
             ? _regionFieldsForm
             : (_regionFieldsForm = new RegionFieldsForm());
+
+        private RegionPredefinedFieldsForm _regionPredefinedFieldsForm;
+        public RegionPredefinedFieldsForm RegionPredefinedFieldsForm => _regionPredefinedFieldsForm != null && !_regionPredefinedFieldsForm.IsDisposed
+            ? _regionPredefinedFieldsForm
+            : (_regionPredefinedFieldsForm = new RegionPredefinedFieldsForm());
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster Cluster { get; set; }
@@ -332,7 +336,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnAddPredefined_Click(object sender, EventArgs e)
         {
-            // TODO
+            RegionPredefinedFieldsForm.Show();
         }
 
         private void CmbBoundaryType_SelectedIndexChanged(object sender, EventArgs e)
