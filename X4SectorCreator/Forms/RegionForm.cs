@@ -60,6 +60,9 @@ namespace X4SectorCreator.Forms
             SectorHexagon.MouseUp += SectorHexagon_MouseUp;
             SectorHexagon.MouseClick += SectorHexagon_MouseClick;
 
+            txtRegionLinear.Enabled = cmbBoundaryType.SelectedItem is string selected &&
+                selected.Equals("Cylinder", StringComparison.OrdinalIgnoreCase);
+
             // Init hexagon
             InitializeHexagon();
         }
@@ -81,7 +84,7 @@ namespace X4SectorCreator.Forms
 
             // Both hexagons are shared
             _circlePosition = SectorHexagon.ClientRectangle.Center();
-            
+
             // Default linear
             if (string.IsNullOrWhiteSpace(txtRegionLinear.Text))
                 txtRegionLinear.Text = "5000";
@@ -327,6 +330,12 @@ namespace X4SectorCreator.Forms
         private void BtnAddPredefined_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void CmbBoundaryType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtRegionLinear.Enabled = cmbBoundaryType.SelectedItem is string selected && 
+                selected.Equals("Cylinder", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

@@ -217,6 +217,7 @@
             cmbBoundaryType.Size = new Size(204, 28);
             cmbBoundaryType.TabIndex = 52;
             cmbBoundaryType.Text = "Cylinder";
+            cmbBoundaryType.SelectedIndexChanged += CmbBoundaryType_SelectedIndexChanged;
             // 
             // ListBoxResources
             // 
