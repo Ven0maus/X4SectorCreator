@@ -135,8 +135,13 @@
 
             public override string ToString()
             {
-                // TODO: Write custom entries for each type
-                return base.ToString();
+                if (!string.IsNullOrWhiteSpace(Medium))
+                    return $"{Type}=\"{Medium}\"";
+                if (!string.IsNullOrWhiteSpace(GroupRef))
+                    return $"{Type}=\"{GroupRef}\"";
+                if (!string.IsNullOrWhiteSpace(Ref))
+                    return $"{Type}=\"{Ref}\"";
+                return Type;
             }
         }
     }
