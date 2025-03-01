@@ -69,6 +69,8 @@
             txtMinNoiseValue = new TextBox();
             label13 = new Label();
             txtMaxNoiseValue = new TextBox();
+            label15 = new Label();
+            txtLinear = new TextBox();
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).BeginInit();
             TabControlFalloff.SuspendLayout();
             tabLateral.SuspendLayout();
@@ -278,7 +280,7 @@
             ListBoxFields.FormattingEnabled = true;
             ListBoxFields.Location = new Point(12, 377);
             ListBoxFields.Name = "ListBoxFields";
-            ListBoxFields.Size = new Size(436, 229);
+            ListBoxFields.Size = new Size(436, 259);
             ListBoxFields.TabIndex = 59;
             // 
             // label6
@@ -293,7 +295,7 @@
             // 
             // BtnFieldsDel
             // 
-            BtnFieldsDel.Location = new Point(12, 613);
+            BtnFieldsDel.Location = new Point(12, 643);
             BtnFieldsDel.Name = "BtnFieldsDel";
             BtnFieldsDel.Size = new Size(88, 31);
             BtnFieldsDel.TabIndex = 62;
@@ -303,7 +305,7 @@
             // 
             // BtnFieldsAdd
             // 
-            BtnFieldsAdd.Location = new Point(106, 613);
+            BtnFieldsAdd.Location = new Point(106, 643);
             BtnFieldsAdd.Name = "BtnFieldsAdd";
             BtnFieldsAdd.Size = new Size(90, 31);
             BtnFieldsAdd.TabIndex = 61;
@@ -351,7 +353,7 @@
             // 
             // BtnCreateRegion
             // 
-            BtnCreateRegion.Location = new Point(202, 613);
+            BtnCreateRegion.Location = new Point(202, 643);
             BtnCreateRegion.Name = "BtnCreateRegion";
             BtnCreateRegion.Size = new Size(246, 31);
             BtnCreateRegion.TabIndex = 67;
@@ -467,11 +469,32 @@
             txtMaxNoiseValue.TabIndex = 78;
             txtMaxNoiseValue.Text = "1";
             // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 12F);
+            label15.Location = new Point(466, 653);
+            label15.Name = "label15";
+            label15.Size = new Size(109, 21);
+            label15.TabIndex = 81;
+            label15.Text = "Region Linear:";
+            // 
+            // txtLinear
+            // 
+            txtLinear.Enabled = false;
+            txtLinear.Location = new Point(581, 653);
+            txtLinear.Name = "txtLinear";
+            txtLinear.Size = new Size(173, 23);
+            txtLinear.TabIndex = 80;
+            txtLinear.TextAlign = HorizontalAlignment.Center;
+            // 
             // RegionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(763, 656);
+            ClientSize = new Size(763, 683);
+            Controls.Add(label15);
+            Controls.Add(txtLinear);
             Controls.Add(label13);
             Controls.Add(txtMaxNoiseValue);
             Controls.Add(label12);
@@ -565,5 +588,7 @@
         internal ListBox ListBoxLateral;
         internal ListBox ListBoxRadial;
         internal ListBox ListBoxFields;
+        private Label label15;
+        private TextBox txtLinear;
     }
 }
