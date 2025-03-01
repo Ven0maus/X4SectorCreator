@@ -70,7 +70,7 @@
             label13 = new Label();
             txtMaxNoiseValue = new TextBox();
             label15 = new Label();
-            txtLinear = new TextBox();
+            txtRegionLinear = new TextBox();
             BtnAddPredefined = new Button();
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).BeginInit();
             TabControlFalloff.SuspendLayout();
@@ -480,14 +480,14 @@
             label15.TabIndex = 81;
             label15.Text = "Region Linear:";
             // 
-            // txtLinear
+            // txtRegionLinear
             // 
-            txtLinear.Enabled = false;
-            txtLinear.Location = new Point(581, 653);
-            txtLinear.Name = "txtLinear";
-            txtLinear.Size = new Size(173, 23);
-            txtLinear.TabIndex = 80;
-            txtLinear.TextAlign = HorizontalAlignment.Center;
+            txtRegionLinear.Enabled = false;
+            txtRegionLinear.Location = new Point(581, 653);
+            txtRegionLinear.Name = "txtRegionLinear";
+            txtRegionLinear.Size = new Size(173, 23);
+            txtRegionLinear.TabIndex = 80;
+            txtRegionLinear.TextAlign = HorizontalAlignment.Center;
             // 
             // BtnAddPredefined
             // 
@@ -506,7 +506,7 @@
             ClientSize = new Size(763, 683);
             Controls.Add(BtnAddPredefined);
             Controls.Add(label15);
-            Controls.Add(txtLinear);
+            Controls.Add(txtRegionLinear);
             Controls.Add(label13);
             Controls.Add(txtMaxNoiseValue);
             Controls.Add(label12);
@@ -601,7 +601,7 @@
         internal ListBox ListBoxRadial;
         internal ListBox ListBoxFields;
         private Label label15;
-        private TextBox txtLinear;
+        private TextBox txtRegionLinear;
         private Button BtnAddPredefined;
     }
 }

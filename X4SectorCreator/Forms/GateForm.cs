@@ -9,7 +9,7 @@ namespace X4SectorCreator.Forms
         private readonly int _hexRadius;
         private readonly PointF[] _hexagonPoints;
 
-        private readonly int _worldRadius = 400000;
+        public static readonly int WorldRadius = 400000;
         private Point _sourceDotPosition, _targetDotPosition;
         private bool _dragging = false, _rotating = false;
         private float _sourceYaw, _targetYaw;
@@ -126,8 +126,8 @@ namespace X4SectorCreator.Forms
             int centerY = SourceSectorHexagon.Height / 2;
 
             // Reverse world scaling
-            float normalizedX = (coordinate.X * 2f) / _worldRadius;
-            float normalizedY = (coordinate.Y * 2f) / _worldRadius;
+            float normalizedX = (coordinate.X * 2f) / WorldRadius;
+            float normalizedY = (coordinate.Y * 2f) / WorldRadius;
 
             // Reverse normalization and centering
             float screenX = (normalizedX * _hexRadius) + centerX;
@@ -315,8 +315,8 @@ namespace X4SectorCreator.Forms
             float normalizedX = (dotPosition.X - centerX) / (float)_hexRadius;
             float normalizedY = -(dotPosition.Y - centerY) / (float)_hexRadius;
 
-            float worldX = normalizedX * _worldRadius / 2;
-            float worldY = normalizedY * _worldRadius / 2;
+            float worldX = normalizedX * WorldRadius / 2;
+            float worldY = normalizedY * WorldRadius / 2;
 
             positionTextBox.Text = $"({worldX:0}, {worldY:0})";
         }

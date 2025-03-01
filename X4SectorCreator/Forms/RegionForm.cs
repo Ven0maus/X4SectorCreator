@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -80,6 +81,13 @@ namespace X4SectorCreator.Forms
 
             // Both hexagons are shared
             _circlePosition = SectorHexagon.ClientRectangle.Center();
+            
+            // Default linear
+            if (string.IsNullOrWhiteSpace(txtRegionLinear.Text))
+                txtRegionLinear.Text = "5000";
+
+            // Set region positions
+            UpdateRegionPosition();
         }
 
         private void SectorHexagon_Paint(object sender, PaintEventArgs e)
@@ -118,6 +126,7 @@ namespace X4SectorCreator.Forms
                 if (IsFullyInsideHexagon(e.Location, _circleRadius))
                 {
                     _circlePosition = e.Location;
+                    UpdateRegionPosition();
                 }
                 SectorHexagon.Invalidate();
             }
@@ -131,6 +140,7 @@ namespace X4SectorCreator.Forms
                 if (IsFullyInsideHexagon(_circlePosition, newRadius))
                 {
                     _circleRadius = newRadius;
+                    UpdateRegionPosition();
                 }
                 SectorHexagon.Invalidate();
             }
@@ -147,8 +157,56 @@ namespace X4SectorCreator.Forms
             if (e.Button == MouseButtons.Left && IsFullyInsideHexagon(e.Location, _circleRadius))
             {
                 _circlePosition = e.Location;
+                UpdateRegionPosition();
                 SectorHexagon.Invalidate();
             }
+        }
+
+        private void UpdateRegionPosition()
+        {
+            var worldPos = ConvertScreenToWorld(_circlePosition);
+            txtRegionPosition.Text = $"({worldPos.X:0}, {worldPos.Y:0})";
+            txtRegionRadius.Text = ConvertScreenRadiusToWorld(_circleRadius).ToString();
+        }
+
+        private int ConvertScreenRadiusToWorld(int screenRadius)
+        {
+            return (int)Math.Round((screenRadius * GateForm.WorldRadius) / (2f * _hexRadius));
+        }
+
+        private int ConvertWorldRadiusToScreen(int worldRadius)
+        {
+            return (int)Math.Round((worldRadius * 2f * _hexRadius) / GateForm.WorldRadius);
+        }
+
+        private Point ConvertScreenToWorld(Point point)
+        {
+            int centerX = SectorHexagon.Width / 2;
+            int centerY = SectorHexagon.Height / 2;
+
+            float normalizedX = (point.X - centerX) / (float)_hexRadius;
+            float normalizedY = -(point.Y - centerY) / (float)_hexRadius;
+
+            float worldX = normalizedX * GateForm.WorldRadius / 2;
+            float worldY = normalizedY * GateForm.WorldRadius / 2;
+
+            return new Point((int)Math.Round(worldX), (int)Math.Round(worldY));
+        }
+
+        private Point ConvertWorldToScreen(Point coordinate)
+        {
+            int centerX = SectorHexagon.Width / 2;
+            int centerY = SectorHexagon.Height / 2;
+
+            // Reverse world scaling
+            float normalizedX = (coordinate.X * 2f) / GateForm.WorldRadius;
+            float normalizedY = (coordinate.Y * 2f) / GateForm.WorldRadius;
+
+            // Reverse normalization and centering
+            float screenX = (normalizedX * _hexRadius) + centerX;
+            float screenY = (-normalizedY * _hexRadius) + centerY; // Correct Y-axis negation
+
+            return new Point((int)Math.Round(screenX), (int)Math.Round(screenY));
         }
 
         private bool IsPointInsideHexagon(Point point)
