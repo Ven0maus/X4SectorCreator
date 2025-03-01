@@ -106,7 +106,7 @@
             return true;
         }
 
-        private static void IsValidBool(HashSet<string> invalidFields, Control control, out bool? b)
+        private static void IsValidBool(HashSet<string> invalidFields, TextBox control, out bool? b)
         {
             b = null;
             if (string.IsNullOrEmpty(control.Text)) return;
@@ -218,7 +218,11 @@
             public override string ToString()
             {
                 if (!string.IsNullOrWhiteSpace(Medium))
+                {
+                    if (!string.IsNullOrWhiteSpace(Ref))
+                        return $"{Type}=\"{Ref}\"=\"{Medium}\"";
                     return $"{Type}=\"{Medium}\"";
+                }
                 if (!string.IsNullOrWhiteSpace(GroupRef))
                     return $"{Type}=\"{GroupRef}\"";
                 if (!string.IsNullOrWhiteSpace(Ref))

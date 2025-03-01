@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using X4SectorCreator.Objects;
+using Region = X4SectorCreator.Objects.Region;
 
 namespace X4SectorCreator.Forms
 {
@@ -46,7 +47,7 @@ namespace X4SectorCreator.Forms
         private readonly int _hexRadius;
         private readonly PointF[] _hexagonPoints;
         private Point _circlePosition, _lastMousePos;
-        private int _circleRadius = 200;
+        private int _circleRadius = 150;
         private bool _dragging = false, _resizing = false;
         #endregion
 
@@ -69,6 +70,38 @@ namespace X4SectorCreator.Forms
 
             // Init hexagon
             InitializeHexagon();
+            InitDefaultFalloff();
+        }
+
+        private void InitDefaultFalloff()
+        {
+            // Some defaults to make configurating easier
+            var lateral = new List<RegionFalloffForm.StepObj>
+            {
+                new() { Position = "0.0", Value = "0.0" },
+                new() { Position = "0.1", Value = "1.0" },
+                new() { Position = "0.9", Value = "1.0" },
+                new() { Position = "1.0", Value = "0.0" }
+            };
+
+            var radial = new List<RegionFalloffForm.StepObj>
+            {
+                new() { Position = "0.0", Value = "1.0" },
+                new() { Position = "0.8", Value = "1.0" },
+                new() { Position = "1.0", Value = "0.0" }
+            };
+
+            foreach (var lat in lateral) 
+            {
+                lat.Type = "Lateral";
+                ListBoxLateral.Items.Add(lat);
+            }
+
+            foreach (var rad in radial)
+            {
+                rad.Type = "Radial";
+                ListBoxRadial.Items.Add(rad);
+            }
         }
 
         #region Hexagon Methods
@@ -92,9 +125,6 @@ namespace X4SectorCreator.Forms
             // Default linear
             if (string.IsNullOrWhiteSpace(txtRegionLinear.Text))
                 txtRegionLinear.Text = "5000";
-
-            // Set region positions
-            UpdateRegionPosition();
         }
 
         private void SectorHexagon_Paint(object sender, PaintEventArgs e)
@@ -173,17 +203,17 @@ namespace X4SectorCreator.Forms
         {
             var worldPos = ConvertScreenToWorld(_circlePosition);
             txtRegionPosition.Text = $"({worldPos.X:0}, {worldPos.Y:0})";
-            txtRegionRadius.Text = ConvertScreenRadiusToWorld(_circleRadius).ToString();
+            txtRegionRadius.Text = _circleRadius.ToString(); // Don't need to convert so the user can read it better
         }
 
         private int ConvertScreenRadiusToWorld(int screenRadius)
         {
-            return (int)Math.Round((screenRadius * GateForm.WorldRadius) / (2f * _hexRadius));
+            return (int)Math.Round((screenRadius * Sector.DiameterRadius) / (2f * _hexRadius));
         }
 
         private int ConvertWorldRadiusToScreen(int worldRadius)
         {
-            return (int)Math.Round((worldRadius * 2f * _hexRadius) / GateForm.WorldRadius);
+            return (int)Math.Round((worldRadius * 2f * _hexRadius) / Sector.DiameterRadius);
         }
 
         private Point ConvertScreenToWorld(Point point)
@@ -194,8 +224,8 @@ namespace X4SectorCreator.Forms
             float normalizedX = (point.X - centerX) / (float)_hexRadius;
             float normalizedY = -(point.Y - centerY) / (float)_hexRadius;
 
-            float worldX = normalizedX * GateForm.WorldRadius / 2;
-            float worldY = normalizedY * GateForm.WorldRadius / 2;
+            float worldX = normalizedX * Sector.DiameterRadius / 2;
+            float worldY = normalizedY * Sector.DiameterRadius / 2;
 
             return new Point((int)Math.Round(worldX), (int)Math.Round(worldY));
         }
@@ -206,8 +236,8 @@ namespace X4SectorCreator.Forms
             int centerY = SectorHexagon.Height / 2;
 
             // Reverse world scaling
-            float normalizedX = (coordinate.X * 2f) / GateForm.WorldRadius;
-            float normalizedY = (coordinate.Y * 2f) / GateForm.WorldRadius;
+            float normalizedX = (coordinate.X * 2f) / Sector.DiameterRadius;
+            float normalizedY = (coordinate.Y * 2f) / Sector.DiameterRadius;
 
             // Reverse normalization and centering
             float screenX = (normalizedX * _hexRadius) + centerX;
@@ -248,12 +278,112 @@ namespace X4SectorCreator.Forms
 
         private void InitSectorValues()
         {
-
+            // Set region positions
+            UpdateRegionPosition();
         }
 
         private void BtnCreateRegion_Click(object sender, EventArgs e)
         {
+            if (!ValidationChecks(out var region)) return;
 
+            // Convert region radius and position to world space
+            var convertedRegionRadius = ConvertScreenRadiusToWorld(_circleRadius);
+            var convertedRegionPosition = ConvertScreenToWorld(_circlePosition);
+
+            // Set converted worlspace coords & radius
+            region.BoundaryRadius = convertedRegionRadius.ToString();
+            region.Position = convertedRegionPosition;
+
+            // Fields
+            region.Fields.AddRange(ListBoxFields.Items.Cast<RegionFieldsForm.FieldObj>());
+
+            // Falloff lateral & radial
+            region.Falloff.AddRange(ListBoxLateral.Items.Cast<RegionFalloffForm.StepObj>());
+            region.Falloff.AddRange(ListBoxRadial.Items.Cast<RegionFalloffForm.StepObj>());
+
+            // Resources
+            region.Resources.AddRange(ListBoxResources.Items.Cast<RegionResourcesForm.Resource>());
+
+            // Assign ID
+            region.Id = Sector.Regions.DefaultIfEmpty().Max(a => a.Id) + 1;
+
+            // Add region to sector
+            Sector.Regions.Add(region);
+        }
+
+        private bool ValidationChecks(out Region region)
+        {
+            region = null;
+
+            // Name check
+            if (string.IsNullOrWhiteSpace(txtRegionName.Text))
+            {
+                _ = MessageBox.Show("Please insert a valid name for the region.");
+                return false;
+            }
+
+            // Boundary check
+            var selectedBoundaryType = cmbBoundaryType.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedBoundaryType))
+            {
+                _ = MessageBox.Show("Please select a valid boundary type for the region.");
+                return false;
+            }
+
+            // Linear check
+            int regionLinear = default;
+            if (selectedBoundaryType.Equals("Cylinder", StringComparison.OrdinalIgnoreCase) &&
+                (string.IsNullOrWhiteSpace(txtRegionLinear.Text) ||
+                !int.TryParse(txtRegionLinear.Text, out regionLinear) ||
+                regionLinear <= 0))
+            {
+                _ = MessageBox.Show("Region linear must be a valid numeric value higher than 0 for the region.");
+                return false;
+            }
+
+            var messages = new List<string>();
+            IsValidInteger(messages, txtRotation, out var rotation);
+            IsValidInteger(messages, txtSeed, out var seed);
+            IsValidInteger(messages, txtNoiseScale, out var noiseScale);
+            IsValidFloat(messages, txtDensity, out var density);
+            IsValidFloat(messages, txtMinNoiseValue, out var minNoiseValue);
+            IsValidFloat(messages, txtMaxNoiseValue, out var maxNoiseValue);
+            if (messages.Count > 0)
+            {
+                _ = MessageBox.Show(string.Join("\n", messages));
+                return false;
+            }
+
+            region = new Region
+            {
+                BoundaryLinear = regionLinear.ToString(),
+                Density = density.ToString(),
+                MaxNoiseValue = maxNoiseValue.ToString(),
+                MinNoiseValue = minNoiseValue.ToString(),
+                Rotation = rotation.ToString(),
+                NoiseScale = noiseScale.ToString(),
+                Seed = seed.ToString(),
+                Name = txtRegionName.Text,
+                Type = selectedBoundaryType,
+            };
+
+            return true;
+        }
+
+        private static void IsValidFloat(List<string> messages, TextBox textBox, out float value)
+        {
+            if (!float.TryParse(textBox.Text, out value))
+            {
+                messages.Add($"{textBox.Name.Replace("txt", string.Empty)} must be a valid numeric value.");
+            }
+        }
+
+        private static void IsValidInteger(List<string> messages, TextBox textBox, out int value)
+        {
+            if (!int.TryParse(textBox.Text, out value))
+            {
+                messages.Add($"{textBox.Name.Replace("txt", string.Empty)} must be a valid numeric integer value.");
+            }
         }
 
         private void BtnResourcesAdd_Click(object sender, EventArgs e)

@@ -724,6 +724,7 @@ namespace X4SectorCreator
 
                 MainForm.Instance.GateForm.txtTargetSector.Text = selectedSector.Name;
                 MainForm.Instance.GateForm.txtTargetSectorLocation.Text = position.ToString() + $" [{_selectedChildHexIndex?.ToString() ?? "0"}]";
+                MainForm.Instance.GateForm.TargetSectorSelection = null; // Recalibrates automatically
             }
             else
             {

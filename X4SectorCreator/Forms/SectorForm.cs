@@ -21,6 +21,7 @@ namespace X4SectorCreator.Forms
                     txtEconomy.Text = ((int)(_sector.Economy * 100)).ToString();
                     txtSecurity.Text = ((int)(_sector.Security * 100)).ToString();
                     txtCustomTags.Text = _sector.Tags;
+                    txtSectorRadius.Text = ((int)(_sector.DiameterRadius / 1000f / 2f)).ToString();
                     chkAllowRandomAnomalies.Checked = _sector.AllowRandomAnomalies;
                     chkDisableFactionLogic.Checked = _sector.DisableFactionLogic;
                 }
@@ -31,6 +32,7 @@ namespace X4SectorCreator.Forms
                     txtSunlight.Text = "100";
                     txtEconomy.Text = "100";
                     txtSecurity.Text = "100";
+                    txtSectorRadius.Text = "250";
                     txtCustomTags.Text = string.Empty;
                     chkAllowRandomAnomalies.Checked = true;
                     chkDisableFactionLogic.Checked = false;
@@ -38,9 +40,12 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        private readonly Color _controlColor;
+
         public SectorForm()
         {
             InitializeComponent();
+            _controlColor = lblRadiusUnderText.ForeColor;
         }
 
         private void BtnCreate_Click(object sender, EventArgs e)
@@ -76,6 +81,13 @@ namespace X4SectorCreator.Forms
                         return;
                     }
                 }
+            }
+
+            // Validate sector radius
+            if (!int.TryParse(txtSectorRadius.Text, out var sectorRadius) || sectorRadius <= 0 || sectorRadius > 999)
+            {
+                _ = MessageBox.Show($"Please use a valid numerical value for the sector radius, and specify a value between 1 and 999.");
+                return;
             }
 
             // Validate sunlight, economy, security
@@ -123,6 +135,7 @@ namespace X4SectorCreator.Forms
                         Id = selectedCluster.Value.Sectors.DefaultIfEmpty(new Sector()).Max(a => a.Id) + 1,
                         Name = name,
                         Owner = "None",
+                        DiameterRadius = sectorRadius * 2 * 1000, // Convert to diameter + km
                         Description = txtDescription.Text,
                         Sunlight = (float)Math.Round(sunlight / 100f, 2),
                         Economy = (float)Math.Round(economy / 100f, 2),
@@ -131,7 +144,8 @@ namespace X4SectorCreator.Forms
                         AllowRandomAnomalies = chkAllowRandomAnomalies.Checked,
                         DisableFactionLogic = chkDisableFactionLogic.Checked,
                         Offset = new Point(offSetX, offsetY),
-                        Zones = []
+                        Zones = [],
+                        Regions = []
                     });
 
                     // Add to sector listbox
@@ -157,6 +171,7 @@ namespace X4SectorCreator.Forms
                     sector.Tags = txtCustomTags.Text;
                     sector.AllowRandomAnomalies = chkAllowRandomAnomalies.Checked;
                     sector.DisableFactionLogic = chkDisableFactionLogic.Checked;
+                    sector.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
 
                     int index = MainForm.Instance.SectorsListBox.SelectedIndex;
                     MainForm.Instance.SectorsListBox.Items[index] = name;
@@ -177,6 +192,26 @@ namespace X4SectorCreator.Forms
         {
             Sector = null;
             Close();
+        }
+
+        private void TxtSectorRadius_TextChanged(object sender, EventArgs e)
+        {
+            var radiusText = txtSectorRadius.Text;
+            if (string.IsNullOrWhiteSpace(radiusText) || !int.TryParse(radiusText, out var radius))
+            {
+                lblRadiusUnderText.Text = $"(Please enter a valid numerical value for radius.)";
+                lblRadiusUnderText.ForeColor = Color.Red;
+            }
+            else if (radius <= 0 || radius > 999)
+            {
+                lblRadiusUnderText.Text = $"(Maximum radius must be between 1 and 999)";
+                lblRadiusUnderText .ForeColor = Color.Red;
+            }
+            else
+            {
+                lblRadiusUnderText.Text = $"From the center, {radiusText}km in every direction. {radiusText}km diameter.";
+                lblRadiusUnderText.ForeColor = _controlColor;
+            }
         }
     }
 }

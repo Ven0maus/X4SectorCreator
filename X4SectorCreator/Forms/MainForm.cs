@@ -797,6 +797,19 @@ namespace X4SectorCreator
 
         private void BtnNewRegion_Click(object sender, EventArgs e)
         {
+            var selectedSector = SectorsListBox.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedSector))
+            {
+                _ = MessageBox.Show("Please select a valid sector first.");
+                return;
+            }
+
+            var selectedCluster = ClustersListBox.SelectedItem as string;
+            var cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
+            var sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
+
+            RegionForm.Cluster = cluster;
+            RegionForm.Sector = sector;
             RegionForm.Show();
         }
     }

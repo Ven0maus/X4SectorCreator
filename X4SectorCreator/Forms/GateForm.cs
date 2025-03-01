@@ -9,7 +9,6 @@ namespace X4SectorCreator.Forms
         private readonly int _hexRadius;
         private readonly PointF[] _hexagonPoints;
 
-        public static readonly int WorldRadius = 400000;
         private Point _sourceDotPosition, _targetDotPosition;
         private bool _dragging = false, _rotating = false;
         private float _sourceYaw, _targetYaw;
@@ -40,6 +39,9 @@ namespace X4SectorCreator.Forms
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Sector TargetSectorSelection { get; set; }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public UpdateInfo UpdateInfoObject { get; set; }
 
         public class UpdateInfo
@@ -66,8 +68,12 @@ namespace X4SectorCreator.Forms
             InitializeHexagon();
 
             // Set inital position
-            UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
-            UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
+            if (SourceSector != null)
+            {
+                UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, SourceSector.DiameterRadius);
+                // Inherit the source diameter for now, it will adapt when sector is selected automatically
+                UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, SourceSector.DiameterRadius); 
+            }
 
             // Attach events
             SourceSectorHexagon.Paint += SourceSectorHexagon_Paint;
@@ -104,8 +110,8 @@ namespace X4SectorCreator.Forms
             txtSourceSectorLocation.Text = (UpdateInfoObject.SourceCluster.Position.X, UpdateInfoObject.SourceCluster.Position.Y).ToString() + $" [{sourceIndex}]";
 
             // Revert dot positions from world coordinates
-            _sourceDotPosition = ConvertFromWorldCoordinate(UpdateInfoObject.SourceZone.Position);
-            _targetDotPosition = ConvertFromWorldCoordinate(UpdateInfoObject.TargetZone.Position);
+            _sourceDotPosition = ConvertFromWorldCoordinate(UpdateInfoObject.SourceZone.Position, UpdateInfoObject.SourceSector.DiameterRadius);
+            _targetDotPosition = ConvertFromWorldCoordinate(UpdateInfoObject.TargetZone.Position, UpdateInfoObject.TargetSector.DiameterRadius);
 
             // Set rotation of dot
             _sourceYaw = UpdateInfoObject.SourceGate.Yaw;
@@ -120,14 +126,14 @@ namespace X4SectorCreator.Forms
             TargetSectorHexagon.Invalidate();
         }
 
-        private Point ConvertFromWorldCoordinate(Point coordinate)
+        private Point ConvertFromWorldCoordinate(Point coordinate, int diameter)
         {
             int centerX = SourceSectorHexagon.Width / 2;
             int centerY = SourceSectorHexagon.Height / 2;
 
             // Reverse world scaling
-            float normalizedX = (coordinate.X * 2f) / WorldRadius;
-            float normalizedY = (coordinate.Y * 2f) / WorldRadius;
+            float normalizedX = (coordinate.X * 2f) / diameter;
+            float normalizedY = (coordinate.Y * 2f) / diameter;
 
             // Reverse normalization and centering
             float screenX = (normalizedX * _hexRadius) + centerX;
@@ -194,7 +200,8 @@ namespace X4SectorCreator.Forms
                 {
                     _sourceDotPosition = e.Location;
                     SourceSectorHexagon.Invalidate();
-                    UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
+                    UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, UpdateInfoObject?.SourceSector != null ?
+                        UpdateInfoObject.SourceSector.DiameterRadius : SourceSector.DiameterRadius);
                 }
             }
             else if (_rotating) // If right-click is held, adjust yaw
@@ -219,7 +226,8 @@ namespace X4SectorCreator.Forms
             {
                 _sourceDotPosition = e.Location;
                 SourceSectorHexagon.Invalidate();
-                UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition);
+                UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, UpdateInfoObject?.SourceSector != null ?
+                    UpdateInfoObject.SourceSector.DiameterRadius : SourceSector.DiameterRadius);
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -268,9 +276,30 @@ namespace X4SectorCreator.Forms
             {
                 if (IsPointInsideHexagon(e.Location))
                 {
+                    var prev = _targetDotPosition;
                     _targetDotPosition = e.Location;
+
+
+                    if (UpdateInfoObject?.TargetSector != null)
+                    {
+                        UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, UpdateInfoObject.TargetSector.DiameterRadius);
+                    }
+                    else
+                    {
+                        if (TargetSectorSelection == null)
+                        {
+                            // Check if we have a target selected
+                            if (!GetTargetSectorSelection(out var targetSectorSelection, out _))
+                            {
+                                _targetDotPosition = prev;
+                                return;
+                            }
+                            TargetSectorSelection = targetSectorSelection;
+                        }
+                        UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, TargetSectorSelection.DiameterRadius);
+                    }
+
                     TargetSectorHexagon.Invalidate();
-                    UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
                 }
             }
             else if (_rotating) // If right-click is held, adjust yaw
@@ -293,9 +322,28 @@ namespace X4SectorCreator.Forms
         {
             if (e.Button == MouseButtons.Left && IsPointInsideHexagon(e.Location))
             {
+                var prev = _targetDotPosition;
                 _targetDotPosition = e.Location;
+
+                if (UpdateInfoObject?.TargetSector != null)
+                {
+                    UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, UpdateInfoObject.TargetSector.DiameterRadius);
+                }
+                else
+                {
+                    if (TargetSectorSelection == null)
+                    {
+                        // Check if we have a target selected
+                        if (!GetTargetSectorSelection(out var targetSectorSelection, out _))
+                        {
+                            _targetDotPosition = prev;
+                            return;
+                        }
+                        TargetSectorSelection = targetSectorSelection;
+                    }
+                    UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, TargetSectorSelection.DiameterRadius);
+                }
                 TargetSectorHexagon.Invalidate();
-                UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition);
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -307,7 +355,7 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private void UpdateGatePosition(PictureBox sectorHexagon, TextBox positionTextBox, Point dotPosition)
+        private void UpdateGatePosition(PictureBox sectorHexagon, TextBox positionTextBox, Point dotPosition, int diameter)
         {
             int centerX = sectorHexagon.Width / 2;
             int centerY = sectorHexagon.Height / 2;
@@ -315,8 +363,8 @@ namespace X4SectorCreator.Forms
             float normalizedX = (dotPosition.X - centerX) / (float)_hexRadius;
             float normalizedY = -(dotPosition.Y - centerY) / (float)_hexRadius;
 
-            float worldX = normalizedX * WorldRadius / 2;
-            float worldY = normalizedY * WorldRadius / 2;
+            float worldX = normalizedX * diameter / 2;
+            float worldY = normalizedY * diameter / 2;
 
             positionTextBox.Text = $"({worldX:0}, {worldY:0})";
         }
@@ -342,16 +390,35 @@ namespace X4SectorCreator.Forms
             return path.IsVisible(point);
         }
 
-        private void BtnUpdateConnection_Click()
+        private bool GetTargetSectorSelection(out Sector targetSector, out Cluster targetCluster)
         {
+            targetSector = null;
+            targetCluster = null;
             // Validate if the select target is still the same
             System.Text.RegularExpressions.Match targetSectorLocationMatch = RegexHelper.TupleLocationChildIndexRegex().Match(txtTargetSectorLocation.Text);
             if (!targetSectorLocationMatch.Success)
             {
-                _ = MessageBox.Show($"Invalid sector selected, cannot properly parse \"{txtTargetSectorLocation.Text}\".");
-                return;
+                _ = MessageBox.Show($"Please select a valid target sector first.");
+                return false;
             }
 
+            (int targetSectorX, int targetSectorY, int targetSectorIndex) = (int.Parse(targetSectorLocationMatch.Groups[1].Value),
+                int.Parse(targetSectorLocationMatch.Groups[2].Value),
+                int.Parse(targetSectorLocationMatch.Groups[3].Value));
+
+            // Find target cluster / sector
+            if (!MainForm.Instance.AllClusters.TryGetValue((targetSectorX, targetSectorY), out targetCluster))
+            {
+                _ = MessageBox.Show("Invalid sector selection.");
+                return false;
+            }
+
+            targetSector = targetCluster.Sectors[targetSectorIndex];
+            return true;
+        }
+
+        private void BtnUpdateConnection_Click()
+        {
             string selectedTargetType = cmbTargetType.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedTargetType))
             {
@@ -366,19 +433,8 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            (int targetSectorX, int targetSectorY, int targetSectorIndex) = (int.Parse(targetSectorLocationMatch.Groups[1].Value),
-                int.Parse(targetSectorLocationMatch.Groups[2].Value),
-                int.Parse(targetSectorLocationMatch.Groups[3].Value));
-
-            // Find target cluster / sector
-            if (!MainForm.Instance.AllClusters.TryGetValue((targetSectorX, targetSectorY), out Cluster targetCluster))
-            {
-                _ = MessageBox.Show("Invalid sector selection.");
+            if (!GetTargetSectorSelection(out var targetSector, out var targetCluster))
                 return;
-            }
-
-            // Find sector
-            Sector targetSector = targetCluster.Sectors[targetSectorIndex];
 
             // Validate that target sector != source sector
             if (targetSector == SourceSector)

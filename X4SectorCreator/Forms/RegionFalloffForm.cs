@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace X4SectorCreator.Forms
+﻿namespace X4SectorCreator.Forms
 {
     public partial class RegionFalloffForm : Form
     {
@@ -11,8 +9,9 @@ namespace X4SectorCreator.Forms
 
         public class StepObj
         {
-            public float Position { get; set; }
-            public float Value { get; set; }
+            public string Type { get; set; }
+            public string Position { get; set; }
+            public string Value { get; set; }
 
             public override string ToString()
             {
@@ -40,16 +39,18 @@ namespace X4SectorCreator.Forms
 
             var stepObj = new StepObj
             {
-                Position = posValue,
-                Value = valueValue
+                Position = posValue.ToString("0.0"),
+                Value = valueValue.ToString("0.0")
             };
 
             switch (sT.Name)
             {
                 case "tabLateral":
+                    stepObj.Type = "Lateral";
                     regionForm.ListBoxLateral.Items.Add(stepObj);
                     break;
                 case "tabRadial":
+                    stepObj.Type = "Radial";
                     regionForm.ListBoxRadial.Items.Add(stepObj);
                     break;
             }
