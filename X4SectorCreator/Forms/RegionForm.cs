@@ -368,7 +368,7 @@ namespace X4SectorCreator.Forms
                 NoiseScale = noiseScale.ToString(),
                 Seed = seed.ToString(),
                 Name = txtRegionName.Text,
-                BoundaryType = selectedBoundaryType,
+                BoundaryType = selectedBoundaryType.ToLower(),
             };
 
             return true;
