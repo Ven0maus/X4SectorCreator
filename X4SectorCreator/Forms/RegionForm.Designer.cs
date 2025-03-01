@@ -51,7 +51,7 @@
             ListBoxFields = new ListBox();
             label6 = new Label();
             BtnFieldsDel = new Button();
-            BtnFieldsAdd = new Button();
+            BtnFieldsAddCustom = new Button();
             txtRegionPosition = new TextBox();
             label7 = new Label();
             label8 = new Label();
@@ -71,6 +71,7 @@
             txtMaxNoiseValue = new TextBox();
             label15 = new Label();
             txtLinear = new TextBox();
+            BtnAddPredefined = new Button();
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).BeginInit();
             TabControlFalloff.SuspendLayout();
             tabLateral.SuspendLayout();
@@ -303,15 +304,15 @@
             BtnFieldsDel.UseVisualStyleBackColor = true;
             BtnFieldsDel.Click += BtnFieldsDel_Click;
             // 
-            // BtnFieldsAdd
+            // BtnFieldsAddCustom
             // 
-            BtnFieldsAdd.Location = new Point(106, 643);
-            BtnFieldsAdd.Name = "BtnFieldsAdd";
-            BtnFieldsAdd.Size = new Size(90, 31);
-            BtnFieldsAdd.TabIndex = 61;
-            BtnFieldsAdd.Text = "Add Field";
-            BtnFieldsAdd.UseVisualStyleBackColor = true;
-            BtnFieldsAdd.Click += BtnFieldsAdd_Click;
+            BtnFieldsAddCustom.Location = new Point(106, 643);
+            BtnFieldsAddCustom.Name = "BtnFieldsAddCustom";
+            BtnFieldsAddCustom.Size = new Size(90, 31);
+            BtnFieldsAddCustom.TabIndex = 61;
+            BtnFieldsAddCustom.Text = "Add Custom";
+            BtnFieldsAddCustom.UseVisualStyleBackColor = true;
+            BtnFieldsAddCustom.Click += BtnFieldsAddCustom_Click;
             // 
             // txtRegionPosition
             // 
@@ -353,9 +354,9 @@
             // 
             // BtnCreateRegion
             // 
-            BtnCreateRegion.Location = new Point(202, 643);
+            BtnCreateRegion.Location = new Point(319, 643);
             BtnCreateRegion.Name = "BtnCreateRegion";
-            BtnCreateRegion.Size = new Size(246, 31);
+            BtnCreateRegion.Size = new Size(129, 31);
             BtnCreateRegion.TabIndex = 67;
             BtnCreateRegion.Text = "Create Region";
             BtnCreateRegion.UseVisualStyleBackColor = true;
@@ -488,11 +489,22 @@
             txtLinear.TabIndex = 80;
             txtLinear.TextAlign = HorizontalAlignment.Center;
             // 
+            // BtnAddPredefined
+            // 
+            BtnAddPredefined.Location = new Point(202, 643);
+            BtnAddPredefined.Name = "BtnAddPredefined";
+            BtnAddPredefined.Size = new Size(111, 31);
+            BtnAddPredefined.TabIndex = 82;
+            BtnAddPredefined.Text = "Add Predefined";
+            BtnAddPredefined.UseVisualStyleBackColor = true;
+            BtnAddPredefined.Click += BtnAddPredefined_Click;
+            // 
             // RegionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(763, 683);
+            Controls.Add(BtnAddPredefined);
             Controls.Add(label15);
             Controls.Add(txtLinear);
             Controls.Add(label13);
@@ -513,7 +525,7 @@
             Controls.Add(label7);
             Controls.Add(txtRegionPosition);
             Controls.Add(BtnFieldsDel);
-            Controls.Add(BtnFieldsAdd);
+            Controls.Add(BtnFieldsAddCustom);
             Controls.Add(label6);
             Controls.Add(ListBoxFields);
             Controls.Add(label5);
@@ -565,7 +577,7 @@
         private Label label5;
         private Label label6;
         private Button BtnFieldsDel;
-        private Button BtnFieldsAdd;
+        private Button BtnFieldsAddCustom;
         private TextBox txtRegionPosition;
         private Label label7;
         private Label label8;
@@ -590,5 +602,6 @@
         internal ListBox ListBoxFields;
         private Label label15;
         private TextBox txtLinear;
+        private Button BtnAddPredefined;
     }
 }

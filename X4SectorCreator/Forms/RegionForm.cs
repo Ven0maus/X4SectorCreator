@@ -256,12 +256,17 @@ namespace X4SectorCreator.Forms
             };
         }
 
-        private void BtnFieldsAdd_Click(object sender, EventArgs e)
+        private void BtnFieldsAddCustom_Click(object sender, EventArgs e)
         {
             RegionFieldsForm.Show();
         }
 
         private void BtnFieldsDel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnAddPredefined_Click(object sender, EventArgs e)
         {
 
         }
