@@ -29,42 +29,42 @@
         private void InitializeComponent()
         {
             cmbFieldType = new ComboBox();
-            label1 = new Label();
+            lblFieldType = new Label();
             BtnAdd = new Button();
             BtnCancel = new Button();
             txtGroupRef = new TextBox();
-            label2 = new Label();
-            label3 = new Label();
+            lblGroupRef = new Label();
+            lblDensityFactor = new Label();
             txtDensityFactor = new TextBox();
-            label4 = new Label();
+            lblRotation = new Label();
             txtRotation = new TextBox();
-            label5 = new Label();
+            lblRotationVariation = new Label();
             txtRotationVariation = new TextBox();
-            label6 = new Label();
+            lblNoiseScale = new Label();
             txtNoiseScale = new TextBox();
-            label7 = new Label();
+            lblSeed = new Label();
             txtSeed = new TextBox();
-            label8 = new Label();
+            lblMinNoiseValue = new Label();
             txtMinNoiseValue = new TextBox();
-            label9 = new Label();
+            lblMaxNoiseValue = new Label();
             txtMaxNoiseValue = new TextBox();
-            label10 = new Label();
+            lblMultiplier = new Label();
             txtMultiplier = new TextBox();
-            label11 = new Label();
+            lblMedium = new Label();
             txtMedium = new TextBox();
-            label12 = new Label();
+            lblTexture = new Label();
             txtTexture = new TextBox();
-            label13 = new Label();
+            lblLodRule = new Label();
             txtLodRule = new TextBox();
-            label14 = new Label();
+            lblSize = new Label();
             txtSize = new TextBox();
-            label15 = new Label();
+            lblSizeVariation = new Label();
             txtSizeVariation = new TextBox();
-            label16 = new Label();
+            lblDistanceFactor = new Label();
             txtDistanceFactor = new TextBox();
-            label17 = new Label();
+            lblRef = new Label();
             txtRef = new TextBox();
-            label18 = new Label();
+            lblFactor = new Label();
             txtFactor = new TextBox();
             SuspendLayout();
             // 
@@ -79,15 +79,15 @@
             cmbFieldType.TabIndex = 0;
             cmbFieldType.Text = "asteroid";
             // 
-            // label1
+            // lblFieldType
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 10);
-            label1.Name = "label1";
-            label1.Size = new Size(89, 21);
-            label1.TabIndex = 1;
-            label1.Text = "Field Type*:";
+            lblFieldType.AutoSize = true;
+            lblFieldType.Font = new Font("Segoe UI", 12F);
+            lblFieldType.Location = new Point(12, 10);
+            lblFieldType.Name = "lblFieldType";
+            lblFieldType.Size = new Size(89, 21);
+            lblFieldType.TabIndex = 1;
+            lblFieldType.Text = "Field Type*:";
             // 
             // BtnAdd
             // 
@@ -117,25 +117,25 @@
             txtGroupRef.Size = new Size(191, 25);
             txtGroupRef.TabIndex = 4;
             // 
-            // label2
+            // lblGroupRef
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(12, 67);
-            label2.Name = "label2";
-            label2.Size = new Size(80, 21);
-            label2.TabIndex = 5;
-            label2.Text = "GroupRef:";
+            lblGroupRef.AutoSize = true;
+            lblGroupRef.Font = new Font("Segoe UI", 12F);
+            lblGroupRef.Location = new Point(12, 67);
+            lblGroupRef.Name = "lblGroupRef";
+            lblGroupRef.Size = new Size(80, 21);
+            lblGroupRef.TabIndex = 5;
+            lblGroupRef.Text = "GroupRef:";
             // 
-            // label3
+            // lblDensityFactor
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(12, 124);
-            label3.Name = "label3";
-            label3.Size = new Size(107, 21);
-            label3.TabIndex = 7;
-            label3.Text = "DensityFactor:";
+            lblDensityFactor.AutoSize = true;
+            lblDensityFactor.Font = new Font("Segoe UI", 12F);
+            lblDensityFactor.Location = new Point(12, 124);
+            lblDensityFactor.Name = "lblDensityFactor";
+            lblDensityFactor.Size = new Size(107, 21);
+            lblDensityFactor.TabIndex = 7;
+            lblDensityFactor.Text = "DensityFactor:";
             // 
             // txtDensityFactor
             // 
@@ -145,15 +145,15 @@
             txtDensityFactor.Size = new Size(191, 25);
             txtDensityFactor.TabIndex = 6;
             // 
-            // label4
+            // lblRotation
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(12, 180);
-            label4.Name = "label4";
-            label4.Size = new Size(72, 21);
-            label4.TabIndex = 9;
-            label4.Text = "Rotation:";
+            lblRotation.AutoSize = true;
+            lblRotation.Font = new Font("Segoe UI", 12F);
+            lblRotation.Location = new Point(12, 180);
+            lblRotation.Name = "lblRotation";
+            lblRotation.Size = new Size(72, 21);
+            lblRotation.TabIndex = 9;
+            lblRotation.Text = "Rotation:";
             // 
             // txtRotation
             // 
@@ -163,15 +163,15 @@
             txtRotation.Size = new Size(191, 25);
             txtRotation.TabIndex = 8;
             // 
-            // label5
+            // lblRotationVariation
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(12, 237);
-            label5.Name = "label5";
-            label5.Size = new Size(134, 21);
-            label5.TabIndex = 11;
-            label5.Text = "RotationVariation:";
+            lblRotationVariation.AutoSize = true;
+            lblRotationVariation.Font = new Font("Segoe UI", 12F);
+            lblRotationVariation.Location = new Point(12, 237);
+            lblRotationVariation.Name = "lblRotationVariation";
+            lblRotationVariation.Size = new Size(134, 21);
+            lblRotationVariation.TabIndex = 11;
+            lblRotationVariation.Text = "RotationVariation:";
             // 
             // txtRotationVariation
             // 
@@ -181,15 +181,15 @@
             txtRotationVariation.Size = new Size(191, 25);
             txtRotationVariation.TabIndex = 10;
             // 
-            // label6
+            // lblNoiseScale
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(12, 294);
-            label6.Name = "label6";
-            label6.Size = new Size(89, 21);
-            label6.TabIndex = 13;
-            label6.Text = "NoiseScale:";
+            lblNoiseScale.AutoSize = true;
+            lblNoiseScale.Font = new Font("Segoe UI", 12F);
+            lblNoiseScale.Location = new Point(12, 294);
+            lblNoiseScale.Name = "lblNoiseScale";
+            lblNoiseScale.Size = new Size(89, 21);
+            lblNoiseScale.TabIndex = 13;
+            lblNoiseScale.Text = "NoiseScale:";
             // 
             // txtNoiseScale
             // 
@@ -199,15 +199,15 @@
             txtNoiseScale.Size = new Size(191, 25);
             txtNoiseScale.TabIndex = 12;
             // 
-            // label7
+            // lblSeed
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(209, 294);
-            label7.Name = "label7";
-            label7.Size = new Size(47, 21);
-            label7.TabIndex = 15;
-            label7.Text = "Seed:";
+            lblSeed.AutoSize = true;
+            lblSeed.Font = new Font("Segoe UI", 12F);
+            lblSeed.Location = new Point(209, 294);
+            lblSeed.Name = "lblSeed";
+            lblSeed.Size = new Size(47, 21);
+            lblSeed.TabIndex = 15;
+            lblSeed.Text = "Seed:";
             // 
             // txtSeed
             // 
@@ -217,15 +217,15 @@
             txtSeed.Size = new Size(191, 25);
             txtSeed.TabIndex = 14;
             // 
-            // label8
+            // lblMinNoiseValue
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(406, 237);
-            label8.Name = "label8";
-            label8.Size = new Size(118, 21);
-            label8.TabIndex = 17;
-            label8.Text = "MinNoiseValue:";
+            lblMinNoiseValue.AutoSize = true;
+            lblMinNoiseValue.Font = new Font("Segoe UI", 12F);
+            lblMinNoiseValue.Location = new Point(406, 237);
+            lblMinNoiseValue.Name = "lblMinNoiseValue";
+            lblMinNoiseValue.Size = new Size(118, 21);
+            lblMinNoiseValue.TabIndex = 17;
+            lblMinNoiseValue.Text = "MinNoiseValue:";
             // 
             // txtMinNoiseValue
             // 
@@ -235,15 +235,15 @@
             txtMinNoiseValue.Size = new Size(191, 25);
             txtMinNoiseValue.TabIndex = 16;
             // 
-            // label9
+            // lblMaxNoiseValue
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(406, 294);
-            label9.Name = "label9";
-            label9.Size = new Size(120, 21);
-            label9.TabIndex = 19;
-            label9.Text = "MaxNoiseValue:";
+            lblMaxNoiseValue.AutoSize = true;
+            lblMaxNoiseValue.Font = new Font("Segoe UI", 12F);
+            lblMaxNoiseValue.Location = new Point(406, 294);
+            lblMaxNoiseValue.Name = "lblMaxNoiseValue";
+            lblMaxNoiseValue.Size = new Size(120, 21);
+            lblMaxNoiseValue.TabIndex = 19;
+            lblMaxNoiseValue.Text = "MaxNoiseValue:";
             // 
             // txtMaxNoiseValue
             // 
@@ -253,15 +253,15 @@
             txtMaxNoiseValue.Size = new Size(191, 25);
             txtMaxNoiseValue.TabIndex = 18;
             // 
-            // label10
+            // lblMultiplier
             // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 12F);
-            label10.Location = new Point(209, 10);
-            label10.Name = "label10";
-            label10.Size = new Size(80, 21);
-            label10.TabIndex = 21;
-            label10.Text = "Multiplier:";
+            lblMultiplier.AutoSize = true;
+            lblMultiplier.Font = new Font("Segoe UI", 12F);
+            lblMultiplier.Location = new Point(209, 10);
+            lblMultiplier.Name = "lblMultiplier";
+            lblMultiplier.Size = new Size(80, 21);
+            lblMultiplier.TabIndex = 21;
+            lblMultiplier.Text = "Multiplier:";
             // 
             // txtMultiplier
             // 
@@ -271,15 +271,15 @@
             txtMultiplier.Size = new Size(191, 25);
             txtMultiplier.TabIndex = 20;
             // 
-            // label11
+            // lblMedium
             // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 12F);
-            label11.Location = new Point(209, 67);
-            label11.Name = "label11";
-            label11.Size = new Size(71, 21);
-            label11.TabIndex = 23;
-            label11.Text = "Medium:";
+            lblMedium.AutoSize = true;
+            lblMedium.Font = new Font("Segoe UI", 12F);
+            lblMedium.Location = new Point(209, 67);
+            lblMedium.Name = "lblMedium";
+            lblMedium.Size = new Size(71, 21);
+            lblMedium.TabIndex = 23;
+            lblMedium.Text = "Medium:";
             // 
             // txtMedium
             // 
@@ -289,15 +289,15 @@
             txtMedium.Size = new Size(191, 25);
             txtMedium.TabIndex = 22;
             // 
-            // label12
+            // lblTexture
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 12F);
-            label12.Location = new Point(209, 124);
-            label12.Name = "label12";
-            label12.Size = new Size(62, 21);
-            label12.TabIndex = 25;
-            label12.Text = "Texture:";
+            lblTexture.AutoSize = true;
+            lblTexture.Font = new Font("Segoe UI", 12F);
+            lblTexture.Location = new Point(209, 124);
+            lblTexture.Name = "lblTexture";
+            lblTexture.Size = new Size(62, 21);
+            lblTexture.TabIndex = 25;
+            lblTexture.Text = "Texture:";
             // 
             // txtTexture
             // 
@@ -307,15 +307,15 @@
             txtTexture.Size = new Size(191, 25);
             txtTexture.TabIndex = 24;
             // 
-            // label13
+            // lblLodRule
             // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 12F);
-            label13.Location = new Point(209, 180);
-            label13.Name = "label13";
-            label13.Size = new Size(70, 21);
-            label13.TabIndex = 27;
-            label13.Text = "LodRule:";
+            lblLodRule.AutoSize = true;
+            lblLodRule.Font = new Font("Segoe UI", 12F);
+            lblLodRule.Location = new Point(209, 180);
+            lblLodRule.Name = "lblLodRule";
+            lblLodRule.Size = new Size(70, 21);
+            lblLodRule.TabIndex = 27;
+            lblLodRule.Text = "LodRule:";
             // 
             // txtLodRule
             // 
@@ -325,15 +325,15 @@
             txtLodRule.Size = new Size(191, 25);
             txtLodRule.TabIndex = 26;
             // 
-            // label14
+            // lblSize
             // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 12F);
-            label14.Location = new Point(209, 237);
-            label14.Name = "label14";
-            label14.Size = new Size(41, 21);
-            label14.TabIndex = 29;
-            label14.Text = "Size:";
+            lblSize.AutoSize = true;
+            lblSize.Font = new Font("Segoe UI", 12F);
+            lblSize.Location = new Point(209, 237);
+            lblSize.Name = "lblSize";
+            lblSize.Size = new Size(41, 21);
+            lblSize.TabIndex = 29;
+            lblSize.Text = "Size:";
             // 
             // txtSize
             // 
@@ -343,15 +343,15 @@
             txtSize.Size = new Size(191, 25);
             txtSize.TabIndex = 28;
             // 
-            // label15
+            // lblSizeVariation
             // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Segoe UI", 12F);
-            label15.Location = new Point(406, 10);
-            label15.Name = "label15";
-            label15.Size = new Size(103, 21);
-            label15.TabIndex = 31;
-            label15.Text = "SizeVariation:";
+            lblSizeVariation.AutoSize = true;
+            lblSizeVariation.Font = new Font("Segoe UI", 12F);
+            lblSizeVariation.Location = new Point(406, 10);
+            lblSizeVariation.Name = "lblSizeVariation";
+            lblSizeVariation.Size = new Size(103, 21);
+            lblSizeVariation.TabIndex = 31;
+            lblSizeVariation.Text = "SizeVariation:";
             // 
             // txtSizeVariation
             // 
@@ -361,15 +361,15 @@
             txtSizeVariation.Size = new Size(191, 25);
             txtSizeVariation.TabIndex = 30;
             // 
-            // label16
+            // lblDistanceFactor
             // 
-            label16.AutoSize = true;
-            label16.Font = new Font("Segoe UI", 12F);
-            label16.Location = new Point(406, 67);
-            label16.Name = "label16";
-            label16.Size = new Size(114, 21);
-            label16.TabIndex = 33;
-            label16.Text = "DistanceFactor:";
+            lblDistanceFactor.AutoSize = true;
+            lblDistanceFactor.Font = new Font("Segoe UI", 12F);
+            lblDistanceFactor.Location = new Point(406, 67);
+            lblDistanceFactor.Name = "lblDistanceFactor";
+            lblDistanceFactor.Size = new Size(114, 21);
+            lblDistanceFactor.TabIndex = 33;
+            lblDistanceFactor.Text = "DistanceFactor:";
             // 
             // txtDistanceFactor
             // 
@@ -379,15 +379,15 @@
             txtDistanceFactor.Size = new Size(191, 25);
             txtDistanceFactor.TabIndex = 32;
             // 
-            // label17
+            // lblRef
             // 
-            label17.AutoSize = true;
-            label17.Font = new Font("Segoe UI", 12F);
-            label17.Location = new Point(406, 124);
-            label17.Name = "label17";
-            label17.Size = new Size(36, 21);
-            label17.TabIndex = 35;
-            label17.Text = "Ref:";
+            lblRef.AutoSize = true;
+            lblRef.Font = new Font("Segoe UI", 12F);
+            lblRef.Location = new Point(406, 124);
+            lblRef.Name = "lblRef";
+            lblRef.Size = new Size(36, 21);
+            lblRef.TabIndex = 35;
+            lblRef.Text = "Ref:";
             // 
             // txtRef
             // 
@@ -397,15 +397,15 @@
             txtRef.Size = new Size(191, 25);
             txtRef.TabIndex = 34;
             // 
-            // label18
+            // lblFactor
             // 
-            label18.AutoSize = true;
-            label18.Font = new Font("Segoe UI", 12F);
-            label18.Location = new Point(406, 180);
-            label18.Name = "label18";
-            label18.Size = new Size(55, 21);
-            label18.TabIndex = 37;
-            label18.Text = "Factor:";
+            lblFactor.AutoSize = true;
+            lblFactor.Font = new Font("Segoe UI", 12F);
+            lblFactor.Location = new Point(406, 180);
+            lblFactor.Name = "lblFactor";
+            lblFactor.Size = new Size(55, 21);
+            lblFactor.TabIndex = 37;
+            lblFactor.Text = "Factor:";
             // 
             // txtFactor
             // 
@@ -420,43 +420,43 @@
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(603, 405);
-            Controls.Add(label18);
+            Controls.Add(lblFactor);
             Controls.Add(txtFactor);
-            Controls.Add(label17);
+            Controls.Add(lblRef);
             Controls.Add(txtRef);
-            Controls.Add(label16);
+            Controls.Add(lblDistanceFactor);
             Controls.Add(txtDistanceFactor);
-            Controls.Add(label15);
+            Controls.Add(lblSizeVariation);
             Controls.Add(txtSizeVariation);
-            Controls.Add(label14);
+            Controls.Add(lblSize);
             Controls.Add(txtSize);
-            Controls.Add(label13);
+            Controls.Add(lblLodRule);
             Controls.Add(txtLodRule);
-            Controls.Add(label12);
+            Controls.Add(lblTexture);
             Controls.Add(txtTexture);
-            Controls.Add(label11);
+            Controls.Add(lblMedium);
             Controls.Add(txtMedium);
-            Controls.Add(label10);
+            Controls.Add(lblMultiplier);
             Controls.Add(txtMultiplier);
-            Controls.Add(label9);
+            Controls.Add(lblMaxNoiseValue);
             Controls.Add(txtMaxNoiseValue);
-            Controls.Add(label8);
+            Controls.Add(lblMinNoiseValue);
             Controls.Add(txtMinNoiseValue);
-            Controls.Add(label7);
+            Controls.Add(lblSeed);
             Controls.Add(txtSeed);
-            Controls.Add(label6);
+            Controls.Add(lblNoiseScale);
             Controls.Add(txtNoiseScale);
-            Controls.Add(label5);
+            Controls.Add(lblRotationVariation);
             Controls.Add(txtRotationVariation);
-            Controls.Add(label4);
+            Controls.Add(lblRotation);
             Controls.Add(txtRotation);
-            Controls.Add(label3);
+            Controls.Add(lblDensityFactor);
             Controls.Add(txtDensityFactor);
-            Controls.Add(label2);
+            Controls.Add(lblGroupRef);
             Controls.Add(txtGroupRef);
             Controls.Add(BtnCancel);
             Controls.Add(BtnAdd);
-            Controls.Add(label1);
+            Controls.Add(lblFieldType);
             Controls.Add(cmbFieldType);
             Font = new Font("Segoe UI", 10F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -471,42 +471,42 @@
         #endregion
 
         private ComboBox cmbFieldType;
-        private Label label1;
+        private Label lblFieldType;
         private Button BtnAdd;
         private Button BtnCancel;
         private TextBox txtGroupRef;
-        private Label label2;
-        private Label label3;
+        private Label lblGroupRef;
+        private Label lblDensityFactor;
         private TextBox txtDensityFactor;
-        private Label label4;
+        private Label lblRotation;
         private TextBox txtRotation;
-        private Label label5;
+        private Label lblRotationVariation;
         private TextBox txtRotationVariation;
-        private Label label6;
+        private Label lblNoiseScale;
         private TextBox txtNoiseScale;
-        private Label label7;
+        private Label lblSeed;
         private TextBox txtSeed;
-        private Label label8;
+        private Label lblMinNoiseValue;
         private TextBox txtMinNoiseValue;
-        private Label label9;
+        private Label lblMaxNoiseValue;
         private TextBox txtMaxNoiseValue;
-        private Label label10;
+        private Label lblMultiplier;
         private TextBox txtMultiplier;
-        private Label label11;
+        private Label lblMedium;
         private TextBox txtMedium;
-        private Label label12;
+        private Label lblTexture;
         private TextBox txtTexture;
-        private Label label13;
+        private Label lblLodRule;
         private TextBox txtLodRule;
-        private Label label14;
+        private Label lblSize;
         private TextBox txtSize;
-        private Label label15;
+        private Label lblSizeVariation;
         private TextBox txtSizeVariation;
-        private Label label16;
+        private Label lblDistanceFactor;
         private TextBox txtDistanceFactor;
-        private Label label17;
+        private Label lblRef;
         private TextBox txtRef;
-        private Label label18;
+        private Label lblFactor;
         private TextBox txtFactor;
     }
 }
