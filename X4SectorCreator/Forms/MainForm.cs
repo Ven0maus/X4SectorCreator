@@ -179,7 +179,7 @@ namespace X4SectorCreator
                 {
                     var newSectorMappingJson = await versionChecker.GetUpdatedSectorMappingAsync();
                     var oldSectorMappingJson = File.ReadAllText(_sectorMappingFilePath);
-                    if (!oldSectorMappingJson.Equals(newSectorMappingJson))
+                    if (newSectorMappingJson != null && !oldSectorMappingJson.Equals(newSectorMappingJson))
                     {
                         try
                         {
