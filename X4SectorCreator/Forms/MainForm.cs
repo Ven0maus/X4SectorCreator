@@ -6,6 +6,7 @@ using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
 using X4SectorCreator.XmlGeneration;
+using Region = X4SectorCreator.Objects.Region;
 
 namespace X4SectorCreator
 {
@@ -821,6 +822,22 @@ namespace X4SectorCreator
             RegionForm.Cluster = cluster;
             RegionForm.Sector = sector;
             RegionForm.Show();
+        }
+
+        private void BtnRemoveRegion_Click(object sender, EventArgs e)
+        {
+            var selectedRegion = RegionsListBox.SelectedItem as Region;
+            if (selectedRegion == null) return;
+
+            var selectedCluster = ClustersListBox.SelectedItem as string;
+            var selectedSector = SectorsListBox.SelectedItem as string;
+            var cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
+            var sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
+            
+            // Remove region from sector
+            _ = sector.Regions.Remove(selectedRegion);
+            RegionsListBox.Items.Remove(selectedRegion);
+            RegionsListBox.SelectedItem = null;
         }
     }
 }

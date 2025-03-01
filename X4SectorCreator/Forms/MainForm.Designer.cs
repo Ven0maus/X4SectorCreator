@@ -300,6 +300,7 @@
             BtnRemoveRegion.TabIndex = 35;
             BtnRemoveRegion.Text = "Remove";
             BtnRemoveRegion.UseVisualStyleBackColor = true;
+            BtnRemoveRegion.Click += BtnRemoveRegion_Click;
             // 
             // MainForm
             // 
