@@ -1,20 +1,71 @@
-﻿namespace X4SectorCreator.Forms
+﻿using System.Text.Json;
+
+namespace X4SectorCreator.Forms
 {
     public partial class RegionPredefinedFieldsForm : Form
     {
         private bool _suppressEvents = false;
+        private ComboBox _current = null;
+        private readonly string _predefinedFieldMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/predefinedfield_mappings.json");
 
         public RegionPredefinedFieldsForm()
         {
             InitializeComponent();
 
-            // TODO: Read mapping and convert to object
-            // TODO: Init each field with its mapping
+            // Init each field with its mapping
+            var json = File.ReadAllText(_predefinedFieldMappingFilePath);
+            var mappingGroups = JsonSerializer.Deserialize<List<RegionFieldsForm.FieldObj>>(json).GroupBy(a => a.Type);
+            foreach (var group in mappingGroups)
+            {
+                ComboBox cmb;
+                switch (group.Key.ToLower())
+                {
+                    case "asteroid":
+                        cmb = cmbAsteroids;
+                        break;
+                    case "debris":
+                        cmb = cmbDebris;
+                        break;
+                    case "gravidar":
+                        cmb = cmbGravidar;
+                        break;
+                    case "nebula":
+                        cmb = cmbNebula;
+                        break;
+                    case "positional":
+                        cmb = cmbPositional;
+                        break;
+                    case "object":
+                        cmb = cmbObjects;
+                        break;
+                    case "volumetricfog":
+                        cmb = cmbVolumetricfog;
+                        break;
+                    default:
+                        throw new NotSupportedException(group.Key);
+                }
+
+                foreach (var item in group.OrderBy(a => a.GroupRef ?? "").ThenBy(a => a.Resources ?? ""))
+                    cmb.Items.Add(item);
+            }           
+        }
+
+        private RegionFieldsForm.FieldObj FindSelectedFieldObj()
+        {
+            return _current != null ? _current.SelectedItem as RegionFieldsForm.FieldObj : null;
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            // TODO: Add field obj to listbox
+            var selectedFieldObj = FindSelectedFieldObj();
+            if (selectedFieldObj == null)
+            {
+                _ = MessageBox.Show("Please select one predefined field.");
+                return;
+            }
+
+            MainForm.Instance.RegionForm.ListBoxFields.Items.Add(selectedFieldObj);
+            MainForm.Instance.RegionForm.ListBoxFields.SelectedItem = selectedFieldObj;
             Close();
         }
 
@@ -61,6 +112,7 @@
         private void ResetAllExcept(ComboBox cmb)
         {
             if (_suppressEvents) return;
+            _current = cmb.SelectedItem != null ? cmb : null;
             _suppressEvents = true;
             var fields = new List<ComboBox>
             {
