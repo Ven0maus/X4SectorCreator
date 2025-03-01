@@ -90,9 +90,10 @@ namespace X4SectorCreator.XmlGeneration
                                 new XAttribute("connection", "cluster"),
                                 new XAttribute("ref", "standardregion")
                             ),
+                            // Region definition name needs to prefix region for some stupid reason, and can't find any index to remap it to another wildcard...
                             new XElement("properties",
                                 new XElement("region",
-                                    new XAttribute("ref", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}")
+                                    new XAttribute("ref", $"region_{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}")
                                 )
                             )
                         )
