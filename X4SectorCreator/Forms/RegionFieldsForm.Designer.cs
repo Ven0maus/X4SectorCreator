@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegionFieldsForm));
             cmbFieldType = new ComboBox();
             lblFieldType = new Label();
             BtnAdd = new Button();
@@ -66,6 +67,7 @@
             txtRef = new TextBox();
             lblFactor = new Label();
             txtFactor = new TextBox();
+            label1 = new Label();
             SuspendLayout();
             // 
             // cmbFieldType
@@ -91,7 +93,7 @@
             // 
             // BtnAdd
             // 
-            BtnAdd.Location = new Point(152, 354);
+            BtnAdd.Location = new Point(152, 428);
             BtnAdd.Name = "BtnAdd";
             BtnAdd.Size = new Size(445, 45);
             BtnAdd.TabIndex = 2;
@@ -101,7 +103,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 354);
+            BtnCancel.Location = new Point(12, 428);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(134, 45);
             BtnCancel.TabIndex = 3;
@@ -415,11 +417,21 @@
             txtFactor.Size = new Size(191, 25);
             txtFactor.TabIndex = 36;
             // 
+            // label1
+            // 
+            label1.Font = new Font("Segoe UI", 10F);
+            label1.Location = new Point(12, 359);
+            label1.Name = "label1";
+            label1.Size = new Size(579, 66);
+            label1.TabIndex = 38;
+            label1.Text = resources.GetString("label1.Text");
+            // 
             // RegionFieldsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(603, 405);
+            ClientSize = new Size(603, 478);
+            Controls.Add(label1);
             Controls.Add(lblFactor);
             Controls.Add(txtFactor);
             Controls.Add(lblRef);
@@ -508,5 +520,6 @@
         private TextBox txtRef;
         private Label lblFactor;
         private TextBox txtFactor;
+        private Label label1;
     }
 }

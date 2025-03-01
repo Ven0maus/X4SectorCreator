@@ -117,4 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Note: only basic field type validation is done for these fields here. (numerical checks, etc..)
+It is expected that you know what you are doing when adding custom fields or you might run into issues. Use predefined fields if you want to be sure its functional.</value>
+  </data>
 </root>

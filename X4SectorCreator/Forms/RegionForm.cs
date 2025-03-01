@@ -324,12 +324,15 @@ namespace X4SectorCreator.Forms
 
         private void BtnFieldsDel_Click(object sender, EventArgs e)
         {
-
+            var fieldObj = ListBoxFields.SelectedItem as RegionFieldsForm.FieldObj;
+            if (fieldObj == null) return;
+            ListBoxFields.Items.Remove(fieldObj);
+            ListBoxFields.SelectedItem = null;
         }
 
         private void BtnAddPredefined_Click(object sender, EventArgs e)
         {
-
+            // TODO
         }
 
         private void CmbBoundaryType_SelectedIndexChanged(object sender, EventArgs e)
