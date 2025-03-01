@@ -28,8 +28,7 @@ namespace X4SectorCreator.XmlGeneration
                         new XAttribute("ref", "standardcluster")
                     ),
                     new XElement("connections",
-                        GenerateConnections(modPrefix, cluster),
-                        GenerateRegions(modPrefix, cluster)
+                        GenerateConnections(modPrefix, cluster)
                     )
                 );
             }
@@ -54,24 +53,8 @@ namespace X4SectorCreator.XmlGeneration
                         new XAttribute("connection", "cluster")
                     )
                 );
-            }
 
-            // Adding content connection
-            yield return new XElement("connection",
-                new XAttribute("ref", "content"),
-                new XElement("macro",
-                    new XElement("component",
-                        new XAttribute("connection", "space"),
-                        new XAttribute("ref", cluster.BackgroundVisualMapping.CapitalizeFirstLetter())
-                    )
-                )
-            );
-        }
-
-        private static IEnumerable<XElement> GenerateRegions(string modPrefix, Cluster cluster)
-        {
-            foreach (var sector in cluster.Sectors)
-            {
+                // Return regions after sector connection
                 foreach (var region in sector.Regions)
                 {
                     yield return new XElement("connection",
@@ -100,6 +83,17 @@ namespace X4SectorCreator.XmlGeneration
                     );
                 }
             }
+
+            // Adding content connection
+            yield return new XElement("connection",
+                new XAttribute("ref", "content"),
+                new XElement("macro",
+                    new XElement("component",
+                        new XAttribute("connection", "space"),
+                        new XAttribute("ref", cluster.BackgroundVisualMapping.CapitalizeFirstLetter())
+                    )
+                )
+            );
         }
 
         private static string EnsureDirectoryExists(string filePath)
