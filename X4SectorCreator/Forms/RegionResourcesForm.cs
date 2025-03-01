@@ -1,21 +1,12 @@
-﻿namespace X4SectorCreator.Forms
+﻿using X4SectorCreator.Objects;
+
+namespace X4SectorCreator.Forms
 {
     public partial class RegionResourcesForm : Form
     {
         public RegionResourcesForm()
         {
             InitializeComponent();
-        }
-
-        public class Resource
-        {
-            public string Ware { get; set; }
-            public string Yield { get; set; }
-
-            public override string ToString()
-            {
-                return $"[{Ware}|{Yield}]";
-            }
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)

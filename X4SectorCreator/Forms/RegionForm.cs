@@ -76,7 +76,7 @@ namespace X4SectorCreator.Forms
         private void InitDefaultFalloff()
         {
             // Some defaults to make configurating easier
-            var lateral = new List<RegionFalloffForm.StepObj>
+            var lateral = new List<StepObj>
             {
                 new() { Position = "0.0", Value = "0.0" },
                 new() { Position = "0.1", Value = "1.0" },
@@ -84,7 +84,7 @@ namespace X4SectorCreator.Forms
                 new() { Position = "1.0", Value = "0.0" }
             };
 
-            var radial = new List<RegionFalloffForm.StepObj>
+            var radial = new List<StepObj>
             {
                 new() { Position = "0.0", Value = "1.0" },
                 new() { Position = "0.8", Value = "1.0" },
@@ -295,14 +295,14 @@ namespace X4SectorCreator.Forms
             region.Position = convertedRegionPosition;
 
             // Fields
-            region.Fields.AddRange(ListBoxFields.Items.Cast<RegionFieldsForm.FieldObj>());
+            region.Fields.AddRange(ListBoxFields.Items.Cast<FieldObj>());
 
             // Falloff lateral & radial
-            region.Falloff.AddRange(ListBoxLateral.Items.Cast<RegionFalloffForm.StepObj>());
-            region.Falloff.AddRange(ListBoxRadial.Items.Cast<RegionFalloffForm.StepObj>());
+            region.Falloff.AddRange(ListBoxLateral.Items.Cast<StepObj>());
+            region.Falloff.AddRange(ListBoxRadial.Items.Cast<StepObj>());
 
             // Resources
-            region.Resources.AddRange(ListBoxResources.Items.Cast<RegionResourcesForm.Resource>());
+            region.Resources.AddRange(ListBoxResources.Items.Cast<Resource>());
 
             // Assign ID
             region.Id = Sector.Regions.DefaultIfEmpty().Max(a => a.Id) + 1;
@@ -393,7 +393,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnResourcesDel_Click(object sender, EventArgs e)
         {
-            if (ListBoxResources.SelectedItem is not RegionResourcesForm.Resource selectedResource) return;
+            if (ListBoxResources.SelectedItem is not Resource selectedResource) return;
             ListBoxResources.Items.Remove(selectedResource);
             ListBoxResources.SelectedItem = null;
         }
@@ -406,7 +406,7 @@ namespace X4SectorCreator.Forms
         private void BtnFalloffDel_Click(object sender, EventArgs e)
         {
             var listBox = GetActiveFalloffListbox();
-            if (listBox.SelectedItem is not RegionFalloffForm.StepObj lateral) return;
+            if (listBox.SelectedItem is not StepObj lateral) return;
             listBox.Items.Remove(lateral);
             listBox.SelectedItem = null;
         }
@@ -458,7 +458,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnFieldsDel_Click(object sender, EventArgs e)
         {
-            var fieldObj = ListBoxFields.SelectedItem as RegionFieldsForm.FieldObj;
+            var fieldObj = ListBoxFields.SelectedItem as FieldObj;
             if (fieldObj == null) return;
             ListBoxFields.Items.Remove(fieldObj);
             ListBoxFields.SelectedItem = null;

@@ -17,8 +17,8 @@ namespace X4SectorCreator.Objects
         public string BoundaryLinear { get; set; }
         public Point Position { get; set; }
 
-        public List<RegionFieldsForm.FieldObj> Fields { get; set; } = [];
-        public List<RegionResourcesForm.Resource> Resources { get; set; } = [];
-        public List<RegionFalloffForm.StepObj> Falloff { get; set; } = [];
+        public List<FieldObj> Fields { get; set; } = [];
+        public List<Resource> Resources { get; set; } = [];
+        public List<StepObj> Falloff { get; set; } = [];
     }
 }

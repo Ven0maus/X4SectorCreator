@@ -1,22 +1,12 @@
-﻿namespace X4SectorCreator.Forms
+﻿using X4SectorCreator.Objects;
+
+namespace X4SectorCreator.Forms
 {
     public partial class RegionFalloffForm : Form
     {
         public RegionFalloffForm()
         {
             InitializeComponent();
-        }
-
-        public class StepObj
-        {
-            public string Type { get; set; }
-            public string Position { get; set; }
-            public string Value { get; set; }
-
-            public override string ToString()
-            {
-                return $"[pos=\"{Position}\" val=\"{Value}\"]";
-            }
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -14,7 +15,7 @@ namespace X4SectorCreator.Forms
 
             // Init each field with its mapping
             var json = File.ReadAllText(_predefinedFieldMappingFilePath);
-            var mappingGroups = JsonSerializer.Deserialize<List<RegionFieldsForm.FieldObj>>(json).GroupBy(a => a.Type);
+            var mappingGroups = JsonSerializer.Deserialize<List<FieldObj>>(json).GroupBy(a => a.Type);
             foreach (var group in mappingGroups)
             {
                 ComboBox cmb;
@@ -50,9 +51,9 @@ namespace X4SectorCreator.Forms
             }           
         }
 
-        private RegionFieldsForm.FieldObj FindSelectedFieldObj()
+        private FieldObj FindSelectedFieldObj()
         {
-            return _current != null ? _current.SelectedItem as RegionFieldsForm.FieldObj : null;
+            return _current != null ? _current.SelectedItem as FieldObj : null;
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
