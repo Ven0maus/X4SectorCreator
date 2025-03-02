@@ -67,6 +67,7 @@
             // 
             txtCurrentVersion.Location = new Point(182, 16);
             txtCurrentVersion.Name = "txtCurrentVersion";
+            txtCurrentVersion.ReadOnly = true;
             txtCurrentVersion.Size = new Size(152, 23);
             txtCurrentVersion.TabIndex = 3;
             // 
@@ -74,6 +75,7 @@
             // 
             txtCurrentX4Version.Location = new Point(182, 47);
             txtCurrentX4Version.Name = "txtCurrentX4Version";
+            txtCurrentX4Version.ReadOnly = true;
             txtCurrentX4Version.Size = new Size(152, 23);
             txtCurrentX4Version.TabIndex = 4;
             // 
@@ -135,6 +137,7 @@
             // 
             txtUpdateX4Version.Location = new Point(170, 65);
             txtUpdateX4Version.Name = "txtUpdateX4Version";
+            txtUpdateX4Version.ReadOnly = true;
             txtUpdateX4Version.Size = new Size(147, 23);
             txtUpdateX4Version.TabIndex = 14;
             // 
@@ -142,6 +145,7 @@
             // 
             txtUpdateVersion.Location = new Point(170, 34);
             txtUpdateVersion.Name = "txtUpdateVersion";
+            txtUpdateVersion.ReadOnly = true;
             txtUpdateVersion.Size = new Size(147, 23);
             txtUpdateVersion.TabIndex = 13;
             // 
