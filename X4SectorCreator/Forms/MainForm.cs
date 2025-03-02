@@ -32,8 +32,6 @@ namespace X4SectorCreator
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static MainForm Instance { get; private set; }
 
-        // Lazy forms
-        public GuideForm GuideForm => _guideForm != null && !_guideForm.IsDisposed ? _guideForm : (_guideForm = new GuideForm());
         public GalaxySettingsForm GalaxySettingsForm => _galaxySettingsForm != null && !_galaxySettingsForm.IsDisposed ? _galaxySettingsForm : (_galaxySettingsForm = new GalaxySettingsForm());
 
         public SectorMapForm SectorMapForm => _sectorMapForm != null && !_sectorMapForm.IsDisposed ? _sectorMapForm : (_sectorMapForm = new SectorMapForm());
