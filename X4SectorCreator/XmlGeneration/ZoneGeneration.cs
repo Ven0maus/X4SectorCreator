@@ -23,20 +23,33 @@ namespace X4SectorCreator.XmlGeneration
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_zones.xml")));
 
             // Save new zones in existing sectors
-            var diffData = GenerateExistingSectorZones(modPrefix, clusters).ToList();
+            var diffData = GenerateExistingSectorZones(modPrefix, clusters)
+                .GroupBy(a => a.dlc)
+                .ToList();
             if (diffData.Count > 0)
             {
-                var xmlDiffDocument = new XDocument(
-                    new XDeclaration("1.0", "utf-8", null),
-                    new XElement("diff",
-                        new XElement("add",
-                            new XAttribute("sel", "/macros"),
-                            GenerateExistingSectorZones(modPrefix, clusters)
+                foreach (var group in diffData)
+                {
+                    var dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
+                    var xmlDiffDocument = new XDocument(
+                        new XDeclaration("1.0", "utf-8", null),
+                        new XElement("diff",
+                            new XElement("add",
+                                new XAttribute("sel", "/macros"),
+                                group.Select(a => a.element)
+                            )
                         )
-                    )
-                );
+                    );
 
-                xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/zones.xml")));
+                    if (dlcMapping == null)
+                    {
+                        xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/zones.xml")));
+                    }
+                    else
+                    {
+                        xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{group.Key}/maps/{galaxyName}/{dlcMapping}zones.xml")));
+                    }
+                }
             }
         }
 
@@ -94,7 +107,7 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
-        private static IEnumerable<XElement> GenerateExistingSectorZones(string modPrefix, List<Cluster> clusters)
+        private static IEnumerable<(string dlc, XElement element)> GenerateExistingSectorZones(string modPrefix, List<Cluster> clusters)
         {
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
@@ -104,14 +117,14 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
-                        yield return new XElement("macro",
+                        yield return (cluster.Dlc, new XElement("macro",
                             new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_macro"),
                             new XAttribute("class", "zone"),
                             new XElement("component", new XAttribute("ref", "standardzone")),
                             new XElement("connections",
                                 GenerateExistingSectorGates(modPrefix, zone)
                             )
-                        );
+                        ));
                     }
                 }
             }

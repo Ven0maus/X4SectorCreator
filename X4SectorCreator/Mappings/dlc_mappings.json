@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Dlc": "ego_dlc_boron",
+    "Prefix": "dlc_boron"
+  },
+  {
+    "Dlc": "ego_dlc_pirate",
+    "Prefix": "dlc_pirate"
+  },
+  {
+    "Dlc": "ego_dlc_split",
+    "Prefix": "dlc4"
+  },
+  {
+    "Dlc": "ego_dlc_terran",
+    "Prefix": "dlc_terran"
+  },
+  {
+    "Dlc": "ego_dlc_timelines",
+    "Prefix": "dlc7"
+  }
+]
