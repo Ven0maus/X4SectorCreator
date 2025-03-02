@@ -43,7 +43,16 @@ namespace X4SectorCreator.Configuration
 
         public static List<Cluster> Deserialize(string filePath)
         {
-            ConfigurationObj configObj = JsonSerializer.Deserialize<ConfigurationObj>(filePath, _serializerOptions);
+            ConfigurationObj configObj = null;
+            try
+            {
+                configObj = JsonSerializer.Deserialize<ConfigurationObj>(filePath, _serializerOptions);
+            }
+            catch (Exception)
+            {
+                _ = MessageBox.Show("Unable to import config file, it is likely because the file was exported from an older app version and may be incompatible.");
+                return null;
+            }
 
             var vc = new VersionChecker();
 
