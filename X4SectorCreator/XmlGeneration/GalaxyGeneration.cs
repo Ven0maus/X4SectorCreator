@@ -33,7 +33,7 @@ namespace X4SectorCreator.XmlGeneration
                 xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
                     new XElement("diff",
                         new XElement("add",
-                            new XAttribute("sel", $"/macros/macro[@name='{GalaxySettingsForm.GalaxyName}_macro']/connections"),
+                            new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections"),
                             GenerateClusters(modPrefix, orderedClusters),
                             GenerateGateConnections(modPrefix, orderedClusters)
                         )
