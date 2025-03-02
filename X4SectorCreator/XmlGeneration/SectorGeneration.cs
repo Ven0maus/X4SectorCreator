@@ -21,17 +21,30 @@ namespace X4SectorCreator.XmlGeneration
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_sectors.xml")));
 
             // Save new zones in existing sectors
-            var diffData = GenerateSectorAdds(modPrefix, clusters).ToList();
+            var diffData = GenerateSectorAdds(modPrefix, clusters)
+                .GroupBy(a => a.dlc)
+                .ToList();
             if (diffData.Count > 0)
             {
-                var xmlSectorDiff = new XDocument(
-                    new XDeclaration("1.0", "utf-8", null),
-                    new XElement("diff",
-                        diffData
-                    )
-                );
+                foreach (var group in diffData)
+                {
+                    var dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
+                    var xmlSectorDiff = new XDocument(
+                        new XDeclaration("1.0", "utf-8", null),
+                        new XElement("diff",
+                            group.Select(a => a.element)
+                        )
+                    );
 
-                xmlSectorDiff.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/sectors.xml")));
+                    if (dlcMapping == null)
+                    {
+                        xmlSectorDiff.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/sectors.xml")));
+                    }
+                    else
+                    {
+                        xmlSectorDiff.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{group.Key}/maps/{galaxyName}/{dlcMapping}sectors.xml")));
+                    }
+                }
             }
         }
 
@@ -77,7 +90,7 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
-        private static IEnumerable<XElement> GenerateSectorAdds(string modPrefix, List<Cluster> clusters)
+        private static IEnumerable<(string dlc, XElement element)> GenerateSectorAdds(string modPrefix, List<Cluster> clusters)
         {
             foreach (var cluster in clusters)
             {
@@ -87,9 +100,9 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     if (sector.Zones.Count == 0) continue;
 
-                    yield return new XElement("add",
+                    yield return (cluster.Dlc, new XElement("add",
                         new XAttribute("sel", $"//macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"),
-                        GenerateExistingSectorZoneConnections(modPrefix, cluster, sector, sector.Zones)
+                        GenerateExistingSectorZoneConnections(modPrefix, cluster, sector, sector.Zones))
                     );
                 }
             }

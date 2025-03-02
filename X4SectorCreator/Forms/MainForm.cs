@@ -23,6 +23,7 @@ namespace X4SectorCreator
         private string _currentX4Version;
 
         private readonly string _sectorMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/sector_mappings.json");
+        private readonly string _dlcMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/dlc_mappings.json");
 
         private Dictionary<(int, int), Cluster> _allClusters;
         public Dictionary<(int, int), Cluster> AllClusters => _allClusters;
@@ -44,6 +45,7 @@ namespace X4SectorCreator
             : (_versionUpdateForm = new VersionUpdateForm());
 
         public readonly Dictionary<string, string> BackgroundVisualMapping;
+        public readonly Dictionary<string, string> DlcMappings;
 
         public MainForm()
         {
@@ -83,6 +85,10 @@ namespace X4SectorCreator
                 .Where(a => a.Value.IsBaseGame)
                 .Where(a => !string.IsNullOrWhiteSpace(a.Value.BaseGameMapping))
                 .ToDictionary(a => a.Value.Name, a => a.Value.BaseGameMapping);
+            // Set dlc mappings
+            json = File.ReadAllText(_dlcMappingFilePath);
+            DlcMappings = JsonSerializer.Deserialize<List<DlcMapping>>(json)
+                .ToDictionary(a => a.Dlc, a => a.Prefix);
 
             FactionColorMapping = clusterCollection.FactionColors.ToDictionary(a => a.Key, a => HexToColor(a.Value), StringComparer.OrdinalIgnoreCase);
         }
