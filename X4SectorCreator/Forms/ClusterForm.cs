@@ -9,24 +9,18 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster Cluster { get; set; }
 
-        private readonly Dictionary<string, string> _backgroundVisualMapping;
-
         public ClusterForm()
         {
             InitializeComponent();
 
-            // Init background visual mapping
-            _backgroundVisualMapping = MainForm.Instance.AllClusters
-                .Where(a => a.Value.IsBaseGame)
-                .Where(a => !string.IsNullOrWhiteSpace(a.Value.BaseGameMapping))
-                .ToDictionary(a => a.Value.Name, a => a.Value.BaseGameMapping);
-
-            foreach (var mapping in _backgroundVisualMapping)
+            foreach (var mapping in MainForm.Instance.BackgroundVisualMapping)
                 cmbBackgroundVisual.Items.Add(mapping.Key);
         }
 
         private void BtnPick_Click(object sender, EventArgs e)
         {
+            MainForm.Instance.SectorMapForm.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            MainForm.Instance.SectorMapForm.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
             MainForm.Instance.SectorMapForm.GateSectorSelection = false;
             MainForm.Instance.SectorMapForm.BtnSelectLocation.Enabled = false;
             MainForm.Instance.SectorMapForm.ControlPanel.Size = new Size(176, 250);
@@ -69,7 +63,7 @@ namespace X4SectorCreator.Forms
                 _ = MessageBox.Show("Please select a valid visual background for the cluster.");
                 return;
             }
-            var backgroundVisualMapping = _backgroundVisualMapping[selectedBackgroundVisual];
+            var backgroundVisualMapping = MainForm.Instance.BackgroundVisualMapping[selectedBackgroundVisual];
 
             Match match = RegexHelper.TupleLocationRegex().Match(location);
             if (match.Success)
@@ -138,9 +132,9 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        public string FindBackgroundVisualMappingByCode(string mappingCode)
+        public static string FindBackgroundVisualMappingByCode(string mappingCode)
         {
-            return _backgroundVisualMapping
+            return MainForm.Instance.BackgroundVisualMapping
                 .Where(a => a.Value.Equals(mappingCode))
                 .First()
                 .Key;

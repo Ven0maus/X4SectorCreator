@@ -45,7 +45,7 @@
             LblDetails = new Label();
             BtnExportConfig = new Button();
             BtnImportConfig = new Button();
-            BtnSectorCreationGuide = new Button();
+            BtnGalaxySettings = new Button();
             BtnReset = new Button();
             BtnShowSectorMap = new Button();
             BtnOpenFolder = new Button();
@@ -206,7 +206,7 @@
             // 
             // BtnExportConfig
             // 
-            BtnExportConfig.Location = new Point(125, 8);
+            BtnExportConfig.Location = new Point(272, 10);
             BtnExportConfig.Name = "BtnExportConfig";
             BtnExportConfig.Size = new Size(107, 31);
             BtnExportConfig.TabIndex = 29;
@@ -216,7 +216,7 @@
             // 
             // BtnImportConfig
             // 
-            BtnImportConfig.Location = new Point(238, 8);
+            BtnImportConfig.Location = new Point(385, 10);
             BtnImportConfig.Name = "BtnImportConfig";
             BtnImportConfig.Size = new Size(107, 31);
             BtnImportConfig.TabIndex = 30;
@@ -224,19 +224,19 @@
             BtnImportConfig.UseVisualStyleBackColor = true;
             BtnImportConfig.Click += BtnImportConfig_Click;
             // 
-            // BtnSectorCreationGuide
+            // BtnGalaxySettings
             // 
-            BtnSectorCreationGuide.Location = new Point(351, 8);
-            BtnSectorCreationGuide.Name = "BtnSectorCreationGuide";
-            BtnSectorCreationGuide.Size = new Size(141, 31);
-            BtnSectorCreationGuide.TabIndex = 31;
-            BtnSectorCreationGuide.Text = "Sector Creation Guide";
-            BtnSectorCreationGuide.UseVisualStyleBackColor = true;
-            BtnSectorCreationGuide.Click += BtnSectorCreationGuide_Click;
+            BtnGalaxySettings.Location = new Point(12, 10);
+            BtnGalaxySettings.Name = "BtnGalaxySettings";
+            BtnGalaxySettings.Size = new Size(141, 31);
+            BtnGalaxySettings.TabIndex = 31;
+            BtnGalaxySettings.Text = "Galaxy Settings";
+            BtnGalaxySettings.UseVisualStyleBackColor = true;
+            BtnGalaxySettings.Click += BtnGalaxySettings_Click;
             // 
             // BtnReset
             // 
-            BtnReset.Location = new Point(12, 8);
+            BtnReset.Location = new Point(159, 10);
             BtnReset.Name = "BtnReset";
             BtnReset.Size = new Size(107, 31);
             BtnReset.TabIndex = 32;
@@ -314,7 +314,7 @@
             Controls.Add(BtnOpenFolder);
             Controls.Add(BtnShowSectorMap);
             Controls.Add(BtnReset);
-            Controls.Add(BtnSectorCreationGuide);
+            Controls.Add(BtnGalaxySettings);
             Controls.Add(BtnImportConfig);
             Controls.Add(BtnExportConfig);
             Controls.Add(LblDetails);
@@ -357,7 +357,7 @@
         private Label LblDetails;
         private Button BtnExportConfig;
         private Button BtnImportConfig;
-        private Button BtnSectorCreationGuide;
+        private Button BtnGalaxySettings;
         private Button BtnReset;
         private Button BtnShowSectorMap;
         internal ListBox ClustersListBox;

@@ -7,6 +7,9 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
+            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
+                $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
+
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("macros",
@@ -14,7 +17,7 @@ namespace X4SectorCreator.XmlGeneration
                 )
             );
 
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/{modPrefix}_clusters.xml")));
+            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_clusters.xml")));
         }
 
         private static IEnumerable<XElement> GenerateClusters(string modPrefix, List<Cluster> clusters)

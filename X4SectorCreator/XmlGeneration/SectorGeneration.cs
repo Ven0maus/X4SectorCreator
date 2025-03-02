@@ -7,6 +7,9 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
+            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
+                $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
+
             // Save new sectors in custom clusters
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
@@ -15,7 +18,7 @@ namespace X4SectorCreator.XmlGeneration
                 )
             );
 
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/{modPrefix}_sectors.xml")));
+            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_sectors.xml")));
 
             // Save new zones in existing sectors
             var diffData = GenerateSectorAdds(modPrefix, clusters).ToList();
@@ -28,7 +31,7 @@ namespace X4SectorCreator.XmlGeneration
                     )
                 );
 
-                xmlSectorDiff.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/xu_ep2_universe/sectors.xml")));
+                xmlSectorDiff.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/sectors.xml")));
             }
         }
 

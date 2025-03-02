@@ -12,7 +12,7 @@ namespace X4SectorCreator
 {
     public partial class MainForm : Form
     {
-        private GuideForm _guideForm;
+        private GalaxySettingsForm _galaxySettingsForm;
         private SectorMapForm _sectorMapForm;
         private ClusterForm _clusterForm;
         private SectorForm _sectorForm;
@@ -24,7 +24,9 @@ namespace X4SectorCreator
 
         private readonly string _sectorMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/sector_mappings.json");
 
-        public readonly Dictionary<(int, int), Cluster> AllClusters;
+        private Dictionary<(int, int), Cluster> _allClusters;
+        public Dictionary<(int, int), Cluster> AllClusters => _allClusters;
+
         public readonly Dictionary<string, Color> FactionColorMapping;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -32,6 +34,8 @@ namespace X4SectorCreator
 
         // Lazy forms
         public GuideForm GuideForm => _guideForm != null && !_guideForm.IsDisposed ? _guideForm : (_guideForm = new GuideForm());
+        public GalaxySettingsForm GalaxySettingsForm => _galaxySettingsForm != null && !_galaxySettingsForm.IsDisposed ? _galaxySettingsForm : (_galaxySettingsForm = new GalaxySettingsForm());
+
         public SectorMapForm SectorMapForm => _sectorMapForm != null && !_sectorMapForm.IsDisposed ? _sectorMapForm : (_sectorMapForm = new SectorMapForm());
         public ClusterForm ClusterForm => _clusterForm != null && !_clusterForm.IsDisposed ? _clusterForm : (_clusterForm = new ClusterForm());
         public SectorForm SectorForm => _sectorForm != null && !_sectorForm.IsDisposed ? _sectorForm : (_sectorForm = new SectorForm());
@@ -40,6 +44,8 @@ namespace X4SectorCreator
         public VersionUpdateForm VersionUpdateForm => _versionUpdateForm != null && !_versionUpdateForm.IsDisposed
             ? _versionUpdateForm
             : (_versionUpdateForm = new VersionUpdateForm());
+
+        public readonly Dictionary<string, string> BackgroundVisualMapping;
 
         public MainForm()
         {
@@ -56,7 +62,7 @@ namespace X4SectorCreator
             ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
 
             // Create lookups
-            AllClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
+            _allClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
             // Init all collections
             foreach (var cluster in AllClusters)
             {
@@ -74,16 +80,57 @@ namespace X4SectorCreator
                     }
                 }
             }
+            // Set background visual mapping
+            BackgroundVisualMapping = AllClusters
+                .Where(a => a.Value.IsBaseGame)
+                .Where(a => !string.IsNullOrWhiteSpace(a.Value.BaseGameMapping))
+                .ToDictionary(a => a.Value.Name, a => a.Value.BaseGameMapping);
+
             FactionColorMapping = clusterCollection.FactionColors.ToDictionary(a => a.Key, a => HexToColor(a.Value), StringComparer.OrdinalIgnoreCase);
         }
 
-        private void BtnSectorCreationGuide_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Used to toggle between base game galaxy and custom galaxy.
+        /// </summary>
+        public void ToggleGalaxyMode(Dictionary<(int, int), Cluster> mergedClusters)
         {
-            GuideForm.Show();
+            if (GalaxySettingsForm.IsCustomGalaxy)
+            {
+                _allClusters = AllClusters
+                    .Where(a => !a.Value.IsBaseGame)
+                    .ToDictionary(a => a.Key, a => a.Value);
+            }
+            else
+            {
+                _allClusters = mergedClusters;
+            }
+
+            // Init all listboxes properly again
+            ClustersListBox.Items.Clear();
+            SectorsListBox.Items.Clear();
+            GatesListBox.Items.Clear();
+            RegionsListBox.Items.Clear();
+
+            // Init clusters and select the first to propagate the other listboxes
+            Cluster firstCluster = null;
+            foreach (var cluster in AllClusters.Where(a => !a.Value.IsBaseGame))
+            {
+                firstCluster ??= cluster.Value;
+                ClustersListBox.Items.Add(cluster.Value.Name);
+            }
+            ClustersListBox.SelectedItem = firstCluster?.Name;
+        }
+
+        private void BtnGalaxySettings_Click(object sender, EventArgs e)
+        {
+            GalaxySettingsForm.Initialize();
+            GalaxySettingsForm.Show();
         }
 
         private void BtnShowSectorMap_Click(object sender, EventArgs e)
         {
+            SectorMapForm.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            SectorMapForm.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
             SectorMapForm.GateSectorSelection = false;
             SectorMapForm.BtnSelectLocation.Enabled = false;
             SectorMapForm.ControlPanel.Size = new Size(176, 215);
@@ -343,6 +390,9 @@ namespace X4SectorCreator
                     {
                         // Reset configuration
                         BtnReset.PerformClick();
+
+                        if (GalaxySettingsForm.IsCustomGalaxy)
+                            ToggleGalaxyMode(null);
 
                         // Import new configuration
                         foreach (Cluster cluster in clusters)

@@ -72,6 +72,12 @@ namespace X4SectorCreator
             }
         }
 
+        public static bool CompareVersion(string source, string target)
+        {
+            return Version.TryParse(source, out Version current) &&
+                 Version.TryParse(target, out Version other) && current.Equals(other);
+        }
+
         private static bool IsNewVersionAvailable(string latestVersion, string version)
         {
             return Version.TryParse(latestVersion, out Version latest) &&

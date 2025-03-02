@@ -83,8 +83,16 @@ namespace X4SectorCreator
             var allClusters = MainForm.Instance.AllClusters.Values;
 
             // Determine size of hex grid based on cluster mapping + custom sector
-            _cols = ((Math.Max(Math.Abs(allClusters.Max(a => a.Position.X)), Math.Abs(allClusters.Min(a => a.Position.X))) + _minExpansionRoom) * 2) + 1;
-            _rows = ((int)((Math.Max(Math.Abs(allClusters.Max(b => b.Position.Y)), Math.Abs(allClusters.Min(b => b.Position.Y))) + (_minExpansionRoom / 2)) * 1.5f)) + 1;
+            if (allClusters.Count == 0) // Check if the list is empty
+            {
+                _cols = (_minExpansionRoom * 2) + 1;
+                _rows = ((int)((_minExpansionRoom / 2) * 1.5f)) + 1;
+            }
+            else
+            {
+                _cols = ((Math.Max(Math.Abs(allClusters.Max(a => a.Position.X)), Math.Abs(allClusters.Min(a => a.Position.X))) + _minExpansionRoom) * 2) + 1;
+                _rows = ((int)((Math.Max(Math.Abs(allClusters.Max(b => b.Position.Y)), Math.Abs(allClusters.Min(b => b.Position.Y))) + (_minExpansionRoom / 2)) * 1.5f)) + 1;
+            }
 
             GenerateHexagons();
             Invalidate();
