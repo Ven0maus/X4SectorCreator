@@ -379,50 +379,38 @@ namespace X4SectorCreator
                 string filePath = openFileDialog.FileName;
 
                 // Import new configuration
-                try
+                string jsonContent = File.ReadAllText(filePath);
+                List<Cluster> clusters = ConfigSerializer.Deserialize(jsonContent);
+                if (clusters != null)
                 {
-                    string jsonContent = File.ReadAllText(filePath);
-                    List<Cluster> clusters = ConfigSerializer.Deserialize(jsonContent);
-                    if (clusters != null)
+                    // Reset configuration
+                    BtnReset.PerformClick();
+
+                    if (GalaxySettingsForm.IsCustomGalaxy)
+                        ToggleGalaxyMode(null);
+
+                    // Import new configuration
+                    foreach (Cluster cluster in clusters)
                     {
-                        // Reset configuration
-                        BtnReset.PerformClick();
+                        // Contains also base game clusters that have zones for exported gate connections
+                        // Set custom clusters
+                        AllClusters[(cluster.Position.X, cluster.Position.Y)] = cluster;
 
-                        if (GalaxySettingsForm.IsCustomGalaxy)
-                            ToggleGalaxyMode(null);
+                        // Apply support additions for new versions
+                        Import_Support_NewVersions(cluster);
 
-                        // Import new configuration
-                        foreach (Cluster cluster in clusters)
-                        {
-                            // Contains also base game clusters that have zones for exported gate connections
-                            // Set custom clusters
-                            AllClusters[(cluster.Position.X, cluster.Position.Y)] = cluster;
-
-                            // Apply support additions for new versions
-                            Import_Support_NewVersions(cluster);
-
-                            // Setup listboxes
-                            if (!cluster.IsBaseGame)
-                                _ = ClustersListBox.Items.Add(cluster.Name);
-                        }
-
-                        // No longer needed
-                        _clusterDlcLookup = null;
-
-                        // Select first one so sector and zones populate automatically
-                        ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
-
-                        _ = MessageBox.Show($"Configuration imported succesfully.", "Success");
+                        // Setup listboxes
+                        if (!cluster.IsBaseGame)
+                            _ = ClustersListBox.Items.Add(cluster.Name);
                     }
-                    else
-                    {
-                        throw new Exception();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _ = MessageBox.Show($"Invalid JSON content in file, please try another file: {ex.Message}",
-                        "Invalid JSON Content", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // No longer needed
+                    _clusterDlcLookup = null;
+
+                    // Select first one so sector and zones populate automatically
+                    ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
+
+                    _ = MessageBox.Show($"Configuration imported succesfully.", "Success");
                 }
             }
         }
