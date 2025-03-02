@@ -1,5 +1,4 @@
 ﻿using System.Xml.Linq;
-using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
 {
@@ -7,20 +6,27 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modName, string modPrefix)
         {
+            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ? 
+                $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
+
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("index",
+                    GalaxySettingsForm.IsCustomGalaxy ? new XElement("entry",
+                        new XAttribute("name", $"{galaxyName}_macro"),
+                        new XAttribute("value", $@"extensions\{modName}\maps\{galaxyName}\galaxy")
+                    ) : null,
                     new XElement("entry",
                         new XAttribute("name", $"{modPrefix}_CL_*"),
-                        new XAttribute("value", $@"extensions\{modName}\maps\XU_ep2_universe\{modPrefix}_clusters")
+                        new XAttribute("value", $@"extensions\{modName}\maps\{galaxyName}\{modPrefix}_clusters")
                     ),
                     new XElement("entry",
                         new XAttribute("name", $"{modPrefix}_SE_*"),
-                        new XAttribute("value", $@"extensions\{modName}\maps\XU_ep2_universe\{modPrefix}_sectors")
+                        new XAttribute("value", $@"extensions\{modName}\maps\{galaxyName}\{modPrefix}_sectors")
                     ),
                     new XElement("entry",
                         new XAttribute("name", $"{modPrefix}_ZO_*"),
-                        new XAttribute("value", $@"extensions\{modName}\maps\XU_ep2_universe\{modPrefix}_zones")
+                        new XAttribute("value", $@"extensions\{modName}\maps\{galaxyName}\{modPrefix}_zones")
                     )
                 )
             );
