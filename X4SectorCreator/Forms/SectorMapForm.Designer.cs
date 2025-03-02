@@ -171,14 +171,13 @@
         }
 
         #endregion
-
-        private CheckBox chkShowX4Sectors;
         private CheckBox chkShowCoordinates;
         private CheckBox chkShowCustomSectors;
         internal Button BtnSelectLocation;
         internal Panel ControlPanel;
         internal Panel panel1;
         private Label label1;
-        private CheckedListBox DlcListBox;
+        internal CheckBox chkShowX4Sectors;
+        internal CheckedListBox DlcListBox;
     }
 }

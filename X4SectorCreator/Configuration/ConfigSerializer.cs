@@ -29,15 +29,34 @@ namespace X4SectorCreator.Configuration
                 }
             }
 
-            return JsonSerializer.Serialize(clusters, _serializerOptions);
+            var configObj = new ConfigurationObj
+            {
+                Clusters = clusters,
+                GalaxyName = GalaxySettingsForm.GalaxyName,
+                Version = new VersionChecker().CurrentVersion
+            };
+
+            return JsonSerializer.Serialize(configObj, _serializerOptions);
         }
 
         public static List<Cluster> Deserialize(string filePath)
         {
-            List<Cluster> clusters = JsonSerializer.Deserialize<List<Cluster>>(filePath, _serializerOptions);
+            ConfigurationObj configObj = JsonSerializer.Deserialize<ConfigurationObj>(filePath, _serializerOptions);
+
+            var vc = new VersionChecker();
+
+            // Validate app version, show message if from an older version
+            if (!VersionChecker.CompareVersion(vc.CurrentVersion, configObj.Version))
+            {
+                _ = MessageBox.Show("Please note, if you receive any error when importing your config,\nit is likely because the file was exported from an older app version and may be incompatible.");
+            }
+
+            // Set static values
+            GalaxySettingsForm.GalaxyName = configObj.GalaxyName;
+            GalaxySettingsForm.IsCustomGalaxy = configObj.IsCustomGalaxy;
 
             // First order everything correctly before returning
-            clusters = [.. clusters.OrderBy(a => a.Id)];
+            var clusters = configObj.Clusters.OrderBy(a => a.Id).ToList();
             foreach (Cluster cluster in clusters)
             {
                 cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];

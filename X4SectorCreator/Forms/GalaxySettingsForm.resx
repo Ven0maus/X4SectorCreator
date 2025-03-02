@@ -117,26 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label1.Text" xml:space="preserve">
-    <value>&gt; Understanding the Map Structure
-
-The X4 Foundations map is divided into hexagon clusters, which help define the overall layout of the galaxy. Each of these clusters contains sectors, and within each sector, there are zones where objects such as ships and stations can spawn.
-
-&gt; Cluster, Sector, and Zone Breakdown
-
-Clusters: Represent hexagonal regions on the map.
-Sectors: Each cluster can contain between 1 to 3 sectors.
-Zones: Every sector must contain at least one zone, but it can have multiple zones.
-Zones define where objects such as ships and stations can appear.
-
-&gt; Creating a new cluster
-
-You can press the "New" button under the Clusters overview and fill in the required details.
-This will automatically create a sector with the same name, and a default zone.
-You can edit existing entries by double clicking on them.
-
-&gt; Creating a Gate connection between two sectors
-
-TODO</value>
-  </data>
 </root>

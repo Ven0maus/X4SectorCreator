@@ -8,18 +8,40 @@ namespace X4SectorCreator.XmlGeneration
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
             List<Cluster> orderedClusters = [.. clusters.OrderBy(a => a.Id)];
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("diff",
-                    new XElement("add",
-                        new XAttribute("sel", "/macros/macro[@name='XU_EP2_universe_macro']/connections"),
-                        GenerateClusters(modPrefix, orderedClusters),
-                        GenerateGateConnections(modPrefix, orderedClusters)
-                    )
-                )
-            );
 
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, "maps/xu_ep2_universe/galaxy.xml")));
+            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
+                $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
+
+            XDocument xmlDocument;
+            if (GalaxySettingsForm.IsCustomGalaxy)
+            {
+                xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
+                    new XElement("macros",
+                        new XElement("macro",
+                            new XAttribute("name", $"{galaxyName}_macro"),
+                            new XAttribute("class", "galaxy"),
+                                new XElement("connections",
+                                GenerateClusters(modPrefix, orderedClusters),
+                                GenerateGateConnections(modPrefix, orderedClusters)
+                            )
+                        )
+                    )
+                );
+            }
+            else
+            {
+                xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
+                    new XElement("diff",
+                        new XElement("add",
+                            new XAttribute("sel", $"/macros/macro[@name='{GalaxySettingsForm.GalaxyName}_macro']/connections"),
+                            GenerateClusters(modPrefix, orderedClusters),
+                            GenerateGateConnections(modPrefix, orderedClusters)
+                        )
+                    )
+                );
+            }
+
+            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/galaxy.xml")));
         }
 
         private static IEnumerable<XElement> GenerateClusters(string modPrefix, List<Cluster> clusters)
