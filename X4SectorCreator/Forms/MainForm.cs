@@ -883,6 +883,7 @@ namespace X4SectorCreator
         }
         #endregion
 
+        #region Regions
         private void BtnNewRegion_Click(object sender, EventArgs e)
         {
             string selectedSector = SectorsListBox.SelectedItem as string;
@@ -934,5 +935,6 @@ namespace X4SectorCreator
             RegionForm.CustomRegion = selectedRegion;
             RegionForm.Show();
         }
+        #endregion
     }
 }
