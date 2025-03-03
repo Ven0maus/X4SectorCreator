@@ -30,9 +30,9 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     foreach (var region in sector.Regions)
                     {
-                        // Region definition name needs to prefix region for some stupid reason, and can't find any index to remap it to another wildcard...
+                        // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
                         yield return new XElement("region",
-                            new XAttribute("name", $"region_{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}"),
+                            new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}".ToLower()),
                             new XAttribute("density", region.Density),
                             new XAttribute("rotation", region.Rotation),
                             new XAttribute("noisescale", region.NoiseScale),
