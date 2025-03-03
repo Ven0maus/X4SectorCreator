@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Configuration
@@ -34,6 +35,7 @@ namespace X4SectorCreator.Configuration
             var configObj = new ConfigurationObj
             {
                 Clusters = clusters,
+                RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
                 GalaxyName = GalaxySettingsForm.GalaxyName,
                 Version = new VersionChecker().CurrentVersion
             };
@@ -65,6 +67,10 @@ namespace X4SectorCreator.Configuration
             // Set static values
             GalaxySettingsForm.GalaxyName = configObj.GalaxyName;
             GalaxySettingsForm.IsCustomGalaxy = configObj.IsCustomGalaxy;
+
+            // Set stored region definitions
+            if (configObj.RegionDefinitions != null && configObj.RegionDefinitions.Count > 0)
+                RegionDefinitionForm.RegionDefinitions.AddRange(configObj.RegionDefinitions);
 
             // First order everything correctly before returning
             var clusters = configObj.Clusters.OrderBy(a => a.Id).ToList();

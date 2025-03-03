@@ -117,7 +117,7 @@ namespace X4SectorCreator.Forms
             switch(BtnAdd.Text)
             {
                 case "Add":
-                    var regionForm = MainForm.Instance.RegionForm;
+                    var regionForm = MainForm.Instance.RegionForm.RegionDefinitionForm;
                     regionForm.ListBoxFields.Items.Add(newField);
                     regionForm.ListBoxFields.SelectedItem = newField;
                     break;

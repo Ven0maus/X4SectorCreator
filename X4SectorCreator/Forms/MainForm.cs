@@ -34,12 +34,11 @@ namespace X4SectorCreator
         public static MainForm Instance { get; private set; }
 
         public GalaxySettingsForm GalaxySettingsForm => _galaxySettingsForm != null && !_galaxySettingsForm.IsDisposed ? _galaxySettingsForm : (_galaxySettingsForm = new GalaxySettingsForm());
-
+        public RegionForm RegionForm => _regionForm != null && !_regionForm.IsDisposed ? _regionForm : (_regionForm = new RegionForm());
         public SectorMapForm SectorMapForm => _sectorMapForm != null && !_sectorMapForm.IsDisposed ? _sectorMapForm : (_sectorMapForm = new SectorMapForm());
         public ClusterForm ClusterForm => _clusterForm != null && !_clusterForm.IsDisposed ? _clusterForm : (_clusterForm = new ClusterForm());
         public SectorForm SectorForm => _sectorForm != null && !_sectorForm.IsDisposed ? _sectorForm : (_sectorForm = new SectorForm());
         public GateForm GateForm => _gateForm != null && !_gateForm.IsDisposed ? _gateForm : (_gateForm = new GateForm());
-        public RegionForm RegionForm => _regionForm != null && !_regionForm.IsDisposed ? _regionForm : (_regionForm = new RegionForm());
         public VersionUpdateForm VersionUpdateForm => _versionUpdateForm != null && !_versionUpdateForm.IsDisposed
             ? _versionUpdateForm
             : (_versionUpdateForm = new VersionUpdateForm());
@@ -861,25 +860,37 @@ namespace X4SectorCreator
             var cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             var sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
-            RegionForm.Cluster = cluster;
             RegionForm.Sector = sector;
             RegionForm.Show();
         }
 
         private void BtnRemoveRegion_Click(object sender, EventArgs e)
         {
-            var selectedRegion = RegionsListBox.SelectedItem as Region;
-            if (selectedRegion == null) return;
+            if (RegionsListBox.SelectedItem is not Region selectedRegion) return;
 
             var selectedCluster = ClustersListBox.SelectedItem as string;
             var selectedSector = SectorsListBox.SelectedItem as string;
             var cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             var sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
-            
+
             // Remove region from sector
             _ = sector.Regions.Remove(selectedRegion);
             RegionsListBox.Items.Remove(selectedRegion);
             RegionsListBox.SelectedItem = null;
+        }
+
+        private void RegionsListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (RegionsListBox.SelectedItem is not Region selectedRegion) return;
+
+            var selectedCluster = ClustersListBox.SelectedItem as string;
+            var selectedSector = SectorsListBox.SelectedItem as string;
+            var cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
+            var sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
+
+            RegionForm.Sector = sector;
+            RegionForm.CustomRegion = selectedRegion;
+            RegionForm.Show();
         }
     }
 }

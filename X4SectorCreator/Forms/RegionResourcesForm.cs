@@ -49,15 +49,15 @@ namespace X4SectorCreator.Forms
                         Ware = cmbWare.Text,
                         Yield = cmbYield.Text,
                     };
-                    MainForm.Instance.RegionForm.ListBoxResources.Items.Add(resource);
+                    MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxResources.Items.Add(resource);
                     break;
                 case "Update":
-                    int index = MainForm.Instance.RegionForm.ListBoxResources.SelectedIndex;
-                    MainForm.Instance.RegionForm.ListBoxResources.Items.Remove(Resource);
+                    int index = MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxResources.SelectedIndex;
+                    MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxResources.Items.Remove(Resource);
                     Resource.Ware = cmbWare.Text;
                     Resource.Yield = cmbYield.Text;
-                    MainForm.Instance.RegionForm.ListBoxResources.Items.Insert(index, Resource);
-                    MainForm.Instance.RegionForm.ListBoxResources.SelectedItem = Resource;
+                    MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxResources.Items.Insert(index, Resource);
+                    MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxResources.SelectedItem = Resource;
                     break;
             }
 

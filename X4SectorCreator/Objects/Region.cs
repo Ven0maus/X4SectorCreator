@@ -4,13 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string BoundaryType { get; set; }
-        public string Density { get; set; }
-        public string Rotation { get; set; }
-        public string NoiseScale { get; set; }
-        public string Seed { get; set; }
-        public string MinNoiseValue { get; set; }
-        public string MaxNoiseValue { get; set; }
+        public RegionDefinition Definition { get; set; }
         public string BoundaryRadius { get; set; }
         public string BoundaryLinear { get; set; }
         public Point Position { get; set; }

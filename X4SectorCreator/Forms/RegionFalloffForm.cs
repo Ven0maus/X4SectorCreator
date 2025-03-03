@@ -57,7 +57,7 @@ namespace X4SectorCreator.Forms
         private static void HandleAdditionStep(float posValue, float valueValue)
         {
             // Determine which tab is active
-            var regionForm = MainForm.Instance.RegionForm;
+            var regionForm = MainForm.Instance.RegionForm.RegionDefinitionForm;
             var sT = regionForm.TabControlFalloff.SelectedTab;
 
             var stepObj = new StepObj
@@ -82,7 +82,7 @@ namespace X4SectorCreator.Forms
         private void HandleUpdateStep(float posValue, float valueValue)
         {
             // Determine which tab is active
-            var regionForm = MainForm.Instance.RegionForm;
+            var regionForm = MainForm.Instance.RegionForm.RegionDefinitionForm;
             var sT = regionForm.TabControlFalloff.SelectedTab;
 
             StepObj.Position = posValue.ToString("0.0");

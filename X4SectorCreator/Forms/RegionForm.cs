@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 using X4SectorCreator.Objects;
 using Region = X4SectorCreator.Objects.Region;
 
@@ -9,29 +8,6 @@ namespace X4SectorCreator.Forms
 {
     public partial class RegionForm : Form
     {
-        private RegionResourcesForm _regionResourcesForm;
-        public RegionResourcesForm RegionResourcesForm => _regionResourcesForm != null && !_regionResourcesForm.IsDisposed
-            ? _regionResourcesForm
-            : (_regionResourcesForm = new RegionResourcesForm());
-
-        private RegionFalloffForm _regionFalloffForm;
-        public RegionFalloffForm RegionFalloffForm => _regionFalloffForm != null && !_regionFalloffForm.IsDisposed
-            ? _regionFalloffForm
-            : (_regionFalloffForm = new RegionFalloffForm());
-
-        private RegionFieldsForm _regionFieldsForm;
-        public RegionFieldsForm RegionFieldsForm => _regionFieldsForm != null && !_regionFieldsForm.IsDisposed
-            ? _regionFieldsForm
-            : (_regionFieldsForm = new RegionFieldsForm());
-
-        private RegionPredefinedFieldsForm _regionPredefinedFieldsForm;
-        public RegionPredefinedFieldsForm RegionPredefinedFieldsForm => _regionPredefinedFieldsForm != null && !_regionPredefinedFieldsForm.IsDisposed
-            ? _regionPredefinedFieldsForm
-            : (_regionPredefinedFieldsForm = new RegionPredefinedFieldsForm());
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Cluster Cluster { get; set; }
-
         private Sector _sector;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Sector Sector
@@ -44,6 +20,30 @@ namespace X4SectorCreator.Forms
                     InitSectorValues();
             }
         }
+
+        private Region _region;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Region CustomRegion
+        {
+            get => _region;
+            set
+            {
+                _region = value;
+                if (_region != null)
+                {
+                    _circlePosition = ConvertWorldToScreen(CustomRegion.Position);
+                    _circleRadius = ConvertWorldRadiusToScreen(int.Parse(CustomRegion.BoundaryRadius));
+                    txtRegionName.Text = CustomRegion.Name;
+                    txtRegionLinear.Text = CustomRegion.BoundaryLinear;
+                    txtRegionPosition.Text = (CustomRegion.Position.X, CustomRegion.Position.Y).ToString();
+                    txtRegionRadius.Text = _circleRadius.ToString();
+                    BtnCreateRegion.Text = "Update Region";
+                }
+            }
+        }
+
+        private RegionDefinitionForm _regionDefinitionForm;
+        public RegionDefinitionForm RegionDefinitionForm => _regionDefinitionForm != null && !_regionDefinitionForm.IsDisposed ? _regionDefinitionForm : (_regionDefinitionForm = new RegionDefinitionForm());
 
         #region Hexagon Data
         private readonly int _hexRadius;
@@ -67,43 +67,10 @@ namespace X4SectorCreator.Forms
             SectorHexagon.MouseUp += SectorHexagon_MouseUp;
             SectorHexagon.MouseClick += SectorHexagon_MouseClick;
 
-            txtRegionLinear.Enabled = cmbBoundaryType.SelectedItem is string selected &&
-                selected.Equals("Cylinder", StringComparison.OrdinalIgnoreCase);
+            txtRegionLinear.Enabled = false;
 
             // Init hexagon
             InitializeHexagon();
-            InitDefaultFalloff();
-        }
-
-        private void InitDefaultFalloff()
-        {
-            // Some defaults to make configurating easier
-            var lateral = new List<StepObj>
-            {
-                new() { Position = "0.0", Value = "0.0" },
-                new() { Position = "0.1", Value = "1.0" },
-                new() { Position = "0.9", Value = "1.0" },
-                new() { Position = "1.0", Value = "0.0" }
-            };
-
-            var radial = new List<StepObj>
-            {
-                new() { Position = "0.0", Value = "1.0" },
-                new() { Position = "0.8", Value = "1.0" },
-                new() { Position = "1.0", Value = "0.0" }
-            };
-
-            foreach (var lat in lateral)
-            {
-                lat.Type = "Lateral";
-                ListBoxLateral.Items.Add(lat);
-            }
-
-            foreach (var rad in radial)
-            {
-                rad.Type = "Radial";
-                ListBoxRadial.Items.Add(rad);
-            }
         }
 
         #region Hexagon Methods
@@ -282,261 +249,110 @@ namespace X4SectorCreator.Forms
         {
             // Set region positions
             UpdateRegionPosition();
+
+            // Init listbox definitions stored by user
+            foreach (var definition in RegionDefinitionForm.RegionDefinitions)
+                ListBoxRegionDefinitions.Items.Add(definition);
+            ListBoxRegionDefinitions.SelectedItem = RegionDefinitionForm.RegionDefinitions.Count > 0 ?
+                RegionDefinitionForm.RegionDefinitions[0] : null;
         }
 
         private void BtnCreateRegion_Click(object sender, EventArgs e)
         {
-            if (!ValidationChecks(out var region)) return;
-
-            // Convert region radius and position to world space
-            var convertedRegionRadius = ConvertScreenRadiusToWorld(_circleRadius);
-            var convertedRegionPosition = ConvertScreenToWorld(_circlePosition);
-
-            // Set converted worlspace coords & radius
-            region.BoundaryRadius = convertedRegionRadius.ToString();
-            region.Position = convertedRegionPosition;
-
-            // Fields
-            region.Fields.AddRange(ListBoxFields.Items.Cast<FieldObj>());
-
-            // Falloff lateral & radial
-            region.Falloff.AddRange(ListBoxLateral.Items.Cast<StepObj>());
-            region.Falloff.AddRange(ListBoxRadial.Items.Cast<StepObj>());
-
-            // Resources
-            region.Resources.AddRange(ListBoxResources.Items.Cast<Resource>());
-
-            // Assign ID
-            region.Id = Sector.Regions.DefaultIfEmpty(new Region()).Max(a => a.Id) + 1;
-
-            // Add region to sector
-            Sector.Regions.Add(region);
-
-            MainForm.Instance.RegionsListBox.Items.Add(region);
-            MainForm.Instance.RegionsListBox.SelectedItem = region;
-            Close();
-        }
-
-        private bool ValidationChecks(out Region region)
-        {
-            region = null;
-
             // Name check
             if (string.IsNullOrWhiteSpace(txtRegionName.Text))
             {
                 _ = MessageBox.Show("Please insert a valid name for the region.");
-                return false;
+                return;
             }
 
-            // Boundary check
-            var selectedBoundaryType = cmbBoundaryType.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(selectedBoundaryType))
+            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition)
             {
-                _ = MessageBox.Show("Please select a valid boundary type for the region.");
-                return false;
+                _ = MessageBox.Show("Please select a valid region definition for this region.");
+                return;
             }
 
             // Linear check
             int regionLinear = default;
-            if (selectedBoundaryType.Equals("Cylinder", StringComparison.OrdinalIgnoreCase) &&
+            if (selectedRegionDefinition.BoundaryType.Equals("Cylinder", StringComparison.OrdinalIgnoreCase) &&
                 (string.IsNullOrWhiteSpace(txtRegionLinear.Text) ||
                 !int.TryParse(txtRegionLinear.Text, out regionLinear) ||
                 regionLinear <= 0))
             {
                 _ = MessageBox.Show("Region linear must be a valid numeric value higher than 0 for the region.");
-                return false;
+                return;
             }
 
-            var messages = new List<string>();
-            IsValidInteger(messages, txtRotation, out var rotation);
-            IsValidInteger(messages, txtSeed, out var seed);
-            IsValidInteger(messages, txtNoiseScale, out var noiseScale);
-            IsValidFloat(messages, txtDensity, out var density);
-            IsValidFloat(messages, txtMinNoiseValue, out var minNoiseValue);
-            IsValidFloat(messages, txtMaxNoiseValue, out var maxNoiseValue);
-            if (messages.Count > 0)
+            switch (BtnCreateRegion.Text)
             {
-                _ = MessageBox.Show(string.Join("\n", messages));
-                return false;
+                case "Create Region":
+                    var region = new Region
+                    {
+                        Id = Sector.Regions.DefaultIfEmpty(new Region()).Max(a => a.Id) + 1,
+                        Name = txtRegionName.Text,
+                        Definition = selectedRegionDefinition,
+                        BoundaryLinear = regionLinear.ToString(),
+                        BoundaryRadius = ConvertScreenRadiusToWorld(_circleRadius).ToString(),
+                        Position = ConvertScreenToWorld(_circlePosition)
+                    };
+
+                    // Add region to sector
+                    Sector.Regions.Add(region);
+
+                    MainForm.Instance.RegionsListBox.Items.Add(region);
+                    MainForm.Instance.RegionsListBox.SelectedItem = region;
+                    break;
+                case "Update Region":
+                    CustomRegion.Name = txtRegionName.Text;
+                    CustomRegion.BoundaryLinear = regionLinear.ToString();
+                    CustomRegion.BoundaryRadius = ConvertScreenRadiusToWorld(_circleRadius).ToString();
+                    CustomRegion.Position = ConvertScreenToWorld(_circlePosition);
+
+                    var index = MainForm.Instance.RegionsListBox.SelectedIndex;
+                    MainForm.Instance.RegionsListBox.Items.Remove(CustomRegion);
+                    MainForm.Instance.RegionsListBox.Items.Insert(index, CustomRegion);
+                    MainForm.Instance.RegionsListBox.SelectedItem = CustomRegion;
+                    break;
             }
 
-            region = new Region
-            {
-                BoundaryLinear = regionLinear.ToString(),
-                Density = density.ToString(),
-                MaxNoiseValue = maxNoiseValue.ToString(),
-                MinNoiseValue = minNoiseValue.ToString(),
-                Rotation = rotation.ToString(),
-                NoiseScale = noiseScale.ToString(),
-                Seed = seed.ToString(),
-                Name = txtRegionName.Text,
-                BoundaryType = selectedBoundaryType.ToLower(),
-            };
 
-            return true;
+            Close();
         }
 
-        private static void IsValidFloat(List<string> messages, TextBox textBox, out float value)
+        private void ListBoxRegionDefinitions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!float.TryParse(textBox.Text, out value))
-            {
-                messages.Add($"{textBox.Name.Replace("txt", string.Empty)} must be a valid numeric value.");
-            }
+            txtRegionLinear.Enabled = ListBoxRegionDefinitions.SelectedItem is RegionDefinition selectedRegionDefinition &&
+                selectedRegionDefinition.BoundaryType.Equals("Cylinder", StringComparison.OrdinalIgnoreCase);
         }
 
-        private static void IsValidInteger(List<string> messages, TextBox textBox, out int value)
+        private void BtnNewDefinition_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(textBox.Text, out value))
-            {
-                messages.Add($"{textBox.Name.Replace("txt", string.Empty)} must be a valid numeric integer value.");
-            }
+            RegionDefinitionForm.Show();
         }
 
-        private void BtnResourcesAdd_Click(object sender, EventArgs e)
+        private void BtnRemoveDefinition_Click(object sender, EventArgs e)
         {
-            RegionResourcesForm.Show();
-        }
+            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition) return;
 
-        private void BtnResourcesDel_Click(object sender, EventArgs e)
-        {
-            if (ListBoxResources.SelectedItem is not Resource selectedResource) return;
-
-            var index = ListBoxResources.Items.IndexOf(selectedResource);
-            ListBoxResources.Items.Remove(selectedResource);
+            var index = ListBoxRegionDefinitions.Items.IndexOf(selectedRegionDefinition);
+            ListBoxRegionDefinitions.Items.Remove(selectedRegionDefinition);
+            RegionDefinitionForm.RegionDefinitions.Remove(selectedRegionDefinition); // remove from static cache
 
             // Ensure index is within valid range
             index--;
             index = Math.Max(0, index);
-            if (index >= 0 && ListBoxResources.Items.Count > 0)
-                ListBoxResources.SelectedItem = ListBoxResources.Items[index];
+            if (index >= 0 && ListBoxRegionDefinitions.Items.Count > 0)
+                ListBoxRegionDefinitions.SelectedItem = ListBoxRegionDefinitions.Items[index];
             else
-                ListBoxResources.SelectedItem = null;
+                ListBoxRegionDefinitions.SelectedItem = null;
         }
 
-        private void BtnFalloffAdd_Click(object sender, EventArgs e)
+        private void ListBoxRegionDefinitions_DoubleClick(object sender, EventArgs e)
         {
-            RegionFalloffForm.Show();
-        }
+            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition) return;
 
-        private void BtnFalloffDel_Click(object sender, EventArgs e)
-        {
-            var listBox = GetActiveFalloffListbox();
-            if (listBox.SelectedItem is not StepObj lateral) return;
-
-            var index = listBox.Items.IndexOf(lateral);
-            listBox.Items.Remove(lateral);
-
-            // Ensure index is within valid range
-            index--;
-            index = Math.Max(0, index);
-            if (index >= 0 && listBox.Items.Count > 0)
-                listBox.SelectedItem = listBox.Items[index];
-            else
-                listBox.SelectedItem = null;
-        }
-
-        private void BtnFalloffUp_Click(object sender, EventArgs e)
-        {
-            // Determine which tab is active
-            var listBox = GetActiveFalloffListbox();
-            int index = listBox.SelectedIndex;
-            if (index > 0) // Ensure it's not already at the top
-            {
-                var item = listBox.Items[index];
-                listBox.Items.RemoveAt(index);
-                listBox.Items.Insert(index - 1, item);
-                listBox.SelectedIndex = index - 1; // Keep selection
-            }
-        }
-
-        private void BtnFalloffDown_Click(object sender, EventArgs e)
-        {
-            // Determine which tab is active
-            var listBox = GetActiveFalloffListbox();
-            int index = listBox.SelectedIndex;
-            if (index < listBox.Items.Count - 1 && index >= 0) // Ensure it's not already at the bottom
-            {
-                var item = listBox.Items[index];
-                listBox.Items.RemoveAt(index);
-                listBox.Items.Insert(index + 1, item);
-                listBox.SelectedIndex = index + 1; // Keep selection
-            }
-        }
-
-        private ListBox GetActiveFalloffListbox()
-        {
-            // Determine which tab is active
-            var sT = TabControlFalloff.SelectedTab;
-            return sT.Name switch
-            {
-                "tabLateral" => ListBoxLateral,
-                "tabRadial" => ListBoxRadial,
-                _ => throw new NotSupportedException(sT.Name),
-            };
-        }
-
-        private void BtnFieldsAddCustom_Click(object sender, EventArgs e)
-        {
-            RegionFieldsForm.Show();
-        }
-
-        private void BtnFieldsDel_Click(object sender, EventArgs e)
-        {
-            if (ListBoxFields.SelectedItem is not FieldObj fieldObj) return;
-
-            var index = ListBoxFields.Items.IndexOf(fieldObj);
-            ListBoxFields.Items.Remove(fieldObj);
-
-            // Ensure index is within valid range
-            index--;
-            index = Math.Max(0, index);
-            if (index >= 0 && ListBoxFields.Items.Count > 0)
-                ListBoxFields.SelectedItem = ListBoxFields.Items[index];
-            else
-                ListBoxFields.SelectedItem = null;
-        }
-
-        private void BtnAddPredefined_Click(object sender, EventArgs e)
-        {
-            RegionPredefinedFieldsForm.Show();
-        }
-
-        private void CmbBoundaryType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            txtRegionLinear.Enabled = cmbBoundaryType.SelectedItem is string selected &&
-                selected.Equals("Cylinder", StringComparison.OrdinalIgnoreCase);
-        }
-
-        private void ListBoxFields_DoubleClick(object sender, EventArgs e)
-        {
-            if (ListBoxFields.SelectedItem is not FieldObj selectedField) return;
-
-            RegionFieldsForm.FieldObj = selectedField;
-            RegionFieldsForm.Show();
-        }
-
-        private void ListBoxResources_DoubleClick(object sender, EventArgs e)
-        {
-            if (ListBoxResources.SelectedItem is not Resource selectedResource) return;
-
-            RegionResourcesForm.Resource = selectedResource;
-            RegionResourcesForm.Show();
-        }
-
-        private void ListBoxLateral_DoubleClick(object sender, EventArgs e)
-        {
-            if (ListBoxLateral.SelectedItem is not StepObj selectedStep) return;
-
-            RegionFalloffForm.StepObj = selectedStep;
-            RegionFalloffForm.Show();
-        }
-
-        private void ListBoxRadial_DoubleClick(object sender, EventArgs e)
-        {
-            if (ListBoxRadial.SelectedItem is not StepObj selectedStep) return;
-
-            RegionFalloffForm.StepObj = selectedStep;
-            RegionFalloffForm.Show();
+            RegionDefinitionForm.RegionDefinition = selectedRegionDefinition;
+            RegionDefinitionForm.Show();
         }
     }
 }

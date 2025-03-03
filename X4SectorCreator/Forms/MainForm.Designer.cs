@@ -281,6 +281,7 @@
             RegionsListBox.Name = "RegionsListBox";
             RegionsListBox.Size = new Size(156, 169);
             RegionsListBox.TabIndex = 37;
+            RegionsListBox.DoubleClick += RegionsListBox_DoubleClick;
             // 
             // label1
             // 
