@@ -6,7 +6,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modName, string modPrefix)
         {
-            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ? 
+            string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
             XDocument xmlDocument = new(

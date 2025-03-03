@@ -9,7 +9,7 @@ namespace X4SectorCreator.XmlGeneration
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
             // Create XML structure
-            XDocument xmlDocument = new XDocument(
+            XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("regions",
                     new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
@@ -24,11 +24,11 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GetRegions(string modPrefix, List<Cluster> clusters)
         {
-            foreach (var cluster in clusters)
+            foreach (Cluster cluster in clusters)
             {
-                foreach (var sector in cluster.Sectors)
+                foreach (Sector sector in cluster.Sectors)
                 {
-                    foreach (var region in sector.Regions)
+                    foreach (Region region in sector.Regions)
                     {
                         // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
                         yield return new XElement("region",
@@ -63,10 +63,10 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateLateralRadialSteps(Region region)
         {
-            var groups = region.Definition.Falloff.GroupBy(a => a.Type);
-            foreach (var group in groups)
+            IEnumerable<IGrouping<string, StepObj>> groups = region.Definition.Falloff.GroupBy(a => a.Type);
+            foreach (IGrouping<string, StepObj> group in groups)
             {
-                var steps = group.Select(a => new XElement("step",
+                IEnumerable<XElement> steps = group.Select(a => new XElement("step",
                                         new XAttribute("position", a.Position),
                                         new XAttribute("value", a.Value)
                                     ));
@@ -76,7 +76,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateFields(Region region)
         {
-            foreach (var field in region.Definition.Fields)
+            foreach (FieldObj field in region.Definition.Fields)
             {
                 yield return new XElement(field.Type.ToLower(),
                     // Core attributes
@@ -125,7 +125,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateResources(Region region)
         {
-            foreach (var resource in region.Definition.Resources)
+            foreach (Resource resource in region.Definition.Resources)
             {
                 yield return new XElement("resource",
                                     new XAttribute("ware", $"{resource.Ware}"),

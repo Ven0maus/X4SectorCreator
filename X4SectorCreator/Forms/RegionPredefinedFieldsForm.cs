@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text.Json;
+﻿using System.Text.Json;
 using X4SectorCreator.CustomComponents;
 using X4SectorCreator.Objects;
 
@@ -8,7 +7,7 @@ namespace X4SectorCreator.Forms
     public partial class RegionPredefinedFieldsForm : Form
     {
         private readonly string _predefinedFieldMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/predefinedfield_mappings.json");
-        
+
         private readonly MultiSelectCombo _mscAsteroids, _mscDebris, _mscGravidar, _mscNebula, _mscPositional, _mscObjects, _mscVolumetricfog, _mscAmbientSound;
 
         public RegionPredefinedFieldsForm()
@@ -16,9 +15,9 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Init each field with its mapping
-            var json = File.ReadAllText(_predefinedFieldMappingFilePath);
-            var mappingGroups = JsonSerializer.Deserialize<List<FieldObj>>(json).GroupBy(a => a.Type);
-            foreach (var group in mappingGroups)
+            string json = File.ReadAllText(_predefinedFieldMappingFilePath);
+            IEnumerable<IGrouping<string, FieldObj>> mappingGroups = JsonSerializer.Deserialize<List<FieldObj>>(json).GroupBy(a => a.Type);
+            foreach (IGrouping<string, FieldObj> group in mappingGroups)
             {
                 ComboBox cmb = group.Key.ToLower() switch
                 {
@@ -32,12 +31,12 @@ namespace X4SectorCreator.Forms
                     "ambientsound" => cmbAmbientSound,
                     _ => throw new NotSupportedException(group.Key),
                 };
-                foreach (var item in group.OrderBy(a => a.GroupRef ?? "")
+                foreach (FieldObj item in group.OrderBy(a => a.GroupRef ?? "")
                     .ThenBy(a => a.Resources ?? "")
                     .ThenBy(a => a.Ref ?? "")
                     .ThenBy(a => a.SoundId ?? ""))
                 {
-                    cmb.Items.Add(item);
+                    _ = cmb.Items.Add(item);
                 }
 
                 // Init multi-select wrappers after item init
@@ -68,17 +67,22 @@ namespace X4SectorCreator.Forms
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            var selectedFieldObjects = GetSelectedFieldObjects();
+            FieldObj[] selectedFieldObjects = GetSelectedFieldObjects();
             if (selectedFieldObjects == null || selectedFieldObjects.Length == 0)
             {
                 _ = MessageBox.Show("Please select atleast one predefined field.");
                 return;
             }
 
-            foreach (var item in selectedFieldObjects)
-                MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxFields.Items.Add(item);
+            foreach (FieldObj item in selectedFieldObjects)
+            {
+                _ = MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxFields.Items.Add(item);
+            }
+
             if (selectedFieldObjects.Length == 1)
+            {
                 MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxFields.SelectedItem = selectedFieldObjects[0];
+            }
 
             Close();
         }

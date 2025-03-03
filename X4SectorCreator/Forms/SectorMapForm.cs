@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Linq;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator
@@ -26,7 +25,7 @@ namespace X4SectorCreator
         private float _zoom = 1.2f; // 1.0 means 100% scale
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
-        private readonly static Dictionary<string, string> _dlcMapping = new()
+        private static readonly Dictionary<string, string> _dlcMapping = new()
         {
             { "Split Vendetta", "ego_dlc_split" },
             { "Tides Of Avarice", "ego_dlc_pirate" },
@@ -35,8 +34,8 @@ namespace X4SectorCreator
             { "Timelines", "ego_dlc_timelines" },
             { "Hyperion Pack", "ego_dlc_mini_01" }
         };
-        private readonly static Dictionary<int, bool> _dlcsSelected = [];
-        private readonly static List<string> _dlcIndexOrder = [];
+        private static readonly Dictionary<int, bool> _dlcsSelected = [];
+        private static readonly List<string> _dlcIndexOrder = [];
 
         public SectorMapForm()
         {
@@ -54,7 +53,7 @@ namespace X4SectorCreator
             // Init dlcs
             for (int i = 0; i < _dlcMapping.Count; i++)
             {
-                if (!_dlcsSelected.TryGetValue(i, out var value))
+                if (!_dlcsSelected.TryGetValue(i, out bool value))
                 {
                     // If not yet initialized, it will be by default selected
                     _dlcsSelected[i] = value = true;
@@ -62,7 +61,7 @@ namespace X4SectorCreator
 
                 // Init listbox values and pre-check the cached selected dlcs
                 _dlcIndexOrder.Add(_dlcMapping.Keys.ElementAt(i));
-                DlcListBox.Items.Add(_dlcIndexOrder[i]);
+                _ = DlcListBox.Items.Add(_dlcIndexOrder[i]);
                 DlcListBox.SetItemChecked(i, value);
             }
         }
@@ -80,13 +79,13 @@ namespace X4SectorCreator
                 .Where(a => !a.IsBaseGame)
                 .ToArray();
 
-            var allClusters = MainForm.Instance.AllClusters.Values;
+            Dictionary<(int, int), Cluster>.ValueCollection allClusters = MainForm.Instance.AllClusters.Values;
 
             // Determine size of hex grid based on cluster mapping + custom sector
             if (allClusters.Count == 0) // Check if the list is empty
             {
                 _cols = (_minExpansionRoom * 2) + 1;
-                _rows = ((int)((_minExpansionRoom / 2) * 1.5f)) + 1;
+                _rows = ((int)(_minExpansionRoom / 2 * 1.5f)) + 1;
             }
             else
             {
@@ -385,7 +384,11 @@ namespace X4SectorCreator
                 foreach (Cluster cluster in _baseGameClusters.Values)
                 {
                     // Check if the dlc is selected
-                    if (!IsSelectedDlcCluster(cluster)) continue;
+                    if (!IsSelectedDlcCluster(cluster))
+                    {
+                        continue;
+                    }
+
                     RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
 
@@ -393,7 +396,11 @@ namespace X4SectorCreator
                 foreach (Cluster cluster in _baseGameClusters.Values)
                 {
                     // Check if the dlc is selected
-                    if (!IsSelectedDlcCluster(cluster)) continue;
+                    if (!IsSelectedDlcCluster(cluster))
+                    {
+                        continue;
+                    }
+
                     RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
             }
@@ -431,8 +438,8 @@ namespace X4SectorCreator
         private void RenderNonSectorGrid(PaintEventArgs e, Color nonExistantHexColor, KeyValuePair<(int, int), Hexagon> hex)
         {
             // Render each non-existant hex first
-            if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) || 
-                !IsSelectedDlcCluster(cluster) || 
+            if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) ||
+                !IsSelectedDlcCluster(cluster) ||
                 (!chkShowX4Sectors.Checked && cluster.IsBaseGame) ||
                 (!chkShowCustomSectors.Checked && !cluster.IsBaseGame))
             {
@@ -468,11 +475,14 @@ namespace X4SectorCreator
         private static bool IsSelectedDlcCluster(Cluster cluster)
         {
             // If no dlc, its selected by default
-            if (string.IsNullOrWhiteSpace(cluster.Dlc)) return true;
+            if (string.IsNullOrWhiteSpace(cluster.Dlc))
+            {
+                return true;
+            }
 
             // Check if the dlc is selected
-            var key = _dlcMapping.First(a => a.Value.Equals(cluster.Dlc, StringComparison.OrdinalIgnoreCase)).Key;
-            var dlcIndex = _dlcIndexOrder.IndexOf(key);
+            string key = _dlcMapping.First(a => a.Value.Equals(cluster.Dlc, StringComparison.OrdinalIgnoreCase)).Key;
+            int dlcIndex = _dlcIndexOrder.IndexOf(key);
             return _dlcsSelected[dlcIndex];
         }
 

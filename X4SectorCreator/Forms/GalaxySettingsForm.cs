@@ -29,7 +29,10 @@ namespace X4SectorCreator
         private void BtnSave_Click(object sender, EventArgs e)
         {
             // Return if no change
-            if (IsCustomGalaxy == chkCustomGalaxy.Checked) return;
+            if (IsCustomGalaxy == chkCustomGalaxy.Checked)
+            {
+                return;
+            }
 
             if (chkCustomGalaxy.Checked && (string.IsNullOrWhiteSpace(txtGalaxyName.Text) || txtGalaxyName.Text.Equals("xu_ep2_universe", StringComparison.OrdinalIgnoreCase)))
             {
@@ -42,8 +45,8 @@ namespace X4SectorCreator
             {
                 // Perform validation to avoid key collisions
                 mergedClusters = new Dictionary<(int, int), Cluster>(_baseGameClusters);
-                var invalidClusters = new List<Cluster>();
-                foreach (var cluster in MainForm.Instance.AllClusters)
+                List<Cluster> invalidClusters = new();
+                foreach (KeyValuePair<(int, int), Cluster> cluster in MainForm.Instance.AllClusters)
                 {
                     if (!mergedClusters.ContainsKey(cluster.Key) &&
                         !mergedClusters.Values.Any(c => c.Name.Equals(cluster.Value.Name, StringComparison.OrdinalIgnoreCase)))
@@ -68,9 +71,12 @@ namespace X4SectorCreator
             // Validate if there are any gate connections with basegame clusters existing if we're going to custom galaxy
             if (chkCustomGalaxy.Checked && ContainsGateConnectionsToBaseGameClusters(out List<(Cluster, Sector, Gate)> clusters))
             {
-                var resultDialog = MessageBox.Show("There exist custom sectors that have a gate connection to a base game cluster, these will be removed when converting to a custom galaxy.\n" +
+                DialogResult resultDialog = MessageBox.Show("There exist custom sectors that have a gate connection to a base game cluster, these will be removed when converting to a custom galaxy.\n" +
                     "Are you sure you want to continue?", "Warning: loss of sector connections!", MessageBoxButtons.YesNo);
-                if (resultDialog == DialogResult.No) return;
+                if (resultDialog == DialogResult.No)
+                {
+                    return;
+                }
 
                 // Delete base game gate connections for these invalid clusters
                 RemoveBaseGameGateConnections(clusters);
@@ -102,20 +108,22 @@ namespace X4SectorCreator
         private static bool ContainsGateConnectionsToBaseGameClusters(out List<(Cluster, Sector, Gate)> invalidClusters)
         {
             invalidClusters = [];
-            var customClusters = MainForm.Instance.AllClusters
+            List<KeyValuePair<(int, int), Cluster>> customClusters = MainForm.Instance.AllClusters
                 .Where(a => !a.Value.IsBaseGame)
                 .ToList();
-            foreach (var cluster in customClusters)
+            foreach (KeyValuePair<(int, int), Cluster> cluster in customClusters)
             {
-                foreach (var sector in cluster.Value.Sectors)
+                foreach (Sector sector in cluster.Value.Sectors)
                 {
-                    foreach (var zone in sector.Zones)
+                    foreach (Zone zone in sector.Zones)
                     {
-                        foreach (var gate in zone.Gates)
+                        foreach (Gate gate in zone.Gates)
                         {
-                            var destCluster = FindDestinationCluster(gate);
+                            Cluster destCluster = FindDestinationCluster(gate);
                             if (destCluster.IsBaseGame)
+                            {
                                 invalidClusters.Add((cluster.Value, sector, gate));
+                            }
                         }
                     }
                 }
@@ -125,7 +133,7 @@ namespace X4SectorCreator
 
         private static void RemoveBaseGameGateConnections(List<(Cluster Cluster, Sector Sector, Gate Gate)> pairs)
         {
-            foreach (var pair in pairs)
+            foreach ((Cluster Cluster, Sector Sector, Gate Gate) pair in pairs)
             {
                 // Delete target connection
                 Zone targetZone = pair.Sector.Zones
@@ -136,11 +144,13 @@ namespace X4SectorCreator
 
                 // Check to remove zone if empty
                 if (targetZone.Gates.Count == 0)
-                    pair.Sector.Zones.Remove(targetZone);
+                {
+                    _ = pair.Sector.Zones.Remove(targetZone);
+                }
 
                 // Re-order zone ids if needed
                 int count = 0;
-                foreach (var tZone in pair.Sector.Zones.OrderBy(a => a.Id))
+                foreach (Zone tZone in pair.Sector.Zones.OrderBy(a => a.Id))
                 {
                     tZone.Id = ++count;
                 }
@@ -158,11 +168,13 @@ namespace X4SectorCreator
 
                 // Check to remove zone if empty
                 if (sourceZone.Gates.Count == 0)
-                    sourceSector.Zones.Remove(sourceZone);
+                {
+                    _ = sourceSector.Zones.Remove(sourceZone);
+                }
 
                 // Re-order zone ids if needed
                 count = 0;
-                foreach (var sZone in sourceSector.Zones.OrderBy(a => a.Id))
+                foreach (Zone sZone in sourceSector.Zones.OrderBy(a => a.Id))
                 {
                     sZone.Id = ++count;
                 }
@@ -201,7 +213,9 @@ namespace X4SectorCreator
         {
             // Allow backspace
             if (e.KeyChar == (char)Keys.Back)
+            {
                 return;
+            }
 
             // Block whitespace and invalid characters
             if (char.IsWhiteSpace(e.KeyChar) || _invalidChars.Contains(e.KeyChar))

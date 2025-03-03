@@ -7,7 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
+            string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
             XDocument xmlDocument = new(
@@ -58,7 +58,7 @@ namespace X4SectorCreator.XmlGeneration
                 );
 
                 // Return regions after sector connection
-                foreach (var region in sector.Regions)
+                foreach (Objects.Region region in sector.Regions)
                 {
                     yield return new XElement("connection",
                         new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}_connection"),

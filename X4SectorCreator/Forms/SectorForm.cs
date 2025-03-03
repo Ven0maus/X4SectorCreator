@@ -84,16 +84,16 @@ namespace X4SectorCreator.Forms
             }
 
             // Validate sector radius
-            if (!int.TryParse(txtSectorRadius.Text, out var sectorRadius) || sectorRadius <= 0 || sectorRadius > 999)
+            if (!int.TryParse(txtSectorRadius.Text, out int sectorRadius) || sectorRadius <= 0 || sectorRadius > 999)
             {
                 _ = MessageBox.Show($"Please use a valid numerical value for the sector radius, and specify a value between 1 and 999.");
                 return;
             }
 
             // Validate sunlight, economy, security
-            if (!int.TryParse(txtSunlight.Text, out var sunlight) ||
-                !int.TryParse(txtEconomy.Text, out var economy) ||
-                !int.TryParse(txtSecurity.Text, out var security))
+            if (!int.TryParse(txtSunlight.Text, out int sunlight) ||
+                !int.TryParse(txtEconomy.Text, out int economy) ||
+                !int.TryParse(txtSecurity.Text, out int security))
             {
                 _ = MessageBox.Show($"Please use valid numerical values for sunlight, economy and security.");
                 return;
@@ -149,7 +149,7 @@ namespace X4SectorCreator.Forms
                     });
 
                     // Add to sector listbox
-                    MainForm.Instance.SectorsListBox.Items.Add(name);
+                    _ = MainForm.Instance.SectorsListBox.Items.Add(name);
                     MainForm.Instance.SectorsListBox.SelectedItem = name;
                     break;
 
@@ -196,16 +196,16 @@ namespace X4SectorCreator.Forms
 
         private void TxtSectorRadius_TextChanged(object sender, EventArgs e)
         {
-            var radiusText = txtSectorRadius.Text;
-            if (string.IsNullOrWhiteSpace(radiusText) || !int.TryParse(radiusText, out var radius))
+            string radiusText = txtSectorRadius.Text;
+            if (string.IsNullOrWhiteSpace(radiusText) || !int.TryParse(radiusText, out int radius))
             {
                 lblRadiusUnderText.Text = $"(Please enter a valid numerical value for radius.)";
                 lblRadiusUnderText.ForeColor = Color.Red;
             }
-            else if (radius <= 0 || radius > 999)
+            else if (radius is <= 0 or > 999)
             {
                 lblRadiusUnderText.Text = $"(Maximum radius must be between 1 and 999)";
-                lblRadiusUnderText .ForeColor = Color.Red;
+                lblRadiusUnderText.ForeColor = Color.Red;
             }
             else
             {

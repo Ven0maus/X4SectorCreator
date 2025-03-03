@@ -1,5 +1,5 @@
-﻿using X4SectorCreator.Objects;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -16,7 +16,7 @@ namespace X4SectorCreator.Forms
                 if (_resource != null)
                 {
                     cmbWare.SelectedItem = _resource.Ware;
-                    cmbYield.SelectedItem = _resource.Yield;                    
+                    cmbYield.SelectedItem = _resource.Yield;
                     BtnAdd.Text = "Update";
                 }
             }
@@ -41,15 +41,15 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            switch(BtnAdd.Text)
+            switch (BtnAdd.Text)
             {
                 case "Add":
-                    var resource = new Resource
+                    Resource resource = new()
                     {
                         Ware = cmbWare.Text,
                         Yield = cmbYield.Text,
                     };
-                    MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxResources.Items.Add(resource);
+                    _ = MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxResources.Items.Add(resource);
                     break;
                 case "Update":
                     int index = MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxResources.SelectedIndex;

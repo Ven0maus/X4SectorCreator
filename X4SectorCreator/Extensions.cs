@@ -9,10 +9,7 @@
 
         public static string CapitalizeFirstLetter(this string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return input;
-
-            return char.ToUpper(input[0]) + input[1..];
+            return string.IsNullOrEmpty(input) ? input : char.ToUpper(input[0]) + input[1..];
         }
     }
 }

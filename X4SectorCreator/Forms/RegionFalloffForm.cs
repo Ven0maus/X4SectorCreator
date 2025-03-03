@@ -1,5 +1,5 @@
-﻿using X4SectorCreator.Objects;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -29,13 +29,13 @@ namespace X4SectorCreator.Forms
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtPosition.Text) || !float.TryParse(txtPosition.Text, out var posValue))
+            if (string.IsNullOrWhiteSpace(txtPosition.Text) || !float.TryParse(txtPosition.Text, out float posValue))
             {
                 _ = MessageBox.Show("Please enter a valid numerical \"position\".");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(txtValue.Text) || !float.TryParse(txtValue.Text, out var valueValue))
+            if (string.IsNullOrWhiteSpace(txtValue.Text) || !float.TryParse(txtValue.Text, out float valueValue))
             {
                 _ = MessageBox.Show("Please enter a valid numerical \"value\".");
                 return;
@@ -57,10 +57,10 @@ namespace X4SectorCreator.Forms
         private static void HandleAdditionStep(float posValue, float valueValue)
         {
             // Determine which tab is active
-            var regionForm = MainForm.Instance.RegionForm.RegionDefinitionForm;
-            var sT = regionForm.TabControlFalloff.SelectedTab;
+            RegionDefinitionForm regionForm = MainForm.Instance.RegionForm.RegionDefinitionForm;
+            TabPage sT = regionForm.TabControlFalloff.SelectedTab;
 
-            var stepObj = new StepObj
+            StepObj stepObj = new()
             {
                 Position = posValue.ToString("0.0"),
                 Value = valueValue.ToString("0.0")
@@ -70,11 +70,11 @@ namespace X4SectorCreator.Forms
             {
                 case "tabLateral":
                     stepObj.Type = "Lateral";
-                    regionForm.ListBoxLateral.Items.Add(stepObj);
+                    _ = regionForm.ListBoxLateral.Items.Add(stepObj);
                     break;
                 case "tabRadial":
                     stepObj.Type = "Radial";
-                    regionForm.ListBoxRadial.Items.Add(stepObj);
+                    _ = regionForm.ListBoxRadial.Items.Add(stepObj);
                     break;
             }
         }
@@ -82,8 +82,8 @@ namespace X4SectorCreator.Forms
         private void HandleUpdateStep(float posValue, float valueValue)
         {
             // Determine which tab is active
-            var regionForm = MainForm.Instance.RegionForm.RegionDefinitionForm;
-            var sT = regionForm.TabControlFalloff.SelectedTab;
+            RegionDefinitionForm regionForm = MainForm.Instance.RegionForm.RegionDefinitionForm;
+            TabPage sT = regionForm.TabControlFalloff.SelectedTab;
 
             StepObj.Position = posValue.ToString("0.0");
             StepObj.Value = valueValue.ToString("0.0");

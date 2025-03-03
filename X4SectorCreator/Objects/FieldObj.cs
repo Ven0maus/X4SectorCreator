@@ -52,19 +52,17 @@
 
             if (!string.IsNullOrWhiteSpace(Medium))
             {
-                if (!string.IsNullOrWhiteSpace(Ref))
-                    return $"{Type}=\"{Ref}\"=\"{Medium}\"";
-                return $"{Type}=\"{Medium}\"";
+                return !string.IsNullOrWhiteSpace(Ref) ? $"{Type}=\"{Ref}\"=\"{Medium}\"" : $"{Type}=\"{Medium}\"";
             }
 
             if (!string.IsNullOrWhiteSpace(GroupRef))
+            {
                 return $"{Type}=\"{GroupRef}\"";
+            }
 
             if (!string.IsNullOrWhiteSpace(Ref))
             {
-                if (!string.IsNullOrWhiteSpace(Resources))
-                    return $"{Type}=\"{Ref}\"=\"{Resources}\"";
-                return $"{Type}=\"{Ref}\"";
+                return !string.IsNullOrWhiteSpace(Resources) ? $"{Type}=\"{Ref}\"=\"{Resources}\"" : $"{Type}=\"{Ref}\"";
             }
 
             return Type;

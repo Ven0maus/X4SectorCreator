@@ -32,7 +32,7 @@ namespace X4SectorCreator.Configuration
                 }
             }
 
-            var configObj = new ConfigurationObj
+            ConfigurationObj configObj = new()
             {
                 Clusters = clusters,
                 RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
@@ -56,7 +56,7 @@ namespace X4SectorCreator.Configuration
                 return null;
             }
 
-            var vc = new VersionChecker();
+            VersionChecker vc = new();
 
             // Validate app version, show message if from an older version
             if (!VersionChecker.CompareVersion(vc.CurrentVersion, configObj.Version))
@@ -70,10 +70,12 @@ namespace X4SectorCreator.Configuration
 
             // Set stored region definitions
             if (configObj.RegionDefinitions != null && configObj.RegionDefinitions.Count > 0)
+            {
                 RegionDefinitionForm.RegionDefinitions.AddRange(configObj.RegionDefinitions);
+            }
 
             // First order everything correctly before returning
-            var clusters = configObj.Clusters.OrderBy(a => a.Id).ToList();
+            List<Cluster> clusters = configObj.Clusters.OrderBy(a => a.Id).ToList();
             foreach (Cluster cluster in clusters)
             {
                 cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];

@@ -10,7 +10,7 @@ namespace X4SectorCreator
         [STAThread]
         private static void Main()
         {
-            var invariantCulture = CultureInfo.InvariantCulture;
+            CultureInfo invariantCulture = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentCulture = invariantCulture;
             Thread.CurrentThread.CurrentUICulture = invariantCulture;
             ApplicationConfiguration.Initialize();

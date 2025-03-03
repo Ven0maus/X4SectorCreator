@@ -7,7 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
+            string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
             // Save new zones in custom sectors
@@ -23,15 +23,15 @@ namespace X4SectorCreator.XmlGeneration
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_zones.xml")));
 
             // Save new zones in existing sectors
-            var diffData = GenerateExistingSectorZones(modPrefix, clusters)
+            List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateExistingSectorZones(modPrefix, clusters)
                 .GroupBy(a => a.dlc)
                 .ToList();
             if (diffData.Count > 0)
             {
-                foreach (var group in diffData)
+                foreach (IGrouping<string, (string dlc, XElement element)> group in diffData)
                 {
-                    var dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
-                    var xmlDiffDocument = new XDocument(
+                    string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
+                    XDocument xmlDiffDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
                         new XElement("diff",
                             new XElement("add",
@@ -58,7 +58,10 @@ namespace X4SectorCreator.XmlGeneration
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
                 // Handle zone's in base game sectors in a seperate DIFF xml correctly in the base zones.xml
-                if (cluster.IsBaseGame) continue;
+                if (cluster.IsBaseGame)
+                {
+                    continue;
+                }
 
                 foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
                 {
@@ -111,7 +114,10 @@ namespace X4SectorCreator.XmlGeneration
         {
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
-                if (!cluster.IsBaseGame) continue;
+                if (!cluster.IsBaseGame)
+                {
+                    continue;
+                }
 
                 foreach (Sector sector in cluster.Sectors)
                 {
@@ -132,7 +138,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateExistingSectorGates(string modPrefix, Zone zone)
         {
-            foreach (var gate in zone.Gates.OrderBy(a => a.Id))
+            foreach (Gate gate in zone.Gates.OrderBy(a => a.Id))
             {
                 // General rule: don't place anything more than 50km away within a zone
                 yield return new XElement("connection",

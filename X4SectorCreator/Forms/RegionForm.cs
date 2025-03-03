@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Drawing;
 using System.Drawing.Drawing2D;
 using X4SectorCreator.Objects;
 using Region = X4SectorCreator.Objects.Region;
@@ -17,7 +16,9 @@ namespace X4SectorCreator.Forms
             {
                 _sector = value;
                 if (_sector != null)
+                {
                     InitSectorValues();
+                }
             }
         }
 
@@ -39,7 +40,10 @@ namespace X4SectorCreator.Forms
                     txtRegionRadius.Text = _circleRadius.ToString();
                     // Just incase it is somehow deleted, we must still display it here
                     if (!ListBoxRegionDefinitions.Items.Contains(CustomRegion.Definition))
-                        ListBoxRegionDefinitions.Items.Add(CustomRegion.Definition);
+                    {
+                        _ = ListBoxRegionDefinitions.Items.Add(CustomRegion.Definition);
+                    }
+
                     ListBoxRegionDefinitions.SelectedItem = CustomRegion.Definition;
                     BtnCreateRegion.Text = "Update Region";
                 }
@@ -97,7 +101,9 @@ namespace X4SectorCreator.Forms
 
             // Default linear
             if (string.IsNullOrWhiteSpace(txtRegionLinear.Text))
+            {
                 txtRegionLinear.Text = "5000";
+            }
         }
 
         private void SectorHexagon_Paint(object sender, PaintEventArgs e)
@@ -174,19 +180,19 @@ namespace X4SectorCreator.Forms
 
         private void UpdateRegionPosition()
         {
-            var worldPos = ConvertScreenToWorld(_circlePosition);
+            Point worldPos = ConvertScreenToWorld(_circlePosition);
             txtRegionPosition.Text = $"({worldPos.X:0}, {worldPos.Y:0})";
             txtRegionRadius.Text = _circleRadius.ToString(); // Don't need to convert so the user can read it better
         }
 
         private int ConvertScreenRadiusToWorld(int screenRadius)
         {
-            return (int)Math.Round((screenRadius * Sector.DiameterRadius) / (2f * _hexRadius));
+            return (int)Math.Round(screenRadius * Sector.DiameterRadius / (2f * _hexRadius));
         }
 
         private int ConvertWorldRadiusToScreen(int worldRadius)
         {
-            return (int)Math.Round((worldRadius * 2f * _hexRadius) / Sector.DiameterRadius);
+            return (int)Math.Round(worldRadius * 2f * _hexRadius / Sector.DiameterRadius);
         }
 
         private Point ConvertScreenToWorld(Point point)
@@ -209,8 +215,8 @@ namespace X4SectorCreator.Forms
             int centerY = SectorHexagon.Height / 2;
 
             // Reverse world scaling
-            float normalizedX = (coordinate.X * 2f) / Sector.DiameterRadius;
-            float normalizedY = (coordinate.Y * 2f) / Sector.DiameterRadius;
+            float normalizedX = coordinate.X * 2f / Sector.DiameterRadius;
+            float normalizedY = coordinate.Y * 2f / Sector.DiameterRadius;
 
             // Reverse normalization and centering
             float screenX = (normalizedX * _hexRadius) + centerX;
@@ -255,8 +261,11 @@ namespace X4SectorCreator.Forms
             UpdateRegionPosition();
 
             // Init listbox definitions stored by user
-            foreach (var definition in RegionDefinitionForm.RegionDefinitions)
-                ListBoxRegionDefinitions.Items.Add(definition);
+            foreach (RegionDefinition definition in RegionDefinitionForm.RegionDefinitions)
+            {
+                _ = ListBoxRegionDefinitions.Items.Add(definition);
+            }
+
             ListBoxRegionDefinitions.SelectedItem = RegionDefinitionForm.RegionDefinitions.Count > 0 ?
                 RegionDefinitionForm.RegionDefinitions[0] : null;
         }
@@ -290,7 +299,7 @@ namespace X4SectorCreator.Forms
             switch (BtnCreateRegion.Text)
             {
                 case "Create Region":
-                    var region = new Region
+                    Region region = new()
                     {
                         Id = Sector.Regions.DefaultIfEmpty(new Region()).Max(a => a.Id) + 1,
                         Name = txtRegionName.Text,
@@ -303,7 +312,7 @@ namespace X4SectorCreator.Forms
                     // Add region to sector
                     Sector.Regions.Add(region);
 
-                    MainForm.Instance.RegionsListBox.Items.Add(region);
+                    _ = MainForm.Instance.RegionsListBox.Items.Add(region);
                     MainForm.Instance.RegionsListBox.SelectedItem = region;
                     break;
                 case "Update Region":
@@ -313,7 +322,7 @@ namespace X4SectorCreator.Forms
                     CustomRegion.Position = ConvertScreenToWorld(_circlePosition);
                     CustomRegion.Definition = selectedRegionDefinition;
 
-                    var index = MainForm.Instance.RegionsListBox.SelectedIndex;
+                    int index = MainForm.Instance.RegionsListBox.SelectedIndex;
                     MainForm.Instance.RegionsListBox.Items.Remove(CustomRegion);
                     MainForm.Instance.RegionsListBox.Items.Insert(index, CustomRegion);
                     MainForm.Instance.RegionsListBox.SelectedItem = CustomRegion;
@@ -337,24 +346,27 @@ namespace X4SectorCreator.Forms
 
         private void BtnRemoveDefinition_Click(object sender, EventArgs e)
         {
-            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition) return;
+            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition)
+            {
+                return;
+            }
 
-            var index = ListBoxRegionDefinitions.Items.IndexOf(selectedRegionDefinition);
+            int index = ListBoxRegionDefinitions.Items.IndexOf(selectedRegionDefinition);
             ListBoxRegionDefinitions.Items.Remove(selectedRegionDefinition);
-            RegionDefinitionForm.RegionDefinitions.Remove(selectedRegionDefinition); // remove from static cache
+            _ = RegionDefinitionForm.RegionDefinitions.Remove(selectedRegionDefinition); // remove from static cache
 
             // Ensure index is within valid range
             index--;
             index = Math.Max(0, index);
-            if (index >= 0 && ListBoxRegionDefinitions.Items.Count > 0)
-                ListBoxRegionDefinitions.SelectedItem = ListBoxRegionDefinitions.Items[index];
-            else
-                ListBoxRegionDefinitions.SelectedItem = null;
+            ListBoxRegionDefinitions.SelectedItem = index >= 0 && ListBoxRegionDefinitions.Items.Count > 0 ? ListBoxRegionDefinitions.Items[index] : null;
         }
 
         private void ListBoxRegionDefinitions_DoubleClick(object sender, EventArgs e)
         {
-            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition) return;
+            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition)
+            {
+                return;
+            }
 
             RegionDefinitionForm.RegionDefinition = selectedRegionDefinition;
             RegionDefinitionForm.Show();

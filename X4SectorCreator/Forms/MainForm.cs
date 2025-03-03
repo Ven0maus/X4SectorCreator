@@ -25,8 +25,8 @@ namespace X4SectorCreator
         private readonly string _sectorMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/sector_mappings.json");
         private readonly string _dlcMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/dlc_mappings.json");
 
-        private Dictionary<(int, int), Cluster> _allClusters;
-        public Dictionary<(int, int), Cluster> AllClusters => _allClusters;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Dictionary<(int, int), Cluster> AllClusters { get; private set; }
 
         public readonly Dictionary<string, Color> FactionColorMapping;
 
@@ -61,19 +61,21 @@ namespace X4SectorCreator
             ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
 
             // Create lookups
-            _allClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
+            AllClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
             // Init all collections
-            foreach (var cluster in AllClusters)
+            foreach (KeyValuePair<(int, int), Cluster> cluster in AllClusters)
             {
-                foreach (var sector in cluster.Value.Sectors)
+                foreach (Sector sector in cluster.Value.Sectors)
                 {
                     // Init regular sectors
                     if (cluster.Value.IsBaseGame && string.IsNullOrWhiteSpace(sector.BaseGameMapping))
+                    {
                         sector.BaseGameMapping = "sector001";
+                    }
 
                     sector.Regions ??= [];
                     sector.Zones ??= [];
-                    foreach (var zone in sector.Zones)
+                    foreach (Zone zone in sector.Zones)
                     {
                         zone.Gates ??= [];
                     }
@@ -97,16 +99,11 @@ namespace X4SectorCreator
         /// </summary>
         public void ToggleGalaxyMode(Dictionary<(int, int), Cluster> mergedClusters)
         {
-            if (GalaxySettingsForm.IsCustomGalaxy)
-            {
-                _allClusters = AllClusters
+            AllClusters = GalaxySettingsForm.IsCustomGalaxy
+                ? AllClusters
                     .Where(a => !a.Value.IsBaseGame)
-                    .ToDictionary(a => a.Key, a => a.Value);
-            }
-            else
-            {
-                _allClusters = mergedClusters;
-            }
+                    .ToDictionary(a => a.Key, a => a.Value)
+                : mergedClusters;
 
             // Init all listboxes properly again
             ClustersListBox.Items.Clear();
@@ -116,10 +113,10 @@ namespace X4SectorCreator
 
             // Init clusters and select the first to propagate the other listboxes
             Cluster firstCluster = null;
-            foreach (var cluster in AllClusters.Where(a => !a.Value.IsBaseGame))
+            foreach (KeyValuePair<(int, int), Cluster> cluster in AllClusters.Where(a => !a.Value.IsBaseGame))
             {
                 firstCluster ??= cluster.Value;
-                ClustersListBox.Items.Add(cluster.Value.Name);
+                _ = ClustersListBox.Items.Add(cluster.Value.Name);
             }
             ClustersListBox.SelectedItem = firstCluster?.Name;
         }
@@ -145,7 +142,7 @@ namespace X4SectorCreator
         private void BtnGenerateDiffs_Click(object sender, EventArgs e)
         {
             // Validate if all clusters have atleast one sector
-            var invalidClusters = AllClusters.Values
+            Cluster[] invalidClusters = AllClusters.Values
                 .Where(a => a.Sectors == null || a.Sectors.Count == 0)
                 .ToArray();
             if (invalidClusters.Length != 0)
@@ -230,8 +227,8 @@ namespace X4SectorCreator
                 // That means only the mapping was updated, we can automatically update this.
                 if (result.VersionInfo.AppVersion.Equals(versionChecker.CurrentVersion))
                 {
-                    var newSectorMappingJson = await versionChecker.GetUpdatedSectorMappingAsync();
-                    var oldSectorMappingJson = File.ReadAllText(_sectorMappingFilePath);
+                    string newSectorMappingJson = await versionChecker.GetUpdatedSectorMappingAsync();
+                    string oldSectorMappingJson = File.ReadAllText(_sectorMappingFilePath);
                     if (newSectorMappingJson != null && !oldSectorMappingJson.Equals(newSectorMappingJson))
                     {
                         try
@@ -241,12 +238,14 @@ namespace X4SectorCreator
                             ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(newSectorMappingJson);
 
                             // Replace clusters
-                            var newClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
+                            Dictionary<(int X, int Y), Cluster> newClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
                             if (newClusters.Count > 0)
                             {
                                 AllClusters.Clear();
-                                foreach (var cluster in newClusters)
+                                foreach (KeyValuePair<(int X, int Y), Cluster> cluster in newClusters)
+                                {
                                     AllClusters[cluster.Key] = cluster.Value;
+                                }
                             }
 
                             // Update X4 version file
@@ -256,12 +255,12 @@ namespace X4SectorCreator
                             Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
                             _currentX4Version = versionChecker.TargetGameVersion;
 
-                            MessageBox.Show($"Your cluster mapping has been automatically updated with the latest X4 version ({result.VersionInfo.X4Version}).");
+                            _ = MessageBox.Show($"Your cluster mapping has been automatically updated with the latest X4 version ({result.VersionInfo.X4Version}).");
                         }
                         catch (Exception)
                         {
                             // Don't do anything
-                            MessageBox.Show($"A new cluster mapping is available for X4 version ({result.VersionInfo.X4Version}) but was unable to download it, please update manually.");
+                            _ = MessageBox.Show($"A new cluster mapping is available for X4 version ({result.VersionInfo.X4Version}) but was unable to download it, please update manually.");
                         }
                     }
                 }
@@ -309,19 +308,19 @@ namespace X4SectorCreator
 
         private void SetDetailsText(Cluster cluster, Sector sector)
         {
-            var sb = new StringBuilder();
-            sb.AppendLine($"[Cluster]: {cluster.Name}");
-            sb.AppendLine("Location: " + (cluster.Position.X, cluster.Position.Y));
-            sb.AppendLine();
+            StringBuilder sb = new();
+            _ = sb.AppendLine($"[Cluster]: {cluster.Name}");
+            _ = sb.AppendLine("Location: " + (cluster.Position.X, cluster.Position.Y));
+            _ = sb.AppendLine();
             if (sector != null)
             {
-                sb.AppendLine($"[Sector]: {sector.Name}");
-                sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}%");
-                sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}%");
-                sb.AppendLine($"Security: {(int)(sector.Security * 100f)}%");
-                sb.AppendLine($"Tags: {sector.Tags}");
-                sb.AppendLine($"Allow Anomalies: {sector.AllowRandomAnomalies}");
-                sb.AppendLine($"FactionLogic Disabled: {sector.DisableFactionLogic}");
+                _ = sb.AppendLine($"[Sector]: {sector.Name}");
+                _ = sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}%");
+                _ = sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}%");
+                _ = sb.AppendLine($"Security: {(int)(sector.Security * 100f)}%");
+                _ = sb.AppendLine($"Tags: {sector.Tags}");
+                _ = sb.AppendLine($"Allow Anomalies: {sector.AllowRandomAnomalies}");
+                _ = sb.AppendLine($"FactionLogic Disabled: {sector.DisableFactionLogic}");
             }
             LblDetails.Text = sb.ToString();
         }
@@ -330,9 +329,11 @@ namespace X4SectorCreator
         public void Reset(bool fromImport)
         {
             // Remove custom clusters
-            var toBeRemoved = AllClusters.Where(a => !a.Value.IsBaseGame).ToArray();
-            foreach (var cluster in toBeRemoved)
-                AllClusters.Remove(cluster.Key);
+            KeyValuePair<(int, int), Cluster>[] toBeRemoved = AllClusters.Where(a => !a.Value.IsBaseGame).ToArray();
+            foreach (KeyValuePair<(int, int), Cluster> cluster in toBeRemoved)
+            {
+                _ = AllClusters.Remove(cluster.Key);
+            }
 
             LblDetails.Text = string.Empty;
             ClustersListBox.Items.Clear();
@@ -364,7 +365,7 @@ namespace X4SectorCreator
 
                 try
                 {
-                    var allModifiedClusters = AllClusters.Values
+                    List<Cluster> allModifiedClusters = AllClusters.Values
                         .Where(a => !a.IsBaseGame)
                         .Concat(AllClusters.Values
                             .Where(a => a.IsBaseGame && a.Sectors
@@ -403,7 +404,9 @@ namespace X4SectorCreator
                     Reset(true);
 
                     if (GalaxySettingsForm.IsCustomGalaxy)
+                    {
                         ToggleGalaxyMode(null);
+                    }
 
                     // Import new configuration
                     foreach (Cluster cluster in clusters)
@@ -417,7 +420,9 @@ namespace X4SectorCreator
 
                         // Setup listboxes
                         if (!cluster.IsBaseGame)
+                        {
                             _ = ClustersListBox.Items.Add(cluster.Name);
+                        }
                     }
 
                     // No longer needed
@@ -435,7 +440,9 @@ namespace X4SectorCreator
         private void Import_Support_NewVersions(Cluster cluster)
         {
             if (string.IsNullOrWhiteSpace(cluster.BackgroundVisualMapping))
+            {
                 cluster.BackgroundVisualMapping = "cluster_01";
+            }
 
             // Re-check DLCs
             if (cluster.Dlc == null)
@@ -448,16 +455,21 @@ namespace X4SectorCreator
                     _clusterDlcLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
                 }
 
-                if (_clusterDlcLookup.TryGetValue((cluster.Position.X, cluster.Position.Y), out var lookupCluster))
+                if (_clusterDlcLookup.TryGetValue((cluster.Position.X, cluster.Position.Y), out Cluster lookupCluster))
+                {
                     cluster.Dlc = lookupCluster.Dlc;
+                }
             }
         }
 
         private void BtnOpenFolder_Click(object sender, EventArgs e)
         {
-            var directoryPath = Path.Combine(Application.StartupPath, "GeneratedXml");
+            string directoryPath = Path.Combine(Application.StartupPath, "GeneratedXml");
             if (!Directory.Exists(directoryPath))
-                Directory.CreateDirectory(directoryPath);
+            {
+                _ = Directory.CreateDirectory(directoryPath);
+            }
+
             _ = Process.Start("explorer.exe", directoryPath);
         }
         #endregion
@@ -508,7 +520,7 @@ namespace X4SectorCreator
 
             // Re-align ids
             int count = 0;
-            foreach (var clust in AllClusters.Values.Where(a => !a.IsBaseGame).OrderBy(a => a.Id))
+            foreach (Cluster clust in AllClusters.Values.Where(a => !a.IsBaseGame).OrderBy(a => a.Id))
             {
                 clust.Id = ++count;
             }
@@ -621,7 +633,7 @@ namespace X4SectorCreator
 
             // Re-align ids before re-calculate
             int count = 0;
-            foreach (var sect in cluster.Value.Sectors.OrderBy(a => a.Id))
+            foreach (Sector sect in cluster.Value.Sectors.OrderBy(a => a.Id))
             {
                 sect.Id = ++count;
             }
@@ -638,8 +650,8 @@ namespace X4SectorCreator
 
         private static void RecalculateSectorOffsets(Cluster cluster)
         {
-            var sectors = new List<Sector>();
-            foreach (var sector in cluster.Sectors.OrderBy(a => a.Id))
+            List<Sector> sectors = new();
+            foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
             {
                 int offSetX, offsetY;
                 if (sectors.Count == 0)
@@ -719,11 +731,11 @@ namespace X4SectorCreator
                 _ = GatesListBox.Items.Add(gate);
             }
 
-            var cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
-            var sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
             // Show all regions
-            foreach (var region in sector.Regions)
+            foreach (Region region in sector.Regions)
             {
                 _ = RegionsListBox.Items.Add(region);
             }
@@ -776,11 +788,13 @@ namespace X4SectorCreator
 
             // Check to remove zone if empty
             if (targetZone.Gates.Count == 0)
-                targetSector.Zones.Remove(targetZone);
+            {
+                _ = targetSector.Zones.Remove(targetZone);
+            }
 
             // Re-order zone ids if needed
             int count = 0;
-            foreach (var tZone in targetSector.Zones.OrderBy(a => a.Id))
+            foreach (Zone tZone in targetSector.Zones.OrderBy(a => a.Id))
             {
                 tZone.Id = ++count;
             }
@@ -798,11 +812,13 @@ namespace X4SectorCreator
 
             // Check to remove zone if empty
             if (sourceZone.Gates.Count == 0)
-                sourceSector.Zones.Remove(sourceZone);
+            {
+                _ = sourceSector.Zones.Remove(sourceZone);
+            }
 
             // Re-order zone ids if needed
             count = 0;
-            foreach (var sZone in sourceSector.Zones.OrderBy(a => a.Id))
+            foreach (Zone sZone in sourceSector.Zones.OrderBy(a => a.Id))
             {
                 sZone.Id = ++count;
             }
@@ -815,7 +831,7 @@ namespace X4SectorCreator
         private void GatesListBox_DoubleClick(object sender, EventArgs e)
         {
             // Collect target gate data
-            var targetGate = GatesListBox.SelectedItem as Gate;
+            Gate targetGate = GatesListBox.SelectedItem as Gate;
 
             var targetQueryResult = AllClusters.Values
                 .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
@@ -859,16 +875,16 @@ namespace X4SectorCreator
 
         private void BtnNewRegion_Click(object sender, EventArgs e)
         {
-            var selectedSector = SectorsListBox.SelectedItem as string;
+            string selectedSector = SectorsListBox.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedSector))
             {
                 _ = MessageBox.Show("Please select a valid sector first.");
                 return;
             }
 
-            var selectedCluster = ClustersListBox.SelectedItem as string;
-            var cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
-            var sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
+            string selectedCluster = ClustersListBox.SelectedItem as string;
+            Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
             RegionForm.Sector = sector;
             RegionForm.Show();
@@ -876,12 +892,15 @@ namespace X4SectorCreator
 
         private void BtnRemoveRegion_Click(object sender, EventArgs e)
         {
-            if (RegionsListBox.SelectedItem is not Region selectedRegion) return;
+            if (RegionsListBox.SelectedItem is not Region selectedRegion)
+            {
+                return;
+            }
 
-            var selectedCluster = ClustersListBox.SelectedItem as string;
-            var selectedSector = SectorsListBox.SelectedItem as string;
-            var cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
-            var sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
+            string selectedCluster = ClustersListBox.SelectedItem as string;
+            string selectedSector = SectorsListBox.SelectedItem as string;
+            Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
             // Remove region from sector
             _ = sector.Regions.Remove(selectedRegion);
@@ -891,12 +910,15 @@ namespace X4SectorCreator
 
         private void RegionsListBox_DoubleClick(object sender, EventArgs e)
         {
-            if (RegionsListBox.SelectedItem is not Region selectedRegion) return;
+            if (RegionsListBox.SelectedItem is not Region selectedRegion)
+            {
+                return;
+            }
 
-            var selectedCluster = ClustersListBox.SelectedItem as string;
-            var selectedSector = SectorsListBox.SelectedItem as string;
-            var cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
-            var sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
+            string selectedCluster = ClustersListBox.SelectedItem as string;
+            string selectedSector = SectorsListBox.SelectedItem as string;
+            Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
             RegionForm.Sector = sector;
             RegionForm.CustomRegion = selectedRegion;

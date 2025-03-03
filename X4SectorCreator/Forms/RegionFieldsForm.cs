@@ -1,5 +1,5 @@
-﻿using X4SectorCreator.Objects;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -51,9 +51,14 @@ namespace X4SectorCreator.Forms
             txtTexture.Text = FieldObj.Texture ?? string.Empty;
             txtUniformDensity.Text = FieldObj.UniformDensity?.ToString("0.##") ?? string.Empty;
             if (FieldObj.UniformRed != null && FieldObj.UniformGreen != null && FieldObj.UniformBlue != null)
+            {
                 txtUniformRGB.Text = $"{FieldObj.UniformRed},{FieldObj.UniformGreen},{FieldObj.UniformBlue}";
+            }
+
             if (FieldObj.LocalRed != null && FieldObj.LocalGreen != null && FieldObj.LocalBlue != null)
+            {
                 txtLocalRgb.Text = $"{FieldObj.LocalRed},{FieldObj.LocalGreen},{FieldObj.LocalBlue}";
+            }
 
             BtnAdd.Text = "Update";
         }
@@ -87,23 +92,23 @@ namespace X4SectorCreator.Forms
             // Parsing RGB values
             if (!string.IsNullOrWhiteSpace(txtUniformRGB.Text))
             {
-                var rgb = txtUniformRGB.Text.Split(',');
+                string[] rgb = txtUniformRGB.Text.Split(',');
                 if (rgb.Length == 3)
                 {
-                    fieldObj.UniformRed = int.TryParse(rgb[0], out int red) ? (int?)red : null;
-                    fieldObj.UniformGreen = int.TryParse(rgb[1], out int green) ? (int?)green : null;
-                    fieldObj.UniformBlue = int.TryParse(rgb[2], out int blue) ? (int?)blue : null;
+                    fieldObj.UniformRed = int.TryParse(rgb[0], out int red) ? red : null;
+                    fieldObj.UniformGreen = int.TryParse(rgb[1], out int green) ? green : null;
+                    fieldObj.UniformBlue = int.TryParse(rgb[2], out int blue) ? blue : null;
                 }
             }
 
             if (!string.IsNullOrWhiteSpace(txtLocalRgb.Text))
             {
-                var rgb = txtLocalRgb.Text.Split(',');
+                string[] rgb = txtLocalRgb.Text.Split(',');
                 if (rgb.Length == 3)
                 {
-                    fieldObj.LocalRed = int.TryParse(rgb[0], out int red) ? (int?)red : null;
-                    fieldObj.LocalGreen = int.TryParse(rgb[1], out int green) ? (int?)green : null;
-                    fieldObj.LocalBlue = int.TryParse(rgb[2], out int blue) ? (int?)blue : null;
+                    fieldObj.LocalRed = int.TryParse(rgb[0], out int red) ? red : null;
+                    fieldObj.LocalGreen = int.TryParse(rgb[1], out int green) ? green : null;
+                    fieldObj.LocalBlue = int.TryParse(rgb[2], out int blue) ? blue : null;
                 }
             }
         }
@@ -111,14 +116,16 @@ namespace X4SectorCreator.Forms
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             // Validation for types
-            if (!DoFieldValidation(out var newField))
+            if (!DoFieldValidation(out FieldObj newField))
+            {
                 return;
+            }
 
-            switch(BtnAdd.Text)
+            switch (BtnAdd.Text)
             {
                 case "Add":
-                    var regionForm = MainForm.Instance.RegionForm.RegionDefinitionForm;
-                    regionForm.ListBoxFields.Items.Add(newField);
+                    RegionDefinitionForm regionForm = MainForm.Instance.RegionForm.RegionDefinitionForm;
+                    _ = regionForm.ListBoxFields.Items.Add(newField);
                     regionForm.ListBoxFields.SelectedItem = newField;
                     break;
                 case "Update":
@@ -138,41 +145,41 @@ namespace X4SectorCreator.Forms
 
         private bool DoFieldValidation(out FieldObj fieldObj)
         {
-            var invalidFields = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> invalidFields = new(StringComparer.OrdinalIgnoreCase);
 
             // Floats
-            IsValidFloat(invalidFields, txtDensityFactor, out var densityFactor);
-            IsValidFloat(invalidFields, txtDistanceFactor, out var distanceFactor);
-            IsValidFloat(invalidFields, txtFactor, out var factor);
-            IsValidFloat(invalidFields, txtMaxNoiseValue, out var maxNoiseValue);
-            IsValidFloat(invalidFields, txtMinNoiseValue, out var minNoiseValue);
-            IsValidFloat(invalidFields, txtMultiplier, out var multiplier);
-            IsValidFloat(invalidFields, txtNoiseScale, out var noiseScale);
-            IsValidFloat(invalidFields, txtRotation, out var rotation);
-            IsValidFloat(invalidFields, txtRotationVariation, out var rotationVariation);
-            IsValidFloat(invalidFields, txtSeed, out var seed);
-            IsValidFloat(invalidFields, txtSize, out var size);
-            IsValidFloat(invalidFields, txtSizeVariation, out var sizeVariation);
-            IsValidFloat(invalidFields, txtLocalDensity, out var localDensity);
-            IsValidFloat(invalidFields, txtUniformDensity, out var uniformDensity);
-            IsValidFloat(invalidFields, txtPlaytime, out var playtime);
+            IsValidFloat(invalidFields, txtDensityFactor, out float? densityFactor);
+            IsValidFloat(invalidFields, txtDistanceFactor, out float? distanceFactor);
+            IsValidFloat(invalidFields, txtFactor, out float? factor);
+            IsValidFloat(invalidFields, txtMaxNoiseValue, out float? maxNoiseValue);
+            IsValidFloat(invalidFields, txtMinNoiseValue, out float? minNoiseValue);
+            IsValidFloat(invalidFields, txtMultiplier, out float? multiplier);
+            IsValidFloat(invalidFields, txtNoiseScale, out float? noiseScale);
+            IsValidFloat(invalidFields, txtRotation, out float? rotation);
+            IsValidFloat(invalidFields, txtRotationVariation, out float? rotationVariation);
+            IsValidFloat(invalidFields, txtSeed, out float? seed);
+            IsValidFloat(invalidFields, txtSize, out float? size);
+            IsValidFloat(invalidFields, txtSizeVariation, out float? sizeVariation);
+            IsValidFloat(invalidFields, txtLocalDensity, out float? localDensity);
+            IsValidFloat(invalidFields, txtUniformDensity, out float? uniformDensity);
+            IsValidFloat(invalidFields, txtPlaytime, out float? playtime);
 
             // Strings
-            IsValidString(invalidFields, txtRef, out var tRef);
-            IsValidString(invalidFields, txtTexture, out var texture);
-            IsValidString(invalidFields, txtMedium, out var medium);
-            IsValidString(invalidFields, txtLodRule, out var lodRule);
-            IsValidString(invalidFields, txtGroupRef, out var groupRef);
-            IsValidString(invalidFields, cmbFieldType, out var fieldType);
-            IsValidString(invalidFields, txtResources, out var resources);
-            IsValidString(invalidFields, txtSoundId, out var soundId);
+            IsValidString(invalidFields, txtRef, out string tRef);
+            IsValidString(invalidFields, txtTexture, out string texture);
+            IsValidString(invalidFields, txtMedium, out string medium);
+            IsValidString(invalidFields, txtLodRule, out string lodRule);
+            IsValidString(invalidFields, txtGroupRef, out string groupRef);
+            IsValidString(invalidFields, cmbFieldType, out string fieldType);
+            IsValidString(invalidFields, txtResources, out string resources);
+            IsValidString(invalidFields, txtSoundId, out string soundId);
 
             // Exceptional cases
             IsValidString(invalidFields, txtLocalRgb, out _);
             IsValidString(invalidFields, txtUniformRGB, out _);
 
             // Bools
-            IsValidBool(invalidFields, txtBackgroundFog, out var backgroundFog);
+            IsValidBool(invalidFields, txtBackgroundFog, out bool? backgroundFog);
 
             if (invalidFields.Count != 0)
             {
@@ -181,8 +188,8 @@ namespace X4SectorCreator.Forms
                 return false;
             }
 
-            var localRgbSucces = SeperateRGB(txtLocalRgb.Text, out int lr, out int lg, out int lb);
-            var uniformRgbSucces = SeperateRGB(txtUniformRGB.Text, out int ur, out int ug, out int ub);
+            bool localRgbSucces = SeperateRGB(txtLocalRgb.Text, out int lr, out int lg, out int lb);
+            bool uniformRgbSucces = SeperateRGB(txtUniformRGB.Text, out int ur, out int ug, out int ub);
 
             fieldObj = new FieldObj
             {
@@ -224,10 +231,14 @@ namespace X4SectorCreator.Forms
         private static void IsValidBool(HashSet<string> invalidFields, TextBox control, out bool? b)
         {
             b = null;
-            if (string.IsNullOrEmpty(control.Text)) return;
-            if (!bool.TryParse(control.Text, out var boolValue))
+            if (string.IsNullOrEmpty(control.Text))
             {
-                invalidFields.Add(control.Name.Replace("txt", string.Empty).Replace("cmb", string.Empty));
+                return;
+            }
+
+            if (!bool.TryParse(control.Text, out bool boolValue))
+            {
+                _ = invalidFields.Add(control.Name.Replace("txt", string.Empty).Replace("cmb", string.Empty));
                 return;
             }
             b = boolValue;
@@ -235,28 +246,37 @@ namespace X4SectorCreator.Forms
 
         private static void IsValidString(HashSet<string> invalidFields, Control control, out string s)
         {
-            var cName = control.Name.Replace("txt", string.Empty).Replace("cmb", string.Empty);
+            string cName = control.Name.Replace("txt", string.Empty).Replace("cmb", string.Empty);
             s = control.Text;
             if (control is ComboBox cmb)
             {
-                var text = cmb.SelectedItem as string;
+                string text = cmb.SelectedItem as string;
                 if (string.IsNullOrWhiteSpace(text))
-                    invalidFields.Add(cName);
+                {
+                    _ = invalidFields.Add(cName);
+                }
                 else
+                {
                     s = text;
+                }
             }
             else
             {
                 if (string.IsNullOrWhiteSpace(control.Text))
+                {
                     return;
+                }
 
                 // Special cases
-                switch(control.Name)
+                switch (control.Name)
                 {
                     case "txtLocalRGB":
                     case "txtUniformRGB":
                         if (!SeperateRGB(control.Text, out _, out _, out _))
-                            invalidFields.Add(cName);
+                        {
+                            _ = invalidFields.Add(cName);
+                        }
+
                         break;
                     default:
                         break;
@@ -268,10 +288,13 @@ namespace X4SectorCreator.Forms
         {
             f = null;
             if (string.IsNullOrWhiteSpace(control.Text))
-                return; 
-            if (!float.TryParse(control.Text, out var fl))
             {
-                invalidFields.Add(control.Name.Replace("txt", string.Empty));
+                return;
+            }
+
+            if (!float.TryParse(control.Text, out float fl))
+            {
+                _ = invalidFields.Add(control.Name.Replace("txt", string.Empty));
                 return;
             }
             f = fl;
@@ -280,14 +303,15 @@ namespace X4SectorCreator.Forms
         private static bool SeperateRGB(string rgb, out int r, out int g, out int b)
         {
             r = 0; g = 0; b = 0;
-            var split = rgb.Split(',');
-            if (split.Length != 3) 
+            string[] split = rgb.Split(',');
+            if (split.Length != 3)
+            {
                 return false;
-            if (!int.TryParse(split[0], out r) || 
-                !int.TryParse(split[1], out g) || 
-                !int.TryParse(split[2], out b)) 
-                return false;
-            return true;
+            }
+
+            return int.TryParse(split[0], out r) &&
+                int.TryParse(split[1], out g) &&
+                int.TryParse(split[2], out b);
         }
     }
 }

@@ -72,7 +72,7 @@ namespace X4SectorCreator.Forms
             {
                 UpdateGatePosition(SourceSectorHexagon, txtSourceGatePosition, _sourceDotPosition, SourceSector.DiameterRadius);
                 // Inherit the source diameter for now, it will adapt when sector is selected automatically
-                UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, SourceSector.DiameterRadius); 
+                UpdateGatePosition(TargetSectorHexagon, txtTargetGatePosition, _targetDotPosition, SourceSector.DiameterRadius);
             }
 
             // Attach events
@@ -103,10 +103,10 @@ namespace X4SectorCreator.Forms
 
             // Sectors
             txtTargetSector.Text = UpdateInfoObject.TargetSector.Name;
-            var targetIndex = UpdateInfoObject.TargetCluster.Sectors.IndexOf(UpdateInfoObject.TargetSector);
+            int targetIndex = UpdateInfoObject.TargetCluster.Sectors.IndexOf(UpdateInfoObject.TargetSector);
             txtTargetSectorLocation.Text = (UpdateInfoObject.TargetCluster.Position.X, UpdateInfoObject.TargetCluster.Position.Y).ToString() + $" [{targetIndex}]";
             txtSourceSector.Text = UpdateInfoObject.SourceSector.Name;
-            var sourceIndex = UpdateInfoObject.SourceCluster.Sectors.IndexOf(UpdateInfoObject.SourceSector);
+            int sourceIndex = UpdateInfoObject.SourceCluster.Sectors.IndexOf(UpdateInfoObject.SourceSector);
             txtSourceSectorLocation.Text = (UpdateInfoObject.SourceCluster.Position.X, UpdateInfoObject.SourceCluster.Position.Y).ToString() + $" [{sourceIndex}]";
 
             // Revert dot positions from world coordinates
@@ -132,8 +132,8 @@ namespace X4SectorCreator.Forms
             int centerY = SourceSectorHexagon.Height / 2;
 
             // Reverse world scaling
-            float normalizedX = (coordinate.X * 2f) / diameter;
-            float normalizedY = (coordinate.Y * 2f) / diameter;
+            float normalizedX = coordinate.X * 2f / diameter;
+            float normalizedY = coordinate.Y * 2f / diameter;
 
             // Reverse normalization and centering
             float screenX = (normalizedX * _hexRadius) + centerX;
@@ -207,7 +207,10 @@ namespace X4SectorCreator.Forms
             else if (_rotating) // If right-click is held, adjust yaw
             {
                 _sourceYaw = (float)(Math.Atan2(e.Y - _sourceDotPosition.Y, e.X - _sourceDotPosition.X) * (180.0 / Math.PI)) + 90;
-                if (_sourceYaw < 0) _sourceYaw += 360;
+                if (_sourceYaw < 0)
+                {
+                    _sourceYaw += 360;
+                }
 
                 txtSourceGateYaw.Text = $"{_sourceYaw:0}";
                 SourceSectorHexagon.Invalidate();
@@ -232,7 +235,10 @@ namespace X4SectorCreator.Forms
             else if (e.Button == MouseButtons.Right)
             {
                 _sourceYaw = (float)(Math.Atan2(e.Y - _sourceDotPosition.Y, e.X - _sourceDotPosition.X) * (180.0 / Math.PI)) + 90;
-                if (_sourceYaw < 0) _sourceYaw += 360;
+                if (_sourceYaw < 0)
+                {
+                    _sourceYaw += 360;
+                }
 
                 txtSourceGateYaw.Text = $"{_sourceYaw:0}";
                 SourceSectorHexagon.Invalidate();
@@ -276,7 +282,7 @@ namespace X4SectorCreator.Forms
             {
                 if (IsPointInsideHexagon(e.Location))
                 {
-                    var prev = _targetDotPosition;
+                    Point prev = _targetDotPosition;
                     _targetDotPosition = e.Location;
 
 
@@ -289,7 +295,7 @@ namespace X4SectorCreator.Forms
                         if (TargetSectorSelection == null)
                         {
                             // Check if we have a target selected
-                            if (!GetTargetSectorSelection(out var targetSectorSelection, out _))
+                            if (!GetTargetSectorSelection(out Sector targetSectorSelection, out _))
                             {
                                 _targetDotPosition = prev;
                                 return;
@@ -305,7 +311,10 @@ namespace X4SectorCreator.Forms
             else if (_rotating) // If right-click is held, adjust yaw
             {
                 _targetYaw = (float)(Math.Atan2(e.Y - _targetDotPosition.Y, e.X - _targetDotPosition.X) * (180.0 / Math.PI)) + 90;
-                if (_targetYaw < 0) _targetYaw += 360;
+                if (_targetYaw < 0)
+                {
+                    _targetYaw += 360;
+                }
 
                 txtTargetGateYaw.Text = $"{_targetYaw:0}";
                 TargetSectorHexagon.Invalidate();
@@ -322,7 +331,7 @@ namespace X4SectorCreator.Forms
         {
             if (e.Button == MouseButtons.Left && IsPointInsideHexagon(e.Location))
             {
-                var prev = _targetDotPosition;
+                Point prev = _targetDotPosition;
                 _targetDotPosition = e.Location;
 
                 if (UpdateInfoObject?.TargetSector != null)
@@ -334,7 +343,7 @@ namespace X4SectorCreator.Forms
                     if (TargetSectorSelection == null)
                     {
                         // Check if we have a target selected
-                        if (!GetTargetSectorSelection(out var targetSectorSelection, out _))
+                        if (!GetTargetSectorSelection(out Sector targetSectorSelection, out _))
                         {
                             _targetDotPosition = prev;
                             return;
@@ -348,7 +357,10 @@ namespace X4SectorCreator.Forms
             else if (e.Button == MouseButtons.Right)
             {
                 _targetYaw = (float)(Math.Atan2(e.Y - _targetDotPosition.Y, e.X - _targetDotPosition.X) * (180.0 / Math.PI)) + 90;
-                if (_targetYaw < 0) _targetYaw += 360;
+                if (_targetYaw < 0)
+                {
+                    _targetYaw += 360;
+                }
 
                 txtTargetGateYaw.Text = $"{_targetYaw:0}";
                 TargetSectorHexagon.Invalidate();
@@ -375,8 +387,8 @@ namespace X4SectorCreator.Forms
             int arrowLength = 20; // Adjust length
 
             Point arrowEnd = new(
-                (int)(dotPosition.X + arrowLength * Math.Cos(angleRadians)),
-                (int)(dotPosition.Y + arrowLength * Math.Sin(angleRadians))
+                (int)(dotPosition.X + (arrowLength * Math.Cos(angleRadians))),
+                (int)(dotPosition.Y + (arrowLength * Math.Sin(angleRadians)))
             );
 
             using Pen arrowPen = new(Color.Blue, 2);
@@ -433,8 +445,10 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            if (!GetTargetSectorSelection(out var targetSector, out var targetCluster))
+            if (!GetTargetSectorSelection(out Sector targetSector, out Cluster targetCluster))
+            {
                 return;
+            }
 
             // Validate that target sector != source sector
             if (targetSector == SourceSector)
@@ -458,10 +472,10 @@ namespace X4SectorCreator.Forms
             }
 
             // Gate Position
-            var (GatePosX, GatePosY) = (int.Parse(targetGatePosMatch.Groups[1].Value), int.Parse(targetGatePosMatch.Groups[2].Value));
+            (int GatePosX, int GatePosY) = (int.Parse(targetGatePosMatch.Groups[1].Value), int.Parse(targetGatePosMatch.Groups[2].Value));
 
-            var targetGate = UpdateInfoObject.TargetGate;
-            var targetZone = UpdateInfoObject.TargetZone;
+            Gate targetGate = UpdateInfoObject.TargetGate;
+            Zone targetZone = UpdateInfoObject.TargetZone;
 
             if (targetSector == UpdateInfoObject.TargetSector)
             {
@@ -476,7 +490,7 @@ namespace X4SectorCreator.Forms
             else
             {
                 // Target Sector was changed, remove the target zone + gate, and create a new target gate
-                UpdateInfoObject.TargetSector.Zones.Remove(targetZone);
+                _ = UpdateInfoObject.TargetSector.Zones.Remove(targetZone);
                 UpdateInfoObject.TargetSector = targetSector; // Update to new prevent confusion and mistakes
                 UpdateInfoObject.TargetCluster = targetCluster;
 
@@ -505,7 +519,7 @@ namespace X4SectorCreator.Forms
                 // Set paths correctly
                 UpdateInfoObject.TargetGate.Source = UpdateInfoObject.SourceGate.Destination;
                 UpdateInfoObject.TargetGate.Destination = UpdateInfoObject.SourceGate.Source;
-                UpdateInfoObject.TargetGate.SetDestinationPath("PREFIX", UpdateInfoObject.SourceCluster, 
+                UpdateInfoObject.TargetGate.SetDestinationPath("PREFIX", UpdateInfoObject.SourceCluster,
                     UpdateInfoObject.SourceSector, UpdateInfoObject.SourceZone, UpdateInfoObject.SourceGate);
 
                 // Make sure soure gate points to new destination sector name
@@ -513,7 +527,7 @@ namespace X4SectorCreator.Forms
                 UpdateInfoObject.SourceGate.DestinationSectorName = UpdateInfoObject.TargetSector.Name;
 
                 // Remove old target gate
-                var index = MainForm.Instance.GatesListBox.SelectedIndex;
+                int index = MainForm.Instance.GatesListBox.SelectedIndex;
                 MainForm.Instance.GatesListBox.Items.Remove(targetGate);
                 // Add new gate
                 MainForm.Instance.GatesListBox.Items.Insert(index, UpdateInfoObject.TargetGate);
@@ -523,8 +537,8 @@ namespace X4SectorCreator.Forms
             // Set source gate info
             (GatePosX, GatePosY) = (int.Parse(sourceGatePosMatch.Groups[1].Value), int.Parse(sourceGatePosMatch.Groups[2].Value));
 
-            var sourceGate = UpdateInfoObject.SourceGate;
-            var sourceZone = UpdateInfoObject.SourceZone;
+            Gate sourceGate = UpdateInfoObject.SourceGate;
+            Zone sourceZone = UpdateInfoObject.SourceZone;
 
             // Update source gate properties
             // No sector change, just update the target gate properties
@@ -689,14 +703,22 @@ namespace X4SectorCreator.Forms
         {
             string value = string.Empty;
             if (cluster.IsBaseGame)
+            {
                 value += $"{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}";
+            }
             else
+            {
                 value += $"c{cluster.Id:D3}";
+            }
 
             if (sector.IsBaseGame)
+            {
                 value += $"_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}";
+            }
             else
+            {
                 value += $"_s{sector.Id:D3}";
+            }
 
             value += $"_z{zone.Id:D3}";
 

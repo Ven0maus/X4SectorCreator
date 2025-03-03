@@ -1,6 +1,5 @@
-﻿using X4SectorCreator.Objects;
-using System.ComponentModel;
-using System.Drawing;
+﻿using System.ComponentModel;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -47,17 +46,26 @@ namespace X4SectorCreator.Forms
                     txtSeed.Text = _regionDefinition.Seed;
                     cmbBoundaryType.SelectedItem = _regionDefinition.BoundaryType;
 
-                    foreach (var field in _regionDefinition.Fields)
-                        ListBoxFields.Items.Add(field);
-                    foreach (var fallOff in _regionDefinition.Falloff)
+                    foreach (FieldObj field in _regionDefinition.Fields)
+                    {
+                        _ = ListBoxFields.Items.Add(field);
+                    }
+
+                    foreach (StepObj fallOff in _regionDefinition.Falloff)
                     {
                         if (fallOff.Type.Equals("Lateral", StringComparison.OrdinalIgnoreCase))
-                            ListBoxLateral.Items.Add(fallOff);
+                        {
+                            _ = ListBoxLateral.Items.Add(fallOff);
+                        }
                         else
-                            ListBoxRadial.Items.Add(fallOff);
+                        {
+                            _ = ListBoxRadial.Items.Add(fallOff);
+                        }
                     }
-                    foreach (var resource in _regionDefinition.Resources)
-                        ListBoxResources.Items.Add(resource);
+                    foreach (Resource resource in _regionDefinition.Resources)
+                    {
+                        _ = ListBoxResources.Items.Add(resource);
+                    }
 
                     BtnCreateRegionDefinition.Text = "Update Region Definition";
                 }
@@ -69,13 +77,15 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             if (RegionDefinition != null)
+            {
                 InitDefaultFalloff();
+            }
         }
 
         private void InitDefaultFalloff()
         {
             // Some defaults to make configurating easier
-            var lateral = new List<StepObj>
+            List<StepObj> lateral = new()
             {
                 new() { Position = "0.0", Value = "0.0" },
                 new() { Position = "0.1", Value = "1.0" },
@@ -83,23 +93,23 @@ namespace X4SectorCreator.Forms
                 new() { Position = "1.0", Value = "0.0" }
             };
 
-            var radial = new List<StepObj>
+            List<StepObj> radial = new()
             {
                 new() { Position = "0.0", Value = "1.0" },
                 new() { Position = "0.8", Value = "1.0" },
                 new() { Position = "1.0", Value = "0.0" }
             };
 
-            foreach (var lat in lateral)
+            foreach (StepObj lat in lateral)
             {
                 lat.Type = "Lateral";
-                ListBoxLateral.Items.Add(lat);
+                _ = ListBoxLateral.Items.Add(lat);
             }
 
-            foreach (var rad in radial)
+            foreach (StepObj rad in radial)
             {
                 rad.Type = "Radial";
-                ListBoxRadial.Items.Add(rad);
+                _ = ListBoxRadial.Items.Add(rad);
             }
         }
 
@@ -113,30 +123,30 @@ namespace X4SectorCreator.Forms
             }
 
             // Boundary check
-            var selectedBoundaryType = cmbBoundaryType.SelectedItem as string;
+            string selectedBoundaryType = cmbBoundaryType.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedBoundaryType))
             {
                 _ = MessageBox.Show("Please select a valid boundary type for the region definition.");
                 return;
             }
 
-            var messages = new List<string>();
-            IsValidInteger(messages, txtRotation, out var rotation);
-            IsValidInteger(messages, txtSeed, out var seed);
-            IsValidInteger(messages, txtNoiseScale, out var noiseScale);
-            IsValidFloat(messages, txtDensity, out var density);
-            IsValidFloat(messages, txtMinNoiseValue, out var minNoiseValue);
-            IsValidFloat(messages, txtMaxNoiseValue, out var maxNoiseValue);
+            List<string> messages = new();
+            IsValidInteger(messages, txtRotation, out int rotation);
+            IsValidInteger(messages, txtSeed, out int seed);
+            IsValidInteger(messages, txtNoiseScale, out int noiseScale);
+            IsValidFloat(messages, txtDensity, out float density);
+            IsValidFloat(messages, txtMinNoiseValue, out float minNoiseValue);
+            IsValidFloat(messages, txtMaxNoiseValue, out float maxNoiseValue);
             if (messages.Count > 0)
             {
                 _ = MessageBox.Show(string.Join("\n", messages));
                 return;
             }
 
-            switch(BtnCreateRegionDefinition.Text)
+            switch (BtnCreateRegionDefinition.Text)
             {
                 case "Create Region Definition":
-                    var regionDefinition = new RegionDefinition
+                    RegionDefinition regionDefinition = new()
                     {
                         Density = density.ToString("0.##"),
                         MaxNoiseValue = maxNoiseValue.ToString("0.##"),
@@ -159,7 +169,7 @@ namespace X4SectorCreator.Forms
                     regionDefinition.Resources.AddRange(ListBoxResources.Items.Cast<Resource>());
 
                     RegionDefinitions.Add(regionDefinition);
-                    MainForm.Instance.RegionForm.ListBoxRegionDefinitions.Items.Add(regionDefinition);
+                    _ = MainForm.Instance.RegionForm.ListBoxRegionDefinitions.Items.Add(regionDefinition);
                     MainForm.Instance.RegionForm.ListBoxRegionDefinitions.SelectedItem = regionDefinition;
                     break;
                 case "Update Region Definition":
@@ -185,7 +195,7 @@ namespace X4SectorCreator.Forms
                     MainForm.Instance.RegionForm.ListBoxRegionDefinitions.SelectedItem = RegionDefinition;
                     break;
             }
-            
+
             Close();
         }
 
@@ -212,18 +222,18 @@ namespace X4SectorCreator.Forms
 
         private void BtnResourcesDel_Click(object sender, EventArgs e)
         {
-            if (ListBoxResources.SelectedItem is not Resource selectedResource) return;
+            if (ListBoxResources.SelectedItem is not Resource selectedResource)
+            {
+                return;
+            }
 
-            var index = ListBoxResources.Items.IndexOf(selectedResource);
+            int index = ListBoxResources.Items.IndexOf(selectedResource);
             ListBoxResources.Items.Remove(selectedResource);
 
             // Ensure index is within valid range
             index--;
             index = Math.Max(0, index);
-            if (index >= 0 && ListBoxResources.Items.Count > 0)
-                ListBoxResources.SelectedItem = ListBoxResources.Items[index];
-            else
-                ListBoxResources.SelectedItem = null;
+            ListBoxResources.SelectedItem = index >= 0 && ListBoxResources.Items.Count > 0 ? ListBoxResources.Items[index] : null;
         }
 
         private void BtnFalloffAdd_Click(object sender, EventArgs e)
@@ -233,29 +243,29 @@ namespace X4SectorCreator.Forms
 
         private void BtnFalloffDel_Click(object sender, EventArgs e)
         {
-            var listBox = GetActiveFalloffListbox();
-            if (listBox.SelectedItem is not StepObj lateral) return;
+            ListBox listBox = GetActiveFalloffListbox();
+            if (listBox.SelectedItem is not StepObj lateral)
+            {
+                return;
+            }
 
-            var index = listBox.Items.IndexOf(lateral);
+            int index = listBox.Items.IndexOf(lateral);
             listBox.Items.Remove(lateral);
 
             // Ensure index is within valid range
             index--;
             index = Math.Max(0, index);
-            if (index >= 0 && listBox.Items.Count > 0)
-                listBox.SelectedItem = listBox.Items[index];
-            else
-                listBox.SelectedItem = null;
+            listBox.SelectedItem = index >= 0 && listBox.Items.Count > 0 ? listBox.Items[index] : null;
         }
 
         private void BtnFalloffUp_Click(object sender, EventArgs e)
         {
             // Determine which tab is active
-            var listBox = GetActiveFalloffListbox();
+            ListBox listBox = GetActiveFalloffListbox();
             int index = listBox.SelectedIndex;
             if (index > 0) // Ensure it's not already at the top
             {
-                var item = listBox.Items[index];
+                object item = listBox.Items[index];
                 listBox.Items.RemoveAt(index);
                 listBox.Items.Insert(index - 1, item);
                 listBox.SelectedIndex = index - 1; // Keep selection
@@ -265,11 +275,11 @@ namespace X4SectorCreator.Forms
         private void BtnFalloffDown_Click(object sender, EventArgs e)
         {
             // Determine which tab is active
-            var listBox = GetActiveFalloffListbox();
+            ListBox listBox = GetActiveFalloffListbox();
             int index = listBox.SelectedIndex;
             if (index < listBox.Items.Count - 1 && index >= 0) // Ensure it's not already at the bottom
             {
-                var item = listBox.Items[index];
+                object item = listBox.Items[index];
                 listBox.Items.RemoveAt(index);
                 listBox.Items.Insert(index + 1, item);
                 listBox.SelectedIndex = index + 1; // Keep selection
@@ -279,7 +289,7 @@ namespace X4SectorCreator.Forms
         private ListBox GetActiveFalloffListbox()
         {
             // Determine which tab is active
-            var sT = TabControlFalloff.SelectedTab;
+            TabPage sT = TabControlFalloff.SelectedTab;
             return sT.Name switch
             {
                 "tabLateral" => ListBoxLateral,
@@ -295,18 +305,18 @@ namespace X4SectorCreator.Forms
 
         private void BtnFieldsDel_Click(object sender, EventArgs e)
         {
-            if (ListBoxFields.SelectedItem is not FieldObj fieldObj) return;
+            if (ListBoxFields.SelectedItem is not FieldObj fieldObj)
+            {
+                return;
+            }
 
-            var index = ListBoxFields.Items.IndexOf(fieldObj);
+            int index = ListBoxFields.Items.IndexOf(fieldObj);
             ListBoxFields.Items.Remove(fieldObj);
 
             // Ensure index is within valid range
             index--;
             index = Math.Max(0, index);
-            if (index >= 0 && ListBoxFields.Items.Count > 0)
-                ListBoxFields.SelectedItem = ListBoxFields.Items[index];
-            else
-                ListBoxFields.SelectedItem = null;
+            ListBoxFields.SelectedItem = index >= 0 && ListBoxFields.Items.Count > 0 ? ListBoxFields.Items[index] : null;
         }
 
         private void BtnAddPredefined_Click(object sender, EventArgs e)
@@ -316,7 +326,10 @@ namespace X4SectorCreator.Forms
 
         private void ListBoxFields_DoubleClick(object sender, EventArgs e)
         {
-            if (ListBoxFields.SelectedItem is not FieldObj selectedField) return;
+            if (ListBoxFields.SelectedItem is not FieldObj selectedField)
+            {
+                return;
+            }
 
             RegionFieldsForm.FieldObj = selectedField;
             RegionFieldsForm.Show();
@@ -324,7 +337,10 @@ namespace X4SectorCreator.Forms
 
         private void ListBoxResources_DoubleClick(object sender, EventArgs e)
         {
-            if (ListBoxResources.SelectedItem is not Resource selectedResource) return;
+            if (ListBoxResources.SelectedItem is not Resource selectedResource)
+            {
+                return;
+            }
 
             RegionResourcesForm.Resource = selectedResource;
             RegionResourcesForm.Show();
@@ -332,7 +348,10 @@ namespace X4SectorCreator.Forms
 
         private void ListBoxLateral_DoubleClick(object sender, EventArgs e)
         {
-            if (ListBoxLateral.SelectedItem is not StepObj selectedStep) return;
+            if (ListBoxLateral.SelectedItem is not StepObj selectedStep)
+            {
+                return;
+            }
 
             RegionFalloffForm.StepObj = selectedStep;
             RegionFalloffForm.Show();
@@ -340,7 +359,10 @@ namespace X4SectorCreator.Forms
 
         private void ListBoxRadial_DoubleClick(object sender, EventArgs e)
         {
-            if (ListBoxRadial.SelectedItem is not StepObj selectedStep) return;
+            if (ListBoxRadial.SelectedItem is not StepObj selectedStep)
+            {
+                return;
+            }
 
             RegionFalloffForm.StepObj = selectedStep;
             RegionFalloffForm.Show();
