@@ -37,6 +37,10 @@ namespace X4SectorCreator.Forms
                     txtRegionLinear.Text = CustomRegion.BoundaryLinear;
                     txtRegionPosition.Text = (CustomRegion.Position.X, CustomRegion.Position.Y).ToString();
                     txtRegionRadius.Text = _circleRadius.ToString();
+                    // Just incase it is somehow deleted, we must still display it here
+                    if (!ListBoxRegionDefinitions.Items.Contains(CustomRegion.Definition))
+                        ListBoxRegionDefinitions.Items.Add(CustomRegion.Definition);
+                    ListBoxRegionDefinitions.SelectedItem = CustomRegion.Definition;
                     BtnCreateRegion.Text = "Update Region";
                 }
             }
