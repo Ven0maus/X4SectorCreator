@@ -28,28 +28,28 @@ namespace X4SectorCreator.Forms
         private void InitializeFields()
         {
             txtBackgroundFog.Text = FieldObj.BackgroundFog?.ToString() ?? string.Empty;
-            txtDensityFactor.Text = FieldObj.DensityFactor?.ToString() ?? string.Empty;
-            txtDistanceFactor.Text = FieldObj.DistanceFactor?.ToString() ?? string.Empty;
-            txtFactor.Text = FieldObj.Factor?.ToString() ?? string.Empty;
+            txtDensityFactor.Text = FieldObj.DensityFactor?.ToString("0.##") ?? string.Empty;
+            txtDistanceFactor.Text = FieldObj.DistanceFactor?.ToString("0.##") ?? string.Empty;
+            txtFactor.Text = FieldObj.Factor?.ToString("0.##") ?? string.Empty;
             txtGroupRef.Text = FieldObj.GroupRef ?? string.Empty;
-            txtLocalDensity.Text = FieldObj.LocalDensity?.ToString() ?? string.Empty;
+            txtLocalDensity.Text = FieldObj.LocalDensity?.ToString("0.##") ?? string.Empty;
             txtLodRule.Text = FieldObj.LodRule ?? string.Empty;
-            txtMaxNoiseValue.Text = FieldObj.MaxNoiseValue?.ToString() ?? string.Empty;
+            txtMaxNoiseValue.Text = FieldObj.MaxNoiseValue?.ToString("0.##") ?? string.Empty;
             txtMedium.Text = FieldObj.Medium ?? string.Empty;
-            txtMinNoiseValue.Text = FieldObj.MinNoiseValue?.ToString() ?? string.Empty;
-            txtMultiplier.Text = FieldObj.Multiplier?.ToString() ?? string.Empty;
-            txtNoiseScale.Text = FieldObj.NoiseScale?.ToString() ?? string.Empty;
+            txtMinNoiseValue.Text = FieldObj.MinNoiseValue?.ToString("0.##") ?? string.Empty;
+            txtMultiplier.Text = FieldObj.Multiplier?.ToString("0.##") ?? string.Empty;
+            txtNoiseScale.Text = FieldObj.NoiseScale?.ToString("0.##") ?? string.Empty;
             txtPlaytime.Text = FieldObj.Playtime?.ToString() ?? string.Empty;
             txtRef.Text = FieldObj.Ref ?? string.Empty;
             txtResources.Text = FieldObj.Resources ?? string.Empty;
-            txtRotation.Text = FieldObj.Rotation?.ToString() ?? string.Empty;
-            txtRotationVariation.Text = FieldObj.RotationVariation?.ToString() ?? string.Empty;
-            txtSeed.Text = FieldObj.Seed?.ToString() ?? string.Empty;
-            txtSize.Text = FieldObj.Size?.ToString() ?? string.Empty;
-            txtSizeVariation.Text = FieldObj.SizeVariation?.ToString() ?? string.Empty;
+            txtRotation.Text = FieldObj.Rotation?.ToString("0.##") ?? string.Empty;
+            txtRotationVariation.Text = FieldObj.RotationVariation?.ToString("0.##") ?? string.Empty;
+            txtSeed.Text = FieldObj.Seed?.ToString("0.##") ?? string.Empty;
+            txtSize.Text = FieldObj.Size?.ToString("0.##") ?? string.Empty;
+            txtSizeVariation.Text = FieldObj.SizeVariation?.ToString("0.##") ?? string.Empty;
             txtSoundId.Text = FieldObj.SoundId ?? string.Empty;
             txtTexture.Text = FieldObj.Texture ?? string.Empty;
-            txtUniformDensity.Text = FieldObj.UniformDensity?.ToString() ?? string.Empty;
+            txtUniformDensity.Text = FieldObj.UniformDensity?.ToString("0.##") ?? string.Empty;
             if (FieldObj.UniformRed != null && FieldObj.UniformGreen != null && FieldObj.UniformBlue != null)
                 txtUniformRGB.Text = $"{FieldObj.UniformRed},{FieldObj.UniformGreen},{FieldObj.UniformBlue}";
             if (FieldObj.LocalRed != null && FieldObj.LocalGreen != null && FieldObj.LocalBlue != null)

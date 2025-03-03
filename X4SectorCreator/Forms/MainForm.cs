@@ -327,7 +327,7 @@ namespace X4SectorCreator
         }
 
         #region Configuration
-        private void BtnReset_Click(object sender, EventArgs e)
+        public void Reset(bool fromImport)
         {
             // Remove custom clusters
             var toBeRemoved = AllClusters.Where(a => !a.Value.IsBaseGame).ToArray();
@@ -338,6 +338,15 @@ namespace X4SectorCreator
             ClustersListBox.Items.Clear();
             SectorsListBox.Items.Clear();
             GatesListBox.Items.Clear();
+
+            if (!fromImport)
+            {
+                RegionDefinitionForm.RegionDefinitions.Clear();
+            }
+        }
+        private void BtnReset_Click(object sender, EventArgs e)
+        {
+            Reset(false);
         }
 
         private void BtnExportConfig_Click(object sender, EventArgs e)
@@ -390,7 +399,7 @@ namespace X4SectorCreator
                 if (clusters != null)
                 {
                     // Reset configuration
-                    BtnReset.PerformClick();
+                    Reset(true);
 
                     if (GalaxySettingsForm.IsCustomGalaxy)
                         ToggleGalaxyMode(null);

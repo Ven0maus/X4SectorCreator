@@ -40,7 +40,7 @@ namespace X4SectorCreator.Forms
                 {
                     txtDensity.Text = _regionDefinition.Density;
                     txtMaxNoiseValue.Text = _regionDefinition.MaxNoiseValue;
-                    txtMinNoiseValue.Text += _regionDefinition.MinNoiseValue;
+                    txtMinNoiseValue.Text = _regionDefinition.MinNoiseValue;
                     txtNoiseScale.Text = _regionDefinition.NoiseScale;
                     txtRegionDefinitionName.Text = _regionDefinition.Name;
                     txtRotation.Text = _regionDefinition.Rotation;
@@ -138,9 +138,9 @@ namespace X4SectorCreator.Forms
                 case "Create Region Definition":
                     var regionDefinition = new RegionDefinition
                     {
-                        Density = density.ToString(),
-                        MaxNoiseValue = maxNoiseValue.ToString(),
-                        MinNoiseValue = minNoiseValue.ToString(),
+                        Density = density.ToString("0.##"),
+                        MaxNoiseValue = maxNoiseValue.ToString("0.##"),
+                        MinNoiseValue = minNoiseValue.ToString("0.##"),
                         Rotation = rotation.ToString(),
                         NoiseScale = noiseScale.ToString(),
                         Seed = seed.ToString(),
@@ -163,10 +163,10 @@ namespace X4SectorCreator.Forms
                     MainForm.Instance.RegionForm.ListBoxRegionDefinitions.SelectedItem = regionDefinition;
                     break;
                 case "Update Region Definition":
-                    RegionDefinition.Density = density.ToString();
+                    RegionDefinition.Density = density.ToString("0.##");
                     RegionDefinition.Rotation = rotation.ToString();
-                    RegionDefinition.MaxNoiseValue = maxNoiseValue.ToString();
-                    RegionDefinition.MinNoiseValue = minNoiseValue.ToString();
+                    RegionDefinition.MaxNoiseValue = maxNoiseValue.ToString("0.##");
+                    RegionDefinition.MinNoiseValue = minNoiseValue.ToString("0.##");
                     RegionDefinition.BoundaryType = selectedBoundaryType.ToLower();
                     RegionDefinition.NoiseScale = noiseScale.ToString();
                     RegionDefinition.Seed = seed.ToString();
