@@ -338,6 +338,7 @@ namespace X4SectorCreator
             ClustersListBox.Items.Clear();
             SectorsListBox.Items.Clear();
             GatesListBox.Items.Clear();
+            RegionsListBox.Items.Clear();
 
             if (!fromImport)
             {
