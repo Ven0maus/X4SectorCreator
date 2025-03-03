@@ -311,6 +311,7 @@ namespace X4SectorCreator.Forms
                     CustomRegion.BoundaryLinear = regionLinear.ToString();
                     CustomRegion.BoundaryRadius = ConvertScreenRadiusToWorld(_circleRadius).ToString();
                     CustomRegion.Position = ConvertScreenToWorld(_circlePosition);
+                    CustomRegion.Definition = selectedRegionDefinition;
 
                     var index = MainForm.Instance.RegionsListBox.SelectedIndex;
                     MainForm.Instance.RegionsListBox.Items.Remove(CustomRegion);
