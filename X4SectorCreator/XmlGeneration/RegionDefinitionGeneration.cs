@@ -63,7 +63,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateLateralRadialSteps(Region region)
         {
-            var groups = region.Falloff.GroupBy(a => a.Type);
+            var groups = region.Definition.Falloff.GroupBy(a => a.Type);
             foreach (var group in groups)
             {
                 var steps = group.Select(a => new XElement("step",
@@ -76,7 +76,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateFields(Region region)
         {
-            foreach (var field in region.Fields)
+            foreach (var field in region.Definition.Fields)
             {
                 yield return new XElement(field.Type.ToLower(),
                     // Core attributes
@@ -116,14 +116,16 @@ namespace X4SectorCreator.XmlGeneration
                     field.BackgroundFog.HasValue ? new XAttribute("backgroundfog", field.BackgroundFog.Value ? "true" : "false") : null,
 
                     // Resources
-                    field.Resources != null ? new XAttribute("resources", field.Resources) : null
+                    field.Resources != null ? new XAttribute("resources", field.Resources) : null,
+                    field.SoundId != null ? new XAttribute("soundid", field.SoundId) : null,
+                    field.Playtime != null ? new XAttribute("playtime", field.Playtime) : null
                 );
             }
         }
 
         private static IEnumerable<XElement> GenerateResources(Region region)
         {
-            foreach (var resource in region.Resources)
+            foreach (var resource in region.Definition.Resources)
             {
                 yield return new XElement("resource",
                                     new XAttribute("ware", $"{resource.Ware}"),
