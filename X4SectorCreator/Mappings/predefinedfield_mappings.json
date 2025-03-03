@@ -690,6 +690,61 @@
     "MinNoiseValue": 0.9,
     "MaxNoiseValue": 1.0,
     "DistanceFactor": 0.6
+  },
+  {
+    "Type": "ambientsound",
+    "SoundId": "zoned_sound_01",
+    "Seed": 27180,
+    "NoiseScale": 26000,
+    "MinNoiseValue": 0.8,
+    "Playtime": 20
+  },
+  {
+    "Type": "ambientsound",
+    "SoundId": "zoned_sound_02",
+    "Seed": 90493,
+    "NoiseScale": 26000,
+    "MinNoiseValue": 0.8,
+    "Playtime": 20
+  },
+  {
+    "Type": "ambientsound",
+    "SoundId": "zoned_sound_03",
+    "Seed": 11368,
+    "NoiseScale": 26000,
+    "MinNoiseValue": 0.8,
+    "Playtime": 20
+  },
+  {
+    "Type": "ambientsound",
+    "SoundId": "zoned_sound_04",
+    "Seed": 18999,
+    "NoiseScale": 26000,
+    "MinNoiseValue": 0.8,
+    "Playtime": 20
+  },
+  {
+    "Type": "ambientsound",
+    "SoundId": "zoned_sound_05",
+    "Seed": 88199,
+    "NoiseScale": 26000,
+    "MinNoiseValue": 0.8,
+    "Playtime": 20
+  },
+  {
+    "Type": "ambientsound",
+    "SoundId": "zoned_sound_06",
+    "Seed": 91194,
+    "NoiseScale": 26000,
+    "MinNoiseValue": 0.8,
+    "Playtime": 20
+  },
+  {
+    "Type": "ambientsound",
+    "SoundId": "zoned_sound_07",
+    "Seed": 72531,
+    "NoiseScale": 26000,
+    "Minnoisevalue": 0.8,
+    "Playtime": 20
   }
-
 ]

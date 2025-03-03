@@ -80,6 +80,10 @@
             txtResources = new TextBox();
             lblBackgroundFog = new Label();
             txtBackgroundFog = new TextBox();
+            label2 = new Label();
+            txtPlaytime = new TextBox();
+            label3 = new Label();
+            txtSoundId = new TextBox();
             SuspendLayout();
             // 
             // cmbFieldType
@@ -105,7 +109,7 @@
             // 
             // BtnAdd
             // 
-            BtnAdd.Location = new Point(152, 428);
+            BtnAdd.Location = new Point(152, 493);
             BtnAdd.Name = "BtnAdd";
             BtnAdd.Size = new Size(642, 45);
             BtnAdd.TabIndex = 2;
@@ -115,7 +119,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 428);
+            BtnCancel.Location = new Point(12, 493);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(134, 45);
             BtnCancel.TabIndex = 3;
@@ -432,7 +436,7 @@
             // label1
             // 
             label1.Font = new Font("Segoe UI", 10F);
-            label1.Location = new Point(12, 349);
+            label1.Location = new Point(12, 414);
             label1.Name = "label1";
             label1.Size = new Size(782, 76);
             label1.TabIndex = 38;
@@ -547,11 +551,51 @@
             txtBackgroundFog.Size = new Size(191, 25);
             txtBackgroundFog.TabIndex = 39;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F);
+            label2.Location = new Point(209, 349);
+            label2.Name = "label2";
+            label2.Size = new Size(73, 21);
+            label2.TabIndex = 54;
+            label2.Text = "Playtime:";
+            // 
+            // txtPlaytime
+            // 
+            txtPlaytime.Font = new Font("Segoe UI", 10F);
+            txtPlaytime.Location = new Point(209, 373);
+            txtPlaytime.Name = "txtPlaytime";
+            txtPlaytime.Size = new Size(191, 25);
+            txtPlaytime.TabIndex = 53;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F);
+            label3.Location = new Point(12, 349);
+            label3.Name = "label3";
+            label3.Size = new Size(71, 21);
+            label3.TabIndex = 52;
+            label3.Text = "SoundId:";
+            // 
+            // txtSoundId
+            // 
+            txtSoundId.Font = new Font("Segoe UI", 10F);
+            txtSoundId.Location = new Point(12, 373);
+            txtSoundId.Name = "txtSoundId";
+            txtSoundId.Size = new Size(191, 25);
+            txtSoundId.TabIndex = 51;
+            // 
             // RegionFieldsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(801, 478);
+            ClientSize = new Size(801, 543);
+            Controls.Add(label2);
+            Controls.Add(txtPlaytime);
+            Controls.Add(label3);
+            Controls.Add(txtSoundId);
             Controls.Add(lblUniformDensity);
             Controls.Add(txtUniformDensity);
             Controls.Add(lblLocalDensity);
@@ -666,5 +710,9 @@
         private TextBox txtResources;
         private Label lblBackgroundFog;
         private TextBox txtBackgroundFog;
+        private Label label2;
+        private TextBox txtPlaytime;
+        private Label label3;
+        private TextBox txtSoundId;
     }
 }

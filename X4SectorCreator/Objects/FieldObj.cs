@@ -40,22 +40,33 @@
         public bool? BackgroundFog { get; set; }
         public string Resources { get; set; }
 
+        public string SoundId { get; set; }
+        public int? Playtime { get; set; }
+
         public override string ToString()
         {
+            if (!string.IsNullOrEmpty(SoundId))
+            {
+                return $"{Type}=\"{SoundId}\"";
+            }
+
             if (!string.IsNullOrWhiteSpace(Medium))
             {
                 if (!string.IsNullOrWhiteSpace(Ref))
                     return $"{Type}=\"{Ref}\"=\"{Medium}\"";
                 return $"{Type}=\"{Medium}\"";
             }
+
             if (!string.IsNullOrWhiteSpace(GroupRef))
                 return $"{Type}=\"{GroupRef}\"";
+
             if (!string.IsNullOrWhiteSpace(Ref))
             {
                 if (!string.IsNullOrWhiteSpace(Resources))
                     return $"{Type}=\"{Ref}\"=\"{Resources}\"";
                 return $"{Type}=\"{Ref}\"";
             }
+
             return Type;
         }
     }

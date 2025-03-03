@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 using X4SectorCreator.Objects;
 using Region = X4SectorCreator.Objects.Region;
 
@@ -91,7 +93,7 @@ namespace X4SectorCreator.Forms
                 new() { Position = "1.0", Value = "0.0" }
             };
 
-            foreach (var lat in lateral) 
+            foreach (var lat in lateral)
             {
                 lat.Type = "Lateral";
                 ListBoxLateral.Items.Add(lat);
@@ -398,8 +400,17 @@ namespace X4SectorCreator.Forms
         private void BtnResourcesDel_Click(object sender, EventArgs e)
         {
             if (ListBoxResources.SelectedItem is not Resource selectedResource) return;
+
+            var index = ListBoxResources.Items.IndexOf(selectedResource);
             ListBoxResources.Items.Remove(selectedResource);
-            ListBoxResources.SelectedItem = null;
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            if (index >= 0 && ListBoxResources.Items.Count > 0)
+                ListBoxResources.SelectedItem = ListBoxResources.Items[index];
+            else
+                ListBoxResources.SelectedItem = null;
         }
 
         private void BtnFalloffAdd_Click(object sender, EventArgs e)
@@ -411,8 +422,17 @@ namespace X4SectorCreator.Forms
         {
             var listBox = GetActiveFalloffListbox();
             if (listBox.SelectedItem is not StepObj lateral) return;
+
+            var index = listBox.Items.IndexOf(lateral);
             listBox.Items.Remove(lateral);
-            listBox.SelectedItem = null;
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            if (index >= 0 && listBox.Items.Count > 0)
+                listBox.SelectedItem = listBox.Items[index];
+            else
+                listBox.SelectedItem = null;
         }
 
         private void BtnFalloffUp_Click(object sender, EventArgs e)
@@ -464,8 +484,17 @@ namespace X4SectorCreator.Forms
         {
             var fieldObj = ListBoxFields.SelectedItem as FieldObj;
             if (fieldObj == null) return;
+
+            var index = ListBoxFields.Items.IndexOf(fieldObj);
             ListBoxFields.Items.Remove(fieldObj);
-            ListBoxFields.SelectedItem = null;
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            if (index >= 0 && ListBoxFields.Items.Count > 0)
+                ListBoxFields.SelectedItem = ListBoxFields.Items[index];
+            else
+                ListBoxFields.SelectedItem = null;
         }
 
         private void BtnAddPredefined_Click(object sender, EventArgs e)
@@ -475,8 +504,17 @@ namespace X4SectorCreator.Forms
 
         private void CmbBoundaryType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtRegionLinear.Enabled = cmbBoundaryType.SelectedItem is string selected && 
+            txtRegionLinear.Enabled = cmbBoundaryType.SelectedItem is string selected &&
                 selected.Equals("Cylinder", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private void ListBoxFields_DoubleClick(object sender, EventArgs e)
+        {
+            var selectedField = ListBoxFields.SelectedItem as FieldObj;
+            if (selectedField == null) return;
+
+            RegionFieldsForm.FieldObj = selectedField;
+            RegionFieldsForm.Show();
         }
     }
 }

@@ -284,6 +284,7 @@
             ListBoxFields.Name = "ListBoxFields";
             ListBoxFields.Size = new Size(436, 259);
             ListBoxFields.TabIndex = 59;
+            ListBoxFields.DoubleClick += ListBoxFields_DoubleClick;
             // 
             // label6
             // 

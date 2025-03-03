@@ -44,6 +44,8 @@
             BtnCancel = new Button();
             label7 = new Label();
             cmbDebris = new ComboBox();
+            label8 = new Label();
+            cmbAmbientSound = new ComboBox();
             SuspendLayout();
             // 
             // cmbAsteroids
@@ -168,7 +170,7 @@
             // 
             // BtnAdd
             // 
-            BtnAdd.Location = new Point(138, 401);
+            BtnAdd.Location = new Point(138, 456);
             BtnAdd.Name = "BtnAdd";
             BtnAdd.Size = new Size(201, 36);
             BtnAdd.TabIndex = 12;
@@ -178,7 +180,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 401);
+            BtnCancel.Location = new Point(12, 456);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(120, 36);
             BtnCancel.TabIndex = 13;
@@ -206,11 +208,33 @@
             cmbDebris.TabIndex = 14;
             cmbDebris.SelectedIndexChanged += CmbDebris_SelectedIndexChanged;
             // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 12F);
+            label8.Location = new Point(12, 398);
+            label8.Name = "label8";
+            label8.Size = new Size(114, 21);
+            label8.TabIndex = 17;
+            label8.Text = "AmbientSound";
+            // 
+            // cmbAmbientSound
+            // 
+            cmbAmbientSound.Font = new Font("Segoe UI", 11F);
+            cmbAmbientSound.FormattingEnabled = true;
+            cmbAmbientSound.Location = new Point(11, 422);
+            cmbAmbientSound.Name = "cmbAmbientSound";
+            cmbAmbientSound.Size = new Size(328, 28);
+            cmbAmbientSound.TabIndex = 16;
+            cmbAmbientSound.SelectedIndexChanged += cmbAmbientSound_SelectedIndexChanged;
+            // 
             // RegionPredefinedFieldsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(351, 444);
+            ClientSize = new Size(351, 498);
+            Controls.Add(label8);
+            Controls.Add(cmbAmbientSound);
             Controls.Add(label7);
             Controls.Add(cmbDebris);
             Controls.Add(BtnCancel);
@@ -254,5 +278,7 @@
         private Button BtnCancel;
         private Label label7;
         private ComboBox cmbDebris;
+        private Label label8;
+        private ComboBox cmbAmbientSound;
     }
 }

@@ -42,13 +42,21 @@ namespace X4SectorCreator.Forms
                     case "volumetricfog":
                         cmb = cmbVolumetricfog;
                         break;
+                    case "ambientsound":
+                        cmb = cmbAmbientSound;
+                        break;
                     default:
                         throw new NotSupportedException(group.Key);
                 }
 
-                foreach (var item in group.OrderBy(a => a.GroupRef ?? "").ThenBy(a => a.Resources ?? ""))
+                foreach (var item in group.OrderBy(a => a.GroupRef ?? "")
+                    .ThenBy(a => a.Resources ?? "")
+                    .ThenBy(a => a.Ref ?? "")
+                    .ThenBy(a => a.SoundId ?? ""))
+                {
                     cmb.Items.Add(item);
-            }           
+                }
+            }
         }
 
         private FieldObj FindSelectedFieldObj()
@@ -110,6 +118,11 @@ namespace X4SectorCreator.Forms
             ResetAllExcept(cmbDebris);
         }
 
+        private void cmbAmbientSound_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ResetAllExcept(cmbAmbientSound);
+        }
+
         private void ResetAllExcept(ComboBox cmb)
         {
             if (_suppressEvents) return;
@@ -122,7 +135,9 @@ namespace X4SectorCreator.Forms
                 cmbObjects,
                 cmbVolumetricfog,
                 cmbPositional,
-                cmbGravidar
+                cmbGravidar,
+                cmbDebris,
+                cmbAmbientSound
             };
             fields.Remove(cmb);
             foreach (var field in fields)

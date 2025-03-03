@@ -1,12 +1,111 @@
 ﻿using X4SectorCreator.Objects;
+using System.ComponentModel;
 
 namespace X4SectorCreator.Forms
 {
     public partial class RegionFieldsForm : Form
     {
+        private FieldObj _fieldObj;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public FieldObj FieldObj
+        {
+            get => _fieldObj;
+            set
+            {
+                _fieldObj = value;
+                if (_fieldObj != null)
+                {
+                    InitializeFields();
+                }
+            }
+        }
+
         public RegionFieldsForm()
         {
             InitializeComponent();
+        }
+
+        private void InitializeFields()
+        {
+            txtBackgroundFog.Text = FieldObj.BackgroundFog?.ToString() ?? string.Empty;
+            txtDensityFactor.Text = FieldObj.DensityFactor?.ToString() ?? string.Empty;
+            txtDistanceFactor.Text = FieldObj.DistanceFactor?.ToString() ?? string.Empty;
+            txtFactor.Text = FieldObj.Factor?.ToString() ?? string.Empty;
+            txtGroupRef.Text = FieldObj.GroupRef ?? string.Empty;
+            txtLocalDensity.Text = FieldObj.LocalDensity?.ToString() ?? string.Empty;
+            txtLodRule.Text = FieldObj.LodRule ?? string.Empty;
+            txtMaxNoiseValue.Text = FieldObj.MaxNoiseValue?.ToString() ?? string.Empty;
+            txtMedium.Text = FieldObj.Medium ?? string.Empty;
+            txtMinNoiseValue.Text = FieldObj.MinNoiseValue?.ToString() ?? string.Empty;
+            txtMultiplier.Text = FieldObj.Multiplier?.ToString() ?? string.Empty;
+            txtNoiseScale.Text = FieldObj.NoiseScale?.ToString() ?? string.Empty;
+            txtPlaytime.Text = FieldObj.Playtime?.ToString() ?? string.Empty;
+            txtRef.Text = FieldObj.Ref ?? string.Empty;
+            txtResources.Text = FieldObj.Resources ?? string.Empty;
+            txtRotation.Text = FieldObj.Rotation?.ToString() ?? string.Empty;
+            txtRotationVariation.Text = FieldObj.RotationVariation?.ToString() ?? string.Empty;
+            txtSeed.Text = FieldObj.Seed?.ToString() ?? string.Empty;
+            txtSize.Text = FieldObj.Size?.ToString() ?? string.Empty;
+            txtSizeVariation.Text = FieldObj.SizeVariation?.ToString() ?? string.Empty;
+            txtSoundId.Text = FieldObj.SoundId ?? string.Empty;
+            txtTexture.Text = FieldObj.Texture ?? string.Empty;
+            txtUniformDensity.Text = FieldObj.UniformDensity?.ToString() ?? string.Empty;
+            if (FieldObj.UniformRed != null && FieldObj.UniformGreen != null && FieldObj.UniformBlue != null)
+                txtUniformRGB.Text = $"{FieldObj.UniformRed},{FieldObj.UniformGreen},{FieldObj.UniformBlue}";
+            if (FieldObj.LocalRed != null && FieldObj.LocalGreen != null && FieldObj.LocalBlue != null)
+                txtLocalRgb.Text = $"{FieldObj.LocalRed},{FieldObj.LocalGreen},{FieldObj.LocalBlue}";
+
+            BtnAdd.Text = "Update";
+        }
+
+        private void ConvertFromTextboxes(FieldObj fieldObj)
+        {
+            fieldObj.BackgroundFog = string.IsNullOrWhiteSpace(txtBackgroundFog.Text) ? null : bool.Parse(txtBackgroundFog.Text);
+            fieldObj.DensityFactor = string.IsNullOrWhiteSpace(txtDensityFactor.Text) ? null : float.Parse(txtDensityFactor.Text);
+            fieldObj.DistanceFactor = string.IsNullOrWhiteSpace(txtDistanceFactor.Text) ? null : float.Parse(txtDistanceFactor.Text);
+            fieldObj.Factor = string.IsNullOrWhiteSpace(txtFactor.Text) ? null : float.Parse(txtFactor.Text);
+            fieldObj.GroupRef = txtGroupRef.Text;
+            fieldObj.LocalDensity = string.IsNullOrWhiteSpace(txtLocalDensity.Text) ? null : float.Parse(txtLocalDensity.Text);
+            fieldObj.LodRule = txtLodRule.Text;
+            fieldObj.MaxNoiseValue = string.IsNullOrWhiteSpace(txtMaxNoiseValue.Text) ? null : float.Parse(txtMaxNoiseValue.Text);
+            fieldObj.Medium = txtMedium.Text;
+            fieldObj.MinNoiseValue = string.IsNullOrWhiteSpace(txtMinNoiseValue.Text) ? null : float.Parse(txtMinNoiseValue.Text);
+            fieldObj.Multiplier = string.IsNullOrWhiteSpace(txtMultiplier.Text) ? null : float.Parse(txtMultiplier.Text);
+            fieldObj.NoiseScale = string.IsNullOrWhiteSpace(txtNoiseScale.Text) ? null : float.Parse(txtNoiseScale.Text);
+            fieldObj.Playtime = string.IsNullOrWhiteSpace(txtPlaytime.Text) ? null : int.Parse(txtPlaytime.Text);
+            fieldObj.Ref = txtRef.Text;
+            fieldObj.Resources = txtResources.Text;
+            fieldObj.Rotation = string.IsNullOrWhiteSpace(txtRotation.Text) ? null : float.Parse(txtRotation.Text);
+            fieldObj.RotationVariation = string.IsNullOrWhiteSpace(txtRotationVariation.Text) ? null : float.Parse(txtRotationVariation.Text);
+            fieldObj.Seed = string.IsNullOrWhiteSpace(txtSeed.Text) ? null : int.Parse(txtSeed.Text);
+            fieldObj.Size = string.IsNullOrWhiteSpace(txtSize.Text) ? null : float.Parse(txtSize.Text);
+            fieldObj.SizeVariation = string.IsNullOrWhiteSpace(txtSizeVariation.Text) ? null : float.Parse(txtSizeVariation.Text);
+            fieldObj.SoundId = txtSoundId.Text;
+            fieldObj.Texture = txtTexture.Text;
+            fieldObj.UniformDensity = string.IsNullOrWhiteSpace(txtUniformDensity.Text) ? null : float.Parse(txtUniformDensity.Text);
+
+            // Parsing RGB values
+            if (!string.IsNullOrWhiteSpace(txtUniformRGB.Text))
+            {
+                var rgb = txtUniformRGB.Text.Split(',');
+                if (rgb.Length == 3)
+                {
+                    fieldObj.UniformRed = int.TryParse(rgb[0], out int red) ? (int?)red : null;
+                    fieldObj.UniformGreen = int.TryParse(rgb[1], out int green) ? (int?)green : null;
+                    fieldObj.UniformBlue = int.TryParse(rgb[2], out int blue) ? (int?)blue : null;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(txtLocalRgb.Text))
+            {
+                var rgb = txtLocalRgb.Text.Split(',');
+                if (rgb.Length == 3)
+                {
+                    fieldObj.LocalRed = int.TryParse(rgb[0], out int red) ? (int?)red : null;
+                    fieldObj.LocalGreen = int.TryParse(rgb[1], out int green) ? (int?)green : null;
+                    fieldObj.LocalBlue = int.TryParse(rgb[2], out int blue) ? (int?)blue : null;
+                }
+            }
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
@@ -15,9 +114,19 @@ namespace X4SectorCreator.Forms
             if (!DoFieldValidation(out var newField))
                 return;
 
-            var regionForm = MainForm.Instance.RegionForm;
-            regionForm.ListBoxFields.Items.Add(newField);
-            regionForm.ListBoxFields.SelectedItem = newField;
+            switch(BtnAdd.Text)
+            {
+                case "Add":
+                    var regionForm = MainForm.Instance.RegionForm;
+                    regionForm.ListBoxFields.Items.Add(newField);
+                    regionForm.ListBoxFields.SelectedItem = newField;
+                    break;
+                case "Update":
+                    ConvertFromTextboxes(FieldObj);
+                    break;
+            }
+
+
 
             Close();
         }
@@ -46,6 +155,7 @@ namespace X4SectorCreator.Forms
             IsValidFloat(invalidFields, txtSizeVariation, out var sizeVariation);
             IsValidFloat(invalidFields, txtLocalDensity, out var localDensity);
             IsValidFloat(invalidFields, txtUniformDensity, out var uniformDensity);
+            IsValidFloat(invalidFields, txtPlaytime, out var playtime);
 
             // Strings
             IsValidString(invalidFields, txtRef, out var tRef);
@@ -55,6 +165,7 @@ namespace X4SectorCreator.Forms
             IsValidString(invalidFields, txtGroupRef, out var groupRef);
             IsValidString(invalidFields, cmbFieldType, out var fieldType);
             IsValidString(invalidFields, txtResources, out var resources);
+            IsValidString(invalidFields, txtSoundId, out var soundId);
 
             // Exceptional cases
             IsValidString(invalidFields, txtLocalRgb, out _);
@@ -102,7 +213,9 @@ namespace X4SectorCreator.Forms
                 UniformRed = uniformRgbSucces ? ur : null,
                 UniformDensity = uniformDensity,
                 BackgroundFog = backgroundFog,
-                Resources = resources
+                Resources = resources,
+                SoundId = soundId,
+                Playtime = playtime != null ? (int)playtime : null
             };
 
             return true;
