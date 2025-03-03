@@ -309,18 +309,28 @@ namespace X4SectorCreator
         private void SetDetailsText(Cluster cluster, Sector sector)
         {
             StringBuilder sb = new();
-            _ = sb.AppendLine($"[Cluster]: {cluster.Name}");
-            _ = sb.AppendLine("Location: " + (cluster.Position.X, cluster.Position.Y));
-            _ = sb.AppendLine();
+            _ = sb.Append($"[{cluster.Name}]");
+
             if (sector != null)
             {
-                _ = sb.AppendLine($"[Sector]: {sector.Name}");
+                _ = sb.AppendLine($"[{sector.Name}]");
                 _ = sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}%");
                 _ = sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}%");
                 _ = sb.AppendLine($"Security: {(int)(sector.Security * 100f)}%");
-                _ = sb.AppendLine($"Tags: {sector.Tags}");
-                _ = sb.AppendLine($"Allow Anomalies: {sector.AllowRandomAnomalies}");
-                _ = sb.AppendLine($"FactionLogic Disabled: {sector.DisableFactionLogic}");
+                if (!sector.AllowRandomAnomalies)
+                    _ = sb.AppendLine("No random anomalies");
+                if (sector.DisableFactionLogic)
+                    _ = sb.AppendLine($"FactionLogic Disabled");
+                if (sector.Regions.Count > 0)
+                {
+                    // Show minerals in sector
+                    var resources = sector.Regions
+                        .SelectMany(a => a.Definition.Resources)
+                        .Select(a => a.Ware)
+                        .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+                    _ = sb.AppendLine($"Resources: {string.Join(", ", resources)}");
+                }
             }
             LblDetails.Text = sb.ToString();
         }
