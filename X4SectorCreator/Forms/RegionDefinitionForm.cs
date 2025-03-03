@@ -76,7 +76,7 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
 
-            if (RegionDefinition != null)
+            if (RegionDefinition == null)
             {
                 InitDefaultFalloff();
             }
@@ -148,6 +148,7 @@ namespace X4SectorCreator.Forms
                 case "Create Region Definition":
                     RegionDefinition regionDefinition = new()
                     {
+                        Guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray()),
                         Density = density.ToString("0.##"),
                         MaxNoiseValue = maxNoiseValue.ToString("0.##"),
                         MinNoiseValue = minNoiseValue.ToString("0.##"),

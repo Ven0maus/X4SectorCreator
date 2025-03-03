@@ -10,6 +10,7 @@ namespace X4SectorCreator.Configuration
         private static readonly JsonSerializerOptions _serializerOptions = new()
         {
             WriteIndented = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             Converters = { new JsonStringEnumConverter() }
         };
 
