@@ -342,6 +342,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnNewDefinition_Click(object sender, EventArgs e)
         {
+            RegionDefinitionForm.InitDefaultFalloff();
             RegionDefinitionForm.Show();
         }
 

@@ -75,14 +75,9 @@ namespace X4SectorCreator.Forms
         public RegionDefinitionForm()
         {
             InitializeComponent();
-
-            if (RegionDefinition == null)
-            {
-                InitDefaultFalloff();
-            }
         }
 
-        private void InitDefaultFalloff()
+        public void InitDefaultFalloff()
         {
             // Some defaults to make configurating easier
             List<StepObj> lateral = new()
