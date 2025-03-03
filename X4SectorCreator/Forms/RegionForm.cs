@@ -482,8 +482,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnFieldsDel_Click(object sender, EventArgs e)
         {
-            var fieldObj = ListBoxFields.SelectedItem as FieldObj;
-            if (fieldObj == null) return;
+            if (ListBoxFields.SelectedItem is not FieldObj fieldObj) return;
 
             var index = ListBoxFields.Items.IndexOf(fieldObj);
             ListBoxFields.Items.Remove(fieldObj);
@@ -510,8 +509,7 @@ namespace X4SectorCreator.Forms
 
         private void ListBoxFields_DoubleClick(object sender, EventArgs e)
         {
-            var selectedField = ListBoxFields.SelectedItem as FieldObj;
-            if (selectedField == null) return;
+            if (ListBoxFields.SelectedItem is not FieldObj selectedField) return;
 
             RegionFieldsForm.FieldObj = selectedField;
             RegionFieldsForm.Show();
@@ -519,8 +517,7 @@ namespace X4SectorCreator.Forms
 
         private void ListBoxResources_DoubleClick(object sender, EventArgs e)
         {
-            var selectedResource = ListBoxResources.SelectedItem as Resource;
-            if (selectedResource == null) return;
+            if (ListBoxResources.SelectedItem is not Resource selectedResource) return;
 
             RegionResourcesForm.Resource = selectedResource;
             RegionResourcesForm.Show();
@@ -528,8 +525,7 @@ namespace X4SectorCreator.Forms
 
         private void ListBoxLateral_DoubleClick(object sender, EventArgs e)
         {
-            var selectedStep = ListBoxLateral.SelectedItem as StepObj;
-            if (selectedStep == null) return;
+            if (ListBoxLateral.SelectedItem is not StepObj selectedStep) return;
 
             RegionFalloffForm.StepObj = selectedStep;
             RegionFalloffForm.Show();
@@ -537,8 +533,7 @@ namespace X4SectorCreator.Forms
 
         private void ListBoxRadial_DoubleClick(object sender, EventArgs e)
         {
-            var selectedStep = ListBoxRadial.SelectedItem as StepObj;
-            if (selectedStep == null) return;
+            if (ListBoxRadial.SelectedItem is not StepObj selectedStep) return;
 
             RegionFalloffForm.StepObj = selectedStep;
             RegionFalloffForm.Show();

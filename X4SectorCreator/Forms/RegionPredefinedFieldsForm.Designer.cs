@@ -1,4 +1,7 @@
-﻿namespace X4SectorCreator.Forms
+﻿using X4SectorCreator.CustomComponents;
+using X4SectorCreator.Objects;
+
+namespace X4SectorCreator.Forms
 {
     partial class RegionPredefinedFieldsForm
     {
@@ -28,35 +31,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            cmbAsteroids = new ComboBox();
             label1 = new Label();
             label2 = new Label();
-            cmbNebula = new ComboBox();
+            cmbNebula = new MultiSelectCombo.NoDropDownComboBox();
             label3 = new Label();
-            cmbVolumetricfog = new ComboBox();
+            cmbVolumetricfog = new MultiSelectCombo.NoDropDownComboBox();
             label4 = new Label();
-            cmbObjects = new ComboBox();
+            cmbObjects = new MultiSelectCombo.NoDropDownComboBox();
             label5 = new Label();
-            cmbGravidar = new ComboBox();
+            cmbGravidar = new MultiSelectCombo.NoDropDownComboBox();
             label6 = new Label();
-            cmbPositional = new ComboBox();
+            cmbPositional = new MultiSelectCombo.NoDropDownComboBox();
             BtnAdd = new Button();
             BtnCancel = new Button();
             label7 = new Label();
-            cmbDebris = new ComboBox();
+            cmbDebris = new MultiSelectCombo.NoDropDownComboBox();
             label8 = new Label();
-            cmbAmbientSound = new ComboBox();
+            cmbAmbientSound = new MultiSelectCombo.NoDropDownComboBox();
+            cmbAsteroids = new MultiSelectCombo.NoDropDownComboBox();
             SuspendLayout();
-            // 
-            // cmbAsteroids
-            // 
-            cmbAsteroids.Font = new Font("Segoe UI", 11F);
-            cmbAsteroids.FormattingEnabled = true;
-            cmbAsteroids.Location = new Point(11, 37);
-            cmbAsteroids.Name = "cmbAsteroids";
-            cmbAsteroids.Size = new Size(328, 28);
-            cmbAsteroids.TabIndex = 0;
-            cmbAsteroids.SelectedIndexChanged += CmbAsteroids_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -86,7 +79,6 @@
             cmbNebula.Name = "cmbNebula";
             cmbNebula.Size = new Size(328, 28);
             cmbNebula.TabIndex = 2;
-            cmbNebula.SelectedIndexChanged += CmbNebula_SelectedIndexChanged;
             // 
             // label3
             // 
@@ -106,7 +98,6 @@
             cmbVolumetricfog.Name = "cmbVolumetricfog";
             cmbVolumetricfog.Size = new Size(328, 28);
             cmbVolumetricfog.TabIndex = 4;
-            cmbVolumetricfog.SelectedIndexChanged += CmbVolumetricfog_SelectedIndexChanged;
             // 
             // label4
             // 
@@ -126,7 +117,6 @@
             cmbObjects.Name = "cmbObjects";
             cmbObjects.Size = new Size(328, 28);
             cmbObjects.TabIndex = 6;
-            cmbObjects.SelectedIndexChanged += CmbObjects_SelectedIndexChanged;
             // 
             // label5
             // 
@@ -146,7 +136,6 @@
             cmbGravidar.Name = "cmbGravidar";
             cmbGravidar.Size = new Size(328, 28);
             cmbGravidar.TabIndex = 8;
-            cmbGravidar.SelectedIndexChanged += CmbGravidar_SelectedIndexChanged;
             // 
             // label6
             // 
@@ -166,7 +155,6 @@
             cmbPositional.Name = "cmbPositional";
             cmbPositional.Size = new Size(328, 28);
             cmbPositional.TabIndex = 10;
-            cmbPositional.SelectedIndexChanged += CmbPositional_SelectedIndexChanged;
             // 
             // BtnAdd
             // 
@@ -206,7 +194,6 @@
             cmbDebris.Name = "cmbDebris";
             cmbDebris.Size = new Size(328, 28);
             cmbDebris.TabIndex = 14;
-            cmbDebris.SelectedIndexChanged += CmbDebris_SelectedIndexChanged;
             // 
             // label8
             // 
@@ -226,13 +213,22 @@
             cmbAmbientSound.Name = "cmbAmbientSound";
             cmbAmbientSound.Size = new Size(328, 28);
             cmbAmbientSound.TabIndex = 16;
-            cmbAmbientSound.SelectedIndexChanged += cmbAmbientSound_SelectedIndexChanged;
+            // 
+            // cmbAsteroids
+            // 
+            cmbAsteroids.Font = new Font("Segoe UI", 11F);
+            cmbAsteroids.FormattingEnabled = true;
+            cmbAsteroids.Location = new Point(11, 37);
+            cmbAsteroids.Name = "cmbAsteroids";
+            cmbAsteroids.Size = new Size(328, 28);
+            cmbAsteroids.TabIndex = 18;
             // 
             // RegionPredefinedFieldsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(351, 498);
+            ClientSize = new Size(349, 498);
+            Controls.Add(cmbAsteroids);
             Controls.Add(label8);
             Controls.Add(cmbAmbientSound);
             Controls.Add(label7);
@@ -250,7 +246,6 @@
             Controls.Add(label2);
             Controls.Add(cmbNebula);
             Controls.Add(label1);
-            Controls.Add(cmbAsteroids);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -262,23 +257,23 @@
 
         #endregion
 
-        private ComboBox cmbAsteroids;
         private Label label1;
         private Label label2;
-        private ComboBox cmbNebula;
+        private MultiSelectCombo.NoDropDownComboBox cmbNebula;
         private Label label3;
-        private ComboBox cmbVolumetricfog;
+        private MultiSelectCombo.NoDropDownComboBox cmbVolumetricfog;
         private Label label4;
-        private ComboBox cmbObjects;
+        private MultiSelectCombo.NoDropDownComboBox cmbObjects;
         private Label label5;
-        private ComboBox cmbGravidar;
+        private MultiSelectCombo.NoDropDownComboBox cmbGravidar;
         private Label label6;
-        private ComboBox cmbPositional;
+        private MultiSelectCombo.NoDropDownComboBox cmbPositional;
         private Button BtnAdd;
         private Button BtnCancel;
         private Label label7;
-        private ComboBox cmbDebris;
+        private MultiSelectCombo.NoDropDownComboBox cmbDebris;
         private Label label8;
-        private ComboBox cmbAmbientSound;
+        private MultiSelectCombo.NoDropDownComboBox cmbAmbientSound;
+        private MultiSelectCombo.NoDropDownComboBox cmbAsteroids;
     }
 }

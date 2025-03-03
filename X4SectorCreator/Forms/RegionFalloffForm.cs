@@ -88,7 +88,7 @@ namespace X4SectorCreator.Forms
             StepObj.Position = posValue.ToString("0.0");
             StepObj.Value = valueValue.ToString("0.0");
 
-            int index = 0;
+            int index;
             switch (sT.Name)
             {
                 case "tabLateral":
