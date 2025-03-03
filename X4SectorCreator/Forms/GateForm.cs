@@ -513,9 +513,10 @@ namespace X4SectorCreator.Forms
                 UpdateInfoObject.SourceGate.DestinationSectorName = UpdateInfoObject.TargetSector.Name;
 
                 // Remove old target gate
+                var index = MainForm.Instance.GatesListBox.SelectedIndex;
                 MainForm.Instance.GatesListBox.Items.Remove(targetGate);
                 // Add new gate
-                _ = MainForm.Instance.GatesListBox.Items.Add(UpdateInfoObject.TargetGate);
+                MainForm.Instance.GatesListBox.Items.Insert(index, UpdateInfoObject.TargetGate);
                 MainForm.Instance.GatesListBox.SelectedItem = UpdateInfoObject.TargetGate;
             }
 

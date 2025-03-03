@@ -516,5 +516,32 @@ namespace X4SectorCreator.Forms
             RegionFieldsForm.FieldObj = selectedField;
             RegionFieldsForm.Show();
         }
+
+        private void ListBoxResources_DoubleClick(object sender, EventArgs e)
+        {
+            var selectedResource = ListBoxResources.SelectedItem as Resource;
+            if (selectedResource == null) return;
+
+            RegionResourcesForm.Resource = selectedResource;
+            RegionResourcesForm.Show();
+        }
+
+        private void ListBoxLateral_DoubleClick(object sender, EventArgs e)
+        {
+            var selectedStep = ListBoxLateral.SelectedItem as StepObj;
+            if (selectedStep == null) return;
+
+            RegionFalloffForm.StepObj = selectedStep;
+            RegionFalloffForm.Show();
+        }
+
+        private void ListBoxRadial_DoubleClick(object sender, EventArgs e)
+        {
+            var selectedStep = ListBoxRadial.SelectedItem as StepObj;
+            if (selectedStep == null) return;
+
+            RegionFalloffForm.StepObj = selectedStep;
+            RegionFalloffForm.Show();
+        }
     }
 }

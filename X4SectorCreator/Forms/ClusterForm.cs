@@ -122,8 +122,9 @@ namespace X4SectorCreator.Forms
                         MainForm.Instance.AllClusters.Add(coordinate, Cluster);
 
                         // Update listbox
+                        int index = MainForm.Instance.ClustersListBox.SelectedIndex;
                         MainForm.Instance.ClustersListBox.Items.Remove(oldName);
-                        _ = MainForm.Instance.ClustersListBox.Items.Add(name);
+                        MainForm.Instance.ClustersListBox.Items.Insert(index, name);
                         MainForm.Instance.ClustersListBox.SelectedItem = name;
                         break;
                 }

@@ -134,6 +134,7 @@
             ListBoxLateral.Name = "ListBoxLateral";
             ListBoxLateral.Size = new Size(236, 211);
             ListBoxLateral.TabIndex = 47;
+            ListBoxLateral.DoubleClick += ListBoxLateral_DoubleClick;
             // 
             // tabRadial
             // 
@@ -154,6 +155,7 @@
             ListBoxRadial.Name = "ListBoxRadial";
             ListBoxRadial.Size = new Size(236, 211);
             ListBoxRadial.TabIndex = 48;
+            ListBoxRadial.DoubleClick += ListBoxRadial_DoubleClick;
             // 
             // BtnFalloffAdd
             // 
@@ -226,6 +228,7 @@
             ListBoxResources.Name = "ListBoxResources";
             ListBoxResources.Size = new Size(204, 214);
             ListBoxResources.TabIndex = 53;
+            ListBoxResources.DoubleClick += ListBoxResources_DoubleClick;
             // 
             // label4
             // 

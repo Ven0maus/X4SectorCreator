@@ -1,9 +1,27 @@
 ﻿using X4SectorCreator.Objects;
+using System.ComponentModel;
 
 namespace X4SectorCreator.Forms
 {
     public partial class RegionResourcesForm : Form
     {
+        private Resource _resource;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Resource Resource
+        {
+            get => _resource;
+            set
+            {
+                _resource = value;
+                if (_resource != null)
+                {
+                    cmbWare.SelectedItem = _resource.Ware;
+                    cmbYield.SelectedItem = _resource.Yield;                    
+                    BtnAdd.Text = "Update";
+                }
+            }
+        }
+
         public RegionResourcesForm()
         {
             InitializeComponent();
@@ -23,13 +41,25 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            // Add resource to listbox
-            var resource = new Resource
+            switch(BtnAdd.Text)
             {
-                Ware = cmbWare.Text,
-                Yield = cmbYield.Text,
-            };
-            MainForm.Instance.RegionForm.ListBoxResources.Items.Add(resource);
+                case "Add":
+                    var resource = new Resource
+                    {
+                        Ware = cmbWare.Text,
+                        Yield = cmbYield.Text,
+                    };
+                    MainForm.Instance.RegionForm.ListBoxResources.Items.Add(resource);
+                    break;
+                case "Update":
+                    int index = MainForm.Instance.RegionForm.ListBoxResources.SelectedIndex;
+                    MainForm.Instance.RegionForm.ListBoxResources.Items.Remove(Resource);
+                    Resource.Ware = cmbWare.Text;
+                    Resource.Yield = cmbYield.Text;
+                    MainForm.Instance.RegionForm.ListBoxResources.Items.Insert(index, Resource);
+                    MainForm.Instance.RegionForm.ListBoxResources.SelectedItem = Resource;
+                    break;
+            }
 
             Close();
         }

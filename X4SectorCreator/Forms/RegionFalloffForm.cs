@@ -1,9 +1,27 @@
 ﻿using X4SectorCreator.Objects;
+using System.ComponentModel;
 
 namespace X4SectorCreator.Forms
 {
     public partial class RegionFalloffForm : Form
     {
+        private StepObj _stepObj;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public StepObj StepObj
+        {
+            get => _stepObj;
+            set
+            {
+                _stepObj = value;
+                if (_stepObj != null)
+                {
+                    txtPosition.Text = _stepObj.Position;
+                    txtValue.Text = _stepObj.Value;
+                    BtnAdd.Text = "Update";
+                }
+            }
+        }
+
         public RegionFalloffForm()
         {
             InitializeComponent();
@@ -23,6 +41,21 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            switch (BtnAdd.Text)
+            {
+                case "Add":
+                    HandleAdditionStep(posValue, valueValue);
+                    break;
+                case "Update":
+                    HandleUpdateStep(posValue, valueValue);
+                    break;
+            }
+
+            Close();
+        }
+
+        private static void HandleAdditionStep(float posValue, float valueValue)
+        {
             // Determine which tab is active
             var regionForm = MainForm.Instance.RegionForm;
             var sT = regionForm.TabControlFalloff.SelectedTab;
@@ -44,8 +77,33 @@ namespace X4SectorCreator.Forms
                     regionForm.ListBoxRadial.Items.Add(stepObj);
                     break;
             }
+        }
 
-            Close();
+        private void HandleUpdateStep(float posValue, float valueValue)
+        {
+            // Determine which tab is active
+            var regionForm = MainForm.Instance.RegionForm;
+            var sT = regionForm.TabControlFalloff.SelectedTab;
+
+            StepObj.Position = posValue.ToString("0.0");
+            StepObj.Value = valueValue.ToString("0.0");
+
+            int index = 0;
+            switch (sT.Name)
+            {
+                case "tabLateral":
+                    index = regionForm.ListBoxLateral.SelectedIndex;
+                    regionForm.ListBoxLateral.Items.Remove(StepObj);
+                    regionForm.ListBoxLateral.Items.Insert(index, StepObj);
+                    regionForm.ListBoxLateral.SelectedItem = StepObj;
+                    break;
+                case "tabRadial":
+                    index = regionForm.ListBoxRadial.SelectedIndex;
+                    regionForm.ListBoxRadial.Items.Remove(StepObj);
+                    regionForm.ListBoxRadial.Items.Insert(index, StepObj);
+                    regionForm.ListBoxRadial.SelectedItem = StepObj;
+                    break;
+            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
