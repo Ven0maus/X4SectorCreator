@@ -111,7 +111,7 @@ namespace X4SectorCreator.Forms
                         offSetX = 0;
                         offsetY = 0;
                     }
-                    if (selectedCluster.Value.Sectors.Count == 1)
+                    else if (selectedCluster.Value.Sectors.Count == 1)
                     {
                         // Down
                         offSetX = 0;
