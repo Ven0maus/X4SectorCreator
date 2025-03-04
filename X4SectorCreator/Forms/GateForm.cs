@@ -298,6 +298,7 @@ namespace X4SectorCreator.Forms
                             if (!GetTargetSectorSelection(out Sector targetSectorSelection, out _))
                             {
                                 _targetDotPosition = prev;
+                                _dragging = false;
                                 return;
                             }
                             TargetSectorSelection = targetSectorSelection;
