@@ -121,25 +121,63 @@ namespace X4SectorCreator.XmlGeneration
             foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
             {
                 var macro = Old.BaseGameMapping.CapitalizeFirstLetter();
-                elements.Add(CreateReplaceElement(Old.Name, New.Name, macro, "name", New.Name));
-                elements.Add(CreateReplaceElement(Old.Description, New.Description, macro, "description", New.Description));
+
+                // Identification nodes
+                elements.Add(CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name));
+                elements.Add(CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description));
             }
             foreach (var (VanillaCluster, Old, New) in vanillaChanges.ModifiedSectors)
             {
                 var cluster = VanillaCluster;
                 var macro = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{Old.BaseGameMapping.CapitalizeFirstLetter()}";
-                elements.Add(CreateReplaceElement(Old.Name, New.Name, macro, "name", New.Name));
-                elements.Add(CreateReplaceElement(Old.Description, New.Description, macro, "description", New.Description));
+
+                // Identification nodes
+                elements.Add(CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name));
+                elements.Add(CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description));
+
+                // Area nodes
+                elements.Add(CreateReplaceElement(Old.Sunlight.ToString("0.##"), New.Sunlight.ToString("0.##"), macro, "area", "sunlight", New.Sunlight.ToString("0.##")));
+                elements.Add(CreateReplaceElement(Old.Economy.ToString("0.##"), New.Economy.ToString("0.##"), macro, "area", "economy", New.Economy.ToString("0.##")));
+                elements.Add(CreateReplaceElement(Old.Security.ToString("0.##"), New.Security.ToString("0.##"), macro, "area", "security", New.Security.ToString("0.##")));
+
+                // Adjust tags for random anomalies
+                if (Old.AllowRandomAnomalies != New.AllowRandomAnomalies)
+                {
+                    if (New.AllowRandomAnomalies)
+                    {
+                        if (string.IsNullOrWhiteSpace(New.Tags))
+                        {
+                            if (New.AllowRandomAnomalies)
+                                New.Tags = "allowrandomanomaly";
+                        }
+                        else if (!New.Tags.Contains("allowrandomanomaly"))
+                        {
+                            New.Tags = New.Tags.TrimEnd() + " allowrandomanomaly";
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrWhiteSpace(New.Tags))
+                        {
+                            if (New.Tags.Contains("allowrandomanomaly"))
+                            {
+                                New.Tags = New.Tags.Replace("allowrandomanomaly", string.Empty).TrimEnd();
+                            }
+                        }
+                    }
+                }
+
+                elements.Add(CreateReplaceElement(Old.Tags, New.Tags, macro, "area", "tags", New.Tags));
             }
             return elements.Where(a => a != null);
         }
 
-        private static XElement CreateReplaceElement(string checkOne, string checkTwo, string macro, string property, string value)
+        private static XElement CreateReplaceElement(string checkOne, string checkTwo, string macro, string property, string field, string value)
         {
             if (Extensions.HasStringChanged(checkOne, checkTwo))
             {
                 return new XElement("replace",
-                    new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/identification/@{property}"),
+                    new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/identification/@{field}"),
                     value);
             }
             return null;
