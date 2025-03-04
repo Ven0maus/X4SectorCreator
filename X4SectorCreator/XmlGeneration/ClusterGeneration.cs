@@ -138,14 +138,9 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
         {
-            foreach (var cluster in vanillaChanges.RemovedClusters)
-            {
-                yield return (cluster.Dlc, new XElement("remove",
-                    new XAttribute("sel", $"//macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_macro']")));
-            }
             foreach (var sector in vanillaChanges.RemovedSectors)
             {
-                // Check if the cluster was removed, then skip this sector as its already part of the cluster deletion
+                // Check if the cluster was removed, then skip this sector as its already part of the cluster deletion in galaxy.xml
                 if (vanillaChanges.RemovedClusters.Contains(sector.VanillaCluster)) continue;
 
                 var clusterCode = sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();

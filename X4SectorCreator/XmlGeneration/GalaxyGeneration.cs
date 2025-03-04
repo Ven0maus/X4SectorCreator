@@ -12,8 +12,10 @@ namespace X4SectorCreator.XmlGeneration
             string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
-            XDocument xmlDocument = GalaxySettingsForm.IsCustomGalaxy
-                ? new(new XDeclaration("1.0", "utf-8", null),
+            XDocument xmlDocument = null;
+            if (GalaxySettingsForm.IsCustomGalaxy)
+            {
+                xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
                     new XElement("macros",
                         new XElement("macro",
                             new XAttribute("name", $"{galaxyName}_macro"),
@@ -24,17 +26,52 @@ namespace X4SectorCreator.XmlGeneration
                             )
                         )
                     )
-                )
-                : new(new XDeclaration("1.0", "utf-8", null),
-                    new XElement("diff",
-                        new XElement("add",
-                            new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections"),
-                            GenerateClusters(modPrefix, orderedClusters),
-                            GenerateGateConnections(modPrefix, orderedClusters)
-                        )
-                    )
                 );
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/galaxy.xml")));
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/galaxy.xml")));
+            }
+            else
+            {
+                var groups = GenerateVanillaChanges(vanillaChanges)
+                    .Append((null, GenerateNewContent(modPrefix, clusters)))
+                    .Where(a => a.element != null)
+                    .GroupBy(a => a.dlc)
+                    .ToArray();
+                if (groups.Length > 0)
+                {
+                    foreach (var group in groups)
+                    {
+                        string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
+                        xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
+                            new XElement("diff", group.Select(a => a.element))
+                        );
+
+                        if (dlcMapping == null)
+                        {
+                            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/galaxy.xml")));
+                        }
+                        else
+                        {
+                            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{group.Key}/maps/{galaxyName}/galaxy.xml")));
+                        }
+                    }
+                }
+            }
+        }
+
+        private static XElement GenerateNewContent(string modPrefix, List<Cluster> clusters)
+        {
+            var addElement = new XElement("add",
+                                new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections"));
+
+            var newClusters = GenerateClusters(modPrefix, clusters);
+            foreach (var element in newClusters)
+                addElement.Add(element);
+
+            var newGateConnections = GenerateGateConnections(modPrefix, clusters);
+            foreach (var element in newGateConnections)
+                addElement.Add(element);
+
+            return addElement.IsEmpty ? null : addElement;
         }
 
         private static IEnumerable<XElement> GenerateClusters(string modPrefix, List<Cluster> clusters)
@@ -101,6 +138,49 @@ namespace X4SectorCreator.XmlGeneration
                                 )
                             );
                         }
+                    }
+                }
+            }
+        }
+
+        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
+        {
+            foreach (var cluster in vanillaChanges.RemovedClusters)
+            {
+                yield return (cluster.Dlc, new XElement("remove",
+                    new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection']")));
+            }
+            foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
+            {
+                if (Old.Position != New.Position) 
+                {
+                    // Exceptional case for cluster 0, 0 it has no offset properties defined
+                    if (Old.BaseGameMapping.Equals("cluster_01", StringComparison.OrdinalIgnoreCase))
+                    {
+                        yield return (Old.Dlc, new XElement("add",
+                            new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']"),
+                                new XElement("offset",
+                                    new XElement("position",
+                                        new XAttribute("x", New.Position.X),
+                                        new XAttribute("y", "0"),
+                                        new XAttribute("z", New.Position.Y)
+                                    )
+                                )
+                            )
+                        );
+                    }
+                    else
+                    {
+                        yield return (Old.Dlc, new XElement("replace",
+                            new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']/offset/position/@x"),
+                            New.Position.X
+                            )
+                        );
+                        yield return (Old.Dlc, new XElement("replace",
+                            new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']/offset/position/@z"),
+                            New.Position.Y
+                            )
+                        );
                     }
                 }
             }
