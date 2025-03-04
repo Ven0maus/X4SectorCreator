@@ -8,18 +8,22 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
+            var elements = GenerateVanillaChanges(vanillaChanges)
+                .Append(GenerateNewClusterElements(modPrefix, clusters))
+                .ToArray();
+
             XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("diff",
                     new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
                     new XAttribute(xsi + "noNamespaceSchemaLocation", "libraries.xsd"),
-                    GenerateNewClusterElements(modPrefix, clusters),
-                    GenerateVanillaChanges(vanillaChanges)
+                    elements
                 )
             );
 
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/mapdefaults.xml")));
+            if (elements.Length > 0)
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/mapdefaults.xml")));
         }
 
         private static XElement GenerateNewClusterElements(string modPrefix, List<Cluster> clusters)
