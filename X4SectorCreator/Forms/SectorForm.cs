@@ -162,6 +162,23 @@ namespace X4SectorCreator.Forms
                     }
                     Sector sector = selectedCluster.Value.Sectors.First(a => a.Name.Equals(selectedSector));
 
+                    // Adjust first the gates
+                    var gates = sector.Zones.SelectMany(a => a.Gates).ToArray();
+                    foreach (var gate in gates)
+                    {
+                        Sector sourceSector = MainForm.Instance.AllClusters.Values
+                        .SelectMany(a => a.Sectors)
+                        .First(a => a.Name.Equals(gate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+                        Zone sourceZone = sourceSector.Zones
+                            .First(a => a.Gates
+                                .Any(a => a.DestinationSectorName
+                                    .Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
+                        Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+
+                        sourceGate.DestinationSectorName = name;
+                        gate.ParentSectorName = name;
+                    }
+
                     // Update fields
                     sector.Name = name;
                     sector.Description = txtDescription.Text;

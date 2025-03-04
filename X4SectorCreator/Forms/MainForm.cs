@@ -604,6 +604,13 @@ namespace X4SectorCreator
                 return;
             }
 
+            var cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            if (cluster.Value.Sectors.Count >= 3)
+            {
+                _ = MessageBox.Show("You've already reached the maximum allowed sectors in this sector.");
+                return;
+            }
+
             SectorForm.Sector = null;
             SectorForm.BtnCreate.Text = "Create";
             SectorForm.Show();
