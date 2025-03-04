@@ -353,6 +353,24 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            // Check if regions exist that use this given region definition
+            var regionsThatUseThisDefinition = MainForm.Instance.AllClusters.Values
+                .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
+                .SelectMany(cs => cs.sector.Regions, (cs, region) => new { cs.cluster, cs.sector, region })
+                .Where(x => x.region.Definition.Equals(selectedRegionDefinition))
+                .Where(x => CustomRegion == null || !x.region.Equals(CustomRegion))
+                .ToArray();
+
+            if (regionsThatUseThisDefinition.Length > 0)
+            {
+                string message = "Following regions use this region definition, they must first be changed or deleted before this definition can be deleted:\n" +
+                    string.Join("\n", regionsThatUseThisDefinition.Select(x =>
+                        $"- {x.region.Name} (Cluster: {x.cluster.Name}, Sector: {x.sector.Name})"));
+
+                _ = MessageBox.Show(message);
+                return;
+            }
+
             int index = ListBoxRegionDefinitions.Items.IndexOf(selectedRegionDefinition);
             ListBoxRegionDefinitions.Items.Remove(selectedRegionDefinition);
             _ = RegionDefinitionForm.RegionDefinitions.Remove(selectedRegionDefinition); // remove from static cache
