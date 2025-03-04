@@ -19,4 +19,11 @@ namespace X4SectorCreator.Objects
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);
     }
+
+    public enum ClusterOption
+    {
+        Custom,
+        Vanilla,
+        Both
+    }
 }

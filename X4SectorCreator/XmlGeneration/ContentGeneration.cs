@@ -5,7 +5,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class ContentGeneration
     {
-        public static void Generate(string folder, string modName, string depVersion, List<Cluster> clusters)
+        public static void Generate(string folder, string modName, string depVersion, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             XElement content = new("content",
                 new XAttribute("id", $"{modName.Replace(" ", "_")}"),

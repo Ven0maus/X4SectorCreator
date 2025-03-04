@@ -6,7 +6,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class RegionDefinitionGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             // Create XML structure
             XDocument xmlDocument = new(

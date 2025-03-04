@@ -6,7 +6,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class MapDefaultsGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
             XDocument xmlDocument = new(
