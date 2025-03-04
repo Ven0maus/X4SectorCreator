@@ -12,17 +12,19 @@ namespace X4SectorCreator
         private Dictionary<(int, int), Cluster> _baseGameClusters;
         private Cluster[] _customClusters;
 
-        private readonly int _hexSize = 100;
+        private const int _hexSize = 100;
 
         // How many extra rows and cols will be "open" around the base game sectors + custom sectors for the user to select
         private const int _minExpansionRoom = 20;
         private int _cols, _rows;
-        private PointF _offset;
         private bool _dragging = false;
         private Point _lastMousePos, _mouseDownPos;
         private int? _selectedChildHexIndex, _previousSelectedChildHexIndex;
         private (int, int)? _selectedHex, _previousSelectedHex;
-        private float _zoom = 1.2f; // 1.0 means 100% scale
+
+        private const float _defaultZoom = 1.2f;
+        private static PointF _offset;
+        private static float _zoom = _defaultZoom; // 1.0 means 100% scale
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
         private static readonly Dictionary<string, string> _dlcMapping = new()
@@ -36,6 +38,8 @@ namespace X4SectorCreator
         };
         private static readonly Dictionary<int, bool> _dlcsSelected = [];
         private static readonly List<string> _dlcIndexOrder = [];
+
+        private static bool _sectorMapFirstTimeOpen = true;
 
         public SectorMapForm()
         {
@@ -68,9 +72,6 @@ namespace X4SectorCreator
 
         public void Reset()
         {
-            _zoom = 1.2f;
-            _offset = new PointF(0, 0);
-
             _baseGameClusters = MainForm.Instance.AllClusters
                 .Where(a => a.Value.IsBaseGame)
                 .ToDictionary(a => a.Key, a => a.Value);
@@ -132,14 +133,17 @@ namespace X4SectorCreator
         {
             if (WindowState != FormWindowState.Minimized)
             {
-                // Recalculate the offset to keep (0,0) in the center
-                if (_hexagons.TryGetValue((0, 0), out Hexagon zeroHex))
+                if (_sectorMapFirstTimeOpen)
                 {
-                    PointF center = GetHexCenter(zeroHex.Points);
-                    _offset = new PointF((ClientSize.Width / 2) - center.X, (ClientSize.Height / 2) - center.Y);
+                    // Recalculate the offset to keep (0,0) in the center
+                    if (_hexagons.TryGetValue((0, 0), out Hexagon zeroHex))
+                    {
+                        PointF center = GetHexCenter(zeroHex.Points);
+                        _offset = new PointF((ClientSize.Width / 2) - center.X, (ClientSize.Height / 2) - center.Y);
+                    }
+                    _sectorMapFirstTimeOpen = false;
+                    Invalidate(); // Force redraw
                 }
-
-                Invalidate(); // Force redraw
             }
         }
 
@@ -282,7 +286,7 @@ namespace X4SectorCreator
                     }
 
                     // Determine hex information
-                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, ClientSize.Width / 2, ClientSize.Height / 2, _zoom, children);
+                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, _defaultZoom, children);
                     _hexagons[translatedCoordinate] = hex;
                 }
             }
