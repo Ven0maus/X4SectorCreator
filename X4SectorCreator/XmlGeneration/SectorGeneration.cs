@@ -7,7 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
+            string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
             // Save new sectors in custom clusters
@@ -21,15 +21,15 @@ namespace X4SectorCreator.XmlGeneration
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_sectors.xml")));
 
             // Save new zones in existing sectors
-            var diffData = GenerateSectorAdds(modPrefix, clusters)
+            List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateSectorAdds(modPrefix, clusters)
                 .GroupBy(a => a.dlc)
                 .ToList();
             if (diffData.Count > 0)
             {
-                foreach (var group in diffData)
+                foreach (IGrouping<string, (string dlc, XElement element)> group in diffData)
                 {
-                    var dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
-                    var xmlSectorDiff = new XDocument(
+                    string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
+                    XDocument xmlSectorDiff = new(
                         new XDeclaration("1.0", "utf-8", null),
                         new XElement("diff",
                             group.Select(a => a.element)
@@ -92,13 +92,19 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateSectorAdds(string modPrefix, List<Cluster> clusters)
         {
-            foreach (var cluster in clusters)
+            foreach (Cluster cluster in clusters)
             {
-                if (!cluster.IsBaseGame) continue;
-
-                foreach (var sector in cluster.Sectors)
+                if (!cluster.IsBaseGame)
                 {
-                    if (sector.Zones.Count == 0) continue;
+                    continue;
+                }
+
+                foreach (Sector sector in cluster.Sectors)
+                {
+                    if (sector.Zones.Count == 0)
+                    {
+                        continue;
+                    }
 
                     yield return (cluster.Dlc, new XElement("add",
                         new XAttribute("sel", $"//macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"),
@@ -110,7 +116,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateExistingSectorZoneConnections(string modPrefix, Cluster cluster, Sector sector, List<Zone> zones)
         {
-            foreach (var zone in zones.OrderBy(a => a.Id))
+            foreach (Zone zone in zones.OrderBy(a => a.Id))
             {
                 yield return new XElement("connection",
                     new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_connection"),

@@ -7,7 +7,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
+            string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
             XDocument xmlDocument = new(
@@ -56,6 +56,35 @@ namespace X4SectorCreator.XmlGeneration
                         new XAttribute("connection", "cluster")
                     )
                 );
+
+                // Return regions after sector connection
+                foreach (Objects.Region region in sector.Regions)
+                {
+                    yield return new XElement("connection",
+                        new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}_connection"),
+                        new XAttribute("ref", "regions"),
+                        new XElement("offset",
+                            new XElement("position",
+                                new XAttribute("x", sector.Offset.X + region.Position.X),
+                                new XAttribute("y", 0),
+                                new XAttribute("z", sector.Offset.Y + region.Position.Y)
+                            )
+                        ),
+                        new XElement("macro",
+                            new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}_macro"),
+                            new XElement("component",
+                                new XAttribute("connection", "cluster"),
+                                new XAttribute("ref", "standardregion")
+                            ),
+                            // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
+                            new XElement("properties",
+                                new XElement("region",
+                                    new XAttribute("ref", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}".ToLower())
+                                )
+                            )
+                        )
+                    );
+                }
             }
 
             // Adding content connection

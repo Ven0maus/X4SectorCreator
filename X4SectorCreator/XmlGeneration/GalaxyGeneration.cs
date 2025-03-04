@@ -9,13 +9,11 @@ namespace X4SectorCreator.XmlGeneration
         {
             List<Cluster> orderedClusters = [.. clusters.OrderBy(a => a.Id)];
 
-            var galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
+            string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
-            XDocument xmlDocument;
-            if (GalaxySettingsForm.IsCustomGalaxy)
-            {
-                xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
+            XDocument xmlDocument = GalaxySettingsForm.IsCustomGalaxy
+                ? new(new XDeclaration("1.0", "utf-8", null),
                     new XElement("macros",
                         new XElement("macro",
                             new XAttribute("name", $"{galaxyName}_macro"),
@@ -26,11 +24,8 @@ namespace X4SectorCreator.XmlGeneration
                             )
                         )
                     )
-                );
-            }
-            else
-            {
-                xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
+                )
+                : new(new XDeclaration("1.0", "utf-8", null),
                     new XElement("diff",
                         new XElement("add",
                             new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections"),
@@ -39,8 +34,6 @@ namespace X4SectorCreator.XmlGeneration
                         )
                     )
                 );
-            }
-
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/galaxy.xml")));
         }
 
@@ -85,7 +78,7 @@ namespace X4SectorCreator.XmlGeneration
                             if (string.IsNullOrWhiteSpace(gate.SourcePath) ||
                                 string.IsNullOrWhiteSpace(gate.DestinationPath))
                             {
-                                throw new Exception($"Gate \"{cluster.Name}/{sector.Name}/{zone.Name}/g{gate.Id:D3}\" source/destination path is not set.");
+                                throw new Exception($"Gate \"{cluster.Name}/{sector.Name}/z{zone.Id}/g{gate.Id:D3}\" source/destination path is not set.");
                             }
 
                             Sector sourceSector = clusters

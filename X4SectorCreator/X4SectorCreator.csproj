@@ -12,6 +12,9 @@
     <None Update="Mappings\dlc_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Mappings\predefinedfield_mappings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Mappings\sector_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

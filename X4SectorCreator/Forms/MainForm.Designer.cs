@@ -266,13 +266,13 @@
             // 
             // BtnNewRegion
             // 
-            BtnNewRegion.Enabled = false;
             BtnNewRegion.Location = new Point(335, 482);
             BtnNewRegion.Name = "BtnNewRegion";
             BtnNewRegion.Size = new Size(75, 23);
             BtnNewRegion.TabIndex = 38;
             BtnNewRegion.Text = "New";
             BtnNewRegion.UseVisualStyleBackColor = true;
+            BtnNewRegion.Click += BtnNewRegion_Click;
             // 
             // RegionsListBox
             // 
@@ -281,6 +281,7 @@
             RegionsListBox.Name = "RegionsListBox";
             RegionsListBox.Size = new Size(156, 169);
             RegionsListBox.TabIndex = 37;
+            RegionsListBox.DoubleClick += RegionsListBox_DoubleClick;
             // 
             // label1
             // 
@@ -294,13 +295,13 @@
             // 
             // BtnRemoveRegion
             // 
-            BtnRemoveRegion.Enabled = false;
             BtnRemoveRegion.Location = new Point(416, 482);
             BtnRemoveRegion.Name = "BtnRemoveRegion";
             BtnRemoveRegion.Size = new Size(75, 23);
             BtnRemoveRegion.TabIndex = 35;
             BtnRemoveRegion.Text = "Remove";
             BtnRemoveRegion.UseVisualStyleBackColor = true;
+            BtnRemoveRegion.Click += BtnRemoveRegion_Click;
             // 
             // MainForm
             // 
@@ -332,6 +333,7 @@
             Controls.Add(ClustersListBox);
             Controls.Add(lblClusters);
             Controls.Add(BtnRemoveCluster);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "MainForm";
             Text = "X4 Sector Creator";

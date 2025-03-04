@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Configuration
@@ -9,6 +10,7 @@ namespace X4SectorCreator.Configuration
         private static readonly JsonSerializerOptions _serializerOptions = new()
         {
             WriteIndented = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             Converters = { new JsonStringEnumConverter() }
         };
 
@@ -21,6 +23,8 @@ namespace X4SectorCreator.Configuration
                 cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];
                 foreach (Sector sector in cluster.Sectors)
                 {
+                    sector.Regions ??= []; // Support older config saves
+                    sector.Regions = [.. sector.Regions];
                     sector.Zones = [.. sector.Zones.OrderBy(a => a.Id)];
                     foreach (Zone zone in sector.Zones)
                     {
@@ -29,9 +33,10 @@ namespace X4SectorCreator.Configuration
                 }
             }
 
-            var configObj = new ConfigurationObj
+            ConfigurationObj configObj = new()
             {
                 Clusters = clusters,
+                RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
                 GalaxyName = GalaxySettingsForm.GalaxyName,
                 Version = new VersionChecker().CurrentVersion
             };
@@ -52,7 +57,7 @@ namespace X4SectorCreator.Configuration
                 return null;
             }
 
-            var vc = new VersionChecker();
+            VersionChecker vc = new();
 
             // Validate app version, show message if from an older version
             if (!VersionChecker.CompareVersion(vc.CurrentVersion, configObj.Version))
@@ -64,13 +69,21 @@ namespace X4SectorCreator.Configuration
             GalaxySettingsForm.GalaxyName = configObj.GalaxyName;
             GalaxySettingsForm.IsCustomGalaxy = configObj.IsCustomGalaxy;
 
+            // Set stored region definitions
+            if (configObj.RegionDefinitions != null && configObj.RegionDefinitions.Count > 0)
+            {
+                RegionDefinitionForm.RegionDefinitions.AddRange(configObj.RegionDefinitions);
+            }
+
             // First order everything correctly before returning
-            var clusters = configObj.Clusters.OrderBy(a => a.Id).ToList();
+            List<Cluster> clusters = configObj.Clusters.OrderBy(a => a.Id).ToList();
             foreach (Cluster cluster in clusters)
             {
                 cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];
                 foreach (Sector sector in cluster.Sectors)
                 {
+                    sector.Regions ??= []; // Support older config saves
+                    sector.Regions = [.. sector.Regions.OrderBy(a => a.Id)];
                     sector.Zones = [.. sector.Zones.OrderBy(a => a.Id)];
                     foreach (Zone zone in sector.Zones)
                     {

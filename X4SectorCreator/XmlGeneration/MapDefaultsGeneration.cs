@@ -27,7 +27,7 @@ namespace X4SectorCreator.XmlGeneration
 
             foreach (Cluster cluster in clusters.Where(a => !a.IsBaseGame))
             {
-                var clusterFactionLogicTag = AddFactionLogic(cluster: cluster);
+                XObject clusterFactionLogicTag = AddFactionLogic(cluster: cluster);
                 // Add Cluster XML
                 elements.Add(
                     new XElement("dataset",
@@ -91,10 +91,10 @@ namespace X4SectorCreator.XmlGeneration
         {
             if (cluster != null)
             {
-                if (cluster.Sectors.All(a => a.DisableFactionLogic) || 
+                if (cluster.Sectors.All(a => a.DisableFactionLogic) ||
                     cluster.Sectors.All(a => !a.DisableFactionLogic))
                 {
-                    var disableFactionLogic = cluster.Sectors[0].DisableFactionLogic;
+                    bool disableFactionLogic = cluster.Sectors[0].DisableFactionLogic;
                     return new XElement("area",
                         new XAttribute("factionlogic", (!disableFactionLogic).ToString().ToLower())
                     );

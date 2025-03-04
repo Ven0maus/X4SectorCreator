@@ -13,8 +13,10 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
 
-            foreach (var mapping in MainForm.Instance.BackgroundVisualMapping)
-                cmbBackgroundVisual.Items.Add(mapping.Key);
+            foreach (KeyValuePair<string, string> mapping in MainForm.Instance.BackgroundVisualMapping)
+            {
+                _ = cmbBackgroundVisual.Items.Add(mapping.Key);
+            }
         }
 
         private void BtnPick_Click(object sender, EventArgs e)
@@ -57,13 +59,13 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            var selectedBackgroundVisual = cmbBackgroundVisual.SelectedItem as string;
+            string selectedBackgroundVisual = cmbBackgroundVisual.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedBackgroundVisual))
             {
                 _ = MessageBox.Show("Please select a valid visual background for the cluster.");
                 return;
             }
-            var backgroundVisualMapping = MainForm.Instance.BackgroundVisualMapping[selectedBackgroundVisual];
+            string backgroundVisualMapping = MainForm.Instance.BackgroundVisualMapping[selectedBackgroundVisual];
 
             Match match = RegexHelper.TupleLocationRegex().Match(location);
             if (match.Success)
@@ -100,7 +102,8 @@ namespace X4SectorCreator.Forms
                             Id = 1,
                             Name = name,
                             Owner = "None",
-                            Zones = [ ]
+                            Zones = [],
+                            Regions = []
                         });
 
                         // Add to listbox and select it
@@ -121,8 +124,9 @@ namespace X4SectorCreator.Forms
                         MainForm.Instance.AllClusters.Add(coordinate, Cluster);
 
                         // Update listbox
+                        int index = MainForm.Instance.ClustersListBox.SelectedIndex;
                         MainForm.Instance.ClustersListBox.Items.Remove(oldName);
-                        _ = MainForm.Instance.ClustersListBox.Items.Add(name);
+                        MainForm.Instance.ClustersListBox.Items.Insert(index, name);
                         MainForm.Instance.ClustersListBox.SelectedItem = name;
                         break;
                 }

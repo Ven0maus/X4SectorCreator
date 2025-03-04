@@ -40,7 +40,7 @@
 
         private static string ConvertToPath(string modPrefix, Cluster cluster, Sector sector, Zone zone, Gate gate)
         {
-            var isBaseGame = cluster.IsBaseGame;
+            bool isBaseGame = cluster.IsBaseGame;
 
             string path;
             if (isBaseGame)

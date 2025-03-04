@@ -80,6 +80,7 @@ namespace X4SectorCreator.Forms
             // MultiInputDialog
             // 
             ClientSize = new Size(284, 261);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "MultiInputDialog";

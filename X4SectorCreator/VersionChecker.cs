@@ -29,7 +29,7 @@ namespace X4SectorCreator
                 string response = await client.GetStringAsync(_versionUrl);
 
                 VersionInfo versionInfo = JsonSerializer.Deserialize<VersionInfo>(response);
-                return versionInfo != null && (IsNewVersionAvailable(versionInfo.AppVersion, CurrentVersion) || IsNewVersionAvailable(versionInfo.X4Version, TargetGameVersion)) ? 
+                return versionInfo != null && (IsNewVersionAvailable(versionInfo.AppVersion, CurrentVersion) || IsNewVersionAvailable(versionInfo.X4Version, TargetGameVersion)) ?
                     ((bool NewVersionAvailable, VersionInfo VersionInfo))(true, versionInfo) : ((bool NewVersionAvailable, VersionInfo VersionInfo))(false, versionInfo);
             }
             catch (Exception)
@@ -61,12 +61,12 @@ namespace X4SectorCreator
                     TargetGameVersion = versionInfo.X4Version;
 
                     // Save it to disk
-                    var newVersionInfo = new VersionInfo
+                    VersionInfo newVersionInfo = new()
                     {
                         AppVersion = CurrentVersion,
                         X4Version = versionInfo.X4Version,
                     };
-                    var json = JsonSerializer.Serialize(newVersionInfo);
+                    string json = JsonSerializer.Serialize(newVersionInfo);
                     File.WriteAllText(_versionFilePath, json);
                 }
             }
