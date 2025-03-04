@@ -3,11 +3,16 @@
 A tool to help mod new sectors and gate connections in *X4: Foundations*. This tool provides an easy way to create clusters, define sectors within those clusters, and establish gate connections between them. It generates a fully working mod directory with all necessary XML files, making the modding process seamless.
 
 ## Features
-- **Custom Galaxy Creation** - The tool supports complete custom galaxy creation
-- **Cluster Creation** – Define new clusters in the X4 universe.
-- **Sector Creation** – Add sectors within clusters with ease.
-- **Gate Connections** – Establish connections between sectors via gates.
-- **Automatic Mod Directory Generation** – Outputs a complete mod structure with all required XML files.
+- Cluster creation (placement & visualization on map)
+- Sector creation (up to 3 per cluster for now)
+- Gate creation between custom & basegame sectors (dragging + rotating)
+- Region creation (dragging + resizing + ability to fully choose what is inside the region)
+- Possibility to create a complete custom universe if you wish
+- Auto-detect new versions and will show a popup if new version available
+- Easily edit each component by double clicking on them (clusters, sectors, gates, regions)
+- Detect when you have connections with DLC sectors and will add dependency to content.xml automatically
+- Export/Import configuration (to continue working on your changes later)
+- Export to XML (creates a mod folder with all the required files, it can be directly put in extensions folder and run)
 
 ## Installation
 1. Just download the latest release, it will contain the tool executable.
