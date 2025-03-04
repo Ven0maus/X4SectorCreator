@@ -14,6 +14,7 @@ namespace X4SectorCreator
             Thread.CurrentThread.CurrentCulture = invariantCulture;
             Thread.CurrentThread.CurrentUICulture = invariantCulture;
             ApplicationConfiguration.Initialize();
+            //Application.Run(new SplineTubeEditorForm());
             Application.Run(new MainForm());
         }
     }
