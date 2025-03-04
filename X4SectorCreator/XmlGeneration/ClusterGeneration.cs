@@ -15,15 +15,17 @@ namespace X4SectorCreator.XmlGeneration
                     .Where(a => !a.IsBaseGame)
                     .ToList())
                 .ToArray();
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("macros",
-                    elements
-                )
-            );
-
             if (elements.Length > 0)
+            {
+                XDocument xmlDocument = new(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("macros",
+                        elements
+                    )
+                );
+
                 xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_clusters.xml")));
+            }
             #endregion
 
             #region BaseGame Clusters File
@@ -36,7 +38,7 @@ namespace X4SectorCreator.XmlGeneration
                 foreach (var group in vanillaChangeElements)
                 {
                     string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
-                    xmlDocument = new(
+                    XDocument xmlDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
                         new XElement("diff",
                             group.Select(a => a.element)

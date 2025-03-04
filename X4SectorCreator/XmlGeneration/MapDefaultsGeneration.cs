@@ -12,18 +12,20 @@ namespace X4SectorCreator.XmlGeneration
                 .Append(GenerateNewClusterElements(modPrefix, clusters))
                 .ToArray();
 
-            XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("diff",
-                    new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                    new XAttribute(xsi + "noNamespaceSchemaLocation", "libraries.xsd"),
-                    elements
-                )
-            );
-
             if (elements.Length > 0)
+            {
+                XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
+                XDocument xmlDocument = new(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("diff",
+                        new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                        new XAttribute(xsi + "noNamespaceSchemaLocation", "libraries.xsd"),
+                        elements
+                    )
+                );
+
                 xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/mapdefaults.xml")));
+            }
         }
 
         private static XElement GenerateNewClusterElements(string modPrefix, List<Cluster> clusters)

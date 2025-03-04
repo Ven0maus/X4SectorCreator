@@ -15,19 +15,25 @@ namespace X4SectorCreator.XmlGeneration
             XDocument xmlDocument = null;
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
-                xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
-                    new XElement("macros",
-                        new XElement("macro",
-                            new XAttribute("name", $"{galaxyName}_macro"),
-                            new XAttribute("class", "galaxy"),
-                                new XElement("connections",
-                                GenerateClusters(modPrefix, orderedClusters),
-                                GenerateGateConnections(modPrefix, orderedClusters)
+                var galaxyElements = GenerateClusters(modPrefix, orderedClusters)
+                    .Concat(GenerateGateConnections(modPrefix, orderedClusters))
+                    .ToArray();
+                if (galaxyElements.Length > 0)
+                {
+                    xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
+                        new XElement("macros",
+                            new XElement("macro",
+                                new XAttribute("name", $"{galaxyName}_macro"),
+                                new XAttribute("class", "galaxy"),
+                                    new XElement("connections",
+                                    galaxyElements
+                                )
                             )
                         )
-                    )
-                );
-                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/galaxy.xml")));
+                    );
+
+                    xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/galaxy.xml")));
+                }
             }
             else
             {

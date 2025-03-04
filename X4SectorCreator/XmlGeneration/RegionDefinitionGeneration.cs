@@ -9,17 +9,21 @@ namespace X4SectorCreator.XmlGeneration
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             // Create XML structure
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("regions",
-                    new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                    new XAttribute(XName.Get("noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance"), "region_definitions.xsd"),
-                    GetRegions(modPrefix, clusters)
-                )
-            );
+            var regions = GetRegions(modPrefix, clusters).ToArray();
+            if (regions.Length > 0)
+            {
+                XDocument xmlDocument = new(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("regions",
+                        new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                        new XAttribute(XName.Get("noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance"), "region_definitions.xsd"),
+                        regions
+                    )
+                );
 
-            // Save to an XML file
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/region_definitions.xml")));
+                // Save to an XML file
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/region_definitions.xml")));
+            }
         }
 
         private static IEnumerable<XElement> GetRegions(string modPrefix, List<Cluster> clusters)

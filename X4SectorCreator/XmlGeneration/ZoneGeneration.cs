@@ -12,16 +12,20 @@ namespace X4SectorCreator.XmlGeneration
 
             #region Custom Zone File
             // Save new zones in custom sectors
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("macros",
-                    new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                    new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
-                    GenerateZones(modPrefix, clusters)
-                )
-            );
+            var zones = GenerateZones(modPrefix, clusters).ToArray();
+            if (zones.Length > 0)
+            {
+                XDocument xmlDocument = new(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("macros",
+                        new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                        new XAttribute(XNamespace.Xmlns + "xsd", "http://www.w3.org/2001/XMLSchema"),
+                        zones
+                    )
+                );
 
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_zones.xml")));
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_zones.xml")));
+            }
             #endregion
 
             #region BaseGame Zone File

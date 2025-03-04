@@ -12,14 +12,17 @@ namespace X4SectorCreator.XmlGeneration
 
             #region Custom Sector File
             // Save new sectors in custom clusters
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("macros",
-                    GenerateSectors(modPrefix, clusters.Where(a => !a.IsBaseGame).ToList())
-                )
-            );
+            var sectors = GenerateSectors(modPrefix, clusters.Where(a => !a.IsBaseGame).ToList()).ToArray();
+            if (sectors.Length > 0) {
+                XDocument xmlDocument = new(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("macros",
+                        sectors
+                    )
+                );
 
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_sectors.xml")));
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_sectors.xml")));
+            }
             #endregion
 
             #region BaseGame Sector File
