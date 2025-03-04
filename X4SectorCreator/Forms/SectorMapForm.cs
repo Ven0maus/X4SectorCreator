@@ -378,6 +378,18 @@ namespace X4SectorCreator
                 RenderNonSectorGrid(e, nonExistantHexColor, hex);
             }
 
+            // Highlight selected hex
+            if (_selectedHex != null)
+            {
+                using SolidBrush brush = new(Color.Cyan);
+                Hexagon hexc = _hexagons[_selectedHex.Value];
+                if (_selectedChildHexIndex != null)
+                {
+                    hexc = hexc.Children[_selectedChildHexIndex.Value];
+                }
+                e.Graphics.FillPolygon(brush, hexc.Points);
+            }
+
             if (chkShowX4Sectors.Checked)
             {
                 // Next step render the game clusters on top
@@ -390,18 +402,6 @@ namespace X4SectorCreator
                     }
 
                     RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
-                }
-
-                // Next step render names
-                foreach (Cluster cluster in _baseGameClusters.Values)
-                {
-                    // Check if the dlc is selected
-                    if (!IsSelectedDlcCluster(cluster))
-                    {
-                        continue;
-                    }
-
-                    RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
             }
 
@@ -422,16 +422,19 @@ namespace X4SectorCreator
                 }
             }
 
-            // Highlight selected hex
-            if (_selectedHex != null)
+            if (chkShowX4Sectors.Checked)
             {
-                using SolidBrush brush = new(Color.Cyan);
-                Hexagon hexc = _hexagons[_selectedHex.Value];
-                if (_selectedChildHexIndex != null)
+                // Next step render names
+                foreach (Cluster cluster in _baseGameClusters.Values)
                 {
-                    hexc = hexc.Children[_selectedChildHexIndex.Value];
+                    // Check if the dlc is selected
+                    if (!IsSelectedDlcCluster(cluster))
+                    {
+                        continue;
+                    }
+
+                    RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
-                e.Graphics.FillPolygon(brush, hexc.Points);
             }
         }
 
