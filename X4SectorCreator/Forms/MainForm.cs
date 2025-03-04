@@ -783,7 +783,7 @@ namespace X4SectorCreator
 
         private static void RecalculateSectorOffsets(Cluster cluster)
         {
-            List<Sector> sectors = new();
+            List<Sector> sectors = [];
             foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
             {
                 int offSetX, offsetY;

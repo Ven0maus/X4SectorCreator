@@ -10,6 +10,7 @@ namespace X4SectorCreator.XmlGeneration
             string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
+            #region Custom Zone File
             // Save new zones in custom sectors
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
@@ -21,7 +22,9 @@ namespace X4SectorCreator.XmlGeneration
             );
 
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_zones.xml")));
+            #endregion
 
+            #region BaseGame Zone File
             // Save new zones in existing sectors
             List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateExistingSectorZones(modPrefix, clusters)
                 .GroupBy(a => a.dlc)
@@ -51,6 +54,7 @@ namespace X4SectorCreator.XmlGeneration
                     }
                 }
             }
+            #endregion
         }
 
         private static IEnumerable<XElement> GenerateZones(string modPrefix, List<Cluster> clusters)
