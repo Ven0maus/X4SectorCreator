@@ -378,18 +378,6 @@ namespace X4SectorCreator
                 RenderNonSectorGrid(e, nonExistantHexColor, hex);
             }
 
-            // Highlight selected hex
-            if (_selectedHex != null)
-            {
-                using SolidBrush brush = new(Color.Cyan);
-                Hexagon hexc = _hexagons[_selectedHex.Value];
-                if (_selectedChildHexIndex != null)
-                {
-                    hexc = hexc.Children[_selectedChildHexIndex.Value];
-                }
-                e.Graphics.FillPolygon(brush, hexc.Points);
-            }
-
             if (chkShowX4Sectors.Checked)
             {
                 // Next step render the game clusters on top
@@ -414,7 +402,22 @@ namespace X4SectorCreator
                     cluster.Hexagon = _hexagons[(cluster.Position.X, cluster.Position.Y)];
                     RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
+            }
 
+            // Highlight selected hex
+            if (_selectedHex != null)
+            {
+                using SolidBrush brush = new(Color.Cyan);
+                Hexagon hexc = _hexagons[_selectedHex.Value];
+                if (_selectedChildHexIndex != null)
+                {
+                    hexc = hexc.Children[_selectedChildHexIndex.Value];
+                }
+                e.Graphics.FillPolygon(brush, hexc.Points);
+            }
+
+            if (chkShowCustomSectors.Checked)
+            {
                 // Next step render names
                 foreach (Cluster cluster in _customClusters)
                 {
@@ -436,6 +439,8 @@ namespace X4SectorCreator
                     RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
             }
+
+
         }
 
         private void RenderNonSectorGrid(PaintEventArgs e, Color nonExistantHexColor, KeyValuePair<(int, int), Hexagon> hex)
