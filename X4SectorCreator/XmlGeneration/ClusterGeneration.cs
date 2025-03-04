@@ -140,6 +140,17 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
         {
+            foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
+            {
+                if (Old.BackgroundVisualMapping != New.BackgroundVisualMapping)
+                {
+                    var clusterCode = Old.BaseGameMapping.CapitalizeFirstLetter();
+                    yield return (Old.Dlc, new XElement("replace",
+                        new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']/connections/connection[@ref='content']/macro/component/@ref"),
+                        New.BackgroundVisualMapping
+                        ));
+                }
+            }
             foreach (var sector in vanillaChanges.RemovedSectors)
             {
                 // Check if the cluster was removed, then skip this sector as its already part of the cluster deletion in galaxy.xml
