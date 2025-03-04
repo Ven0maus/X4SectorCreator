@@ -364,8 +364,10 @@ namespace X4SectorCreator.Forms
             if (regionsThatUseThisDefinition.Length > 0)
             {
                 string message = "Following regions use this region definition, they must first be changed or deleted before this definition can be deleted:\n" +
-                    string.Join("\n", regionsThatUseThisDefinition.Select(x =>
-                        $"- {x.region.Name} (Cluster: {x.cluster.Name}, Sector: {x.sector.Name})"));
+                    string.Join("\n", regionsThatUseThisDefinition
+                    .OrderBy(a => a.cluster.Name)
+                    .ThenBy(a => a.sector.Name)
+                    .Select(x => $"- {x.region.Name} (Cluster: {x.cluster.Name}, Sector: {x.sector.Name})"));
 
                 _ = MessageBox.Show(message);
                 return;
