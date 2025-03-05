@@ -56,7 +56,7 @@ namespace X4SectorCreator.XmlGeneration
                     )
                 ),
                 new XElement("player",
-                    new XAttribute("macro", "character_player_fight_macro"),
+                    new XAttribute("macro", "character_player_custom_f_asi_macro"),
                     new XAttribute("female", "true"),
                     new XAttribute("money", "75000"),
                     new XAttribute("name", "Jade Miras"),
