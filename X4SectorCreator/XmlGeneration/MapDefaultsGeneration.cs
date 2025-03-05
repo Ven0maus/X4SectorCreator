@@ -118,6 +118,16 @@ namespace X4SectorCreator.XmlGeneration
         private static IEnumerable<XElement> GenerateVanillaChanges(VanillaChanges vanillaChanges, List<Cluster> allClusters)
         {
             var elements = new List<XElement>();
+            foreach (var cluster in vanillaChanges.RemovedClusters)
+            {
+                var macro = cluster.BaseGameMapping.CapitalizeFirstLetter();
+                elements.Add(new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']")));
+            }
+            foreach (var sector in vanillaChanges.RemovedSectors)
+            {
+                var macro = $"{sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
+                elements.Add(new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']")));
+            }
             foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
             {
                 var macro = Old.BaseGameMapping.CapitalizeFirstLetter();

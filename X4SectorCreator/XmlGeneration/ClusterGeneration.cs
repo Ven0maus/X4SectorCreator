@@ -140,6 +140,11 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
         {
+            foreach (var cluster in vanillaChanges.RemovedClusters)
+            {
+                var clusterCode = cluster.BaseGameMapping.CapitalizeFirstLetter();
+                yield return (cluster.Dlc, new XElement("remove", new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']")));
+            }
             foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
             {
                 if (!Old.BackgroundVisualMapping.Equals(New.BackgroundVisualMapping, StringComparison.OrdinalIgnoreCase))
