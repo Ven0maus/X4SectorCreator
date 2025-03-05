@@ -259,6 +259,7 @@ namespace X4SectorCreator
                 ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", clusters, vanillaChanges);
                 RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 GameStartsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
+                DlcDisableGeneration.Generate(modFolder);
             }
             catch (Exception ex)
             {
