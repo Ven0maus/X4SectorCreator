@@ -53,6 +53,7 @@
             RegionsListBox = new ListBox();
             label1 = new Label();
             BtnRemoveRegion = new Button();
+            cmbClusterOption = new ComboBox();
             SuspendLayout();
             // 
             // BtnRemoveCluster
@@ -303,11 +304,24 @@
             BtnRemoveRegion.UseVisualStyleBackColor = true;
             BtnRemoveRegion.Click += BtnRemoveRegion_Click;
             // 
+            // cmbClusterOption
+            // 
+            cmbClusterOption.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbClusterOption.FormattingEnabled = true;
+            cmbClusterOption.Items.AddRange(new object[] { "Custom", "Vanilla", "Both" });
+            cmbClusterOption.Location = new Point(93, 49);
+            cmbClusterOption.MaxDropDownItems = 3;
+            cmbClusterOption.Name = "cmbClusterOption";
+            cmbClusterOption.Size = new Size(75, 23);
+            cmbClusterOption.TabIndex = 39;
+            cmbClusterOption.SelectedIndexChanged += CmbClusterOption_SelectedIndexChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(503, 570);
+            Controls.Add(cmbClusterOption);
             Controls.Add(BtnNewRegion);
             Controls.Add(RegionsListBox);
             Controls.Add(label1);
@@ -369,5 +383,6 @@
         internal ListBox RegionsListBox;
         private Label label1;
         private Button BtnRemoveRegion;
+        private ComboBox cmbClusterOption;
     }
 }

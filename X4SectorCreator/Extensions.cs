@@ -11,5 +11,19 @@
         {
             return string.IsNullOrEmpty(input) ? input : char.ToUpper(input[0]) + input[1..];
         }
+
+        public static bool HasStringChanged(string old, string @new)
+        {
+            string oldValueTrimmed = old?.Trim();
+            string newValueTrimmed = @new?.Trim();
+
+            // Treat null and empty as the same (no change)
+            if (string.IsNullOrEmpty(oldValueTrimmed) && string.IsNullOrEmpty(newValueTrimmed))
+            {
+                return false;
+            }
+
+            return oldValueTrimmed != newValueTrimmed;
+        }
     }
 }

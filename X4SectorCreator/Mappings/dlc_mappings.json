@@ -18,5 +18,9 @@
   {
     "Dlc": "ego_dlc_timelines",
     "Prefix": "dlc7"
+  },
+  {
+    "Dlc": "ego_dlc_mini_01",
+    "Prefix": "dlc_mini_01"
   }
 ]

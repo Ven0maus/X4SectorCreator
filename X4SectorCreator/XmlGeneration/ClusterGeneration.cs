@@ -5,19 +5,58 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class ClusterGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("macros",
-                    GenerateClusters(modPrefix, clusters.Where(a => !a.IsBaseGame).ToList())
-                )
-            );
+            #region Custom Clusters File
+            var elements = GenerateClusters(modPrefix, clusters
+                    .Where(a => !a.IsBaseGame)
+                    .ToList())
+                .ToArray();
+            if (elements.Length > 0)
+            {
+                XDocument xmlDocument = new(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("macros",
+                        elements
+                    )
+                );
 
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_clusters.xml")));
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_clusters.xml")));
+            }
+            #endregion
+
+            #region BaseGame Clusters File
+            if (GalaxySettingsForm.IsCustomGalaxy) return; // No need to process these
+            var vanillaChangeElements = GenerateVanillaChanges(vanillaChanges)
+                .GroupBy(a => a.dlc)
+                .ToArray();
+            if (vanillaChangeElements.Length > 0)
+            {
+                foreach (var group in vanillaChangeElements)
+                {
+                    string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
+                    XDocument xmlDocument = new(
+                        new XDeclaration("1.0", "utf-8", null),
+                        new XElement("diff",
+                            group.Select(a => a.element)
+                        )
+                    );
+
+                    if (dlcMapping == null)
+                    {
+                        xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/clusters.xml")));
+                    }
+                    else
+                    {
+                        xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{group.Key}/maps/{galaxyName}/{dlcMapping}clusters.xml")));
+                    }
+                }
+            }
+
+            #endregion
         }
 
         private static IEnumerable<XElement> GenerateClusters(string modPrefix, List<Cluster> clusters)
@@ -97,6 +136,36 @@ namespace X4SectorCreator.XmlGeneration
                     )
                 )
             );
+        }
+
+        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
+        {
+            foreach (var cluster in vanillaChanges.RemovedClusters)
+            {
+                var clusterCode = cluster.BaseGameMapping.CapitalizeFirstLetter();
+                yield return (cluster.Dlc, new XElement("remove", new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']")));
+            }
+            foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
+            {
+                if (!Old.BackgroundVisualMapping.Equals(New.BackgroundVisualMapping, StringComparison.OrdinalIgnoreCase))
+                {
+                    var clusterCode = Old.BaseGameMapping.CapitalizeFirstLetter();
+                    yield return (Old.Dlc, new XElement("replace",
+                        new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']/connections/connection[@ref='content']/macro/component/@ref"),
+                        New.BackgroundVisualMapping
+                        ));
+                }
+            }
+            foreach (var sector in vanillaChanges.RemovedSectors)
+            {
+                // Check if the cluster was removed, then skip this sector as its already part of the cluster deletion in galaxy.xml
+                if (vanillaChanges.RemovedClusters.Contains(sector.VanillaCluster)) continue;
+
+                var clusterCode = sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
+                var sectorCode = $"{clusterCode}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
+                yield return (sector.VanillaCluster.Dlc, new XElement("remove",
+                    new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{sectorCode}_connection']")));
+            }
         }
 
         private static string EnsureDirectoryExists(string filePath)

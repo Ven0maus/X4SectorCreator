@@ -5,27 +5,34 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class SectorGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
                 $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
 
+            #region Custom Sector File
             // Save new sectors in custom clusters
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("macros",
-                    GenerateSectors(modPrefix, clusters.Where(a => !a.IsBaseGame).ToList())
-                )
-            );
+            var sectors = GenerateSectors(modPrefix, clusters.Where(a => !a.IsBaseGame).ToList()).ToArray();
+            if (sectors.Length > 0) {
+                XDocument xmlDocument = new(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("macros",
+                        sectors
+                    )
+                );
 
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_sectors.xml")));
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_sectors.xml")));
+            }
+            #endregion
 
+            #region BaseGame Sector File
             // Save new zones in existing sectors
             List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateSectorAdds(modPrefix, clusters)
                 .GroupBy(a => a.dlc)
                 .ToList();
             if (diffData.Count > 0)
             {
+                // TODO: Clean up sectors from vanilla changes
                 foreach (IGrouping<string, (string dlc, XElement element)> group in diffData)
                 {
                     string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
@@ -46,6 +53,7 @@ namespace X4SectorCreator.XmlGeneration
                     }
                 }
             }
+            #endregion
         }
 
         private static IEnumerable<XElement> GenerateSectors(string modPrefix, List<Cluster> clusters)
