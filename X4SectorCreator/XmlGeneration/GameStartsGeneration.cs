@@ -118,7 +118,10 @@ namespace X4SectorCreator.XmlGeneration
                 )
             );
 
-            return gameStartElement;
+            XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
+            return new XElement("gamestarts", new XAttribute(XNamespace.Xmlns + "xsi", xsi),
+                new XAttribute(xsi + "noNamespaceSchemaLocation", "gamestarts.xsd"),
+                gameStartElement);
         }
 
         private static IEnumerable<XElement> GenerateVanillaChanges(VanillaChanges vanillaChanges)
