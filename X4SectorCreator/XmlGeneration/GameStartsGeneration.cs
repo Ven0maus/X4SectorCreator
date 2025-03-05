@@ -42,7 +42,7 @@ namespace X4SectorCreator.XmlGeneration
                 new XAttribute("name", "Custom Galaxy Start"),
                 new XAttribute("image", "gamestart_1"),
                 new XElement("location",
-                    new XAttribute("galaxy", $"{GalaxySettingsForm.GalaxyName}_macro"),
+                    new XAttribute("galaxy", $"{modPrefix}_{GalaxySettingsForm.GalaxyName}_macro"),
                     new XAttribute("sector", $"{sectorMacro}"),
                     new XElement("position",
                         new XAttribute("x", "0"),

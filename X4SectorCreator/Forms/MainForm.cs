@@ -275,6 +275,9 @@ namespace X4SectorCreator
 
         private VanillaChanges CollectVanillaChanges()
         {
+            if (GalaxySettingsForm.IsCustomGalaxy) 
+                return new VanillaChanges();
+
             var vanillaClusters = AllClusters.Values
                 .Where(a => a.IsBaseGame)
                 .ToDictionary(a => a.BaseGameMapping);

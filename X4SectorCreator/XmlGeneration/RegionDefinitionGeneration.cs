@@ -36,7 +36,7 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
                         yield return new XElement("region",
-                            new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}".ToLower()),
+                            new XAttribute("name", $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}"),
                             new XAttribute("density", region.Definition.Density),
                             new XAttribute("rotation", region.Definition.Rotation),
                             new XAttribute("noisescale", region.Definition.NoiseScale),

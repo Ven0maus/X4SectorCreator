@@ -28,15 +28,17 @@ namespace X4SectorCreator
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            // Return if no change
-            if (IsCustomGalaxy == chkCustomGalaxy.Checked)
-            {
-                return;
-            }
-
             if (chkCustomGalaxy.Checked && (string.IsNullOrWhiteSpace(txtGalaxyName.Text) || txtGalaxyName.Text.Equals("xu_ep2_universe", StringComparison.OrdinalIgnoreCase)))
             {
                 _ = MessageBox.Show("Please select a valid galaxy name, it cannot be empty or equal to \"xu_ep2_universe\".", "Invalid custom galaxy name");
+                return;
+            }
+
+            // Return if no change
+            if (IsCustomGalaxy == chkCustomGalaxy.Checked)
+            {
+                GalaxyName = txtGalaxyName.Text.ToLower();
+                Close();
                 return;
             }
 
@@ -88,7 +90,7 @@ namespace X4SectorCreator
             }
             else
             {
-                GalaxyName = txtGalaxyName.Text;
+                GalaxyName = txtGalaxyName.Text.ToLower();
 
                 // Store base game clusters lazily
                 _baseGameClusters ??= MainForm.Instance.AllClusters

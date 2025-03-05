@@ -8,32 +8,39 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
-            var elements = GenerateVanillaChanges(vanillaChanges, clusters)
-                .Append(GenerateNewClusterElements(modPrefix, clusters))
+            var groups= GenerateVanillaChanges(vanillaChanges, clusters)
+                .Prepend(GenerateNewClusterElements(modPrefix, clusters))
+                .GroupBy(a => a.dlc)
                 .ToArray();
 
-            if (elements.Length > 0)
+            if (groups.Length > 0)
             {
-                XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
-                XDocument xmlDocument = new(
-                    new XDeclaration("1.0", "utf-8", null),
-                    new XElement("diff",
-                        new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                        new XAttribute(xsi + "noNamespaceSchemaLocation", "libraries.xsd"),
-                        elements
-                    )
-                );
+                foreach (var group in groups)
+                {
+                    string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
+                    XDocument xmlDocument = new(
+                        new XDeclaration("1.0", "utf-8", null),
+                        new XElement("diff",
+                            group.Select(a => a.element)
+                        )
+                    );
 
-                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/mapdefaults.xml")));
+                    if (dlcMapping == null)
+                    {
+                        xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/mapdefaults.xml")));
+                    }
+                    else
+                    {
+                        xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{group.Key}/libraries/mapdefaults.xml")));
+                    }
+                }
             }
         }
 
-        private static XElement GenerateNewClusterElements(string modPrefix, List<Cluster> clusters)
+        private static (string dlc, XElement element) GenerateNewClusterElements(string modPrefix, List<Cluster> clusters)
         {
-            var addElement = new XElement("add",
-                new XAttribute("sel", $"/defaults"));
-
-            foreach (Cluster cluster in clusters.Where(a => !a.IsBaseGame))
+            var addElement = new XElement("add", new XAttribute("sel", $"/defaults"));
+            foreach (var cluster in clusters.Where(a => !a.IsBaseGame))
             {
                 XObject clusterFactionLogicTag = AddFactionLogic(cluster: cluster);
                 // Add Cluster XML
@@ -92,7 +99,7 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
 
-            return addElement.IsEmpty ? null : addElement;
+            return (null, addElement);
         }
 
         private static XObject AddFactionLogic(Cluster cluster = null, Sector sector = null)
@@ -115,39 +122,39 @@ namespace X4SectorCreator.XmlGeneration
             return null;
         }
 
-        private static IEnumerable<XElement> GenerateVanillaChanges(VanillaChanges vanillaChanges, List<Cluster> allClusters)
+        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges, List<Cluster> allClusters)
         {
-            var elements = new List<XElement>();
+            var elements = new List<(string dlc, XElement element)>();
             foreach (var cluster in vanillaChanges.RemovedClusters)
             {
                 var macro = cluster.BaseGameMapping.CapitalizeFirstLetter();
-                elements.Add(new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']")));
+                elements.Add((cluster.Dlc, new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']"))));
             }
             foreach (var sector in vanillaChanges.RemovedSectors)
             {
                 var macro = $"{sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
-                elements.Add(new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']")));
+                elements.Add((sector.VanillaCluster.Dlc, new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']"))));
             }
             foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
             {
                 var macro = Old.BaseGameMapping.CapitalizeFirstLetter();
 
                 // Identification nodes
-                elements.Add(CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name));
-                elements.Add(CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description));
+                elements.Add((Old.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name)));
+                elements.Add((Old.Dlc, CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description)));
             }
             foreach (var (VanillaCluster, Old, New) in vanillaChanges.ModifiedSectors)
             {
                 var macro = $"{VanillaCluster.BaseGameMapping.CapitalizeFirstLetter()}_{Old.BaseGameMapping.CapitalizeFirstLetter()}";
 
                 // Identification nodes
-                elements.Add(CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name));
-                elements.Add(CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description));
+                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name)));
+                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description)));
 
                 // Area nodes
-                elements.Add(CreateReplaceElement(Old.Sunlight.ToString("0.##"), New.Sunlight.ToString("0.##"), macro, "area", "sunlight", New.Sunlight.ToString("0.##")));
-                elements.Add(CreateReplaceElement(Old.Economy.ToString("0.##"), New.Economy.ToString("0.##"), macro, "area", "economy", New.Economy.ToString("0.##")));
-                elements.Add(CreateReplaceElement(Old.Security.ToString("0.##"), New.Security.ToString("0.##"), macro, "area", "security", New.Security.ToString("0.##")));
+                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Sunlight.ToString("0.##"), New.Sunlight.ToString("0.##"), macro, "area", "sunlight", New.Sunlight.ToString("0.##"))));
+                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Economy.ToString("0.##"), New.Economy.ToString("0.##"), macro, "area", "economy", New.Economy.ToString("0.##"))));
+                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Security.ToString("0.##"), New.Security.ToString("0.##"), macro, "area", "security", New.Security.ToString("0.##"))));
 
                 // Adjust tags for random anomalies
                 if (Old.AllowRandomAnomalies != New.AllowRandomAnomalies)
@@ -177,7 +184,7 @@ namespace X4SectorCreator.XmlGeneration
                     }
                 }
 
-                elements.Add(CreateReplaceElement(Old.Tags, New.Tags, macro, "area", "tags", New.Tags));
+                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Tags, New.Tags, macro, "area", "tags", New.Tags)));
 
                 // Faction logic element
                 if (Old.DisableFactionLogic != New.DisableFactionLogic)
@@ -191,14 +198,14 @@ namespace X4SectorCreator.XmlGeneration
                         if (Old.DisableFactionLogic)
                         {
                             // Set on the cluster with replace
-                            elements.Add(CreateReplaceElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
-                                VanillaCluster.BaseGameMapping.CapitalizeFirstLetter(), "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower()));
+                            elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
+                                VanillaCluster.BaseGameMapping.CapitalizeFirstLetter(), "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower())));
                         }
                         else
                         {
                             // Set on the cluster with add
-                            elements.Add(CreateAddElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
-                                VanillaCluster.BaseGameMapping.CapitalizeFirstLetter(), "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower()));
+                            elements.Add((VanillaCluster.Dlc, CreateAddElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
+                                VanillaCluster.BaseGameMapping.CapitalizeFirstLetter(), "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower())));
                         }
                     }
                     else
@@ -208,19 +215,19 @@ namespace X4SectorCreator.XmlGeneration
                         if (Old.DisableFactionLogic)
                         {
                             // Set on the sector with replace
-                            elements.Add(CreateReplaceElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
-                                macro, "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower()));
+                            elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
+                                macro, "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower())));
                         }
                         else
                         {
                             // Set on the sector with add
-                            elements.Add(CreateAddElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
-                                macro, "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower()));
+                            elements.Add((VanillaCluster.Dlc, CreateAddElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
+                                macro, "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower())));
                         }
                     }
                 }
             }
-            return elements.Where(a => a != null);
+            return elements.Where(a => a.element != null);
         }
 
         private static XElement CreateReplaceElement(string checkOne, string checkTwo, string macro, string property, string field, string value)
