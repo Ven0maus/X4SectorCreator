@@ -135,16 +135,21 @@ namespace X4SectorCreator.XmlGeneration
                 var macro = $"{sector.VanillaCluster.BaseGameMapping}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
                 elements.Add((sector.VanillaCluster.Dlc, new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']"))));
             }
-            foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
+            foreach (var modification in vanillaChanges.ModifiedClusters)
             {
+                var Old = modification.Old;
+                var New = modification.New;
                 var macro = Old.BaseGameMapping;
 
                 // Identification nodes
                 elements.Add((Old.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name)));
                 elements.Add((Old.Dlc, CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description)));
             }
-            foreach (var (VanillaCluster, Old, New) in vanillaChanges.ModifiedSectors)
+            foreach (var modification in vanillaChanges.ModifiedSectors)
             {
+                var VanillaCluster = modification.VanillaCluster;
+                var Old = modification.Old;
+                var New = modification.New;
                 var macro = $"{VanillaCluster.BaseGameMapping}_{Old.BaseGameMapping.CapitalizeFirstLetter()}";
 
                 // Identification nodes

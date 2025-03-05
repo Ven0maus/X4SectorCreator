@@ -14,7 +14,7 @@ namespace X4SectorCreator.Configuration
             Converters = { new JsonStringEnumConverter() }
         };
 
-        public static string Serialize(List<Cluster> clusters)
+        public static string Serialize(List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             // First order everything correctly before exporting
             clusters = [.. clusters.OrderBy(a => a.Id)];
@@ -38,13 +38,14 @@ namespace X4SectorCreator.Configuration
                 Clusters = clusters,
                 RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
                 GalaxyName = GalaxySettingsForm.GalaxyName,
+                VanillaChanges = vanillaChanges,
                 Version = new VersionChecker().CurrentVersion
             };
 
             return JsonSerializer.Serialize(configObj, _serializerOptions);
         }
 
-        public static List<Cluster> Deserialize(string filePath)
+        public static (List<Cluster> clusters, VanillaChanges vanillaChanges) Deserialize(string filePath)
         {
             ConfigurationObj configObj = null;
             try
@@ -54,7 +55,7 @@ namespace X4SectorCreator.Configuration
             catch (Exception)
             {
                 _ = MessageBox.Show("Unable to import config file, it is likely because the file was exported from an older app version and may be incompatible.");
-                return null;
+                return (null, null);
             }
 
             VersionChecker vc = new();
@@ -62,7 +63,7 @@ namespace X4SectorCreator.Configuration
             // Validate app version, show message if from an older version
             if (!VersionChecker.CompareVersion(vc.CurrentVersion, configObj.Version))
             {
-                _ = MessageBox.Show("Please note, if you receive any error when importing your config,\nit is likely because the file was exported from an older app version and may be incompatible.");
+                _ = MessageBox.Show("Please note, if you have any issues after importing your config,\nit is likely because the file was exported from an older app version and may be incompatible.");
             }
 
             // Set static values
@@ -76,7 +77,7 @@ namespace X4SectorCreator.Configuration
             }
 
             // First order everything correctly before returning
-            List<Cluster> clusters = configObj.Clusters.OrderBy(a => a.Id).ToList();
+            List<Cluster> clusters = [.. configObj.Clusters.OrderBy(a => a.Id)];
             foreach (Cluster cluster in clusters)
             {
                 cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];
@@ -92,7 +93,7 @@ namespace X4SectorCreator.Configuration
                 }
             }
 
-            return clusters;
+            return (clusters, configObj.VanillaChanges);
         }
     }
 }

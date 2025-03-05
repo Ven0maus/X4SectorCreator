@@ -145,8 +145,10 @@ namespace X4SectorCreator.XmlGeneration
                 var clusterCode = cluster.BaseGameMapping.CapitalizeFirstLetter();
                 yield return (cluster.Dlc, new XElement("remove", new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']")));
             }
-            foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
+            foreach (var modification in vanillaChanges.ModifiedClusters)
             {
+                var Old = modification.Old;
+                var New = modification.New;
                 if (!Old.BackgroundVisualMapping.Equals(New.BackgroundVisualMapping, StringComparison.OrdinalIgnoreCase))
                 {
                     var clusterCode = Old.BaseGameMapping.CapitalizeFirstLetter();

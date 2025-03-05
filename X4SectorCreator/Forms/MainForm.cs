@@ -301,7 +301,7 @@ namespace X4SectorCreator
                     // Add to removed clusters + sectors
                     vanillaChanges.RemovedClusters.Add(nonModifiedCluster);
                     foreach (var nonModifiedSector in nonModifiedCluster.Sectors)
-                        vanillaChanges.RemovedSectors.Add((nonModifiedCluster, nonModifiedSector));
+                        vanillaChanges.RemovedSectors.Add(new RemovedSector { VanillaCluster = nonModifiedCluster, Sector = nonModifiedSector });
                     continue;
                 }
 
@@ -311,7 +311,7 @@ namespace X4SectorCreator
                     nonModifiedCluster.Position != modifiedCluster.Position)
                 {
                     // Add to modified clusters
-                    vanillaChanges.ModifiedClusters.Add((nonModifiedCluster, modifiedCluster));
+                    vanillaChanges.ModifiedClusters.Add(new ModifiedCluster { Old = nonModifiedCluster, New = modifiedCluster });
                 }
 
                 foreach (var nonModifiedSector in nonModifiedCluster.Sectors)
@@ -320,7 +320,7 @@ namespace X4SectorCreator
                     if (modifiedSector == null)
                     {
                         // The vanilla sector was removed
-                        vanillaChanges.RemovedSectors.Add((nonModifiedCluster, nonModifiedSector));
+                        vanillaChanges.RemovedSectors.Add(new RemovedSector { VanillaCluster = nonModifiedCluster, Sector = nonModifiedSector });
                         continue;
                     }
 
@@ -334,7 +334,7 @@ namespace X4SectorCreator
                         nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies)
                     {
                         // Add to modified clusters
-                        vanillaChanges.ModifiedSectors.Add((nonModifiedCluster, nonModifiedSector, modifiedSector));
+                        vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = modifiedSector });
                     }
                 }
             }
@@ -507,7 +507,7 @@ namespace X4SectorCreator
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = saveFileDialog.FileName;
-                // TODO: Support vanilla changes
+
                 try
                 {
                     List<Cluster> allModifiedClusters = AllClusters.Values
@@ -518,7 +518,10 @@ namespace X4SectorCreator
                                 .Any()))
                         .ToList();
 
-                    string jsonContent = ConfigSerializer.Serialize(allModifiedClusters);
+                    // Support also vanilla changes
+                    var vanillaChanges = CollectVanillaChanges();
+
+                    string jsonContent = ConfigSerializer.Serialize(allModifiedClusters, vanillaChanges);
                     File.WriteAllText(filePath, jsonContent);
                     _ = MessageBox.Show($"Configuration exported succesfully.", "Success");
                 }
@@ -542,15 +545,77 @@ namespace X4SectorCreator
                 // TODO: Support vanilla changes
                 // Import new configuration
                 string jsonContent = File.ReadAllText(filePath);
-                List<Cluster> clusters = ConfigSerializer.Deserialize(jsonContent);
-                if (clusters != null)
+                var configuration = ConfigSerializer.Deserialize(jsonContent);
+                if (configuration.clusters != null)
                 {
+                    var clusters = configuration.clusters;
                     // Reset configuration
                     Reset(true);
 
                     if (GalaxySettingsForm.IsCustomGalaxy)
                     {
                         ToggleGalaxyMode(null);
+                    }
+
+                    // Apply vanilla changes to AllClusters
+                    if (configuration.vanillaChanges != null)
+                    {
+                        // Cluster removal
+                        foreach (var cluster in configuration.vanillaChanges.RemovedClusters)
+                            AllClusters.Remove((cluster.Position.X, cluster.Position.Y));
+
+                        // Sector removal
+                        foreach (var pair in configuration.vanillaChanges.RemovedSectors)
+                        {
+                            // If cluster doesn't exist its already removed, skip
+                            if (!AllClusters.TryGetValue((pair.VanillaCluster.Position.X, pair.VanillaCluster.Position.Y), out var cluster))
+                                continue;
+
+                            var sector = cluster.Sectors.FirstOrDefault(a => a.Name.Equals(pair.Sector.Name, StringComparison.OrdinalIgnoreCase));
+                            if (sector != null)
+                                cluster.Sectors.Remove(sector);
+                        }
+
+                        // Cluster modification
+                        foreach (var modification in configuration.vanillaChanges.ModifiedClusters)
+                        {
+                            var Old = modification.Old;
+                            var New = modification.New;
+                            // If cluster doesn't exist its already removed, skip
+                            if (!AllClusters.TryGetValue((Old.Position.X, Old.Position.Y), out var cluster))
+                                continue;
+
+                            // Update cluster properties
+                            cluster.Name = New.Name;
+                            cluster.Description = New.Description;
+                            cluster.BackgroundVisualMapping = New.BackgroundVisualMapping;
+                            cluster.Position = New.Position;
+                        }
+
+                        // Sector modification
+                        foreach (var modification in configuration.vanillaChanges.ModifiedSectors)
+                        {
+                            var VanillaCluster = modification.VanillaCluster;
+                            var Old = modification.Old;
+                            var New = modification.New;
+                            // If cluster doesn't exist its already removed, skip
+                            if (!AllClusters.TryGetValue((VanillaCluster.Position.X, VanillaCluster.Position.Y), out var cluster))
+                                continue;
+
+                            // Find matching sector
+                            var sector = cluster.Sectors.FirstOrDefault(a => a.Name.Equals(Old.Name, StringComparison.OrdinalIgnoreCase));
+                            if (sector == null) continue;
+
+                            // Update sector properties
+                            sector.Name = New.Name;
+                            sector.Description = New.Description;
+                            sector.DisableFactionLogic = New.DisableFactionLogic;
+                            sector.Sunlight = New.Sunlight;
+                            sector.Economy = New.Economy;
+                            sector.Security = New.Security;
+                            sector.Tags = New.Tags;
+                            sector.AllowRandomAnomalies = New.AllowRandomAnomalies;
+                        }
                     }
 
                     // Import new configuration

@@ -157,8 +157,10 @@ namespace X4SectorCreator.XmlGeneration
                 yield return (cluster.Dlc, new XElement("remove",
                     new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection']")));
             }
-            foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
+            foreach (var modification in vanillaChanges.ModifiedClusters)
             {
+                var Old = modification.Old;
+                var New = modification.New;
                 if (Old.Position != New.Position) 
                 {
                     // Exceptional case for cluster 0, 0 it has no offset properties defined
