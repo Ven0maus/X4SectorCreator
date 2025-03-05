@@ -7,15 +7,26 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
-            var generatedElements = GenerateVanillaChanges(vanillaChanges).ToList();
-
             // Generate a custom gamestart for custom galaxy
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
                 var customGameStart = GenerateCustomGameStart(modPrefix, clusters);
                 if (customGameStart != null)
-                    generatedElements.Add(customGameStart);
+                {
+                    XDocument xmlDocument = new(
+                        new XDeclaration("1.0", "utf-8", null),
+                        new XElement("diff",
+                            new XElement("replace", 
+                            new XAttribute("sel", "//gamestarts"),
+                            customGameStart)
+                        )
+                    );
+                    xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/gamestarts.xml")));
+                    return;
+                }
             }
+
+            var generatedElements = GenerateVanillaChanges(vanillaChanges).ToList();
 
             if (generatedElements.Count > 0)
             {
@@ -107,7 +118,7 @@ namespace X4SectorCreator.XmlGeneration
                 )
             );
 
-            return new XElement("add", new XAttribute("sel", "//gamestarts"), gameStartElement);
+            return gameStartElement;
         }
 
         private static IEnumerable<XElement> GenerateVanillaChanges(VanillaChanges vanillaChanges)
