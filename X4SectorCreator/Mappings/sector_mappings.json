@@ -1558,12 +1558,18 @@
         {
           "Name": "Savage Spur I",
           "Owner": "Xenon",
-          "BaseGameMapping": "Sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.17,
+          "Economy": 0.25,
+          "Security": 0.25
         },
         {
           "Name": "Savage Spur II",
           "Owner": "Xenon",
-          "BaseGameMapping": "Sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.25,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2092,7 +2098,10 @@
       "Sectors": [
         {
           "Name": "Segaris",
-          "Owner": "Segaris"
+          "Owner": "Segaris",
+          "Sunlight": 1.87,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2107,7 +2116,10 @@
       "Sectors": [
         {
           "Name": "Gaian Prophecy",
-          "Owner": "Segaris"
+          "Owner": "Segaris",
+          "Sunlight": 2.08,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2122,7 +2134,10 @@
       "Sectors": [
         {
           "Name": "Brennan's Triumph",
-          "Owner": "Segaris"
+          "Owner": "Segaris",
+          "Sunlight": 1.22,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2154,7 +2169,10 @@
       "Sectors": [
         {
           "Name": "Neptune",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.06,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2169,7 +2187,10 @@
       "Sectors": [
         {
           "Name": "Pluto",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.05,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2184,7 +2205,10 @@
       "Sectors": [
         {
           "Name": "Oort Cloud",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.02,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2199,7 +2223,10 @@
       "Sectors": [
         {
           "Name": "Uranus",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.07,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2215,17 +2242,26 @@
         {
           "Name": "Saturn 2",
           "Owner": "Terran",
-          "BaseGameMapping": "Sector003"
+          "BaseGameMapping": "Sector003",
+          "Sunlight": 0.08,
+          "Economy": 0.25,
+          "Security": 0.25
         },
         {
           "Name": "Saturn 1",
           "Owner": "Terran",
-          "BaseGameMapping": "Sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.08,
+          "Economy": 0.25,
+          "Security": 0.25
         },
         {
           "Name": "Titan",
           "Owner": "Terran",
-          "BaseGameMapping": "Sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.08,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2240,7 +2276,10 @@
       "Sectors": [
         {
           "Name": "Jupiter",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.1,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -2255,7 +2294,10 @@
       "Sectors": [
         {
           "Name": "Asteroid Belt",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.13,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -2270,7 +2312,10 @@
       "Sectors": [
         {
           "Name": "Mars",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.44,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -2285,7 +2330,10 @@
       "Sectors": [
         {
           "Name": "Venus",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 1.89,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -2300,7 +2348,10 @@
       "Sectors": [
         {
           "Name": "Mercury",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 7.14,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -2316,12 +2367,18 @@
         {
           "Name": "Earth",
           "Owner": "Terran",
-          "BaseGameMapping": "Sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1,
+          "Economy": 0.75,
+          "Security": 0.75
         },
         {
           "Name": "The Moon",
           "Owner": "Terran",
-          "BaseGameMapping": "Sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.05,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
