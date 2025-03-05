@@ -705,7 +705,10 @@
       "Sectors": [
         {
           "Name": "Mitsuno's Revelation",
-          "Owner": "Quettanauts"
+          "Owner": "Quettanauts",
+          "Sunlight": 1.18,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -720,7 +723,10 @@
       "Sectors": [
         {
           "Name": "Mitsuno's Defiance",
-          "Owner": "Quettanauts"
+          "Owner": "Quettanauts",
+          "Sunlight": 1.11,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -735,7 +741,10 @@
       "Sectors": [
         {
           "Name": "Mitsuno's Sacrifice",
-          "Owner": "Quettanauts"
+          "Owner": "Quettanauts",
+          "Sunlight": 1.06,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1142,7 +1151,10 @@
       "Sectors": [
         {
           "Name": "President's End",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "Sunlight": 0.71,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1208,7 +1220,10 @@
       "Sectors": [
         {
           "Name": "Matrix #101",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 4.08,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1601,7 +1616,10 @@
       "Sectors": [
         {
           "Name": "Nopileos' Memorial",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.63,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1616,7 +1634,10 @@
       "Sectors": [
         {
           "Name": "Hatikvah's Faith",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.88,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
