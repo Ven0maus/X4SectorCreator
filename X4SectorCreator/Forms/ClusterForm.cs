@@ -13,7 +13,7 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
 
-            foreach (KeyValuePair<string, string> mapping in MainForm.Instance.BackgroundVisualMapping)
+            foreach (KeyValuePair<string, string> mapping in MainForm.Instance.BackgroundVisualMapping.OrderBy(a => a.Key))
             {
                 _ = cmbBackgroundVisual.Items.Add(mapping.Key);
             }
