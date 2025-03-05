@@ -1802,7 +1802,10 @@
       "Sectors": [
         {
           "Name": "Watchful Gaze",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.41,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1817,7 +1820,10 @@
       "Sectors": [
         {
           "Name": "Barren Shores",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 0.83,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1832,7 +1838,10 @@
       "Sectors": [
         {
           "Name": "Great Reef",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 1.28,
+          "Economy": 0.5,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1847,7 +1856,10 @@
       "Sectors": [
         {
           "Name": "Ocean of Fantasy",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 0.12,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1862,7 +1874,10 @@
       "Sectors": [
         {
           "Name": "Sanctuary of Darkness",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.74,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1878,17 +1893,26 @@
         {
           "Name": "Kingdom End I",
           "Owner": "Boron",
-          "BaseGameMapping": "Sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.18,
+          "Economy": 0.75,
+          "Security": 0.75
         },
         {
           "Name": "Towering Wave",
           "Owner": "Boron",
-          "BaseGameMapping": "Sector003"
+          "BaseGameMapping": "Sector003",
+          "Sunlight": 1.18,
+          "Economy": 0.75,
+          "Security": 0.75
         },
         {
           "Name": "Reflected Stars",
           "Owner": "Boron",
-          "BaseGameMapping": "Sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.18,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1903,7 +1927,10 @@
       "Sectors": [
         {
           "Name": "Rolk's Demise",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 0.15,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1918,7 +1945,10 @@
       "Sectors": [
         {
           "Name": "Atreus' Clouds",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 0.41,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1933,7 +1963,10 @@
       "Sectors": [
         {
           "Name": "Menelaus' Oasis",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 2.71,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
