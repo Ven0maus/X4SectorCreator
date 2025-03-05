@@ -6,7 +6,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class RegionDefinitionGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
             // Create XML structure
             var regions = GetRegions(modPrefix, clusters).ToArray();

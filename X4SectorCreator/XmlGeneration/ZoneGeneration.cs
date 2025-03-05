@@ -5,11 +5,8 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class ZoneGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
-                $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
-
             #region Custom Zone File
             // Save new zones in custom sectors
             var zones = GenerateZones(modPrefix, clusters).ToArray();
@@ -24,7 +21,7 @@ namespace X4SectorCreator.XmlGeneration
                     )
                 );
 
-                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/{modPrefix}_zones.xml")));
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{GalaxySettingsForm.GalaxyName}/{modPrefix}_zones.xml")));
             }
             #endregion
 
@@ -50,11 +47,11 @@ namespace X4SectorCreator.XmlGeneration
 
                     if (dlcMapping == null)
                     {
-                        xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/zones.xml")));
+                        xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{GalaxySettingsForm.GalaxyName}/zones.xml")));
                     }
                     else
                     {
-                        xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{group.Key}/maps/{galaxyName}/{dlcMapping}zones.xml")));
+                        xmlDiffDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{group.Key}/maps/{GalaxySettingsForm.GalaxyName}/{dlcMapping}zones.xml")));
                     }
                 }
             }

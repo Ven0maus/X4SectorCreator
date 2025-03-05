@@ -9,9 +9,6 @@ namespace X4SectorCreator.XmlGeneration
         {
             List<Cluster> orderedClusters = [.. clusters.OrderBy(a => a.Id)];
 
-            string galaxyName = GalaxySettingsForm.IsCustomGalaxy ?
-                $"{modPrefix}_{GalaxySettingsForm.GalaxyName}" : GalaxySettingsForm.GalaxyName;
-
             XDocument xmlDocument = null;
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
@@ -23,7 +20,7 @@ namespace X4SectorCreator.XmlGeneration
                     xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
                         new XElement("macros",
                             new XElement("macro",
-                                new XAttribute("name", $"{galaxyName}_macro"),
+                                new XAttribute("name", $"{GalaxySettingsForm.GalaxyName}_macro"),
                                 new XAttribute("class", "galaxy"),
                                     new XElement("component", new XAttribute("ref", "standardgalaxy")),
                                     new XElement("connections",
@@ -33,7 +30,7 @@ namespace X4SectorCreator.XmlGeneration
                         )
                     );
 
-                    xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/galaxy.xml")));
+                    xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{GalaxySettingsForm.GalaxyName}/galaxy.xml")));
                 }
             }
             else
@@ -54,11 +51,11 @@ namespace X4SectorCreator.XmlGeneration
 
                         if (dlcMapping == null)
                         {
-                            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{galaxyName}/galaxy.xml")));
+                            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"maps/{GalaxySettingsForm.GalaxyName}/galaxy.xml")));
                         }
                         else
                         {
-                            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{group.Key}/maps/{galaxyName}/galaxy.xml")));
+                            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{group.Key}/maps/{GalaxySettingsForm.GalaxyName}/galaxy.xml")));
                         }
                     }
                 }
