@@ -16,7 +16,7 @@ namespace X4SectorCreator.XmlGeneration
                 new XAttribute("date", DateTime.Today.ToString("d")),
                 new XAttribute("save", "0"),
                 new XAttribute("enabled", "1"),
-                GenerateDependencies(CollectDependencies(clusters)),
+                GenerateDependencies(CollectDependencies(clusters, vanillaChanges)),
                 new XElement("dependency", new XAttribute("version", depVersion)),
                 GenerateTranslations(modName)
             );
@@ -25,7 +25,7 @@ namespace X4SectorCreator.XmlGeneration
             doc.Save(EnsureDirectoryExists(Path.Combine(folder, $"content.xml")));
         }
 
-        private static IEnumerable<(string code, string name)> CollectDependencies(List<Cluster> clusters)
+        private static IEnumerable<(string code, string name)> CollectDependencies(List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             HashSet<string> dlcDependencies = new(StringComparer.OrdinalIgnoreCase);
 
@@ -59,6 +59,15 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
 
+            // Check if vanilla changes touched any dlc content
+            var allChangedContent = vanillaChanges.GetModifiedDlcContent()
+                .Where(a => a != null)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            // Add to current dlcDependencies
+            foreach (var changedContent in allChangedContent)
+                dlcDependencies.Add(changedContent);
+
             // Convert to a pair
             return dlcDependencies.Select(a =>
             {
@@ -69,7 +78,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GenerateDependencies(IEnumerable<(string code, string name)> dependencies)
         {
-            foreach ((string code, string name) in dependencies ?? Enumerable.Empty<(string code, string name)>())
+            foreach ((string code, string name) in dependencies ?? [])
             {
                 yield return new XElement("dependency", new XAttribute("id", code), new XAttribute("optional", "false"), new XAttribute("name", name));
             }

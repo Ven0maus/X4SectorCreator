@@ -17,11 +17,14 @@ namespace X4SectorCreator.XmlGeneration
             {
                 foreach (var group in groups)
                 {
+                    var content = group.Where(a => a.element != null).ToArray();
+                    if (content.Length == 0) continue;
+
                     string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
                     XDocument xmlDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
                         new XElement("diff",
-                            group.Select(a => a.element)
+                            content
                         )
                     );
 
@@ -99,7 +102,7 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
 
-            return (null, addElement);
+            return (null, addElement.IsEmpty ? null : addElement);
         }
 
         private static XObject AddFactionLogic(Cluster cluster = null, Sector sector = null)
