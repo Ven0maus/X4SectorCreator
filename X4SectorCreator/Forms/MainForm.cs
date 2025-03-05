@@ -358,7 +358,7 @@ namespace X4SectorCreator
                 // That means only the mapping was updated, we can automatically update this.
                 if (result.VersionInfo.AppVersion.Equals(versionChecker.CurrentVersion))
                 {
-                    string newSectorMappingJson = await versionChecker.GetUpdatedSectorMappingAsync();
+                    string newSectorMappingJson = await VersionChecker.GetUpdatedSectorMappingAsync();
                     string oldSectorMappingJson = File.ReadAllText(_sectorMappingFilePath);
                     if (newSectorMappingJson != null && !oldSectorMappingJson.Equals(newSectorMappingJson))
                     {

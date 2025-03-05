@@ -38,7 +38,7 @@ namespace X4SectorCreator
             }
         }
 
-        public async Task<string> GetUpdatedSectorMappingAsync()
+        public static async Task<string> GetUpdatedSectorMappingAsync()
         {
             try
             {
