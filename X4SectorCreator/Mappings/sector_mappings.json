@@ -751,12 +751,18 @@
         {
           "Name": "Thuruk's Demise II First Impact",
           "Owner": "FreeFam",
-          "BaseGameMapping": "Sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.71,
+          "Economy": 0.6,
+          "Security": 0.3
         },
         {
           "Name": "Thuruk's Demise III",
           "Owner": "FreeFam",
-          "BaseGameMapping": "Sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.59,
+          "Economy": 0.4,
+          "Security": 0.3
         }
       ],
       "Position": {
@@ -771,7 +777,10 @@
       "Sectors": [
         {
           "Name": "Family Tkr",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 0.89,
+          "Economy": 0.5,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -820,7 +829,10 @@
       "Sectors": [
         {
           "Name": "Fires of Defeat",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 0.81,
+          "Economy": 0.5,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -835,7 +847,10 @@
       "Sectors": [
         {
           "Name": "Tharka's Ravine XXIV",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 1.09,
+          "Economy": 0.7,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -850,7 +865,10 @@
       "Sectors": [
         {
           "Name": "Tharka's Ravine XVI",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 1.17,
+          "Economy": 0.25,
+          "Security": 0.3
         }
       ],
       "Position": {
@@ -865,7 +883,10 @@
       "Sectors": [
         {
           "Name": "Tharka's Ravine VIII",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 1.26,
+          "Economy": 0.5,
+          "Security": 0.7
         }
       ],
       "Position": {
@@ -880,7 +901,10 @@
       "Sectors": [
         {
           "Name": "Tharka's Ravine IV Tharka's Fall",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 1.31,
+          "Economy": 0.5,
+          "Security": 0.7
         }
       ],
       "Position": {
@@ -895,7 +919,10 @@
       "Sectors": [
         {
           "Name": "Heart of Acrimony II",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 2.45,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -910,7 +937,10 @@
       "Sectors": [
         {
           "Name": "Heart of Acrimony I The Boneyard",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.64,
+          "Economy": 0,
+          "Security": 0
         }
       ],
       "Position": {
@@ -959,7 +989,10 @@
       "Sectors": [
         {
           "Name": "Two Grand",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 1.33,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -974,7 +1007,10 @@
       "Sectors": [
         {
           "Name": "Open Market",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 0.88,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -989,7 +1025,10 @@
       "Sectors": [
         {
           "Name": "Family Nhuut",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 0.85,
+          "Economy": 0.7,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1004,7 +1043,10 @@
       "Sectors": [
         {
           "Name": "Zyarth's Dominion IV",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 2.1,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1019,7 +1061,10 @@
       "Sectors": [
         {
           "Name": "Zyarth's Dominion I",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 1.42,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1034,7 +1079,10 @@
       "Sectors": [
         {
           "Name": "Zyarth's Dominion X",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 1.51,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1049,7 +1097,10 @@
       "Sectors": [
         {
           "Name": "Eleventh Hour",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "Sunlight": 1.18,
+          "Economy": 0.25,
+          "Security": 0.7
         }
       ],
       "Position": {
@@ -1065,12 +1116,18 @@
         {
           "Name": "Guiding Star VII",
           "Owner": "Argon",
-          "BaseGameMapping": "Sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.71,
+          "Economy": 0.5,
+          "Security": 0.5
         },
         {
           "Name": "Guiding Star V",
           "Owner": "Argon",
-          "BaseGameMapping": "Sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.83,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1209,7 +1266,10 @@
       "Sectors": [
         {
           "Name": "Family Zhin",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 0.71,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1224,7 +1284,10 @@
       "Sectors": [
         {
           "Name": "Family Kritt",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 2.39,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1239,7 +1302,10 @@
       "Sectors": [
         {
           "Name": "Rhy's Defiance",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 1.63,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1254,7 +1320,10 @@
       "Sectors": [
         {
           "Name": "Matrix #598",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 0.77,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1269,7 +1338,10 @@
       "Sectors": [
         {
           "Name": "Wretched Skies IV Family Valka",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 1.3,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1284,7 +1356,10 @@
       "Sectors": [
         {
           "Name": "Wretched Skies V Family Phi",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 1.23,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1299,7 +1374,10 @@
       "Sectors": [
         {
           "Name": "Wretched Skies X",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 1.08,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1315,12 +1393,18 @@
         {
           "Name": "Litany of Fury XII",
           "Owner": "Paranid",
-          "BaseGameMapping": "Sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.32,
+          "Economy": 0.25,
+          "Security": 0.25
         },
         {
           "Name": "Litany of Fury IX",
           "Owner": "Paranid",
-          "BaseGameMapping": "Sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.42,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1336,12 +1420,18 @@
         {
           "Name": "Emperor's Pride VI",
           "Owner": "Xenon",
-          "BaseGameMapping": "Sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.65,
+          "Economy": 0.75,
+          "Security": 0.75
         },
         {
           "Name": "Emperor's Pride IV",
           "Owner": "Xenon",
-          "BaseGameMapping": "Sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.71,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
