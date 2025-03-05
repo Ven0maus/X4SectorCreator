@@ -127,17 +127,17 @@ namespace X4SectorCreator.XmlGeneration
             var elements = new List<(string dlc, XElement element)>();
             foreach (var cluster in vanillaChanges.RemovedClusters)
             {
-                var macro = cluster.BaseGameMapping.CapitalizeFirstLetter();
+                var macro = cluster.BaseGameMapping;
                 elements.Add((cluster.Dlc, new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']"))));
             }
             foreach (var sector in vanillaChanges.RemovedSectors)
             {
-                var macro = $"{sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
+                var macro = $"{sector.VanillaCluster.BaseGameMapping}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
                 elements.Add((sector.VanillaCluster.Dlc, new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']"))));
             }
             foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
             {
-                var macro = Old.BaseGameMapping.CapitalizeFirstLetter();
+                var macro = Old.BaseGameMapping;
 
                 // Identification nodes
                 elements.Add((Old.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name)));
@@ -145,7 +145,7 @@ namespace X4SectorCreator.XmlGeneration
             }
             foreach (var (VanillaCluster, Old, New) in vanillaChanges.ModifiedSectors)
             {
-                var macro = $"{VanillaCluster.BaseGameMapping.CapitalizeFirstLetter()}_{Old.BaseGameMapping.CapitalizeFirstLetter()}";
+                var macro = $"{VanillaCluster.BaseGameMapping}_{Old.BaseGameMapping.CapitalizeFirstLetter()}";
 
                 // Identification nodes
                 elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name)));
@@ -199,13 +199,13 @@ namespace X4SectorCreator.XmlGeneration
                         {
                             // Set on the cluster with replace
                             elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
-                                VanillaCluster.BaseGameMapping.CapitalizeFirstLetter(), "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower())));
+                                VanillaCluster.BaseGameMapping, "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower())));
                         }
                         else
                         {
                             // Set on the cluster with add
                             elements.Add((VanillaCluster.Dlc, CreateAddElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
-                                VanillaCluster.BaseGameMapping.CapitalizeFirstLetter(), "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower())));
+                                VanillaCluster.BaseGameMapping, "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower())));
                         }
                     }
                     else

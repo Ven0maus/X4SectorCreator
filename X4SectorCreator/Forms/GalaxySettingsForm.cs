@@ -8,6 +8,9 @@ namespace X4SectorCreator
     public partial class GalaxySettingsForm : Form
     {
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public static bool DisableAllStorylines { get; set; } = false;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static bool IsCustomGalaxy { get; set; } = false;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -100,6 +103,7 @@ namespace X4SectorCreator
 
             // Apply change
             IsCustomGalaxy = chkCustomGalaxy.Checked;
+            DisableAllStorylines = chkDisableAllStorylines.Checked;
 
             // Toggle galaxy mode
             MainForm.Instance.ToggleGalaxyMode(mergedClusters);
@@ -202,9 +206,13 @@ namespace X4SectorCreator
                 // Reset to default galaxy
                 txtGalaxyName.Text = "xu_ep2_universe";
                 txtGalaxyName.Enabled = false;
+                chkDisableAllStorylines.Enabled = true;
+                chkDisableAllStorylines.Checked = false;
             }
             else
             {
+                chkDisableAllStorylines.Enabled = false;
+                chkDisableAllStorylines.Checked = true;
                 txtGalaxyName.Enabled = true;
                 txtGalaxyName.Text = string.Empty;
             }
