@@ -43,7 +43,7 @@ namespace X4SectorCreator.XmlGeneration
                 new XAttribute("image", "gamestart_1"),
                 new XElement("location",
                     new XAttribute("galaxy", $"{modPrefix}_{GalaxySettingsForm.GalaxyName}_macro"),
-                    new XAttribute("sector", $"{sectorMacro}"),
+                    new XAttribute("sector", $"{sectorMacro.ToLower()}"),
                     new XElement("position",
                         new XAttribute("x", "0"),
                         new XAttribute("y", "0"),
