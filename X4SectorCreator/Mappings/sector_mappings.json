@@ -153,7 +153,10 @@
       "Sectors": [
         {
           "Name": "Windfall IV Aurora's Dream",
-          "Owner": "Vigor"
+          "Owner": "Vigor",
+          "Sunlight": 0.11,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -168,7 +171,10 @@
       "Sectors": [
         {
           "Name": "Windfall III The Hoard",
-          "Owner": "Vigor"
+          "Owner": "Vigor",
+          "Sunlight": 0.16,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -183,7 +189,10 @@
       "Sectors": [
         {
           "Name": "Windfall I Union Summit",
-          "Owner": "Vigor"
+          "Owner": "Vigor",
+          "Sunlight": 0.2,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -199,17 +208,26 @@
         {
           "Name": "Avarice I",
           "Owner": "Riptide",
-          "BaseGameMapping": "Sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 13.9,
+          "Economy": 0.25,
+          "Security": 0.75
         },
         {
           "Name": "Avarice V Dead End",
           "Owner": "Riptide",
-          "BaseGameMapping": "Sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 13.9,
+          "Economy": 0.25,
+          "Security": 0.75
         },
         {
           "Name": "Avarice IV",
           "Owner": "Riptide",
-          "BaseGameMapping": "Sector003"
+          "BaseGameMapping": "Sector003",
+          "Sunlight": 13.9,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -241,7 +259,10 @@
       "Sectors": [
         {
           "Name": "Unknown System",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.05,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
