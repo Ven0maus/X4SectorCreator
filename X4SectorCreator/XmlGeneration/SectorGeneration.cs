@@ -33,6 +33,11 @@ namespace X4SectorCreator.XmlGeneration
             if (diffData.Count > 0)
             {
                 // TODO: Clean up sectors from vanilla changes
+                // TODO: If sector or cluster argon prime is removed, then remove it also from gamestart "custom_creative" sector + known sectors
+                /*
+                    <add sel="/gamestarts/gamestart[@id='custom_creative']/location" type="@sector">cluster_14_sector001_macro</add>
+                    <remove sel="/gamestarts/gamestart[@id='custom_creative']/player/knownspace/space"/>
+                */
                 foreach (IGrouping<string, (string dlc, XElement element)> group in diffData)
                 {
                     string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
