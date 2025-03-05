@@ -27,12 +27,12 @@ namespace X4SectorCreator.XmlGeneration
 
             #region BaseGame Sector File
             // Save new zones in existing sectors
-            List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateSectorAdds(modPrefix, clusters)
+            List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateVanillaChanges(vanillaChanges)
+                .Concat(GenerateSectorAdds(modPrefix, clusters))
                 .GroupBy(a => a.dlc)
                 .ToList();
             if (diffData.Count > 0)
             {
-                // TODO: Clean up sectors from vanilla changes
                 foreach (IGrouping<string, (string dlc, XElement element)> group in diffData)
                 {
                     string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
@@ -141,6 +141,16 @@ namespace X4SectorCreator.XmlGeneration
                         new XAttribute("connection", "sector")
                     )
                 );
+            }
+        }
+
+        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
+        {
+            foreach (var sector in vanillaChanges.RemovedSectors)
+            {
+                var macro = $"{sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
+                yield return (sector.VanillaCluster.Dlc, new XElement("remove",
+                    new XAttribute("sel", $"//macros/macro[@name='{macro}_macro']")));
             }
         }
 

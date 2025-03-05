@@ -232,6 +232,9 @@ namespace X4SectorCreator
                 return;
             }
 
+            // lowercase modPrefix just incase
+            modPrefix = modPrefix.ToLower();
+
             List<Cluster> clusters = [.. AllClusters.Values];
 
             // Collects all changes done to base game content
@@ -255,6 +258,7 @@ namespace X4SectorCreator
                 ZoneGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", clusters, vanillaChanges);
                 RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
+                GameStartsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
             }
             catch (Exception ex)
             {
@@ -271,6 +275,9 @@ namespace X4SectorCreator
 
         private VanillaChanges CollectVanillaChanges()
         {
+            if (GalaxySettingsForm.IsCustomGalaxy) 
+                return new VanillaChanges();
+
             var vanillaClusters = AllClusters.Values
                 .Where(a => a.IsBaseGame)
                 .ToDictionary(a => a.BaseGameMapping);

@@ -25,6 +25,7 @@ namespace X4SectorCreator.XmlGeneration
                             new XElement("macro",
                                 new XAttribute("name", $"{galaxyName}_macro"),
                                 new XAttribute("class", "galaxy"),
+                                    new XElement("component", new XAttribute("ref", "standardgalaxy")),
                                     new XElement("connections",
                                     galaxyElements
                                 )
