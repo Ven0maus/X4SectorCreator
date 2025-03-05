@@ -32,6 +32,7 @@ namespace X4SectorCreator.XmlGeneration
                 .ToList();
             if (diffData.Count > 0)
             {
+                // TODO: Clean up sectors from vanilla changes
                 foreach (IGrouping<string, (string dlc, XElement element)> group in diffData)
                 {
                     string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";

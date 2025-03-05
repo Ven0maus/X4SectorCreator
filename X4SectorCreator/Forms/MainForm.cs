@@ -497,7 +497,7 @@ namespace X4SectorCreator
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = saveFileDialog.FileName;
-
+                // TODO: Support vanilla changes
                 try
                 {
                     List<Cluster> allModifiedClusters = AllClusters.Values
@@ -529,7 +529,7 @@ namespace X4SectorCreator
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog.FileName;
-
+                // TODO: Support vanilla changes
                 // Import new configuration
                 string jsonContent = File.ReadAllText(filePath);
                 List<Cluster> clusters = ConfigSerializer.Deserialize(jsonContent);
