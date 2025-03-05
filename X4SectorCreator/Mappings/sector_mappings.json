@@ -20,22 +20,22 @@
   "Clusters": [
     {
       "Name": "Grand Exchange",
-      "BaseGameMapping": "cluster_01",
+      "BaseGameMapping": "Cluster_01",
       "Sectors": [
         {
           "Name": "Grand Exchange IV",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector003"
+          "BaseGameMapping": "Sector003"
         },
         {
           "Name": "Grand Exchange I",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Grand Exchange III",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -45,7 +45,7 @@
     },
     {
       "Name": "Path to Profit",
-      "BaseGameMapping": "cluster_05",
+      "BaseGameMapping": "Cluster_05",
       "Sectors": [
         {
           "Name": "Path to Profit",
@@ -59,17 +59,17 @@
     },
     {
       "Name": "Black Hole Sun",
-      "BaseGameMapping": "cluster_06",
+      "BaseGameMapping": "Cluster_06",
       "Sectors": [
         {
           "Name": "Black Hole Sun IV",
           "Owner": "Argon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Black Hole Sun V",
           "Owner": "Argon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -79,7 +79,7 @@
     },
     {
       "Name": "Second Contact II Flashpoint",
-      "BaseGameMapping": "cluster_13",
+      "BaseGameMapping": "Cluster_13",
       "Sectors": [
         {
           "Name": "Second Contact II Flashpoint",
@@ -93,7 +93,7 @@
     },
     {
       "Name": "Second Contact VII",
-      "BaseGameMapping": "cluster_40",
+      "BaseGameMapping": "Cluster_40",
       "Sectors": [
         {
           "Name": "Second Contact VII",
@@ -107,7 +107,7 @@
     },
     {
       "Name": "Second Contact XI",
-      "BaseGameMapping": "cluster_41",
+      "BaseGameMapping": "Cluster_41",
       "Sectors": [
         {
           "Name": "Second Contact XI",
@@ -121,7 +121,7 @@
     },
     {
       "Name": "Windfall IV Aurora's Dream",
-      "BaseGameMapping": "cluster_503",
+      "BaseGameMapping": "Cluster_503",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -136,7 +136,7 @@
     },
     {
       "Name": "Windfall III The Hoard",
-      "BaseGameMapping": "cluster_502",
+      "BaseGameMapping": "Cluster_502",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -151,7 +151,7 @@
     },
     {
       "Name": "Windfall I Union Summit",
-      "BaseGameMapping": "cluster_501",
+      "BaseGameMapping": "Cluster_501",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -166,23 +166,23 @@
     },
     {
       "Name": "Avarice",
-      "BaseGameMapping": "cluster_500",
+      "BaseGameMapping": "Cluster_500",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Avarice I",
           "Owner": "Riptide",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Avarice V Dead End",
           "Owner": "Riptide",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Avarice IV",
           "Owner": "Riptide",
-          "BaseGameMapping": "sector003"
+          "BaseGameMapping": "Sector003"
         }
       ],
       "Position": {
@@ -192,7 +192,7 @@
     },
     {
       "Name": "Eighteen Billion",
-      "BaseGameMapping": "cluster_02",
+      "BaseGameMapping": "Cluster_02",
       "Sectors": [
         {
           "Name": "Eighteen Billion",
@@ -206,7 +206,7 @@
     },
     {
       "Name": "Unknown System",
-      "BaseGameMapping": "cluster_504",
+      "BaseGameMapping": "Cluster_504",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -221,7 +221,7 @@
     },
     {
       "Name": "Memory of Profit IX",
-      "BaseGameMapping": "cluster_03",
+      "BaseGameMapping": "Cluster_03",
       "Sectors": [
         {
           "Name": "Memory of Profit IX",
@@ -235,7 +235,7 @@
     },
     {
       "Name": "Memory of Profit X",
-      "BaseGameMapping": "cluster_39",
+      "BaseGameMapping": "Cluster_39",
       "Sectors": [
         {
           "Name": "Memory of Profit X",
@@ -249,17 +249,17 @@
     },
     {
       "Name": "Nopileos Fortune",
-      "BaseGameMapping": "cluster_04",
+      "BaseGameMapping": "Cluster_04",
       "Sectors": [
         {
           "Name": "Nopileos Fortune II",
           "Owner": "None",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Nopileos Fortune VI",
           "Owner": "None",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -283,7 +283,7 @@
     },
     {
       "Name": "Trinity Sanctum VII",
-      "BaseGameMapping": "cluster_47",
+      "BaseGameMapping": "Cluster_47",
       "Sectors": [
         {
           "Name": "Trinity Sanctum VII",
@@ -297,7 +297,7 @@
     },
     {
       "Name": "Trinity Sanctum III",
-      "BaseGameMapping": "cluster_18",
+      "BaseGameMapping": "Cluster_18",
       "Sectors": [
         {
           "Name": "Trinity Sanctum III",
@@ -311,7 +311,7 @@
     },
     {
       "Name": "Unholy Retribution",
-      "BaseGameMapping": "cluster_10",
+      "BaseGameMapping": "Cluster_10",
       "Sectors": [
         {
           "Name": "Unholy Retribution",
@@ -367,7 +367,7 @@
     },
     {
       "Name": "Pious Mists II",
-      "BaseGameMapping": "cluster_22",
+      "BaseGameMapping": "Cluster_22",
       "Sectors": [
         {
           "Name": "Pious Mists II",
@@ -381,7 +381,7 @@
     },
     {
       "Name": "Pious Mists IV",
-      "BaseGameMapping": "cluster_37",
+      "BaseGameMapping": "Cluster_37",
       "Sectors": [
         {
           "Name": "Pious Mists IV",
@@ -395,7 +395,7 @@
     },
     {
       "Name": "Pious Mists XI",
-      "BaseGameMapping": "cluster_38",
+      "BaseGameMapping": "Cluster_38",
       "Sectors": [
         {
           "Name": "Pious Mists XI",
@@ -409,7 +409,7 @@
     },
     {
       "Name": "Sacred Relic",
-      "BaseGameMapping": "cluster_23",
+      "BaseGameMapping": "Cluster_23",
       "Sectors": [
         {
           "Name": "Sacred Relic",
@@ -437,17 +437,17 @@
     },
     {
       "Name": "Hewa's Twin C1",
-      "BaseGameMapping": "cluster_19",
+      "BaseGameMapping": "Cluster_19",
       "Sectors": [
         {
           "Name": "Hewa's Twin II",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Hewa's Twin I",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         }
       ],
       "Position": {
@@ -457,7 +457,7 @@
     },
     {
       "Name": "Company Regard",
-      "BaseGameMapping": "cluster_20",
+      "BaseGameMapping": "Cluster_20",
       "Sectors": [
         {
           "Name": "Company Regard",
@@ -471,17 +471,17 @@
     },
     {
       "Name": "Hewa's Twin C2",
-      "BaseGameMapping": "cluster_42",
+      "BaseGameMapping": "Cluster_42",
       "Sectors": [
         {
           "Name": "Hewa's Twin III",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Hewa's Twin IV The Cove",
           "Owner": "None",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -491,17 +491,17 @@
     },
     {
       "Name": "Scale Plate Green",
-      "BaseGameMapping": "cluster_21",
+      "BaseGameMapping": "Cluster_21",
       "Sectors": [
         {
           "Name": "Scale Plate Green VII",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Scale Plate Green I",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         }
       ],
       "Position": {
@@ -511,17 +511,17 @@
     },
     {
       "Name": "Turquoise Sea",
-      "BaseGameMapping": "cluster_50",
+      "BaseGameMapping": "Cluster_50",
       "Sectors": [
         {
           "Name": "Turquoise Sea IX",
           "Owner": "None",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Turquoise Sea X",
           "Owner": "None",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -531,7 +531,7 @@
     },
     {
       "Name": "Hewa's Twin V",
-      "BaseGameMapping": "cluster_43",
+      "BaseGameMapping": "Cluster_43",
       "Sectors": [
         {
           "Name": "Hewa's Twin V",
@@ -545,17 +545,17 @@
     },
     {
       "Name": "Ianamus Zura",
-      "BaseGameMapping": "cluster_15",
+      "BaseGameMapping": "Cluster_15",
       "Sectors": [
         {
           "Name": "Ianamus Zura VII",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Ianamus Zura IV",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         }
       ],
       "Position": {
@@ -610,18 +610,18 @@
     },
     {
       "Name": "Thuruk's Demise II First Impact",
-      "BaseGameMapping": "cluster_408",
+      "BaseGameMapping": "Cluster_408",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Thuruk's Demise II First Impact",
           "Owner": "FreeFam",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Thuruk's Demise III",
           "Owner": "FreeFam",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         }
       ],
       "Position": {
@@ -631,7 +631,7 @@
     },
     {
       "Name": "Family Tkr",
-      "BaseGameMapping": "cluster_407",
+      "BaseGameMapping": "Cluster_407",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -646,7 +646,7 @@
     },
     {
       "Name": "Matrix #451",
-      "BaseGameMapping": "cluster_16",
+      "BaseGameMapping": "Cluster_16",
       "Sectors": [
         {
           "Name": "Matrix #451",
@@ -660,7 +660,7 @@
     },
     {
       "Name": "Matrix #9",
-      "BaseGameMapping": "cluster_17",
+      "BaseGameMapping": "Cluster_17",
       "Sectors": [
         {
           "Name": "Matrix #9",
@@ -674,7 +674,7 @@
     },
     {
       "Name": "Fires of Defeat",
-      "BaseGameMapping": "cluster_421",
+      "BaseGameMapping": "Cluster_421",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -689,7 +689,7 @@
     },
     {
       "Name": "Tharka's Ravine XXIV",
-      "BaseGameMapping": "cluster_409",
+      "BaseGameMapping": "Cluster_409",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -704,7 +704,7 @@
     },
     {
       "Name": "Tharka's Ravine XVI",
-      "BaseGameMapping": "cluster_410",
+      "BaseGameMapping": "Cluster_410",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -719,7 +719,7 @@
     },
     {
       "Name": "Tharka's Ravine VIII",
-      "BaseGameMapping": "cluster_412",
+      "BaseGameMapping": "Cluster_412",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -734,7 +734,7 @@
     },
     {
       "Name": "Tharka's Ravine IV Tharka's Fall",
-      "BaseGameMapping": "cluster_413",
+      "BaseGameMapping": "Cluster_413",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -749,7 +749,7 @@
     },
     {
       "Name": "Heart of Acrimony II",
-      "BaseGameMapping": "cluster_411",
+      "BaseGameMapping": "Cluster_411",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -764,7 +764,7 @@
     },
     {
       "Name": "Heart of Acrimony I The Boneyard",
-      "BaseGameMapping": "cluster_425",
+      "BaseGameMapping": "Cluster_425",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -779,7 +779,7 @@
     },
     {
       "Name": "Bright Promise",
-      "BaseGameMapping": "cluster_09",
+      "BaseGameMapping": "Cluster_09",
       "Sectors": [
         {
           "Name": "Bright Promise",
@@ -793,7 +793,7 @@
     },
     {
       "Name": "Profit Center Alpha",
-      "BaseGameMapping": "cluster_34",
+      "BaseGameMapping": "Cluster_34",
       "Sectors": [
         {
           "Name": "Profit Center Alpha",
@@ -807,7 +807,7 @@
     },
     {
       "Name": "Two Grand",
-      "BaseGameMapping": "cluster_420",
+      "BaseGameMapping": "Cluster_420",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -822,7 +822,7 @@
     },
     {
       "Name": "Open Market",
-      "BaseGameMapping": "cluster_419",
+      "BaseGameMapping": "Cluster_419",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -837,7 +837,7 @@
     },
     {
       "Name": "Family Nhuut",
-      "BaseGameMapping": "cluster_418",
+      "BaseGameMapping": "Cluster_418",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -852,7 +852,7 @@
     },
     {
       "Name": "Zyarth's Dominion IV",
-      "BaseGameMapping": "cluster_405",
+      "BaseGameMapping": "Cluster_405",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -867,7 +867,7 @@
     },
     {
       "Name": "Zyarth's Dominion I",
-      "BaseGameMapping": "cluster_404",
+      "BaseGameMapping": "Cluster_404",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -882,7 +882,7 @@
     },
     {
       "Name": "Zyarth's Dominion X",
-      "BaseGameMapping": "cluster_406",
+      "BaseGameMapping": "Cluster_406",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -897,7 +897,7 @@
     },
     {
       "Name": "Eleventh Hour",
-      "BaseGameMapping": "cluster_417",
+      "BaseGameMapping": "Cluster_417",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -912,18 +912,18 @@
     },
     {
       "Name": "Guiding Star",
-      "BaseGameMapping": "cluster_416",
+      "BaseGameMapping": "Cluster_416",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Guiding Star VII",
           "Owner": "Argon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Guiding Star V",
           "Owner": "Argon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         }
       ],
       "Position": {
@@ -948,7 +948,7 @@
     },
     {
       "Name": "Silent Witness I",
-      "BaseGameMapping": "cluster_08",
+      "BaseGameMapping": "Cluster_08",
       "Sectors": [
         {
           "Name": "Silent Witness I",
@@ -962,7 +962,7 @@
     },
     {
       "Name": "Silent Witness XI",
-      "BaseGameMapping": "cluster_44",
+      "BaseGameMapping": "Cluster_44",
       "Sectors": [
         {
           "Name": "Silent Witness XI",
@@ -976,7 +976,7 @@
     },
     {
       "Name": "Silent Witness XII",
-      "BaseGameMapping": "cluster_45",
+      "BaseGameMapping": "Cluster_45",
       "Sectors": [
         {
           "Name": "Silent Witness XII",
@@ -1005,17 +1005,17 @@
     },
     {
       "Name": "Tharka's Cascade",
-      "BaseGameMapping": "cluster_32",
+      "BaseGameMapping": "Cluster_32",
       "Sectors": [
         {
           "Name": "Tharka's Cascade XVII",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Tharka's Cascade XV",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         }
       ],
       "Position": {
@@ -1025,7 +1025,7 @@
     },
     {
       "Name": "Matrix #79B",
-      "BaseGameMapping": "cluster_33",
+      "BaseGameMapping": "Cluster_33",
       "Sectors": [
         {
           "Name": "Matrix #79B",
@@ -1039,7 +1039,7 @@
     },
     {
       "Name": "Family Zhin",
-      "BaseGameMapping": "cluster_401",
+      "BaseGameMapping": "Cluster_401",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1054,7 +1054,7 @@
     },
     {
       "Name": "Family Kritt",
-      "BaseGameMapping": "cluster_402",
+      "BaseGameMapping": "Cluster_402",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1069,7 +1069,7 @@
     },
     {
       "Name": "Rhy's Defiance",
-      "BaseGameMapping": "cluster_414",
+      "BaseGameMapping": "Cluster_414",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1084,7 +1084,7 @@
     },
     {
       "Name": "Matrix #598",
-      "BaseGameMapping": "cluster_415",
+      "BaseGameMapping": "Cluster_415",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1099,7 +1099,7 @@
     },
     {
       "Name": "Wretched Skies IV Family Valka",
-      "BaseGameMapping": "cluster_400",
+      "BaseGameMapping": "Cluster_400",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1114,7 +1114,7 @@
     },
     {
       "Name": "Wretched Skies V Family Phi",
-      "BaseGameMapping": "cluster_403",
+      "BaseGameMapping": "Cluster_403",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1129,7 +1129,7 @@
     },
     {
       "Name": "Wretched Skies X",
-      "BaseGameMapping": "cluster_422",
+      "BaseGameMapping": "Cluster_422",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1144,18 +1144,18 @@
     },
     {
       "Name": "Litany of Fury",
-      "BaseGameMapping": "cluster_423",
+      "BaseGameMapping": "Cluster_423",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Litany of Fury XII",
           "Owner": "Paranid",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Litany of Fury IX",
           "Owner": "Paranid",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         }
       ],
       "Position": {
@@ -1165,18 +1165,18 @@
     },
     {
       "Name": "Emperor's Pride",
-      "BaseGameMapping": "cluster_424",
+      "BaseGameMapping": "Cluster_424",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Emperor's Pride VI",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Emperor's Pride IV",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         }
       ],
       "Position": {
@@ -1186,17 +1186,17 @@
     },
     {
       "Name": "Hatikvah's Choice",
-      "BaseGameMapping": "cluster_29",
+      "BaseGameMapping": "Cluster_29",
       "Sectors": [
         {
           "Name": "Hatikvah's Choice III",
           "Owner": "Argon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         },
         {
           "Name": "Hatikvah's Choice I",
           "Owner": "Hatikvah",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         }
       ],
       "Position": {
@@ -1206,7 +1206,7 @@
     },
     {
       "Name": "Morning Star III",
-      "BaseGameMapping": "cluster_30",
+      "BaseGameMapping": "Cluster_30",
       "Sectors": [
         {
           "Name": "Morning Star III",
@@ -1220,7 +1220,7 @@
     },
     {
       "Name": "Morning Star IV",
-      "BaseGameMapping": "cluster_46",
+      "BaseGameMapping": "Cluster_46",
       "Sectors": [
         {
           "Name": "Morning Star IV",
@@ -1234,7 +1234,7 @@
     },
     {
       "Name": "Argon Prime",
-      "BaseGameMapping": "cluster_14",
+      "BaseGameMapping": "Cluster_14",
       "Sectors": [
         {
           "Name": "Argon Prime",
@@ -1248,7 +1248,7 @@
     },
     {
       "Name": "The Reach",
-      "BaseGameMapping": "cluster_07",
+      "BaseGameMapping": "Cluster_07",
       "Sectors": [
         {
           "Name": "The Reach",
@@ -1262,7 +1262,7 @@
     },
     {
       "Name": "Heretic's End",
-      "BaseGameMapping": "cluster_31",
+      "BaseGameMapping": "Cluster_31",
       "Sectors": [
         {
           "Name": "Heretic's End",
@@ -1276,18 +1276,18 @@
     },
     {
       "Name": "Savage Spur",
-      "BaseGameMapping": "cluster_112",
+      "BaseGameMapping": "Cluster_112",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Savage Spur I",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Savage Spur II",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -1297,7 +1297,7 @@
     },
     {
       "Name": "Getsu Fune",
-      "BaseGameMapping": "cluster_48",
+      "BaseGameMapping": "Cluster_48",
       "Sectors": [
         {
           "Name": "Getsu Fune",
@@ -1341,7 +1341,7 @@
     },
     {
       "Name": "The Void",
-      "BaseGameMapping": "cluster_27",
+      "BaseGameMapping": "Cluster_27",
       "Sectors": [
         {
           "Name": "The Void",
@@ -1355,7 +1355,7 @@
     },
     {
       "Name": "Antigone Memorial",
-      "BaseGameMapping": "cluster_28",
+      "BaseGameMapping": "Cluster_28",
       "Sectors": [
         {
           "Name": "Antigone Memorial",
@@ -1384,7 +1384,7 @@
     },
     {
       "Name": "Frontier Edge",
-      "BaseGameMapping": "cluster_49",
+      "BaseGameMapping": "Cluster_49",
       "Sectors": [
         {
           "Name": "Frontier Edge",
@@ -1412,17 +1412,17 @@
     },
     {
       "Name": "Atiya's Misfortune",
-      "BaseGameMapping": "cluster_26",
+      "BaseGameMapping": "Cluster_26",
       "Sectors": [
         {
           "Name": "Atiya's Misfortune I",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Atiya's Misfortune III",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -1460,17 +1460,17 @@
     },
     {
       "Name": "Faulty Logic",
-      "BaseGameMapping": "cluster_25",
+      "BaseGameMapping": "Cluster_25",
       "Sectors": [
         {
           "Name": "Faulty Logic I",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Faulty Logic VII",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -1480,7 +1480,7 @@
     },
     {
       "Name": "True Sight",
-      "BaseGameMapping": "cluster_12",
+      "BaseGameMapping": "Cluster_12",
       "Sectors": [
         {
           "Name": "True Sight",
@@ -1494,7 +1494,7 @@
     },
     {
       "Name": "Holy Vision",
-      "BaseGameMapping": "cluster_24",
+      "BaseGameMapping": "Cluster_24",
       "Sectors": [
         {
           "Name": "Holy Vision",
@@ -1508,7 +1508,7 @@
     },
     {
       "Name": "Cardinal's Redress",
-      "BaseGameMapping": "cluster_36",
+      "BaseGameMapping": "Cluster_36",
       "Sectors": [
         {
           "Name": "Cardinal's Redress",
@@ -1522,7 +1522,7 @@
     },
     {
       "Name": "Pontifex's Claim",
-      "BaseGameMapping": "cluster_11",
+      "BaseGameMapping": "Cluster_11",
       "Sectors": [
         {
           "Name": "Pontifex's Claim",
@@ -1536,7 +1536,7 @@
     },
     {
       "Name": "Lasting Vengeance",
-      "BaseGameMapping": "cluster_35",
+      "BaseGameMapping": "Cluster_35",
       "Sectors": [
         {
           "Name": "Lasting Vengeance",
@@ -1578,7 +1578,7 @@
     },
     {
       "Name": "Watchful Gaze",
-      "BaseGameMapping": "cluster_601",
+      "BaseGameMapping": "Cluster_601",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -1593,7 +1593,7 @@
     },
     {
       "Name": "Barren Shores",
-      "BaseGameMapping": "cluster_602",
+      "BaseGameMapping": "Cluster_602",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -1608,7 +1608,7 @@
     },
     {
       "Name": "Great Reef",
-      "BaseGameMapping": "cluster_603",
+      "BaseGameMapping": "Cluster_603",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -1623,7 +1623,7 @@
     },
     {
       "Name": "Ocean of Fantasy",
-      "BaseGameMapping": "cluster_604",
+      "BaseGameMapping": "Cluster_604",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -1638,7 +1638,7 @@
     },
     {
       "Name": "Sanctuary of Darkness",
-      "BaseGameMapping": "cluster_605",
+      "BaseGameMapping": "Cluster_605",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -1653,23 +1653,23 @@
     },
     {
       "Name": "Kingdom End",
-      "BaseGameMapping": "cluster_606",
+      "BaseGameMapping": "Cluster_606",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Kingdom End I",
           "Owner": "Boron",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Towering Wave",
           "Owner": "Boron",
-          "BaseGameMapping": "sector003"
+          "BaseGameMapping": "Sector003"
         },
         {
           "Name": "Reflected Stars",
           "Owner": "Boron",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -1679,7 +1679,7 @@
     },
     {
       "Name": "Rolk's Demise",
-      "BaseGameMapping": "cluster_607",
+      "BaseGameMapping": "Cluster_607",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -1694,7 +1694,7 @@
     },
     {
       "Name": "Atreus' Clouds",
-      "BaseGameMapping": "cluster_608",
+      "BaseGameMapping": "Cluster_608",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -1709,7 +1709,7 @@
     },
     {
       "Name": "Menelaus' Oasis",
-      "BaseGameMapping": "cluster_609",
+      "BaseGameMapping": "Cluster_609",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -1724,7 +1724,7 @@
     },
     {
       "Name": "Segaris",
-      "BaseGameMapping": "cluster_113",
+      "BaseGameMapping": "Cluster_113",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1739,7 +1739,7 @@
     },
     {
       "Name": "Gaian Prophecy",
-      "BaseGameMapping": "cluster_114",
+      "BaseGameMapping": "Cluster_114",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1754,7 +1754,7 @@
     },
     {
       "Name": "Brennan's Triumph",
-      "BaseGameMapping": "cluster_115",
+      "BaseGameMapping": "Cluster_115",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1783,7 +1783,7 @@
     },
     {
       "Name": "Neptune",
-      "BaseGameMapping": "cluster_110",
+      "BaseGameMapping": "Cluster_110",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1798,7 +1798,7 @@
     },
     {
       "Name": "Pluto",
-      "BaseGameMapping": "cluster_111",
+      "BaseGameMapping": "Cluster_111",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1813,7 +1813,7 @@
     },
     {
       "Name": "Oort Cloud",
-      "BaseGameMapping": "cluster_116",
+      "BaseGameMapping": "Cluster_116",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1828,7 +1828,7 @@
     },
     {
       "Name": "Uranus",
-      "BaseGameMapping": "cluster_109",
+      "BaseGameMapping": "Cluster_109",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1843,23 +1843,23 @@
     },
     {
       "Name": "Saturn",
-      "BaseGameMapping": "cluster_108",
+      "BaseGameMapping": "Cluster_108",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Saturn 2",
           "Owner": "Terran",
-          "BaseGameMapping": "sector003"
+          "BaseGameMapping": "Sector003"
         },
         {
           "Name": "Saturn 1",
           "Owner": "Terran",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "Titan",
           "Owner": "Terran",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
@@ -1869,7 +1869,7 @@
     },
     {
       "Name": "Jupiter",
-      "BaseGameMapping": "cluster_107",
+      "BaseGameMapping": "Cluster_107",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1884,7 +1884,7 @@
     },
     {
       "Name": "Asteroid Belt",
-      "BaseGameMapping": "cluster_100",
+      "BaseGameMapping": "Cluster_100",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1899,7 +1899,7 @@
     },
     {
       "Name": "Mars",
-      "BaseGameMapping": "cluster_101",
+      "BaseGameMapping": "Cluster_101",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1914,7 +1914,7 @@
     },
     {
       "Name": "Venus",
-      "BaseGameMapping": "cluster_102",
+      "BaseGameMapping": "Cluster_102",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1929,7 +1929,7 @@
     },
     {
       "Name": "Mercury",
-      "BaseGameMapping": "cluster_106",
+      "BaseGameMapping": "Cluster_106",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1944,18 +1944,18 @@
     },
     {
       "Name": "Earth",
-      "BaseGameMapping": "cluster_104",
+      "BaseGameMapping": "Cluster_104",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Earth",
           "Owner": "Terran",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001"
         },
         {
           "Name": "The Moon",
           "Owner": "Terran",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002"
         }
       ],
       "Position": {
