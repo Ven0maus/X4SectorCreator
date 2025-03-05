@@ -455,7 +455,8 @@ namespace X4SectorCreator
 
             if (sector != null)
             {
-                _ = sb.AppendLine($"[{sector.Name}]");
+                if (!sector.Name.Equals(cluster.Name, StringComparison.OrdinalIgnoreCase))
+                    _ = sb.AppendLine($"[{sector.Name}]");
                 _ = sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}%");
                 _ = sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}%");
                 _ = sb.AppendLine($"Security: {(int)(sector.Security * 100f)}%");
@@ -772,7 +773,7 @@ namespace X4SectorCreator
 
             // Show new sectors and zones
             Sector selectedSector = null;
-            foreach (Sector sector in cluster.Value.Sectors)
+            foreach (Sector sector in cluster.Value.Sectors.OrderBy(a => a.Name))
             {
                 _ = SectorsListBox.Items.Add(sector.Name);
                 if (selectedSector == null)
@@ -967,7 +968,7 @@ namespace X4SectorCreator
                 .Where(a => a.DestinationSectorName.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase))
                 .ToArray();
 
-            foreach (Gate gate in gates)
+            foreach (Gate gate in gates.OrderBy(a => a.ParentSectorName))
             {
                 _ = GatesListBox.Items.Add(gate);
             }
@@ -976,7 +977,7 @@ namespace X4SectorCreator
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
             // Show all regions
-            foreach (Region region in sector.Regions)
+            foreach (Region region in sector.Regions.OrderBy(a => a.Name))
             {
                 _ = RegionsListBox.Items.Add(region);
             }
