@@ -33,6 +33,7 @@ namespace X4SectorCreator.XmlGeneration
                         new XAttribute("value", $@"extensions\{modName}\maps\{galaxyName}\{modPrefix}_zones")
                     ) : null
             };
+            elements.RemoveAll(a => a == null);
 
             if (elements.Count > 0)
             {

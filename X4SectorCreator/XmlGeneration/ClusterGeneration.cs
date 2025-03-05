@@ -142,7 +142,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
             {
-                if (Old.BackgroundVisualMapping != New.BackgroundVisualMapping)
+                if (!Old.BackgroundVisualMapping.Equals(New.BackgroundVisualMapping, StringComparison.OrdinalIgnoreCase))
                 {
                     var clusterCode = Old.BaseGameMapping.CapitalizeFirstLetter();
                     yield return (Old.Dlc, new XElement("replace",

@@ -90,6 +90,10 @@ namespace X4SectorCreator
             // Init all collections
             foreach (KeyValuePair<(int, int), Cluster> cluster in clusterLookup)
             {
+                // Init base game mapping
+                if (cluster.Value.IsBaseGame && cluster.Value.BackgroundVisualMapping == null)
+                    cluster.Value.BackgroundVisualMapping = cluster.Value.BaseGameMapping;
+
                 foreach (Sector sector in cluster.Value.Sectors)
                 {
                     // Init regular sectors

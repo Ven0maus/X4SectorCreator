@@ -8,7 +8,7 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
-            var elements = GenerateVanillaChanges(vanillaChanges)
+            var elements = GenerateVanillaChanges(vanillaChanges, clusters)
                 .Append(GenerateNewClusterElements(modPrefix, clusters))
                 .ToArray();
 
@@ -115,7 +115,7 @@ namespace X4SectorCreator.XmlGeneration
             return null;
         }
 
-        private static IEnumerable<XElement> GenerateVanillaChanges(VanillaChanges vanillaChanges)
+        private static IEnumerable<XElement> GenerateVanillaChanges(VanillaChanges vanillaChanges, List<Cluster> allClusters)
         {
             var elements = new List<XElement>();
             foreach (var (Old, New) in vanillaChanges.ModifiedClusters)
@@ -128,8 +128,7 @@ namespace X4SectorCreator.XmlGeneration
             }
             foreach (var (VanillaCluster, Old, New) in vanillaChanges.ModifiedSectors)
             {
-                var cluster = VanillaCluster;
-                var macro = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{Old.BaseGameMapping.CapitalizeFirstLetter()}";
+                var macro = $"{VanillaCluster.BaseGameMapping.CapitalizeFirstLetter()}_{Old.BaseGameMapping.CapitalizeFirstLetter()}";
 
                 // Identification nodes
                 elements.Add(CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name));
@@ -168,6 +167,47 @@ namespace X4SectorCreator.XmlGeneration
                 }
 
                 elements.Add(CreateReplaceElement(Old.Tags, New.Tags, macro, "area", "tags", New.Tags));
+
+                // Faction logic element
+                if (Old.DisableFactionLogic != New.DisableFactionLogic)
+                {
+                    var newCluster = allClusters.First(a => a.BaseGameMapping.Equals(VanillaCluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
+                    if (newCluster.Sectors.All(a => a.DisableFactionLogic) ||
+                        newCluster.Sectors.All(a => !a.DisableFactionLogic))
+                    {
+                        // Set on cluster
+                        // If the vanilla cluster had its factionlogic disabled, we need to replace instead of add!
+                        if (Old.DisableFactionLogic)
+                        {
+                            // Set on the cluster with replace
+                            elements.Add(CreateReplaceElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
+                                VanillaCluster.BaseGameMapping.CapitalizeFirstLetter(), "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower()));
+                        }
+                        else
+                        {
+                            // Set on the cluster with add
+                            elements.Add(CreateAddElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
+                                VanillaCluster.BaseGameMapping.CapitalizeFirstLetter(), "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower()));
+                        }
+                    }
+                    else
+                    {
+                        // Set on sector
+                        // If the vanilla sector had its factionlogic disabled, we need to replace instead of add!
+                        if (Old.DisableFactionLogic)
+                        {
+                            // Set on the sector with replace
+                            elements.Add(CreateReplaceElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
+                                macro, "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower()));
+                        }
+                        else
+                        {
+                            // Set on the sector with add
+                            elements.Add(CreateAddElement(Old.DisableFactionLogic.ToString(), New.DisableFactionLogic.ToString(),
+                                macro, "area", "factionlogic", New.DisableFactionLogic.ToString().ToLower()));
+                        }
+                    }
+                }
             }
             return elements.Where(a => a != null);
         }
@@ -177,7 +217,18 @@ namespace X4SectorCreator.XmlGeneration
             if (Extensions.HasStringChanged(checkOne, checkTwo))
             {
                 return new XElement("replace",
-                    new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/identification/@{field}"),
+                    new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/{property}/@{field}"),
+                    value);
+            }
+            return null;
+        }
+
+        private static XElement CreateAddElement(string checkOne, string checkTwo, string macro, string property, string field, string value)
+        {
+            if (Extensions.HasStringChanged(checkOne, checkTwo))
+            {
+                return new XElement("add",
+                    new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/{property}/@{field}"),
                     value);
             }
             return null;
