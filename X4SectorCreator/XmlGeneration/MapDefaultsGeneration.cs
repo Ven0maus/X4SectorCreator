@@ -156,6 +156,7 @@ namespace X4SectorCreator.XmlGeneration
                     }
                     else
                     {
+                        Old.Tags ??= "allowrandomanomaly";
                         if (!string.IsNullOrWhiteSpace(New.Tags))
                         {
                             if (New.Tags.Contains("allowrandomanomaly"))
