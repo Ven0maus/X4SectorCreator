@@ -33,6 +33,7 @@
             txtGalaxyName = new TextBox();
             BtnSave = new Button();
             BtnCancel = new Button();
+            chkDisableAllStorylines = new CheckBox();
             SuspendLayout();
             // 
             // label1
@@ -86,11 +87,22 @@
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
+            // chkDisableAllStorylines
+            // 
+            chkDisableAllStorylines.AutoSize = true;
+            chkDisableAllStorylines.Location = new Point(12, 12);
+            chkDisableAllStorylines.Name = "chkDisableAllStorylines";
+            chkDisableAllStorylines.Size = new Size(132, 19);
+            chkDisableAllStorylines.TabIndex = 5;
+            chkDisableAllStorylines.Text = "Disable all storylines";
+            chkDisableAllStorylines.UseVisualStyleBackColor = true;
+            // 
             // GalaxySettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(372, 111);
+            Controls.Add(chkDisableAllStorylines);
             Controls.Add(BtnCancel);
             Controls.Add(BtnSave);
             Controls.Add(txtGalaxyName);
@@ -112,5 +124,6 @@
         private TextBox txtGalaxyName;
         private Button BtnSave;
         private Button BtnCancel;
+        private CheckBox chkDisableAllStorylines;
     }
 }
