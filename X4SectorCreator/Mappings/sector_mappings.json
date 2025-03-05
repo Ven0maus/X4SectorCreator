@@ -1686,7 +1686,10 @@
       "Sectors": [
         {
           "Name": "Third Redemption",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
