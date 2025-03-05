@@ -167,9 +167,9 @@ namespace X4SectorCreator.XmlGeneration
                             new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']"),
                                 new XElement("offset",
                                     new XElement("position",
-                                        new XAttribute("x", New.Position.X),
+                                        new XAttribute("x", New.Position.X * 15000 * 1000),
                                         new XAttribute("y", "0"),
-                                        new XAttribute("z", New.Position.Y)
+                                        new XAttribute("z", New.Position.Y * 8660 * 1000)
                                     )
                                 )
                             )
@@ -179,12 +179,12 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         yield return (Old.Dlc, new XElement("replace",
                             new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']/offset/position/@x"),
-                            New.Position.X
+                            New.Position.X * 15000 * 1000
                             )
                         );
                         yield return (Old.Dlc, new XElement("replace",
                             new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']/offset/position/@z"),
-                            New.Position.Y
+                            New.Position.Y * 8660 * 1000
                             )
                         );
                     }
