@@ -22,7 +22,7 @@ namespace X4SectorCreator
         private int? _selectedChildHexIndex, _previousSelectedChildHexIndex;
         private (int, int)? _selectedHex, _previousSelectedHex;
 
-        private const float _defaultZoom = 1.2f;
+        private const float _defaultZoom = 1f;
         private static PointF _offset;
         private static float _zoom = _defaultZoom; // 1.0 means 100% scale
 

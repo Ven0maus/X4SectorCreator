@@ -43,7 +43,7 @@
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(167, 131);
+            BtnCreate.Location = new Point(167, 228);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(218, 30);
             BtnCreate.TabIndex = 0;
@@ -53,7 +53,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 131);
+            BtnCancel.Location = new Point(12, 228);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(149, 30);
             BtnCancel.TabIndex = 1;
@@ -82,7 +82,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(82, 100);
+            label2.Location = new Point(82, 197);
             label2.Name = "label2";
             label2.Size = new Size(72, 21);
             label2.TabIndex = 4;
@@ -90,7 +90,7 @@
             // 
             // BtnPick
             // 
-            BtnPick.Location = new Point(278, 100);
+            BtnPick.Location = new Point(278, 197);
             BtnPick.Name = "BtnPick";
             BtnPick.Size = new Size(105, 26);
             BtnPick.TabIndex = 5;
@@ -101,7 +101,7 @@
             // TxtLocation
             // 
             TxtLocation.Enabled = false;
-            TxtLocation.Location = new Point(167, 102);
+            TxtLocation.Location = new Point(167, 199);
             TxtLocation.Name = "TxtLocation";
             TxtLocation.Size = new Size(105, 23);
             TxtLocation.TabIndex = 6;
@@ -119,15 +119,16 @@
             // txtDescription
             // 
             txtDescription.Location = new Point(167, 41);
+            txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(216, 23);
+            txtDescription.Size = new Size(216, 122);
             txtDescription.TabIndex = 7;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(12, 74);
+            label4.Location = new Point(12, 171);
             label4.Name = "label4";
             label4.Size = new Size(142, 21);
             label4.TabIndex = 9;
@@ -136,7 +137,7 @@
             // cmbBackgroundVisual
             // 
             cmbBackgroundVisual.FormattingEnabled = true;
-            cmbBackgroundVisual.Location = new Point(167, 73);
+            cmbBackgroundVisual.Location = new Point(167, 170);
             cmbBackgroundVisual.Name = "cmbBackgroundVisual";
             cmbBackgroundVisual.Size = new Size(216, 23);
             cmbBackgroundVisual.TabIndex = 10;
@@ -145,7 +146,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(397, 171);
+            ClientSize = new Size(397, 264);
             Controls.Add(cmbBackgroundVisual);
             Controls.Add(label4);
             Controls.Add(label3);
