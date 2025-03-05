@@ -660,9 +660,16 @@ namespace X4SectorCreator
                 clust.Id = ++count;
             }
 
+            int index = ClustersListBox.Items.IndexOf(ClustersListBox.SelectedItem);
             ClustersListBox.Items.Remove(ClustersListBox.SelectedItem);
-            ClustersListBox.SelectedItem = null;
-            SectorsListBox.Items.Clear();
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            ClustersListBox.SelectedItem = index >= 0 && ClustersListBox.Items.Count > 0 ? ClustersListBox.Items[index] : null;
+
+            if (ClustersListBox.SelectedItem == null)
+                SectorsListBox.Items.Clear();
             GatesListBox.Items.Clear();
             RegionsListBox.Items.Clear();
         }
@@ -789,11 +796,22 @@ namespace X4SectorCreator
 
             RegionsListBox.Items.Clear();
             GatesListBox.Items.Clear();
+
+            int index = SectorsListBox.Items.IndexOf(SectorsListBox.SelectedItem);
             SectorsListBox.Items.Remove(SectorsListBox.SelectedItem);
-            SectorsListBox.SelectedItem = null;
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            SectorsListBox.SelectedItem = index >= 0 && SectorsListBox.Items.Count > 0 ? SectorsListBox.Items[index] : null;
+
+            if (SectorsListBox.SelectedItem != null)
+                sector = cluster.Value.Sectors.First(a => a.Name.Equals(SectorsListBox.SelectedItem as string, StringComparison.OrdinalIgnoreCase));
+            else
+                sector = null;
 
             // Set details
-            SetDetailsText(cluster.Value, null);
+            SetDetailsText(cluster.Value, sector);
         }
 
         private static void RecalculateSectorOffsets(Cluster cluster)
