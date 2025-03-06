@@ -1077,6 +1077,11 @@ namespace X4SectorCreator
         {
             // Collect target gate data
             Gate targetGate = GatesListBox.SelectedItem as Gate;
+            if (targetGate.IsHighwayGate)
+            {
+                _ = MessageBox.Show("The selected gate is a highway type gate, which has limited edit support in the tool. You can only delete this connections.");
+                return;
+            }
 
             var targetQueryResult = AllClusters.Values
                 .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
@@ -1086,7 +1091,7 @@ namespace X4SectorCreator
             Sector targetSector = targetQueryResult.sector;
             Zone targetZone = targetSector.Zones.First(a => a.Gates.Contains(targetGate));
 
-            // Collect the source gate datz
+            // Collect the source gate data
             var sourceQueryResult = AllClusters.Values
                 .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
                 .First(pair => pair.sector.Name.Equals(targetGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
