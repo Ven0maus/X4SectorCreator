@@ -28,6 +28,9 @@ namespace X4SectorCreator.XmlGeneration
                 // Split Vendetta
                 CreateReplacementMdForDlc(folder, SectorMapForm.DlcMapping["Split Vendetta"], "setup_dlc_split", "story_split", "x4ep1_war_split");
 
+                // Hyperion Pack
+                CreateReplacementMdForDlc(folder, SectorMapForm.DlcMapping["Hyperion Pack"], "setup_dlc_mini_01", "story_hyperion", "gs_hyperion");
+
                 // Base Game
                 var baseGameMds = new List<string> { "story_buccaneers", "story_diplomacy_intro", "story_paranid", "story_research_welfare_1", "story_ventures", "terraforming", "x4ep1_war_subscriptions" };
 
