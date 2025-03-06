@@ -71,13 +71,13 @@ namespace X4SectorCreator.Configuration
             {
                 var mappingsPath = Path.Combine(Application.StartupPath, "Mappings/vanilla_connection_mappings.json");
                 var json = File.ReadAllText(mappingsPath);
-                var connections = JsonSerializer.Deserialize<List<Connection>>(json);
+                var vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json);
 
                 var baseGameClusters = allClusters.Values
                     .Where(a => a.IsBaseGame)
                     .ToArray();
 
-                foreach (var connection in connections)
+                foreach (var connection in vanillaMapping.Connections)
                 {
                     // Cleanup the data
                     connection.Source.Cluster = connection.Source.Cluster.Replace("_connection", string.Empty);
@@ -100,9 +100,17 @@ namespace X4SectorCreator.Configuration
                     var targetSector = targetCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Destination.Sector, StringComparison.OrdinalIgnoreCase));
                     var targetZone = targetSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Destination.Zone, StringComparison.OrdinalIgnoreCase));
 
+                    // Collect known zone and gate infos for the given source & target
+                    var sourceZoneGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, sourceCluster, sourceSector).ToArray();
+                    var targetZoneGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, targetCluster, targetSector).ToArray();
+
+                    // Determine radius for source & target sector based on known zone and gate positions
+                    sourceSector.DiameterRadius = DetermineRadius(sourceZoneGateInfo) * 2;
+                    targetSector.DiameterRadius = DetermineRadius(targetZoneGateInfo) * 2;
+
                     // Source & Target connection
-                    CreateGateConnection(sourceSector, sourceZone, connection.Source, connection.Destination, targetSector);
-                    CreateGateConnection(targetSector, targetZone, connection.Destination, connection.Source, sourceSector);
+                    CreateGateConnection(sourceSector, sourceZone, connection.Source, sourceZoneGateInfo, connection.Destination, targetSector);
+                    CreateGateConnection(targetSector, targetZone, connection.Destination, targetZoneGateInfo, connection.Source, sourceSector);
                 }
             }
             catch (Exception ex)
@@ -112,7 +120,27 @@ namespace X4SectorCreator.Configuration
             }
         }
 
-        private static void CreateGateConnection(Sector sector, Zone zone, ConnectionInfo sourceInfo, ConnectionInfo targetInfo, Sector targetSector)
+        private static int DetermineRadius(ZoneGateInfo[] zoneGateInfos)
+        {
+            return (int)Math.Ceiling(zoneGateInfos
+                .Select(a => Math.Sqrt(Math.Pow(a.ZonePosition.X + a.GatePosition.X, 2) +
+                                       Math.Pow(a.ZonePosition.Y + a.GatePosition.Y, 2)))
+                .Select(a => a) // Normalize
+                .DefaultIfEmpty()
+                .Max());
+        }
+
+        private static IEnumerable<ZoneGateInfo> CollectZoneGateInfoForSector(List<ZoneGateInfo> zoneGateInfos, Cluster cluster, Sector sector)
+        {
+            foreach (var zoneGateInfo in zoneGateInfos)
+            {
+                if (zoneGateInfo.ZoneName.EndsWith(cluster.BaseGameMapping + "_" + sector.BaseGameMapping + "_connection", StringComparison.OrdinalIgnoreCase))
+                    yield return zoneGateInfo;
+            }
+        }
+
+        private static void CreateGateConnection(Sector sector, Zone zone, ConnectionInfo sourceInfo, 
+            ZoneGateInfo[] sourceZoneGateInfo, ConnectionInfo targetInfo, Sector targetSector)
         {
             if (zone == null)
             {
@@ -124,7 +152,9 @@ namespace X4SectorCreator.Configuration
                 sector.Zones.Add(zone);
             }
 
-            // Find dest sector name
+            // Find the matching zoneGateInfo for the source zone + set position
+            var zoneGateInfo = sourceZoneGateInfo.First(a => a.ZoneName.Replace("_connection", string.Empty).Equals(sourceInfo.Zone, StringComparison.OrdinalIgnoreCase));
+            zone.Position = new Point(zoneGateInfo.ZonePosition.X + zoneGateInfo.GatePosition.X, zoneGateInfo.ZonePosition.Y + zoneGateInfo.GatePosition.Y);
 
             zone.Gates.Add(new Gate
             {
@@ -330,9 +360,9 @@ namespace X4SectorCreator.Configuration
         public string ZoneName { get; set; }
     }
 
-    public readonly struct CustomPoint(int x, int y)
+    public struct CustomPoint(int x, int y)
     {
-        public int X { get; } = x;
-        public int Y { get; } = y;
+        public int X { get; set; } = x;
+        public int Y { get; set; } = y;
     }
 }
