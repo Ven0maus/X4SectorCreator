@@ -14,7 +14,6 @@ namespace X4SectorCreator
         private Cluster[] _customClusters;
 
         private const int _hexSize = 100;
-        private float _hexRadius;
 
         // How many extra rows and cols will be "open" around the base game sectors + custom sectors for the user to select
         private const int _minExpansionRoom = 20;
@@ -81,8 +80,6 @@ namespace X4SectorCreator
             _customClusters = MainForm.Instance.AllClusters.Values
                 .Where(a => !a.IsBaseGame)
                 .ToArray();
-
-            _hexRadius = (float)(_hexSize / Math.Sqrt(3));
 
             Dictionary<(int, int), Cluster>.ValueCollection allClusters = MainForm.Instance.AllClusters.Values;
 
@@ -521,17 +518,17 @@ namespace X4SectorCreator
             return _dlcsSelected[dlcIndex];
         }
 
-        private PointF ConvertFromWorldCoordinate(PointF worldPos, float sectorDiameterRadius)
+        private static PointF ConvertFromWorldCoordinate(PointF worldPos, float sectorDiameterRadius, float hexRadius)
         {
             // Reverse world scaling
             float normalizedX = worldPos.X * 2f / sectorDiameterRadius;
             float normalizedY = worldPos.Y * 2f / sectorDiameterRadius;
 
             // Reverse normalization and centering
-            float screenX = (normalizedX * _hexRadius);
-            float screenY = (-normalizedY * _hexRadius); // Correct Y-axis negation
+            float screenX = normalizedX * hexRadius;
+            float screenY = -normalizedY * hexRadius; // Correct Y-axis negation
 
-            return new Point((int)Math.Round(screenX), (int)Math.Round(screenY));
+            return new PointF(screenX, screenY);
         }
 
         private void RenderGateConnections(PaintEventArgs e)
@@ -630,8 +627,12 @@ namespace X4SectorCreator
         }
 
 
-        private IEnumerable<GateData> CollectGateDataFromCluster(Cluster cluster)
+        private static IEnumerable<GateData> CollectGateDataFromCluster(Cluster cluster)
         {
+            // Calculate hex size and radius based on zoom and sector size
+            float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _zoom; // Height for flat-top hexes, applying zoom
+            float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+
             int sectorIndex = 0;
             foreach (var sector in cluster.Sectors)
             {
@@ -639,12 +640,14 @@ namespace X4SectorCreator
                 var childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                 PointF hexCenter = GetHexCenter(childHexagon.Points);
 
+                var correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
+
                 foreach (var zone in sector.Zones)
                 {
                     foreach (var gate in zone.Gates)
                     {
                         // Convert the zone position from world to screen space
-                        PointF gateScreenPosition = ConvertFromWorldCoordinate(zone.Position, sector.DiameterRadius);
+                        PointF gateScreenPosition = ConvertFromWorldCoordinate(zone.Position, sector.DiameterRadius, correctHexRadius);
 
                         gateScreenPosition.X += hexCenter.X;
                         gateScreenPosition.Y += hexCenter.Y;
