@@ -1,0 +1,2666 @@
+[
+  {
+    "Source": {
+      "Name": "ClusterGate001To004",
+      "Path": "../Cluster_01_connection/Cluster_01_Sector001_connection/Zone003_Cluster_01_Sector001_connection/connection_ClusterGate001To004",
+      "Cluster": "Cluster_01_connection",
+      "Sector": "Cluster_01_Sector001_connection",
+      "Zone": "Zone003_Cluster_01_Sector001_connection",
+      "Gate": "Cluster_01_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_04_connection/Cluster_04_Sector002_connection/Zone001_Cluster_04_Sector002_connection/connection_ClusterGate004To001",
+      "Cluster": "Cluster_04_connection",
+      "Sector": "Cluster_04_Sector002_connection",
+      "Zone": "Zone001_Cluster_04_Sector002_connection",
+      "Gate": "Cluster_04_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate001To005",
+      "Path": "../Cluster_01_connection/Cluster_01_Sector001_connection/Zone001_Cluster_01_Sector001_connection/connection_ClusterGate001To005",
+      "Cluster": "Cluster_01_connection",
+      "Sector": "Cluster_01_Sector001_connection",
+      "Zone": "Zone001_Cluster_01_Sector001_connection",
+      "Gate": "Cluster_01_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_05_connection/Cluster_05_Sector001_connection/Zone001_Cluster_05_Sector001_connection/connection_ClusterGate005To001",
+      "Cluster": "Cluster_05_connection",
+      "Sector": "Cluster_05_Sector001_connection",
+      "Zone": "Zone001_Cluster_05_Sector001_connection",
+      "Gate": "Cluster_05_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate001To006",
+      "Path": "../Cluster_01_connection/Cluster_01_Sector002_connection/Zone004_Cluster_01_Sector002_connection/connection_ClusterGate001To006",
+      "Cluster": "Cluster_01_connection",
+      "Sector": "Cluster_01_Sector002_connection",
+      "Zone": "Zone004_Cluster_01_Sector002_connection",
+      "Gate": "Cluster_01_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_06_connection/Cluster_06_Sector002_connection/Zone004_Cluster_06_Sector002_connection/connection_ClusterGate006To001",
+      "Cluster": "Cluster_06_connection",
+      "Sector": "Cluster_06_Sector002_connection",
+      "Zone": "Zone004_Cluster_06_Sector002_connection",
+      "Gate": "Cluster_06_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate001To002",
+      "Path": "../Cluster_01_connection/Cluster_01_Sector003_connection/Zone003_Cluster_01_Sector003_connection/connection_ClusterGate001To002",
+      "Cluster": "Cluster_01_connection",
+      "Sector": "Cluster_01_Sector003_connection",
+      "Zone": "Zone003_Cluster_01_Sector003_connection",
+      "Gate": "Cluster_01_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_02_connection/Cluster_02_Sector001_connection/Zone001_Cluster_02_Sector001_connection/connection_ClusterGate002To001",
+      "Cluster": "Cluster_02_connection",
+      "Sector": "Cluster_02_Sector001_connection",
+      "Zone": "Zone001_Cluster_02_Sector001_connection",
+      "Gate": "Cluster_02_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate002To003",
+      "Path": "../Cluster_02_connection/Cluster_02_Sector001_connection/Zone002_Cluster_02_Sector001_connection/connection_ClusterGate002To003",
+      "Cluster": "Cluster_02_connection",
+      "Sector": "Cluster_02_Sector001_connection",
+      "Zone": "Zone002_Cluster_02_Sector001_connection",
+      "Gate": "Cluster_02_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_03_connection/Cluster_03_Sector001_connection/Zone002_Cluster_03_Sector001_connection/connection_ClusterGate003To002",
+      "Cluster": "Cluster_03_connection",
+      "Sector": "Cluster_03_Sector001_connection",
+      "Zone": "Zone002_Cluster_03_Sector001_connection",
+      "Gate": "Cluster_03_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate002To008",
+      "Path": "../Cluster_02_connection/Cluster_02_Sector001_connection/Zone003_Cluster_02_Sector001_connection/connection_ClusterGate002To008",
+      "Cluster": "Cluster_02_connection",
+      "Sector": "Cluster_02_Sector001_connection",
+      "Zone": "Zone003_Cluster_02_Sector001_connection",
+      "Gate": "Cluster_02_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_08_connection/Cluster_08_Sector001_connection/Zone003_Cluster_08_Sector001_connection/connection_ClusterGate008To002",
+      "Cluster": "Cluster_08_connection",
+      "Sector": "Cluster_08_Sector001_connection",
+      "Zone": "Zone003_Cluster_08_Sector001_connection",
+      "Gate": "Cluster_08_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate003To009",
+      "Path": "../Cluster_03_connection/Cluster_03_Sector001_connection/Zone003_Cluster_03_Sector001_connection/connection_ClusterGate003To009",
+      "Cluster": "Cluster_03_connection",
+      "Sector": "Cluster_03_Sector001_connection",
+      "Zone": "Zone003_Cluster_03_Sector001_connection",
+      "Gate": "Cluster_03_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_09_connection/Cluster_09_Sector001_connection/Zone003_Cluster_09_Sector001_connection/connection_ClusterGate009To003",
+      "Cluster": "Cluster_09_connection",
+      "Sector": "Cluster_09_Sector001_connection",
+      "Zone": "Zone003_Cluster_09_Sector001_connection",
+      "Gate": "Cluster_09_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate003To039",
+      "Path": "../Cluster_03_connection/Cluster_03_Sector001_connection/Zone001_Cluster_03_Sector001_connection/connection_ClusterGate003To039",
+      "Cluster": "Cluster_03_connection",
+      "Sector": "Cluster_03_Sector001_connection",
+      "Zone": "Zone001_Cluster_03_Sector001_connection",
+      "Gate": "Cluster_03_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_39_connection/Cluster_39_Sector001_connection/Zone001_Cluster_39_Sector001_connection/connection_ClusterGate039To003",
+      "Cluster": "Cluster_39_connection",
+      "Sector": "Cluster_39_Sector001_connection",
+      "Zone": "Zone001_Cluster_39_Sector001_connection",
+      "Gate": "Cluster_39_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate004To022",
+      "Path": "../Cluster_04_connection/Cluster_04_Sector002_connection/Zone001_Cluster_04_Sector002_connection/connection_ClusterGate004To022",
+      "Cluster": "Cluster_04_connection",
+      "Sector": "Cluster_04_Sector002_connection",
+      "Zone": "Zone001_Cluster_04_Sector002_connection",
+      "Gate": "Cluster_04_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_22_connection/Cluster_22_Sector001_connection/Zone001_Cluster_22_Sector001_connection/connection_ClusterGate022To004",
+      "Cluster": "Cluster_22_connection",
+      "Sector": "Cluster_22_Sector001_connection",
+      "Zone": "Zone001_Cluster_22_Sector001_connection",
+      "Gate": "Cluster_22_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate006To013",
+      "Path": "../Cluster_06_connection/Cluster_06_Sector001_connection/Zone003_Cluster_06_Sector001_connection/connection_ClusterGate006To013",
+      "Cluster": "Cluster_06_connection",
+      "Sector": "Cluster_06_Sector001_connection",
+      "Zone": "Zone003_Cluster_06_Sector001_connection",
+      "Gate": "Cluster_06_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_13_connection/Cluster_13_Sector001_connection/Zone001_Cluster_13_Sector001_connection/connection_ClusterGate013To006",
+      "Cluster": "Cluster_13_connection",
+      "Sector": "Cluster_13_Sector001_connection",
+      "Zone": "Zone001_Cluster_13_Sector001_connection",
+      "Gate": "Cluster_13_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate007To014",
+      "Path": "../Cluster_07_connection/Cluster_07_Sector001_connection/Zone003_Cluster_07_Sector001_connection/connection_ClusterGate007To014",
+      "Cluster": "Cluster_07_connection",
+      "Sector": "Cluster_07_Sector001_connection",
+      "Zone": "Zone003_Cluster_07_Sector001_connection",
+      "Gate": "Cluster_07_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_14_connection/Cluster_14_Sector001_connection/Zone002_Cluster_14_Sector001_connection/connection_ClusterGate014To007",
+      "Cluster": "Cluster_14_connection",
+      "Sector": "Cluster_14_Sector001_connection",
+      "Zone": "Zone002_Cluster_14_Sector001_connection",
+      "Gate": "Cluster_14_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate008To044",
+      "Path": "../Cluster_08_connection/Cluster_08_Sector001_connection/Zone001_Cluster_08_Sector001_connection/connection_ClusterGate008To044",
+      "Cluster": "Cluster_08_connection",
+      "Sector": "Cluster_08_Sector001_connection",
+      "Zone": "Zone001_Cluster_08_Sector001_connection",
+      "Gate": "Cluster_08_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_44_connection/Cluster_44_Sector001_connection/Zone004_Cluster_44_Sector001_connection/connection_ClusterGate044To008",
+      "Cluster": "Cluster_44_connection",
+      "Sector": "Cluster_44_Sector001_connection",
+      "Zone": "Zone004_Cluster_44_Sector001_connection",
+      "Gate": "Cluster_44_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate008To034",
+      "Path": "../Cluster_08_connection/Cluster_08_Sector001_connection/Zone002_Cluster_08_Sector001_connection/connection_ClusterGate008To034",
+      "Cluster": "Cluster_08_connection",
+      "Sector": "Cluster_08_Sector001_connection",
+      "Zone": "Zone002_Cluster_08_Sector001_connection",
+      "Gate": "Cluster_08_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_34_connection/Cluster_34_Sector001_connection/Zone003_Cluster_34_Sector001_connection/connection_ClusterGate034To008",
+      "Cluster": "Cluster_34_connection",
+      "Sector": "Cluster_34_Sector001_connection",
+      "Zone": "Zone003_Cluster_34_Sector001_connection",
+      "Gate": "Cluster_34_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate008To029",
+      "Path": "../Cluster_08_connection/Cluster_08_Sector001_connection/Zone004_Cluster_08_Sector001_connection/connection_ClusterGate008To029",
+      "Cluster": "Cluster_08_connection",
+      "Sector": "Cluster_08_Sector001_connection",
+      "Zone": "Zone004_Cluster_08_Sector001_connection",
+      "Gate": "Cluster_08_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_29_connection/Cluster_29_Sector001_connection/Zone002_Cluster_29_Sector001_connection/connection_ClusterGate029To008",
+      "Cluster": "Cluster_29_connection",
+      "Sector": "Cluster_29_Sector001_connection",
+      "Zone": "Zone002_Cluster_29_Sector001_connection",
+      "Gate": "Cluster_29_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate009To034",
+      "Path": "../Cluster_09_connection/Cluster_09_Sector001_connection/Zone001_Cluster_09_Sector001_connection/connection_ClusterGate009To034",
+      "Cluster": "Cluster_09_connection",
+      "Sector": "Cluster_09_Sector001_connection",
+      "Zone": "Zone001_Cluster_09_Sector001_connection",
+      "Gate": "Cluster_09_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_34_connection/Cluster_34_Sector001_connection/Zone005_Cluster_34_Sector001_connection/connection_ClusterGate034to009",
+      "Cluster": "Cluster_34_connection",
+      "Sector": "Cluster_34_Sector001_connection",
+      "Zone": "Zone005_Cluster_34_Sector001_connection",
+      "Gate": "Cluster_34_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate009To018",
+      "Path": "../Cluster_09_connection/Cluster_09_Sector001_connection/Zone002_Cluster_09_Sector001_connection/connection_ClusterGate009To018",
+      "Cluster": "Cluster_09_connection",
+      "Sector": "Cluster_09_Sector001_connection",
+      "Zone": "Zone002_Cluster_09_Sector001_connection",
+      "Gate": "Cluster_09_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_18_connection/Cluster_18_Sector001_connection/Zone003_Cluster_18_Sector001_connection/connection_ClusterGate018To009",
+      "Cluster": "Cluster_18_connection",
+      "Sector": "Cluster_18_Sector001_connection",
+      "Zone": "Zone003_Cluster_18_Sector001_connection",
+      "Gate": "Cluster_18_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate009to015",
+      "Path": "../Cluster_09_connection/Cluster_09_Sector001_connection/Zone004_Cluster_09_Sector001_connection/connection_ClusterGate009to015",
+      "Cluster": "Cluster_09_connection",
+      "Sector": "Cluster_09_Sector001_connection",
+      "Zone": "Zone004_Cluster_09_Sector001_connection",
+      "Gate": "Cluster_09_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_15_connection/Cluster_15_Sector001_connection/Zone004_Cluster_15_Sector001_connection/connection_ClusterGate015To009",
+      "Cluster": "Cluster_15_connection",
+      "Sector": "Cluster_15_Sector001_connection",
+      "Zone": "Zone004_Cluster_15_Sector001_connection",
+      "Gate": "Cluster_15_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate010To022",
+      "Path": "../Cluster_10_connection/Cluster_10_Sector001_connection/Zone001_Cluster_10_Sector001_connection/connection_ClusterGate010To022",
+      "Cluster": "Cluster_10_connection",
+      "Sector": "Cluster_10_Sector001_connection",
+      "Zone": "Zone001_Cluster_10_Sector001_connection",
+      "Gate": "Cluster_10_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_22_connection/Cluster_22_Sector001_connection/Zone002_Cluster_22_Sector001_connection/connection_ClusterGate022To010",
+      "Cluster": "Cluster_22_connection",
+      "Sector": "Cluster_22_Sector001_connection",
+      "Zone": "Zone002_Cluster_22_Sector001_connection",
+      "Gate": "Cluster_22_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate010To018",
+      "Path": "../Cluster_10_connection/Cluster_10_Sector001_connection/Zone002_Cluster_10_Sector001_connection/connection_ClusterGate010To018",
+      "Cluster": "Cluster_10_connection",
+      "Sector": "Cluster_10_Sector001_connection",
+      "Zone": "Zone002_Cluster_10_Sector001_connection",
+      "Gate": "Cluster_10_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_18_connection/Cluster_18_Sector001_connection/Zone005_Cluster_18_Sector001_connection/connection_ClusterGate018To010",
+      "Cluster": "Cluster_18_connection",
+      "Sector": "Cluster_18_Sector001_connection",
+      "Zone": "Zone005_Cluster_18_Sector001_connection",
+      "Gate": "Cluster_18_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate011To024",
+      "Path": "../Cluster_11_connection/Cluster_11_Sector001_connection/Zone001_Cluster_11_Sector001_connection/connection_ClusterGate011To024",
+      "Cluster": "Cluster_11_connection",
+      "Sector": "Cluster_11_Sector001_connection",
+      "Zone": "Zone001_Cluster_11_Sector001_connection",
+      "Gate": "Cluster_11_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_24_connection/Cluster_24_Sector001_connection/Zone004_Cluster_24_Sector001_connection/connection_ClusterGate024To011",
+      "Cluster": "Cluster_24_connection",
+      "Sector": "Cluster_24_Sector001_connection",
+      "Zone": "Zone004_Cluster_24_Sector001_connection",
+      "Gate": "Cluster_24_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate011To022",
+      "Path": "../Cluster_11_connection/Cluster_11_Sector001_connection/Zone001_Cluster_11_Sector001_connection/connection_ClusterGate011To022",
+      "Cluster": "Cluster_11_connection",
+      "Sector": "Cluster_11_Sector001_connection",
+      "Zone": "Zone001_Cluster_11_Sector001_connection",
+      "Gate": "Cluster_11_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_22_connection/Cluster_22_Sector001_connection/Zone004_Cluster_22_Sector001_connection/connection_ClusterGate022To011",
+      "Cluster": "Cluster_22_connection",
+      "Sector": "Cluster_22_Sector001_connection",
+      "Zone": "Zone004_Cluster_22_Sector001_connection",
+      "Gate": "Cluster_22_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate012To024",
+      "Path": "../Cluster_12_connection/Cluster_12_Sector001_connection/Zone001_Cluster_12_Sector001_connection/connection_ClusterGate012To024",
+      "Cluster": "Cluster_12_connection",
+      "Sector": "Cluster_12_Sector001_connection",
+      "Zone": "Zone001_Cluster_12_Sector001_connection",
+      "Gate": "Cluster_12_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_24_connection/Cluster_24_Sector001_connection/Zone002_Cluster_24_Sector001_connection/connection_ClusterGate024To012",
+      "Cluster": "Cluster_24_connection",
+      "Sector": "Cluster_24_Sector001_connection",
+      "Zone": "Zone002_Cluster_24_Sector001_connection",
+      "Gate": "Cluster_24_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate012To013",
+      "Path": "../Cluster_12_connection/Cluster_12_Sector001_connection/Zone003_Cluster_12_Sector001_connection/connection_ClusterGate012To013",
+      "Cluster": "Cluster_12_connection",
+      "Sector": "Cluster_12_Sector001_connection",
+      "Zone": "Zone003_Cluster_12_Sector001_connection",
+      "Gate": "Cluster_12_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_13_connection/Cluster_13_Sector001_connection/Zone002_Cluster_13_Sector001_connection/connection_ClusterGate013To012",
+      "Cluster": "Cluster_13_connection",
+      "Sector": "Cluster_13_Sector001_connection",
+      "Zone": "Zone002_Cluster_13_Sector001_connection",
+      "Gate": "Cluster_13_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate013To027",
+      "Path": "../Cluster_13_connection/Cluster_13_Sector001_connection/Zone002_Cluster_13_Sector001_connection/connection_ClusterGate013To027",
+      "Cluster": "Cluster_13_connection",
+      "Sector": "Cluster_13_Sector001_connection",
+      "Zone": "Zone002_Cluster_13_Sector001_connection",
+      "Gate": "Cluster_13_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_27_connection/Cluster_27_Sector001_connection/Zone001_Cluster_27_Sector001_connection/connection_ClusterGate027To013",
+      "Cluster": "Cluster_27_connection",
+      "Sector": "Cluster_27_Sector001_connection",
+      "Zone": "Zone001_Cluster_27_Sector001_connection",
+      "Gate": "Cluster_27_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate013To040",
+      "Path": "../Cluster_13_connection/Cluster_13_Sector001_connection/Zone002_Cluster_13_Sector001_connection/connection_ClusterGate013To040",
+      "Cluster": "Cluster_13_connection",
+      "Sector": "Cluster_13_Sector001_connection",
+      "Zone": "Zone002_Cluster_13_Sector001_connection",
+      "Gate": "Cluster_13_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_40_connection/Cluster_40_Sector001_connection/Zone001_Cluster_40_Sector001_connection/connection_ClusterGate040To013",
+      "Cluster": "Cluster_40_connection",
+      "Sector": "Cluster_40_Sector001_connection",
+      "Zone": "Zone001_Cluster_40_Sector001_connection",
+      "Gate": "Cluster_40_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate013To014",
+      "Path": "../Cluster_13_connection/Cluster_13_Sector001_connection/Zone003_Cluster_13_Sector001_connection/connection_ClusterGate013To014",
+      "Cluster": "Cluster_13_connection",
+      "Sector": "Cluster_13_Sector001_connection",
+      "Zone": "Zone003_Cluster_13_Sector001_connection",
+      "Gate": "Cluster_13_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_14_connection/Cluster_14_Sector001_connection/Zone001_Cluster_14_Sector001_connection/connection_ClusterGate014To013",
+      "Cluster": "Cluster_14_connection",
+      "Sector": "Cluster_14_Sector001_connection",
+      "Zone": "Zone001_Cluster_14_Sector001_connection",
+      "Gate": "Cluster_14_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate014To029",
+      "Path": "../Cluster_14_connection/Cluster_14_Sector001_connection/Zone003_Cluster_14_Sector001_connection/connection_ClusterGate014To029",
+      "Cluster": "Cluster_14_connection",
+      "Sector": "Cluster_14_Sector001_connection",
+      "Zone": "Zone003_Cluster_14_Sector001_connection",
+      "Gate": "Cluster_14_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_29_connection/Cluster_29_Sector001_connection/Zone003_Cluster_29_Sector001_connection/connection_ClusterGate029To014",
+      "Cluster": "Cluster_29_connection",
+      "Sector": "Cluster_29_Sector001_connection",
+      "Zone": "Zone003_Cluster_29_Sector001_connection",
+      "Gate": "Cluster_29_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate015To016",
+      "Path": "../Cluster_15_connection/Cluster_15_Sector001_connection/Zone002_Cluster_15_Sector001_connection/connection_ClusterGate015To016",
+      "Cluster": "Cluster_15_connection",
+      "Sector": "Cluster_15_Sector001_connection",
+      "Zone": "Zone002_Cluster_15_Sector001_connection",
+      "Gate": "Cluster_15_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_16_connection/Cluster_16_Sector001_connection/Zone001_Cluster_16_Sector001_connection/connection_ClusterGate016To015",
+      "Cluster": "Cluster_16_connection",
+      "Sector": "Cluster_16_Sector001_connection",
+      "Zone": "Zone001_Cluster_16_Sector001_connection",
+      "Gate": "Cluster_16_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate016To017",
+      "Path": "../Cluster_16_connection/Cluster_16_Sector001_connection/Zone004_Cluster_16_Sector001_connection/connection_ClusterGate016To017",
+      "Cluster": "Cluster_16_connection",
+      "Sector": "Cluster_16_Sector001_connection",
+      "Zone": "Zone004_Cluster_16_Sector001_connection",
+      "Gate": "Cluster_16_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_17_connection/Cluster_17_Sector001_connection/Zone004_Cluster_17_Sector001_connection/connection_ClusterGate017To016",
+      "Cluster": "Cluster_17_connection",
+      "Sector": "Cluster_17_Sector001_connection",
+      "Zone": "Zone004_Cluster_17_Sector001_connection",
+      "Gate": "Cluster_17_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate018To019",
+      "Path": "../Cluster_18_connection/Cluster_18_Sector001_connection/Zone002_Cluster_18_Sector001_connection/connection_ClusterGate018To019",
+      "Cluster": "Cluster_18_connection",
+      "Sector": "Cluster_18_Sector001_connection",
+      "Zone": "Zone002_Cluster_18_Sector001_connection",
+      "Gate": "Cluster_18_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_19_connection/Cluster_19_Sector001_connection/Zone003_Cluster_19_Sector001_connection/connection_ClusterGate019To018",
+      "Cluster": "Cluster_19_connection",
+      "Sector": "Cluster_19_Sector001_connection",
+      "Zone": "Zone003_Cluster_19_Sector001_connection",
+      "Gate": "Cluster_19_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate018To047",
+      "Path": "../Cluster_18_connection/Cluster_18_Sector001_connection/Zone003_Cluster_18_Sector001_connection/connection_ClusterGate018To047",
+      "Cluster": "Cluster_18_connection",
+      "Sector": "Cluster_18_Sector001_connection",
+      "Zone": "Zone003_Cluster_18_Sector001_connection",
+      "Gate": "Cluster_18_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_47_connection/Cluster_47_Sector001_connection/Zone002_Cluster_47_Sector001_connection/connection_ClusterGate047To018",
+      "Cluster": "Cluster_47_connection",
+      "Sector": "Cluster_47_Sector001_connection",
+      "Zone": "Zone002_Cluster_47_Sector001_connection",
+      "Gate": "Cluster_47_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate019To042",
+      "Path": "../Cluster_19_connection/Cluster_19_Sector001_connection/Zone002_Cluster_19_Sector001_connection/connection_ClusterGate019To042",
+      "Cluster": "Cluster_19_connection",
+      "Sector": "Cluster_19_Sector001_connection",
+      "Zone": "Zone002_Cluster_19_Sector001_connection",
+      "Gate": "Cluster_19_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_42_connection/Cluster_42_Sector001_connection/Zone003_Cluster_42_Sector001_connection/connection_ClusterGate042To019",
+      "Cluster": "Cluster_42_connection",
+      "Sector": "Cluster_42_Sector001_connection",
+      "Zone": "Zone003_Cluster_42_Sector001_connection",
+      "Gate": "Cluster_42_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate019To020",
+      "Path": "../Cluster_19_connection/Cluster_19_Sector002_connection/Zone003_Cluster_19_Sector002_connection/connection_ClusterGate019To020",
+      "Cluster": "Cluster_19_connection",
+      "Sector": "Cluster_19_Sector002_connection",
+      "Zone": "Zone003_Cluster_19_Sector002_connection",
+      "Gate": "Cluster_19_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_20_connection/Cluster_20_Sector001_connection/Zone003_Cluster_20_Sector001_connection/connection_ClusterGate020To019",
+      "Cluster": "Cluster_20_connection",
+      "Sector": "Cluster_20_Sector001_connection",
+      "Zone": "Zone003_Cluster_20_Sector001_connection",
+      "Gate": "Cluster_20_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate020To021",
+      "Path": "../Cluster_20_connection/Cluster_20_Sector001_connection/Zone004_Cluster_20_Sector001_connection/connection_ClusterGate020To021",
+      "Cluster": "Cluster_20_connection",
+      "Sector": "Cluster_20_Sector001_connection",
+      "Zone": "Zone004_Cluster_20_Sector001_connection",
+      "Gate": "Cluster_20_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_21_connection/Cluster_21_Sector001_connection/Zone001_Cluster_21_Sector001_connection/connection_ClusterGate021To020",
+      "Cluster": "Cluster_21_connection",
+      "Sector": "Cluster_21_Sector001_connection",
+      "Zone": "Zone001_Cluster_21_Sector001_connection",
+      "Gate": "Cluster_21_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate022To037",
+      "Path": "../Cluster_22_connection/Cluster_22_Sector001_connection/Zone002_Cluster_22_Sector001_connection/connection_ClusterGate022To037",
+      "Cluster": "Cluster_22_connection",
+      "Sector": "Cluster_22_Sector001_connection",
+      "Zone": "Zone002_Cluster_22_Sector001_connection",
+      "Gate": "Cluster_22_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_37_connection/Cluster_37_Sector001_connection/Zone001_Cluster_37_Sector001_connection/connection_ClusterGate037To022",
+      "Cluster": "Cluster_37_connection",
+      "Sector": "Cluster_37_Sector001_connection",
+      "Zone": "Zone001_Cluster_37_Sector001_connection",
+      "Gate": "Cluster_37_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate022To023",
+      "Path": "../Cluster_22_connection/Cluster_22_Sector001_connection/Zone003_Cluster_22_Sector001_connection/connection_ClusterGate022To023",
+      "Cluster": "Cluster_22_connection",
+      "Sector": "Cluster_22_Sector001_connection",
+      "Zone": "Zone003_Cluster_22_Sector001_connection",
+      "Gate": "Cluster_22_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_23_connection/Cluster_23_Sector001_connection/Zone002_Cluster_23_Sector001_connection/connection_ClusterGate023To022",
+      "Cluster": "Cluster_23_connection",
+      "Sector": "Cluster_23_Sector001_connection",
+      "Zone": "Zone002_Cluster_23_Sector001_connection",
+      "Gate": "Cluster_23_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate022To038",
+      "Path": "../Cluster_22_connection/Cluster_22_Sector001_connection/Zone003_Cluster_22_Sector001_connection/connection_ClusterGate022To038",
+      "Cluster": "Cluster_22_connection",
+      "Sector": "Cluster_22_Sector001_connection",
+      "Zone": "Zone003_Cluster_22_Sector001_connection",
+      "Gate": "Cluster_22_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_38_connection/Cluster_38_Sector001_connection/Zone005_Cluster_38_Sector001_connection/connection_ClusterGate038To022",
+      "Cluster": "Cluster_38_connection",
+      "Sector": "Cluster_38_Sector001_connection",
+      "Zone": "Zone005_Cluster_38_Sector001_connection",
+      "Gate": "Cluster_38_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate024To025",
+      "Path": "../Cluster_24_connection/Cluster_24_Sector001_connection/Zone003_Cluster_24_Sector001_connection/connection_ClusterGate024To025",
+      "Cluster": "Cluster_24_connection",
+      "Sector": "Cluster_24_Sector001_connection",
+      "Zone": "Zone003_Cluster_24_Sector001_connection",
+      "Gate": "Cluster_24_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_25_connection/Cluster_25_Sector001_connection/Zone003_Cluster_25_Sector001_connection/connection_ClusterGate025To024",
+      "Cluster": "Cluster_25_connection",
+      "Sector": "Cluster_25_Sector001_connection",
+      "Zone": "Zone003_Cluster_25_Sector001_connection",
+      "Gate": "Cluster_25_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate024To036",
+      "Path": "../Cluster_24_connection/Cluster_24_Sector001_connection/Zone004_Cluster_24_Sector001_connection/connection_ClusterGate024To036",
+      "Cluster": "Cluster_24_connection",
+      "Sector": "Cluster_24_Sector001_connection",
+      "Zone": "Zone004_Cluster_24_Sector001_connection",
+      "Gate": "Cluster_24_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_36_connection/Cluster_36_Sector001_connection/Zone002_Cluster_36_Sector001_connection/connection_ClusterGate036To024",
+      "Cluster": "Cluster_36_connection",
+      "Sector": "Cluster_36_Sector001_connection",
+      "Zone": "Zone002_Cluster_36_Sector001_connection",
+      "Gate": "Cluster_36_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate025To026",
+      "Path": "../Cluster_25_connection/Cluster_25_Sector002_connection/Zone003_Cluster_25_Sector002_connection/connection_ClusterGate025To026",
+      "Cluster": "Cluster_25_connection",
+      "Sector": "Cluster_25_Sector002_connection",
+      "Zone": "Zone003_Cluster_25_Sector002_connection",
+      "Gate": "Cluster_25_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_26_connection/Cluster_26_Sector002_connection/Zone003_Cluster_26_Sector002_connection/connection_ClusterGate026To025",
+      "Cluster": "Cluster_26_connection",
+      "Sector": "Cluster_26_Sector002_connection",
+      "Zone": "Zone003_Cluster_26_Sector002_connection",
+      "Gate": "Cluster_26_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate027To028",
+      "Path": "../Cluster_27_connection/Cluster_27_Sector001_connection/Zone003_Cluster_27_Sector001_connection/connection_ClusterGate027To028",
+      "Cluster": "Cluster_27_connection",
+      "Sector": "Cluster_27_Sector001_connection",
+      "Zone": "Zone003_Cluster_27_Sector001_connection",
+      "Gate": "Cluster_27_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_28_connection/Cluster_28_Sector001_connection/Zone001_Cluster_28_Sector001_connection/connection_ClusterGate028To027",
+      "Cluster": "Cluster_28_connection",
+      "Sector": "Cluster_28_Sector001_connection",
+      "Zone": "Zone001_Cluster_28_Sector001_connection",
+      "Gate": "Cluster_28_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate029To030",
+      "Path": "../Cluster_29_connection/Cluster_29_Sector001_connection/Zone001_Cluster_29_Sector001_connection/connection_ClusterGate029To030",
+      "Cluster": "Cluster_29_connection",
+      "Sector": "Cluster_29_Sector001_connection",
+      "Zone": "Zone001_Cluster_29_Sector001_connection",
+      "Gate": "Cluster_29_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_30_connection/Cluster_30_Sector001_connection/Zone001_Cluster_30_Sector001_connection/connection_ClusterGate030To029",
+      "Cluster": "Cluster_30_connection",
+      "Sector": "Cluster_30_Sector001_connection",
+      "Zone": "Zone001_Cluster_30_Sector001_connection",
+      "Gate": "Cluster_30_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate029To032",
+      "Path": "../Cluster_29_connection/Cluster_29_Sector001_connection/Zone002_Cluster_29_Sector001_connection/connection_ClusterGate029To032",
+      "Cluster": "Cluster_29_connection",
+      "Sector": "Cluster_29_Sector001_connection",
+      "Zone": "Zone002_Cluster_29_Sector001_connection",
+      "Gate": "Cluster_29_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_32_connection/Cluster_32_Sector001_connection/Zone004_Cluster_32_Sector001_connection/connection_ClusterGate032To029",
+      "Cluster": "Cluster_32_connection",
+      "Sector": "Cluster_32_Sector001_connection",
+      "Zone": "Zone004_Cluster_32_Sector001_connection",
+      "Gate": "Cluster_32_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate030To046",
+      "Path": "../Cluster_30_connection/Cluster_30_Sector001_connection/Zone002_Cluster_30_Sector001_connection/connection_ClusterGate030To046",
+      "Cluster": "Cluster_30_connection",
+      "Sector": "Cluster_30_Sector001_connection",
+      "Zone": "Zone002_Cluster_30_Sector001_connection",
+      "Gate": "Cluster_30_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_46_connection/Cluster_46_Sector001_connection/Zone003_Cluster_46_Sector001_connection/connection_ClusterGate046To030",
+      "Cluster": "Cluster_46_connection",
+      "Sector": "Cluster_46_Sector001_connection",
+      "Zone": "Zone003_Cluster_46_Sector001_connection",
+      "Gate": "Cluster_46_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate030To031",
+      "Path": "../Cluster_30_connection/Cluster_30_Sector001_connection/Zone003_Cluster_30_Sector001_connection/connection_ClusterGate030To031",
+      "Cluster": "Cluster_30_connection",
+      "Sector": "Cluster_30_Sector001_connection",
+      "Zone": "Zone003_Cluster_30_Sector001_connection",
+      "Gate": "Cluster_30_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_31_connection/Cluster_31_Sector001_connection/Zone001_Cluster_31_Sector001_connection/connection_ClusterGate031To030",
+      "Cluster": "Cluster_31_connection",
+      "Sector": "Cluster_31_Sector001_connection",
+      "Zone": "Zone001_Cluster_31_Sector001_connection",
+      "Gate": "Cluster_31_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate032To033",
+      "Path": "../Cluster_32_connection/Cluster_32_Sector002_connection/Zone003_Cluster_32_Sector002_connection/connection_ClusterGate032To033",
+      "Cluster": "Cluster_32_connection",
+      "Sector": "Cluster_32_Sector002_connection",
+      "Zone": "Zone003_Cluster_32_Sector002_connection",
+      "Gate": "Cluster_32_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_33_connection/Cluster_33_Sector001_connection/Zone001_Cluster_33_Sector001_connection/connection_ClusterGate033To032",
+      "Cluster": "Cluster_33_connection",
+      "Sector": "Cluster_33_Sector001_connection",
+      "Zone": "Zone001_Cluster_33_Sector001_connection",
+      "Gate": "Cluster_33_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate035To036",
+      "Path": "../Cluster_35_connection/Cluster_35_Sector001_connection/Zone001_Cluster_35_Sector001_connection/connection_ClusterGate035To036",
+      "Cluster": "Cluster_35_connection",
+      "Sector": "Cluster_35_Sector001_connection",
+      "Zone": "Zone001_Cluster_35_Sector001_connection",
+      "Gate": "Cluster_35_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_36_connection/Cluster_36_Sector001_connection/Zone004_Cluster_36_Sector001_connection/connection_ClusterGate036To035",
+      "Cluster": "Cluster_36_connection",
+      "Sector": "Cluster_36_Sector001_connection",
+      "Zone": "Zone004_Cluster_36_Sector001_connection",
+      "Gate": "Cluster_36_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate037To038",
+      "Path": "../Cluster_37_connection/Cluster_37_Sector001_connection/Zone003_Cluster_37_Sector001_connection/connection_ClusterGate037To038",
+      "Cluster": "Cluster_37_connection",
+      "Sector": "Cluster_37_Sector001_connection",
+      "Zone": "Zone003_Cluster_37_Sector001_connection",
+      "Gate": "Cluster_37_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_38_connection/Cluster_38_Sector001_connection/Zone002_Cluster_38_Sector001_connection/connection_ClusterGate038To037",
+      "Cluster": "Cluster_38_connection",
+      "Sector": "Cluster_38_Sector001_connection",
+      "Zone": "Zone002_Cluster_38_Sector001_connection",
+      "Gate": "Cluster_38_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate040To041",
+      "Path": "../Cluster_40_connection/Cluster_40_Sector001_connection/Zone005_Cluster_40_Sector001_connection/connection_ClusterGate040To041",
+      "Cluster": "Cluster_40_connection",
+      "Sector": "Cluster_40_Sector001_connection",
+      "Zone": "Zone005_Cluster_40_Sector001_connection",
+      "Gate": "Cluster_40_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_41_connection/Cluster_41_Sector001_connection/Zone004_Cluster_41_Sector001_connection/connection_ClusterGate041To040",
+      "Cluster": "Cluster_41_connection",
+      "Sector": "Cluster_41_Sector001_connection",
+      "Zone": "Zone004_Cluster_41_Sector001_connection",
+      "Gate": "Cluster_41_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate042To043",
+      "Path": "../Cluster_42_connection/Cluster_42_Sector001_connection/Zone001_Cluster_42_Sector001_connection/connection_ClusterGate042To043",
+      "Cluster": "Cluster_42_connection",
+      "Sector": "Cluster_42_Sector001_connection",
+      "Zone": "Zone001_Cluster_42_Sector001_connection",
+      "Gate": "Cluster_42_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_43_connection/Cluster_43_Sector001_connection/Zone003_Cluster_43_Sector001_connection/connection_ClusterGate043To042",
+      "Cluster": "Cluster_43_connection",
+      "Sector": "Cluster_43_Sector001_connection",
+      "Zone": "Zone003_Cluster_43_Sector001_connection",
+      "Gate": "Cluster_43_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate044To045",
+      "Path": "../Cluster_44_connection/Cluster_44_Sector001_connection/Zone001_Cluster_44_Sector001_connection/connection_ClusterGate044To045",
+      "Cluster": "Cluster_44_connection",
+      "Sector": "Cluster_44_Sector001_connection",
+      "Zone": "Zone001_Cluster_44_Sector001_connection",
+      "Gate": "Cluster_44_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_45_connection/Cluster_45_Sector001_connection/Zone003_Cluster_45_Sector001_connection/connection_ClusterGate045To044",
+      "Cluster": "Cluster_45_connection",
+      "Sector": "Cluster_45_Sector001_connection",
+      "Zone": "Zone003_Cluster_45_Sector001_connection",
+      "Gate": "Cluster_45_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate027To049",
+      "Path": "../Cluster_27_connection/Cluster_27_Sector001_connection/Zone004_Cluster_27_Sector001_connection/connection_ClusterGate027To049",
+      "Cluster": "Cluster_27_connection",
+      "Sector": "Cluster_27_Sector001_connection",
+      "Zone": "Zone004_Cluster_27_Sector001_connection",
+      "Gate": "Cluster_27_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_49_connection/Cluster_49_Sector001_connection/Zone003_Cluster_49_Sector001_connection/connection_ClusterGate049To027",
+      "Cluster": "Cluster_49_connection",
+      "Sector": "Cluster_49_Sector001_connection",
+      "Zone": "Zone003_Cluster_49_Sector001_connection",
+      "Gate": "Cluster_49_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate027To048",
+      "Path": "../Cluster_27_connection/Cluster_27_Sector001_connection/Zone005_Cluster_27_Sector001_connection/connection_ClusterGate027To048",
+      "Cluster": "Cluster_27_connection",
+      "Sector": "Cluster_27_Sector001_connection",
+      "Zone": "Zone005_Cluster_27_Sector001_connection",
+      "Gate": "Cluster_27_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_48_connection/Cluster_48_Sector001_connection/Zone003_Cluster_48_Sector001_connection/connection_ClusterGate048To027",
+      "Cluster": "Cluster_48_connection",
+      "Sector": "Cluster_48_Sector001_connection",
+      "Zone": "Zone003_Cluster_48_Sector001_connection",
+      "Gate": "Cluster_48_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate026To049",
+      "Path": "../Cluster_26_connection/Cluster_26_Sector001_connection/Zone004_Cluster_26_Sector001_connection/connection_ClusterGate026To049",
+      "Cluster": "Cluster_26_connection",
+      "Sector": "Cluster_26_Sector001_connection",
+      "Zone": "Zone004_Cluster_26_Sector001_connection",
+      "Gate": "Cluster_26_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_49_connection/Cluster_49_Sector001_connection/Zone001_Cluster_49_Sector001_connection/connection_ClusterGate049To026",
+      "Cluster": "Cluster_49_connection",
+      "Sector": "Cluster_49_Sector001_connection",
+      "Zone": "Zone001_Cluster_49_Sector001_connection",
+      "Gate": "Cluster_49_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate020To050",
+      "Path": "../Cluster_20_connection/Cluster_20_Sector001_connection/Zone002_Cluster_20_Sector001_connection/connection_ClusterGate020To050",
+      "Cluster": "Cluster_20_connection",
+      "Sector": "Cluster_20_Sector001_connection",
+      "Zone": "Zone002_Cluster_20_Sector001_connection",
+      "Gate": "Cluster_20_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_50_connection/Cluster_50_Sector002_connection/Zone001_Cluster_50_Sector002_connection/connection_ClusterGate050To020",
+      "Cluster": "Cluster_50_connection",
+      "Sector": "Cluster_50_Sector002_connection",
+      "Zone": "Zone001_Cluster_50_Sector002_connection",
+      "Gate": "Cluster_50_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate021To050",
+      "Path": "../Cluster_21_connection/Cluster_21_Sector002_connection/Zone003_Cluster_21_Sector002_connection/connection_ClusterGate021To050",
+      "Cluster": "Cluster_21_connection",
+      "Sector": "Cluster_21_Sector002_connection",
+      "Zone": "Zone003_Cluster_21_Sector002_connection",
+      "Gate": "Cluster_21_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_50_connection/Cluster_50_Sector002_connection/Zone004_Cluster_50_Sector002_connection/connection_ClusterGate050To021",
+      "Cluster": "Cluster_50_connection",
+      "Sector": "Cluster_50_Sector002_connection",
+      "Zone": "Zone004_Cluster_50_Sector002_connection",
+      "Gate": "Cluster_50_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate023To709",
+      "Path": "../Cluster_23_connection/Cluster_23_Sector001_connection/Zone004_Cluster_23_Sector001_connection/connection_ClusterGate023To709",
+      "Cluster": "Cluster_23_connection",
+      "Sector": "Cluster_23_Sector001_connection",
+      "Zone": "Zone004_Cluster_23_Sector001_connection",
+      "Gate": "Cluster_23_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_709_connection/Cluster_709_Sector001_connection/Zone001_Cluster_709_Sector001_connection/connection_ClusterGate709To023",
+      "Cluster": "Cluster_709_connection",
+      "Sector": "Cluster_709_Sector001_connection",
+      "Zone": "Zone001_Cluster_709_Sector001_connection",
+      "Gate": "Cluster_709_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate710To709",
+      "Path": "../Cluster_710_connection/Cluster_710_Sector001_connection/Zone005_Cluster_710_Sector001_connection/connection_ClusterGate710To709",
+      "Cluster": "Cluster_710_connection",
+      "Sector": "Cluster_710_Sector001_connection",
+      "Zone": "Zone005_Cluster_710_Sector001_connection",
+      "Gate": "Cluster_710_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_709_connection/Cluster_709_Sector001_connection/Zone002_Cluster_709_Sector001_connection/connection_ClusterGate709To710",
+      "Cluster": "Cluster_709_connection",
+      "Sector": "Cluster_709_Sector001_connection",
+      "Zone": "Zone002_Cluster_709_Sector001_connection",
+      "Gate": "Cluster_709_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate710To711",
+      "Path": "../Cluster_710_connection/Cluster_710_Sector001_connection/Zone001_Cluster_710_Sector001_connection/connection_ClusterGate710To711",
+      "Cluster": "Cluster_710_connection",
+      "Sector": "Cluster_710_Sector001_connection",
+      "Zone": "Zone001_Cluster_710_Sector001_connection",
+      "Gate": "Cluster_710_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_711_connection/Cluster_711_Sector001_connection/Zone005_Cluster_711_Sector001_connection/connection_ClusterGate711To710",
+      "Cluster": "Cluster_711_connection",
+      "Sector": "Cluster_711_Sector001_connection",
+      "Zone": "Zone005_Cluster_711_Sector001_connection",
+      "Gate": "Cluster_711_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate711To712",
+      "Path": "../Cluster_711_connection/Cluster_711_Sector001_connection/Zone004_Cluster_711_Sector001_connection/connection_ClusterGate711To712",
+      "Cluster": "Cluster_711_connection",
+      "Sector": "Cluster_711_Sector001_connection",
+      "Zone": "Zone004_Cluster_711_Sector001_connection",
+      "Gate": "Cluster_711_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_712_connection/Cluster_712_Sector001_connection/Zone003_Cluster_712_Sector001_connection/connection_ClusterGate712To711",
+      "Cluster": "Cluster_712_connection",
+      "Sector": "Cluster_712_Sector001_connection",
+      "Zone": "Zone003_Cluster_712_Sector001_connection",
+      "Gate": "Cluster_712_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate712To713",
+      "Path": "../Cluster_712_connection/Cluster_712_Sector001_connection/Zone004_Cluster_712_Sector001_connection/connection_ClusterGate712To713",
+      "Cluster": "Cluster_712_connection",
+      "Sector": "Cluster_712_Sector001_connection",
+      "Zone": "Zone004_Cluster_712_Sector001_connection",
+      "Gate": "Cluster_712_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_713_connection/Cluster_713_Sector001_connection/Zone003_Cluster_713_Sector001_connection/connection_ClusterGate713To712",
+      "Cluster": "Cluster_713_connection",
+      "Sector": "Cluster_713_Sector001_connection",
+      "Zone": "Zone003_Cluster_713_Sector001_connection",
+      "Gate": "Cluster_713_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate713To039",
+      "Path": "../Cluster_713_connection/Cluster_713_Sector001_connection/Zone004_Cluster_713_Sector001_connection/connection_ClusterGate713To039",
+      "Cluster": "Cluster_713_connection",
+      "Sector": "Cluster_713_Sector001_connection",
+      "Zone": "Zone004_Cluster_713_Sector001_connection",
+      "Gate": "Cluster_713_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_39_connection/Cluster_39_Sector001_connection/Zone003_Cluster_39_Sector001_connection/connection_ClusterGate039To713",
+      "Cluster": "Cluster_39_connection",
+      "Sector": "Cluster_39_Sector001_connection",
+      "Zone": "Zone003_Cluster_39_Sector001_connection",
+      "Gate": "Cluster_39_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate714To036",
+      "Path": "../Cluster_714_connection/Cluster_714_Sector001_connection/Zone001_Cluster_714_Sector001_connection/connection_ClusterGate714To036",
+      "Cluster": "Cluster_714_connection",
+      "Sector": "Cluster_714_Sector001_connection",
+      "Zone": "Zone001_Cluster_714_Sector001_connection",
+      "Gate": "Cluster_714_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_36_connection/Cluster_36_Sector001_connection/Zone005_Cluster_36_Sector001_connection/connection_ClusterGate036To714",
+      "Cluster": "Cluster_36_connection",
+      "Sector": "Cluster_36_Sector001_connection",
+      "Zone": "Zone005_Cluster_36_Sector001_connection",
+      "Gate": "Cluster_36_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate715To026",
+      "Path": "../Cluster_715_connection/Cluster_715_Sector001_connection/Zone001_Cluster_715_Sector001_connection/connection_ClusterGate715To026",
+      "Cluster": "Cluster_715_connection",
+      "Sector": "Cluster_715_Sector001_connection",
+      "Zone": "Zone001_Cluster_715_Sector001_connection",
+      "Gate": "Cluster_715_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_26_connection/Cluster_26_Sector002_connection/Zone003_Cluster_26_Sector002_connection/connection_ClusterGate026To715",
+      "Cluster": "Cluster_26_connection",
+      "Sector": "Cluster_26_Sector002_connection",
+      "Zone": "Zone003_Cluster_26_Sector002_connection",
+      "Gate": "Cluster_26_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate720To049",
+      "Path": "../Cluster_720_connection/Cluster_720_Sector001_connection/Zone002_Cluster_720_Sector001_connection/connection_ClusterGate720To049",
+      "Cluster": "Cluster_720_connection",
+      "Sector": "Cluster_720_Sector001_connection",
+      "Zone": "Zone002_Cluster_720_Sector001_connection",
+      "Gate": "Cluster_720_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_49_connection/Cluster_49_Sector001_connection/Zone002_Cluster_49_Sector001_connection/connection_ClusterGate049To720",
+      "Cluster": "Cluster_49_connection",
+      "Sector": "Cluster_49_Sector001_connection",
+      "Zone": "Zone002_Cluster_49_Sector001_connection",
+      "Gate": "Cluster_49_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate720To721",
+      "Path": "../Cluster_720_connection/Cluster_720_Sector001_connection/Zone005_Cluster_720_Sector001_connection/connection_ClusterGate720To721",
+      "Cluster": "Cluster_720_connection",
+      "Sector": "Cluster_720_Sector001_connection",
+      "Zone": "Zone005_Cluster_720_Sector001_connection",
+      "Gate": "Cluster_720_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_721_connection/Cluster_721_Sector001_connection/Zone003_Cluster_721_Sector001_connection/connection_ClusterGate721To720",
+      "Cluster": "Cluster_721_connection",
+      "Sector": "Cluster_721_Sector001_connection",
+      "Zone": "Zone003_Cluster_721_Sector001_connection",
+      "Gate": "Cluster_721_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate720To722",
+      "Path": "../Cluster_720_connection/Cluster_720_Sector001_connection/Zone003_Cluster_720_Sector001_connection/connection_ClusterGate720To722",
+      "Cluster": "Cluster_720_connection",
+      "Sector": "Cluster_720_Sector001_connection",
+      "Zone": "Zone003_Cluster_720_Sector001_connection",
+      "Gate": "Cluster_720_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_722_connection/Cluster_722_Sector001_connection/Zone001_Cluster_722_Sector001_connection/connection_ClusterGate722To720",
+      "Cluster": "Cluster_722_connection",
+      "Sector": "Cluster_722_Sector001_connection",
+      "Zone": "Zone001_Cluster_722_Sector001_connection",
+      "Gate": "Cluster_722_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate722To723",
+      "Path": "../Cluster_722_connection/Cluster_722_Sector001_connection/Zone003_Cluster_722_Sector001_connection/connection_ClusterGate722To723",
+      "Cluster": "Cluster_722_connection",
+      "Sector": "Cluster_722_Sector001_connection",
+      "Zone": "Zone003_Cluster_722_Sector001_connection",
+      "Gate": "Cluster_722_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_723_connection/Cluster_723_Sector001_connection/Zone004_Cluster_723_Sector001_connection/connection_ClusterGate723To722",
+      "Cluster": "Cluster_723_connection",
+      "Sector": "Cluster_723_Sector001_connection",
+      "Zone": "Zone004_Cluster_723_Sector001_connection",
+      "Gate": "Cluster_723_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate722To724",
+      "Path": "../Cluster_722_connection/Cluster_722_Sector001_connection/Zone004_Cluster_722_Sector001_connection/connection_ClusterGate722To724",
+      "Cluster": "Cluster_722_connection",
+      "Sector": "Cluster_722_Sector001_connection",
+      "Zone": "Zone004_Cluster_722_Sector001_connection",
+      "Gate": "Cluster_722_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_724_connection/Cluster_724_Sector001_connection/Zone003_Cluster_724_Sector001_connection/connection_ClusterGate724To722",
+      "Cluster": "Cluster_724_connection",
+      "Sector": "Cluster_724_Sector001_connection",
+      "Zone": "Zone003_Cluster_724_Sector001_connection",
+      "Gate": "Cluster_724_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate723To709",
+      "Path": "../Cluster_723_connection/Cluster_723_Sector001_connection/Zone002_Cluster_723_Sector001_connection/connection_ClusterGate723To709",
+      "Cluster": "Cluster_723_connection",
+      "Sector": "Cluster_723_Sector001_connection",
+      "Zone": "Zone002_Cluster_723_Sector001_connection",
+      "Gate": "Cluster_723_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_709_connection/Cluster_709_Sector001_connection/Zone004_Cluster_709_Sector001_connection/connection_ClusterGate709To723",
+      "Cluster": "Cluster_709_connection",
+      "Sector": "Cluster_709_Sector001_connection",
+      "Zone": "Zone004_Cluster_709_Sector001_connection",
+      "Gate": "Cluster_709_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate401To402",
+      "Path": "../Cluster_401_connection/Cluster_401_Sector001_connection/Zone002_Cluster_401_Sector001_connection/connection_ClusterGate401To402",
+      "Cluster": "Cluster_401_connection",
+      "Sector": "Cluster_401_Sector001_connection",
+      "Zone": "Zone002_Cluster_401_Sector001_connection",
+      "Gate": "Cluster_401_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_402_connection/Cluster_402_Sector001_connection/Zone005_Cluster_402_Sector001_connection/connection_ClusterGate402To401",
+      "Cluster": "Cluster_402_connection",
+      "Sector": "Cluster_402_Sector001_connection",
+      "Zone": "Zone005_Cluster_402_Sector001_connection",
+      "Gate": "Cluster_402_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate401To032",
+      "Path": "../Cluster_401_connection/Cluster_401_Sector001_connection/Zone005_Cluster_401_Sector001_connection/connection_ClusterGate401To032",
+      "Cluster": "Cluster_401_connection",
+      "Sector": "Cluster_401_Sector001_connection",
+      "Zone": "Zone005_Cluster_401_Sector001_connection",
+      "Gate": "Cluster_401_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_32_connection/Cluster_32_Sector001_connection/Zone003_Cluster_32_Sector001_connection/connection_ClusterGate032To401",
+      "Cluster": "Cluster_32_connection",
+      "Sector": "Cluster_32_Sector001_connection",
+      "Zone": "Zone003_Cluster_32_Sector001_connection",
+      "Gate": "Cluster_32_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate400To403",
+      "Path": "../Cluster_400_connection/Cluster_400_Sector001_connection/Zone001_Cluster_400_Sector001_connection/connection_ClusterGate400To403",
+      "Cluster": "Cluster_400_connection",
+      "Sector": "Cluster_400_Sector001_connection",
+      "Zone": "Zone001_Cluster_400_Sector001_connection",
+      "Gate": "Cluster_400_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_403_connection/Cluster_403_Sector001_connection/Zone003_Cluster_403_Sector001_connection/connection_ClusterGate403To400",
+      "Cluster": "Cluster_403_connection",
+      "Sector": "Cluster_403_Sector001_connection",
+      "Zone": "Zone003_Cluster_403_Sector001_connection",
+      "Gate": "Cluster_403_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate400To401",
+      "Path": "../Cluster_400_connection/Cluster_400_Sector001_connection/Zone004_Cluster_400_Sector001_connection/connection_ClusterGate400To401",
+      "Cluster": "Cluster_400_connection",
+      "Sector": "Cluster_400_Sector001_connection",
+      "Zone": "Zone004_Cluster_400_Sector001_connection",
+      "Gate": "Cluster_400_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_401_connection/Cluster_401_Sector001_connection/Zone001_Cluster_401_Sector001_connection/connection_ClusterGate401To400",
+      "Cluster": "Cluster_401_connection",
+      "Sector": "Cluster_401_Sector001_connection",
+      "Zone": "Zone001_Cluster_401_Sector001_connection",
+      "Gate": "Cluster_401_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate401To418",
+      "Path": "../Cluster_401_connection/Cluster_401_Sector001_connection/Zone003_Cluster_401_Sector001_connection/connection_ClusterGate401To418",
+      "Cluster": "Cluster_401_connection",
+      "Sector": "Cluster_401_Sector001_connection",
+      "Zone": "Zone003_Cluster_401_Sector001_connection",
+      "Gate": "Cluster_401_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_418_connection/Cluster_418_Sector001_connection/Zone001_Cluster_418_Sector001_connection/connection_ClusterGate418To401",
+      "Cluster": "Cluster_418_connection",
+      "Sector": "Cluster_418_Sector001_connection",
+      "Zone": "Zone001_Cluster_418_Sector001_connection",
+      "Gate": "Cluster_418_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate402To414",
+      "Path": "../Cluster_402_connection/Cluster_402_Sector001_connection/Zone002_Cluster_402_Sector001_connection/connection_ClusterGate402To414",
+      "Cluster": "Cluster_402_connection",
+      "Sector": "Cluster_402_Sector001_connection",
+      "Zone": "Zone002_Cluster_402_Sector001_connection",
+      "Gate": "Cluster_402_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_414_connection/Cluster_414_Sector001_connection/Zone005_Cluster_414_Sector001_connection/connection_ClusterGate414To402",
+      "Cluster": "Cluster_414_connection",
+      "Sector": "Cluster_414_Sector001_connection",
+      "Zone": "Zone005_Cluster_414_Sector001_connection",
+      "Gate": "Cluster_414_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate403To422",
+      "Path": "../Cluster_403_connection/Cluster_403_Sector001_connection/Zone002_Cluster_403_Sector001_connection/connection_ClusterGate403To422",
+      "Cluster": "Cluster_403_connection",
+      "Sector": "Cluster_403_Sector001_connection",
+      "Zone": "Zone002_Cluster_403_Sector001_connection",
+      "Gate": "Cluster_403_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_422_connection/Cluster_422_Sector001_connection/Zone005_Cluster_422_Sector001_connection/connection_ClusterGate422To403",
+      "Cluster": "Cluster_422_connection",
+      "Sector": "Cluster_422_Sector001_connection",
+      "Zone": "Zone005_Cluster_422_Sector001_connection",
+      "Gate": "Cluster_422_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate403To031",
+      "Path": "../Cluster_403_connection/Cluster_403_Sector001_connection/Zone005_Cluster_403_Sector001_connection/connection_ClusterGate403To031",
+      "Cluster": "Cluster_403_connection",
+      "Sector": "Cluster_403_Sector001_connection",
+      "Zone": "Zone005_Cluster_403_Sector001_connection",
+      "Gate": "Cluster_403_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_31_connection/Cluster_31_Sector001_connection/Zone002_Cluster_31_Sector001_connection/connection_ClusterGate031To403",
+      "Cluster": "Cluster_31_connection",
+      "Sector": "Cluster_31_Sector001_connection",
+      "Zone": "Zone002_Cluster_31_Sector001_connection",
+      "Gate": "Cluster_31_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate404To406",
+      "Path": "../Cluster_404_connection/Cluster_404_Sector001_connection/Zone003_Cluster_404_Sector001_connection/connection_ClusterGate404To406",
+      "Cluster": "Cluster_404_connection",
+      "Sector": "Cluster_404_Sector001_connection",
+      "Zone": "Zone003_Cluster_404_Sector001_connection",
+      "Gate": "Cluster_404_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_406_connection/Cluster_406_Sector001_connection/Zone002_Cluster_406_Sector001_connection/connection_ClusterGate406To404",
+      "Cluster": "Cluster_406_connection",
+      "Sector": "Cluster_406_Sector001_connection",
+      "Zone": "Zone002_Cluster_406_Sector001_connection",
+      "Gate": "Cluster_406_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate404To415",
+      "Path": "../Cluster_404_connection/Cluster_404_Sector001_connection/Zone001_Cluster_404_Sector001_connection/connection_ClusterGate404To415",
+      "Cluster": "Cluster_404_connection",
+      "Sector": "Cluster_404_Sector001_connection",
+      "Zone": "Zone001_Cluster_404_Sector001_connection",
+      "Gate": "Cluster_404_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_415_connection/Cluster_415_Sector001_connection/Zone004_Cluster_415_Sector001_connection/connection_ClusterGate415To404",
+      "Cluster": "Cluster_415_connection",
+      "Sector": "Cluster_415_Sector001_connection",
+      "Zone": "Zone004_Cluster_415_Sector001_connection",
+      "Gate": "Cluster_415_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate404To418",
+      "Path": "../Cluster_404_connection/Cluster_404_Sector001_connection/Zone005_Cluster_404_Sector001_connection/connection_ClusterGate404To418",
+      "Cluster": "Cluster_404_connection",
+      "Sector": "Cluster_404_Sector001_connection",
+      "Zone": "Zone005_Cluster_404_Sector001_connection",
+      "Gate": "Cluster_404_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_418_connection/Cluster_418_Sector001_connection/Zone002_Cluster_418_Sector001_connection/connection_ClusterGate418To404",
+      "Cluster": "Cluster_418_connection",
+      "Sector": "Cluster_418_Sector001_connection",
+      "Zone": "Zone002_Cluster_418_Sector001_connection",
+      "Gate": "Cluster_418_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate405To406",
+      "Path": "../Cluster_405_connection/Cluster_405_Sector001_connection/Zone003_Cluster_405_Sector001_connection/connection_ClusterGate405To406",
+      "Cluster": "Cluster_405_connection",
+      "Sector": "Cluster_405_Sector001_connection",
+      "Zone": "Zone003_Cluster_405_Sector001_connection",
+      "Gate": "Cluster_405_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_406_connection/Cluster_406_Sector001_connection/Zone005_Cluster_406_Sector001_connection/connection_ClusterGate406To405",
+      "Cluster": "Cluster_406_connection",
+      "Sector": "Cluster_406_Sector001_connection",
+      "Zone": "Zone005_Cluster_406_Sector001_connection",
+      "Gate": "Cluster_406_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate405To419",
+      "Path": "../Cluster_405_connection/Cluster_405_Sector001_connection/Zone005_Cluster_405_Sector001_connection/connection_ClusterGate405To419",
+      "Cluster": "Cluster_405_connection",
+      "Sector": "Cluster_405_Sector001_connection",
+      "Zone": "Zone005_Cluster_405_Sector001_connection",
+      "Gate": "Cluster_405_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_419_connection/Cluster_419_Sector001_connection/Zone002_Cluster_419_Sector001_connection/connection_ClusterGate419To405",
+      "Cluster": "Cluster_419_connection",
+      "Sector": "Cluster_419_Sector001_connection",
+      "Zone": "Zone002_Cluster_419_Sector001_connection",
+      "Gate": "Cluster_419_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate406To417",
+      "Path": "../Cluster_406_connection/Cluster_406_Sector001_connection/Zone003_Cluster_406_Sector001_connection/connection_ClusterGate406To417",
+      "Cluster": "Cluster_406_connection",
+      "Sector": "Cluster_406_Sector001_connection",
+      "Zone": "Zone003_Cluster_406_Sector001_connection",
+      "Gate": "Cluster_406_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_417_connection/Cluster_417_Sector001_connection/Zone001_Cluster_417_Sector001_connection/connection_ClusterGate417To406",
+      "Cluster": "Cluster_417_connection",
+      "Sector": "Cluster_417_Sector001_connection",
+      "Zone": "Zone001_Cluster_417_Sector001_connection",
+      "Gate": "Cluster_417_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate407To409",
+      "Path": "../Cluster_407_connection/Cluster_407_Sector001_connection/Zone003_Cluster_407_Sector001_connection/connection_ClusterGate407To409",
+      "Cluster": "Cluster_407_connection",
+      "Sector": "Cluster_407_Sector001_connection",
+      "Zone": "Zone003_Cluster_407_Sector001_connection",
+      "Gate": "Cluster_407_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_409_connection/Cluster_409_Sector001_connection/Zone005_Cluster_409_Sector001_connection/connection_ClusterGate409To407",
+      "Cluster": "Cluster_409_connection",
+      "Sector": "Cluster_409_Sector001_connection",
+      "Zone": "Zone005_Cluster_409_Sector001_connection",
+      "Gate": "Cluster_409_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate407To421",
+      "Path": "../Cluster_407_connection/Cluster_407_Sector001_connection/Zone002_Cluster_407_Sector001_connection/connection_ClusterGate407To421",
+      "Cluster": "Cluster_407_connection",
+      "Sector": "Cluster_407_Sector001_connection",
+      "Zone": "Zone002_Cluster_407_Sector001_connection",
+      "Gate": "Cluster_407_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_421_connection/Cluster_421_Sector001_connection/Zone005_Cluster_421_Sector001_connection/connection_ClusterGate421To407",
+      "Cluster": "Cluster_421_connection",
+      "Sector": "Cluster_421_Sector001_connection",
+      "Zone": "Zone005_Cluster_421_Sector001_connection",
+      "Gate": "Cluster_421_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate407To408",
+      "Path": "../Cluster_407_connection/Cluster_407_Sector001_connection/Zone005_Cluster_407_Sector001_connection/connection_ClusterGate407To408",
+      "Cluster": "Cluster_407_connection",
+      "Sector": "Cluster_407_Sector001_connection",
+      "Zone": "Zone005_Cluster_407_Sector001_connection",
+      "Gate": "Cluster_407_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_408_connection/Cluster_408_Sector001_connection/Zone002_Cluster_408_Sector001_connection/connection_ClusterGate408To407",
+      "Cluster": "Cluster_408_connection",
+      "Sector": "Cluster_408_Sector001_connection",
+      "Zone": "Zone002_Cluster_408_Sector001_connection",
+      "Gate": "Cluster_408_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate407To016",
+      "Path": "../Cluster_407_connection/Cluster_407_Sector001_connection/Zone004_Cluster_407_Sector001_connection/connection_ClusterGate407To016",
+      "Cluster": "Cluster_407_connection",
+      "Sector": "Cluster_407_Sector001_connection",
+      "Zone": "Zone004_Cluster_407_Sector001_connection",
+      "Gate": "Cluster_407_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_16_connection/Cluster_16_Sector001_connection/Zone003_Cluster_16_Sector001_connection/connection_ClusterGate016To407",
+      "Cluster": "Cluster_16_connection",
+      "Sector": "Cluster_16_Sector001_connection",
+      "Zone": "Zone003_Cluster_16_Sector001_connection",
+      "Gate": "Cluster_16_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate409To421",
+      "Path": "../Cluster_409_connection/Cluster_409_Sector001_connection/Zone001_Cluster_409_Sector001_connection/connection_ClusterGate409To421",
+      "Cluster": "Cluster_409_connection",
+      "Sector": "Cluster_409_Sector001_connection",
+      "Zone": "Zone001_Cluster_409_Sector001_connection",
+      "Gate": "Cluster_409_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_421_connection/Cluster_421_Sector001_connection/Zone004_Cluster_421_Sector001_connection/connection_ClusterGate421To409",
+      "Cluster": "Cluster_421_connection",
+      "Sector": "Cluster_421_Sector001_connection",
+      "Zone": "Zone004_Cluster_421_Sector001_connection",
+      "Gate": "Cluster_421_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate409To410",
+      "Path": "../Cluster_409_connection/Cluster_409_Sector001_connection/Zone004_Cluster_409_Sector001_connection/connection_ClusterGate409To410",
+      "Cluster": "Cluster_409_connection",
+      "Sector": "Cluster_409_Sector001_connection",
+      "Zone": "Zone004_Cluster_409_Sector001_connection",
+      "Gate": "Cluster_409_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_410_connection/Cluster_410_Sector001_connection/Zone003_Cluster_410_Sector001_connection/connection_ClusterGate410To409",
+      "Cluster": "Cluster_410_connection",
+      "Sector": "Cluster_410_Sector001_connection",
+      "Zone": "Zone003_Cluster_410_Sector001_connection",
+      "Gate": "Cluster_410_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate410To411",
+      "Path": "../Cluster_410_connection/Cluster_410_Sector001_connection/Zone002_Cluster_410_Sector001_connection/connection_ClusterGate410To411",
+      "Cluster": "Cluster_410_connection",
+      "Sector": "Cluster_410_Sector001_connection",
+      "Zone": "Zone002_Cluster_410_Sector001_connection",
+      "Gate": "Cluster_410_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_411_connection/Cluster_411_Sector001_connection/Zone005_Cluster_411_Sector001_connection/connection_ClusterGate411To410",
+      "Cluster": "Cluster_411_connection",
+      "Sector": "Cluster_411_Sector001_connection",
+      "Zone": "Zone005_Cluster_411_Sector001_connection",
+      "Gate": "Cluster_411_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate410To412",
+      "Path": "../Cluster_410_connection/Cluster_410_Sector001_connection/Zone005_Cluster_410_Sector001_connection/connection_ClusterGate410To412",
+      "Cluster": "Cluster_410_connection",
+      "Sector": "Cluster_410_Sector001_connection",
+      "Zone": "Zone005_Cluster_410_Sector001_connection",
+      "Gate": "Cluster_410_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_412_connection/Cluster_412_Sector001_connection/Zone001_Cluster_412_Sector001_connection/connection_ClusterGate412To410",
+      "Cluster": "Cluster_412_connection",
+      "Sector": "Cluster_412_Sector001_connection",
+      "Zone": "Zone001_Cluster_412_Sector001_connection",
+      "Gate": "Cluster_412_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate412To413",
+      "Path": "../Cluster_412_connection/Cluster_412_Sector001_connection/Zone004_Cluster_412_Sector001_connection/connection_ClusterGate412To413",
+      "Cluster": "Cluster_412_connection",
+      "Sector": "Cluster_412_Sector001_connection",
+      "Zone": "Zone004_Cluster_412_Sector001_connection",
+      "Gate": "Cluster_412_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_413_connection/Cluster_413_Sector001_connection/Zone001_Cluster_413_Sector001_connection/connection_ClusterGate413To412",
+      "Cluster": "Cluster_413_connection",
+      "Sector": "Cluster_413_Sector001_connection",
+      "Zone": "Zone001_Cluster_413_Sector001_connection",
+      "Gate": "Cluster_413_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate414To415",
+      "Path": "../Cluster_414_connection/Cluster_414_Sector001_connection/Zone003_Cluster_414_Sector001_connection/connection_ClusterGate414To415",
+      "Cluster": "Cluster_414_connection",
+      "Sector": "Cluster_414_Sector001_connection",
+      "Zone": "Zone003_Cluster_414_Sector001_connection",
+      "Gate": "Cluster_414_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_415_connection/Cluster_415_Sector001_connection/Zone002_Cluster_415_Sector001_connection/connection_ClusterGate415To414",
+      "Cluster": "Cluster_415_connection",
+      "Sector": "Cluster_415_Sector001_connection",
+      "Zone": "Zone002_Cluster_415_Sector001_connection",
+      "Gate": "Cluster_415_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate416To420",
+      "Path": "../Cluster_416_connection/Cluster_416_Sector001_connection/Zone003_Cluster_416_Sector001_connection/connection_ClusterGate416To420",
+      "Cluster": "Cluster_416_connection",
+      "Sector": "Cluster_416_Sector001_connection",
+      "Zone": "Zone003_Cluster_416_Sector001_connection",
+      "Gate": "Cluster_416_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_420_connection/Cluster_420_Sector001_connection/Zone002_Cluster_420_Sector001_connection/connection_ClusterGate420To416",
+      "Cluster": "Cluster_420_connection",
+      "Sector": "Cluster_420_Sector001_connection",
+      "Zone": "Zone002_Cluster_420_Sector001_connection",
+      "Gate": "Cluster_420_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate416To417",
+      "Path": "../Cluster_416_connection/Cluster_416_Sector002_connection/Zone005_Cluster_416_Sector002_connection/connection_ClusterGate416To417",
+      "Cluster": "Cluster_416_connection",
+      "Sector": "Cluster_416_Sector002_connection",
+      "Zone": "Zone005_Cluster_416_Sector002_connection",
+      "Gate": "Cluster_416_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_417_connection/Cluster_417_Sector001_connection/Zone005_Cluster_417_Sector001_connection/connection_ClusterGate417To416",
+      "Cluster": "Cluster_417_connection",
+      "Sector": "Cluster_417_Sector001_connection",
+      "Zone": "Zone005_Cluster_417_Sector001_connection",
+      "Gate": "Cluster_417_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate420To421",
+      "Path": "../Cluster_420_connection/Cluster_420_Sector001_connection/Zone004_Cluster_420_Sector001_connection/connection_ClusterGate420To421",
+      "Cluster": "Cluster_420_connection",
+      "Sector": "Cluster_420_Sector001_connection",
+      "Zone": "Zone004_Cluster_420_Sector001_connection",
+      "Gate": "Cluster_420_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_421_connection/Cluster_421_Sector001_connection/Zone001_Cluster_421_Sector001_connection/connection_ClusterGate421To420",
+      "Cluster": "Cluster_421_connection",
+      "Sector": "Cluster_421_Sector001_connection",
+      "Zone": "Zone001_Cluster_421_Sector001_connection",
+      "Gate": "Cluster_421_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate418To419",
+      "Path": "../Cluster_418_connection/Cluster_418_Sector001_connection/Zone004_Cluster_418_Sector001_connection/connection_ClusterGate418To419",
+      "Cluster": "Cluster_418_connection",
+      "Sector": "Cluster_418_Sector001_connection",
+      "Zone": "Zone004_Cluster_418_Sector001_connection",
+      "Gate": "Cluster_418_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_419_connection/Cluster_419_Sector001_connection/Zone001_Cluster_419_Sector001_connection/connection_ClusterGate419To418",
+      "Cluster": "Cluster_419_connection",
+      "Sector": "Cluster_419_Sector001_connection",
+      "Zone": "Zone001_Cluster_419_Sector001_connection",
+      "Gate": "Cluster_419_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate419To420",
+      "Path": "../Cluster_419_connection/Cluster_419_Sector001_connection/Zone004_Cluster_419_Sector001_connection/connection_ClusterGate419To420",
+      "Cluster": "Cluster_419_connection",
+      "Sector": "Cluster_419_Sector001_connection",
+      "Zone": "Zone004_Cluster_419_Sector001_connection",
+      "Gate": "Cluster_419_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_420_connection/Cluster_420_Sector001_connection/Zone001_Cluster_420_Sector001_connection/connection_ClusterGate420To419",
+      "Cluster": "Cluster_420_connection",
+      "Sector": "Cluster_420_Sector001_connection",
+      "Zone": "Zone001_Cluster_420_Sector001_connection",
+      "Gate": "Cluster_420_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate420To034",
+      "Path": "../Cluster_420_connection/Cluster_420_Sector001_connection/Zone005_Cluster_420_Sector001_connection/connection_ClusterGate420To034",
+      "Cluster": "Cluster_420_connection",
+      "Sector": "Cluster_420_Sector001_connection",
+      "Zone": "Zone005_Cluster_420_Sector001_connection",
+      "Gate": "Cluster_420_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_34_connection/Cluster_34_Sector001_connection/Zone004_Cluster_34_Sector001_connection/connection_ClusterGate034To420",
+      "Cluster": "Cluster_34_connection",
+      "Sector": "Cluster_34_Sector001_connection",
+      "Zone": "Zone004_Cluster_34_Sector001_connection",
+      "Gate": "Cluster_34_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate421To017",
+      "Path": "../Cluster_421_connection/Cluster_421_Sector001_connection/Zone002_Cluster_421_Sector001_connection/connection_ClusterGate421To017",
+      "Cluster": "Cluster_421_connection",
+      "Sector": "Cluster_421_Sector001_connection",
+      "Zone": "Zone002_Cluster_421_Sector001_connection",
+      "Gate": "Cluster_421_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_17_connection/Cluster_17_Sector001_connection/Zone004_Cluster_17_Sector001_connection/connection_ClusterGate017To421",
+      "Cluster": "Cluster_17_connection",
+      "Sector": "Cluster_17_Sector001_connection",
+      "Zone": "Zone004_Cluster_17_Sector001_connection",
+      "Gate": "Cluster_17_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate422To423",
+      "Path": "../Cluster_422_connection/Cluster_422_Sector001_connection/Zone001_Cluster_422_Sector001_connection/connection_ClusterGate422To423",
+      "Cluster": "Cluster_422_connection",
+      "Sector": "Cluster_422_Sector001_connection",
+      "Zone": "Zone001_Cluster_422_Sector001_connection",
+      "Gate": "Cluster_422_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_423_connection/Cluster_423_Sector001_connection/Zone004_Cluster_423_Sector001_connection/connection_ClusterGate423To422",
+      "Cluster": "Cluster_423_connection",
+      "Sector": "Cluster_423_Sector001_connection",
+      "Zone": "Zone004_Cluster_423_Sector001_connection",
+      "Gate": "Cluster_423_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate423To424",
+      "Path": "../Cluster_423_connection/Cluster_423_Sector001_connection/Zone001_Cluster_423_Sector001_connection/connection_ClusterGate423To424",
+      "Cluster": "Cluster_423_connection",
+      "Sector": "Cluster_423_Sector001_connection",
+      "Zone": "Zone001_Cluster_423_Sector001_connection",
+      "Gate": "Cluster_423_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_424_connection/Cluster_424_Sector001_connection/Zone005_Cluster_424_Sector001_connection/connection_ClusterGate424To423",
+      "Cluster": "Cluster_424_connection",
+      "Sector": "Cluster_424_Sector001_connection",
+      "Zone": "Zone005_Cluster_424_Sector001_connection",
+      "Gate": "Cluster_424_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate411To425",
+      "Path": "../Cluster_411_connection/Cluster_411_Sector001_connection/Zone002_Cluster_411_Sector001_connection/connection_ClusterGate411To425",
+      "Cluster": "Cluster_411_connection",
+      "Sector": "Cluster_411_Sector001_connection",
+      "Zone": "Zone002_Cluster_411_Sector001_connection",
+      "Gate": "Cluster_411_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_425_connection/Cluster_425_Sector001_connection/Zone005_Cluster_425_Sector001_connection/connection_ClusterGate425To411",
+      "Cluster": "Cluster_425_connection",
+      "Sector": "Cluster_425_Sector001_connection",
+      "Zone": "Zone005_Cluster_425_Sector001_connection",
+      "Gate": "Cluster_425_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate408To015",
+      "Path": "../Cluster_408_connection/Cluster_408_Sector001_connection/Zone004_Cluster_408_Sector001_connection/connection_ClusterGate408To015",
+      "Cluster": "Cluster_408_connection",
+      "Sector": "Cluster_408_Sector001_connection",
+      "Zone": "Zone004_Cluster_408_Sector001_connection",
+      "Gate": "Cluster_408_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_15_connection/Cluster_15_Sector002_connection/Zone001_Cluster_15_Sector002_connection/connection_ClusterGate015To408",
+      "Cluster": "Cluster_15_connection",
+      "Sector": "Cluster_15_Sector002_connection",
+      "Zone": "Zone001_Cluster_15_Sector002_connection",
+      "Gate": "Cluster_15_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate501To502",
+      "Path": "../Cluster_501_connection/Cluster_501_Sector001_connection/Zone003_Cluster_501_Sector001_connection/connection_ClusterGate501To502",
+      "Cluster": "Cluster_501_connection",
+      "Sector": "Cluster_501_Sector001_connection",
+      "Zone": "Zone003_Cluster_501_Sector001_connection",
+      "Gate": "Cluster_501_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_502_connection/Cluster_502_Sector001_connection/Zone002_Cluster_502_Sector001_connection/connection_ClusterGate502To501",
+      "Cluster": "Cluster_502_connection",
+      "Sector": "Cluster_502_Sector001_connection",
+      "Zone": "Zone002_Cluster_502_Sector001_connection",
+      "Gate": "Cluster_502_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate502To503",
+      "Path": "../Cluster_502_connection/Cluster_502_Sector001_connection/Zone005_Cluster_502_Sector001_connection/connection_ClusterGate502To503",
+      "Cluster": "Cluster_502_connection",
+      "Sector": "Cluster_502_Sector001_connection",
+      "Zone": "Zone005_Cluster_502_Sector001_connection",
+      "Gate": "Cluster_502_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_503_connection/Cluster_503_Sector001_connection/Zone002_Cluster_503_Sector001_connection/connection_ClusterGate503To502",
+      "Cluster": "Cluster_503_connection",
+      "Sector": "Cluster_503_Sector001_connection",
+      "Zone": "Zone002_Cluster_503_Sector001_connection",
+      "Gate": "Cluster_503_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate502To500",
+      "Path": "../Cluster_502_connection/Cluster_502_Sector001_connection/Zone004_Cluster_502_Sector001_connection/connection_ClusterGate502To500",
+      "Cluster": "Cluster_502_connection",
+      "Sector": "Cluster_502_Sector001_connection",
+      "Zone": "Zone004_Cluster_502_Sector001_connection",
+      "Gate": "Cluster_502_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_500_connection/Cluster_500_Sector003_connection/Zone001_Cluster_500_Sector003_connection/connection_ClusterGate500To502",
+      "Cluster": "Cluster_500_connection",
+      "Sector": "Cluster_500_Sector003_connection",
+      "Zone": "Zone001_Cluster_500_Sector003_connection",
+      "Gate": "Cluster_500_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate501To008",
+      "Path": "../Cluster_501_connection/Cluster_501_Sector001_connection/Zone002_Cluster_501_Sector001_connection/connection_ClusterGate501To008",
+      "Cluster": "Cluster_501_connection",
+      "Sector": "Cluster_501_Sector001_connection",
+      "Zone": "Zone002_Cluster_501_Sector001_connection",
+      "Gate": "Cluster_501_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_08_connection/Cluster_08_Sector001_connection/Zone006_Cluster_08_Sector001_connection/connection_ClusterGate008To501",
+      "Cluster": "Cluster_08_connection",
+      "Sector": "Cluster_08_Sector001_connection",
+      "Zone": "Zone006_Cluster_08_Sector001_connection",
+      "Gate": "Cluster_08_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate501To002",
+      "Path": "../Cluster_501_connection/Cluster_501_Sector001_connection/Zone004_Cluster_501_Sector001_connection/connection_ClusterGate501To002",
+      "Cluster": "Cluster_501_connection",
+      "Sector": "Cluster_501_Sector001_connection",
+      "Zone": "Zone004_Cluster_501_Sector001_connection",
+      "Gate": "Cluster_501_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_02_connection/Cluster_02_Sector001_connection/Zone004_Cluster_02_Sector001_connection/connection_ClusterGate002To501",
+      "Cluster": "Cluster_02_connection",
+      "Sector": "Cluster_02_Sector001_connection",
+      "Zone": "Zone004_Cluster_02_Sector001_connection",
+      "Gate": "Cluster_02_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate503To006",
+      "Path": "../Cluster_503_connection/Cluster_503_Sector001_connection/Zone005_Cluster_503_Sector001_connection/connection_ClusterGate503To006",
+      "Cluster": "Cluster_503_connection",
+      "Sector": "Cluster_503_Sector001_connection",
+      "Zone": "Zone005_Cluster_503_Sector001_connection",
+      "Gate": "Cluster_503_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_06_connection/Cluster_06_Sector001_connection/Zone004_Cluster_06_Sector001_connection/connection_ClusterGate006To503",
+      "Cluster": "Cluster_06_connection",
+      "Sector": "Cluster_06_Sector001_connection",
+      "Zone": "Zone004_Cluster_06_Sector001_connection",
+      "Gate": "Cluster_06_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate114To115",
+      "Path": "../Cluster_114_connection/Cluster_114_Sector001_connection/Zone002_Cluster_114_Sector001_connection/connection_ClusterGate114To115",
+      "Cluster": "Cluster_114_connection",
+      "Sector": "Cluster_114_Sector001_connection",
+      "Zone": "Zone002_Cluster_114_Sector001_connection",
+      "Gate": "Cluster_114_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_115_connection/Cluster_115_Sector001_connection/Zone005_Cluster_115_Sector001_connection/connection_ClusterGate115To114",
+      "Cluster": "Cluster_115_connection",
+      "Sector": "Cluster_115_Sector001_connection",
+      "Zone": "Zone005_Cluster_115_Sector001_connection",
+      "Gate": "Cluster_115_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate113To114",
+      "Path": "../Cluster_113_connection/Cluster_113_Sector001_connection/Zone002_Cluster_113_Sector001_connection/connection_ClusterGate113To114",
+      "Cluster": "Cluster_113_connection",
+      "Sector": "Cluster_113_Sector001_connection",
+      "Zone": "Zone002_Cluster_113_Sector001_connection",
+      "Gate": "Cluster_113_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_114_connection/Cluster_114_Sector001_connection/Zone005_Cluster_114_Sector001_connection/connection_ClusterGate114To113",
+      "Cluster": "Cluster_114_connection",
+      "Sector": "Cluster_114_Sector001_connection",
+      "Zone": "Zone005_Cluster_114_Sector001_connection",
+      "Gate": "Cluster_114_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate110To115",
+      "Path": "../Cluster_110_connection/Cluster_110_Sector001_connection/Zone005_Cluster_110_Sector001_connection/connection_ClusterGate110To115",
+      "Cluster": "Cluster_110_connection",
+      "Sector": "Cluster_110_Sector001_connection",
+      "Zone": "Zone005_Cluster_110_Sector001_connection",
+      "Gate": "Cluster_110_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_115_connection/Cluster_115_Sector001_connection/Zone002_Cluster_115_Sector001_connection/connection_ClusterGate115To110",
+      "Cluster": "Cluster_115_connection",
+      "Sector": "Cluster_115_Sector001_connection",
+      "Zone": "Zone002_Cluster_115_Sector001_connection",
+      "Gate": "Cluster_115_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate110To111",
+      "Path": "../Cluster_110_connection/Cluster_110_Sector001_connection/Zone002_Cluster_110_Sector001_connection/connection_ClusterGate110To111",
+      "Cluster": "Cluster_110_connection",
+      "Sector": "Cluster_110_Sector001_connection",
+      "Zone": "Zone002_Cluster_110_Sector001_connection",
+      "Gate": "Cluster_110_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_111_connection/Cluster_111_Sector001_connection/Zone002_Cluster_111_Sector001_connection/connection_ClusterGate111To110",
+      "Cluster": "Cluster_111_connection",
+      "Sector": "Cluster_111_Sector001_connection",
+      "Zone": "Zone002_Cluster_111_Sector001_connection",
+      "Gate": "Cluster_111_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate108To109",
+      "Path": "../Cluster_108_connection/Cluster_108_Sector001_connection/Zone005_Cluster_108_Sector001_connection/connection_ClusterGate108To109",
+      "Cluster": "Cluster_108_connection",
+      "Sector": "Cluster_108_Sector001_connection",
+      "Zone": "Zone005_Cluster_108_Sector001_connection",
+      "Gate": "Cluster_108_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_109_connection/Cluster_109_Sector001_connection/Zone002_Cluster_109_Sector001_connection/connection_ClusterGate109To108",
+      "Cluster": "Cluster_109_connection",
+      "Sector": "Cluster_109_Sector001_connection",
+      "Zone": "Zone002_Cluster_109_Sector001_connection",
+      "Gate": "Cluster_109_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate109To110",
+      "Path": "../Cluster_109_connection/Cluster_109_Sector001_connection/Zone001_Cluster_109_Sector001_connection/connection_ClusterGate109To110",
+      "Cluster": "Cluster_109_connection",
+      "Sector": "Cluster_109_Sector001_connection",
+      "Zone": "Zone001_Cluster_109_Sector001_connection",
+      "Gate": "Cluster_109_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_110_connection/Cluster_110_Sector001_connection/Zone001_Cluster_110_Sector001_connection/connection_ClusterGate110To109",
+      "Cluster": "Cluster_110_connection",
+      "Sector": "Cluster_110_Sector001_connection",
+      "Zone": "Zone001_Cluster_110_Sector001_connection",
+      "Gate": "Cluster_110_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate107To108",
+      "Path": "../Cluster_107_connection/Cluster_107_Sector001_connection/Zone005_Cluster_107_Sector001_connection/connection_ClusterGate107To108",
+      "Cluster": "Cluster_107_connection",
+      "Sector": "Cluster_107_Sector001_connection",
+      "Zone": "Zone005_Cluster_107_Sector001_connection",
+      "Gate": "Cluster_107_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_108_connection/Cluster_108_Sector001_connection/Zone002_Cluster_108_Sector001_connection/connection_ClusterGate108To107",
+      "Cluster": "Cluster_108_connection",
+      "Sector": "Cluster_108_Sector001_connection",
+      "Zone": "Zone002_Cluster_108_Sector001_connection",
+      "Gate": "Cluster_108_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate102To104",
+      "Path": "../Cluster_102_connection/Cluster_102_Sector001_connection/Zone003_Cluster_102_Sector001_connection/connection_ClusterGate102To104",
+      "Cluster": "Cluster_102_connection",
+      "Sector": "Cluster_102_Sector001_connection",
+      "Zone": "Zone003_Cluster_102_Sector001_connection",
+      "Gate": "Cluster_102_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_104_connection/Cluster_104_Sector002_connection/Zone005_Cluster_104_Sector002_connection/connection_ClusterGate104To102",
+      "Cluster": "Cluster_104_connection",
+      "Sector": "Cluster_104_Sector002_connection",
+      "Zone": "Zone005_Cluster_104_Sector002_connection",
+      "Gate": "Cluster_104_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate102To106",
+      "Path": "../Cluster_102_connection/Cluster_102_Sector001_connection/Zone002_Cluster_102_Sector001_connection/connection_ClusterGate102To106",
+      "Cluster": "Cluster_102_connection",
+      "Sector": "Cluster_102_Sector001_connection",
+      "Zone": "Zone002_Cluster_102_Sector001_connection",
+      "Gate": "Cluster_102_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_106_connection/Cluster_106_Sector001_connection/Zone003_Cluster_106_Sector001_connection/connection_ClusterGate106To102",
+      "Cluster": "Cluster_106_connection",
+      "Sector": "Cluster_106_Sector001_connection",
+      "Zone": "Zone003_Cluster_106_Sector001_connection",
+      "Gate": "Cluster_106_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate100To101",
+      "Path": "../Cluster_100_connection/Cluster_100_Sector001_connection/Zone002_Cluster_100_Sector001_connection/connection_ClusterGate100To101",
+      "Cluster": "Cluster_100_connection",
+      "Sector": "Cluster_100_Sector001_connection",
+      "Zone": "Zone002_Cluster_100_Sector001_connection",
+      "Gate": "Cluster_100_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_101_connection/Cluster_101_Sector001_connection/Zone005_Cluster_101_Sector001_connection/connection_ClusterGate101To100",
+      "Cluster": "Cluster_101_connection",
+      "Sector": "Cluster_101_Sector001_connection",
+      "Zone": "Zone005_Cluster_101_Sector001_connection",
+      "Gate": "Cluster_101_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate100To107",
+      "Path": "../Cluster_100_connection/Cluster_100_Sector001_connection/Zone005_Cluster_100_Sector001_connection/connection_ClusterGate100To107",
+      "Cluster": "Cluster_100_connection",
+      "Sector": "Cluster_100_Sector001_connection",
+      "Zone": "Zone005_Cluster_100_Sector001_connection",
+      "Gate": "Cluster_100_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_107_connection/Cluster_107_Sector001_connection/Zone003_Cluster_107_Sector001_connection/connection_ClusterGate107To100",
+      "Cluster": "Cluster_107_connection",
+      "Sector": "Cluster_107_Sector001_connection",
+      "Zone": "Zone003_Cluster_107_Sector001_connection",
+      "Gate": "Cluster_107_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate101To102",
+      "Path": "../Cluster_101_connection/Cluster_101_Sector001_connection/Zone001_Cluster_101_Sector001_connection/connection_ClusterGate101To102",
+      "Cluster": "Cluster_101_connection",
+      "Sector": "Cluster_101_Sector001_connection",
+      "Zone": "Zone001_Cluster_101_Sector001_connection",
+      "Gate": "Cluster_101_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_102_connection/Cluster_102_Sector001_connection/Zone005_Cluster_102_Sector001_connection/connection_ClusterGate102To101",
+      "Cluster": "Cluster_102_connection",
+      "Sector": "Cluster_102_Sector001_connection",
+      "Zone": "Zone005_Cluster_102_Sector001_connection",
+      "Gate": "Cluster_102_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate100To048",
+      "Path": "../Cluster_100_connection/Cluster_100_Sector001_connection/Zone004_Cluster_100_Sector001_connection/connection_ClusterGate100To048",
+      "Cluster": "Cluster_100_connection",
+      "Sector": "Cluster_100_Sector001_connection",
+      "Zone": "Zone004_Cluster_100_Sector001_connection",
+      "Gate": "Cluster_100_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_48_connection/Cluster_48_Sector001_connection/Zone001_Cluster_48_Sector001_connection/connection_ClusterGate048To100",
+      "Cluster": "Cluster_48_connection",
+      "Sector": "Cluster_48_Sector001_connection",
+      "Zone": "Zone001_Cluster_48_Sector001_connection",
+      "Gate": "Cluster_48_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate111To116",
+      "Path": "../Cluster_111_connection/Cluster_111_Sector001_connection/Zone004_Cluster_111_Sector001_connection/connection_ClusterGate111To116",
+      "Cluster": "Cluster_111_connection",
+      "Sector": "Cluster_111_Sector001_connection",
+      "Zone": "Zone004_Cluster_111_Sector001_connection",
+      "Gate": "Cluster_111_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_116_connection/Cluster_116_Sector001_connection/Zone002_Cluster_116_Sector001_connection/connection_ClusterGate116To111",
+      "Cluster": "Cluster_116_connection",
+      "Sector": "Cluster_116_Sector001_connection",
+      "Zone": "Zone002_Cluster_116_Sector001_connection",
+      "Gate": "Cluster_116_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate113To028",
+      "Path": "../Cluster_113_connection/Cluster_113_Sector001_connection/Zone005_Cluster_113_Sector001_connection/connection_ClusterGate113To028",
+      "Cluster": "Cluster_113_connection",
+      "Sector": "Cluster_113_Sector001_connection",
+      "Zone": "Zone005_Cluster_113_Sector001_connection",
+      "Gate": "Cluster_113_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_28_connection/Cluster_28_Sector001_connection/Zone004_Cluster_28_Sector001_connection/connection_ClusterGate028To113",
+      "Cluster": "Cluster_28_connection",
+      "Sector": "Cluster_28_Sector001_connection",
+      "Zone": "Zone004_Cluster_28_Sector001_connection",
+      "Gate": "Cluster_28_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate112To048",
+      "Path": "../Cluster_112_connection/Cluster_112_Sector002_connection/Zone002_Cluster_112_Sector002_connection/connection_ClusterGate112To048",
+      "Cluster": "Cluster_112_connection",
+      "Sector": "Cluster_112_Sector002_connection",
+      "Zone": "Zone002_Cluster_112_Sector002_connection",
+      "Gate": "Cluster_112_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_48_connection/Cluster_48_Sector001_connection/Zone004_Cluster_48_Sector001_connection/connection_ClusterGate048To112",
+      "Cluster": "Cluster_48_connection",
+      "Sector": "Cluster_48_Sector001_connection",
+      "Zone": "Zone004_Cluster_48_Sector001_connection",
+      "Gate": "Cluster_48_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate112To033",
+      "Path": "../Cluster_112_connection/Cluster_112_Sector001_connection/Zone002_Cluster_112_Sector001_connection/connection_ClusterGate112To033",
+      "Cluster": "Cluster_112_connection",
+      "Sector": "Cluster_112_Sector001_connection",
+      "Zone": "Zone002_Cluster_112_Sector001_connection",
+      "Gate": "Cluster_112_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_33_connection/Cluster_33_Sector001_connection/Zone003_Cluster_33_Sector001_connection/connection_ClusterGate033To112",
+      "Cluster": "Cluster_33_connection",
+      "Sector": "Cluster_33_Sector001_connection",
+      "Zone": "Zone003_Cluster_33_Sector001_connection",
+      "Gate": "Cluster_33_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate724To115",
+      "Path": "../Cluster_724_connection/Cluster_724_Sector001_connection/Zone001_Cluster_724_Sector001_connection/connection_ClusterGate724To115",
+      "Cluster": "Cluster_724_connection",
+      "Sector": "Cluster_724_Sector001_connection",
+      "Zone": "Zone001_Cluster_724_Sector001_connection",
+      "Gate": "Cluster_724_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_115_connection/Cluster_115_Sector001_connection/Zone006_Cluster_115_Sector001_connection/connection_ClusterGate115To724",
+      "Cluster": "Cluster_115_connection",
+      "Sector": "Cluster_115_Sector001_connection",
+      "Zone": "Zone006_Cluster_115_Sector001_connection",
+      "Gate": "Cluster_115_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate601To602",
+      "Path": "../Cluster_601_connection/Cluster_601_Sector001_connection/Zone005_Cluster_601_Sector001_connection/connection_ClusterGate601To602",
+      "Cluster": "Cluster_601_connection",
+      "Sector": "Cluster_601_Sector001_connection",
+      "Zone": "Zone005_Cluster_601_Sector001_connection",
+      "Gate": "Cluster_601_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_602_connection/Cluster_602_Sector001_connection/Zone003_Cluster_602_Sector001_connection/connection_ClusterGate602To601",
+      "Cluster": "Cluster_602_connection",
+      "Sector": "Cluster_602_Sector001_connection",
+      "Zone": "Zone003_Cluster_602_Sector001_connection",
+      "Gate": "Cluster_602_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate602To603",
+      "Path": "../Cluster_602_connection/Cluster_602_Sector001_connection/Zone004_Cluster_602_Sector001_connection/connection_ClusterGate602To603",
+      "Cluster": "Cluster_602_connection",
+      "Sector": "Cluster_602_Sector001_connection",
+      "Zone": "Zone004_Cluster_602_Sector001_connection",
+      "Gate": "Cluster_602_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_603_connection/Cluster_603_Sector001_connection/Zone004_Cluster_603_Sector001_connection/connection_ClusterGate603To602",
+      "Cluster": "Cluster_603_connection",
+      "Sector": "Cluster_603_Sector001_connection",
+      "Zone": "Zone004_Cluster_603_Sector001_connection",
+      "Gate": "Cluster_603_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate603To605",
+      "Path": "../Cluster_603_connection/Cluster_603_Sector001_connection/Zone002_Cluster_603_Sector001_connection/connection_ClusterGate603To605",
+      "Cluster": "Cluster_603_connection",
+      "Sector": "Cluster_603_Sector001_connection",
+      "Zone": "Zone002_Cluster_603_Sector001_connection",
+      "Gate": "Cluster_603_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_605_connection/Cluster_605_Sector001_connection/Zone002_Cluster_605_Sector001_connection/connection_ClusterGate605To603",
+      "Cluster": "Cluster_605_connection",
+      "Sector": "Cluster_605_Sector001_connection",
+      "Zone": "Zone002_Cluster_605_Sector001_connection",
+      "Gate": "Cluster_605_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate603To604",
+      "Path": "../Cluster_603_connection/Cluster_603_Sector001_connection/Zone005_Cluster_603_Sector001_connection/connection_ClusterGate603To604",
+      "Cluster": "Cluster_603_connection",
+      "Sector": "Cluster_603_Sector001_connection",
+      "Zone": "Zone005_Cluster_603_Sector001_connection",
+      "Gate": "Cluster_603_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_604_connection/Cluster_604_Sector001_connection/Zone004_Cluster_604_Sector001_connection/connection_ClusterGate604To603",
+      "Cluster": "Cluster_604_connection",
+      "Sector": "Cluster_604_Sector001_connection",
+      "Zone": "Zone004_Cluster_604_Sector001_connection",
+      "Gate": "Cluster_604_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate605To606",
+      "Path": "../Cluster_605_connection/Cluster_605_Sector001_connection/Zone004_Cluster_605_Sector001_connection/connection_ClusterGate605To606",
+      "Cluster": "Cluster_605_connection",
+      "Sector": "Cluster_605_Sector001_connection",
+      "Zone": "Zone004_Cluster_605_Sector001_connection",
+      "Gate": "Cluster_605_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_606_connection/Cluster_606_Sector003_connection/Zone002_Cluster_606_Sector003_connection/connection_ClusterGate606To605",
+      "Cluster": "Cluster_606_connection",
+      "Sector": "Cluster_606_Sector003_connection",
+      "Zone": "Zone002_Cluster_606_Sector003_connection",
+      "Gate": "Cluster_606_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate606To607",
+      "Path": "../Cluster_606_connection/Cluster_606_Sector002_connection/Zone004_Cluster_606_Sector002_connection/connection_ClusterGate606To607",
+      "Cluster": "Cluster_606_connection",
+      "Sector": "Cluster_606_Sector002_connection",
+      "Zone": "Zone004_Cluster_606_Sector002_connection",
+      "Gate": "Cluster_606_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_607_connection/Cluster_607_Sector001_connection/Zone002_Cluster_607_Sector001_connection/connection_ClusterGate607To606",
+      "Cluster": "Cluster_607_connection",
+      "Sector": "Cluster_607_Sector001_connection",
+      "Zone": "Zone002_Cluster_607_Sector001_connection",
+      "Gate": "Cluster_607_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate607To608",
+      "Path": "../Cluster_607_connection/Cluster_607_Sector001_connection/Zone005_Cluster_607_Sector001_connection/connection_ClusterGate607To608",
+      "Cluster": "Cluster_607_connection",
+      "Sector": "Cluster_607_Sector001_connection",
+      "Zone": "Zone005_Cluster_607_Sector001_connection",
+      "Gate": "Cluster_607_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_608_connection/Cluster_608_Sector001_connection/Zone002_Cluster_608_Sector001_connection/connection_ClusterGate608To607",
+      "Cluster": "Cluster_608_connection",
+      "Sector": "Cluster_608_Sector001_connection",
+      "Zone": "Zone002_Cluster_608_Sector001_connection",
+      "Gate": "Cluster_608_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate607To609",
+      "Path": "../Cluster_607_connection/Cluster_607_Sector001_connection/Zone004_Cluster_607_Sector001_connection/connection_ClusterGate607To609",
+      "Cluster": "Cluster_607_connection",
+      "Sector": "Cluster_607_Sector001_connection",
+      "Zone": "Zone004_Cluster_607_Sector001_connection",
+      "Gate": "Cluster_607_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_609_connection/Cluster_609_Sector001_connection/Zone002_Cluster_609_Sector001_connection/connection_ClusterGate609To607",
+      "Cluster": "Cluster_609_connection",
+      "Sector": "Cluster_609_Sector001_connection",
+      "Zone": "Zone002_Cluster_609_Sector001_connection",
+      "Gate": "Cluster_609_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate608To609",
+      "Path": "../Cluster_608_connection/Cluster_608_Sector001_connection/Zone004_Cluster_608_Sector001_connection/connection_ClusterGate608To609",
+      "Cluster": "Cluster_608_connection",
+      "Sector": "Cluster_608_Sector001_connection",
+      "Zone": "Zone004_Cluster_608_Sector001_connection",
+      "Gate": "Cluster_608_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_609_connection/Cluster_609_Sector001_connection/Zone004_Cluster_609_Sector001_connection/connection_ClusterGate609To608",
+      "Cluster": "Cluster_609_connection",
+      "Sector": "Cluster_609_Sector001_connection",
+      "Zone": "Zone004_Cluster_609_Sector001_connection",
+      "Gate": "Cluster_609_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate031To601b",
+      "Path": "../Cluster_31_connection/Cluster_31_Sector001_connection/Zone005_Cluster_31_Sector001_connection/connection_ClusterGate031To601b",
+      "Cluster": "Cluster_31_connection",
+      "Sector": "Cluster_31_Sector001_connection",
+      "Zone": "Zone005_Cluster_31_Sector001_connection",
+      "Gate": "Cluster_31_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_601_connection/Cluster_601_Sector001_connection/Zone002_Cluster_601_Sector001_connection/connection_ClusterGate601To031",
+      "Cluster": "Cluster_601_connection",
+      "Sector": "Cluster_601_Sector001_connection",
+      "Zone": "Zone002_Cluster_601_Sector001_connection",
+      "Gate": "Cluster_601_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate608To721",
+      "Path": "../Cluster_608_connection/Cluster_608_Sector001_connection/Zone003_Cluster_608_Sector001_connection/connection_ClusterGate608To721",
+      "Cluster": "Cluster_608_connection",
+      "Sector": "Cluster_608_Sector001_connection",
+      "Zone": "Zone003_Cluster_608_Sector001_connection",
+      "Gate": "Cluster_608_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_721_connection/Cluster_721_Sector001_connection/Zone001_Cluster_721_Sector001_connection/connection_ClusterGate721To608",
+      "Cluster": "Cluster_721_connection",
+      "Sector": "Cluster_721_Sector001_connection",
+      "Zone": "Zone001_Cluster_721_Sector001_connection",
+      "Gate": "Cluster_721_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate604To048",
+      "Path": "../Cluster_604_connection/Cluster_604_Sector001_connection/Zone003_Cluster_604_Sector001_connection/connection_ClusterGate604To048",
+      "Cluster": "Cluster_604_connection",
+      "Sector": "Cluster_604_Sector001_connection",
+      "Zone": "Zone003_Cluster_604_Sector001_connection",
+      "Gate": "Cluster_604_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_48_connection/Cluster_48_Sector001_connection/Zone006_Cluster_48_Sector001_connection/connection_ClusterGate048To604",
+      "Cluster": "Cluster_48_connection",
+      "Sector": "Cluster_48_Sector001_connection",
+      "Zone": "Zone006_Cluster_48_Sector001_connection",
+      "Gate": "Cluster_48_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate701To015",
+      "Path": "../Cluster_701_connection/Cluster_701_Sector001_connection/Zone004_Cluster_701_Sector001_connection/connection_ClusterGate701To015",
+      "Cluster": "Cluster_701_connection",
+      "Sector": "Cluster_701_Sector001_connection",
+      "Zone": "Zone004_Cluster_701_Sector001_connection",
+      "Gate": "Cluster_701_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_15_connection/Cluster_15_Sector001_connection/Zone001_Cluster_15_Sector001_connection/connection_ClusterGate015To701",
+      "Cluster": "Cluster_15_connection",
+      "Sector": "Cluster_15_Sector001_connection",
+      "Zone": "Zone001_Cluster_15_Sector001_connection",
+      "Gate": "Cluster_15_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate701To702",
+      "Path": "../Cluster_701_connection/Cluster_701_Sector001_connection/Zone003_Cluster_701_Sector001_connection/connection_ClusterGate701To702",
+      "Cluster": "Cluster_701_connection",
+      "Sector": "Cluster_701_Sector001_connection",
+      "Zone": "Zone003_Cluster_701_Sector001_connection",
+      "Gate": "Cluster_701_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_702_connection/Cluster_702_Sector001_connection/Zone004_Cluster_702_Sector001_connection/connection_ClusterGate702To701",
+      "Cluster": "Cluster_702_connection",
+      "Sector": "Cluster_702_Sector001_connection",
+      "Zone": "Zone004_Cluster_702_Sector001_connection",
+      "Gate": "Cluster_702_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate702To703",
+      "Path": "../Cluster_702_connection/Cluster_702_Sector001_connection/Zone003_Cluster_702_Sector001_connection/connection_ClusterGate702To703",
+      "Cluster": "Cluster_702_connection",
+      "Sector": "Cluster_702_Sector001_connection",
+      "Zone": "Zone003_Cluster_702_Sector001_connection",
+      "Gate": "Cluster_702_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_703_connection/Cluster_703_Sector001_connection/Zone001_Cluster_703_Sector001_connection/connection_ClusterGate703To702",
+      "Cluster": "Cluster_703_connection",
+      "Sector": "Cluster_703_Sector001_connection",
+      "Zone": "Zone001_Cluster_703_Sector001_connection",
+      "Gate": "Cluster_703_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate008To704",
+      "Path": "../Cluster_08_connection/Cluster_08_Sector001_connection/Zone003_Cluster_08_Sector001_connection/connection_ClusterGate008To704",
+      "Cluster": "Cluster_08_connection",
+      "Sector": "Cluster_08_Sector001_connection",
+      "Zone": "Zone003_Cluster_08_Sector001_connection",
+      "Gate": "Cluster_08_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_704_connection/Cluster_704_Sector001_connection/Zone004_Cluster_704_Sector001_connection/connection_ClusterGate704To008",
+      "Cluster": "Cluster_704_connection",
+      "Sector": "Cluster_704_Sector001_connection",
+      "Zone": "Zone004_Cluster_704_Sector001_connection",
+      "Gate": "Cluster_704_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate705To706",
+      "Path": "../Cluster_705_connection/Cluster_705_Sector001_connection/Zone002_Cluster_705_Sector001_connection/connection_ClusterGate705To706",
+      "Cluster": "Cluster_705_connection",
+      "Sector": "Cluster_705_Sector001_connection",
+      "Zone": "Zone002_Cluster_705_Sector001_connection",
+      "Gate": "Cluster_705_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_706_connection/Cluster_706_Sector001_connection/Zone004_Cluster_706_Sector001_connection/connection_ClusterGate706To705",
+      "Cluster": "Cluster_706_connection",
+      "Sector": "Cluster_706_Sector001_connection",
+      "Zone": "Zone004_Cluster_706_Sector001_connection",
+      "Gate": "Cluster_706_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate706To014",
+      "Path": "../Cluster_706_connection/Cluster_706_Sector001_connection/Zone002_Cluster_706_Sector001_connection/connection_ClusterGate706To014",
+      "Cluster": "Cluster_706_connection",
+      "Sector": "Cluster_706_Sector001_connection",
+      "Zone": "Zone002_Cluster_706_Sector001_connection",
+      "Gate": "Cluster_706_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_14_connection/Cluster_14_Sector001_connection/Zone002_Cluster_14_Sector001_connection/connection_ClusterGate014To706",
+      "Cluster": "Cluster_14_connection",
+      "Sector": "Cluster_14_Sector001_connection",
+      "Zone": "Zone002_Cluster_14_Sector001_connection",
+      "Gate": "Cluster_14_connection"
+    }
+  },
+  {
+    "Source": {
+      "Name": "ClusterGate032To708",
+      "Path": "../Cluster_32_connection/Cluster_32_Sector001_connection/Zone003_Cluster_32_Sector001_connection/connection_ClusterGate032To708",
+      "Cluster": "Cluster_32_connection",
+      "Sector": "Cluster_32_Sector001_connection",
+      "Zone": "Zone003_Cluster_32_Sector001_connection",
+      "Gate": "Cluster_32_connection"
+    },
+    "Destination": {
+      "Name": "destination",
+      "Path": "../../../../../Cluster_708_connection/Cluster_708_Sector001_connection/Zone004_Cluster_708_Sector001_connection/connection_ClusterGate708To032",
+      "Cluster": "Cluster_708_connection",
+      "Sector": "Cluster_708_Sector001_connection",
+      "Zone": "Zone004_Cluster_708_Sector001_connection",
+      "Gate": "Cluster_708_connection"
+    }
+  }
+]
