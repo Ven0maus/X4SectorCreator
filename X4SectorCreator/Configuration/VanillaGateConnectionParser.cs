@@ -1,13 +1,14 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Configuration
 {
     /// <summary>
-    /// This is a tool, only for development use to create a mapping file from the game's vanilla gate connections.
+    /// Parses the vanilla connection mappings into a valid gate objects into the correct sectors
     /// </summary>
-    public class VanillaGateConnectionParser
+    public static class VanillaGateConnectionParser
     {
         private static readonly JsonSerializerOptions _serializerOptions = new()
         {
@@ -18,12 +19,16 @@ namespace X4SectorCreator.Configuration
         private static string _readPath;
         private static string _resultsPath;
 
+        /// <summary>
+        /// This is a method, only for development use to create a mapping file from the game's vanilla gate connections.
+        /// </summary>
+        /// <param name="readPath"></param>
+        /// <param name="resultsPath"></param>
         public static void GenerateGateConnectionMappings(string readPath, string resultsPath)
         {
             _readPath = readPath;
             _resultsPath = resultsPath;
 
-            var mainPath = Path.Combine(Application.StartupPath);
             var filePaths = new string[]
             {
                 GetFile(null),
@@ -51,6 +56,77 @@ namespace X4SectorCreator.Configuration
             // Generate the mappings based on these connections
             var json = JsonSerializer.Serialize(connections, _serializerOptions);
             File.WriteAllText($"{_resultsPath}/vanilla_connection_mappings.json", json);
+        }
+
+        public static void CreateVanillaGateConnections(Dictionary<(int x, int y), Cluster> allClusters)
+        {
+            try
+            {
+                var mappingsPath = Path.Combine(Application.StartupPath, "Mappings/vanilla_connection_mappings.json");
+                var json = File.ReadAllText(mappingsPath);
+                var connections = JsonSerializer.Deserialize<List<Connection>>(json);
+
+                var baseGameClusters = allClusters.Values
+                    .Where(a => a.IsBaseGame)
+                    .ToArray();
+
+                foreach (var connection in connections)
+                {
+                    // Cleanup the data
+                    connection.Source.Cluster = connection.Source.Cluster.Replace("_connection", string.Empty);
+                    connection.Source.Sector = connection.Source.Sector.Replace("_connection", string.Empty).Replace(connection.Source.Cluster + "_", string.Empty);
+                    connection.Source.Zone = connection.Source.Zone.Replace("_connection", string.Empty);
+                    connection.Source.Gate = connection.Source.Gate.Replace("_connection", string.Empty);
+
+                    connection.Destination.Cluster = connection.Destination.Cluster.Replace("_connection", string.Empty);
+                    connection.Destination.Sector = connection.Destination.Sector.Replace("_connection", string.Empty).Replace(connection.Destination.Cluster + "_", string.Empty);
+                    connection.Destination.Zone = connection.Destination.Zone.Replace("_connection", string.Empty);
+                    connection.Destination.Gate = connection.Destination.Gate.Replace("_connection", string.Empty);
+
+                    // Source
+                    var sourceCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Source.Cluster, StringComparison.OrdinalIgnoreCase));
+                    var sourceSector = sourceCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Source.Sector, StringComparison.OrdinalIgnoreCase));
+                    var sourceZone = sourceSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Source.Zone, StringComparison.OrdinalIgnoreCase));
+
+                    // Target
+                    var targetCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Destination.Cluster, StringComparison.OrdinalIgnoreCase));
+                    var targetSector = targetCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Destination.Sector, StringComparison.OrdinalIgnoreCase));
+                    var targetZone = targetSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Destination.Zone, StringComparison.OrdinalIgnoreCase));
+
+                    // Source & Target connection
+                    CreateGateConnection(sourceSector, sourceZone, connection.Source, connection.Destination, targetSector);
+                    CreateGateConnection(targetSector, targetZone, connection.Destination, connection.Source, sourceSector);
+                }
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show($"Unable to create vanilla gate connections, the mapping file must be outdated or corrupted:\n{ex.Message}");
+                return;
+            }
+        }
+
+        private static void CreateGateConnection(Sector sector, Zone zone, ConnectionInfo sourceInfo, ConnectionInfo targetInfo, Sector targetSector)
+        {
+            if (zone == null)
+            {
+                zone = new Zone
+                {
+                    Name = sourceInfo.Zone,
+                    Gates = []
+                };
+                sector.Zones.Add(zone);
+            }
+
+            // Find dest sector name
+
+            zone.Gates.Add(new Gate
+            {
+                ParentSectorName = sector.Name,
+                DestinationSectorName = targetSector.Name,
+                ConnectionName = sourceInfo.Name,
+                SourcePath = sourceInfo.Path,
+                DestinationPath = targetInfo.Path,
+            });
         }
 
         private static string GetFile(string dlc)

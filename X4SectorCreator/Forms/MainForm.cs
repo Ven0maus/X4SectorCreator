@@ -111,6 +111,9 @@ namespace X4SectorCreator
                 }
             }
 
+            // Create also the required connections for vanilla
+            VanillaGateConnectionParser.CreateVanillaGateConnections(clusterLookup);
+
             return clusterCollection;
         }
 
