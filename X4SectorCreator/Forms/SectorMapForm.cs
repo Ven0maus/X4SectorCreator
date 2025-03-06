@@ -553,8 +553,23 @@ namespace X4SectorCreator
 
             // Collect the source / target for each gate data in one connection
             var connections = CollectConnectionsFromGateData(gatesData);
-            foreach (var connection in connections)
+            var filteredConnections = FilterOutDuplicates(connections).ToArray();
+            foreach (var connection in filteredConnections)
                 PaintConnection(connection, e);
+        }
+
+        private static IEnumerable<GateConnection> FilterOutDuplicates(IEnumerable<GateConnection> connections)
+        {
+            var dupes = new HashSet<(string, string)>();
+            foreach (var con in connections)
+            {
+                var sourceSector = con.Source.Gate.ParentSectorName;
+                var targetSector = con.Target.Gate.ParentSectorName;
+                if (dupes.Contains((sourceSector, targetSector)) || dupes.Contains((targetSector, sourceSector)))
+                    continue;
+                dupes.Add((sourceSector, targetSector));
+                yield return con;
+            }
         }
 
         private static void PaintConnection(GateConnection connection, PaintEventArgs e)
@@ -579,8 +594,10 @@ namespace X4SectorCreator
             e.Graphics.FillEllipse(circleBrush, targetX, targetY, diameter, diameter);
             e.Graphics.DrawEllipse(circlePen, targetX, targetY, diameter, diameter);
 
-
-            using Pen linePen = new(Color.LightGray, 3);
+            var color = Color.LightGray;
+            if (connection.Source.Gate.IsHighwayGate)
+                color = Color.Orange;
+            using Pen linePen = new(color, 3);
             linePen.DashStyle = DashStyle.Dot;
             // Draw connection line between source and target
             e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);
