@@ -3,8 +3,8 @@
 A tool to help mod new sectors and gate connections in *X4: Foundations*. This tool provides an easy way to create clusters, define sectors within those clusters, and establish gate connections between them. It generates a fully working mod directory with all necessary XML files, making the modding process seamless.
 
 ## Features
-- Cluster creation (placement & visualization on map)
-- Sector creation (up to 3 per cluster for now)
+- Cluster creation / editing / removing
+- Sector creation / editing / removing (up to 3 per cluster)
 - Gate creation between custom & basegame sectors (dragging + rotating)
 - Region creation (dragging + resizing + ability to fully choose what is inside the region)
 - Possibility to create a complete custom universe if you wish
