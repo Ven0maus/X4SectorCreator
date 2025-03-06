@@ -189,7 +189,7 @@ namespace X4SectorCreator
             SectorMapForm.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
             SectorMapForm.GateSectorSelection = false;
             SectorMapForm.BtnSelectLocation.Enabled = false;
-            SectorMapForm.ControlPanel.Size = new Size(176, 215);
+            SectorMapForm.ControlPanel.Size = new Size(176, 241);
             SectorMapForm.BtnSelectLocation.Hide();
             SectorMapForm.Reset();
             SectorMapForm.Show();

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Drawing.Drawing2D;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator
@@ -13,6 +14,7 @@ namespace X4SectorCreator
         private Cluster[] _customClusters;
 
         private const int _hexSize = 100;
+        private float _hexRadius;
 
         // How many extra rows and cols will be "open" around the base game sectors + custom sectors for the user to select
         private const int _minExpansionRoom = 20;
@@ -79,6 +81,8 @@ namespace X4SectorCreator
             _customClusters = MainForm.Instance.AllClusters.Values
                 .Where(a => !a.IsBaseGame)
                 .ToArray();
+
+            _hexRadius = (float)(_hexSize / Math.Sqrt(3));
 
             Dictionary<(int, int), Cluster>.ValueCollection allClusters = MainForm.Instance.AllClusters.Values;
 
@@ -371,10 +375,40 @@ namespace X4SectorCreator
 
         private void DrawHexGrid(object sender, PaintEventArgs e)
         {
+            // Init graphics properly with offset and scaling
             e.Graphics.Clear(Color.Black);
             e.Graphics.TranslateTransform(_offset.X, _offset.Y);
             e.Graphics.ScaleTransform(_zoom, _zoom);
 
+            // Renders all the hexagons in the screen
+            RenderAllHexes(e);
+
+            // Highlight selected hex
+            RenderHexSelection(e);
+
+            // Render gate connections above hexes + selected hex
+            RenderGateConnections(e);
+
+            // Hex names draw on top of everything
+            RenderAllHexNames(e);
+        }
+
+        private void RenderHexSelection(PaintEventArgs e)
+        {
+            if (_selectedHex != null)
+            {
+                using SolidBrush brush = new(Color.Cyan);
+                Hexagon hexc = _hexagons[_selectedHex.Value];
+                if (_selectedChildHexIndex != null)
+                {
+                    hexc = hexc.Children[_selectedChildHexIndex.Value];
+                }
+                e.Graphics.FillPolygon(brush, hexc.Points);
+            }
+        }
+
+        private void RenderAllHexes(PaintEventArgs e)
+        {
             // First step render non existant hexagons
             Color nonExistantHexColor = HexToColor("#121212");
             foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
@@ -407,19 +441,10 @@ namespace X4SectorCreator
                     RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
             }
+        }
 
-            // Highlight selected hex
-            if (_selectedHex != null)
-            {
-                using SolidBrush brush = new(Color.Cyan);
-                Hexagon hexc = _hexagons[_selectedHex.Value];
-                if (_selectedChildHexIndex != null)
-                {
-                    hexc = hexc.Children[_selectedChildHexIndex.Value];
-                }
-                e.Graphics.FillPolygon(brush, hexc.Points);
-            }
-
+        private void RenderAllHexNames(PaintEventArgs e)
+        {
             if (chkShowCustomSectors.Checked)
             {
                 // Next step render names
@@ -443,8 +468,6 @@ namespace X4SectorCreator
                     RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
             }
-
-
         }
 
         private void RenderNonSectorGrid(PaintEventArgs e, Color nonExistantHexColor, KeyValuePair<(int, int), Hexagon> hex)
@@ -496,6 +519,165 @@ namespace X4SectorCreator
             string key = _dlcMapping.First(a => a.Value.Equals(cluster.Dlc, StringComparison.OrdinalIgnoreCase)).Key;
             int dlcIndex = _dlcIndexOrder.IndexOf(key);
             return _dlcsSelected[dlcIndex];
+        }
+
+        private PointF ConvertFromWorldCoordinate(PointF worldPos, float sectorDiameterRadius)
+        {
+            // Reverse world scaling
+            float normalizedX = worldPos.X * 2f / sectorDiameterRadius;
+            float normalizedY = worldPos.Y * 2f / sectorDiameterRadius;
+
+            // Reverse normalization and centering
+            float screenX = (normalizedX * _hexRadius);
+            float screenY = (-normalizedY * _hexRadius); // Correct Y-axis negation
+
+            return new Point((int)Math.Round(screenX), (int)Math.Round(screenY));
+        }
+
+        private void RenderGateConnections(PaintEventArgs e)
+        {
+            if (!chkShowConnections.Checked) return;
+
+            var gatesData = new List<GateData>();
+
+            // Render custom cluster gates
+            if (chkShowCustomSectors.Checked)
+            {
+                foreach (var cluster in _customClusters)
+                    gatesData.AddRange(CollectGateDataFromCluster(cluster));
+            }
+
+            // Render base game cluster gates
+            if (chkShowX4Sectors.Checked)
+            {
+                foreach (var cluster in _baseGameClusters)
+                    gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
+            }
+
+            // Collect the source / target for each gate data in one connection
+            var connections = CollectConnectionsFromGateData(gatesData);
+            foreach (var connection in connections)
+                PaintConnection(connection, e);
+        }
+
+        private static void PaintConnection(GateConnection connection, PaintEventArgs e)
+        {
+            int gateSizeRadius = 6;
+            float diameter = gateSizeRadius * 2;
+
+            // Define source
+            float sourceX = connection.Source.ScreenX - gateSizeRadius;
+            float sourceY = connection.Source.ScreenY - gateSizeRadius;
+
+            // Define target
+            float targetX = connection.Target.ScreenX - gateSizeRadius;
+            float targetY = connection.Target.ScreenY - gateSizeRadius;
+
+            using Pen circlePen = new(Color.LightGray, 2);
+            using SolidBrush circleBrush = new(HexToColor("#575757"));
+            // Draw source and target gates
+            e.Graphics.FillEllipse(circleBrush, sourceX, sourceY, diameter, diameter);
+            e.Graphics.DrawEllipse(circlePen, sourceX, sourceY, diameter, diameter);
+
+            e.Graphics.FillEllipse(circleBrush, targetX, targetY, diameter, diameter);
+            e.Graphics.DrawEllipse(circlePen, targetX, targetY, diameter, diameter);
+
+
+            using Pen linePen = new(Color.LightGray, 3);
+            linePen.DashStyle = DashStyle.Dot;
+            // Draw connection line between source and target
+            e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);
+        }
+
+        private static IEnumerable<GateConnection> CollectConnectionsFromGateData(List<GateData> gatesData)
+        {
+            // Set to keep track of processed connections
+            HashSet<(string, string)> processedConnections = [];
+
+            foreach (var gateData in gatesData)
+            {
+                // Find the corresponding source sector for the current gate
+                var sourceSector = gatesData
+                    .Select(a => (a.Sector, GateData: a))
+                    .First(a => a.Sector.Name.Equals(gateData.Gate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+
+                // Find the source zone and source gate within that zone
+                Zone sourceZone = sourceSector.Sector.Zones
+                    .First(a => a.Gates
+                        .Any(a => a.DestinationSectorName
+                            .Equals(gateData.Gate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
+
+                Gate sourceGate = sourceZone.Gates
+                    .First(a => a.DestinationSectorName.Equals(gateData.Gate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+
+                // Create a tuple representing the source-target connection (could be source to target or target to source)
+                var connectionKey = (sourceGate.DestinationSectorName, gateData.Gate.DestinationSectorName);
+
+                // Check if the reverse connection has already been processed
+                if (!processedConnections.Contains(connectionKey) && !processedConnections.Contains((gateData.Gate.DestinationSectorName, sourceGate.DestinationSectorName)))
+                {
+                    // Mark both directions as processed to prevent duplicates
+                    processedConnections.Add(connectionKey);
+
+                    // Yield the connection
+                    yield return new GateConnection
+                    {
+                        Source = sourceSector.GateData, // set the stored gatesData
+                        Target = gateData
+                    };
+                }
+            }
+        }
+
+
+        private IEnumerable<GateData> CollectGateDataFromCluster(Cluster cluster)
+        {
+            int sectorIndex = 0;
+            foreach (var sector in cluster.Sectors)
+            {
+                // Collect the child hexagon points
+                var childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                PointF hexCenter = GetHexCenter(childHexagon.Points);
+
+                foreach (var zone in sector.Zones)
+                {
+                    foreach (var gate in zone.Gates)
+                    {
+                        // Convert the zone position from world to screen space
+                        PointF gateScreenPosition = ConvertFromWorldCoordinate(zone.Position, sector.DiameterRadius);
+
+                        gateScreenPosition.X += hexCenter.X;
+                        gateScreenPosition.Y += hexCenter.Y;
+
+                        yield return new GateData
+                        {
+                            Cluster = cluster,
+                            Sector = sector,
+                            Zone = zone,
+                            Gate = gate,
+                            ScreenX = gateScreenPosition.X,
+                            ScreenY = gateScreenPosition.Y
+                        };
+                    }
+                }
+                sectorIndex++;
+            }
+        }
+
+        struct GateConnection
+        {
+            public GateData Source { get; set; }
+            public GateData Target { get; set; }
+        }
+
+        struct GateData
+        {
+            public float ScreenX { get; set; }
+            public float ScreenY { get; set; }
+            public Gate Gate { get; set; }
+            public Zone Zone { get; set; }
+            public Sector Sector { get; set; }
+            public Cluster Cluster { get; set; }
         }
 
         private void RenderClusters(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex)
@@ -776,6 +958,11 @@ namespace X4SectorCreator
         }
 
         private void ChkShowCustomSectors_CheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void ChkShowConnections_CheckedChanged(object sender, EventArgs e)
         {
             Invalidate();
         }
