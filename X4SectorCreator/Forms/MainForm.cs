@@ -241,7 +241,8 @@ namespace X4SectorCreator
             List<Cluster> clusters = [.. AllClusters.Values];
 
             // Collects all changes done to base game content
-            var vanillaChanges = CollectVanillaChanges();
+            var nonModifiedBaseGameData = InitAllClusters(false);
+            var vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
 
             // Generate each xml
             string mainFolder = Path.Combine(Application.StartupPath, "GeneratedXml");
@@ -257,8 +258,8 @@ namespace X4SectorCreator
                 MapDefaultsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 GalaxyGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 ClusterGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
-                SectorGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
-                ZoneGeneration.Generate(modFolder, modPrefix, clusters);
+                SectorGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
+                ZoneGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData);
                 ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", clusters, vanillaChanges);
                 RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters);
                 GameStartsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
@@ -279,7 +280,7 @@ namespace X4SectorCreator
             _ = MessageBox.Show("XML Files were succesfully generated in the xml folder.");
         }
 
-        private VanillaChanges CollectVanillaChanges()
+        private VanillaChanges CollectVanillaChanges(ClusterCollection nonModifiedBaseGameData)
         {
             if (GalaxySettingsForm.IsCustomGalaxy) 
                 return new VanillaChanges();
@@ -288,7 +289,7 @@ namespace X4SectorCreator
                 .Where(a => a.IsBaseGame)
                 .ToDictionary(a => a.BaseGameMapping);
 
-            var nonModifiedVanillaClusters = InitAllClusters(false)
+            var nonModifiedVanillaClusters = nonModifiedBaseGameData
                 .Clusters
                 .ToDictionary(a => a.BaseGameMapping);
 
@@ -324,6 +325,15 @@ namespace X4SectorCreator
                     {
                         // The vanilla sector was removed
                         vanillaChanges.RemovedSectors.Add(new RemovedSector { VanillaCluster = nonModifiedCluster, Sector = nonModifiedSector });
+                        foreach (var zone in nonModifiedSector.Zones)
+                            foreach (var gate in zone.Gates)
+                                vanillaChanges.RemovedConnections.Add(new RemovedConnection
+                                {
+                                    VanillaCluster = nonModifiedCluster,
+                                    Sector = nonModifiedSector,
+                                    Zone = zone,
+                                    Gate = gate
+                                });
                         continue;
                     }
 
@@ -338,6 +348,28 @@ namespace X4SectorCreator
                     {
                         // Add to modified clusters
                         vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = modifiedSector });
+                    }
+
+                    // Connections
+                    foreach (var nonModifiedZone in nonModifiedSector.Zones)
+                    {
+                        foreach (var nonModifiedGate in nonModifiedZone.Gates)
+                        {
+                            // Find matching zone & connection
+                            var matchingZone = nonModifiedSector.Zones.FirstOrDefault(a => a.Name.Equals(nonModifiedZone.Name, StringComparison.OrdinalIgnoreCase));
+                            var matchingGate = matchingZone?.Gates.FirstOrDefault(a => a.SourcePath == nonModifiedGate.SourcePath && a.DestinationPath == nonModifiedGate.DestinationPath);
+                            if (matchingZone == null || matchingGate == null)
+                            {
+                                vanillaChanges.RemovedConnections.Add(new RemovedConnection
+                                {
+                                    VanillaCluster = nonModifiedCluster,
+                                    Sector = nonModifiedSector,
+                                    Zone = nonModifiedZone,
+                                    Gate = nonModifiedGate
+                                });
+                                continue;
+                            }
+                        }
                     }
                 }
             }
@@ -523,7 +555,8 @@ namespace X4SectorCreator
                         .ToList();
 
                     // Support also vanilla changes
-                    var vanillaChanges = CollectVanillaChanges();
+                    var nonModifiedBaseGameData = InitAllClusters(false);
+                    var vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
 
                     string jsonContent = ConfigSerializer.Serialize(allModifiedClusters, vanillaChanges);
                     File.WriteAllText(filePath, jsonContent);
@@ -1077,9 +1110,9 @@ namespace X4SectorCreator
         {
             // Collect target gate data
             Gate targetGate = GatesListBox.SelectedItem as Gate;
-            if (targetGate.IsHighwayGate)
+            if (targetGate.IsBaseGame)
             {
-                _ = MessageBox.Show("The selected gate is a highway type gate, which has limited edit support in the tool. You can only delete this connections.");
+                _ = MessageBox.Show("Editing vanilla gates is not supported, they can only be deleted.");
                 return;
             }
 

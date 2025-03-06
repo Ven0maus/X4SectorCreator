@@ -23,7 +23,7 @@ namespace X4SectorCreator.Objects
         /// Determines if the Gate is a vanilla gate.
         /// </summary>
         [JsonIgnore]
-        public bool IsBaseGame => ConnectionName != null;
+        public bool IsBaseGame => IsHighwayGate || ConnectionName != null;
 
         /// <summary>
         /// Used to make a connection with new sectors.

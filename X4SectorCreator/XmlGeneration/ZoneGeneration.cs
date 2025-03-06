@@ -5,7 +5,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class ZoneGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
         {
             #region Custom Zone File
             // Save new zones in custom sectors
@@ -27,7 +27,7 @@ namespace X4SectorCreator.XmlGeneration
 
             #region BaseGame Zone File
             // Save new zones in existing sectors
-            List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateExistingSectorZones(modPrefix, clusters)
+            List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateExistingSectorZones(modPrefix, clusters, nonModifiedBaseGameData)
                 .GroupBy(a => a.dlc)
                 .ToList();
             if (diffData.Count > 0)
@@ -115,8 +115,14 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
-        private static IEnumerable<(string dlc, XElement element)> GenerateExistingSectorZones(string modPrefix, List<Cluster> clusters)
+        private static IEnumerable<(string dlc, XElement element)> GenerateExistingSectorZones(string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
         {
+            var zoneCache = nonModifiedBaseGameData.Clusters
+                .SelectMany(a => a.Sectors)
+                .SelectMany(a => a.Zones)
+                .Select(a => a.Name)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
                 if (!cluster.IsBaseGame)
@@ -128,6 +134,8 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
+                        if (zoneCache.Contains(zone.Name)) continue;
+
                         yield return (cluster.Dlc, new XElement("macro",
                             new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_macro"),
                             new XAttribute("class", "zone"),
