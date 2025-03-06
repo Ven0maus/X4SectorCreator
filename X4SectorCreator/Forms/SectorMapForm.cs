@@ -588,41 +588,22 @@ namespace X4SectorCreator
 
         private static IEnumerable<GateConnection> CollectConnectionsFromGateData(List<GateData> gatesData)
         {
+            var sectorGrouping = gatesData
+                .GroupBy(a => a.Sector.Name)
+                .ToDictionary(a => a.Key, a => a.ToArray(), StringComparer.OrdinalIgnoreCase);
+
             // Set to keep track of processed connections
-            HashSet<(string, string)> processedConnections = [];
-
-            foreach (var gateData in gatesData)
+            foreach (var sourceGateData in gatesData)
             {
-                // Find the corresponding source sector for the current gate
-                var sourceSector = gatesData
-                    .Select(a => (a.Sector, GateData: a))
-                    .First(a => a.Sector.Name.Equals(gateData.Gate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
+                // Find the connection with the matching path
+                var targetGateData = sectorGrouping[sourceGateData.Gate.DestinationSectorName]
+                    .First(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
 
-                // Find the source zone and source gate within that zone
-                Zone sourceZone = sourceSector.Sector.Zones
-                    .First(a => a.Gates
-                        .Any(a => a.DestinationSectorName
-                            .Equals(gateData.Gate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-
-                Gate sourceGate = sourceZone.Gates
-                    .First(a => a.DestinationSectorName.Equals(gateData.Gate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
-
-                // Create a tuple representing the source-target connection (could be source to target or target to source)
-                var connectionKey = (sourceGate.DestinationSectorName, gateData.Gate.DestinationSectorName);
-
-                // Check if the reverse connection has already been processed
-                if (!processedConnections.Contains(connectionKey) && !processedConnections.Contains((gateData.Gate.DestinationSectorName, sourceGate.DestinationSectorName)))
+                yield return new GateConnection
                 {
-                    // Mark both directions as processed to prevent duplicates
-                    processedConnections.Add(connectionKey);
-
-                    // Yield the connection
-                    yield return new GateConnection
-                    {
-                        Source = sourceSector.GateData, // set the stored gatesData
-                        Target = gateData
-                    };
-                }
+                    Source = sourceGateData,
+                    Target = targetGateData
+                };
             }
         }
 
@@ -646,7 +627,8 @@ namespace X4SectorCreator
                     foreach (var gate in zone.Gates)
                     {
                         // Convert the zone position from world to screen space
-                        PointF gateScreenPosition = ConvertFromWorldCoordinate(zone.Position, sector.DiameterRadius, correctHexRadius);
+                        var realGatePos = new Point(zone.Position.X + gate.Position.X, zone.Position.Y + gate.Position.Y);
+                        PointF gateScreenPosition = ConvertFromWorldCoordinate(realGatePos, sector.DiameterRadius, correctHexRadius);
 
                         gateScreenPosition.X += hexCenter.X;
                         gateScreenPosition.Y += hexCenter.Y;

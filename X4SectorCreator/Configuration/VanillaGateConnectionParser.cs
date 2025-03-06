@@ -125,7 +125,7 @@ namespace X4SectorCreator.Configuration
             return (int)Math.Ceiling(zoneGateInfos
                 .Select(a => Math.Sqrt(Math.Pow(a.ZonePosition.X + a.GatePosition.X, 2) +
                                        Math.Pow(a.ZonePosition.Y + a.GatePosition.Y, 2)))
-                .Select(a => a + 70000) // Add 70km padding
+                .Select(a => a + 150000) // Add 150km padding
                 .DefaultIfEmpty()
                 .Max());
         }
@@ -154,7 +154,7 @@ namespace X4SectorCreator.Configuration
 
             // Find the matching zoneGateInfo for the source zone + set position
             var zoneGateInfo = sourceZoneGateInfo.First(a => a.ZoneName.Replace("_connection", string.Empty).Equals(sourceInfo.Zone, StringComparison.OrdinalIgnoreCase));
-            zone.Position = new Point(zoneGateInfo.ZonePosition.X + zoneGateInfo.GatePosition.X, zoneGateInfo.ZonePosition.Y + zoneGateInfo.GatePosition.Y);
+            zone.Position = new Point(zoneGateInfo.ZonePosition.X, zoneGateInfo.ZonePosition.Y);
 
             zone.Gates.Add(new Gate
             {
@@ -163,6 +163,7 @@ namespace X4SectorCreator.Configuration
                 ConnectionName = sourceInfo.Name,
                 SourcePath = sourceInfo.Path,
                 DestinationPath = targetInfo.Path,
+                Position = new Point(zoneGateInfo.GatePosition.X, zoneGateInfo.GatePosition.Y)
             });
         }
 

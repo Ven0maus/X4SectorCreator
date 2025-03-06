@@ -16,6 +16,7 @@ namespace X4SectorCreator.Objects
         public int Pitch { get; set; }
         public int Roll { get; set; }
         public GateType Type { get; set; }
+        public Point Position { get; set; }
 
         /// <summary>
         /// Determines if the Gate is a vanilla gate.
