@@ -629,7 +629,7 @@ namespace X4SectorCreator
         private static IEnumerable<GateData> CollectGateDataFromCluster(Cluster cluster)
         {
             // Calculate hex size and radius based on zoom and sector size
-            float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _zoom; // Height for flat-top hexes, applying zoom
+            float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
 
             int sectorIndex = 0;

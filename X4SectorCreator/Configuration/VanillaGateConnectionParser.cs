@@ -125,7 +125,7 @@ namespace X4SectorCreator.Configuration
             return (int)Math.Ceiling(zoneGateInfos
                 .Select(a => Math.Sqrt(Math.Pow(a.ZonePosition.X + a.GatePosition.X, 2) +
                                        Math.Pow(a.ZonePosition.Y + a.GatePosition.Y, 2)))
-                .Select(a => a) // Normalize
+                .Select(a => a + 70000) // Add 70km padding
                 .DefaultIfEmpty()
                 .Max());
         }
