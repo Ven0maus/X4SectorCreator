@@ -154,9 +154,9 @@
             label1.Font = new Font("Segoe UI", 12F);
             label1.Location = new Point(12, 214);
             label1.Name = "label1";
-            label1.Size = new Size(132, 21);
+            label1.Size = new Size(194, 21);
             label1.TabIndex = 93;
-            label1.Text = "Region definition:";
+            label1.Text = "Shared Region Definitions:";
             // 
             // BtnNewDefinition
             // 

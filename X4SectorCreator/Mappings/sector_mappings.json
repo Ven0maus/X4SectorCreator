@@ -20,22 +20,31 @@
   "Clusters": [
     {
       "Name": "Grand Exchange",
-      "BaseGameMapping": "cluster_01",
+      "BaseGameMapping": "Cluster_01",
       "Sectors": [
         {
           "Name": "Grand Exchange IV",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector003"
+          "BaseGameMapping": "Sector003",
+          "Sunlight": 1.29,
+          "Economy": 0.5,
+          "Security": 0.25
         },
         {
           "Name": "Grand Exchange I",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.23,
+          "Economy": 0.5,
+          "Security": 0.25
         },
         {
           "Name": "Grand Exchange III",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.35,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -45,11 +54,14 @@
     },
     {
       "Name": "Path to Profit",
-      "BaseGameMapping": "cluster_05",
+      "BaseGameMapping": "Cluster_05",
       "Sectors": [
         {
           "Name": "Path to Profit",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 1.43,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -59,17 +71,23 @@
     },
     {
       "Name": "Black Hole Sun",
-      "BaseGameMapping": "cluster_06",
+      "BaseGameMapping": "Cluster_06",
       "Sectors": [
         {
           "Name": "Black Hole Sun IV",
           "Owner": "Argon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.16,
+          "Economy": 0.5,
+          "Security": 0.5
         },
         {
           "Name": "Black Hole Sun V",
           "Owner": "Argon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.19,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -79,11 +97,14 @@
     },
     {
       "Name": "Second Contact II Flashpoint",
-      "BaseGameMapping": "cluster_13",
+      "BaseGameMapping": "Cluster_13",
       "Sectors": [
         {
           "Name": "Second Contact II Flashpoint",
-          "Owner": "Antigone"
+          "Owner": "Antigone",
+          "Sunlight": 0.59,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -93,11 +114,14 @@
     },
     {
       "Name": "Second Contact VII",
-      "BaseGameMapping": "cluster_40",
+      "BaseGameMapping": "Cluster_40",
       "Sectors": [
         {
           "Name": "Second Contact VII",
-          "Owner": "Antigone"
+          "Owner": "Antigone",
+          "Sunlight": 0.55,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -107,11 +131,14 @@
     },
     {
       "Name": "Second Contact XI",
-      "BaseGameMapping": "cluster_41",
+      "BaseGameMapping": "Cluster_41",
       "Sectors": [
         {
           "Name": "Second Contact XI",
-          "Owner": "Antigone"
+          "Owner": "Antigone",
+          "Sunlight": 0.47,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -121,12 +148,15 @@
     },
     {
       "Name": "Windfall IV Aurora's Dream",
-      "BaseGameMapping": "cluster_503",
+      "BaseGameMapping": "Cluster_503",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Windfall IV Aurora's Dream",
-          "Owner": "Vigor"
+          "Owner": "Vigor",
+          "Sunlight": 0.11,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -136,12 +166,15 @@
     },
     {
       "Name": "Windfall III The Hoard",
-      "BaseGameMapping": "cluster_502",
+      "BaseGameMapping": "Cluster_502",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Windfall III The Hoard",
-          "Owner": "Vigor"
+          "Owner": "Vigor",
+          "Sunlight": 0.16,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -151,12 +184,15 @@
     },
     {
       "Name": "Windfall I Union Summit",
-      "BaseGameMapping": "cluster_501",
+      "BaseGameMapping": "Cluster_501",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Windfall I Union Summit",
-          "Owner": "Vigor"
+          "Owner": "Vigor",
+          "Sunlight": 0.2,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -166,23 +202,32 @@
     },
     {
       "Name": "Avarice",
-      "BaseGameMapping": "cluster_500",
+      "BaseGameMapping": "Cluster_500",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Avarice I",
           "Owner": "Riptide",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 13.9,
+          "Economy": 0.25,
+          "Security": 0.75
         },
         {
           "Name": "Avarice V Dead End",
           "Owner": "Riptide",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 13.9,
+          "Economy": 0.25,
+          "Security": 0.75
         },
         {
           "Name": "Avarice IV",
           "Owner": "Riptide",
-          "BaseGameMapping": "sector003"
+          "BaseGameMapping": "Sector003",
+          "Sunlight": 13.9,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -192,11 +237,14 @@
     },
     {
       "Name": "Eighteen Billion",
-      "BaseGameMapping": "cluster_02",
+      "BaseGameMapping": "Cluster_02",
       "Sectors": [
         {
           "Name": "Eighteen Billion",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 0.9,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -206,12 +254,15 @@
     },
     {
       "Name": "Unknown System",
-      "BaseGameMapping": "cluster_504",
+      "BaseGameMapping": "Cluster_504",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
           "Name": "Unknown System",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.05,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -221,11 +272,14 @@
     },
     {
       "Name": "Memory of Profit IX",
-      "BaseGameMapping": "cluster_03",
+      "BaseGameMapping": "Cluster_03",
       "Sectors": [
         {
           "Name": "Memory of Profit IX",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 1.15,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -235,11 +289,14 @@
     },
     {
       "Name": "Memory of Profit X",
-      "BaseGameMapping": "cluster_39",
+      "BaseGameMapping": "Cluster_39",
       "Sectors": [
         {
           "Name": "Memory of Profit X",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 1.06,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -249,17 +306,23 @@
     },
     {
       "Name": "Nopileos Fortune",
-      "BaseGameMapping": "cluster_04",
+      "BaseGameMapping": "Cluster_04",
       "Sectors": [
         {
           "Name": "Nopileos Fortune II",
           "Owner": "None",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.82,
+          "Economy": 0.5,
+          "Security": 0.5
         },
         {
           "Name": "Nopileos Fortune VI",
           "Owner": "None",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.78,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -273,7 +336,10 @@
       "Sectors": [
         {
           "Name": "CEO's Doubt",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 0.82,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -283,11 +349,14 @@
     },
     {
       "Name": "Trinity Sanctum VII",
-      "BaseGameMapping": "cluster_47",
+      "BaseGameMapping": "Cluster_47",
       "Sectors": [
         {
           "Name": "Trinity Sanctum VII",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 1.06,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -297,11 +366,14 @@
     },
     {
       "Name": "Trinity Sanctum III",
-      "BaseGameMapping": "cluster_18",
+      "BaseGameMapping": "Cluster_18",
       "Sectors": [
         {
           "Name": "Trinity Sanctum III",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 1.33,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -311,11 +383,14 @@
     },
     {
       "Name": "Unholy Retribution",
-      "BaseGameMapping": "cluster_10",
+      "BaseGameMapping": "Cluster_10",
       "Sectors": [
         {
           "Name": "Unholy Retribution",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 1.63,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -329,7 +404,10 @@
       "Sectors": [
         {
           "Name": "Loomanckstrat's Legacy",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.02,
+          "Economy": 0.1,
+          "Security": 0.1
         }
       ],
       "Position": {
@@ -343,7 +421,10 @@
       "Sectors": [
         {
           "Name": "Mi Ton's Refuge",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.53,
+          "Economy": 0.1,
+          "Security": 0.1
         }
       ],
       "Position": {
@@ -357,7 +438,10 @@
       "Sectors": [
         {
           "Name": "Moo-Kye's Revenge",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.93,
+          "Economy": 0.1,
+          "Security": 0.1
         }
       ],
       "Position": {
@@ -367,11 +451,14 @@
     },
     {
       "Name": "Pious Mists II",
-      "BaseGameMapping": "cluster_22",
+      "BaseGameMapping": "Cluster_22",
       "Sectors": [
         {
           "Name": "Pious Mists II",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 1.36,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -381,11 +468,14 @@
     },
     {
       "Name": "Pious Mists IV",
-      "BaseGameMapping": "cluster_37",
+      "BaseGameMapping": "Cluster_37",
       "Sectors": [
         {
           "Name": "Pious Mists IV",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 0.89,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -395,11 +485,14 @@
     },
     {
       "Name": "Pious Mists XI",
-      "BaseGameMapping": "cluster_38",
+      "BaseGameMapping": "Cluster_38",
       "Sectors": [
         {
           "Name": "Pious Mists XI",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 1.18,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -409,11 +502,14 @@
     },
     {
       "Name": "Sacred Relic",
-      "BaseGameMapping": "cluster_23",
+      "BaseGameMapping": "Cluster_23",
       "Sectors": [
         {
           "Name": "Sacred Relic",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 0.71,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -427,7 +523,10 @@
       "Sectors": [
         {
           "Name": "Cardinal's Domain",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 1.24,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -437,17 +536,23 @@
     },
     {
       "Name": "Hewa's Twin C1",
-      "BaseGameMapping": "cluster_19",
+      "BaseGameMapping": "Cluster_19",
       "Sectors": [
         {
           "Name": "Hewa's Twin II",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.02,
+          "Economy": 0.25,
+          "Security": 0.5
         },
         {
           "Name": "Hewa's Twin I",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.16,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -457,11 +562,14 @@
     },
     {
       "Name": "Company Regard",
-      "BaseGameMapping": "cluster_20",
+      "BaseGameMapping": "Cluster_20",
       "Sectors": [
         {
           "Name": "Company Regard",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 0.83,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -471,17 +579,23 @@
     },
     {
       "Name": "Hewa's Twin C2",
-      "BaseGameMapping": "cluster_42",
+      "BaseGameMapping": "Cluster_42",
       "Sectors": [
         {
           "Name": "Hewa's Twin III",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.86,
+          "Economy": 0.25,
+          "Security": 0.5
         },
         {
           "Name": "Hewa's Twin IV The Cove",
           "Owner": "None",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.91,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -491,17 +605,23 @@
     },
     {
       "Name": "Scale Plate Green",
-      "BaseGameMapping": "cluster_21",
+      "BaseGameMapping": "Cluster_21",
       "Sectors": [
         {
           "Name": "Scale Plate Green VII",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.15,
+          "Economy": 0.25,
+          "Security": 0.75
         },
         {
           "Name": "Scale Plate Green I",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.26,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -511,17 +631,23 @@
     },
     {
       "Name": "Turquoise Sea",
-      "BaseGameMapping": "cluster_50",
+      "BaseGameMapping": "Cluster_50",
       "Sectors": [
         {
           "Name": "Turquoise Sea IX",
           "Owner": "None",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.41,
+          "Economy": 0.25,
+          "Security": 0.5
         },
         {
           "Name": "Turquoise Sea X",
           "Owner": "None",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.28,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -531,11 +657,14 @@
     },
     {
       "Name": "Hewa's Twin V",
-      "BaseGameMapping": "cluster_43",
+      "BaseGameMapping": "Cluster_43",
       "Sectors": [
         {
           "Name": "Hewa's Twin V",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 0.82,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -545,17 +674,23 @@
     },
     {
       "Name": "Ianamus Zura",
-      "BaseGameMapping": "cluster_15",
+      "BaseGameMapping": "Cluster_15",
       "Sectors": [
         {
           "Name": "Ianamus Zura VII",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.15,
+          "Economy": 0.25,
+          "Security": 0.75
         },
         {
           "Name": "Ianamus Zura IV",
           "Owner": "Teladi",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.33,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -570,7 +705,10 @@
       "Sectors": [
         {
           "Name": "Mitsuno's Revelation",
-          "Owner": "Quettanauts"
+          "Owner": "Quettanauts",
+          "Sunlight": 1.18,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -585,7 +723,10 @@
       "Sectors": [
         {
           "Name": "Mitsuno's Defiance",
-          "Owner": "Quettanauts"
+          "Owner": "Quettanauts",
+          "Sunlight": 1.11,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -600,7 +741,10 @@
       "Sectors": [
         {
           "Name": "Mitsuno's Sacrifice",
-          "Owner": "Quettanauts"
+          "Owner": "Quettanauts",
+          "Sunlight": 1.06,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -610,18 +754,24 @@
     },
     {
       "Name": "Thuruk's Demise II First Impact",
-      "BaseGameMapping": "cluster_408",
+      "BaseGameMapping": "Cluster_408",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Thuruk's Demise II First Impact",
           "Owner": "FreeFam",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.71,
+          "Economy": 0.6,
+          "Security": 0.3
         },
         {
           "Name": "Thuruk's Demise III",
           "Owner": "FreeFam",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.59,
+          "Economy": 0.4,
+          "Security": 0.3
         }
       ],
       "Position": {
@@ -631,12 +781,15 @@
     },
     {
       "Name": "Family Tkr",
-      "BaseGameMapping": "cluster_407",
+      "BaseGameMapping": "Cluster_407",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Family Tkr",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 0.89,
+          "Economy": 0.5,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -646,11 +799,14 @@
     },
     {
       "Name": "Matrix #451",
-      "BaseGameMapping": "cluster_16",
+      "BaseGameMapping": "Cluster_16",
       "Sectors": [
         {
           "Name": "Matrix #451",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 2.01,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -660,11 +816,14 @@
     },
     {
       "Name": "Matrix #9",
-      "BaseGameMapping": "cluster_17",
+      "BaseGameMapping": "Cluster_17",
       "Sectors": [
         {
           "Name": "Matrix #9",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 1,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -674,12 +833,15 @@
     },
     {
       "Name": "Fires of Defeat",
-      "BaseGameMapping": "cluster_421",
+      "BaseGameMapping": "Cluster_421",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Fires of Defeat",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 0.81,
+          "Economy": 0.5,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -689,12 +851,15 @@
     },
     {
       "Name": "Tharka's Ravine XXIV",
-      "BaseGameMapping": "cluster_409",
+      "BaseGameMapping": "Cluster_409",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Tharka's Ravine XXIV",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 1.09,
+          "Economy": 0.7,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -704,12 +869,15 @@
     },
     {
       "Name": "Tharka's Ravine XVI",
-      "BaseGameMapping": "cluster_410",
+      "BaseGameMapping": "Cluster_410",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Tharka's Ravine XVI",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 1.17,
+          "Economy": 0.25,
+          "Security": 0.3
         }
       ],
       "Position": {
@@ -719,12 +887,15 @@
     },
     {
       "Name": "Tharka's Ravine VIII",
-      "BaseGameMapping": "cluster_412",
+      "BaseGameMapping": "Cluster_412",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Tharka's Ravine VIII",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 1.26,
+          "Economy": 0.5,
+          "Security": 0.7
         }
       ],
       "Position": {
@@ -734,12 +905,15 @@
     },
     {
       "Name": "Tharka's Ravine IV Tharka's Fall",
-      "BaseGameMapping": "cluster_413",
+      "BaseGameMapping": "Cluster_413",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Tharka's Ravine IV Tharka's Fall",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 1.31,
+          "Economy": 0.5,
+          "Security": 0.7
         }
       ],
       "Position": {
@@ -749,12 +923,15 @@
     },
     {
       "Name": "Heart of Acrimony II",
-      "BaseGameMapping": "cluster_411",
+      "BaseGameMapping": "Cluster_411",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Heart of Acrimony II",
-          "Owner": "FreeFam"
+          "Owner": "FreeFam",
+          "Sunlight": 2.45,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -764,12 +941,15 @@
     },
     {
       "Name": "Heart of Acrimony I The Boneyard",
-      "BaseGameMapping": "cluster_425",
+      "BaseGameMapping": "Cluster_425",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Heart of Acrimony I The Boneyard",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.64,
+          "Economy": 0,
+          "Security": 0
         }
       ],
       "Position": {
@@ -779,11 +959,14 @@
     },
     {
       "Name": "Bright Promise",
-      "BaseGameMapping": "cluster_09",
+      "BaseGameMapping": "Cluster_09",
       "Sectors": [
         {
           "Name": "Bright Promise",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 2.04,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -793,11 +976,14 @@
     },
     {
       "Name": "Profit Center Alpha",
-      "BaseGameMapping": "cluster_34",
+      "BaseGameMapping": "Cluster_34",
       "Sectors": [
         {
           "Name": "Profit Center Alpha",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 0.79,
+          "Economy": 0.75,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -807,12 +993,15 @@
     },
     {
       "Name": "Two Grand",
-      "BaseGameMapping": "cluster_420",
+      "BaseGameMapping": "Cluster_420",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Two Grand",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 1.33,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -822,12 +1011,15 @@
     },
     {
       "Name": "Open Market",
-      "BaseGameMapping": "cluster_419",
+      "BaseGameMapping": "Cluster_419",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Open Market",
-          "Owner": "Teladi"
+          "Owner": "Teladi",
+          "Sunlight": 0.88,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -837,12 +1029,15 @@
     },
     {
       "Name": "Family Nhuut",
-      "BaseGameMapping": "cluster_418",
+      "BaseGameMapping": "Cluster_418",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Family Nhuut",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 0.85,
+          "Economy": 0.7,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -852,12 +1047,15 @@
     },
     {
       "Name": "Zyarth's Dominion IV",
-      "BaseGameMapping": "cluster_405",
+      "BaseGameMapping": "Cluster_405",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Zyarth's Dominion IV",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 2.1,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -867,12 +1065,15 @@
     },
     {
       "Name": "Zyarth's Dominion I",
-      "BaseGameMapping": "cluster_404",
+      "BaseGameMapping": "Cluster_404",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Zyarth's Dominion I",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 1.42,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -882,12 +1083,15 @@
     },
     {
       "Name": "Zyarth's Dominion X",
-      "BaseGameMapping": "cluster_406",
+      "BaseGameMapping": "Cluster_406",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Zyarth's Dominion X",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 1.51,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -897,12 +1101,15 @@
     },
     {
       "Name": "Eleventh Hour",
-      "BaseGameMapping": "cluster_417",
+      "BaseGameMapping": "Cluster_417",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Eleventh Hour",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "Sunlight": 1.18,
+          "Economy": 0.25,
+          "Security": 0.7
         }
       ],
       "Position": {
@@ -912,18 +1119,24 @@
     },
     {
       "Name": "Guiding Star",
-      "BaseGameMapping": "cluster_416",
+      "BaseGameMapping": "Cluster_416",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Guiding Star VII",
           "Owner": "Argon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.71,
+          "Economy": 0.5,
+          "Security": 0.5
         },
         {
           "Name": "Guiding Star V",
           "Owner": "Argon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.83,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -938,7 +1151,10 @@
       "Sectors": [
         {
           "Name": "President's End",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "Sunlight": 0.71,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -948,11 +1164,14 @@
     },
     {
       "Name": "Silent Witness I",
-      "BaseGameMapping": "cluster_08",
+      "BaseGameMapping": "Cluster_08",
       "Sectors": [
         {
           "Name": "Silent Witness I",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "Sunlight": 0.98,
+          "Economy": 0.75,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -962,11 +1181,14 @@
     },
     {
       "Name": "Silent Witness XI",
-      "BaseGameMapping": "cluster_44",
+      "BaseGameMapping": "Cluster_44",
       "Sectors": [
         {
           "Name": "Silent Witness XI",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.18,
+          "Economy": 0.75,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -976,11 +1198,14 @@
     },
     {
       "Name": "Silent Witness XII",
-      "BaseGameMapping": "cluster_45",
+      "BaseGameMapping": "Cluster_45",
       "Sectors": [
         {
           "Name": "Silent Witness XII",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.47,
+          "Economy": 0.75,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -995,7 +1220,10 @@
       "Sectors": [
         {
           "Name": "Matrix #101",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 4.08,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1005,17 +1233,23 @@
     },
     {
       "Name": "Tharka's Cascade",
-      "BaseGameMapping": "cluster_32",
+      "BaseGameMapping": "Cluster_32",
       "Sectors": [
         {
           "Name": "Tharka's Cascade XVII",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.29,
+          "Economy": 0.25,
+          "Security": 0.5
         },
         {
           "Name": "Tharka's Cascade XV",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.42,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1025,11 +1259,14 @@
     },
     {
       "Name": "Matrix #79B",
-      "BaseGameMapping": "cluster_33",
+      "BaseGameMapping": "Cluster_33",
       "Sectors": [
         {
           "Name": "Matrix #79B",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 2.39,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1039,12 +1276,15 @@
     },
     {
       "Name": "Family Zhin",
-      "BaseGameMapping": "cluster_401",
+      "BaseGameMapping": "Cluster_401",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Family Zhin",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 0.71,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1054,12 +1294,15 @@
     },
     {
       "Name": "Family Kritt",
-      "BaseGameMapping": "cluster_402",
+      "BaseGameMapping": "Cluster_402",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Family Kritt",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 2.39,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1069,12 +1312,15 @@
     },
     {
       "Name": "Rhy's Defiance",
-      "BaseGameMapping": "cluster_414",
+      "BaseGameMapping": "Cluster_414",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Rhy's Defiance",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 1.63,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1084,12 +1330,15 @@
     },
     {
       "Name": "Matrix #598",
-      "BaseGameMapping": "cluster_415",
+      "BaseGameMapping": "Cluster_415",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Matrix #598",
-          "Owner": "Xenon"
+          "Owner": "Xenon",
+          "Sunlight": 0.77,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1099,12 +1348,15 @@
     },
     {
       "Name": "Wretched Skies IV Family Valka",
-      "BaseGameMapping": "cluster_400",
+      "BaseGameMapping": "Cluster_400",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Wretched Skies IV Family Valka",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 1.3,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1114,12 +1366,15 @@
     },
     {
       "Name": "Wretched Skies V Family Phi",
-      "BaseGameMapping": "cluster_403",
+      "BaseGameMapping": "Cluster_403",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Wretched Skies V Family Phi",
-          "Owner": "Zyarth"
+          "Owner": "Zyarth",
+          "Sunlight": 1.23,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1129,12 +1384,15 @@
     },
     {
       "Name": "Wretched Skies X",
-      "BaseGameMapping": "cluster_422",
+      "BaseGameMapping": "Cluster_422",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Wretched Skies X",
-          "Owner": "Paranid"
+          "Owner": "Paranid",
+          "Sunlight": 1.08,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1144,18 +1402,24 @@
     },
     {
       "Name": "Litany of Fury",
-      "BaseGameMapping": "cluster_423",
+      "BaseGameMapping": "Cluster_423",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Litany of Fury XII",
           "Owner": "Paranid",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.32,
+          "Economy": 0.25,
+          "Security": 0.25
         },
         {
           "Name": "Litany of Fury IX",
           "Owner": "Paranid",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.42,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1165,18 +1429,24 @@
     },
     {
       "Name": "Emperor's Pride",
-      "BaseGameMapping": "cluster_424",
+      "BaseGameMapping": "Cluster_424",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
           "Name": "Emperor's Pride VI",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.65,
+          "Economy": 0.75,
+          "Security": 0.75
         },
         {
           "Name": "Emperor's Pride IV",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.71,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1186,17 +1456,23 @@
     },
     {
       "Name": "Hatikvah's Choice",
-      "BaseGameMapping": "cluster_29",
+      "BaseGameMapping": "Cluster_29",
       "Sectors": [
         {
           "Name": "Hatikvah's Choice III",
           "Owner": "Argon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.91,
+          "Economy": 0.75,
+          "Security": 0.75
         },
         {
           "Name": "Hatikvah's Choice I",
           "Owner": "Hatikvah",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.12,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1206,11 +1482,14 @@
     },
     {
       "Name": "Morning Star III",
-      "BaseGameMapping": "cluster_30",
+      "BaseGameMapping": "Cluster_30",
       "Sectors": [
         {
           "Name": "Morning Star III",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "Sunlight": 0.76,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1220,11 +1499,14 @@
     },
     {
       "Name": "Morning Star IV",
-      "BaseGameMapping": "cluster_46",
+      "BaseGameMapping": "Cluster_46",
       "Sectors": [
         {
           "Name": "Morning Star IV",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "Sunlight": 0.65,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1234,11 +1516,14 @@
     },
     {
       "Name": "Argon Prime",
-      "BaseGameMapping": "cluster_14",
+      "BaseGameMapping": "Cluster_14",
       "Sectors": [
         {
           "Name": "Argon Prime",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "Sunlight": 1,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1248,11 +1533,14 @@
     },
     {
       "Name": "The Reach",
-      "BaseGameMapping": "cluster_07",
+      "BaseGameMapping": "Cluster_07",
       "Sectors": [
         {
           "Name": "The Reach",
-          "Owner": "Argon"
+          "Owner": "Argon",
+          "Sunlight": 3.67,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1262,11 +1550,14 @@
     },
     {
       "Name": "Heretic's End",
-      "BaseGameMapping": "cluster_31",
+      "BaseGameMapping": "Cluster_31",
       "Sectors": [
         {
           "Name": "Heretic's End",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.81,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1276,18 +1567,24 @@
     },
     {
       "Name": "Savage Spur",
-      "BaseGameMapping": "cluster_112",
+      "BaseGameMapping": "Cluster_112",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Savage Spur I",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.17,
+          "Economy": 0.25,
+          "Security": 0.25
         },
         {
           "Name": "Savage Spur II",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.25,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1297,11 +1594,14 @@
     },
     {
       "Name": "Getsu Fune",
-      "BaseGameMapping": "cluster_48",
+      "BaseGameMapping": "Cluster_48",
       "Sectors": [
         {
           "Name": "Getsu Fune",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.93,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1316,7 +1616,10 @@
       "Sectors": [
         {
           "Name": "Nopileos' Memorial",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.63,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1331,7 +1634,10 @@
       "Sectors": [
         {
           "Name": "Hatikvah's Faith",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.88,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1341,11 +1647,14 @@
     },
     {
       "Name": "The Void",
-      "BaseGameMapping": "cluster_27",
+      "BaseGameMapping": "Cluster_27",
       "Sectors": [
         {
           "Name": "The Void",
-          "Owner": "Antigone"
+          "Owner": "Antigone",
+          "Sunlight": 1.64,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1355,11 +1664,14 @@
     },
     {
       "Name": "Antigone Memorial",
-      "BaseGameMapping": "cluster_28",
+      "BaseGameMapping": "Cluster_28",
       "Sectors": [
         {
           "Name": "Antigone Memorial",
-          "Owner": "Antigone"
+          "Owner": "Antigone",
+          "Sunlight": 1.26,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1374,7 +1686,10 @@
       "Sectors": [
         {
           "Name": "Third Redemption",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1384,11 +1699,14 @@
     },
     {
       "Name": "Frontier Edge",
-      "BaseGameMapping": "cluster_49",
+      "BaseGameMapping": "Cluster_49",
       "Sectors": [
         {
           "Name": "Frontier Edge",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.72,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1402,7 +1720,10 @@
       "Sectors": [
         {
           "Name": "Ore Belt",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.34,
+          "Economy": 0.25,
+          "Security": 0.1
         }
       ],
       "Position": {
@@ -1412,17 +1733,23 @@
     },
     {
       "Name": "Atiya's Misfortune",
-      "BaseGameMapping": "cluster_26",
+      "BaseGameMapping": "Cluster_26",
       "Sectors": [
         {
           "Name": "Atiya's Misfortune I",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.09,
+          "Economy": 0.25,
+          "Security": 0.75
         },
         {
           "Name": "Atiya's Misfortune III",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.93,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1436,7 +1763,10 @@
       "Sectors": [
         {
           "Name": "Mists of Artemis",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.41,
+          "Economy": 0.1,
+          "Security": 0.1
         }
       ],
       "Position": {
@@ -1450,7 +1780,10 @@
       "Sectors": [
         {
           "Name": "Sanctum Verge",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.89,
+          "Economy": 0.25,
+          "Security": 0.1
         }
       ],
       "Position": {
@@ -1460,17 +1793,23 @@
     },
     {
       "Name": "Faulty Logic",
-      "BaseGameMapping": "cluster_25",
+      "BaseGameMapping": "Cluster_25",
       "Sectors": [
         {
           "Name": "Faulty Logic I",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.77,
+          "Economy": 0.25,
+          "Security": 0.5
         },
         {
           "Name": "Faulty Logic VII",
           "Owner": "Xenon",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.47,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1480,11 +1819,14 @@
     },
     {
       "Name": "True Sight",
-      "BaseGameMapping": "cluster_12",
+      "BaseGameMapping": "Cluster_12",
       "Sectors": [
         {
           "Name": "True Sight",
-          "Owner": "HolyOrder"
+          "Owner": "HolyOrder",
+          "Sunlight": 0.71,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1494,11 +1836,14 @@
     },
     {
       "Name": "Holy Vision",
-      "BaseGameMapping": "cluster_24",
+      "BaseGameMapping": "Cluster_24",
       "Sectors": [
         {
           "Name": "Holy Vision",
-          "Owner": "HolyOrder"
+          "Owner": "HolyOrder",
+          "Sunlight": 2.08,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1508,11 +1853,14 @@
     },
     {
       "Name": "Cardinal's Redress",
-      "BaseGameMapping": "cluster_36",
+      "BaseGameMapping": "Cluster_36",
       "Sectors": [
         {
           "Name": "Cardinal's Redress",
-          "Owner": "HolyOrder"
+          "Owner": "HolyOrder",
+          "Sunlight": 0.88,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1522,11 +1870,14 @@
     },
     {
       "Name": "Pontifex's Claim",
-      "BaseGameMapping": "cluster_11",
+      "BaseGameMapping": "Cluster_11",
       "Sectors": [
         {
           "Name": "Pontifex's Claim",
-          "Owner": "HolyOrder"
+          "Owner": "HolyOrder",
+          "Sunlight": 1.94,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1536,11 +1887,14 @@
     },
     {
       "Name": "Lasting Vengeance",
-      "BaseGameMapping": "cluster_35",
+      "BaseGameMapping": "Cluster_35",
       "Sectors": [
         {
           "Name": "Lasting Vengeance",
-          "Owner": "HolyOrder"
+          "Owner": "HolyOrder",
+          "Sunlight": 1,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1554,7 +1908,10 @@
       "Sectors": [
         {
           "Name": "Freedom's Reach",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 2.21,
+          "Economy": 0.1,
+          "Security": 0.2
         }
       ],
       "Position": {
@@ -1568,7 +1925,10 @@
       "Sectors": [
         {
           "Name": "Tempting Fumes",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.66,
+          "Economy": 0.25,
+          "Security": 0.1
         }
       ],
       "Position": {
@@ -1578,12 +1938,15 @@
     },
     {
       "Name": "Watchful Gaze",
-      "BaseGameMapping": "cluster_601",
+      "BaseGameMapping": "Cluster_601",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Watchful Gaze",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.41,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1593,12 +1956,15 @@
     },
     {
       "Name": "Barren Shores",
-      "BaseGameMapping": "cluster_602",
+      "BaseGameMapping": "Cluster_602",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Barren Shores",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 0.83,
+          "Economy": 0.25,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1608,12 +1974,15 @@
     },
     {
       "Name": "Great Reef",
-      "BaseGameMapping": "cluster_603",
+      "BaseGameMapping": "Cluster_603",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Great Reef",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 1.28,
+          "Economy": 0.5,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1623,12 +1992,15 @@
     },
     {
       "Name": "Ocean of Fantasy",
-      "BaseGameMapping": "cluster_604",
+      "BaseGameMapping": "Cluster_604",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Ocean of Fantasy",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 0.12,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1638,12 +2010,15 @@
     },
     {
       "Name": "Sanctuary of Darkness",
-      "BaseGameMapping": "cluster_605",
+      "BaseGameMapping": "Cluster_605",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Sanctuary of Darkness",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.74,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1653,23 +2028,32 @@
     },
     {
       "Name": "Kingdom End",
-      "BaseGameMapping": "cluster_606",
+      "BaseGameMapping": "Cluster_606",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Kingdom End I",
           "Owner": "Boron",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1.18,
+          "Economy": 0.75,
+          "Security": 0.75
         },
         {
           "Name": "Towering Wave",
           "Owner": "Boron",
-          "BaseGameMapping": "sector003"
+          "BaseGameMapping": "Sector003",
+          "Sunlight": 1.18,
+          "Economy": 0.75,
+          "Security": 0.75
         },
         {
           "Name": "Reflected Stars",
           "Owner": "Boron",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.18,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1679,12 +2063,15 @@
     },
     {
       "Name": "Rolk's Demise",
-      "BaseGameMapping": "cluster_607",
+      "BaseGameMapping": "Cluster_607",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Rolk's Demise",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 0.15,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1694,12 +2081,15 @@
     },
     {
       "Name": "Atreus' Clouds",
-      "BaseGameMapping": "cluster_608",
+      "BaseGameMapping": "Cluster_608",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Atreus' Clouds",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 0.41,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1709,12 +2099,15 @@
     },
     {
       "Name": "Menelaus' Oasis",
-      "BaseGameMapping": "cluster_609",
+      "BaseGameMapping": "Cluster_609",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Menelaus' Oasis",
-          "Owner": "Boron"
+          "Owner": "Boron",
+          "Sunlight": 2.71,
+          "Economy": 0.5,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1724,12 +2117,15 @@
     },
     {
       "Name": "Segaris",
-      "BaseGameMapping": "cluster_113",
+      "BaseGameMapping": "Cluster_113",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Segaris",
-          "Owner": "Segaris"
+          "Owner": "Segaris",
+          "Sunlight": 1.87,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1739,12 +2135,15 @@
     },
     {
       "Name": "Gaian Prophecy",
-      "BaseGameMapping": "cluster_114",
+      "BaseGameMapping": "Cluster_114",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Gaian Prophecy",
-          "Owner": "Segaris"
+          "Owner": "Segaris",
+          "Sunlight": 2.08,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1754,12 +2153,15 @@
     },
     {
       "Name": "Brennan's Triumph",
-      "BaseGameMapping": "cluster_115",
+      "BaseGameMapping": "Cluster_115",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Brennan's Triumph",
-          "Owner": "Segaris"
+          "Owner": "Segaris",
+          "Sunlight": 1.22,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1773,7 +2175,10 @@
       "Sectors": [
         {
           "Name": "Circle of Deceit",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 1.42,
+          "Economy": 0.25,
+          "Security": 0.1
         }
       ],
       "Position": {
@@ -1783,12 +2188,15 @@
     },
     {
       "Name": "Neptune",
-      "BaseGameMapping": "cluster_110",
+      "BaseGameMapping": "Cluster_110",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Neptune",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.06,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1798,12 +2206,15 @@
     },
     {
       "Name": "Pluto",
-      "BaseGameMapping": "cluster_111",
+      "BaseGameMapping": "Cluster_111",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Pluto",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.05,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1813,12 +2224,15 @@
     },
     {
       "Name": "Oort Cloud",
-      "BaseGameMapping": "cluster_116",
+      "BaseGameMapping": "Cluster_116",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Oort Cloud",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.02,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1828,12 +2242,15 @@
     },
     {
       "Name": "Uranus",
-      "BaseGameMapping": "cluster_109",
+      "BaseGameMapping": "Cluster_109",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Uranus",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.07,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1843,23 +2260,32 @@
     },
     {
       "Name": "Saturn",
-      "BaseGameMapping": "cluster_108",
+      "BaseGameMapping": "Cluster_108",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Saturn 2",
           "Owner": "Terran",
-          "BaseGameMapping": "sector003"
+          "BaseGameMapping": "Sector003",
+          "Sunlight": 0.08,
+          "Economy": 0.25,
+          "Security": 0.25
         },
         {
           "Name": "Saturn 1",
           "Owner": "Terran",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 0.08,
+          "Economy": 0.25,
+          "Security": 0.25
         },
         {
           "Name": "Titan",
           "Owner": "Terran",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 0.08,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1869,12 +2295,15 @@
     },
     {
       "Name": "Jupiter",
-      "BaseGameMapping": "cluster_107",
+      "BaseGameMapping": "Cluster_107",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Jupiter",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.1,
+          "Economy": 0.25,
+          "Security": 0.25
         }
       ],
       "Position": {
@@ -1884,12 +2313,15 @@
     },
     {
       "Name": "Asteroid Belt",
-      "BaseGameMapping": "cluster_100",
+      "BaseGameMapping": "Cluster_100",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Asteroid Belt",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.13,
+          "Economy": 0.25,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1899,12 +2331,15 @@
     },
     {
       "Name": "Mars",
-      "BaseGameMapping": "cluster_101",
+      "BaseGameMapping": "Cluster_101",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Mars",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 0.44,
+          "Economy": 0.75,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1914,12 +2349,15 @@
     },
     {
       "Name": "Venus",
-      "BaseGameMapping": "cluster_102",
+      "BaseGameMapping": "Cluster_102",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Venus",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 1.89,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1929,12 +2367,15 @@
     },
     {
       "Name": "Mercury",
-      "BaseGameMapping": "cluster_106",
+      "BaseGameMapping": "Cluster_106",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Mercury",
-          "Owner": "Terran"
+          "Owner": "Terran",
+          "Sunlight": 7.14,
+          "Economy": 0.5,
+          "Security": 0.5
         }
       ],
       "Position": {
@@ -1944,18 +2385,24 @@
     },
     {
       "Name": "Earth",
-      "BaseGameMapping": "cluster_104",
+      "BaseGameMapping": "Cluster_104",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
           "Name": "Earth",
           "Owner": "Terran",
-          "BaseGameMapping": "sector001"
+          "BaseGameMapping": "Sector001",
+          "Sunlight": 1,
+          "Economy": 0.75,
+          "Security": 0.75
         },
         {
           "Name": "The Moon",
           "Owner": "Terran",
-          "BaseGameMapping": "sector002"
+          "BaseGameMapping": "Sector002",
+          "Sunlight": 1.05,
+          "Economy": 0.75,
+          "Security": 0.75
         }
       ],
       "Position": {
@@ -1969,7 +2416,10 @@
       "Sectors": [
         {
           "Name": "Adventure's Promise",
-          "Owner": "None"
+          "Owner": "None",
+          "Sunlight": 0.71,
+          "Economy": 0.25,
+          "Security": 0.1
         }
       ],
       "Position": {

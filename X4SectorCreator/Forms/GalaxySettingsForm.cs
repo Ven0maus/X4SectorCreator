@@ -8,6 +8,9 @@ namespace X4SectorCreator
     public partial class GalaxySettingsForm : Form
     {
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public static bool DisableAllStorylines { get; set; } = false;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static bool IsCustomGalaxy { get; set; } = false;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -28,15 +31,17 @@ namespace X4SectorCreator
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            // Return if no change
-            if (IsCustomGalaxy == chkCustomGalaxy.Checked)
-            {
-                return;
-            }
-
             if (chkCustomGalaxy.Checked && (string.IsNullOrWhiteSpace(txtGalaxyName.Text) || txtGalaxyName.Text.Equals("xu_ep2_universe", StringComparison.OrdinalIgnoreCase)))
             {
                 _ = MessageBox.Show("Please select a valid galaxy name, it cannot be empty or equal to \"xu_ep2_universe\".", "Invalid custom galaxy name");
+                return;
+            }
+
+            // Return if no change
+            if (IsCustomGalaxy == chkCustomGalaxy.Checked)
+            {
+                GalaxyName = txtGalaxyName.Text.ToLower();
+                Close();
                 return;
             }
 
@@ -88,7 +93,7 @@ namespace X4SectorCreator
             }
             else
             {
-                GalaxyName = txtGalaxyName.Text;
+                GalaxyName = txtGalaxyName.Text.ToLower();
 
                 // Store base game clusters lazily
                 _baseGameClusters ??= MainForm.Instance.AllClusters
@@ -98,6 +103,7 @@ namespace X4SectorCreator
 
             // Apply change
             IsCustomGalaxy = chkCustomGalaxy.Checked;
+            DisableAllStorylines = chkDisableAllStorylines.Checked;
 
             // Toggle galaxy mode
             MainForm.Instance.ToggleGalaxyMode(mergedClusters);
@@ -200,9 +206,13 @@ namespace X4SectorCreator
                 // Reset to default galaxy
                 txtGalaxyName.Text = "xu_ep2_universe";
                 txtGalaxyName.Enabled = false;
+                chkDisableAllStorylines.Enabled = true;
+                chkDisableAllStorylines.Checked = false;
             }
             else
             {
+                chkDisableAllStorylines.Enabled = false;
+                chkDisableAllStorylines.Checked = true;
                 txtGalaxyName.Enabled = true;
                 txtGalaxyName.Text = string.Empty;
             }

@@ -41,9 +41,7 @@ namespace X4SectorCreator.Forms
 
                     // Just incase it is somehow deleted, we must still display it here
                     if (!ListBoxRegionDefinitions.Items.Contains(CustomRegion.Definition))
-                    {
                         _ = ListBoxRegionDefinitions.Items.Add(CustomRegion.Definition);
-                    }
 
                     ListBoxRegionDefinitions.SelectedItem = CustomRegion.Definition;
                     BtnCreateRegion.Text = "Update Region";
@@ -262,13 +260,13 @@ namespace X4SectorCreator.Forms
             UpdateRegionPosition();
 
             // Init listbox definitions stored by user
-            foreach (RegionDefinition definition in RegionDefinitionForm.RegionDefinitions)
+            foreach (RegionDefinition definition in RegionDefinitionForm.RegionDefinitions.OrderBy(a => a.Name))
             {
                 _ = ListBoxRegionDefinitions.Items.Add(definition);
             }
 
             ListBoxRegionDefinitions.SelectedItem = RegionDefinitionForm.RegionDefinitions.Count > 0 ?
-                RegionDefinitionForm.RegionDefinitions[0] : null;
+                RegionDefinitionForm.RegionDefinitions.OrderBy(a => a.Name).First() : null;
         }
 
         private void BtnCreateRegion_Click(object sender, EventArgs e)
@@ -350,6 +348,26 @@ namespace X4SectorCreator.Forms
         {
             if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition)
             {
+                return;
+            }
+
+            // Check if regions exist that use this given region definition
+            var regionsThatUseThisDefinition = MainForm.Instance.AllClusters.Values
+                .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
+                .SelectMany(cs => cs.sector.Regions, (cs, region) => new { cs.cluster, cs.sector, region })
+                .Where(x => x.region.Definition.Equals(selectedRegionDefinition))
+                .Where(x => CustomRegion == null || !x.region.Equals(CustomRegion))
+                .ToArray();
+
+            if (regionsThatUseThisDefinition.Length > 0)
+            {
+                string message = "Following regions use this region definition, they must first be changed or deleted before this definition can be deleted:\n" +
+                    string.Join("\n", regionsThatUseThisDefinition
+                    .OrderBy(a => a.cluster.Name)
+                    .ThenBy(a => a.sector.Name)
+                    .Select(x => $"- {x.region.Name} (Cluster: {x.cluster.Name}, Sector: {x.sector.Name})"));
+
+                _ = MessageBox.Show(message);
                 return;
             }
 

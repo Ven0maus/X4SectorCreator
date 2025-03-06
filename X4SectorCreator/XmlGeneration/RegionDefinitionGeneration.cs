@@ -9,17 +9,21 @@ namespace X4SectorCreator.XmlGeneration
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
             // Create XML structure
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("regions",
-                    new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                    new XAttribute(XName.Get("noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance"), "region_definitions.xsd"),
-                    GetRegions(modPrefix, clusters)
-                )
-            );
+            var regions = GetRegions(modPrefix, clusters).ToArray();
+            if (regions.Length > 0)
+            {
+                XDocument xmlDocument = new(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("regions",
+                        new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                        new XAttribute(XName.Get("noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance"), "region_definitions.xsd"),
+                        regions
+                    )
+                );
 
-            // Save to an XML file
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/region_definitions.xml")));
+                // Save to an XML file
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/region_definitions.xml")));
+            }
         }
 
         private static IEnumerable<XElement> GetRegions(string modPrefix, List<Cluster> clusters)
@@ -32,7 +36,7 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
                         yield return new XElement("region",
-                            new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}".ToLower()),
+                            new XAttribute("name", $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}"),
                             new XAttribute("density", region.Definition.Density),
                             new XAttribute("rotation", region.Definition.Rotation),
                             new XAttribute("noisescale", region.Definition.NoiseScale),

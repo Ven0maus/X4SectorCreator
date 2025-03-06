@@ -119,6 +119,7 @@
             // 
             // DlcListBox
             // 
+            DlcListBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             DlcListBox.BackColor = SystemColors.MenuText;
             DlcListBox.CheckOnClick = true;
             DlcListBox.ForeColor = Color.White;
@@ -143,19 +144,18 @@
             // 
             // label1
             // 
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             label1.ForeColor = Color.White;
             label1.Location = new Point(-1, -2);
             label1.Name = "label1";
-            label1.Size = new Size(180, 23);
+            label1.Size = new Size(176, 23);
             label1.TabIndex = 0;
             label1.Text = "Game DLCs";
             label1.TextAlign = ContentAlignment.TopCenter;
             // 
             // SectorMapForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 569);
             Controls.Add(panel1);
             Controls.Add(ControlPanel);
