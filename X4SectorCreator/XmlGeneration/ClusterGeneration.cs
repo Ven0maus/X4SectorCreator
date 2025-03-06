@@ -165,6 +165,10 @@ namespace X4SectorCreator.XmlGeneration
                 yield return (sector.VanillaCluster.Dlc, new XElement("remove",
                     new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{sectorCode}_connection']")));
             }
+            foreach (var removedConnection in vanillaChanges.RemovedConnections)
+            {
+                // TODO
+            }
         }
 
         private static string EnsureDirectoryExists(string filePath)

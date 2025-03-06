@@ -190,6 +190,10 @@ namespace X4SectorCreator.XmlGeneration
                     }
                 }
             }
+            foreach (var removedConnection in vanillaChanges.RemovedConnections)
+            {
+                // TODO
+            }
         }
 
         private static string EnsureDirectoryExists(string filePath)
