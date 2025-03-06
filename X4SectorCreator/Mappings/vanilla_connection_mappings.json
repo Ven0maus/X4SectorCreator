@@ -2675,6 +2675,11 @@
         "X": 68625,
         "Y": -37668
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate001To004",
       "ZoneName": "Zone003_Cluster_01_Sector001_connection"
@@ -2687,6 +2692,11 @@
       "ZonePosition": {
         "X": -166832,
         "Y": 46815
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 80,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate001To005",
@@ -2701,6 +2711,11 @@
         "X": -106543,
         "Y": -84962
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate001To006",
       "ZoneName": "Zone004_Cluster_01_Sector002_connection"
@@ -2713,6 +2728,11 @@
       "ZonePosition": {
         "X": 32883,
         "Y": 107680
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate001To002",
@@ -2727,6 +2747,11 @@
         "X": -87085,
         "Y": -89801
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate002To001",
       "ZoneName": "Zone001_Cluster_02_Sector001_connection"
@@ -2739,6 +2764,11 @@
       "ZonePosition": {
         "X": 110416,
         "Y": 83193
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate002To003",
@@ -2753,6 +2783,11 @@
         "X": -79336,
         "Y": 96889
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate002To008",
       "ZoneName": "Zone003_Cluster_02_Sector001_connection"
@@ -2765,6 +2800,11 @@
       "ZonePosition": {
         "X": -114310,
         "Y": -8096
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate002To501",
@@ -2779,6 +2819,11 @@
         "X": 136099,
         "Y": 95816
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate003To009",
       "ZoneName": "Zone003_Cluster_03_Sector001_connection"
@@ -2791,6 +2836,11 @@
       "ZonePosition": {
         "X": -74080,
         "Y": 102954
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate003To002",
@@ -2805,6 +2855,11 @@
         "X": -65355,
         "Y": -80259
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 360,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate003To039",
       "ZoneName": "Zone001_Cluster_03_Sector001_connection"
@@ -2817,6 +2872,11 @@
       "ZonePosition": {
         "X": -41734,
         "Y": 166070
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate004To022",
@@ -2831,6 +2891,11 @@
         "X": -17178,
         "Y": 83958
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate005To001",
       "ZoneName": "Zone001_Cluster_05_Sector001_connection"
@@ -2843,6 +2908,11 @@
       "ZonePosition": {
         "X": -85771,
         "Y": 93376
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate006To013",
@@ -2857,6 +2927,11 @@
         "X": 19493,
         "Y": 164808
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate006To503",
       "ZoneName": "Zone004_Cluster_06_Sector001_connection"
@@ -2869,6 +2944,11 @@
       "ZonePosition": {
         "X": 89656,
         "Y": 98108
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate006To001",
@@ -2883,6 +2963,11 @@
         "X": 173160,
         "Y": 6001
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate007To014",
       "ZoneName": "Zone003_Cluster_07_Sector001_connection"
@@ -2895,6 +2980,11 @@
       "ZonePosition": {
         "X": -258,
         "Y": 78113
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate008To044",
@@ -2909,6 +2999,11 @@
         "X": 76827,
         "Y": -3112
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate008To034",
       "ZoneName": "Zone002_Cluster_08_Sector001_connection"
@@ -2921,6 +3016,11 @@
       "ZonePosition": {
         "X": -147944,
         "Y": -67756
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate008To029",
@@ -2935,6 +3035,11 @@
         "X": 26131,
         "Y": -142360
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 360,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate008To002",
       "ZoneName": "Zone003_Cluster_08_Sector001_connection"
@@ -2947,6 +3052,11 @@
       "ZonePosition": {
         "X": -477,
         "Y": 82223
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate009To034",
@@ -2961,6 +3071,11 @@
         "X": -73511,
         "Y": -164943
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 335,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate008To501",
       "ZoneName": "Zone006_Cluster_08_Sector001_connection"
@@ -2973,6 +3088,11 @@
       "ZonePosition": {
         "X": 8894,
         "Y": -111675
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate009To018",
@@ -2987,6 +3107,11 @@
         "X": 152043,
         "Y": 131248
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 330,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate009to015",
       "ZoneName": "Zone004_Cluster_09_Sector001_connection"
@@ -2999,6 +3124,11 @@
       "ZonePosition": {
         "X": -149183,
         "Y": -4329
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate009To003",
@@ -3013,6 +3143,11 @@
         "X": -79242,
         "Y": 5014
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate010To022",
       "ZoneName": "Zone001_Cluster_10_Sector001_connection"
@@ -3025,6 +3160,11 @@
       "ZonePosition": {
         "X": 90040,
         "Y": 105351
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate010To018",
@@ -3039,6 +3179,11 @@
         "X": 1520,
         "Y": 82079
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate011To024",
       "ZoneName": "Zone001_Cluster_11_Sector001_connection"
@@ -3051,6 +3196,11 @@
       "ZonePosition": {
         "X": -10131,
         "Y": -105944
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate012To024",
@@ -3065,6 +3215,11 @@
         "X": 35973,
         "Y": 88150
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate012To013",
       "ZoneName": "Zone003_Cluster_12_Sector001_connection"
@@ -3077,6 +3232,11 @@
       "ZonePosition": {
         "X": -37251,
         "Y": -57811
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 360,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate013To012",
@@ -3091,6 +3251,11 @@
         "X": 68695,
         "Y": -65741
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate013To006",
       "ZoneName": "Zone001_Cluster_13_Sector001_connection"
@@ -3103,6 +3268,11 @@
       "ZonePosition": {
         "X": 42731,
         "Y": 49506
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate013To014",
@@ -3117,6 +3287,11 @@
         "X": 89982,
         "Y": -100098
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate014To013",
       "ZoneName": "Zone001_Cluster_14_Sector001_connection"
@@ -3129,6 +3304,11 @@
       "ZonePosition": {
         "X": -57062,
         "Y": 61363
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 65,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate014To007",
@@ -3143,6 +3323,11 @@
         "X": 45572,
         "Y": 108138
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate014To029",
       "ZoneName": "Zone003_Cluster_14_Sector001_connection"
@@ -3155,6 +3340,11 @@
       "ZonePosition": {
         "X": 163054,
         "Y": 39929
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 270,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate015To701",
@@ -3169,6 +3359,11 @@
         "X": 65059,
         "Y": 55852
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate015To016",
       "ZoneName": "Zone002_Cluster_15_Sector001_connection"
@@ -3181,6 +3376,11 @@
       "ZonePosition": {
         "X": -138440,
         "Y": 137906
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate015To009",
@@ -3195,6 +3395,11 @@
         "X": -161156,
         "Y": 45972
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate015To408",
       "ZoneName": "Zone001_Cluster_15_Sector002_connection"
@@ -3207,6 +3412,11 @@
       "ZonePosition": {
         "X": -106475,
         "Y": 99691
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate016To017",
@@ -3221,6 +3431,11 @@
         "X": 108557,
         "Y": 110513
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate016To407",
       "ZoneName": "Zone003_Cluster_16_Sector001_connection"
@@ -3233,6 +3448,11 @@
       "ZonePosition": {
         "X": -120300,
         "Y": -120866
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate016To015",
@@ -3247,6 +3467,11 @@
         "X": 137202,
         "Y": 133565
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate017To016",
       "ZoneName": "Zone004_Cluster_17_Sector001_connection"
@@ -3259,6 +3484,11 @@
       "ZonePosition": {
         "X": 130041,
         "Y": 34804
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate018To019",
@@ -3273,6 +3503,11 @@
         "X": 3129,
         "Y": 4815
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate018To009",
       "ZoneName": "Zone003_Cluster_18_Sector001_connection"
@@ -3285,6 +3520,11 @@
       "ZonePosition": {
         "X": 2314,
         "Y": -135764
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate018To010",
@@ -3299,6 +3539,11 @@
         "X": -118719,
         "Y": 124940
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate019To018",
       "ZoneName": "Zone003_Cluster_19_Sector001_connection"
@@ -3311,6 +3556,11 @@
       "ZonePosition": {
         "X": 83107,
         "Y": 119173
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate019To042",
@@ -3325,6 +3575,11 @@
         "X": 123625,
         "Y": -72589
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 305,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate019To020",
       "ZoneName": "Zone003_Cluster_19_Sector002_connection"
@@ -3337,6 +3592,11 @@
       "ZonePosition": {
         "X": -114333,
         "Y": -91033
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate020To021",
@@ -3351,6 +3611,11 @@
         "X": 6763,
         "Y": 137463
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate020To019",
       "ZoneName": "Zone003_Cluster_20_Sector001_connection"
@@ -3363,6 +3628,11 @@
       "ZonePosition": {
         "X": 96774,
         "Y": -3816
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate020To050",
@@ -3377,6 +3647,11 @@
         "X": 147351,
         "Y": 165382
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate021To020",
       "ZoneName": "Zone001_Cluster_21_Sector001_connection"
@@ -3389,6 +3664,11 @@
       "ZonePosition": {
         "X": 130442,
         "Y": 110055
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 305,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate021To050",
@@ -3403,6 +3683,11 @@
         "X": 103750,
         "Y": 20340
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate022To010",
       "ZoneName": "Zone002_Cluster_22_Sector001_connection"
@@ -3415,6 +3700,11 @@
       "ZonePosition": {
         "X": -427,
         "Y": -75385
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 360,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate022To023",
@@ -3429,6 +3719,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate022To004",
       "ZoneName": "Zone001_Cluster_22_Sector001_connection"
@@ -3441,6 +3736,11 @@
       "ZonePosition": {
         "X": -127622,
         "Y": -33783
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 70,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate022To011",
@@ -3455,6 +3755,11 @@
         "X": -21916,
         "Y": 108945
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate023To022",
       "ZoneName": "Zone002_Cluster_23_Sector001_connection"
@@ -3467,6 +3772,11 @@
       "ZonePosition": {
         "X": 92201,
         "Y": -35615
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate023To709",
@@ -3481,6 +3791,11 @@
         "X": -21852,
         "Y": 53706
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 35,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate024To012",
       "ZoneName": "Zone002_Cluster_24_Sector001_connection"
@@ -3493,6 +3808,11 @@
       "ZonePosition": {
         "X": -109790,
         "Y": -145237
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate024To025",
@@ -3507,6 +3827,11 @@
         "X": 141051,
         "Y": -142354
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate024To011",
       "ZoneName": "Zone004_Cluster_24_Sector001_connection"
@@ -3519,6 +3844,11 @@
       "ZonePosition": {
         "X": 116536,
         "Y": -18900
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate025To024",
@@ -3533,6 +3863,11 @@
         "X": -102053,
         "Y": -137445
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate025To026",
       "ZoneName": "Zone003_Cluster_25_Sector002_connection"
@@ -3545,6 +3880,11 @@
       "ZonePosition": {
         "X": 87251,
         "Y": 84626
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate026To049",
@@ -3559,6 +3899,11 @@
         "X": 103727,
         "Y": -117594
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate026To025",
       "ZoneName": "Zone003_Cluster_26_Sector002_connection"
@@ -3571,6 +3916,11 @@
       "ZonePosition": {
         "X": -111128,
         "Y": -48958
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate027To028",
@@ -3585,6 +3935,11 @@
         "X": 105999,
         "Y": -70364
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate027To013",
       "ZoneName": "Zone001_Cluster_27_Sector001_connection"
@@ -3597,6 +3952,11 @@
       "ZonePosition": {
         "X": 7336,
         "Y": -180866
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate027To049",
@@ -3611,6 +3971,11 @@
         "X": -22186,
         "Y": 284128
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate027To048",
       "ZoneName": "Zone005_Cluster_27_Sector001_connection"
@@ -3623,6 +3988,11 @@
       "ZonePosition": {
         "X": 33634,
         "Y": -112121
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate028To113",
@@ -3637,6 +4007,11 @@
         "X": 104990,
         "Y": 134568
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate028To027",
       "ZoneName": "Zone001_Cluster_28_Sector001_connection"
@@ -3649,6 +4024,11 @@
       "ZonePosition": {
         "X": 2506,
         "Y": 25444
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate029To030",
@@ -3663,6 +4043,11 @@
         "X": 174058,
         "Y": 160956
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate029To032",
       "ZoneName": "Zone002_Cluster_29_Sector001_connection"
@@ -3675,6 +4060,11 @@
       "ZonePosition": {
         "X": -95524,
         "Y": -115834
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 30,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate029To014",
@@ -3689,6 +4079,11 @@
         "X": 35850,
         "Y": 110331
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate030To046",
       "ZoneName": "Zone002_Cluster_30_Sector001_connection"
@@ -3701,6 +4096,11 @@
       "ZonePosition": {
         "X": -108392,
         "Y": -10975
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate030To031",
@@ -3715,6 +4115,11 @@
         "X": 114342,
         "Y": -101700
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate030To029",
       "ZoneName": "Zone001_Cluster_30_Sector001_connection"
@@ -3727,6 +4132,11 @@
       "ZonePosition": {
         "X": 3170,
         "Y": -3369
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 345,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate031To403",
@@ -3741,6 +4151,11 @@
         "X": -89137,
         "Y": 144270
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 30,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_anim_macro",
       "GateName": "connection_ClusterGate031To601b",
       "ZoneName": "Zone005_Cluster_31_Sector001_connection"
@@ -3753,6 +4168,11 @@
       "ZonePosition": {
         "X": 144449,
         "Y": -6973
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate031To030",
@@ -3767,6 +4187,11 @@
         "X": 106360,
         "Y": 47287
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate032To708",
       "ZoneName": "Zone003_Cluster_32_Sector001_connection"
@@ -3779,6 +4204,11 @@
       "ZonePosition": {
         "X": 90705,
         "Y": -97932
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate032To029",
@@ -3793,6 +4223,11 @@
         "X": -109521,
         "Y": 121477
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate032To033",
       "ZoneName": "Zone003_Cluster_32_Sector002_connection"
@@ -3805,6 +4240,11 @@
       "ZonePosition": {
         "X": -91471,
         "Y": -13531
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 30,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate033To112",
@@ -3819,6 +4259,11 @@
         "X": 111385,
         "Y": -132799
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate033To032",
       "ZoneName": "Zone001_Cluster_33_Sector001_connection"
@@ -3831,6 +4276,11 @@
       "ZonePosition": {
         "X": 152552,
         "Y": -91995
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 290,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate034to009",
@@ -3845,6 +4295,11 @@
         "X": 51543,
         "Y": 53541
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 310,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate034to420",
       "ZoneName": "Zone004_Cluster_34_Sector001_connection"
@@ -3857,6 +4312,11 @@
       "ZonePosition": {
         "X": -149183,
         "Y": -4329
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 70,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate034To008",
@@ -3871,6 +4331,11 @@
         "X": -114153,
         "Y": 52088
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate035To036",
       "ZoneName": "Zone001_Cluster_35_Sector001_connection"
@@ -3883,6 +4348,11 @@
       "ZonePosition": {
         "X": -21916,
         "Y": 108945
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate036To024",
@@ -3897,6 +4367,11 @@
         "X": 75408,
         "Y": -126087
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate036To714",
       "ZoneName": "Zone005_Cluster_36_Sector001_connection"
@@ -3909,6 +4384,11 @@
       "ZonePosition": {
         "X": 92201,
         "Y": -35615
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate036To035",
@@ -3923,6 +4403,11 @@
         "X": -427,
         "Y": -75385
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 40,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate037To038",
       "ZoneName": "Zone003_Cluster_37_Sector001_connection"
@@ -3935,6 +4420,11 @@
       "ZonePosition": {
         "X": 86,
         "Y": 115545
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 45,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate037To022",
@@ -3949,6 +4439,11 @@
         "X": 103750,
         "Y": 20340
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate038To037",
       "ZoneName": "Zone002_Cluster_38_Sector001_connection"
@@ -3961,6 +4456,11 @@
       "ZonePosition": {
         "X": -71468,
         "Y": 53358
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate038To022",
@@ -3975,6 +4475,11 @@
         "X": 86380,
         "Y": -106070
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate039To713",
       "ZoneName": "Zone003_Cluster_39_Sector001_connection"
@@ -3987,6 +4492,11 @@
       "ZonePosition": {
         "X": -66378,
         "Y": 115443
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate039To003",
@@ -4001,6 +4511,11 @@
         "X": 96741,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 315,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate040To013",
       "ZoneName": "Zone001_Cluster_40_Sector001_connection"
@@ -4013,6 +4528,11 @@
       "ZonePosition": {
         "X": -121550,
         "Y": 114678
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate040To041",
@@ -4027,6 +4547,11 @@
         "X": -68982,
         "Y": -112406
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate041To040",
       "ZoneName": "Zone004_Cluster_41_Sector001_connection"
@@ -4039,6 +4564,11 @@
       "ZonePosition": {
         "X": -427,
         "Y": -75385
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate042To019",
@@ -4053,6 +4583,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate042To043",
       "ZoneName": "Zone001_Cluster_42_Sector001_connection"
@@ -4065,6 +4600,11 @@
       "ZonePosition": {
         "X": 33098,
         "Y": -121434
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate043To042",
@@ -4079,6 +4619,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 40,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate044To045",
       "ZoneName": "Zone001_Cluster_44_Sector001_connection"
@@ -4091,6 +4636,11 @@
       "ZonePosition": {
         "X": -127622,
         "Y": -33783
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 50,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate044To008",
@@ -4105,6 +4655,11 @@
         "X": 105806,
         "Y": -121911
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 290,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate045To044",
       "ZoneName": "Zone003_Cluster_45_Sector001_connection"
@@ -4117,6 +4672,11 @@
       "ZonePosition": {
         "X": -427,
         "Y": -143003
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate046To030",
@@ -4131,6 +4691,11 @@
         "X": 131873,
         "Y": -42316
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 290,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate047To018",
       "ZoneName": "Zone002_Cluster_47_Sector001_connection"
@@ -4143,6 +4708,11 @@
       "ZonePosition": {
         "X": 89982,
         "Y": -100098
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate049To026",
@@ -4157,6 +4727,11 @@
         "X": -57062,
         "Y": 61363
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate049To720",
       "ZoneName": "Zone002_Cluster_49_Sector001_connection"
@@ -4169,6 +4744,11 @@
       "ZonePosition": {
         "X": 45572,
         "Y": 108138
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate049To027",
@@ -4183,6 +4763,11 @@
         "X": -49562,
         "Y": -104809
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate048To027",
       "ZoneName": "Zone003_Cluster_48_Sector001_connection"
@@ -4195,6 +4780,11 @@
       "ZonePosition": {
         "X": -106999,
         "Y": 77455
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 90,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate048To100",
@@ -4209,6 +4799,11 @@
         "X": 232354,
         "Y": 104692
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 305,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate048To112",
       "ZoneName": "Zone004_Cluster_48_Sector001_connection"
@@ -4221,6 +4816,11 @@
       "ZonePosition": {
         "X": -106999,
         "Y": 186408
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 90,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate048To604",
@@ -4235,6 +4835,11 @@
         "X": -96516,
         "Y": -104859
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 70,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate050To021",
       "ZoneName": "Zone004_Cluster_50_Sector002_connection"
@@ -4247,6 +4852,11 @@
       "ZonePosition": {
         "X": -43129,
         "Y": 157906
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 56,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate050To020",
@@ -4261,6 +4871,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate709To023",
       "ZoneName": "Zone001_Cluster_709_Sector001_connection"
@@ -4273,6 +4888,11 @@
       "ZonePosition": {
         "X": 137328,
         "Y": 138576
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate709To710",
@@ -4287,6 +4907,11 @@
         "X": 105554,
         "Y": -127904
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate709To",
       "ZoneName": "Zone003_Cluster_709_Sector001_connection"
@@ -4299,6 +4924,11 @@
       "ZonePosition": {
         "X": -127518,
         "Y": 34255
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate709To723",
@@ -4313,6 +4943,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate710To711",
       "ZoneName": "Zone001_Cluster_710_Sector001_connection"
@@ -4325,6 +4960,11 @@
       "ZonePosition": {
         "X": 137328,
         "Y": 138576
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate710To",
@@ -4339,6 +4979,11 @@
         "X": -129500,
         "Y": -126970
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate710To709",
       "ZoneName": "Zone005_Cluster_710_Sector001_connection"
@@ -4351,6 +4996,11 @@
       "ZonePosition": {
         "X": -127518,
         "Y": 34255
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 50,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate711To712",
@@ -4365,6 +5015,11 @@
         "X": -129500,
         "Y": -126970
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate711To710",
       "ZoneName": "Zone005_Cluster_711_Sector001_connection"
@@ -4377,6 +5032,11 @@
       "ZonePosition": {
         "X": 105554,
         "Y": -127904
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 295,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate712To711",
@@ -4391,6 +5051,11 @@
         "X": -127518,
         "Y": 34255
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 55,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate712To713",
       "ZoneName": "Zone004_Cluster_712_Sector001_connection"
@@ -4403,6 +5068,11 @@
       "ZonePosition": {
         "X": 86,
         "Y": 115545
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 45,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate713To",
@@ -4417,6 +5087,11 @@
         "X": 105554,
         "Y": -127904
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate713To712",
       "ZoneName": "Zone003_Cluster_713_Sector001_connection"
@@ -4429,6 +5104,11 @@
       "ZonePosition": {
         "X": -127518,
         "Y": 34255
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate713To039",
@@ -4443,6 +5123,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate714To036",
       "ZoneName": "Zone001_Cluster_714_Sector001_connection"
@@ -4455,6 +5140,11 @@
       "ZonePosition": {
         "X": 86,
         "Y": 115545
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate715To026",
@@ -4469,6 +5159,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate720To730",
       "ZoneName": "Zone001_Cluster_720_Sector001_connection"
@@ -4481,6 +5176,11 @@
       "ZonePosition": {
         "X": 137328,
         "Y": 138576
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate720To049",
@@ -4495,6 +5195,11 @@
         "X": 105554,
         "Y": -127904
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate720To722",
       "ZoneName": "Zone003_Cluster_720_Sector001_connection"
@@ -4507,6 +5212,11 @@
       "ZonePosition": {
         "X": -129500,
         "Y": -126970
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate720To721",
@@ -4521,6 +5231,11 @@
         "X": 86,
         "Y": 200000
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate721To608",
       "ZoneName": "Zone001_Cluster_721_Sector001_connection"
@@ -4533,6 +5248,11 @@
       "ZonePosition": {
         "X": 105554,
         "Y": -127904
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate721To720",
@@ -4547,6 +5267,11 @@
         "X": -129500,
         "Y": -126970
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 295,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate721To",
       "ZoneName": "Zone005_Cluster_721_Sector001_connection"
@@ -4559,6 +5284,11 @@
       "ZonePosition": {
         "X": 86,
         "Y": 115545
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate722To720",
@@ -4573,6 +5303,11 @@
         "X": 105554,
         "Y": -127904
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate722To723",
       "ZoneName": "Zone003_Cluster_722_Sector001_connection"
@@ -4585,6 +5320,11 @@
       "ZonePosition": {
         "X": -127518,
         "Y": 34255
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate722To724",
@@ -4599,6 +5339,11 @@
         "X": -129500,
         "Y": -126970
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate722To806",
       "ZoneName": "Zone005_Cluster_722_Sector001_connection"
@@ -4611,6 +5356,11 @@
       "ZonePosition": {
         "X": 137328,
         "Y": 138576
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate723To709",
@@ -4625,6 +5375,11 @@
         "X": 105554,
         "Y": -127904
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 70,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate723To",
       "ZoneName": "Zone003_Cluster_723_Sector001_connection"
@@ -4637,6 +5392,11 @@
       "ZonePosition": {
         "X": -127518,
         "Y": 34255
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate723To722",
@@ -4651,6 +5411,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate724To115",
       "ZoneName": "Zone001_Cluster_724_Sector001_connection"
@@ -4663,6 +5428,11 @@
       "ZonePosition": {
         "X": 105554,
         "Y": -127904
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate724To722",
@@ -4677,6 +5447,11 @@
         "X": -129500,
         "Y": -126970
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 310,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate724To",
       "ZoneName": "Zone005_Cluster_724_Sector001_connection"
@@ -4689,6 +5464,11 @@
       "ZonePosition": {
         "X": 112515,
         "Y": 57018
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate401To418",
@@ -4703,6 +5483,11 @@
         "X": -125584,
         "Y": 20138
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 90,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate401To400",
       "ZoneName": "Zone001_Cluster_401_Sector001_connection"
@@ -4715,6 +5500,11 @@
       "ZonePosition": {
         "X": -21916,
         "Y": 108945
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate401To402",
@@ -4729,6 +5519,11 @@
         "X": 75408,
         "Y": -126087
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate401To032",
       "ZoneName": "Zone005_Cluster_401_Sector001_connection"
@@ -4741,6 +5536,11 @@
       "ZonePosition": {
         "X": -21916,
         "Y": 108945
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate402To414",
@@ -4755,6 +5555,11 @@
         "X": 75408,
         "Y": -126087
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 360,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate402To401",
       "ZoneName": "Zone005_Cluster_402_Sector001_connection"
@@ -4767,6 +5572,11 @@
       "ZonePosition": {
         "X": -114871,
         "Y": 7212
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 50,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate403To422",
@@ -4781,6 +5591,11 @@
         "X": 136999,
         "Y": 93736
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate403To400",
       "ZoneName": "Zone003_Cluster_403_Sector001_connection"
@@ -4793,6 +5608,11 @@
       "ZonePosition": {
         "X": 75408,
         "Y": -126087
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 360,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate403To031",
@@ -4807,6 +5627,11 @@
         "X": -114153,
         "Y": -46898
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate400To403",
       "ZoneName": "Zone001_Cluster_400_Sector001_connection"
@@ -4819,6 +5644,11 @@
       "ZonePosition": {
         "X": 92201,
         "Y": -35615
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 270,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate400To401",
@@ -4833,6 +5663,11 @@
         "X": 13300,
         "Y": 131769
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 360,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate408To407",
       "ZoneName": "Zone002_Cluster_408_Sector001_connection"
@@ -4845,6 +5680,11 @@
       "ZonePosition": {
         "X": -59697,
         "Y": -53411
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate408To015",
@@ -4859,6 +5699,11 @@
         "X": 112585,
         "Y": 75821
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 315,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate407To409",
       "ZoneName": "Zone003_Cluster_407_Sector001_connection"
@@ -4871,6 +5716,11 @@
       "ZonePosition": {
         "X": -21916,
         "Y": 108945
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 360,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate407To421",
@@ -4885,6 +5735,11 @@
         "X": -125447,
         "Y": -86447
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 45,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate407To016",
       "ZoneName": "Zone004_Cluster_407_Sector001_connection"
@@ -4897,6 +5752,11 @@
       "ZonePosition": {
         "X": 75408,
         "Y": -126087
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate407To408",
@@ -4911,6 +5771,11 @@
         "X": -114153,
         "Y": 116119
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 65,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate409To421",
       "ZoneName": "Zone001_Cluster_409_Sector001_connection"
@@ -4923,6 +5788,11 @@
       "ZonePosition": {
         "X": 125829,
         "Y": -9578
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate409To410",
@@ -4937,6 +5807,11 @@
         "X": -137134,
         "Y": -135122
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate409To407",
       "ZoneName": "Zone005_Cluster_409_Sector001_connection"
@@ -4949,6 +5824,11 @@
       "ZonePosition": {
         "X": -113207,
         "Y": -122958
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate410To409",
@@ -4963,6 +5843,11 @@
         "X": -21916,
         "Y": 108945
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 360,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate410To411",
       "ZoneName": "Zone002_Cluster_410_Sector001_connection"
@@ -4975,6 +5860,11 @@
       "ZonePosition": {
         "X": 75408,
         "Y": -126087
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 290,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate410To412",
@@ -4989,6 +5879,11 @@
         "X": 2087,
         "Y": 81310
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 25,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_02_macro",
       "GateName": "connection_ClusterGate411To425",
       "ZoneName": "Zone002_Cluster_411_Sector001_connection"
@@ -5001,6 +5896,11 @@
       "ZonePosition": {
         "X": -28,
         "Y": -125438
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate411To410",
@@ -5015,6 +5915,11 @@
         "X": 69261,
         "Y": 57018
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate405To406",
       "ZoneName": "Zone003_Cluster_405_Sector001_connection"
@@ -5027,6 +5932,11 @@
       "ZonePosition": {
         "X": 75408,
         "Y": -126087
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate405To419",
@@ -5041,6 +5951,11 @@
         "X": 93217,
         "Y": 108441
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 310,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate406To417",
       "ZoneName": "Zone003_Cluster_406_Sector001_connection"
@@ -5053,6 +5968,11 @@
       "ZonePosition": {
         "X": -122277,
         "Y": -96571
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 30,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate406To404",
@@ -5067,6 +5987,11 @@
         "X": 75408,
         "Y": -126087
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate406To405",
       "ZoneName": "Zone005_Cluster_406_Sector001_connection"
@@ -5079,6 +6004,11 @@
       "ZonePosition": {
         "X": 113605,
         "Y": 90602
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate404To406",
@@ -5093,6 +6023,11 @@
         "X": -114153,
         "Y": 116119
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 45,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate404To415",
       "ZoneName": "Zone001_Cluster_404_Sector001_connection"
@@ -5105,6 +6040,11 @@
       "ZonePosition": {
         "X": 26476,
         "Y": -123399
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate404To418",
@@ -5119,6 +6059,11 @@
         "X": -130630,
         "Y": 47528
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate418To401",
       "ZoneName": "Zone001_Cluster_418_Sector001_connection"
@@ -5131,6 +6076,11 @@
       "ZonePosition": {
         "X": 7690,
         "Y": 136950
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 360,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate418To404",
@@ -5145,6 +6095,11 @@
         "X": 126073,
         "Y": -92469
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate418To419",
       "ZoneName": "Zone004_Cluster_418_Sector001_connection"
@@ -5157,6 +6112,11 @@
       "ZonePosition": {
         "X": -132792,
         "Y": 84289
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate419To418",
@@ -5171,6 +6131,11 @@
         "X": -21916,
         "Y": 108945
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 360,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate419To405",
       "ZoneName": "Zone002_Cluster_419_Sector001_connection"
@@ -5183,6 +6148,11 @@
       "ZonePosition": {
         "X": 113820,
         "Y": -49262
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate419To420",
@@ -5197,6 +6167,11 @@
         "X": -114153,
         "Y": 116119
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate420To419",
       "ZoneName": "Zone001_Cluster_420_Sector001_connection"
@@ -5209,6 +6184,11 @@
       "ZonePosition": {
         "X": 100675,
         "Y": 126138
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 330,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate420To416",
@@ -5223,6 +6203,11 @@
         "X": 92201,
         "Y": -35615
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate420To421",
       "ZoneName": "Zone004_Cluster_420_Sector001_connection"
@@ -5235,6 +6220,11 @@
       "ZonePosition": {
         "X": -86050,
         "Y": -129546
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate420To034",
@@ -5249,6 +6239,11 @@
         "X": -108110,
         "Y": -70970
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate416To420",
       "ZoneName": "Zone003_Cluster_416_Sector001_connection"
@@ -5261,6 +6256,11 @@
       "ZonePosition": {
         "X": -11613,
         "Y": 110594
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 360,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate416To417",
@@ -5275,6 +6275,11 @@
         "X": -114153,
         "Y": 116119
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 70,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate417To406",
       "ZoneName": "Zone001_Cluster_417_Sector001_connection"
@@ -5287,6 +6292,11 @@
       "ZonePosition": {
         "X": 75408,
         "Y": -126087
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate417To416",
@@ -5301,6 +6311,11 @@
         "X": -114153,
         "Y": 116119
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate421To420",
       "ZoneName": "Zone001_Cluster_421_Sector001_connection"
@@ -5313,6 +6328,11 @@
       "ZonePosition": {
         "X": -118451,
         "Y": -31719
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate421To017",
@@ -5327,6 +6347,11 @@
         "X": 124632,
         "Y": -26917
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate421To409",
       "ZoneName": "Zone004_Cluster_421_Sector001_connection"
@@ -5339,6 +6364,11 @@
       "ZonePosition": {
         "X": 16305,
         "Y": -127384
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate421To407",
@@ -5353,6 +6383,11 @@
         "X": -131351,
         "Y": 33833
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate422To423",
       "ZoneName": "Zone001_Cluster_422_Sector001_connection"
@@ -5365,6 +6400,11 @@
       "ZonePosition": {
         "X": 128030,
         "Y": -126663
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate422To403",
@@ -5379,6 +6419,11 @@
         "X": -114153,
         "Y": 116119
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate423To424",
       "ZoneName": "Zone001_Cluster_423_Sector001_connection"
@@ -5391,6 +6436,11 @@
       "ZonePosition": {
         "X": 134723,
         "Y": -34125
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 270,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate423To422",
@@ -5405,6 +6455,11 @@
         "X": -114153,
         "Y": 116119
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate412To410",
       "ZoneName": "Zone001_Cluster_412_Sector001_connection"
@@ -5417,6 +6472,11 @@
       "ZonePosition": {
         "X": 92201,
         "Y": -35615
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate412To413",
@@ -5431,6 +6491,11 @@
         "X": -124250,
         "Y": -60352
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate413To412",
       "ZoneName": "Zone001_Cluster_413_Sector001_connection"
@@ -5443,6 +6508,11 @@
       "ZonePosition": {
         "X": 127876,
         "Y": 121693
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate414To415",
@@ -5457,6 +6527,11 @@
         "X": -16848,
         "Y": -131554
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate414To402",
       "ZoneName": "Zone005_Cluster_414_Sector001_connection"
@@ -5469,6 +6544,11 @@
       "ZonePosition": {
         "X": -103928,
         "Y": -93513
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate415To414",
@@ -5483,6 +6563,11 @@
         "X": 145198,
         "Y": -22829
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate415To404",
       "ZoneName": "Zone004_Cluster_415_Sector001_connection"
@@ -5495,6 +6580,11 @@
       "ZonePosition": {
         "X": 75408,
         "Y": -126087
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate424To423",
@@ -5509,6 +6599,11 @@
         "X": 75408,
         "Y": -126087
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_02_macro",
       "GateName": "connection_ClusterGate425To411",
       "ZoneName": "Zone005_Cluster_425_Sector001_connection"
@@ -5521,6 +6616,11 @@
       "ZonePosition": {
         "X": -117047,
         "Y": 82594
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate500To502",
@@ -5535,6 +6635,11 @@
         "X": -10961,
         "Y": 112070
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate501To008",
       "ZoneName": "Zone002_Cluster_501_Sector001_connection"
@@ -5547,6 +6652,11 @@
       "ZonePosition": {
         "X": -97898,
         "Y": -23633
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 45,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate501To502",
@@ -5561,6 +6671,11 @@
         "X": 103164,
         "Y": -32492
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 285,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate501To002",
       "ZoneName": "Zone004_Cluster_501_Sector001_connection"
@@ -5573,6 +6688,11 @@
       "ZonePosition": {
         "X": 103164,
         "Y": -32492
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate502To500",
@@ -5587,6 +6707,11 @@
         "X": 108009,
         "Y": 115934
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 320,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate502To501",
       "ZoneName": "Zone002_Cluster_502_Sector001_connection"
@@ -5599,6 +6724,11 @@
       "ZonePosition": {
         "X": -23023,
         "Y": -160133
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate502To503",
@@ -5613,6 +6743,11 @@
         "X": -2269,
         "Y": 165758
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate503To502",
       "ZoneName": "Zone002_Cluster_503_Sector001_connection"
@@ -5625,6 +6760,11 @@
       "ZonePosition": {
         "X": -23023,
         "Y": -160133
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 10,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate503To006",
@@ -5639,6 +6779,11 @@
         "X": -21916,
         "Y": 108945
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 60,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate100To101",
       "ZoneName": "Zone002_Cluster_100_Sector001_connection"
@@ -5651,6 +6796,11 @@
       "ZonePosition": {
         "X": 92201,
         "Y": -35615
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate100To048",
@@ -5665,6 +6815,11 @@
         "X": 75408,
         "Y": -126087
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate100To107",
       "ZoneName": "Zone005_Cluster_100_Sector001_connection"
@@ -5677,6 +6832,11 @@
       "ZonePosition": {
         "X": -114153,
         "Y": 116119
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 80,
+        "Z": 170
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate101To102",
@@ -5691,6 +6851,11 @@
         "X": 75408,
         "Y": -126087
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate101To100",
       "ZoneName": "Zone005_Cluster_101_Sector001_connection"
@@ -5703,6 +6868,11 @@
       "ZonePosition": {
         "X": 76468,
         "Y": -96198
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 300,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate102To101",
@@ -5717,6 +6887,11 @@
         "X": -77654,
         "Y": 125310
       },
+      "Rotation": {
+        "X": 186,
+        "Y": 65,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate102To106",
       "ZoneName": "Zone002_Cluster_102_Sector001_connection"
@@ -5729,6 +6904,11 @@
       "ZonePosition": {
         "X": 90514,
         "Y": 77156
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate102To104",
@@ -5743,6 +6923,11 @@
         "X": -92491,
         "Y": -121375
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 55,
+        "Z": 170
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate104To102",
       "ZoneName": "Zone005_Cluster_104_Sector002_connection"
@@ -5755,6 +6940,11 @@
       "ZonePosition": {
         "X": -15650,
         "Y": -88058
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate106To102",
@@ -5769,6 +6959,11 @@
         "X": 114955,
         "Y": 93627
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate107To100",
       "ZoneName": "Zone003_Cluster_107_Sector001_connection"
@@ -5781,6 +6976,11 @@
       "ZonePosition": {
         "X": -33515,
         "Y": -136579
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate107To108",
@@ -5795,6 +6995,11 @@
         "X": 54031,
         "Y": 101331
       },
+      "Rotation": {
+        "X": 10,
+        "Y": 315,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate108To107",
       "ZoneName": "Zone002_Cluster_108_Sector001_connection"
@@ -5807,6 +7012,11 @@
       "ZonePosition": {
         "X": -44813,
         "Y": -136466
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate108To109",
@@ -5821,6 +7031,11 @@
         "X": 82573,
         "Y": -92240
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 290,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate109To110",
       "ZoneName": "Zone001_Cluster_109_Sector001_connection"
@@ -5833,6 +7048,11 @@
       "ZonePosition": {
         "X": 127966,
         "Y": 123632
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 290,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate109To108",
@@ -5847,6 +7067,11 @@
         "X": -109002,
         "Y": -85623
       },
+      "Rotation": {
+        "X": 3,
+        "Y": 31,
+        "Z": 360
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate110To111",
       "ZoneName": "Zone002_Cluster_110_Sector001_connection"
@@ -5859,6 +7084,11 @@
       "ZonePosition": {
         "X": -114153,
         "Y": 116119
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 30,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate110To109",
@@ -5873,6 +7103,11 @@
         "X": 125349,
         "Y": 15910
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 270,
+        "Z": 0
+      },
       "GateType": "props_ter_gate_01_macro",
       "GateName": "connection_ClusterGate110To115",
       "ZoneName": "Zone005_Cluster_110_Sector001_connection"
@@ -5885,6 +7120,11 @@
       "ZonePosition": {
         "X": 95555,
         "Y": 78554
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate111To110",
@@ -5899,6 +7139,11 @@
         "X": -129370,
         "Y": -126428
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate111To116",
       "ZoneName": "Zone004_Cluster_111_Sector001_connection"
@@ -5911,6 +7156,11 @@
       "ZonePosition": {
         "X": 127631,
         "Y": 128764
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 305,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate112To033",
@@ -5925,6 +7175,11 @@
         "X": -113140,
         "Y": -50164
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 65,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate112To048",
       "ZoneName": "Zone002_Cluster_112_Sector002_connection"
@@ -5937,6 +7192,11 @@
       "ZonePosition": {
         "X": 1566,
         "Y": 132594
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate113To028",
@@ -5951,6 +7211,11 @@
         "X": -113140,
         "Y": -50164
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 90,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate113To114",
       "ZoneName": "Zone002_Cluster_113_Sector001_connection"
@@ -5963,6 +7228,11 @@
       "ZonePosition": {
         "X": -115039,
         "Y": 41591
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 90,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate114To115",
@@ -5977,6 +7247,11 @@
         "X": 131127,
         "Y": -114179
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 290,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate114To113",
       "ZoneName": "Zone005_Cluster_114_Sector001_connection"
@@ -5989,6 +7264,11 @@
       "ZonePosition": {
         "X": -113140,
         "Y": -50164
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 90,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate115To110",
@@ -6003,6 +7283,11 @@
         "X": 64412,
         "Y": 91020
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate115To000",
       "ZoneName": "Zone004_Cluster_115_Sector001_connection"
@@ -6015,6 +7300,11 @@
       "ZonePosition": {
         "X": 121893,
         "Y": -70437
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 295,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate115To114",
@@ -6029,6 +7319,11 @@
         "X": -30,
         "Y": -274973
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate115To724",
       "ZoneName": "Zone006_Cluster_115_Sector001_connection"
@@ -6041,6 +7336,11 @@
       "ZonePosition": {
         "X": 3637,
         "Y": 120528
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 310,
+        "Z": 180
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate116To111",
@@ -6055,6 +7355,11 @@
         "X": -133890,
         "Y": -88468
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate602To603",
       "ZoneName": "Zone004_Cluster_602_Sector001_connection"
@@ -6067,6 +7372,11 @@
       "ZonePosition": {
         "X": 86,
         "Y": 115545
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 20,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGateInactive",
@@ -6081,6 +7391,11 @@
         "X": 121475,
         "Y": -4501
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 320,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate602To601",
       "ZoneName": "Zone003_Cluster_602_Sector001_connection"
@@ -6093,6 +7408,11 @@
       "ZonePosition": {
         "X": 22972,
         "Y": 119150
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 25,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate603To605",
@@ -6107,6 +7427,11 @@
         "X": 142074,
         "Y": 71802
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 320,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate603To602",
       "ZoneName": "Zone004_Cluster_603_Sector001_connection"
@@ -6119,6 +7444,11 @@
       "ZonePosition": {
         "X": -57990,
         "Y": -130164
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate603To604",
@@ -6133,6 +7463,11 @@
         "X": -84684,
         "Y": 55645
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 30,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_anim_macro",
       "GateName": "connection_ClusterGate605To606",
       "ZoneName": "Zone004_Cluster_605_Sector001_connection"
@@ -6145,6 +7480,11 @@
       "ZonePosition": {
         "X": 55319,
         "Y": -98948
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 290,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate605To603",
@@ -6159,6 +7499,11 @@
         "X": -119850,
         "Y": -93008
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 65,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate606To607",
       "ZoneName": "Zone004_Cluster_606_Sector002_connection"
@@ -6171,6 +7516,11 @@
       "ZonePosition": {
         "X": 115195,
         "Y": 14787
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate606To605",
@@ -6185,6 +7535,11 @@
         "X": -22313,
         "Y": 118046
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate604To603",
       "ZoneName": "Zone004_Cluster_604_Sector001_connection"
@@ -6197,6 +7552,11 @@
       "ZonePosition": {
         "X": 105554,
         "Y": -127904
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 270,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate604to048",
@@ -6211,6 +7571,11 @@
         "X": 23503,
         "Y": 118619
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 305,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate607To606",
       "ZoneName": "Zone002_Cluster_607_Sector001_connection"
@@ -6223,6 +7588,11 @@
       "ZonePosition": {
         "X": 131077,
         "Y": 2935
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 305,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate607To608",
@@ -6237,6 +7607,11 @@
         "X": -76998,
         "Y": -117440
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate607To609",
       "ZoneName": "Zone004_Cluster_607_Sector001_connection"
@@ -6249,6 +7624,11 @@
       "ZonePosition": {
         "X": 137328,
         "Y": 138576
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate601To031",
@@ -6263,6 +7643,11 @@
         "X": -129500,
         "Y": -126970
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate601To602",
       "ZoneName": "Zone005_Cluster_601_Sector001_connection"
@@ -6275,6 +7660,11 @@
       "ZonePosition": {
         "X": -115974,
         "Y": 117825
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 45,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate608To607",
@@ -6289,6 +7679,11 @@
         "X": -128151,
         "Y": -109468
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 60,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate608To609",
       "ZoneName": "Zone004_Cluster_608_Sector001_connection"
@@ -6301,6 +7696,11 @@
       "ZonePosition": {
         "X": 105554,
         "Y": -127904
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate608To721",
@@ -6315,6 +7715,11 @@
         "X": -67369,
         "Y": 148724
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 0,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate609To607",
       "ZoneName": "Zone002_Cluster_609_Sector001_connection"
@@ -6327,6 +7732,11 @@
       "ZonePosition": {
         "X": 158696,
         "Y": -62249
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate609To608",
@@ -6341,6 +7751,11 @@
         "X": -127518,
         "Y": 34255
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 65,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate702To701",
       "ZoneName": "Zone004_Cluster_702_Sector001_connection"
@@ -6353,6 +7768,11 @@
       "ZonePosition": {
         "X": 17315,
         "Y": -127904
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 315,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate702To703",
@@ -6367,6 +7787,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 40,
+        "Z": 180
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate703To702",
       "ZoneName": "Zone001_Cluster_703_Sector001_connection"
@@ -6379,6 +7804,11 @@
       "ZonePosition": {
         "X": -127518,
         "Y": 34255
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 90,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate705To0b",
@@ -6393,6 +7823,11 @@
         "X": 130142,
         "Y": -16350
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 310,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate705To706",
       "ZoneName": "Zone002_Cluster_705_Sector001_connection"
@@ -6405,6 +7840,11 @@
       "ZonePosition": {
         "X": 105554,
         "Y": -127904
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate705To0a",
@@ -6419,6 +7859,11 @@
         "X": -127518,
         "Y": 34255
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 45,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate706To705",
       "ZoneName": "Zone004_Cluster_706_Sector001_connection"
@@ -6431,6 +7876,11 @@
       "ZonePosition": {
         "X": 86,
         "Y": 115545
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 360,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate706To0a",
@@ -6445,6 +7895,11 @@
         "X": 130142,
         "Y": 48135
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 300,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate706To014",
       "ZoneName": "Zone002_Cluster_706_Sector001_connection"
@@ -6457,6 +7912,11 @@
       "ZonePosition": {
         "X": -127518,
         "Y": 34255
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate704To008",
@@ -6471,6 +7931,11 @@
         "X": 86,
         "Y": 115545
       },
+      "Rotation": {
+        "X": 180,
+        "Y": 360,
+        "Z": 180
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate704To0",
       "ZoneName": "Zone001_Cluster_704_Sector001_connection"
@@ -6483,6 +7948,11 @@
       "ZonePosition": {
         "X": 130142,
         "Y": 48135
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 270,
+        "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate704To0b",
@@ -6497,6 +7967,11 @@
         "X": 105554,
         "Y": -127904
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate704To0c",
       "ZoneName": "Zone003_Cluster_704_Sector001_connection"
@@ -6509,6 +7984,11 @@
       "ZonePosition": {
         "X": -127518,
         "Y": 34255
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate701To015",
@@ -6523,6 +8003,11 @@
         "X": 105554,
         "Y": -127904
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 310,
+        "Z": 0
+      },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate701To702",
       "ZoneName": "Zone003_Cluster_701_Sector001_connection"
@@ -6535,6 +8020,11 @@
       "ZonePosition": {
         "X": -127518,
         "Y": 34255
+      },
+      "Rotation": {
+        "X": 180,
+        "Y": 90,
+        "Z": 180
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate708To032",

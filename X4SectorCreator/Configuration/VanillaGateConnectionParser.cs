@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
@@ -163,7 +164,10 @@ namespace X4SectorCreator.Configuration
                 ConnectionName = sourceInfo.Name,
                 SourcePath = sourceInfo.Path,
                 DestinationPath = targetInfo.Path,
-                Position = new Point(zoneGateInfo.GatePosition.X, zoneGateInfo.GatePosition.Y)
+                Position = new Point(zoneGateInfo.GatePosition.X, zoneGateInfo.GatePosition.Y),
+                Roll = zoneGateInfo.Rotation.X,
+                Pitch = zoneGateInfo.Rotation.Y,
+                Yaw = zoneGateInfo.Rotation.Z,
             });
         }
 
@@ -194,14 +198,12 @@ namespace X4SectorCreator.Configuration
         {
             foreach (var (prefix, path) in filePaths)
             {
-                // TODO add right prefix per dlc
                 var zonesXDoc = XDocument.Load($"{path}{prefix ?? ""}zones.xml");
                 var zoneElements = zonesXDoc.Descendants("macro")
                     .Where(c => c.Attribute("class") != null && c.Attribute("class").Value
                         .Equals("zone", StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
-                // TODO add right prefix per dlc
                 var sectorXDoc = XDocument.Load($"{path}{prefix ?? ""}sectors.xml");
                 var sectorElements = sectorXDoc.Descendants("connection")
                     .Where(c => c.Attribute("ref") != null && c.Attribute("ref").Value.Equals("zones", StringComparison.OrdinalIgnoreCase))
@@ -235,6 +237,7 @@ namespace X4SectorCreator.Configuration
 
         private static ZoneGateInfo ParseGate(XElement element)
         {
+            ZoneGateInfo zoneGateInfo = null;
             var gateConnectionElement = element
                 .Element("connections")?
                 .Elements("connection")?
@@ -242,25 +245,32 @@ namespace X4SectorCreator.Configuration
             if (gateConnectionElement != null)
             {
                 var gateTypeElement = gateConnectionElement.Element("macro")?.Attribute("ref").Value;
+
+                zoneGateInfo = new ZoneGateInfo
+                {
+                    GateName = gateConnectionElement.Attribute("name").Value,
+                    GateType = gateTypeElement ?? "props_gates_anc_gate_macro"
+                };
+
                 if (gateConnectionElement.Element("offset")?.Element("position") != null)
                 {
                     var positionElement = gateConnectionElement.Element("offset").Element("position");
                     var x = (int)Math.Round(float.Parse(positionElement.Attribute("x").Value, CultureInfo.InvariantCulture));
                     var z = (int)Math.Round(float.Parse(positionElement.Attribute("z").Value, CultureInfo.InvariantCulture));
-                    return new ZoneGateInfo 
-                    { 
-                        GatePosition = new CustomPoint(x, z), 
-                        GateType = gateTypeElement ?? "props_gates_anc_gate_macro", 
-                        GateName = gateConnectionElement.Attribute("name").Value
-                    };
+                    zoneGateInfo.GatePosition = new CustomPoint(x, z);
                 }
-                return new ZoneGateInfo 
-                { 
-                    GateType = gateTypeElement ?? "props_gates_anc_gate_macro",
-                    GateName = gateConnectionElement.Attribute("name").Value
-                };
+                if (gateConnectionElement.Element("offset")?.Element("quaternion") != null)
+                {
+                    var positionElement = gateConnectionElement.Element("offset").Element("quaternion");
+                    var qx = float.Parse(positionElement.Attribute("qx").Value, CultureInfo.InvariantCulture);
+                    var qy = float.Parse(positionElement.Attribute("qy").Value, CultureInfo.InvariantCulture);
+                    var qz = float.Parse(positionElement.Attribute("qz").Value, CultureInfo.InvariantCulture);
+                    var qw = float.Parse(positionElement.Attribute("qw").Value, CultureInfo.InvariantCulture);
+                    var quaternion = new Quaternion(qx, qy, qz, qw);
+                    zoneGateInfo.Rotation = quaternion.ToEulerAngles();
+                }
             }
-            return null;
+            return zoneGateInfo;
         }
 
         private static Connection ParseConnection(XElement connectionElement)
@@ -356,6 +366,7 @@ namespace X4SectorCreator.Configuration
     {
         public CustomPoint GatePosition { get; set; }
         public CustomPoint ZonePosition { get; set; }
+        public CustomVector Rotation { get; set; }
         public string GateType { get; set; }
         public string GateName { get; set; }
         public string ZoneName { get; set; }
@@ -365,5 +376,12 @@ namespace X4SectorCreator.Configuration
     {
         public int X { get; set; } = x;
         public int Y { get; set; } = y;
+    }
+
+    public struct CustomVector(int x, int y, int z)
+    {
+        public int X { get; set; } = x;
+        public int Y { get; set; } = y;
+        public int Z { get; set; } = z;
     }
 }
