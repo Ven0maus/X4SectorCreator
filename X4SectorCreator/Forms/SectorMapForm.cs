@@ -626,7 +626,6 @@ namespace X4SectorCreator
             }
         }
 
-
         private static IEnumerable<GateData> CollectGateDataFromCluster(Cluster cluster)
         {
             // Calculate hex size and radius based on zoom and sector size
@@ -665,22 +664,6 @@ namespace X4SectorCreator
                 }
                 sectorIndex++;
             }
-        }
-
-        struct GateConnection
-        {
-            public GateData Source { get; set; }
-            public GateData Target { get; set; }
-        }
-
-        struct GateData
-        {
-            public float ScreenX { get; set; }
-            public float ScreenY { get; set; }
-            public Gate Gate { get; set; }
-            public Zone Zone { get; set; }
-            public Sector Sector { get; set; }
-            public Cluster Cluster { get; set; }
         }
 
         private void RenderClusters(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex)
@@ -974,6 +957,22 @@ namespace X4SectorCreator
         {
             _dlcsSelected[e.Index] = e.NewValue == CheckState.Checked;
             Invalidate();
+        }
+
+        struct GateConnection
+        {
+            public GateData Source { get; set; }
+            public GateData Target { get; set; }
+        }
+
+        struct GateData
+        {
+            public float ScreenX { get; set; }
+            public float ScreenY { get; set; }
+            public Gate Gate { get; set; }
+            public Zone Zone { get; set; }
+            public Sector Sector { get; set; }
+            public Cluster Cluster { get; set; }
         }
     }
 }
