@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
 using X4SectorCreator.Objects;
@@ -29,32 +30,38 @@ namespace X4SectorCreator.Configuration
             _readPath = readPath;
             _resultsPath = resultsPath;
 
-            var filePaths = new string[]
+            var filePaths = new (string prefix, string path)[]
             {
-                GetFile(null),
-                GetFile(SectorMapForm.DlcMapping["Split Vendetta"]),
-                GetFile(SectorMapForm.DlcMapping["Tides Of Avarice"]),
-                GetFile(SectorMapForm.DlcMapping["Cradle Of Humanity"]),
-                GetFile(SectorMapForm.DlcMapping["Kingdom End"]),
-                GetFile(SectorMapForm.DlcMapping["Timelines"]),
-                //GetFile(SectorMapForm.DlcMapping["Hyperion Pack"]),
+                (null, GetFile(null)),
+                ("dlc4_", GetFile(SectorMapForm.DlcMapping["Split Vendetta"])),
+                ("dlc_pirate_", GetFile(SectorMapForm.DlcMapping["Tides Of Avarice"])),
+                ("dlc_terran_", GetFile(SectorMapForm.DlcMapping["Cradle Of Humanity"])),
+                ("dlc_boron_", GetFile(SectorMapForm.DlcMapping["Kingdom End"])),
+                ("dlc7_", GetFile(SectorMapForm.DlcMapping["Timelines"])),
+                //("dlc_mini01_", GetFile(SectorMapForm.DlcMapping["Hyperion Pack"])),
             };
 
             // Verify existance
             var nonExistant = filePaths
-                .Where(a => !File.Exists(a))
+                .Where(a => !Directory.Exists(Path.GetDirectoryName(a.path)))
                 .ToArray();
             if (nonExistant.Length > 0)
             {
-                Console.WriteLine("Unable to generate vanilla gate connection mappings file. Missing info files:\n- " +
-                    string.Join("\n- ", filePaths));
+                Console.WriteLine("Unable to generate vanilla gate connection mappings file. Missing directories:\n- " +
+                    string.Join("\n- ", filePaths.Select(a => a.path)));
                 return;
             }
 
-            var connections = CollectGateConnections(filePaths);
+            var connections = CollectGateConnections(filePaths.Select(a => a.path)).ToList();
+            var zoneGateInfos = CollectZoneAndGateInformation(filePaths).ToList();
+            var mapping = new VanilaConnectionMapping
+            {
+                Connections = connections,
+                ZoneGateInfos = zoneGateInfos
+            };
 
             // Generate the mappings based on these connections
-            var json = JsonSerializer.Serialize(connections, _serializerOptions);
+            var json = JsonSerializer.Serialize(mapping, _serializerOptions);
             File.WriteAllText($"{_resultsPath}/vanilla_connection_mappings.json", json);
         }
 
@@ -131,14 +138,14 @@ namespace X4SectorCreator.Configuration
 
         private static string GetFile(string dlc)
         {
-            return dlc == null ? $"{_readPath}/maps/xu_ep2_universe/galaxy.xml" : $"{_readPath}/extensions/{dlc}/maps/xu_ep2_universe/galaxy.xml";
+            return dlc == null ? $"{_readPath}/maps/xu_ep2_universe/" : $"{_readPath}/extensions/{dlc}/maps/xu_ep2_universe/";
         }
 
         private static IEnumerable<Connection> CollectGateConnections(IEnumerable<string> filePaths)
         {
             foreach (var filePath in filePaths)
             {
-                var xDocument = XDocument.Load(filePath);
+                var xDocument = XDocument.Load(filePath + "galaxy.xml");
                 // Query all <connection> elements that contain a <macro> child with a 'connection' attribute
                 var elements = xDocument.Descendants("connection")
                     .Where(c => c.Element("macro") != null && !c.Element("macro").Attribute("connection").Value.Equals("galaxy", StringComparison.OrdinalIgnoreCase))
@@ -150,6 +157,79 @@ namespace X4SectorCreator.Configuration
                     yield return ParseConnection(element);
                 }
             }
+        }
+
+        private static IEnumerable<ZoneGateInfo> CollectZoneAndGateInformation(IEnumerable<(string prefix, string path)> filePaths)
+        {
+            foreach (var (prefix, path) in filePaths)
+            {
+                // TODO add right prefix per dlc
+                var zonesXDoc = XDocument.Load($"{path}{prefix ?? ""}zones.xml");
+                var zoneElements = zonesXDoc.Descendants("macro")
+                    .Where(c => c.Attribute("class") != null && c.Attribute("class").Value
+                        .Equals("zone", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                // TODO add right prefix per dlc
+                var sectorXDoc = XDocument.Load($"{path}{prefix ?? ""}sectors.xml");
+                var sectorElements = sectorXDoc.Descendants("connection")
+                    .Where(c => c.Attribute("ref") != null && c.Attribute("ref").Value.Equals("zones", StringComparison.OrdinalIgnoreCase))
+                    .ToDictionary(a => a.Attribute("name").Value, a => a, StringComparer.OrdinalIgnoreCase);
+
+                foreach (var zoneElement in zoneElements)
+                {
+                    // Gate inside the zone
+                    var zoneGateInfo = ParseGate(zoneElement);
+                    if (zoneGateInfo == null) continue;
+
+                    // Find matching zone sector element
+                    var matchingElementName = zoneElement.Attribute("name").Value.Replace("_macro", "_connection");
+                    if (!sectorElements.TryGetValue(matchingElementName, out var sectorZoneElement))
+                        throw new Exception("Unable to find: " + matchingElementName);
+
+                    zoneGateInfo.ZoneName = matchingElementName;
+
+                    if (sectorZoneElement.Element("offset")?.Element("position") != null)
+                    {
+                        var positionElement = sectorZoneElement.Element("offset").Element("position");
+                        var x = (int)Math.Round(float.Parse(positionElement.Attribute("x").Value, CultureInfo.InvariantCulture));
+                        var z = (int)Math.Round(float.Parse(positionElement.Attribute("z").Value, CultureInfo.InvariantCulture));
+                        zoneGateInfo.ZonePosition = new CustomPoint(x, z);
+                    }
+
+                    yield return zoneGateInfo;
+                }
+            }
+        }
+
+        private static ZoneGateInfo ParseGate(XElement element)
+        {
+            var gateConnectionElement = element
+                .Element("connections")?
+                .Elements("connection")?
+                .FirstOrDefault(a => a.Attribute("ref").Value.Equals("gates", StringComparison.OrdinalIgnoreCase));
+            if (gateConnectionElement != null)
+            {
+                var gateTypeElement = gateConnectionElement.Element("macro")?.Attribute("ref").Value;
+                if (gateConnectionElement.Element("offset")?.Element("position") != null)
+                {
+                    var positionElement = gateConnectionElement.Element("offset").Element("position");
+                    var x = (int)Math.Round(float.Parse(positionElement.Attribute("x").Value, CultureInfo.InvariantCulture));
+                    var z = (int)Math.Round(float.Parse(positionElement.Attribute("z").Value, CultureInfo.InvariantCulture));
+                    return new ZoneGateInfo 
+                    { 
+                        GatePosition = new CustomPoint(x, z), 
+                        GateType = gateTypeElement ?? "props_gates_anc_gate_macro", 
+                        GateName = gateConnectionElement.Attribute("name").Value
+                    };
+                }
+                return new ZoneGateInfo 
+                { 
+                    GateType = gateTypeElement ?? "props_gates_anc_gate_macro",
+                    GateName = gateConnectionElement.Attribute("name").Value
+                };
+            }
+            return null;
         }
 
         private static Connection ParseConnection(XElement connectionElement)
@@ -218,6 +298,12 @@ namespace X4SectorCreator.Configuration
         }
     }
 
+    public class VanilaConnectionMapping
+    {
+        public List<Connection> Connections { get; set; }
+        public List<ZoneGateInfo> ZoneGateInfos { get; set; }
+    }
+
     public class Connection
     {
         public ConnectionInfo Source { get; set; }
@@ -233,5 +319,20 @@ namespace X4SectorCreator.Configuration
         public string Sector { get; set; }
         public string Zone { get; set; }
         public string Gate { get; set; }
+    }
+
+    public class ZoneGateInfo
+    {
+        public CustomPoint GatePosition { get; set; }
+        public CustomPoint ZonePosition { get; set; }
+        public string GateType { get; set; }
+        public string GateName { get; set; }
+        public string ZoneName { get; set; }
+    }
+
+    public readonly struct CustomPoint(int x, int y)
+    {
+        public int X { get; } = x;
+        public int Y { get; } = y;
     }
 }
