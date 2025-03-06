@@ -2040,17 +2040,17 @@
           "Security": 0.75
         },
         {
-          "Name": "Towering Wave",
+          "Name": "Reflected Stars",
           "Owner": "Boron",
-          "BaseGameMapping": "Sector003",
+          "BaseGameMapping": "Sector002",
           "Sunlight": 1.18,
           "Economy": 0.75,
           "Security": 0.75
         },
         {
-          "Name": "Reflected Stars",
+          "Name": "Towering Wave",
           "Owner": "Boron",
-          "BaseGameMapping": "Sector002",
+          "BaseGameMapping": "Sector003",
           "Sunlight": 1.18,
           "Economy": 0.75,
           "Security": 0.75
