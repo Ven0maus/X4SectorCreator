@@ -585,8 +585,13 @@ namespace X4SectorCreator
             float targetX = connection.Target.ScreenX - gateSizeRadius;
             float targetY = connection.Target.ScreenY - gateSizeRadius;
 
-            using Pen circlePen = new(Color.LightGray, 2);
+            var color = Color.LightGray;
+            if (connection.Source.Gate.IsHighwayGate)
+                color = Color.SlateGray;
+
+            using Pen circlePen = new(color, 2);
             using SolidBrush circleBrush = new(HexToColor("#575757"));
+
             // Draw source and target gates
             e.Graphics.FillEllipse(circleBrush, sourceX, sourceY, diameter, diameter);
             e.Graphics.DrawEllipse(circlePen, sourceX, sourceY, diameter, diameter);
@@ -594,11 +599,13 @@ namespace X4SectorCreator
             e.Graphics.FillEllipse(circleBrush, targetX, targetY, diameter, diameter);
             e.Graphics.DrawEllipse(circlePen, targetX, targetY, diameter, diameter);
 
-            var color = Color.LightGray;
-            if (connection.Source.Gate.IsHighwayGate)
-                color = Color.Orange;
             using Pen linePen = new(color, 3);
-            linePen.DashStyle = DashStyle.Dot;
+
+            if (connection.Source.Gate.IsHighwayGate)
+                linePen.DashStyle = DashStyle.Dash;
+            else
+                linePen.DashStyle = DashStyle.Dot;
+
             // Draw connection line between source and target
             e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);
         }
