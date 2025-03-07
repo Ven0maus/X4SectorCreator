@@ -167,7 +167,12 @@ namespace X4SectorCreator.XmlGeneration
             }
             foreach (var removedConnection in vanillaChanges.RemovedConnections)
             {
-                // TODO
+                if (removedConnection.Gate.IsHighwayGate)
+                {
+                    var clusterCode = removedConnection.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
+                    yield return (removedConnection.VanillaCluster.Dlc, new XElement("remove",
+                    new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{removedConnection.Gate.ConnectionName}']")));
+                }
             }
         }
 

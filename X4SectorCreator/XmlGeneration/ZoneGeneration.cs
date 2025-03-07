@@ -5,7 +5,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class ZoneGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData, VanillaChanges vanillaChanges)
         {
             #region Custom Zone File
             // Save new zones in custom sectors
@@ -28,6 +28,7 @@ namespace X4SectorCreator.XmlGeneration
             #region BaseGame Zone File
             // Save new zones in existing sectors
             List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateExistingSectorZones(modPrefix, clusters, nonModifiedBaseGameData)
+                .Concat(GenerateVanillaChanges(modPrefix, vanillaChanges))
                 .GroupBy(a => a.dlc)
                 .ToList();
             if (diffData.Count > 0)
@@ -38,10 +39,7 @@ namespace X4SectorCreator.XmlGeneration
                     XDocument xmlDiffDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
                         new XElement("diff",
-                            new XElement("add",
-                                new XAttribute("sel", "/macros"),
-                                group.Select(a => a.element)
-                            )
+                            group.Select(a => a.element)
                         )
                     );
 
@@ -56,6 +54,17 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
             #endregion
+        }
+
+        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(string modPrefix, VanillaChanges vanillaChanges)
+        {
+            foreach (var connection in vanillaChanges.RemovedConnections)
+            {
+                var connectionName = connection.Gate.IsHighwayGate ? connection.Gate.ConnectionName : $"connection_{connection.Gate.ConnectionName}";
+                if (connection.Gate.ConnectionName.Equals("destination", StringComparison.OrdinalIgnoreCase) && !connection.Gate.IsHighwayGate)
+                    connectionName = connection.Gate.SourcePath.Split('/').Last();
+                yield return (connection.VanillaCluster.Dlc, new XElement("remove", new XAttribute("sel", $"//macros/macro[@name='{connection.Zone.Name}_macro']/connections/connection[@name='{connectionName}']")));
+            }
         }
 
         private static IEnumerable<XElement> GenerateZones(string modPrefix, List<Cluster> clusters)
@@ -123,6 +132,9 @@ namespace X4SectorCreator.XmlGeneration
                 .Select(a => a.Name)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
+            var elements = new List<(string dlc, XElement element)>();
+
+
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
                 if (!cluster.IsBaseGame)
@@ -136,16 +148,26 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         if (zoneCache.Contains(zone.Name)) continue;
 
-                        yield return (cluster.Dlc, new XElement("macro",
+                        elements.Add((cluster.Dlc, new XElement("macro",
                             new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_macro"),
                             new XAttribute("class", "zone"),
                             new XElement("component", new XAttribute("ref", "standardzone")),
                             new XElement("connections",
                                 GenerateExistingSectorGates(modPrefix, zone)
                             )
-                        ));
+                        )));
                     }
                 }
+            }
+
+            foreach (var group in elements.GroupBy(a => a.dlc))
+            {
+                var addElement = new XElement("add", new XAttribute("sel", "/macros"));
+                foreach (var (dlc, element) in group)
+                {
+                    addElement.Add(element);
+                }
+                yield return (group.Key, addElement);
             }
         }
 

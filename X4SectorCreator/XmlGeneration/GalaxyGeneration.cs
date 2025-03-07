@@ -1,4 +1,6 @@
-﻿using System.Xml.Linq;
+﻿using System.Security.Cryptography;
+using System.Xml.Linq;
+using X4SectorCreator.Configuration;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
@@ -192,7 +194,20 @@ namespace X4SectorCreator.XmlGeneration
             }
             foreach (var removedConnection in vanillaChanges.RemovedConnections)
             {
-                // TODO
+                if (!removedConnection.Gate.IsHighwayGate)
+                {
+                    string connectionName = removedConnection.Gate.ConnectionName;
+
+                    // Destination gate doesn't have a removeable entry and can be skipped
+                    if (removedConnection.Gate.ConnectionName.Equals("destination", StringComparison.OrdinalIgnoreCase))
+                        continue;
+
+                    // Remove gate connection from galaxy
+                    yield return (removedConnection.VanillaCluster.Dlc, new XElement("remove",
+                        new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{connectionName}']")
+                        )
+                    );
+                }
             }
         }
 

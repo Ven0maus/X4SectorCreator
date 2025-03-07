@@ -259,7 +259,7 @@ namespace X4SectorCreator
                 GalaxyGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 ClusterGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 SectorGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
-                ZoneGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData);
+                ZoneGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
                 ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", clusters, vanillaChanges);
                 RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters);
                 GameStartsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
@@ -356,7 +356,7 @@ namespace X4SectorCreator
                         foreach (var nonModifiedGate in nonModifiedZone.Gates)
                         {
                             // Find matching zone & connection
-                            var matchingZone = nonModifiedSector.Zones.FirstOrDefault(a => a.Name.Equals(nonModifiedZone.Name, StringComparison.OrdinalIgnoreCase));
+                            var matchingZone = modifiedSector.Zones.FirstOrDefault(a => a.Name.Equals(nonModifiedZone.Name, StringComparison.OrdinalIgnoreCase));
                             var matchingGate = matchingZone?.Gates.FirstOrDefault(a => a.SourcePath == nonModifiedGate.SourcePath && a.DestinationPath == nonModifiedGate.DestinationPath);
                             if (matchingZone == null || matchingGate == null)
                             {
