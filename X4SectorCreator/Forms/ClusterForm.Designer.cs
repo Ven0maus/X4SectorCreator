@@ -40,11 +40,12 @@
             label4 = new Label();
             cmbBackgroundVisual = new ComboBox();
             ChkAutoPlacement = new CheckBox();
+            label5 = new Label();
             SuspendLayout();
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(167, 253);
+            BtnCreate.Location = new Point(167, 290);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(236, 30);
             BtnCreate.TabIndex = 0;
@@ -54,7 +55,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 253);
+            BtnCancel.Location = new Point(12, 290);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(149, 30);
             BtnCancel.TabIndex = 1;
@@ -83,7 +84,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(82, 222);
+            label2.Location = new Point(82, 259);
             label2.Name = "label2";
             label2.Size = new Size(72, 21);
             label2.TabIndex = 4;
@@ -91,7 +92,7 @@
             // 
             // BtnPick
             // 
-            BtnPick.Location = new Point(298, 222);
+            BtnPick.Location = new Point(298, 259);
             BtnPick.Name = "BtnPick";
             BtnPick.Size = new Size(105, 26);
             BtnPick.TabIndex = 5;
@@ -102,7 +103,7 @@
             // TxtLocation
             // 
             TxtLocation.Enabled = false;
-            TxtLocation.Location = new Point(167, 224);
+            TxtLocation.Location = new Point(167, 261);
             TxtLocation.Name = "TxtLocation";
             TxtLocation.Size = new Size(125, 23);
             TxtLocation.TabIndex = 6;
@@ -129,7 +130,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(12, 196);
+            label4.Location = new Point(12, 233);
             label4.Name = "label4";
             label4.Size = new Size(142, 21);
             label4.TabIndex = 9;
@@ -138,7 +139,7 @@
             // cmbBackgroundVisual
             // 
             cmbBackgroundVisual.FormattingEnabled = true;
-            cmbBackgroundVisual.Location = new Point(167, 195);
+            cmbBackgroundVisual.Location = new Point(167, 232);
             cmbBackgroundVisual.Name = "cmbBackgroundVisual";
             cmbBackgroundVisual.Size = new Size(236, 23);
             cmbBackgroundVisual.TabIndex = 10;
@@ -155,11 +156,21 @@
             ChkAutoPlacement.Text = "Determine sector positions automatically";
             ChkAutoPlacement.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            label5.Font = new Font("Segoe UI", 10F);
+            label5.Location = new Point(167, 189);
+            label5.Name = "label5";
+            label5.Size = new Size(236, 43);
+            label5.TabIndex = 33;
+            label5.Text = "(Sector auto positioning is only used when a cluster has multiple sectors.)";
+            // 
             // ClusterForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(415, 291);
+            ClientSize = new Size(415, 327);
+            Controls.Add(label5);
             Controls.Add(ChkAutoPlacement);
             Controls.Add(cmbBackgroundVisual);
             Controls.Add(label4);
@@ -194,5 +205,6 @@
         private Label label4;
         internal ComboBox cmbBackgroundVisual;
         internal CheckBox ChkAutoPlacement;
+        private Label label5;
     }
 }
