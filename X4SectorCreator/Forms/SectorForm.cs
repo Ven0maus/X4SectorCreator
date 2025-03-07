@@ -44,6 +44,15 @@ namespace X4SectorCreator.Forms
         private readonly Color _controlColor;
         private readonly Cluster _selectedCluster;
 
+        private static readonly List<SectorPlacement[]> _validSectorCombations =
+        [
+            [SectorPlacement.TopLeft, SectorPlacement.BottomLeft, SectorPlacement.MiddleRight],
+            [SectorPlacement.TopRight, SectorPlacement.BottomRight, SectorPlacement.MiddleLeft],
+            [SectorPlacement.TopLeft, SectorPlacement.BottomRight],
+            [SectorPlacement.TopRight, SectorPlacement.BottomLeft],
+            [SectorPlacement.MiddleLeft, SectorPlacement.MiddleRight]
+        ];
+
         public SectorForm()
         {
             InitializeComponent();
@@ -116,6 +125,35 @@ namespace X4SectorCreator.Forms
             {
                 cmbPlacement.SelectedItem = cmbPlacement.Items[0];
             }
+        }
+
+        public static bool IsClusterPlacementValid(Cluster cluster)
+        {
+            if (cluster.Sectors.Count == 1) return true;
+
+            var sectorPlacements = cluster.Sectors
+                .Select(a => a.Placement)
+                .ToHashSet();
+
+            foreach (var combination in _validSectorCombations)
+            {
+                bool valid = true;
+                foreach (var placement in sectorPlacements)
+                {
+                    if (!combination.Contains(placement))
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+
+                if (valid)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void BtnCreate_Click(object sender, EventArgs e)

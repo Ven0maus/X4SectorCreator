@@ -234,6 +234,17 @@ namespace X4SectorCreator
                 return;
             }
 
+            // Validate if all clusters have valid sector placements
+            invalidClusters = AllClusters.Values
+                .Where(a => !SectorForm.IsClusterPlacementValid(a))
+                .ToArray();
+            if (invalidClusters.Length != 0)
+            {
+                _ = MessageBox.Show($"Following clusters have sectors that have overlapped placements, please fix these first:\n- " +
+                    string.Join("\n- ", invalidClusters.Select(a => a.Name)));
+                return;
+            }
+
             const string lblModName = "Please enter the name you'd like to use for your mod folder:";
             const string lblModPrefix = "Please enter the prefix you'd like to use for your mod:";
             Dictionary<string, string> modInfo = MultiInputDialog.Show("Mod information",
