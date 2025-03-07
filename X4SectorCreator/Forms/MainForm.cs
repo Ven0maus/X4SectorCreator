@@ -79,7 +79,7 @@ namespace X4SectorCreator
             UpdateClusterOptions();
         }
 
-        private ClusterCollection InitAllClusters(bool replaceAllClusters = true)
+        public ClusterCollection InitAllClusters(bool replaceAllClusters = true)
         {
             string json = File.ReadAllText(_sectorMappingFilePath);
             ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
@@ -516,6 +516,13 @@ namespace X4SectorCreator
         #region Configuration
         public void Reset(bool fromImport)
         {
+            // Reset
+            if (!fromImport)
+            {
+                GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
+                GalaxySettingsForm.IsCustomGalaxy = false;
+            }
+
             // Re-initialize all clusters properly
             _ = InitAllClusters();
 
