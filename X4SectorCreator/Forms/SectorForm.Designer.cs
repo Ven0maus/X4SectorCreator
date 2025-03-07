@@ -73,7 +73,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(14, 430);
+            BtnCancel.Location = new Point(14, 431);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(97, 30);
             BtnCancel.TabIndex = 8;
@@ -83,7 +83,7 @@
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(117, 430);
+            BtnCreate.Location = new Point(117, 431);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(196, 30);
             BtnCreate.TabIndex = 7;
@@ -95,7 +95,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(40, 268);
+            label2.Location = new Point(40, 269);
             label2.Name = "label2";
             label2.Size = new Size(71, 21);
             label2.TabIndex = 11;
@@ -105,7 +105,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(34, 296);
+            label3.Location = new Point(34, 297);
             label3.Name = "label3";
             label3.Size = new Size(77, 21);
             label3.TabIndex = 12;
@@ -115,7 +115,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(42, 325);
+            label4.Location = new Point(42, 326);
             label4.Name = "label4";
             label4.Size = new Size(69, 21);
             label4.TabIndex = 13;
@@ -126,7 +126,7 @@
             chkAllowRandomAnomalies.AutoSize = true;
             chkAllowRandomAnomalies.Checked = true;
             chkAllowRandomAnomalies.CheckState = CheckState.Checked;
-            chkAllowRandomAnomalies.Location = new Point(14, 384);
+            chkAllowRandomAnomalies.Location = new Point(14, 385);
             chkAllowRandomAnomalies.Name = "chkAllowRandomAnomalies";
             chkAllowRandomAnomalies.Size = new Size(199, 19);
             chkAllowRandomAnomalies.TabIndex = 14;
@@ -135,7 +135,7 @@
             // 
             // txtSunlight
             // 
-            txtSunlight.Location = new Point(117, 268);
+            txtSunlight.Location = new Point(117, 269);
             txtSunlight.Name = "txtSunlight";
             txtSunlight.Size = new Size(196, 23);
             txtSunlight.TabIndex = 15;
@@ -143,7 +143,7 @@
             // 
             // txtSecurity
             // 
-            txtSecurity.Location = new Point(117, 325);
+            txtSecurity.Location = new Point(117, 326);
             txtSecurity.Name = "txtSecurity";
             txtSecurity.Size = new Size(196, 23);
             txtSecurity.TabIndex = 17;
@@ -151,7 +151,7 @@
             // 
             // txtEconomy
             // 
-            txtEconomy.Location = new Point(117, 296);
+            txtEconomy.Location = new Point(117, 297);
             txtEconomy.Name = "txtEconomy";
             txtEconomy.Size = new Size(196, 23);
             txtEconomy.TabIndex = 16;
@@ -159,7 +159,7 @@
             // 
             // txtCustomTags
             // 
-            txtCustomTags.Location = new Point(117, 354);
+            txtCustomTags.Location = new Point(117, 355);
             txtCustomTags.Name = "txtCustomTags";
             txtCustomTags.Size = new Size(196, 23);
             txtCustomTags.TabIndex = 19;
@@ -168,7 +168,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(11, 354);
+            label5.Location = new Point(11, 355);
             label5.Name = "label5";
             label5.Size = new Size(100, 21);
             label5.TabIndex = 18;
@@ -196,7 +196,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(309, 269);
+            label7.Location = new Point(309, 270);
             label7.Name = "label7";
             label7.Size = new Size(23, 21);
             label7.TabIndex = 22;
@@ -206,7 +206,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(309, 297);
+            label8.Location = new Point(309, 298);
             label8.Name = "label8";
             label8.Size = new Size(23, 21);
             label8.TabIndex = 23;
@@ -216,7 +216,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(309, 326);
+            label9.Location = new Point(309, 327);
             label9.Name = "label9";
             label9.Size = new Size(23, 21);
             label9.TabIndex = 24;
@@ -225,7 +225,7 @@
             // chkDisableFactionLogic
             // 
             chkDisableFactionLogic.AutoSize = true;
-            chkDisableFactionLogic.Location = new Point(14, 405);
+            chkDisableFactionLogic.Location = new Point(14, 406);
             chkDisableFactionLogic.Name = "chkDisableFactionLogic";
             chkDisableFactionLogic.Size = new Size(303, 19);
             chkDisableFactionLogic.TabIndex = 25;
@@ -234,7 +234,7 @@
             // 
             // txtSectorRadius
             // 
-            txtSectorRadius.Location = new Point(117, 211);
+            txtSectorRadius.Location = new Point(117, 212);
             txtSectorRadius.Name = "txtSectorRadius";
             txtSectorRadius.Size = new Size(196, 23);
             txtSectorRadius.TabIndex = 27;
@@ -245,7 +245,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 12F);
-            label10.Location = new Point(51, 211);
+            label10.Location = new Point(51, 212);
             label10.Name = "label10";
             label10.Size = new Size(60, 21);
             label10.TabIndex = 26;
@@ -254,7 +254,7 @@
             // lblRadiusUnderText
             // 
             lblRadiusUnderText.Font = new Font("Segoe UI", 8F);
-            lblRadiusUnderText.Location = new Point(116, 237);
+            lblRadiusUnderText.Location = new Point(116, 238);
             lblRadiusUnderText.Name = "lblRadiusUnderText";
             lblRadiusUnderText.Size = new Size(201, 32);
             lblRadiusUnderText.TabIndex = 28;
@@ -263,6 +263,7 @@
             // cmbPlacement
             // 
             cmbPlacement.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbPlacement.Enabled = false;
             cmbPlacement.FormattingEnabled = true;
             cmbPlacement.Location = new Point(117, 181);
             cmbPlacement.Name = "cmbPlacement";
@@ -283,7 +284,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(333, 466);
+            ClientSize = new Size(333, 467);
             Controls.Add(label11);
             Controls.Add(cmbPlacement);
             Controls.Add(lblRadiusUnderText);

@@ -67,6 +67,7 @@ namespace X4SectorCreator.Forms
             }
             string backgroundVisualMapping = MainForm.Instance.BackgroundVisualMapping[selectedBackgroundVisual];
 
+            var beforeAutoPos = Cluster?.CustomSectorPositioning ?? false;
             Match match = RegexHelper.TupleLocationRegex().Match(location);
             if (match.Success)
             {
@@ -79,12 +80,11 @@ namespace X4SectorCreator.Forms
                         return;
                     }
                 }
-
                 switch (BtnCreate.Text)
                 {
                     case "Create":
                         // Add new custom cluster
-                        MainForm.Instance.AllClusters.Add(coordinate, cluster = new Cluster
+                        MainForm.Instance.AllClusters.Add(coordinate, Cluster = new Cluster
                         {
                             Id = MainForm.Instance.AllClusters.Values
                                 .Where(a => !a.IsBaseGame)
@@ -93,11 +93,12 @@ namespace X4SectorCreator.Forms
                             Description = txtDescription.Text,
                             BackgroundVisualMapping = backgroundVisualMapping,
                             Position = new Point(coordinate.X, coordinate.Y),
+                            CustomSectorPositioning = !ChkAutoPlacement.Checked,
                             Sectors = []
                         });
 
                         // Create also a sector and one zone with the same name
-                        cluster.Sectors.Add(new Sector
+                        Cluster.Sectors.Add(new Sector
                         {
                             Id = 1,
                             Name = name,
@@ -121,6 +122,7 @@ namespace X4SectorCreator.Forms
                         Cluster.Name = name;
                         Cluster.Description = txtDescription.Text;
                         Cluster.BackgroundVisualMapping = backgroundVisualMapping;
+                        Cluster.CustomSectorPositioning = !ChkAutoPlacement.Checked;
                         MainForm.Instance.AllClusters.Add(coordinate, Cluster);
 
                         // Update listbox
@@ -130,6 +132,10 @@ namespace X4SectorCreator.Forms
                         MainForm.Instance.ClustersListBox.SelectedItem = name;
                         break;
                 }
+
+                // If auto positioning was enabled, re position current sectors automatically
+                if (beforeAutoPos != Cluster.CustomSectorPositioning && !Cluster.CustomSectorPositioning)
+                    Cluster.AutoPositionSectors();
 
                 ResetAndHide();
             }

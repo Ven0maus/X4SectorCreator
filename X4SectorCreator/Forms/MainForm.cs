@@ -101,6 +101,10 @@ namespace X4SectorCreator
                     throw new Exception($"Invalid sector offset configuration for cluster \"{cluster.Value.Name} | {cluster.Value.BaseGameMapping}\".");
                 }
 
+                // By default all vanilla multi clusters should have custom positioning enabled
+                if (cluster.Value.IsBaseGame && cluster.Value.Sectors.Count > 1)
+                    cluster.Value.CustomSectorPositioning = true;
+
                 foreach (Sector sector in cluster.Value.Sectors)
                 {
                     // Init regular sectors
@@ -665,7 +669,6 @@ namespace X4SectorCreator
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filePath = openFileDialog.FileName;
-                // TODO: Support vanilla changes
                 // Import new configuration
                 string jsonContent = File.ReadAllText(filePath);
                 (List<Cluster> clusters, VanillaChanges vanillaChanges) configuration = ConfigSerializer.Deserialize(jsonContent);
@@ -1094,6 +1097,7 @@ namespace X4SectorCreator
             ClusterForm.txtDescription.Text = cluster.Value.Description;
             ClusterForm.cmbBackgroundVisual.SelectedItem = ClusterForm.FindBackgroundVisualMappingByCode(cluster.Value.BackgroundVisualMapping ?? cluster.Value.BaseGameMapping);
             ClusterForm.TxtLocation.Text = cluster.Key.ToString();
+            ClusterForm.ChkAutoPlacement.Checked = !cluster.Value.CustomSectorPositioning;
             ClusterForm.Show();
         }
         #endregion

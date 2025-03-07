@@ -24,7 +24,18 @@ namespace X4SectorCreator.Forms
                     txtSectorRadius.Text = ((int)(_sector.DiameterRadius / 1000f / 2f)).ToString();
                     chkAllowRandomAnomalies.Checked = _sector.AllowRandomAnomalies;
                     chkDisableFactionLogic.Checked = _sector.DisableFactionLogic;
-                    SetupPlacementValues();
+
+                    if (_selectedCluster.CustomSectorPositioning)
+                    {
+                        SetupPlacementValues();
+                        cmbPlacement.Enabled = true;
+                    }
+                    else
+                    {
+                        cmbPlacement.Items.Clear();
+                        cmbPlacement.SelectedIndex = -1;
+                        cmbPlacement.Enabled = false;
+                    }
                 }
                 else
                 {
@@ -44,7 +55,7 @@ namespace X4SectorCreator.Forms
         private readonly Color _controlColor;
         private readonly Cluster _selectedCluster;
 
-        private static readonly List<SectorPlacement[]> _validSectorCombations =
+        public static readonly List<SectorPlacement[]> ValidSectorCombinations =
         [
             [SectorPlacement.TopLeft, SectorPlacement.BottomLeft, SectorPlacement.MiddleRight],
             [SectorPlacement.TopRight, SectorPlacement.BottomRight, SectorPlacement.MiddleLeft],
@@ -63,9 +74,6 @@ namespace X4SectorCreator.Forms
             _selectedCluster = MainForm.Instance.AllClusters
                 .First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase))
                 .Value;
-
-            // Setup placement values dynamically
-            SetupPlacementValues();
         }
 
         /// <summary>
@@ -102,23 +110,16 @@ namespace X4SectorCreator.Forms
         private void SetupPlacementValues()
         {
             var placementValues = Enum.GetValues<SectorPlacement>().OrderBy(a => a).ToArray();
-            var placementsAlreadyTaken = _selectedCluster.Sectors
-                .Select(a => a.Placement)
-                .ToHashSet();
 
             // Select selected placement value dynamically based on other sectors in the cluster
             cmbPlacement.Items.Clear();
             foreach (var placementValue in placementValues)
             {
-                if (placementsAlreadyTaken.Contains(placementValue))
-                    continue;
                 cmbPlacement.Items.Add(placementValue);
             }
 
             if (Sector != null)
             {
-                if (!cmbPlacement.Items.Contains(Sector.Placement))
-                    cmbPlacement.Items.Add(Sector.Placement);
                 cmbPlacement.SelectedItem = Sector.Placement;
             }
             else
@@ -135,7 +136,7 @@ namespace X4SectorCreator.Forms
                 .Select(a => a.Placement)
                 .ToHashSet();
 
-            foreach (var combination in _validSectorCombations)
+            foreach (var combination in ValidSectorCombinations)
             {
                 bool valid = true;
                 foreach (var placement in sectorPlacements)
@@ -200,6 +201,9 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            SectorPlacement sectorPlacement = !_selectedCluster.CustomSectorPositioning ? default : (SectorPlacement)cmbPlacement.SelectedItem;
+            var sectorValue = Sector;
+            var beforePlacement = sectorValue?.Placement;
             switch (BtnCreate.Text)
             {
                 case "Create":
@@ -209,7 +213,7 @@ namespace X4SectorCreator.Forms
                         return;
                     }
 
-                    var newSector = new Sector
+                    sectorValue = new Sector
                     {
                         Id = _selectedCluster.Sectors.DefaultIfEmpty(new Sector()).Max(a => a.Id) + 1,
                         Name = name,
@@ -222,16 +226,13 @@ namespace X4SectorCreator.Forms
                         Tags = txtCustomTags.Text,
                         AllowRandomAnomalies = chkAllowRandomAnomalies.Checked,
                         DisableFactionLogic = chkDisableFactionLogic.Checked,
-                        Placement = (SectorPlacement)cmbPlacement.SelectedItem,
+                        Placement = sectorPlacement,
                         Zones = [],
                         Regions = []
                     };
 
-                    // Determines the position inside the cluster
-                    DetermineSectorOffset(_selectedCluster, newSector);
-
                     // Create new sector in selected cluster
-                    _selectedCluster.Sectors.Add(newSector);
+                    _selectedCluster.Sectors.Add(sectorValue);
 
                     // Add to sector listbox
                     _ = MainForm.Instance.SectorsListBox.Items.Add(name);
@@ -239,16 +240,8 @@ namespace X4SectorCreator.Forms
                     break;
 
                 case "Update":
-                    string selectedSector = MainForm.Instance.SectorsListBox.SelectedItem as string;
-                    if (string.IsNullOrEmpty(selectedSector))
-                    {
-                        ResetAndHide();
-                        return;
-                    }
-                    Sector existingSector = _selectedCluster.Sectors.First(a => a.Name.Equals(selectedSector));
-
                     // Adjust first the gates
-                    Gate[] gates = existingSector.Zones.SelectMany(a => a.Gates).ToArray();
+                    Gate[] gates = sectorValue.Zones.SelectMany(a => a.Gates).ToArray();
                     foreach (Gate gate in gates)
                     {
                         Sector sourceSector = MainForm.Instance.AllClusters.Values
@@ -265,19 +258,16 @@ namespace X4SectorCreator.Forms
                     }
 
                     // Update fields
-                    existingSector.Name = name;
-                    existingSector.Description = txtDescription.Text;
-                    existingSector.Sunlight = (float)Math.Round(sunlight / 100f, 2);
-                    existingSector.Economy = (float)Math.Round(economy / 100f, 2);
-                    existingSector.Security = (float)Math.Round(security / 100f, 2);
-                    existingSector.Tags = txtCustomTags.Text;
-                    existingSector.AllowRandomAnomalies = chkAllowRandomAnomalies.Checked;
-                    existingSector.DisableFactionLogic = chkDisableFactionLogic.Checked;
-                    existingSector.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
-                    existingSector.Placement = (SectorPlacement)cmbPlacement.SelectedItem;
-
-                    // Determines the position inside the cluster
-                    DetermineSectorOffset(_selectedCluster, existingSector);
+                    sectorValue.Name = name;
+                    sectorValue.Description = txtDescription.Text;
+                    sectorValue.Sunlight = (float)Math.Round(sunlight / 100f, 2);
+                    sectorValue.Economy = (float)Math.Round(economy / 100f, 2);
+                    sectorValue.Security = (float)Math.Round(security / 100f, 2);
+                    sectorValue.Tags = txtCustomTags.Text;
+                    sectorValue.AllowRandomAnomalies = chkAllowRandomAnomalies.Checked;
+                    sectorValue.DisableFactionLogic = chkDisableFactionLogic.Checked;
+                    sectorValue.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
+                    sectorValue.Placement = sectorPlacement;
 
                     int index = MainForm.Instance.SectorsListBox.SelectedIndex;
                     MainForm.Instance.SectorsListBox.Items[index] = name;
@@ -285,6 +275,15 @@ namespace X4SectorCreator.Forms
                     break;
             }
 
+            // Reposition sectors in the cluster
+            if (!_selectedCluster.CustomSectorPositioning)
+            {
+                if (beforePlacement == null || (beforePlacement != Sector.Placement))
+                    _selectedCluster.AutoPositionSectors();
+            }
+
+            // Determines the position inside the cluster based on the selected placement
+            DetermineSectorOffset(_selectedCluster, sectorValue);
             ResetAndHide();
         }
 
