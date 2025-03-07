@@ -554,6 +554,9 @@ namespace X4SectorCreator
             {
                 foreach (KeyValuePair<(int, int), Cluster> cluster in _baseGameClusters)
                 {
+                    // Check if the dlc is selected
+                    if (!IsSelectedDlcCluster(cluster.Value))
+                        continue;
                     gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
                 }
             }
@@ -636,6 +639,9 @@ namespace X4SectorCreator
 
                 GateData targetGateData = availableGateData
                     .First(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
+
+                if (!IsSelectedDlcCluster(targetGateData.Cluster))
+                    continue;
 
                 yield return new GateConnection
                 {
