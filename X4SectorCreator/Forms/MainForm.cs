@@ -357,7 +357,8 @@ namespace X4SectorCreator
                 if (nonModifiedCluster.Name != modifiedCluster.Name ||
                     nonModifiedCluster.Description != modifiedCluster.Description ||
                     nonModifiedCluster.BackgroundVisualMapping != modifiedCluster.BackgroundVisualMapping ||
-                    nonModifiedCluster.Position != modifiedCluster.Position)
+                    nonModifiedCluster.Position != modifiedCluster.Position ||
+                    nonModifiedCluster.CustomSectorPositioning != modifiedCluster.CustomSectorPositioning)
                 {
                     // Add to modified clusters
                     vanillaChanges.ModifiedClusters.Add(new ModifiedCluster { Old = nonModifiedCluster, New = modifiedCluster });
@@ -789,6 +790,7 @@ namespace X4SectorCreator
                 cluster.Description = New.Description;
                 cluster.BackgroundVisualMapping = New.BackgroundVisualMapping;
                 cluster.Position = New.Position;
+                cluster.CustomSectorPositioning = New.CustomSectorPositioning;
             }
 
             // Sector modification
@@ -836,6 +838,7 @@ namespace X4SectorCreator
             currentCluster.Description = cluster.Description;
             currentCluster.Name = cluster.Name;
             currentCluster.BackgroundVisualMapping = cluster.BackgroundVisualMapping;
+            currentCluster.CustomSectorPositioning = cluster.CustomSectorPositioning;
 
             foreach (Sector newSector in cluster.Sectors)
             {
