@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Xml.Linq;
-using X4SectorCreator.Configuration;
+﻿using System.Xml.Linq;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
@@ -154,7 +152,7 @@ namespace X4SectorCreator.XmlGeneration
             foreach (var cluster in vanillaChanges.RemovedClusters)
             {
                 yield return (cluster.Dlc, new XElement("remove",
-                    new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection']")));
+                    new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection']")));
             }
             foreach (var modification in vanillaChanges.ModifiedClusters)
             {
@@ -166,7 +164,7 @@ namespace X4SectorCreator.XmlGeneration
                     if (Old.BaseGameMapping.Equals("cluster_01", StringComparison.OrdinalIgnoreCase))
                     {
                         yield return (Old.Dlc, new XElement("add",
-                            new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']"),
+                            new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']"),
                                 new XElement("offset",
                                     new XElement("position",
                                         new XAttribute("x", New.Position.X * 15000 * 1000),
@@ -180,12 +178,12 @@ namespace X4SectorCreator.XmlGeneration
                     else
                     {
                         yield return (Old.Dlc, new XElement("replace",
-                            new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']/offset/position/@x"),
+                            new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']/offset/position/@x"),
                             New.Position.X * 15000 * 1000
                             )
                         );
                         yield return (Old.Dlc, new XElement("replace",
-                            new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']/offset/position/@z"),
+                            new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{Old.BaseGameMapping.CapitalizeFirstLetter()}_connection']/offset/position/@z"),
                             New.Position.Y * 8660 * 1000
                             )
                         );
@@ -204,7 +202,7 @@ namespace X4SectorCreator.XmlGeneration
 
                     // Remove gate connection from galaxy
                     yield return (removedConnection.VanillaCluster.Dlc, new XElement("remove",
-                        new XAttribute("sel", $"//macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{connectionName}']")
+                        new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{connectionName}']")
                         )
                     );
                 }

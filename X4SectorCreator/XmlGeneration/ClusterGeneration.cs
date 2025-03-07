@@ -150,7 +150,7 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     var clusterCode = Old.BaseGameMapping.CapitalizeFirstLetter();
                     yield return (Old.Dlc, new XElement("replace",
-                        new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']/connections/connection[@ref='content']/macro/component/@ref"),
+                        new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@ref='content']/macro/component/@ref"),
                         New.BackgroundVisualMapping
                         ));
                 }
@@ -163,15 +163,17 @@ namespace X4SectorCreator.XmlGeneration
                 var clusterCode = sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
                 var sectorCode = $"{clusterCode}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
                 yield return (sector.VanillaCluster.Dlc, new XElement("remove",
-                    new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{sectorCode}_connection']")));
+                    new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{sectorCode}_connection']")));
             }
+            var handledConnections = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var removedConnection in vanillaChanges.RemovedConnections)
             {
-                if (removedConnection.Gate.IsHighwayGate)
+                if (removedConnection.Gate.IsHighwayGate && !handledConnections.Contains(removedConnection.Gate.ConnectionName))
                 {
+                    handledConnections.Add(removedConnection.Gate.ConnectionName);
                     var clusterCode = removedConnection.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
                     yield return (removedConnection.VanillaCluster.Dlc, new XElement("remove",
-                    new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{removedConnection.Gate.ConnectionName}']")));
+                    new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{removedConnection.Gate.ConnectionName}']")));
                 }
             }
         }

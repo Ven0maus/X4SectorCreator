@@ -28,7 +28,7 @@ namespace X4SectorCreator.XmlGeneration
             #region BaseGame Zone File
             // Save new zones in existing sectors
             List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateExistingSectorZones(modPrefix, clusters, nonModifiedBaseGameData)
-                .Concat(GenerateVanillaChanges(modPrefix, vanillaChanges))
+                .Concat(GenerateVanillaChanges(vanillaChanges))
                 .GroupBy(a => a.dlc)
                 .ToList();
             if (diffData.Count > 0)
@@ -56,14 +56,15 @@ namespace X4SectorCreator.XmlGeneration
             #endregion
         }
 
-        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(string modPrefix, VanillaChanges vanillaChanges)
+        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
         {
             foreach (var connection in vanillaChanges.RemovedConnections)
             {
-                var connectionName = connection.Gate.IsHighwayGate ? connection.Gate.ConnectionName : $"connection_{connection.Gate.ConnectionName}";
+                if (connection.Gate.IsHighwayGate) continue;
+                var connectionName = $"connection_{connection.Gate.ConnectionName}";
                 if (connection.Gate.ConnectionName.Equals("destination", StringComparison.OrdinalIgnoreCase) && !connection.Gate.IsHighwayGate)
                     connectionName = connection.Gate.SourcePath.Split('/').Last();
-                yield return (connection.VanillaCluster.Dlc, new XElement("remove", new XAttribute("sel", $"//macros/macro[@name='{connection.Zone.Name}_macro']/connections/connection[@name='{connectionName}']")));
+                yield return (connection.VanillaCluster.Dlc, new XElement("remove", new XAttribute("sel", $"/macros/macro[@name='{connection.Zone.Name}_macro']/connections/connection[@name='{connectionName}']")));
             }
         }
 
