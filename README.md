@@ -7,6 +7,7 @@ A tool to help mod new sectors and gate connections in *X4: Foundations*. This t
 - Sector creation / editing / removing (up to 3 per cluster)
 - Gate creation between custom & basegame sectors (dragging + rotating)
 - Region creation (dragging + resizing + ability to fully choose what is inside the region)
+- Fully functional sector map that visualizes dlcs content and gate connections
 - Possibility to create a complete custom universe if you wish
 - Auto-detect new versions and will show a popup if new version available
 - Easily edit each component by double clicking on them (clusters, sectors, gates, regions)
