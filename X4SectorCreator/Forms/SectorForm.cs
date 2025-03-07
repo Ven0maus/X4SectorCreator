@@ -92,7 +92,7 @@ namespace X4SectorCreator.Forms
 
         private void SetupPlacementValues()
         {
-            var placementValues = Enum.GetValues<SectorPlacement>();
+            var placementValues = Enum.GetValues<SectorPlacement>().OrderBy(a => a).ToArray();
             var placementsAlreadyTaken = _selectedCluster.Sectors
                 .Select(a => a.Placement)
                 .ToHashSet();

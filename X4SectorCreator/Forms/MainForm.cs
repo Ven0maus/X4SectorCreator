@@ -897,7 +897,7 @@ namespace X4SectorCreator
             // Support for dynamic placement, if all are the same we need to init some changes dynamically
             if (cluster.Sectors.Count > 1 && cluster.Sectors.All(a => a.Placement == default))
             {
-                var placements = Enum.GetValues<SectorPlacement>().ToList();
+                var placements = Enum.GetValues<SectorPlacement>().OrderBy(a => a).ToList();
                 int index = 0;
                 foreach (var sector in cluster.Sectors)
                 {
