@@ -18,8 +18,10 @@ namespace X4SectorCreator.Objects
         public string Tags { get; set; }
         public List<Zone> Zones { get; set; }
         public List<Region> Regions { get; set; }
-        public Point Offset { get; set; }
         public SectorPlacement Placement { get; set; }
+
+        [JsonIgnore]
+        public Point Offset { get; set; }
 
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);

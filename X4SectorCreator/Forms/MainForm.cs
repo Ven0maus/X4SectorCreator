@@ -906,6 +906,14 @@ namespace X4SectorCreator
                     index++;
                 }
             }
+            else if (cluster.Sectors.Count > 1)
+            {
+                // Determine offset dynamically based on placements
+                foreach (var sector in cluster.Sectors)
+                {
+                    SectorForm.DetermineSectorOffset(cluster, sector);
+                }
+            }
         }
 
         private void BtnOpenFolder_Click(object sender, EventArgs e)
