@@ -9,7 +9,7 @@ namespace X4SectorCreator.XmlGeneration
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
             // Create XML structure
-            var regions = GetRegions(modPrefix, clusters).ToArray();
+            XElement[] regions = GetRegions(modPrefix, clusters).ToArray();
             if (regions.Length > 0)
             {
                 XDocument xmlDocument = new(

@@ -50,22 +50,13 @@
                 return $"{Type}=\"{SoundId}\"";
             }
 
-            if (!string.IsNullOrWhiteSpace(Medium))
-            {
-                return !string.IsNullOrWhiteSpace(Ref) ? $"{Type}=\"{Ref}\"=\"{Medium}\"" : $"{Type}=\"{Medium}\"";
-            }
-
-            if (!string.IsNullOrWhiteSpace(GroupRef))
-            {
-                return $"{Type}=\"{GroupRef}\"";
-            }
-
-            if (!string.IsNullOrWhiteSpace(Ref))
-            {
-                return !string.IsNullOrWhiteSpace(Resources) ? $"{Type}=\"{Ref}\"=\"{Resources}\"" : $"{Type}=\"{Ref}\"";
-            }
-
-            return Type;
+            return !string.IsNullOrWhiteSpace(Medium)
+                ? !string.IsNullOrWhiteSpace(Ref) ? $"{Type}=\"{Ref}\"=\"{Medium}\"" : $"{Type}=\"{Medium}\""
+                : !string.IsNullOrWhiteSpace(GroupRef)
+                ? $"{Type}=\"{GroupRef}\""
+                : !string.IsNullOrWhiteSpace(Ref)
+                ? !string.IsNullOrWhiteSpace(Resources) ? $"{Type}=\"{Ref}\"=\"{Resources}\"" : $"{Type}=\"{Ref}\""
+                : Type;
         }
     }
 }

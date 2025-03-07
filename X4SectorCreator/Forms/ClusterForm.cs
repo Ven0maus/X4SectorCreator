@@ -25,7 +25,7 @@ namespace X4SectorCreator.Forms
             MainForm.Instance.SectorMapForm.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
             MainForm.Instance.SectorMapForm.GateSectorSelection = false;
             MainForm.Instance.SectorMapForm.BtnSelectLocation.Enabled = false;
-            MainForm.Instance.SectorMapForm.ControlPanel.Size = new Size(176, 250);
+            MainForm.Instance.SectorMapForm.ControlPanel.Size = new Size(176, 277);
             MainForm.Instance.SectorMapForm.BtnSelectLocation.Show();
             MainForm.Instance.SectorMapForm.Reset();
             MainForm.Instance.SectorMapForm.Show();

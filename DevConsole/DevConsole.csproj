@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+	<TargetFramework>net9.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<PublishSingleFile>false</PublishSingleFile>
+	<SelfContained>true</SelfContained>
+	<RuntimeIdentifiers>win-x64;win-x86;win-arm64</RuntimeIdentifiers>
+	<IncludeNativeLibrariesForSelfExtract>false</IncludeNativeLibrariesForSelfExtract>
+	<DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\X4SectorCreator\X4SectorCreator.csproj" />
+  </ItemGroup>
+
+</Project>

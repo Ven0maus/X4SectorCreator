@@ -304,12 +304,8 @@ namespace X4SectorCreator.Forms
         {
             r = 0; g = 0; b = 0;
             string[] split = rgb.Split(',');
-            if (split.Length != 3)
-            {
-                return false;
-            }
-
-            return int.TryParse(split[0], out r) &&
+            return split.Length == 3
+&& int.TryParse(split[0], out r) &&
                 int.TryParse(split[1], out g) &&
                 int.TryParse(split[2], out b);
         }

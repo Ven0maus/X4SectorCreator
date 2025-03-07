@@ -41,7 +41,9 @@ namespace X4SectorCreator.Forms
 
                     // Just incase it is somehow deleted, we must still display it here
                     if (!ListBoxRegionDefinitions.Items.Contains(CustomRegion.Definition))
+                    {
                         _ = ListBoxRegionDefinitions.Items.Add(CustomRegion.Definition);
+                    }
 
                     ListBoxRegionDefinitions.SelectedItem = CustomRegion.Definition;
                     BtnCreateRegion.Text = "Update Region";

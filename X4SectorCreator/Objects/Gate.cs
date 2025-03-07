@@ -1,8 +1,11 @@
-﻿namespace X4SectorCreator.Objects
+﻿using System.Text.Json.Serialization;
+
+namespace X4SectorCreator.Objects
 {
     public class Gate
     {
         public int Id { get; set; }
+        public string ConnectionName { get; set; }
         public string ParentSectorName { get; set; }
         public string DestinationSectorName { get; set; }
         public string Source { get; set; } // format: c000_s000_z000
@@ -13,6 +16,14 @@
         public int Pitch { get; set; }
         public int Roll { get; set; }
         public GateType Type { get; set; }
+        public Point Position { get; set; }
+        public bool IsHighwayGate { get; set; }
+
+        /// <summary>
+        /// Determines if the Gate is a vanilla gate.
+        /// </summary>
+        [JsonIgnore]
+        public bool IsBaseGame => IsHighwayGate || ConnectionName != null;
 
         /// <summary>
         /// Used to make a connection with new sectors.

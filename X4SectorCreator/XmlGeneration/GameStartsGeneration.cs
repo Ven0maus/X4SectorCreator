@@ -10,13 +10,13 @@ namespace X4SectorCreator.XmlGeneration
             // Generate a custom gamestart for custom galaxy
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
-                var customGameStart = GenerateCustomGameStart(modPrefix, clusters);
+                XElement customGameStart = GenerateCustomGameStart(modPrefix, clusters);
                 if (customGameStart != null)
                 {
                     XDocument xmlDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
                         new XElement("diff",
-                            new XElement("replace", 
+                            new XElement("replace",
                             new XAttribute("sel", "//gamestarts"),
                             customGameStart)
                         )
@@ -26,7 +26,7 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
 
-            var generatedElements = GenerateVanillaChanges(vanillaChanges).ToList();
+            List<XElement> generatedElements = GenerateVanillaChanges(vanillaChanges).ToList();
 
             if (generatedElements.Count > 0)
             {
@@ -42,19 +42,26 @@ namespace X4SectorCreator.XmlGeneration
 
         private static XElement GenerateCustomGameStart(string modPrefix, List<Cluster> clusters)
         {
-            var firstCluster = clusters.OrderBy(a => a.Name).FirstOrDefault(a => !a.IsBaseGame);
-            if (firstCluster == null) return null;
-            var sector = firstCluster.Sectors.FirstOrDefault();
-            if (sector == null) return null;
+            Cluster firstCluster = clusters.OrderBy(a => a.Name).FirstOrDefault(a => !a.IsBaseGame);
+            if (firstCluster == null)
+            {
+                return null;
+            }
 
-            var sectorMacro = $"{modPrefix}_SE_c{firstCluster.Id:D3}_s{sector.Id:D3}_macro";
-            var gameStartElement = new XElement("gamestart",
+            Sector sector = firstCluster.Sectors.FirstOrDefault();
+            if (sector == null)
+            {
+                return null;
+            }
+
+            string sectorMacro = $"{modPrefix}_SE_c{firstCluster.Id:D3}_s{sector.Id:D3}_macro";
+            XElement gameStartElement = new("gamestart",
                 new XAttribute("id", $"{modPrefix}_sectorcreator_customgalaxy"),
                 new XAttribute("name", $"{GalaxySettingsForm.GalaxyName}"),
                 new XAttribute("description", $"{GalaxySettingsForm.GalaxyName} entrypoint."),
                 new XAttribute("image", "gamestart_1"),
                 new XElement("location",
-                    new XAttribute("galaxy", $"{modPrefix}_{GalaxySettingsForm.GalaxyName}_macro"),
+                    new XAttribute("galaxy", $"{GalaxySettingsForm.GalaxyName}_macro"),
                     new XAttribute("sector", $"{sectorMacro.ToLower()}"),
                     new XElement("position",
                         new XAttribute("x", "0"),
@@ -114,7 +121,11 @@ namespace X4SectorCreator.XmlGeneration
                         new XElement("ware", new XAttribute("ware", "research_sensorbooster")),
                         new XElement("ware", new XAttribute("ware", "research_tradeinterface"))
                     ),
-                    new XElement("theme", new XAttribute("paint", "painttheme_player_01"))
+                    new XElement("theme", new XAttribute("paint", "painttheme_player_01")),
+                    new XElement("knownspace", clusters
+                        .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
+                        .Select(a => new XElement("space", 
+                            new XAttribute("sector", $"{modPrefix}_SE_c{a.cluster.Id:D3}_s{a.sector.Id:D3}_macro"))))
                 )
             );
 
@@ -128,7 +139,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             // If argon prime was removed, remove it from "custom_creative" sector + known sectors
             // This will fix the display in the custom creative gamestart
-            if (vanillaChanges.RemovedSectors.Any(a => 
+            if (vanillaChanges.RemovedSectors.Any(a =>
                 a.VanillaCluster.BaseGameMapping.Equals("Cluster_14", StringComparison.OrdinalIgnoreCase) &&
                 a.Sector.BaseGameMapping.Equals("Sector001", StringComparison.OrdinalIgnoreCase)))
             {

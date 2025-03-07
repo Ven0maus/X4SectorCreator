@@ -43,30 +43,40 @@ namespace X4SectorCreator.XmlGeneration
                         continue;
                     }
 
-                    // Each base game cluster, by default has no zones.
-                    // So if zones are present, it means a gate connection was added to a custom sector
-                    // This means this cluster is eligible for dependency check
-                    if (!string.IsNullOrWhiteSpace(cluster.Dlc))
+                    bool breaked = false;
+                    foreach (var zone in sector.Zones)
                     {
-                        if (dlcDependencies.Contains(cluster.Dlc))
+                        if (!zone.IsBaseGame)
                         {
-                            break;
-                        }
+                            if (!string.IsNullOrWhiteSpace(cluster.Dlc))
+                            {
+                                if (dlcDependencies.Contains(cluster.Dlc))
+                                {
+                                    breaked = true;
+                                    break;
+                                }
 
-                        _ = dlcDependencies.Add(cluster.Dlc);
-                        break;
+                                breaked = true;
+                                _ = dlcDependencies.Add(cluster.Dlc);
+                                break;
+                            }
+                        }
                     }
+                    if (breaked)
+                        break;
                 }
             }
 
             // Check if vanilla changes touched any dlc content
-            var allChangedContent = vanillaChanges.GetModifiedDlcContent()
+            HashSet<string> allChangedContent = vanillaChanges.GetModifiedDlcContent()
                 .Where(a => a != null)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
             // Add to current dlcDependencies
-            foreach (var changedContent in allChangedContent)
-                dlcDependencies.Add(changedContent);
+            foreach (string changedContent in allChangedContent)
+            {
+                _ = dlcDependencies.Add(changedContent);
+            }
 
             // Convert to a pair
             return dlcDependencies.Select(a =>

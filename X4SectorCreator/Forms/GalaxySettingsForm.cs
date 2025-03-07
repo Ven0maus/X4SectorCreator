@@ -48,9 +48,12 @@ namespace X4SectorCreator
             Dictionary<(int, int), Cluster> mergedClusters = null;
             if (!chkCustomGalaxy.Checked)
             {
+                _baseGameClusters ??= MainForm.Instance.InitAllClusters(false)
+                        .Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
+
                 // Perform validation to avoid key collisions
                 mergedClusters = new Dictionary<(int, int), Cluster>(_baseGameClusters);
-                List<Cluster> invalidClusters = new();
+                List<Cluster> invalidClusters = [];
                 foreach (KeyValuePair<(int, int), Cluster> cluster in MainForm.Instance.AllClusters)
                 {
                     if (!mergedClusters.ContainsKey(cluster.Key) &&

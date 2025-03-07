@@ -5,11 +5,11 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class ZoneGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData, VanillaChanges vanillaChanges)
         {
             #region Custom Zone File
             // Save new zones in custom sectors
-            var zones = GenerateZones(modPrefix, clusters).ToArray();
+            XElement[] zones = GenerateZones(modPrefix, clusters).ToArray();
             if (zones.Length > 0)
             {
                 XDocument xmlDocument = new(
@@ -27,7 +27,8 @@ namespace X4SectorCreator.XmlGeneration
 
             #region BaseGame Zone File
             // Save new zones in existing sectors
-            List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateExistingSectorZones(modPrefix, clusters)
+            List<IGrouping<string, (string dlc, XElement element)>> diffData = GenerateExistingSectorZones(modPrefix, clusters, nonModifiedBaseGameData)
+                .Concat(GenerateVanillaChanges(vanillaChanges))
                 .GroupBy(a => a.dlc)
                 .ToList();
             if (diffData.Count > 0)
@@ -38,10 +39,7 @@ namespace X4SectorCreator.XmlGeneration
                     XDocument xmlDiffDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
                         new XElement("diff",
-                            new XElement("add",
-                                new XAttribute("sel", "/macros"),
-                                group.Select(a => a.element)
-                            )
+                            group.Select(a => a.element)
                         )
                     );
 
@@ -56,6 +54,25 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
             #endregion
+        }
+
+        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
+        {
+            foreach (RemovedConnection connection in vanillaChanges.RemovedConnections)
+            {
+                if (connection.Gate.IsHighwayGate)
+                {
+                    continue;
+                }
+
+                string connectionName = $"connection_{connection.Gate.ConnectionName}";
+                if (connection.Gate.ConnectionName.Equals("destination", StringComparison.OrdinalIgnoreCase) && !connection.Gate.IsHighwayGate)
+                {
+                    connectionName = connection.Gate.SourcePath.Split('/').Last();
+                }
+
+                yield return (connection.VanillaCluster.Dlc, new XElement("remove", new XAttribute("sel", $"/macros/macro[@name='{connection.Zone.Name}_macro']/connections/connection[@name='{connectionName}']")));
+            }
         }
 
         private static IEnumerable<XElement> GenerateZones(string modPrefix, List<Cluster> clusters)
@@ -115,8 +132,17 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
-        private static IEnumerable<(string dlc, XElement element)> GenerateExistingSectorZones(string modPrefix, List<Cluster> clusters)
+        private static IEnumerable<(string dlc, XElement element)> GenerateExistingSectorZones(string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
         {
+            HashSet<string> zoneCache = nonModifiedBaseGameData.Clusters
+                .SelectMany(a => a.Sectors)
+                .SelectMany(a => a.Zones)
+                .Select(a => a.Name)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            List<(string dlc, XElement element)> elements = [];
+
+
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
                 if (!cluster.IsBaseGame)
@@ -128,16 +154,31 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
-                        yield return (cluster.Dlc, new XElement("macro",
+                        if (zoneCache.Contains(zone.Name))
+                        {
+                            continue;
+                        }
+
+                        elements.Add((cluster.Dlc, new XElement("macro",
                             new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_macro"),
                             new XAttribute("class", "zone"),
                             new XElement("component", new XAttribute("ref", "standardzone")),
                             new XElement("connections",
                                 GenerateExistingSectorGates(modPrefix, zone)
                             )
-                        ));
+                        )));
                     }
                 }
+            }
+
+            foreach (IGrouping<string, (string dlc, XElement element)> group in elements.GroupBy(a => a.dlc))
+            {
+                XElement addElement = new("add", new XAttribute("sel", "/macros"));
+                foreach ((string dlc, XElement element) in group)
+                {
+                    addElement.Add(element);
+                }
+                yield return (group.Key, addElement);
             }
         }
 

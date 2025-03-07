@@ -6,17 +6,36 @@
         public List<Cluster> RemovedClusters { get; set; } = [];
         public List<ModifiedSector> ModifiedSectors { get; set; } = [];
         public List<RemovedSector> RemovedSectors { get; set; } = [];
+        public List<RemovedConnection> RemovedConnections { get; set; } = [];
 
         public IEnumerable<string> GetModifiedDlcContent()
         {
-            foreach (var modification in ModifiedClusters)
+            // Modifications
+            foreach (ModifiedCluster modification in ModifiedClusters)
+            {
                 yield return modification.New.Dlc;
-            foreach (var modification in ModifiedSectors)
+            }
+
+            foreach (ModifiedSector modification in ModifiedSectors)
+            {
                 yield return modification.VanillaCluster.Dlc;
-            foreach (var modification in RemovedSectors)
+            }
+
+            // Deletions
+            foreach (RemovedSector modification in RemovedSectors)
+            {
                 yield return modification.VanillaCluster.Dlc;
-            foreach (var modification in RemovedClusters)
+            }
+
+            foreach (Cluster modification in RemovedClusters)
+            {
                 yield return modification.Dlc;
+            }
+
+            foreach (RemovedConnection modification in RemovedConnections)
+            {
+                yield return modification.VanillaCluster.Dlc;
+            }
         }
     }
 
@@ -38,5 +57,13 @@
     {
         public Cluster VanillaCluster { get; set; }
         public Sector Sector { get; set; }
+    }
+
+    public class RemovedConnection
+    {
+        public Cluster VanillaCluster { get; set; }
+        public Sector Sector { get; set; }
+        public Zone Zone { get; set; }
+        public Gate Gate { get; set; }
     }
 }
