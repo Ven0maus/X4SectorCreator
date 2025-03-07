@@ -27,7 +27,7 @@ namespace X4SectorCreator.XmlGeneration
                     XDocument xmlDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
                         new XElement("diff",
-                            content
+                            content.Select(a => a.element)
                         )
                     );
 
