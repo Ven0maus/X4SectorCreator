@@ -555,14 +555,36 @@ namespace X4SectorCreator
                 {
                     List<Cluster> allModifiedClusters = AllClusters.Values
                         .Where(a => !a.IsBaseGame)
-                        .Concat(AllClusters.Values
-                            .Where(a => a.IsBaseGame && a.Sectors
-                                .SelectMany(a => a.Zones)
-                                .Any()))
                         .ToList();
 
-                    // Support also vanilla changes
                     var nonModifiedBaseGameData = InitAllClusters(false);
+                    var gateConnections = InitAllClusters(false)
+                        .Clusters
+                        .SelectMany(a => a.Sectors)
+                        .SelectMany(a => a.Zones)
+                        .SelectMany(a => a.Gates)
+                        .Select(a => a.ConnectionName)
+                        .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+                    // Also add clusters that are basegame but have new connections compared to vanilla
+                    var baseGameClusters = AllClusters.Values.Where(a => a.IsBaseGame).ToArray();
+                    foreach (var cluster in baseGameClusters)
+                    {
+                        foreach (var sector in cluster.Sectors)
+                        {
+                            foreach (var zone in sector.Zones)
+                            {
+                                foreach (var gate in zone.Gates)
+                                {
+                                    // Check if gate exists in vanilla
+                                    if (!gate.IsBaseGame)
+                                        allModifiedClusters.Add(cluster);
+                                }
+                            }
+                        }
+                    }
+
+                    // Support also vanilla changes
                     var vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
 
                     string jsonContent = ConfigSerializer.Serialize(allModifiedClusters, vanillaChanges);
