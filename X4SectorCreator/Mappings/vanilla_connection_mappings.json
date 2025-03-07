@@ -3720,7 +3720,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -3745,7 +3745,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 80,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -3826,7 +3826,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -3885,9 +3885,9 @@
         "Y": 107680
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate001To002",
@@ -3936,7 +3936,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -3953,9 +3953,9 @@
         "Y": 96889
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate002To008",
@@ -3971,9 +3971,9 @@
         "Y": -8096
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": -3,
+        "Y": 1,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate002To501",
@@ -3989,9 +3989,9 @@
         "Y": 95816
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate003To009",
@@ -4007,9 +4007,9 @@
         "Y": 102954
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate003To002",
@@ -4026,7 +4026,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 360,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -4236,9 +4236,9 @@
         "Y": 83958
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate005To001",
@@ -4296,9 +4296,9 @@
         "Y": 93376
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate006To013",
@@ -4314,9 +4314,9 @@
         "Y": 164808
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate006To503",
@@ -4374,9 +4374,9 @@
         "Y": 98108
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate006To001",
@@ -4407,7 +4407,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4424,9 +4424,9 @@
         "Y": 78113
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate008To044",
@@ -4443,7 +4443,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4461,7 +4461,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4479,7 +4479,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 360,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4503,9 +4503,9 @@
         "Y": 82223
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate009To034",
@@ -4522,7 +4522,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 335,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4564,9 +4564,9 @@
         "Y": 131248
       },
       "Rotation": {
-        "X": 180,
-        "Y": 330,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate009to015",
@@ -4583,7 +4583,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4608,7 +4608,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4625,9 +4625,9 @@
         "Y": 105351
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate010To018",
@@ -4657,9 +4657,9 @@
         "Y": 82079
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate011To024",
@@ -4721,9 +4721,9 @@
         "Y": 88150
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate012To013",
@@ -4747,7 +4747,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 360,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4765,7 +4765,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4782,9 +4782,9 @@
         "Y": 49506
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate013To014",
@@ -4818,9 +4818,9 @@
         "Y": 61363
       },
       "Rotation": {
-        "X": 180,
-        "Y": 65,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate014To007",
@@ -4836,9 +4836,9 @@
         "Y": 108138
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate014To029",
@@ -4876,7 +4876,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 270,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -4893,9 +4893,9 @@
         "Y": 55852
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate015To016",
@@ -4911,9 +4911,9 @@
         "Y": 137906
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate015To009",
@@ -4950,9 +4950,9 @@
         "Y": 45972
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate015To408",
@@ -4982,9 +4982,9 @@
         "Y": 99691
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate016To017",
@@ -5000,9 +5000,9 @@
         "Y": 110513
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate016To407",
@@ -5058,7 +5058,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5090,7 +5090,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5107,9 +5107,9 @@
         "Y": 4815
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate018To009",
@@ -5171,9 +5171,9 @@
         "Y": 124940
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate019To018",
@@ -5189,9 +5189,9 @@
         "Y": 119173
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate019To042",
@@ -5243,7 +5243,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 305,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5285,9 +5285,9 @@
         "Y": 137463
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate020To019",
@@ -5303,9 +5303,9 @@
         "Y": -3816
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate020To050",
@@ -5356,9 +5356,9 @@
         "Y": 165382
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate021To020",
@@ -5402,9 +5402,9 @@
         "Y": 110055
       },
       "Rotation": {
-        "X": 180,
-        "Y": 305,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate021To050",
@@ -5420,9 +5420,9 @@
         "Y": 20340
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate022To010",
@@ -5439,7 +5439,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 360,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5456,9 +5456,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate022To004",
@@ -5475,7 +5475,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 70,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5499,9 +5499,9 @@
         "Y": 108945
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate023To022",
@@ -5556,9 +5556,9 @@
         "Y": 53706
       },
       "Rotation": {
-        "X": 180,
-        "Y": 35,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate024To012",
@@ -5575,7 +5575,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5593,7 +5593,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5638,9 +5638,9 @@
         "Y": -18900
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate025To024",
@@ -5684,9 +5684,9 @@
         "Y": -137445
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": -3,
+        "Y": 1,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate025To026",
@@ -5737,9 +5737,9 @@
         "Y": 84626
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate026To049",
@@ -5812,7 +5812,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5830,7 +5830,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5855,7 +5855,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -5890,9 +5890,9 @@
         "Y": 284128
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate027To048",
@@ -5947,9 +5947,9 @@
         "Y": 134568
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate028To027",
@@ -5979,9 +5979,9 @@
         "Y": 25444
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate029To030",
@@ -5997,9 +5997,9 @@
         "Y": 160956
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate029To032",
@@ -6016,7 +6016,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 30,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -6089,9 +6089,9 @@
         "Y": 110331
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate030To046",
@@ -6107,9 +6107,9 @@
         "Y": -10975
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate030To031",
@@ -6126,7 +6126,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -6143,9 +6143,9 @@
         "Y": -3369
       },
       "Rotation": {
-        "X": 180,
-        "Y": 345,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate031To403",
@@ -6168,9 +6168,9 @@
         "Y": 144270
       },
       "Rotation": {
-        "X": 180,
-        "Y": 30,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_anim_macro",
       "GateName": "connection_ClusterGate031To601b",
@@ -6194,7 +6194,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -6239,9 +6239,9 @@
         "Y": 47287
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate032To708",
@@ -6310,9 +6310,9 @@
         "Y": 121477
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate032To033",
@@ -6336,7 +6336,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 30,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -6361,7 +6361,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -6393,7 +6393,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 290,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -6410,9 +6410,9 @@
         "Y": 53541
       },
       "Rotation": {
-        "X": 180,
-        "Y": 310,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate034to420",
@@ -6428,9 +6428,9 @@
         "Y": -4329
       },
       "Rotation": {
-        "X": 180,
-        "Y": 70,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate034To008",
@@ -6460,9 +6460,9 @@
         "Y": 52088
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate035To036",
@@ -6492,9 +6492,9 @@
         "Y": 108945
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate036To024",
@@ -6543,7 +6543,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -6568,7 +6568,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 40,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -6585,9 +6585,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
-        "Y": 45,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate037To022",
@@ -6617,9 +6617,9 @@
         "Y": 20340
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate038To037",
@@ -6656,9 +6656,9 @@
         "Y": 53358
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate038To022",
@@ -6681,9 +6681,9 @@
         "Y": -106070
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate039To713",
@@ -6699,9 +6699,9 @@
         "Y": 115443
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate039To003",
@@ -6745,9 +6745,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
-        "Y": 315,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate040To013",
@@ -6770,9 +6770,9 @@
         "Y": 114678
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate040To041",
@@ -6856,7 +6856,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -6873,9 +6873,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate042To043",
@@ -7000,9 +7000,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
-        "Y": 40,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate044To045",
@@ -7019,7 +7019,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 50,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -7051,7 +7051,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 290,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -7136,7 +7136,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 290,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -7199,9 +7199,9 @@
         "Y": 61363
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate049To720",
@@ -7217,9 +7217,9 @@
         "Y": 108138
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate049To027",
@@ -7243,7 +7243,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -7268,7 +7268,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 90,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -7285,9 +7285,9 @@
         "Y": 104692
       },
       "Rotation": {
-        "X": 180,
-        "Y": 305,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate048To112",
@@ -7311,7 +7311,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 90,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -7385,7 +7385,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 70,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -7402,9 +7402,9 @@
         "Y": 157906
       },
       "Rotation": {
-        "X": 180,
-        "Y": 56,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate050To020",
@@ -7434,9 +7434,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate709To023",
@@ -7452,9 +7452,9 @@
         "Y": 138576
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate709To710",
@@ -7488,9 +7488,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate709To723",
@@ -7513,9 +7513,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate710To711",
@@ -7531,9 +7531,9 @@
         "Y": 138576
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate710To",
@@ -7564,7 +7564,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -7602,9 +7602,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 50,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate711To712",
@@ -7653,7 +7653,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 295,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -7670,9 +7670,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 55,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate712To713",
@@ -7695,9 +7695,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
-        "Y": 45,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate713To",
@@ -7738,9 +7738,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": -3,
+        "Y": 1,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate713To039",
@@ -7763,9 +7763,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate714To036",
@@ -7809,9 +7809,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate715To026",
@@ -7855,9 +7855,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate720To730",
@@ -7873,9 +7873,9 @@
         "Y": 138576
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate720To049",
@@ -7916,9 +7916,9 @@
         "Y": -126970
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate720To721",
@@ -7934,9 +7934,9 @@
         "Y": 200000
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate721To608",
@@ -7959,9 +7959,9 @@
         "Y": -127904
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate721To720",
@@ -7985,7 +7985,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 295,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8002,9 +8002,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate722To720",
@@ -8028,7 +8028,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8045,9 +8045,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate722To724",
@@ -8088,9 +8088,9 @@
         "Y": 138576
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate723To709",
@@ -8107,7 +8107,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 70,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8124,9 +8124,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate723To722",
@@ -8149,9 +8149,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate724To115",
@@ -8174,9 +8174,9 @@
         "Y": -127904
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate724To722",
@@ -8200,7 +8200,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 310,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8217,9 +8217,9 @@
         "Y": 57018
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate401To418",
@@ -8236,7 +8236,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 90,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8253,9 +8253,9 @@
         "Y": 108945
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate401To402",
@@ -8310,9 +8310,9 @@
         "Y": 108945
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate402To414",
@@ -8336,7 +8336,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 360,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8360,9 +8360,9 @@
         "Y": 7212
       },
       "Rotation": {
-        "X": 180,
-        "Y": 50,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate403To422",
@@ -8378,9 +8378,9 @@
         "Y": 93736
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate403To400",
@@ -8397,7 +8397,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 360,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8428,9 +8428,9 @@
         "Y": -46898
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate400To403",
@@ -8454,7 +8454,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 270,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8492,9 +8492,9 @@
         "Y": 131769
       },
       "Rotation": {
-        "X": 180,
-        "Y": 360,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate408To407",
@@ -8510,9 +8510,9 @@
         "Y": -53411
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": -3,
+        "Y": 1,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate408To015",
@@ -8598,9 +8598,9 @@
         "Y": 75821
       },
       "Rotation": {
-        "X": 180,
-        "Y": 315,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate407To409",
@@ -8623,9 +8623,9 @@
         "Y": 108945
       },
       "Rotation": {
-        "X": 180,
-        "Y": 360,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate407To421",
@@ -8642,7 +8642,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 45,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8684,9 +8684,9 @@
         "Y": 116119
       },
       "Rotation": {
-        "X": 180,
-        "Y": 65,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate409To421",
@@ -8709,9 +8709,9 @@
         "Y": -9578
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate409To410",
@@ -8728,7 +8728,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -8753,7 +8753,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -8777,9 +8777,9 @@
         "Y": 108945
       },
       "Rotation": {
-        "X": 180,
-        "Y": 360,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate410To411",
@@ -8803,7 +8803,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 290,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -8841,9 +8841,9 @@
         "Y": 81310
       },
       "Rotation": {
-        "X": 180,
-        "Y": 25,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_orb_accelerator_02_macro",
       "GateName": "connection_ClusterGate411To425",
@@ -8884,9 +8884,9 @@
         "Y": 57018
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate405To406",
@@ -8941,9 +8941,9 @@
         "Y": 108441
       },
       "Rotation": {
-        "X": 180,
-        "Y": 310,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate406To417",
@@ -8967,7 +8967,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 30,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -9009,9 +9009,9 @@
         "Y": 90602
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate404To406",
@@ -9027,9 +9027,9 @@
         "Y": 116119
       },
       "Rotation": {
-        "X": 180,
-        "Y": 45,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate404To415",
@@ -9084,9 +9084,9 @@
         "Y": 47528
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate418To401",
@@ -9102,9 +9102,9 @@
         "Y": 136950
       },
       "Rotation": {
-        "X": 180,
-        "Y": 360,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate418To404",
@@ -9121,7 +9121,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9159,9 +9159,9 @@
         "Y": 84289
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate419To418",
@@ -9177,9 +9177,9 @@
         "Y": 108945
       },
       "Rotation": {
-        "X": 180,
-        "Y": 360,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate419To405",
@@ -9196,7 +9196,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9227,9 +9227,9 @@
         "Y": 116119
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate420To419",
@@ -9245,9 +9245,9 @@
         "Y": 126138
       },
       "Rotation": {
-        "X": 180,
-        "Y": 330,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate420To416",
@@ -9263,9 +9263,9 @@
         "Y": -35615
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate420To421",
@@ -9282,7 +9282,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9300,7 +9300,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9394,9 +9394,9 @@
         "Y": 110594
       },
       "Rotation": {
-        "X": 180,
-        "Y": 360,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate416To417",
@@ -9441,7 +9441,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 70,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9497,9 +9497,9 @@
         "Y": 116119
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate421To420",
@@ -9516,7 +9516,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9534,7 +9534,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9583,9 +9583,9 @@
         "Y": 33833
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate422To423",
@@ -9616,7 +9616,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -9640,9 +9640,9 @@
         "Y": 116119
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate423To424",
@@ -9666,7 +9666,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 270,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9760,9 +9760,9 @@
         "Y": 116119
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate412To410",
@@ -9785,9 +9785,9 @@
         "Y": -35615
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate412To413",
@@ -9818,7 +9818,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -9856,9 +9856,9 @@
         "Y": 121693
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate414To415",
@@ -9928,7 +9928,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9946,7 +9946,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -9999,7 +9999,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -10265,9 +10265,9 @@
         "Y": 82594
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate500To502",
@@ -10304,9 +10304,9 @@
         "Y": 112070
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate501To008",
@@ -10323,7 +10323,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 45,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -10355,7 +10355,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 285,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -10372,9 +10372,9 @@
         "Y": -32492
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate502To500",
@@ -10390,9 +10390,9 @@
         "Y": 115934
       },
       "Rotation": {
-        "X": 180,
-        "Y": 320,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate502To501",
@@ -10447,9 +10447,9 @@
         "Y": 165758
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate503To502",
@@ -10480,7 +10480,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 10,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -10553,9 +10553,9 @@
         "Y": 108945
       },
       "Rotation": {
-        "X": 180,
-        "Y": 60,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate100To101",
@@ -10571,9 +10571,9 @@
         "Y": -35615
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate100To048",
@@ -10590,7 +10590,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -10614,9 +10614,9 @@
         "Y": 116119
       },
       "Rotation": {
-        "X": 180,
-        "Y": 80,
-        "Z": 170
+        "X": -3,
+        "Y": 1,
+        "Z": 2
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate101To102",
@@ -10647,7 +10647,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -10672,7 +10672,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 300,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -10696,9 +10696,9 @@
         "Y": 125310
       },
       "Rotation": {
-        "X": 186,
-        "Y": 65,
-        "Z": 180
+        "X": -3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate102To106",
@@ -10714,9 +10714,9 @@
         "Y": 77156
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate102To104",
@@ -10795,9 +10795,9 @@
         "Y": -121375
       },
       "Rotation": {
-        "X": 180,
-        "Y": 55,
-        "Z": 170
+        "X": 3,
+        "Y": 0,
+        "Z": 2
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate104To102",
@@ -10873,9 +10873,9 @@
         "Y": 93627
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate107To100",
@@ -10906,7 +10906,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -11028,8 +11028,8 @@
         "Y": 101331
       },
       "Rotation": {
-        "X": 10,
-        "Y": 315,
+        "X": 0,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -11047,7 +11047,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -11121,7 +11121,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 290,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -11138,9 +11138,9 @@
         "Y": 123632
       },
       "Rotation": {
-        "X": 180,
-        "Y": 290,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate109To108",
@@ -11156,9 +11156,9 @@
         "Y": -85623
       },
       "Rotation": {
-        "X": 3,
-        "Y": 31,
-        "Z": 360
+        "X": 0,
+        "Y": 0,
+        "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate110To111",
@@ -11174,9 +11174,9 @@
         "Y": 116119
       },
       "Rotation": {
-        "X": 180,
-        "Y": 30,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate110To109",
@@ -11200,7 +11200,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 270,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_ter_gate_01_macro",
@@ -11231,9 +11231,9 @@
         "Y": 78554
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate111To110",
@@ -11264,7 +11264,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -11295,9 +11295,9 @@
         "Y": 128764
       },
       "Rotation": {
-        "X": 180,
-        "Y": 305,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate112To033",
@@ -11363,7 +11363,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 65,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -11394,9 +11394,9 @@
         "Y": 132594
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate113To028",
@@ -11413,7 +11413,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 90,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -11452,7 +11452,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 90,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -11476,9 +11476,9 @@
         "Y": -114179
       },
       "Rotation": {
-        "X": 180,
-        "Y": 290,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate114To113",
@@ -11509,7 +11509,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 90,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -11533,9 +11533,9 @@
         "Y": 91020
       },
       "Rotation": {
-        "X": 180,
+        "X": 3,
         "Y": 0,
-        "Z": 180
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate115To000",
@@ -11552,7 +11552,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 295,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -11582,9 +11582,9 @@
         "Y": 120528
       },
       "Rotation": {
-        "X": 180,
-        "Y": 310,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate116To111",
@@ -11636,7 +11636,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -11660,9 +11660,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
-        "Y": 20,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGateInactive",
@@ -11678,9 +11678,9 @@
         "Y": -4501
       },
       "Rotation": {
-        "X": 180,
-        "Y": 320,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate602To601",
@@ -11703,9 +11703,9 @@
         "Y": 119150
       },
       "Rotation": {
-        "X": 180,
-        "Y": 25,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate603To605",
@@ -11728,9 +11728,9 @@
         "Y": 71802
       },
       "Rotation": {
-        "X": 180,
-        "Y": 320,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate603To602",
@@ -11764,9 +11764,9 @@
         "Y": 55645
       },
       "Rotation": {
-        "X": 180,
-        "Y": 30,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_anim_macro",
       "GateName": "connection_ClusterGate605To606",
@@ -11797,7 +11797,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 290,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -11906,7 +11906,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 65,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -11965,9 +11965,9 @@
         "Y": 14787
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate606To605",
@@ -12011,9 +12011,9 @@
         "Y": 118046
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate604To603",
@@ -12043,9 +12043,9 @@
         "Y": -127904
       },
       "Rotation": {
-        "X": 180,
-        "Y": 270,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate604to048",
@@ -12075,9 +12075,9 @@
         "Y": 118619
       },
       "Rotation": {
-        "X": 180,
-        "Y": 305,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate607To606",
@@ -12094,7 +12094,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 305,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -12150,9 +12150,9 @@
         "Y": 138576
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate601To031",
@@ -12176,7 +12176,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -12200,9 +12200,9 @@
         "Y": 117825
       },
       "Rotation": {
-        "X": 180,
-        "Y": 45,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate608To607",
@@ -12226,7 +12226,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 60,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -12268,9 +12268,9 @@
         "Y": 148724
       },
       "Rotation": {
-        "X": 180,
+        "X": -3,
         "Y": 0,
-        "Z": 180
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate609To607",
@@ -12293,9 +12293,9 @@
         "Y": -62249
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate609To608",
@@ -12318,9 +12318,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 65,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate702To701",
@@ -12351,7 +12351,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 315,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -12382,9 +12382,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
-        "Y": 40,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
       "GateName": "connection_ClusterGate703To702",
@@ -12422,7 +12422,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 90,
+        "Y": 1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -12447,7 +12447,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 310,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -12489,9 +12489,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 45,
-        "Z": 180
+        "X": -3,
+        "Y": 0,
+        "Z": -3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate706To705",
@@ -12507,9 +12507,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
-        "Y": 360,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate706To0a",
@@ -12525,9 +12525,9 @@
         "Y": 48135
       },
       "Rotation": {
-        "X": 180,
-        "Y": 300,
-        "Z": 180
+        "X": 3,
+        "Y": -1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate706To014",
@@ -12557,9 +12557,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate704To008",
@@ -12575,9 +12575,9 @@
         "Y": 115545
       },
       "Rotation": {
-        "X": 180,
-        "Y": 360,
-        "Z": 180
+        "X": 3,
+        "Y": 0,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate704To0",
@@ -12594,7 +12594,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 270,
+        "Y": -1,
         "Z": 0
       },
       "GateType": "props_gates_anc_gate_macro",
@@ -12636,9 +12636,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate701To015",
@@ -12669,7 +12669,7 @@
       },
       "Rotation": {
         "X": 0,
-        "Y": 310,
+        "Y": 0,
         "Z": 0
       },
       "GateType": "props_gates_orb_accelerator_01_macro",
@@ -12693,9 +12693,9 @@
         "Y": 34255
       },
       "Rotation": {
-        "X": 180,
-        "Y": 90,
-        "Z": 180
+        "X": 3,
+        "Y": 1,
+        "Z": 3
       },
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate708To032",
