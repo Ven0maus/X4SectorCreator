@@ -39,7 +39,7 @@ namespace X4SectorCreator.Configuration
                 ("dlc_terran_", GetFile(SectorMapForm.DlcMapping["Cradle Of Humanity"])),
                 ("dlc_boron_", GetFile(SectorMapForm.DlcMapping["Kingdom End"])),
                 ("dlc7_", GetFile(SectorMapForm.DlcMapping["Timelines"])),
-                //("dlc_mini01_", GetFile(SectorMapForm.DlcMapping["Hyperion Pack"])),
+                ("dlc_mini_01_", GetFile(SectorMapForm.DlcMapping["Hyperion Pack"])),
             };
 
             // Verify existance

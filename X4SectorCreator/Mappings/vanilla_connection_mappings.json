@@ -2814,6 +2814,25 @@
     },
     {
       "Source": {
+        "Name": "ClusterGate730To720",
+        "Path": "../Cluster_730_connection/Cluster_730_Sector001_connection/Zone003_Cluster_730_Sector001_connection/connection_ClusterGate730To720",
+        "Cluster": "Cluster_730_connection",
+        "Sector": "Cluster_730_Sector001_connection",
+        "Zone": "Zone003_Cluster_730_Sector001_connection",
+        "Gate": "Cluster_730_connection"
+      },
+      "Destination": {
+        "Name": "destination",
+        "Path": "../../../../../Cluster_720_connection/Cluster_720_Sector001_connection/Zone001_Cluster_720_Sector001_connection/connection_ClusterGate720To730",
+        "Cluster": "Cluster_720_connection",
+        "Sector": "Cluster_720_Sector001_connection",
+        "Zone": "Zone001_Cluster_720_Sector001_connection",
+        "Gate": "Cluster_720_connection"
+      },
+      "IsHighway": false
+    },
+    {
+      "Source": {
         "Name": "SuperHighway001_Cluster_01_connection",
         "Path": "../../Cluster_01_Sector002_connection/tzoneCluster_01_Sector002SHCon5_GateZone_connection",
         "Cluster": "Cluster_01",
@@ -12728,6 +12747,47 @@
         "Y": -126970
       },
       "ZoneName": "Zone005_Cluster_708_Sector001_connection"
+    },
+    {
+      "ZonePosition": {
+        "X": 86,
+        "Y": 115545
+      },
+      "ZoneName": "Zone001_Cluster_730_Sector001_connection"
+    },
+    {
+      "ZonePosition": {
+        "X": 137328,
+        "Y": 138576
+      },
+      "ZoneName": "Zone002_Cluster_730_Sector001_connection"
+    },
+    {
+      "GatePosition": {
+        "X": -28232,
+        "Y": -24043
+      },
+      "ZonePosition": {
+        "X": 105554,
+        "Y": -127904
+      },
+      "GateType": "props_gates_anc_gate_macro",
+      "GateName": "connection_ClusterGate730To720",
+      "ZoneName": "Zone003_Cluster_730_Sector001_connection"
+    },
+    {
+      "ZonePosition": {
+        "X": -127518,
+        "Y": 34255
+      },
+      "ZoneName": "Zone004_Cluster_730_Sector001_connection"
+    },
+    {
+      "ZonePosition": {
+        "X": -129500,
+        "Y": -126970
+      },
+      "ZoneName": "Zone005_Cluster_730_Sector001_connection"
     }
   ]
 }
