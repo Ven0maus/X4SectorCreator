@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Text;
 using System.Text.Json;
 using X4SectorCreator.Configuration;
@@ -356,7 +357,7 @@ namespace X4SectorCreator
                         foreach (var nonModifiedGate in nonModifiedZone.Gates)
                         {
                             // Find matching zone & connection
-                            var matchingZone = modifiedSector.Zones.FirstOrDefault(a => a.Name.Equals(nonModifiedZone.Name, StringComparison.OrdinalIgnoreCase));
+                            var matchingZone = modifiedSector.Zones.FirstOrDefault(a => a.Name != null && a.Name.Equals(nonModifiedZone.Name, StringComparison.OrdinalIgnoreCase));
                             var matchingGate = matchingZone?.Gates.FirstOrDefault(a => a.SourcePath == nonModifiedGate.SourcePath && a.DestinationPath == nonModifiedGate.DestinationPath);
                             if (matchingZone == null || matchingGate == null)
                             {
@@ -642,6 +643,32 @@ namespace X4SectorCreator
                                 cluster.Sectors.Remove(sector);
                         }
 
+                        foreach (var pair in configuration.vanillaChanges.RemovedConnections)
+                        {
+                            // If cluster doesn't exist its already removed, skip
+                            if (!AllClusters.TryGetValue((pair.VanillaCluster.Position.X, pair.VanillaCluster.Position.Y), out var cluster))
+                                continue;
+
+                            var sector = cluster.Sectors.FirstOrDefault(a => a.Name.Equals(pair.Sector.Name, StringComparison.OrdinalIgnoreCase));
+                            if (sector == null)
+                                continue;
+
+                            var zone = sector.Zones.FirstOrDefault(a =>
+                            {
+                                if (!string.IsNullOrWhiteSpace(a.Name) && !string.IsNullOrWhiteSpace(pair.Zone.Name) && a.Name.Equals(pair.Zone.Name, StringComparison.OrdinalIgnoreCase))
+                                    return true;
+                                if (a.Id == 0 && pair.Zone.Id == 0)
+                                    return false;
+                                return a.Id == pair.Zone.Id;
+                            });
+                            if (zone == null)
+                                continue;
+
+                            var gate = zone.Gates.FirstOrDefault(a => a.SourcePath == pair.Gate.SourcePath && a.DestinationPath == pair.Gate.DestinationPath);
+                            if (gate != null)
+                                zone.Gates.Remove(gate);
+                        }
+
                         // Cluster modification
                         foreach (var modification in configuration.vanillaChanges.ModifiedClusters)
                         {
@@ -687,9 +714,8 @@ namespace X4SectorCreator
                     // Import new configuration
                     foreach (Cluster cluster in clusters)
                     {
-                        // Contains also base game clusters that have zones for exported gate connections
-                        // Set custom clusters
-                        AllClusters[(cluster.Position.X, cluster.Position.Y)] = cluster;
+                        // Adjust the cluster
+                        ReplaceClusterByImport(cluster);
 
                         // Apply support additions for new versions
                         Import_Support_NewVersions(cluster);
@@ -708,6 +734,77 @@ namespace X4SectorCreator
                     ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
 
                     _ = MessageBox.Show($"Configuration imported succesfully.", "Success");
+                }
+            }
+        }
+
+        private void ReplaceClusterByImport(Cluster cluster)
+        {
+            if (!AllClusters.TryGetValue((cluster.Position.X, cluster.Position.Y), out var currentCluster))
+            {
+                // Custom cluster
+                AllClusters[(cluster.Position.X, cluster.Position.Y)] = cluster;
+                return;
+            }
+
+            // Replace each part individually as to not override the basegame data
+            currentCluster.Position = cluster.Position;
+            currentCluster.Description = cluster.Description;
+            currentCluster.Name = cluster.Name;
+            currentCluster.BackgroundVisualMapping = cluster.BackgroundVisualMapping;
+            
+            foreach (var newSector in cluster.Sectors)
+            {
+                // Check if it exist then adjust it else add it
+                var currentSector = currentCluster.Sectors.FirstOrDefault(a => a.Name.Equals(newSector.Name, StringComparison.OrdinalIgnoreCase));
+                if (currentSector == null)
+                {
+                    currentCluster.Sectors.Add(newSector);
+                    continue;
+                }
+
+                // Replace each part individually as to not override the basegame data
+                currentSector.Name = newSector.Name;
+                currentSector.Economy = newSector.Economy;
+                currentSector.Sunlight = newSector.Sunlight;
+                currentSector.Security = newSector.Security;
+                currentSector.Tags = newSector.Tags;
+                currentSector.DiameterRadius = newSector.DiameterRadius;
+                currentSector.AllowRandomAnomalies = newSector.AllowRandomAnomalies;
+                currentSector.DisableFactionLogic = newSector.DisableFactionLogic;
+                currentSector.Offset = newSector.Offset;
+
+                foreach (var newZone in newSector.Zones)
+                {
+                    // Check if it exist then adjust it else add it
+                    var currentZone = currentSector.Zones.FirstOrDefault(a =>
+                    {
+                        if (!string.IsNullOrWhiteSpace(a.Name) && !string.IsNullOrWhiteSpace(newZone.Name) && a.Name.Equals(newZone.Name, StringComparison.OrdinalIgnoreCase))
+                            return true;
+                        if (a.Id == 0 && newZone.Id == 0)
+                            return false;
+                        return a.Id == newZone.Id;
+                    });
+
+                    if (currentZone == null)
+                    {
+                        currentSector.Zones.Add(newZone);
+                        continue;
+                    }
+
+                    currentZone.Name = newZone.Name;
+                    currentZone.Position = newZone.Position;
+                    
+                    foreach (var newGate in newZone.Gates)
+                    {
+                        // Check if it exist then adjust it else add it
+                        var currentGate = currentZone.Gates.FirstOrDefault(a => a.SourcePath == newGate.SourcePath && a.DestinationPath == newGate.DestinationPath);
+                        if (currentGate == null)
+                        {
+                            currentZone.Gates.Add(newGate);
+                            continue;
+                        }
+                    }
                 }
             }
         }
@@ -1130,9 +1227,13 @@ namespace X4SectorCreator
                 sZone.Id = ++count;
             }
 
-            // Remove from listbox
-            GatesListBox.Items.Remove(selectedGate);
-            GatesListBox.SelectedItem = null;
+            int index = GatesListBox.Items.IndexOf(GatesListBox.SelectedItem);
+            GatesListBox.Items.Remove(GatesListBox.SelectedItem);
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            GatesListBox.SelectedItem = index >= 0 && GatesListBox.Items.Count > 0 ? GatesListBox.Items[index] : null;
         }
 
         private void GatesListBox_DoubleClick(object sender, EventArgs e)
@@ -1217,8 +1318,14 @@ namespace X4SectorCreator
 
             // Remove region from sector
             _ = sector.Regions.Remove(selectedRegion);
-            RegionsListBox.Items.Remove(selectedRegion);
-            RegionsListBox.SelectedItem = null;
+
+            int index = RegionsListBox.Items.IndexOf(RegionsListBox.SelectedItem);
+            RegionsListBox.Items.Remove(RegionsListBox.SelectedItem);
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            RegionsListBox.SelectedItem = index >= 0 && RegionsListBox.Items.Count > 0 ? RegionsListBox.Items[index] : null;
         }
 
         private void RegionsListBox_DoubleClick(object sender, EventArgs e)
