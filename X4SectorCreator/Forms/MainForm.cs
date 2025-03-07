@@ -69,7 +69,7 @@ namespace X4SectorCreator
 
             // Set dlc mappings
             string json = File.ReadAllText(_dlcMappingFilePath);
-            DlcMappings = JsonSerializer.Deserialize<List<DlcMapping>>(json)
+            DlcMappings = JsonSerializer.Deserialize<List<DlcMapping>>(json, ConfigSerializer.SerializerOptions)
                 .ToDictionary(a => a.Dlc, a => a.Prefix);
 
             // Set faction color mapping
@@ -82,7 +82,7 @@ namespace X4SectorCreator
         public ClusterCollection InitAllClusters(bool replaceAllClusters = true)
         {
             string json = File.ReadAllText(_sectorMappingFilePath);
-            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
+            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.SerializerOptions);
 
             Dictionary<(int X, int Y), Cluster> clusterLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
             // Create lookups
@@ -94,6 +94,11 @@ namespace X4SectorCreator
                 if (cluster.Value.IsBaseGame && cluster.Value.BackgroundVisualMapping == null)
                 {
                     cluster.Value.BackgroundVisualMapping = cluster.Value.BaseGameMapping;
+                }
+
+                if (cluster.Value.Sectors.Count > 1 && cluster.Value.Sectors.All(a => a.Placement == default))
+                {
+                    throw new Exception($"Invalid sector offset configuration for cluster \"{cluster.Value.Name} | {cluster.Value.BaseGameMapping}\".");
                 }
 
                 foreach (Sector sector in cluster.Value.Sectors)
@@ -110,6 +115,9 @@ namespace X4SectorCreator
                     {
                         zone.Gates ??= [];
                     }
+
+                    // Auto-determine offset for each sector
+                    SectorForm.DetermineSectorOffset(cluster.Value, sector);
                 }
             }
 
@@ -428,7 +436,7 @@ namespace X4SectorCreator
                         {
                             // Update mapping file
                             File.WriteAllText(_sectorMappingFilePath, newSectorMappingJson);
-                            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(newSectorMappingJson);
+                            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(newSectorMappingJson, ConfigSerializer.SerializerOptions);
 
                             // Replace clusters
                             Dictionary<(int X, int Y), Cluster> newClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
@@ -876,13 +884,26 @@ namespace X4SectorCreator
                 {
                     // Create new lookup table
                     string json = File.ReadAllText(_sectorMappingFilePath);
-                    ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json);
+                    ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.SerializerOptions);
                     _clusterDlcLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
                 }
 
                 if (_clusterDlcLookup.TryGetValue((cluster.Position.X, cluster.Position.Y), out Cluster lookupCluster))
                 {
                     cluster.Dlc = lookupCluster.Dlc;
+                }
+            }
+
+            // Support for dynamic placement, if all are the same we need to init some changes dynamically
+            if (cluster.Sectors.Count > 1 && cluster.Sectors.All(a => a.Placement == default))
+            {
+                var placements = Enum.GetValues<SectorPlacement>().ToList();
+                int index = 0;
+                foreach (var sector in cluster.Sectors)
+                {
+                    sector.Placement = placements[index];
+                    SectorForm.DetermineSectorOffset(cluster, sector);
+                    index++;
                 }
             }
         }
@@ -1101,8 +1122,6 @@ namespace X4SectorCreator
                 sect.Id = ++count;
             }
 
-            RecalculateSectorOffsets(cluster.Value);
-
             RegionsListBox.Items.Clear();
             GatesListBox.Items.Clear();
 
@@ -1120,35 +1139,6 @@ namespace X4SectorCreator
 
             // Set details
             SetDetailsText(cluster.Value, sector);
-        }
-
-        private static void RecalculateSectorOffsets(Cluster cluster)
-        {
-            List<Sector> sectors = [];
-            foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
-            {
-                int offSetX, offsetY;
-                if (sectors.Count == 0)
-                {
-                    offSetX = 0;
-                    offsetY = 0;
-                }
-                if (sectors.Count == 1)
-                {
-                    // Down
-                    offSetX = 0;
-                    offsetY = -1000000;
-                }
-                else
-                {
-                    // Right
-                    offSetX = 1000000;
-                    offsetY = -500000;
-                }
-
-                sector.Offset = new Point(offSetX, offsetY);
-                sectors.Add(sector);
-            }
         }
 
         private void SectorsListBox_DoubleClick(object sender, EventArgs e)

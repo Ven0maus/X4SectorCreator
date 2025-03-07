@@ -26,6 +26,7 @@
           "Name": "Grand Exchange IV",
           "Owner": "Teladi",
           "BaseGameMapping": "Sector003",
+          "Placement": "TopRight",
           "Sunlight": 1.29,
           "Economy": 0.5,
           "Security": 0.25
@@ -34,6 +35,7 @@
           "Name": "Grand Exchange I",
           "Owner": "Teladi",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomRight",
           "Sunlight": 1.23,
           "Economy": 0.5,
           "Security": 0.25
@@ -42,6 +44,7 @@
           "Name": "Grand Exchange III",
           "Owner": "Teladi",
           "BaseGameMapping": "Sector002",
+          "Placement": "MiddleLeft",
           "Sunlight": 1.35,
           "Economy": 0.5,
           "Security": 0.25
@@ -77,6 +80,7 @@
           "Name": "Black Hole Sun IV",
           "Owner": "Argon",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopLeft",
           "Sunlight": 1.16,
           "Economy": 0.5,
           "Security": 0.5
@@ -85,6 +89,7 @@
           "Name": "Black Hole Sun V",
           "Owner": "Argon",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomRight",
           "Sunlight": 1.19,
           "Economy": 0.5,
           "Security": 0.5
@@ -209,6 +214,7 @@
           "Name": "Avarice I",
           "Owner": "Riptide",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopRight",
           "Sunlight": 13.9,
           "Economy": 0.25,
           "Security": 0.75
@@ -217,6 +223,7 @@
           "Name": "Avarice V Dead End",
           "Owner": "Riptide",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomRight",
           "Sunlight": 13.9,
           "Economy": 0.25,
           "Security": 0.75
@@ -225,6 +232,7 @@
           "Name": "Avarice IV",
           "Owner": "Riptide",
           "BaseGameMapping": "Sector003",
+          "Placement": "MiddleLeft",
           "Sunlight": 13.9,
           "Economy": 0.25,
           "Security": 0.75
@@ -312,6 +320,7 @@
           "Name": "Nopileos Fortune II",
           "Owner": "None",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopLeft",
           "Sunlight": 0.82,
           "Economy": 0.5,
           "Security": 0.5
@@ -320,6 +329,7 @@
           "Name": "Nopileos Fortune VI",
           "Owner": "None",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomRight",
           "Sunlight": 0.78,
           "Economy": 0.5,
           "Security": 0.5
@@ -542,6 +552,7 @@
           "Name": "Hewa's Twin II",
           "Owner": "Teladi",
           "BaseGameMapping": "Sector002",
+          "Placement": "TopRight",
           "Sunlight": 1.02,
           "Economy": 0.25,
           "Security": 0.5
@@ -550,6 +561,7 @@
           "Name": "Hewa's Twin I",
           "Owner": "Teladi",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomLeft",
           "Sunlight": 1.16,
           "Economy": 0.25,
           "Security": 0.5
@@ -585,6 +597,7 @@
           "Name": "Hewa's Twin III",
           "Owner": "Teladi",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopLeft",
           "Sunlight": 0.86,
           "Economy": 0.25,
           "Security": 0.5
@@ -593,6 +606,7 @@
           "Name": "Hewa's Twin IV The Cove",
           "Owner": "None",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomRight",
           "Sunlight": 0.91,
           "Economy": 0.25,
           "Security": 0.5
@@ -611,6 +625,7 @@
           "Name": "Scale Plate Green VII",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector002",
+          "Placement": "TopLeft",
           "Sunlight": 1.15,
           "Economy": 0.25,
           "Security": 0.75
@@ -619,6 +634,7 @@
           "Name": "Scale Plate Green I",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomRight",
           "Sunlight": 1.26,
           "Economy": 0.25,
           "Security": 0.75
@@ -637,6 +653,7 @@
           "Name": "Turquoise Sea IX",
           "Owner": "None",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopLeft",
           "Sunlight": 1.41,
           "Economy": 0.25,
           "Security": 0.5
@@ -645,6 +662,7 @@
           "Name": "Turquoise Sea X",
           "Owner": "None",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomRight",
           "Sunlight": 1.28,
           "Economy": 0.25,
           "Security": 0.5
@@ -680,6 +698,7 @@
           "Name": "Ianamus Zura VII",
           "Owner": "Teladi",
           "BaseGameMapping": "Sector002",
+          "Placement": "TopRight",
           "Sunlight": 1.15,
           "Economy": 0.25,
           "Security": 0.75
@@ -688,6 +707,7 @@
           "Name": "Ianamus Zura IV",
           "Owner": "Teladi",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomLeft",
           "Sunlight": 1.33,
           "Economy": 0.25,
           "Security": 0.75
@@ -761,6 +781,7 @@
           "Name": "Thuruk's Demise II First Impact",
           "Owner": "FreeFam",
           "BaseGameMapping": "Sector002",
+          "Placement": "TopLeft",
           "Sunlight": 0.71,
           "Economy": 0.6,
           "Security": 0.3
@@ -769,6 +790,7 @@
           "Name": "Thuruk's Demise III",
           "Owner": "FreeFam",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomRight",
           "Sunlight": 0.59,
           "Economy": 0.4,
           "Security": 0.3
@@ -1126,6 +1148,7 @@
           "Name": "Guiding Star VII",
           "Owner": "Argon",
           "BaseGameMapping": "Sector002",
+          "Placement": "TopLeft",
           "Sunlight": 0.71,
           "Economy": 0.5,
           "Security": 0.5
@@ -1134,6 +1157,7 @@
           "Name": "Guiding Star V",
           "Owner": "Argon",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomRight",
           "Sunlight": 0.83,
           "Economy": 0.25,
           "Security": 0.25
@@ -1239,6 +1263,7 @@
           "Name": "Tharka's Cascade XVII",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector002",
+          "Placement": "TopLeft",
           "Sunlight": 1.29,
           "Economy": 0.25,
           "Security": 0.5
@@ -1247,6 +1272,7 @@
           "Name": "Tharka's Cascade XV",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomRight",
           "Sunlight": 1.42,
           "Economy": 0.25,
           "Security": 0.5
@@ -1409,6 +1435,7 @@
           "Name": "Litany of Fury XII",
           "Owner": "Paranid",
           "BaseGameMapping": "Sector002",
+          "Placement": "TopRight",
           "Sunlight": 0.32,
           "Economy": 0.25,
           "Security": 0.25
@@ -1417,6 +1444,7 @@
           "Name": "Litany of Fury IX",
           "Owner": "Paranid",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomLeft",
           "Sunlight": 0.42,
           "Economy": 0.25,
           "Security": 0.25
@@ -1436,6 +1464,7 @@
           "Name": "Emperor's Pride VI",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector002",
+          "Placement": "TopRight",
           "Sunlight": 0.65,
           "Economy": 0.75,
           "Security": 0.75
@@ -1444,6 +1473,7 @@
           "Name": "Emperor's Pride IV",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomLeft",
           "Sunlight": 0.71,
           "Economy": 0.5,
           "Security": 0.25
@@ -1462,6 +1492,7 @@
           "Name": "Hatikvah's Choice III",
           "Owner": "Argon",
           "BaseGameMapping": "Sector002",
+          "Placement": "TopRight",
           "Sunlight": 0.91,
           "Economy": 0.75,
           "Security": 0.75
@@ -1470,6 +1501,7 @@
           "Name": "Hatikvah's Choice I",
           "Owner": "Hatikvah",
           "BaseGameMapping": "Sector001",
+          "Placement": "BottomLeft",
           "Sunlight": 1.12,
           "Economy": 0.75,
           "Security": 0.75
@@ -1574,6 +1606,7 @@
           "Name": "Savage Spur I",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopRight",
           "Sunlight": 1.17,
           "Economy": 0.25,
           "Security": 0.25
@@ -1582,6 +1615,7 @@
           "Name": "Savage Spur II",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomLeft",
           "Sunlight": 1.25,
           "Economy": 0.25,
           "Security": 0.25
@@ -1739,6 +1773,7 @@
           "Name": "Atiya's Misfortune I",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopLeft",
           "Sunlight": 1.09,
           "Economy": 0.25,
           "Security": 0.75
@@ -1747,6 +1782,7 @@
           "Name": "Atiya's Misfortune III",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomRight",
           "Sunlight": 0.93,
           "Economy": 0.25,
           "Security": 0.75
@@ -1799,6 +1835,7 @@
           "Name": "Faulty Logic I",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopRight",
           "Sunlight": 1.77,
           "Economy": 0.25,
           "Security": 0.5
@@ -1807,6 +1844,7 @@
           "Name": "Faulty Logic VII",
           "Owner": "Xenon",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomLeft",
           "Sunlight": 1.47,
           "Economy": 0.25,
           "Security": 0.5
@@ -2035,6 +2073,7 @@
           "Name": "Kingdom End I",
           "Owner": "Boron",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopLeft",
           "Sunlight": 1.18,
           "Economy": 0.75,
           "Security": 0.75
@@ -2043,6 +2082,7 @@
           "Name": "Reflected Stars",
           "Owner": "Boron",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomLeft",
           "Sunlight": 1.18,
           "Economy": 0.75,
           "Security": 0.75
@@ -2051,6 +2091,7 @@
           "Name": "Towering Wave",
           "Owner": "Boron",
           "BaseGameMapping": "Sector003",
+          "Placement": "MiddleRight",
           "Sunlight": 1.18,
           "Economy": 0.75,
           "Security": 0.75
@@ -2267,6 +2308,7 @@
           "Name": "Saturn 2",
           "Owner": "Terran",
           "BaseGameMapping": "Sector003",
+          "Placement": "TopLeft",
           "Sunlight": 0.08,
           "Economy": 0.25,
           "Security": 0.25
@@ -2275,6 +2317,7 @@
           "Name": "Saturn 1",
           "Owner": "Terran",
           "BaseGameMapping": "Sector001",
+          "Placement": "MiddleRight",
           "Sunlight": 0.08,
           "Economy": 0.25,
           "Security": 0.25
@@ -2283,6 +2326,7 @@
           "Name": "Titan",
           "Owner": "Terran",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomLeft",
           "Sunlight": 0.08,
           "Economy": 0.25,
           "Security": 0.25
@@ -2392,6 +2436,7 @@
           "Name": "Earth",
           "Owner": "Terran",
           "BaseGameMapping": "Sector001",
+          "Placement": "TopLeft",
           "Sunlight": 1,
           "Economy": 0.75,
           "Security": 0.75
@@ -2400,6 +2445,7 @@
           "Name": "The Moon",
           "Owner": "Terran",
           "BaseGameMapping": "Sector002",
+          "Placement": "BottomRight",
           "Sunlight": 1.05,
           "Economy": 0.75,
           "Security": 0.75

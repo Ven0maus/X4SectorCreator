@@ -19,8 +19,19 @@ namespace X4SectorCreator.Objects
         public List<Zone> Zones { get; set; }
         public List<Region> Regions { get; set; }
         public Point Offset { get; set; }
+        public SectorPlacement Placement { get; set; }
 
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);
+    }
+
+    public enum SectorPlacement
+    {
+        TopLeft,
+        TopRight,
+        BottomLeft,
+        BottomRight,
+        MiddleLeft,
+        MiddleRight
     }
 }

@@ -12,12 +12,6 @@ namespace X4SectorCreator.Configuration
     /// </summary>
     public static class VanillaGateConnectionParser
     {
-        private static readonly JsonSerializerOptions _serializerOptions = new()
-        {
-            WriteIndented = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
         private static string _readPath;
         private static string _resultsPath;
 
@@ -31,8 +25,8 @@ namespace X4SectorCreator.Configuration
             _readPath = readPath;
             _resultsPath = resultsPath;
 
-            (string prefix, string path)[] filePaths = new (string prefix, string path)[]
-            {
+            (string prefix, string path)[] filePaths =
+            [
                 (null, GetFile(null)),
                 ("dlc4_", GetFile(SectorMapForm.DlcMapping["Split Vendetta"])),
                 ("dlc_pirate_", GetFile(SectorMapForm.DlcMapping["Tides Of Avarice"])),
@@ -40,7 +34,7 @@ namespace X4SectorCreator.Configuration
                 ("dlc_boron_", GetFile(SectorMapForm.DlcMapping["Kingdom End"])),
                 ("dlc7_", GetFile(SectorMapForm.DlcMapping["Timelines"])),
                 ("dlc_mini_01_", GetFile(SectorMapForm.DlcMapping["Hyperion Pack"])),
-            };
+            ];
 
             // Verify existance
             (string prefix, string path)[] nonExistant = filePaths
@@ -64,7 +58,7 @@ namespace X4SectorCreator.Configuration
             };
 
             // Generate the mappings based on these connections
-            string json = JsonSerializer.Serialize(mapping, _serializerOptions);
+            string json = JsonSerializer.Serialize(mapping, ConfigSerializer.SerializerOptions);
             File.WriteAllText($"{_resultsPath}/vanilla_connection_mappings.json", json);
         }
 
@@ -74,7 +68,7 @@ namespace X4SectorCreator.Configuration
             {
                 string mappingsPath = Path.Combine(Application.StartupPath, "Mappings/vanilla_connection_mappings.json");
                 string json = File.ReadAllText(mappingsPath);
-                VanilaConnectionMapping vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json);
+                VanilaConnectionMapping vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json, ConfigSerializer.SerializerOptions);
 
                 Cluster[] baseGameClusters = allClusters.Values
                     .Where(a => a.IsBaseGame)

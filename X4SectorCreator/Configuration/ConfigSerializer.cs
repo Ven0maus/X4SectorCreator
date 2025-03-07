@@ -7,7 +7,7 @@ namespace X4SectorCreator.Configuration
 {
     internal static class ConfigSerializer
     {
-        private static readonly JsonSerializerOptions _serializerOptions = new()
+        public static readonly JsonSerializerOptions SerializerOptions = new()
         {
             WriteIndented = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
@@ -55,7 +55,7 @@ namespace X4SectorCreator.Configuration
                 Version = new VersionChecker().CurrentVersion
             };
 
-            return JsonSerializer.Serialize(configObj, _serializerOptions);
+            return JsonSerializer.Serialize(configObj, SerializerOptions);
         }
 
         public static (List<Cluster> clusters, VanillaChanges vanillaChanges) Deserialize(string filePath)
@@ -63,7 +63,7 @@ namespace X4SectorCreator.Configuration
             ConfigurationObj configObj = null;
             try
             {
-                configObj = JsonSerializer.Deserialize<ConfigurationObj>(filePath, _serializerOptions);
+                configObj = JsonSerializer.Deserialize<ConfigurationObj>(filePath, SerializerOptions);
             }
             catch (Exception)
             {
