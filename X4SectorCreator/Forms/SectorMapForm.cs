@@ -631,7 +631,10 @@ namespace X4SectorCreator
             foreach (GateData sourceGateData in gatesData)
             {
                 // Find the connection with the matching path
-                GateData targetGateData = sectorGrouping[sourceGateData.Gate.DestinationSectorName]
+                if (!sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out var availableGateData))
+                    continue;
+
+                GateData targetGateData = availableGateData
                     .First(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
 
                 yield return new GateConnection
