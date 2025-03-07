@@ -880,11 +880,15 @@ namespace X4SectorCreator
                             .SelectMany(a => a.Sectors)
                             .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
                         Zone sourceZone = sourceSector.Zones
-                            .First(a => a.Gates
+                            .FirstOrDefault(a => a.Gates
                                 .Any(a => a.DestinationSectorName
                                     .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-                        Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
-                        _ = sourceZone.Gates.Remove(sourceGate);
+                        if (sourceZone != null)
+                        {
+                            Gate sourceGate = sourceZone.Gates.FirstOrDefault(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                            if (sourceGate != null)
+                                _ = sourceZone.Gates.Remove(sourceGate);
+                        }
                     }
                 }
             }
@@ -1013,10 +1017,12 @@ namespace X4SectorCreator
                         .SelectMany(a => a.Sectors)
                         .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
                     Zone sourceZone = sourceSector.Zones
-                        .First(a => a.Gates
+                        .FirstOrDefault(a => a.Gates
                             .Any(a => a.DestinationSectorName
                                 .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-                    Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                    if (sourceZone == null) continue; // Already deleted?
+                    Gate sourceGate = sourceZone.Gates.FirstOrDefault(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                    if (sourceGate == null) continue; // Already deleted?
                     _ = sourceZone.Gates.Remove(sourceGate);
                 }
             }
@@ -1185,15 +1191,18 @@ namespace X4SectorCreator
                 .SelectMany(a => a.Sectors)
                 .First(a => a.Name.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
             Zone targetZone = targetSector.Zones
-                .First(a => a.Gates
+                .FirstOrDefault(a => a.Gates
                     .Any(a => a.DestinationSectorName
                         .Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase)));
-            _ = targetZone.Gates.Remove(selectedGate);
-
-            // Check to remove zone if empty
-            if (targetZone.Gates.Count == 0)
+            if (targetZone != null)
             {
-                _ = targetSector.Zones.Remove(targetZone);
+                _ = targetZone.Gates.Remove(selectedGate);
+
+                // Check to remove zone if empty
+                if (targetZone.Gates.Count == 0)
+                {
+                    _ = targetSector.Zones.Remove(targetZone);
+                }
             }
 
             // Re-order zone ids if needed
@@ -1208,16 +1217,20 @@ namespace X4SectorCreator
                 .SelectMany(a => a.Sectors)
                 .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
             Zone sourceZone = sourceSector.Zones
-                .First(a => a.Gates
+                .FirstOrDefault(a => a.Gates
                     .Any(a => a.DestinationSectorName
                         .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-            Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
-            _ = sourceZone.Gates.Remove(sourceGate);
-
-            // Check to remove zone if empty
-            if (sourceZone.Gates.Count == 0)
+            if (sourceZone != null)
             {
-                _ = sourceSector.Zones.Remove(sourceZone);
+                Gate sourceGate = sourceZone.Gates.FirstOrDefault(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                if (sourceGate != null)
+                    _ = sourceZone.Gates.Remove(sourceGate);
+
+                // Check to remove zone if empty
+                if (sourceZone.Gates.Count == 0)
+                {
+                    _ = sourceSector.Zones.Remove(sourceZone);
+                }
             }
 
             // Re-order zone ids if needed
@@ -1262,27 +1275,32 @@ namespace X4SectorCreator
             Cluster sourceCluster = sourceQueryResult.cluster;
             Sector sourceSector = sourceQueryResult.sector;
             Zone sourceZone = sourceSector.Zones
-                .First(a => a.Gates
+                .FirstOrDefault(a => a.Gates
                     .Any(a => a.DestinationSectorName
                         .Equals(targetGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-            Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(targetGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
-
-            // Set gates to be updated
-            GateForm.UpdateInfoObject = new GateForm.UpdateInfo
+            if (sourceZone != null)
             {
-                SourceGate = sourceGate,
-                SourceZone = sourceZone,
-                SourceSector = sourceSector,
-                SourceCluster = sourceCluster,
+                Gate sourceGate = sourceZone.Gates.FirstOrDefault(a => a.DestinationSectorName.Equals(targetGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                if (sourceGate != null)
+                {
+                    // Set gates to be updated
+                    GateForm.UpdateInfoObject = new GateForm.UpdateInfo
+                    {
+                        SourceGate = sourceGate,
+                        SourceZone = sourceZone,
+                        SourceSector = sourceSector,
+                        SourceCluster = sourceCluster,
 
-                TargetGate = targetGate,
-                TargetZone = targetZone,
-                TargetSector = targetSector,
-                TargetCluster = targetCluster
-            };
-            GateForm.BtnCreateConnection.Text = "Update Connection";
-            GateForm.PrepareForUpdate();
-            GateForm.Show();
+                        TargetGate = targetGate,
+                        TargetZone = targetZone,
+                        TargetSector = targetSector,
+                        TargetCluster = targetCluster
+                    };
+                    GateForm.BtnCreateConnection.Text = "Update Connection";
+                    GateForm.PrepareForUpdate();
+                    GateForm.Show();
+                }
+            }
         }
         #endregion
 
