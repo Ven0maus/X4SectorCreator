@@ -5,7 +5,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class GalaxyGeneration
     {
-        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
+        public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges, ClusterCollection nonModifiedBaseGameData)
         {
             List<Cluster> orderedClusters = [.. clusters.OrderBy(a => a.Id)];
 
@@ -13,7 +13,7 @@ namespace X4SectorCreator.XmlGeneration
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
                 var galaxyElements = GenerateClusters(modPrefix, orderedClusters)
-                    .Concat(GenerateGateConnections(modPrefix, orderedClusters))
+                    .Concat(GenerateGateConnections(modPrefix, orderedClusters, nonModifiedBaseGameData))
                     .ToArray();
                 if (galaxyElements.Length > 0)
                 {
@@ -36,7 +36,7 @@ namespace X4SectorCreator.XmlGeneration
             else
             {
                 var groups = GenerateVanillaChanges(vanillaChanges)
-                    .Append((null, GenerateNewContent(modPrefix, clusters)))
+                    .Append((null, GenerateNewContent(modPrefix, clusters, nonModifiedBaseGameData)))
                     .Where(a => a.element != null)
                     .GroupBy(a => a.dlc)
                     .ToArray();
@@ -62,7 +62,7 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
-        private static XElement GenerateNewContent(string modPrefix, List<Cluster> clusters)
+        private static XElement GenerateNewContent(string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
         {
             var addElement = new XElement("add",
                                 new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections"));
@@ -71,7 +71,7 @@ namespace X4SectorCreator.XmlGeneration
             foreach (var element in newClusters)
                 addElement.Add(element);
 
-            var newGateConnections = GenerateGateConnections(modPrefix, clusters);
+            var newGateConnections = GenerateGateConnections(modPrefix, clusters, nonModifiedBaseGameData);
             foreach (var element in newGateConnections)
                 addElement.Add(element);
 
@@ -100,10 +100,18 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
-        private static IEnumerable<XElement> GenerateGateConnections(string modPrefix, List<Cluster> clusters)
+        private static IEnumerable<XElement> GenerateGateConnections(string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
         {
+            // Create a mapping of all vanilla gates
+            var gatesCache = nonModifiedBaseGameData.Clusters
+                .SelectMany(a => a.Sectors)
+                .SelectMany(a => a.Zones)
+                .SelectMany(a => a.Gates)
+                .Select(a => a.ConnectionName)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
             HashSet<Gate> destinationGatesToBeSkipped = [];
-            foreach (Cluster cluster in clusters.Where(a => !a.IsBaseGame))
+            foreach (Cluster cluster in clusters)
             {
                 foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
                 {
@@ -111,10 +119,8 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         foreach (Gate gate in zone.Gates.OrderBy(a => a.Id))
                         {
-                            if (destinationGatesToBeSkipped.Contains(gate))
-                            {
+                            if ((gate.ConnectionName != null && gatesCache.Contains(gate.ConnectionName)) || destinationGatesToBeSkipped.Contains(gate))
                                 continue;
-                            }
 
                             if (string.IsNullOrWhiteSpace(gate.SourcePath) ||
                                 string.IsNullOrWhiteSpace(gate.DestinationPath))

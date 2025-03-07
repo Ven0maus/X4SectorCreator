@@ -256,7 +256,7 @@ namespace X4SectorCreator
                 // Generate all xml files
                 MacrosGeneration.Generate(modFolder, modName, modPrefix, clusters);
                 MapDefaultsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
-                GalaxyGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
+                GalaxyGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges, nonModifiedBaseGameData);
                 ClusterGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 SectorGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
                 ZoneGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
