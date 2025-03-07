@@ -61,7 +61,7 @@ namespace X4SectorCreator.XmlGeneration
                 new XAttribute("description", $"{GalaxySettingsForm.GalaxyName} entrypoint."),
                 new XAttribute("image", "gamestart_1"),
                 new XElement("location",
-                    new XAttribute("galaxy", $"{modPrefix}_{GalaxySettingsForm.GalaxyName}_macro"),
+                    new XAttribute("galaxy", $"{GalaxySettingsForm.GalaxyName}_macro"),
                     new XAttribute("sector", $"{sectorMacro.ToLower()}"),
                     new XElement("position",
                         new XAttribute("x", "0"),
@@ -121,7 +121,11 @@ namespace X4SectorCreator.XmlGeneration
                         new XElement("ware", new XAttribute("ware", "research_sensorbooster")),
                         new XElement("ware", new XAttribute("ware", "research_tradeinterface"))
                     ),
-                    new XElement("theme", new XAttribute("paint", "painttheme_player_01"))
+                    new XElement("theme", new XAttribute("paint", "painttheme_player_01")),
+                    new XElement("knownspace", clusters
+                        .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
+                        .Select(a => new XElement("space", 
+                            new XAttribute("sector", $"{modPrefix}_SE_c{a.cluster.Id:D3}_s{a.sector.Id:D3}_macro"))))
                 )
             );
 
