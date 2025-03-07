@@ -1,5 +1,4 @@
 ﻿using System.Xml.Linq;
-using X4SectorCreator.Configuration;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
@@ -10,8 +9,9 @@ namespace X4SectorCreator.XmlGeneration
         {
             #region Custom Sector File
             // Save new sectors in custom clusters
-            var sectors = GenerateSectors(modPrefix, clusters.Where(a => !a.IsBaseGame).ToList()).ToArray();
-            if (sectors.Length > 0) {
+            XElement[] sectors = GenerateSectors(modPrefix, clusters.Where(a => !a.IsBaseGame).ToList()).ToArray();
+            if (sectors.Length > 0)
+            {
                 XDocument xmlDocument = new(
                     new XDeclaration("1.0", "utf-8", null),
                     new XElement("macros",
@@ -98,7 +98,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateSectorAdds(string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
         {
-            var zoneCache = nonModifiedBaseGameData.Clusters
+            HashSet<string> zoneCache = nonModifiedBaseGameData.Clusters
                 .SelectMany(a => a.Sectors)
                 .SelectMany(a => a.Zones)
                 .Select(a => a.Name)
@@ -118,7 +118,7 @@ namespace X4SectorCreator.XmlGeneration
                         continue;
                     }
 
-                    var zoneElements = GenerateExistingSectorZoneConnections(modPrefix, cluster, sector, sector.Zones, zoneCache).ToArray();
+                    XElement[] zoneElements = GenerateExistingSectorZoneConnections(modPrefix, cluster, sector, sector.Zones, zoneCache).ToArray();
                     if (zoneElements.Length > 0)
                     {
                         yield return (cluster.Dlc, new XElement("add",
@@ -136,7 +136,9 @@ namespace X4SectorCreator.XmlGeneration
             {
                 // if zone is not part of base game
                 if (zoneCache.Contains(zone.Name))
+                {
                     continue;
+                }
 
                 yield return new XElement("connection",
                     new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_connection"),
@@ -158,9 +160,9 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
         {
-            foreach (var sector in vanillaChanges.RemovedSectors)
+            foreach (RemovedSector sector in vanillaChanges.RemovedSectors)
             {
-                var macro = $"{sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
+                string macro = $"{sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
                 yield return (sector.VanillaCluster.Dlc, new XElement("remove",
                     new XAttribute("sel", $"//macros/macro[@name='{macro}_macro']")));
             }

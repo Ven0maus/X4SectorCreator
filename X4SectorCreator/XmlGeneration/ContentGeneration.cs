@@ -60,13 +60,15 @@ namespace X4SectorCreator.XmlGeneration
             }
 
             // Check if vanilla changes touched any dlc content
-            var allChangedContent = vanillaChanges.GetModifiedDlcContent()
+            HashSet<string> allChangedContent = vanillaChanges.GetModifiedDlcContent()
                 .Where(a => a != null)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
             // Add to current dlcDependencies
-            foreach (var changedContent in allChangedContent)
-                dlcDependencies.Add(changedContent);
+            foreach (string changedContent in allChangedContent)
+            {
+                _ = dlcDependencies.Add(changedContent);
+            }
 
             // Convert to a pair
             return dlcDependencies.Select(a =>

@@ -7,12 +7,12 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modName, string modPrefix, List<Cluster> clusters)
         {
-            var customClusters = clusters
+            Cluster[] customClusters = clusters
                 .Where(a => !a.IsBaseGame)
                 .ToArray();
 
-            var elements = new List<XElement>
-            {
+            List<XElement> elements =
+            [
                 GalaxySettingsForm.IsCustomGalaxy ? new XElement("entry",
                         new XAttribute("name", $"{GalaxySettingsForm.GalaxyName}_macro"),
                         new XAttribute("value", $@"extensions\{modName}\maps\{GalaxySettingsForm.GalaxyName}\galaxy")
@@ -29,8 +29,8 @@ namespace X4SectorCreator.XmlGeneration
                         new XAttribute("name", $"{modPrefix}_ZO_*"),
                         new XAttribute("value", $@"extensions\{modName}\maps\{GalaxySettingsForm.GalaxyName}\{modPrefix}_zones")
                     ) : null
-            };
-            elements.RemoveAll(a => a == null);
+            ];
+            _ = elements.RemoveAll(a => a == null);
 
             if (elements.Count > 0)
             {

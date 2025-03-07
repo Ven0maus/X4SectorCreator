@@ -53,14 +53,9 @@ namespace X4SectorCreator.Forms
 
                     foreach (StepObj fallOff in _regionDefinition.Falloff)
                     {
-                        if (fallOff.Type.Equals("Lateral", StringComparison.OrdinalIgnoreCase))
-                        {
-                            _ = ListBoxLateral.Items.Add(fallOff);
-                        }
-                        else
-                        {
-                            _ = ListBoxRadial.Items.Add(fallOff);
-                        }
+                        _ = fallOff.Type.Equals("Lateral", StringComparison.OrdinalIgnoreCase)
+                            ? ListBoxLateral.Items.Add(fallOff)
+                            : ListBoxRadial.Items.Add(fallOff);
                     }
                     foreach (Resource resource in _regionDefinition.Resources)
                     {
@@ -80,20 +75,20 @@ namespace X4SectorCreator.Forms
         public void InitDefaultFalloff()
         {
             // Some defaults to make configurating easier
-            List<StepObj> lateral = new()
-            {
+            List<StepObj> lateral =
+            [
                 new() { Position = "0.0", Value = "0.0" },
                 new() { Position = "0.1", Value = "1.0" },
                 new() { Position = "0.9", Value = "1.0" },
                 new() { Position = "1.0", Value = "0.0" }
-            };
+            ];
 
-            List<StepObj> radial = new()
-            {
+            List<StepObj> radial =
+            [
                 new() { Position = "0.0", Value = "1.0" },
                 new() { Position = "0.8", Value = "1.0" },
                 new() { Position = "1.0", Value = "0.0" }
-            };
+            ];
 
             foreach (StepObj lat in lateral)
             {
@@ -125,7 +120,7 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            List<string> messages = new();
+            List<string> messages = [];
             IsValidInteger(messages, txtRotation, out int rotation);
             IsValidInteger(messages, txtSeed, out int seed);
             IsValidInteger(messages, txtNoiseScale, out int noiseScale);

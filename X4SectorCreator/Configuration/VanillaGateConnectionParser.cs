@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Linq;
 using System.Numerics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -32,7 +31,7 @@ namespace X4SectorCreator.Configuration
             _readPath = readPath;
             _resultsPath = resultsPath;
 
-            var filePaths = new (string prefix, string path)[]
+            (string prefix, string path)[] filePaths = new (string prefix, string path)[]
             {
                 (null, GetFile(null)),
                 ("dlc4_", GetFile(SectorMapForm.DlcMapping["Split Vendetta"])),
@@ -44,7 +43,7 @@ namespace X4SectorCreator.Configuration
             };
 
             // Verify existance
-            var nonExistant = filePaths
+            (string prefix, string path)[] nonExistant = filePaths
                 .Where(a => !Directory.Exists(Path.GetDirectoryName(a.path)))
                 .ToArray();
             if (nonExistant.Length > 0)
@@ -54,18 +53,18 @@ namespace X4SectorCreator.Configuration
                 return;
             }
 
-            var connections = CollectGateConnections(filePaths.Select(a => a.path))
+            List<Connection> connections = CollectGateConnections(filePaths.Select(a => a.path))
                 .Concat(CollectHighwayConnections(filePaths))
                 .ToList();
-            var zoneGateInfos = CollectZoneAndGateInformation(filePaths).ToList();
-            var mapping = new VanilaConnectionMapping
+            List<ZoneGateInfo> zoneGateInfos = CollectZoneAndGateInformation(filePaths).ToList();
+            VanilaConnectionMapping mapping = new()
             {
                 Connections = connections,
                 ZoneGateInfos = zoneGateInfos
             };
 
             // Generate the mappings based on these connections
-            var json = JsonSerializer.Serialize(mapping, _serializerOptions);
+            string json = JsonSerializer.Serialize(mapping, _serializerOptions);
             File.WriteAllText($"{_resultsPath}/vanilla_connection_mappings.json", json);
         }
 
@@ -73,15 +72,15 @@ namespace X4SectorCreator.Configuration
         {
             try
             {
-                var mappingsPath = Path.Combine(Application.StartupPath, "Mappings/vanilla_connection_mappings.json");
-                var json = File.ReadAllText(mappingsPath);
-                var vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json);
+                string mappingsPath = Path.Combine(Application.StartupPath, "Mappings/vanilla_connection_mappings.json");
+                string json = File.ReadAllText(mappingsPath);
+                VanilaConnectionMapping vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json);
 
-                var baseGameClusters = allClusters.Values
+                Cluster[] baseGameClusters = allClusters.Values
                     .Where(a => a.IsBaseGame)
                     .ToArray();
 
-                foreach (var connection in vanillaMapping.Connections)
+                foreach (Connection connection in vanillaMapping.Connections)
                 {
                     if (connection.IsHighway)
                     {
@@ -107,26 +106,26 @@ namespace X4SectorCreator.Configuration
             connection.Destination.Zone = connection.Destination.Zone.Replace("_connection", string.Empty);
 
             // Source
-            var sourceCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Source.Cluster, StringComparison.OrdinalIgnoreCase));
-            var sourceSector = sourceCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Source.Sector, StringComparison.OrdinalIgnoreCase));
-            var sourceZone = sourceSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Source.Zone, StringComparison.OrdinalIgnoreCase));
+            Cluster sourceCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Source.Cluster, StringComparison.OrdinalIgnoreCase));
+            Sector sourceSector = sourceCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Source.Sector, StringComparison.OrdinalIgnoreCase));
+            Zone sourceZone = sourceSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Source.Zone, StringComparison.OrdinalIgnoreCase));
 
             // Target
-            var targetCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Destination.Cluster, StringComparison.OrdinalIgnoreCase));
-            var targetSector = targetCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Destination.Sector, StringComparison.OrdinalIgnoreCase));
-            var targetZone = targetSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Destination.Zone, StringComparison.OrdinalIgnoreCase));
+            Cluster targetCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Destination.Cluster, StringComparison.OrdinalIgnoreCase));
+            Sector targetSector = targetCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Destination.Sector, StringComparison.OrdinalIgnoreCase));
+            Zone targetZone = targetSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Destination.Zone, StringComparison.OrdinalIgnoreCase));
 
             // Can't filter out connections we already made (highways have always two 1to1 connections)
             // Because the user needs option to delete both of them.. Looks ugly af on the sector map though..
             // Maybe it makes sense to just render one of the two if its a highway gate when they point to same sectors
 
             // Collect known zone and gate infos for the given source & target
-            var sourceZoneGateInfo = CollectZoneGateInfoForHighwaySector(vanillaMapping.ZoneGateInfos, sourceCluster, sourceSector).ToArray();
-            var targetZoneGateInfo = CollectZoneGateInfoForHighwaySector(vanillaMapping.ZoneGateInfos, targetCluster, targetSector).ToArray();
+            ZoneGateInfo[] sourceZoneGateInfo = CollectZoneGateInfoForHighwaySector(vanillaMapping.ZoneGateInfos, sourceCluster, sourceSector).ToArray();
+            ZoneGateInfo[] targetZoneGateInfo = CollectZoneGateInfoForHighwaySector(vanillaMapping.ZoneGateInfos, targetCluster, targetSector).ToArray();
 
             // We use the regular gates to determine the radius, including the highways
-            var sourceRegularGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, sourceCluster, sourceSector).Concat(sourceZoneGateInfo).ToArray();
-            var targetRegularGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, targetCluster, targetSector).Concat(targetZoneGateInfo).ToArray();
+            ZoneGateInfo[] sourceRegularGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, sourceCluster, sourceSector).Concat(sourceZoneGateInfo).ToArray();
+            ZoneGateInfo[] targetRegularGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, targetCluster, targetSector).Concat(targetZoneGateInfo).ToArray();
 
             // Determine radius for source & target sector based on known zone and gate positions
             sourceSector.DiameterRadius = DetermineRadius(sourceRegularGateInfo) * 2;
@@ -151,18 +150,18 @@ namespace X4SectorCreator.Configuration
             connection.Destination.Gate = connection.Destination.Gate.Replace("_connection", string.Empty);
 
             // Source
-            var sourceCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Source.Cluster, StringComparison.OrdinalIgnoreCase));
-            var sourceSector = sourceCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Source.Sector, StringComparison.OrdinalIgnoreCase));
-            var sourceZone = sourceSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Source.Zone, StringComparison.OrdinalIgnoreCase));
+            Cluster sourceCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Source.Cluster, StringComparison.OrdinalIgnoreCase));
+            Sector sourceSector = sourceCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Source.Sector, StringComparison.OrdinalIgnoreCase));
+            Zone sourceZone = sourceSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Source.Zone, StringComparison.OrdinalIgnoreCase));
 
             // Target
-            var targetCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Destination.Cluster, StringComparison.OrdinalIgnoreCase));
-            var targetSector = targetCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Destination.Sector, StringComparison.OrdinalIgnoreCase));
-            var targetZone = targetSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Destination.Zone, StringComparison.OrdinalIgnoreCase));
+            Cluster targetCluster = baseGameClusters.First(a => a.BaseGameMapping.Equals(connection.Destination.Cluster, StringComparison.OrdinalIgnoreCase));
+            Sector targetSector = targetCluster.Sectors.First(a => a.BaseGameMapping.Equals(connection.Destination.Sector, StringComparison.OrdinalIgnoreCase));
+            Zone targetZone = targetSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Destination.Zone, StringComparison.OrdinalIgnoreCase));
 
             // Collect known zone and gate infos for the given source & target
-            var sourceZoneGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, sourceCluster, sourceSector).ToArray();
-            var targetZoneGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, targetCluster, targetSector).ToArray();
+            ZoneGateInfo[] sourceZoneGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, sourceCluster, sourceSector).ToArray();
+            ZoneGateInfo[] targetZoneGateInfo = CollectZoneGateInfoForSector(vanillaMapping.ZoneGateInfos, targetCluster, targetSector).ToArray();
 
             // Determine radius for source & target sector based on known zone and gate positions
             sourceSector.DiameterRadius = DetermineRadius(sourceZoneGateInfo) * 2;
@@ -183,23 +182,27 @@ namespace X4SectorCreator.Configuration
 
         private static IEnumerable<ZoneGateInfo> CollectZoneGateInfoForSector(List<ZoneGateInfo> zoneGateInfos, Cluster cluster, Sector sector)
         {
-            foreach (var zoneGateInfo in zoneGateInfos)
+            foreach (ZoneGateInfo zoneGateInfo in zoneGateInfos)
             {
                 if (zoneGateInfo.ZoneName.EndsWith(cluster.BaseGameMapping + "_" + sector.BaseGameMapping + "_connection", StringComparison.OrdinalIgnoreCase))
+                {
                     yield return zoneGateInfo;
+                }
             }
         }
 
         private static IEnumerable<ZoneGateInfo> CollectZoneGateInfoForHighwaySector(List<ZoneGateInfo> zoneGateInfos, Cluster cluster, Sector sector)
         {
-            foreach (var zoneGateInfo in zoneGateInfos)
+            foreach (ZoneGateInfo zoneGateInfo in zoneGateInfos)
             {
                 if (zoneGateInfo.ZoneName.StartsWith("tzone" + cluster.BaseGameMapping + "_" + sector.BaseGameMapping, StringComparison.OrdinalIgnoreCase))
+                {
                     yield return zoneGateInfo;
+                }
             }
         }
 
-        private static void CreateGateConnection(Sector sector, Zone zone, ConnectionInfo sourceInfo, 
+        private static void CreateGateConnection(Sector sector, Zone zone, ConnectionInfo sourceInfo,
             ZoneGateInfo[] sourceZoneGateInfo, ConnectionInfo targetInfo, Sector targetSector, bool isHighwayGate)
         {
             if (zone == null)
@@ -213,7 +216,7 @@ namespace X4SectorCreator.Configuration
             }
 
             // Find the matching zoneGateInfo for the source zone + set position
-            var zoneGateInfo = sourceZoneGateInfo.First(a => a.ZoneName.Replace("_connection", string.Empty).Equals(sourceInfo.Zone, StringComparison.OrdinalIgnoreCase));
+            ZoneGateInfo zoneGateInfo = sourceZoneGateInfo.First(a => a.ZoneName.Replace("_connection", string.Empty).Equals(sourceInfo.Zone, StringComparison.OrdinalIgnoreCase));
             zone.Position = new Point(zoneGateInfo.ZonePosition.X, zoneGateInfo.ZonePosition.Y);
 
             zone.Gates.Add(new Gate
@@ -238,37 +241,39 @@ namespace X4SectorCreator.Configuration
 
         private static IEnumerable<Connection> CollectHighwayConnections(IEnumerable<(string dlc, string path)> filePaths)
         {
-            foreach (var (prefix, path) in filePaths)
+            foreach ((string prefix, string path) in filePaths)
             {
-                var xDocument = XDocument.Load($"{path}{prefix ?? ""}clusters.xml");
+                XDocument xDocument = XDocument.Load($"{path}{prefix ?? ""}clusters.xml");
                 // Query all <connection> elements that contain a <macro> child with a 'connection' attribute
-                var elements = xDocument.Descendants("connection")
+                List<XElement> elements = xDocument.Descendants("connection")
                     .Where(c => c.Attribute("ref") != null && c.Attribute("ref").Value.Equals("sechighways", StringComparison.OrdinalIgnoreCase))
                     .Where(c => c.Element("macro") != null)
                     .ToList();
 
                 // Output the connections that have a macro
-                foreach (var element in elements)
+                foreach (XElement element in elements)
                 {
-                    var highwayConnection = ParseHighwayConnection(element);
+                    Connection highwayConnection = ParseHighwayConnection(element);
                     if (highwayConnection != null)
+                    {
                         yield return highwayConnection;
+                    }
                 }
             }
         }
 
         private static IEnumerable<Connection> CollectGateConnections(IEnumerable<string> filePaths)
         {
-            foreach (var filePath in filePaths)
+            foreach (string filePath in filePaths)
             {
-                var xDocument = XDocument.Load(filePath + "galaxy.xml");
+                XDocument xDocument = XDocument.Load(filePath + "galaxy.xml");
                 // Query all <connection> elements that contain a <macro> child with a 'connection' attribute
-                var elements = xDocument.Descendants("connection")
+                List<XElement> elements = xDocument.Descendants("connection")
                     .Where(c => c.Element("macro") != null && !c.Element("macro").Attribute("connection").Value.Equals("galaxy", StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
                 // Output the connections that have a macro
-                foreach (var element in elements)
+                foreach (XElement element in elements)
                 {
                     yield return ParseGateConnection(element);
                 }
@@ -277,36 +282,38 @@ namespace X4SectorCreator.Configuration
 
         private static IEnumerable<ZoneGateInfo> CollectZoneAndGateInformation(IEnumerable<(string prefix, string path)> filePaths)
         {
-            foreach (var (prefix, path) in filePaths)
+            foreach ((string prefix, string path) in filePaths)
             {
-                var zonesXDoc = XDocument.Load($"{path}{prefix ?? ""}zones.xml");
-                var zoneElements = zonesXDoc.Descendants("macro")
+                XDocument zonesXDoc = XDocument.Load($"{path}{prefix ?? ""}zones.xml");
+                List<XElement> zoneElements = zonesXDoc.Descendants("macro")
                     .Where(c => c.Attribute("class") != null && c.Attribute("class").Value
                         .Equals("zone", StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
-                var sectorXDoc = XDocument.Load($"{path}{prefix ?? ""}sectors.xml");
-                var sectorElements = sectorXDoc.Descendants("connection")
+                XDocument sectorXDoc = XDocument.Load($"{path}{prefix ?? ""}sectors.xml");
+                Dictionary<string, XElement> sectorElements = sectorXDoc.Descendants("connection")
                     .Where(c => c.Attribute("ref") != null && c.Attribute("ref").Value.Equals("zones", StringComparison.OrdinalIgnoreCase))
                     .ToDictionary(a => a.Attribute("name").Value, a => a, StringComparer.OrdinalIgnoreCase);
 
-                foreach (var zoneElement in zoneElements)
+                foreach (XElement zoneElement in zoneElements)
                 {
                     // Gate inside the zone
-                    var zoneGateInfo = ParseGate(zoneElement);
+                    ZoneGateInfo zoneGateInfo = ParseGate(zoneElement);
 
                     // Find matching zone sector element
-                    var matchingElementName = zoneElement.Attribute("name").Value.Replace("_macro", "_connection");
-                    if (!sectorElements.TryGetValue(matchingElementName, out var sectorZoneElement))
+                    string matchingElementName = zoneElement.Attribute("name").Value.Replace("_macro", "_connection");
+                    if (!sectorElements.TryGetValue(matchingElementName, out XElement sectorZoneElement))
+                    {
                         throw new Exception("Unable to find: " + matchingElementName);
+                    }
 
                     zoneGateInfo.ZoneName = matchingElementName;
 
                     if (sectorZoneElement.Element("offset")?.Element("position") != null)
                     {
-                        var positionElement = sectorZoneElement.Element("offset").Element("position");
-                        var x = (int)Math.Round(float.Parse(positionElement.Attribute("x").Value, CultureInfo.InvariantCulture));
-                        var z = (int)Math.Round(float.Parse(positionElement.Attribute("z").Value, CultureInfo.InvariantCulture));
+                        XElement positionElement = sectorZoneElement.Element("offset").Element("position");
+                        int x = (int)Math.Round(float.Parse(positionElement.Attribute("x").Value, CultureInfo.InvariantCulture));
+                        int z = (int)Math.Round(float.Parse(positionElement.Attribute("z").Value, CultureInfo.InvariantCulture));
                         zoneGateInfo.ZonePosition = new CustomPoint(x, z);
                     }
 
@@ -318,13 +325,13 @@ namespace X4SectorCreator.Configuration
         private static ZoneGateInfo ParseGate(XElement element)
         {
             ZoneGateInfo zoneGateInfo = new();
-            var gateConnectionElement = element
+            XElement gateConnectionElement = element
                 .Element("connections")?
                 .Elements("connection")?
                 .FirstOrDefault(a => a.Attribute("ref").Value.Equals("gates", StringComparison.OrdinalIgnoreCase));
             if (gateConnectionElement != null)
             {
-                var gateTypeElement = gateConnectionElement.Element("macro")?.Attribute("ref").Value;
+                string gateTypeElement = gateConnectionElement.Element("macro")?.Attribute("ref").Value;
 
                 zoneGateInfo = new ZoneGateInfo
                 {
@@ -334,19 +341,19 @@ namespace X4SectorCreator.Configuration
 
                 if (gateConnectionElement.Element("offset")?.Element("position") != null)
                 {
-                    var positionElement = gateConnectionElement.Element("offset").Element("position");
-                    var x = (int)Math.Round(float.Parse(positionElement.Attribute("x").Value, CultureInfo.InvariantCulture));
-                    var z = (int)Math.Round(float.Parse(positionElement.Attribute("z").Value, CultureInfo.InvariantCulture));
+                    XElement positionElement = gateConnectionElement.Element("offset").Element("position");
+                    int x = (int)Math.Round(float.Parse(positionElement.Attribute("x").Value, CultureInfo.InvariantCulture));
+                    int z = (int)Math.Round(float.Parse(positionElement.Attribute("z").Value, CultureInfo.InvariantCulture));
                     zoneGateInfo.GatePosition = new CustomPoint(x, z);
                 }
                 if (gateConnectionElement.Element("offset")?.Element("quaternion") != null)
                 {
-                    var positionElement = gateConnectionElement.Element("offset").Element("quaternion");
-                    var qx = float.Parse(positionElement.Attribute("qx").Value, CultureInfo.InvariantCulture);
-                    var qy = float.Parse(positionElement.Attribute("qy").Value, CultureInfo.InvariantCulture);
-                    var qz = float.Parse(positionElement.Attribute("qz").Value, CultureInfo.InvariantCulture);
-                    var qw = float.Parse(positionElement.Attribute("qw").Value, CultureInfo.InvariantCulture);
-                    var quaternion = new Quaternion(qx, qy, qz, qw);
+                    XElement positionElement = gateConnectionElement.Element("offset").Element("quaternion");
+                    float qx = float.Parse(positionElement.Attribute("qx").Value, CultureInfo.InvariantCulture);
+                    float qy = float.Parse(positionElement.Attribute("qy").Value, CultureInfo.InvariantCulture);
+                    float qz = float.Parse(positionElement.Attribute("qz").Value, CultureInfo.InvariantCulture);
+                    float qw = float.Parse(positionElement.Attribute("qw").Value, CultureInfo.InvariantCulture);
+                    Quaternion quaternion = new(qx, qy, qz, qw);
                     zoneGateInfo.Rotation = quaternion.ToEulerAngles();
                 }
             }
@@ -355,12 +362,12 @@ namespace X4SectorCreator.Configuration
 
         private static Connection ParseHighwayConnection(XElement connectionElement)
         {
-            var groups = connectionElement.Element("macro").Descendants("connection")
+            IEnumerable<IGrouping<string, XElement>> groups = connectionElement.Element("macro").Descendants("connection")
                 .Where(a => a.Attribute("ref") != null)
                 .GroupBy(a => a.Attribute("ref").Value);
 
             XElement entryPoint = null, exitPoint = null;
-            foreach (var group in groups)
+            foreach (IGrouping<string, XElement> group in groups)
             {
                 if (group.Key.Equals("entrypoint", StringComparison.OrdinalIgnoreCase))
                 {
@@ -373,10 +380,12 @@ namespace X4SectorCreator.Configuration
             }
 
             if (entryPoint == null || exitPoint == null)
+            {
                 return null;
-            
+            }
+
             // Create the main connection object
-            var connection = new Connection
+            Connection connection = new()
             {
                 Source = ParseHighwayConnectionInfo(entryPoint, connectionElement), // Parse source
                 Destination = ParseHighwayConnectionInfo(exitPoint, connectionElement), // Parse destination
@@ -389,7 +398,7 @@ namespace X4SectorCreator.Configuration
         private static Connection ParseGateConnection(XElement connectionElement)
         {
             // Create the main connection object
-            var connection = new Connection
+            Connection connection = new()
             {
                 Source = ParseGateConnectionInfo(connectionElement), // Parse source
                 Destination = ParseMacroConnection(connectionElement), // Parse destination
@@ -401,8 +410,8 @@ namespace X4SectorCreator.Configuration
 
         private static ConnectionInfo ParseHighwayConnectionInfo(XElement point, XElement connectionElement)
         {
-            var macro = point.Element("macro");
-            var clusterString = ExtractCluster(macro.Attribute("path")?.Value);
+            XElement macro = point.Element("macro");
+            string clusterString = ExtractCluster(macro.Attribute("path")?.Value);
 
             // Split cluster and sector from the main clusterString
             string cluster = null, sector = null;
@@ -441,7 +450,7 @@ namespace X4SectorCreator.Configuration
 
         private static ConnectionInfo ParseMacroConnection(XElement connectionElement)
         {
-            var macroElement = connectionElement.Element("macro");
+            XElement macroElement = connectionElement.Element("macro");
 
             if (macroElement != null)
             {
@@ -460,16 +469,35 @@ namespace X4SectorCreator.Configuration
         }
 
         // Helper methods to extract components from the path
-        private static string ExtractCluster(string path) => ExtractPart(path, "Cluster");
-        private static string ExtractSector(string path) => ExtractPart(path, "Sector");
-        private static string ExtractZone(string path) => ExtractPart(path, "Zone");
-        private static string ExtractGate(string path) => ExtractPart(path, "connection");
+        private static string ExtractCluster(string path)
+        {
+            return ExtractPart(path, "Cluster");
+        }
+
+        private static string ExtractSector(string path)
+        {
+            return ExtractPart(path, "Sector");
+        }
+
+        private static string ExtractZone(string path)
+        {
+            return ExtractPart(path, "Zone");
+        }
+
+        private static string ExtractGate(string path)
+        {
+            return ExtractPart(path, "connection");
+        }
 
         private static string ExtractPart(string path, string keyword)
         {
-            if (string.IsNullOrEmpty(path)) return null;
-            var parts = path.Split('/');
-            foreach (var part in parts)
+            if (string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
+            string[] parts = path.Split('/');
+            foreach (string part in parts)
             {
                 if (part.Contains(keyword))
                 {

@@ -163,8 +163,8 @@ namespace X4SectorCreator.Forms
                     Sector sector = selectedCluster.Value.Sectors.First(a => a.Name.Equals(selectedSector));
 
                     // Adjust first the gates
-                    var gates = sector.Zones.SelectMany(a => a.Gates).ToArray();
-                    foreach (var gate in gates)
+                    Gate[] gates = sector.Zones.SelectMany(a => a.Gates).ToArray();
+                    foreach (Gate gate in gates)
                     {
                         Sector sourceSector = MainForm.Instance.AllClusters.Values
                         .SelectMany(a => a.Sectors)

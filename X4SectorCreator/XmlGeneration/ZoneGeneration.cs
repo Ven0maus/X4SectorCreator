@@ -9,7 +9,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             #region Custom Zone File
             // Save new zones in custom sectors
-            var zones = GenerateZones(modPrefix, clusters).ToArray();
+            XElement[] zones = GenerateZones(modPrefix, clusters).ToArray();
             if (zones.Length > 0)
             {
                 XDocument xmlDocument = new(
@@ -58,12 +58,19 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
         {
-            foreach (var connection in vanillaChanges.RemovedConnections)
+            foreach (RemovedConnection connection in vanillaChanges.RemovedConnections)
             {
-                if (connection.Gate.IsHighwayGate) continue;
-                var connectionName = $"connection_{connection.Gate.ConnectionName}";
+                if (connection.Gate.IsHighwayGate)
+                {
+                    continue;
+                }
+
+                string connectionName = $"connection_{connection.Gate.ConnectionName}";
                 if (connection.Gate.ConnectionName.Equals("destination", StringComparison.OrdinalIgnoreCase) && !connection.Gate.IsHighwayGate)
+                {
                     connectionName = connection.Gate.SourcePath.Split('/').Last();
+                }
+
                 yield return (connection.VanillaCluster.Dlc, new XElement("remove", new XAttribute("sel", $"/macros/macro[@name='{connection.Zone.Name}_macro']/connections/connection[@name='{connectionName}']")));
             }
         }
@@ -127,13 +134,13 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateExistingSectorZones(string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
         {
-            var zoneCache = nonModifiedBaseGameData.Clusters
+            HashSet<string> zoneCache = nonModifiedBaseGameData.Clusters
                 .SelectMany(a => a.Sectors)
                 .SelectMany(a => a.Zones)
                 .Select(a => a.Name)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-            var elements = new List<(string dlc, XElement element)>();
+            List<(string dlc, XElement element)> elements = [];
 
 
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
@@ -147,7 +154,10 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
-                        if (zoneCache.Contains(zone.Name)) continue;
+                        if (zoneCache.Contains(zone.Name))
+                        {
+                            continue;
+                        }
 
                         elements.Add((cluster.Dlc, new XElement("macro",
                             new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_macro"),
@@ -161,10 +171,10 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
 
-            foreach (var group in elements.GroupBy(a => a.dlc))
+            foreach (IGrouping<string, (string dlc, XElement element)> group in elements.GroupBy(a => a.dlc))
             {
-                var addElement = new XElement("add", new XAttribute("sel", "/macros"));
-                foreach (var (dlc, element) in group)
+                XElement addElement = new("add", new XAttribute("sel", "/macros"));
+                foreach ((string dlc, XElement element) in group)
                 {
                     addElement.Add(element);
                 }

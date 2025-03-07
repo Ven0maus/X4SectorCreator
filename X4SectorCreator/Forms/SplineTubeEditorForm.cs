@@ -7,7 +7,7 @@ namespace X4SectorCreator.Forms
 {
     public partial class SplineTubeEditorForm : Form
     {
-        private SplineTube _splineTube = new SplineTube();
+        private SplineTube _splineTube = new();
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public SplineTube SplineTube
         {
@@ -52,7 +52,7 @@ namespace X4SectorCreator.Forms
                     float dx = e.X - selectedPos.X;
                     float dy = e.Y - selectedPos.Y;
 
-                    float length = (float)Math.Sqrt(dx * dx + dy * dy);
+                    float length = (float)Math.Sqrt((dx * dx) + (dy * dy));
                     if (length > 0)
                     {
                         selectedPos.TX = dx / length;
@@ -118,7 +118,7 @@ namespace X4SectorCreator.Forms
 
         private void AddSplinePoint(float x, float y)
         {
-            var pos = new SplinePosition
+            SplinePosition pos = new()
             {
                 X = x,
                 Y = y,
@@ -130,7 +130,7 @@ namespace X4SectorCreator.Forms
             };
 
             _splineTube.Positions.Add(pos);
-            ListBoxSplinePositions.Items.Add(pos);
+            _ = ListBoxSplinePositions.Items.Add(pos);
             SplineTubeRenderer.Invalidate();
         }
 
@@ -146,11 +146,10 @@ namespace X4SectorCreator.Forms
 
         private void BtnRemovePoint_Click(object sender, EventArgs e)
         {
-            var selectedPosition = ListBoxSplinePositions.SelectedItem as SplinePosition;
-            if (selectedPosition != null)
+            if (ListBoxSplinePositions.SelectedItem is SplinePosition selectedPosition)
             {
                 int index = ListBoxSplinePositions.Items.IndexOf(selectedPosition);
-                SplineTube.Positions.Remove(selectedPosition);
+                _ = SplineTube.Positions.Remove(selectedPosition);
                 ListBoxSplinePositions.Items.Remove(selectedPosition);
 
                 // Ensure index is within valid range
@@ -164,10 +163,13 @@ namespace X4SectorCreator.Forms
         private void DrawSpline(Graphics g)
         {
             g.Clear(Color.White);
-            if (SplineTube.Positions.Count < 2) return;
+            if (SplineTube.Positions.Count < 2)
+            {
+                return;
+            }
 
-            using Pen splinePen = new Pen(Color.Blue, 2);
-            using Pen tangentPen = new Pen(Color.Green, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+            using Pen splinePen = new(Color.Blue, 2);
+            using Pen tangentPen = new(Color.Green, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
             Brush pointBrush = Brushes.Red;
             Brush handleBrush = Brushes.Green;
 
@@ -177,7 +179,7 @@ namespace X4SectorCreator.Forms
                 SplinePosition p0 = SplineTube.Positions[i];
                 SplinePosition p1 = SplineTube.Positions[i + 1];
 
-                PointF lastPoint = new PointF(p0.X, p0.Y);
+                PointF lastPoint = new(p0.X, p0.Y);
                 for (float t = 0; t <= 1; t += 0.05f)
                 {
                     PointF interpolated = HermiteInterpolation(p0, p1, t);
@@ -187,12 +189,12 @@ namespace X4SectorCreator.Forms
             }
 
             // Draw control points and tangent handles
-            foreach (var pos in SplineTube.Positions)
+            foreach (SplinePosition pos in SplineTube.Positions)
             {
                 g.FillEllipse(pointBrush, pos.X - 5, pos.Y - 5, 10, 10);
 
                 // Tangent visualization
-                PointF tangentEnd = new PointF(pos.X + pos.TX * pos.OutLength, pos.Y + pos.TY * pos.OutLength);
+                PointF tangentEnd = new(pos.X + (pos.TX * pos.OutLength), pos.Y + (pos.TY * pos.OutLength));
                 g.DrawLine(tangentPen, new PointF(pos.X, pos.Y), tangentEnd);
                 g.FillEllipse(handleBrush, tangentEnd.X - 3, tangentEnd.Y - 3, 6, 6);
             }
@@ -205,9 +207,9 @@ namespace X4SectorCreator.Forms
             float t3 = t2 * t;
 
             // Hermite basis functions
-            float h00 = 2 * t3 - 3 * t2 + 1;
-            float h10 = t3 - 2 * t2 + t;
-            float h01 = -2 * t3 + 3 * t2;
+            float h00 = (2 * t3) - (3 * t2) + 1;
+            float h10 = t3 - (2 * t2) + t;
+            float h01 = (-2 * t3) + (3 * t2);
             float h11 = t3 - t2;
 
             // Tangents scaled by inlength/outlength
@@ -218,8 +220,8 @@ namespace X4SectorCreator.Forms
             float tangent1Y = p1.TY * p1.InLength;
 
             // Compute interpolated position
-            float x = h00 * p0.X + h10 * tangent0X + h01 * p1.X + h11 * tangent1X;
-            float y = h00 * p0.Y + h10 * tangent0Y + h01 * p1.Y + h11 * tangent1Y;
+            float x = (h00 * p0.X) + (h10 * tangent0X) + (h01 * p1.X) + (h11 * tangent1X);
+            float y = (h00 * p0.Y) + (h10 * tangent0Y) + (h01 * p1.Y) + (h11 * tangent1Y);
 
             return new PointF(x, y);
         }
@@ -227,7 +229,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnImportSplineTube_Click(object sender, EventArgs e)
         {
-            using OpenFileDialog openFileDialog = new OpenFileDialog
+            using OpenFileDialog openFileDialog = new()
             {
                 Filter = "XML Files (*.xml)|*.xml",
                 Title = "Select a Spline XML File"
@@ -241,11 +243,11 @@ namespace X4SectorCreator.Forms
                 string filePath = openFileDialog.FileName;
 
                 XDocument xmlDoc = XDocument.Load(filePath);
-                var positions = xmlDoc.Descendants("splineposition");
+                IEnumerable<XElement> positions = xmlDoc.Descendants("splineposition");
 
                 // Extract X and Z values for front view (XZ Projection)
-                var xValues = positions.Select(p => float.Parse(p.Attribute("x").Value));
-                var zValues = positions.Select(p => float.Parse(p.Attribute("z").Value));
+                IEnumerable<float> xValues = positions.Select(p => float.Parse(p.Attribute("x").Value));
+                IEnumerable<float> zValues = positions.Select(p => float.Parse(p.Attribute("z").Value));
 
                 float minX = xValues.Min(), maxX = xValues.Max();
                 float minZ = zValues.Min(), maxZ = zValues.Max();
@@ -257,7 +259,7 @@ namespace X4SectorCreator.Forms
                 float maxRange = Math.Max(rangeX, rangeZ);
                 float scale = 400.0f / maxRange;
 
-                foreach (var pos in positions)
+                foreach (XElement pos in positions)
                 {
                     float x = float.Parse(pos.Attribute("x").Value);
                     float z = float.Parse(pos.Attribute("z").Value);
@@ -272,7 +274,7 @@ namespace X4SectorCreator.Forms
                     float scaledZ = (z - minZ) * scale; // Z becomes Y in 2D
 
                     // Store in SplinePosition class
-                    var splinePos = new SplinePosition
+                    SplinePosition splinePos = new()
                     {
                         X = scaledX,
                         Y = scaledZ,
@@ -286,15 +288,18 @@ namespace X4SectorCreator.Forms
                 }
 
                 ScaleSplinePositionsToFitBox(SplineTube.Positions, SplineTubeRenderer.Width, SplineTubeRenderer.Height);
-                foreach (var pos in SplineTube.Positions)
-                    ListBoxSplinePositions.Items.Add(pos);
+                foreach (SplinePosition pos in SplineTube.Positions)
+                {
+                    _ = ListBoxSplinePositions.Items.Add(pos);
+                }
+
                 SplineTubeRenderer.Invalidate();
             }
         }
 
         private void BtnExportSplineTube_Click(object sender, EventArgs e)
         {
-            using SaveFileDialog saveFileDialog = new SaveFileDialog
+            using SaveFileDialog saveFileDialog = new()
             {
                 Filter = "XML Files (*.xml)|*.xml",
                 Title = "Save Spline XML File"
@@ -302,14 +307,14 @@ namespace X4SectorCreator.Forms
 
             string filePath = saveFileDialog.FileName;
 
-            XElement root = new XElement("boundary",
+            XElement root = new("boundary",
                 new XAttribute("class", "splinetube"),
                 new XElement("size", new XAttribute("r", "5000")) // Preserve size if needed
             );
 
-            foreach (var pos in SplineTube.Positions)
+            foreach (SplinePosition pos in SplineTube.Positions)
             {
-                XElement splinePos = new XElement("splineposition",
+                XElement splinePos = new("splineposition",
                     new XAttribute("x", pos.X.ToString(CultureInfo.InvariantCulture)),
                     new XAttribute("y", "0.0"), // Assuming original Y was 0 for 2D
                     new XAttribute("z", pos.Y.ToString(CultureInfo.InvariantCulture)), // Convert back to Z
@@ -323,14 +328,16 @@ namespace X4SectorCreator.Forms
                 root.Add(splinePos);
             }
 
-            XDocument xmlDoc = new XDocument(root);
+            XDocument xmlDoc = new(root);
             xmlDoc.Save(filePath);
         }
 
-        static void ScaleSplinePositionsToFitBox(List<SplinePosition> positions, float boxWidth, float boxHeight)
+        private static void ScaleSplinePositionsToFitBox(List<SplinePosition> positions, float boxWidth, float boxHeight)
         {
             if (positions == null || positions.Count == 0)
+            {
                 return;
+            }
 
             // Find bounding box
             float minX = positions.Min(p => p.X);

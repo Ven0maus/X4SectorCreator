@@ -533,41 +533,53 @@ namespace X4SectorCreator
 
         private void RenderGateConnections(PaintEventArgs e)
         {
-            if (!chkShowConnections.Checked) return;
+            if (!chkShowConnections.Checked)
+            {
+                return;
+            }
 
-            var gatesData = new List<GateData>();
+            List<GateData> gatesData = [];
 
             // Render custom cluster gates
             if (chkShowCustomSectors.Checked)
             {
-                foreach (var cluster in _customClusters)
+                foreach (Cluster cluster in _customClusters)
+                {
                     gatesData.AddRange(CollectGateDataFromCluster(cluster));
+                }
             }
 
             // Render base game cluster gates
             if (chkShowX4Sectors.Checked)
             {
-                foreach (var cluster in _baseGameClusters)
+                foreach (KeyValuePair<(int, int), Cluster> cluster in _baseGameClusters)
+                {
                     gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
+                }
             }
 
             // Collect the source / target for each gate data in one connection
-            var connections = CollectConnectionsFromGateData(gatesData);
-            var filteredConnections = FilterOutDuplicates(connections).ToArray();
-            foreach (var connection in filteredConnections)
+            IEnumerable<GateConnection> connections = CollectConnectionsFromGateData(gatesData);
+            GateConnection[] filteredConnections = FilterOutDuplicates(connections).ToArray();
+            foreach (GateConnection connection in filteredConnections)
+            {
                 PaintConnection(connection, e);
+            }
         }
 
         private static IEnumerable<GateConnection> FilterOutDuplicates(IEnumerable<GateConnection> connections)
         {
-            var dupes = new HashSet<(string, string)>();
-            foreach (var con in connections)
+            HashSet<(string, string)> dupes = [];
+            foreach (GateConnection con in connections)
             {
-                var sourceSector = con.Source.Gate.ParentSectorName;
-                var targetSector = con.Target.Gate.ParentSectorName;
+                string sourceSector = con.Source.Gate.ParentSectorName;
+                string targetSector = con.Target.Gate.ParentSectorName;
                 if (dupes.Contains((sourceSector, targetSector)) || dupes.Contains((targetSector, sourceSector)))
+                {
                     continue;
-                dupes.Add((sourceSector, targetSector));
+                }
+
+                _ = dupes.Add((sourceSector, targetSector));
                 yield return con;
             }
         }
@@ -585,9 +597,11 @@ namespace X4SectorCreator
             float targetX = connection.Target.ScreenX - gateSizeRadius;
             float targetY = connection.Target.ScreenY - gateSizeRadius;
 
-            var color = Color.LightGray;
+            Color color = Color.LightGray;
             if (connection.Source.Gate.IsHighwayGate)
+            {
                 color = Color.SlateGray;
+            }
 
             using Pen circlePen = new(color, 2);
             using SolidBrush circleBrush = new(HexToColor("#575757"));
@@ -601,10 +615,7 @@ namespace X4SectorCreator
 
             using Pen linePen = new(color, 3);
 
-            if (connection.Source.Gate.IsHighwayGate)
-                linePen.DashStyle = DashStyle.Dash;
-            else
-                linePen.DashStyle = DashStyle.Dot;
+            linePen.DashStyle = connection.Source.Gate.IsHighwayGate ? DashStyle.Dash : DashStyle.Dot;
 
             // Draw connection line between source and target
             e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);
@@ -612,15 +623,15 @@ namespace X4SectorCreator
 
         private static IEnumerable<GateConnection> CollectConnectionsFromGateData(List<GateData> gatesData)
         {
-            var sectorGrouping = gatesData
+            Dictionary<string, GateData[]> sectorGrouping = gatesData
                 .GroupBy(a => a.Sector.Name)
                 .ToDictionary(a => a.Key, a => a.ToArray(), StringComparer.OrdinalIgnoreCase);
 
             // Set to keep track of processed connections
-            foreach (var sourceGateData in gatesData)
+            foreach (GateData sourceGateData in gatesData)
             {
                 // Find the connection with the matching path
-                var targetGateData = sectorGrouping[sourceGateData.Gate.DestinationSectorName]
+                GateData targetGateData = sectorGrouping[sourceGateData.Gate.DestinationSectorName]
                     .First(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
 
                 yield return new GateConnection
@@ -638,20 +649,20 @@ namespace X4SectorCreator
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
 
             int sectorIndex = 0;
-            foreach (var sector in cluster.Sectors)
+            foreach (Sector sector in cluster.Sectors)
             {
                 // Collect the child hexagon points
-                var childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                 PointF hexCenter = GetHexCenter(childHexagon.Points);
 
-                var correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
+                float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
 
-                foreach (var zone in sector.Zones)
+                foreach (Zone zone in sector.Zones)
                 {
-                    foreach (var gate in zone.Gates)
+                    foreach (Gate gate in zone.Gates)
                     {
                         // Convert the zone position from world to screen space
-                        var realGatePos = new Point(zone.Position.X + gate.Position.X, zone.Position.Y + gate.Position.Y);
+                        Point realGatePos = new(zone.Position.X + gate.Position.X, zone.Position.Y + gate.Position.Y);
                         PointF gateScreenPosition = ConvertFromWorldCoordinate(realGatePos, sector.DiameterRadius, correctHexRadius);
 
                         gateScreenPosition.X += hexCenter.X;
@@ -965,13 +976,13 @@ namespace X4SectorCreator
             Invalidate();
         }
 
-        struct GateConnection
+        private struct GateConnection
         {
             public GateData Source { get; set; }
             public GateData Target { get; set; }
         }
 
-        struct GateData
+        private struct GateData
         {
             public float ScreenX { get; set; }
             public float ScreenY { get; set; }

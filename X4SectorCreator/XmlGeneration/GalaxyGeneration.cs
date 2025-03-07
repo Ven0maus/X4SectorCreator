@@ -12,7 +12,7 @@ namespace X4SectorCreator.XmlGeneration
             XDocument xmlDocument = null;
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
-                var galaxyElements = GenerateClusters(modPrefix, orderedClusters)
+                XElement[] galaxyElements = GenerateClusters(modPrefix, orderedClusters)
                     .Concat(GenerateGateConnections(modPrefix, orderedClusters, nonModifiedBaseGameData))
                     .ToArray();
                 if (galaxyElements.Length > 0)
@@ -35,14 +35,14 @@ namespace X4SectorCreator.XmlGeneration
             }
             else
             {
-                var groups = GenerateVanillaChanges(vanillaChanges)
+                IGrouping<string, (string dlc, XElement element)>[] groups = GenerateVanillaChanges(vanillaChanges)
                     .Append((null, GenerateNewContent(modPrefix, clusters, nonModifiedBaseGameData)))
                     .Where(a => a.element != null)
                     .GroupBy(a => a.dlc)
                     .ToArray();
                 if (groups.Length > 0)
                 {
-                    foreach (var group in groups)
+                    foreach (IGrouping<string, (string dlc, XElement element)> group in groups)
                     {
                         string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
                         xmlDocument = new(new XDeclaration("1.0", "utf-8", null),
@@ -64,16 +64,20 @@ namespace X4SectorCreator.XmlGeneration
 
         private static XElement GenerateNewContent(string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
         {
-            var addElement = new XElement("add",
+            XElement addElement = new("add",
                                 new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections"));
 
-            var newClusters = GenerateClusters(modPrefix, clusters);
-            foreach (var element in newClusters)
+            IEnumerable<XElement> newClusters = GenerateClusters(modPrefix, clusters);
+            foreach (XElement element in newClusters)
+            {
                 addElement.Add(element);
+            }
 
-            var newGateConnections = GenerateGateConnections(modPrefix, clusters, nonModifiedBaseGameData);
-            foreach (var element in newGateConnections)
+            IEnumerable<XElement> newGateConnections = GenerateGateConnections(modPrefix, clusters, nonModifiedBaseGameData);
+            foreach (XElement element in newGateConnections)
+            {
                 addElement.Add(element);
+            }
 
             return addElement.IsEmpty ? null : addElement;
         }
@@ -103,7 +107,7 @@ namespace X4SectorCreator.XmlGeneration
         private static IEnumerable<XElement> GenerateGateConnections(string modPrefix, List<Cluster> clusters, ClusterCollection nonModifiedBaseGameData)
         {
             // Create a mapping of all vanilla gates
-            var gatesCache = nonModifiedBaseGameData.Clusters
+            HashSet<string> gatesCache = nonModifiedBaseGameData.Clusters
                 .SelectMany(a => a.Sectors)
                 .SelectMany(a => a.Zones)
                 .SelectMany(a => a.Gates)
@@ -120,7 +124,9 @@ namespace X4SectorCreator.XmlGeneration
                         foreach (Gate gate in zone.Gates.OrderBy(a => a.Id))
                         {
                             if ((gate.ConnectionName != null && gatesCache.Contains(gate.ConnectionName)) || destinationGatesToBeSkipped.Contains(gate))
+                            {
                                 continue;
+                            }
 
                             if (string.IsNullOrWhiteSpace(gate.SourcePath) ||
                                 string.IsNullOrWhiteSpace(gate.DestinationPath))
@@ -155,16 +161,16 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
         {
-            foreach (var cluster in vanillaChanges.RemovedClusters)
+            foreach (Cluster cluster in vanillaChanges.RemovedClusters)
             {
                 yield return (cluster.Dlc, new XElement("remove",
                     new XAttribute("sel", $"/macros/macro[@name='XU_EP2_universe_macro']/connections/connection[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection']")));
             }
-            foreach (var modification in vanillaChanges.ModifiedClusters)
+            foreach (ModifiedCluster modification in vanillaChanges.ModifiedClusters)
             {
-                var Old = modification.Old;
-                var New = modification.New;
-                if (Old.Position != New.Position) 
+                Cluster Old = modification.Old;
+                Cluster New = modification.New;
+                if (Old.Position != New.Position)
                 {
                     // Exceptional case for cluster 0, 0 it has no offset properties defined
                     if (Old.BaseGameMapping.Equals("cluster_01", StringComparison.OrdinalIgnoreCase))
@@ -196,7 +202,7 @@ namespace X4SectorCreator.XmlGeneration
                     }
                 }
             }
-            foreach (var removedConnection in vanillaChanges.RemovedConnections)
+            foreach (RemovedConnection removedConnection in vanillaChanges.RemovedConnections)
             {
                 if (!removedConnection.Gate.IsHighwayGate)
                 {
@@ -204,7 +210,9 @@ namespace X4SectorCreator.XmlGeneration
 
                     // Destination gate doesn't have a removeable entry and can be skipped
                     if (removedConnection.Gate.ConnectionName.Equals("destination", StringComparison.OrdinalIgnoreCase))
+                    {
                         continue;
+                    }
 
                     // Remove gate connection from galaxy
                     yield return (removedConnection.VanillaCluster.Dlc, new XElement("remove",

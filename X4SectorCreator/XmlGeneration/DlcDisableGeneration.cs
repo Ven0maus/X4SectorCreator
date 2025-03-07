@@ -32,7 +32,7 @@ namespace X4SectorCreator.XmlGeneration
                 CreateReplacementMdForDlc(folder, SectorMapForm.DlcMapping["Hyperion Pack"], "setup_dlc_mini_01", "story_hyperion", "gs_hyperion");
 
                 // Base Game
-                var baseGameMds = new List<string> { "story_buccaneers", "story_diplomacy_intro", "story_paranid", "story_research_welfare_1", "story_ventures", "terraforming", "x4ep1_war_subscriptions" };
+                List<string> baseGameMds = ["story_buccaneers", "story_diplomacy_intro", "story_paranid", "story_research_welfare_1", "story_ventures", "terraforming", "x4ep1_war_subscriptions"];
 
                 // Exceptional cases where macro checks happen
                 if (GalaxySettingsForm.IsCustomGalaxy)
@@ -45,7 +45,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static void CreateReplacementMdForDlc(string folder, string dlc, params string[] filenames)
         {
-            var xmlDocument = new XDocument(
+            XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("diff",
                     new XElement("replace", new XAttribute("sel", "//mdscript/cues"),
@@ -54,13 +54,15 @@ namespace X4SectorCreator.XmlGeneration
                 )
             );
 
-            foreach (var filename in filenames)
+            foreach (string filename in filenames)
+            {
                 xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"extensions/{dlc}/md/{filename}.xml")));
+            }
         }
 
         private static void CreateReplacementMdForBaseGame(string folder, IEnumerable<string> filenames)
         {
-            var xmlDocument = new XDocument(
+            XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("diff",
                     new XElement("replace", new XAttribute("sel", "//mdscript/cues"),
@@ -69,8 +71,10 @@ namespace X4SectorCreator.XmlGeneration
                 )
             );
 
-            foreach (var filename in filenames)
+            foreach (string filename in filenames)
+            {
                 xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"md/{filename}.xml")));
+            }
         }
 
 

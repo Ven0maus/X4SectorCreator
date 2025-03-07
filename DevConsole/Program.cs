@@ -21,9 +21,14 @@ namespace DevConsole
         private static void EnsureDirectoriesExist()
         {
             if (!Directory.Exists(_readPath))
-                Directory.CreateDirectory(_readPath);
+            {
+                _ = Directory.CreateDirectory(_readPath);
+            }
+
             if (!Directory.Exists(_resultsPath))
-                Directory.CreateDirectory(_resultsPath);
+            {
+                _ = Directory.CreateDirectory(_resultsPath);
+            }
         }
     }
 }

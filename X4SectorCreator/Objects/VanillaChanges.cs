@@ -11,18 +11,31 @@
         public IEnumerable<string> GetModifiedDlcContent()
         {
             // Modifications
-            foreach (var modification in ModifiedClusters)
+            foreach (ModifiedCluster modification in ModifiedClusters)
+            {
                 yield return modification.New.Dlc;
-            foreach (var modification in ModifiedSectors)
+            }
+
+            foreach (ModifiedSector modification in ModifiedSectors)
+            {
                 yield return modification.VanillaCluster.Dlc;
+            }
 
             // Deletions
-            foreach (var modification in RemovedSectors)
+            foreach (RemovedSector modification in RemovedSectors)
+            {
                 yield return modification.VanillaCluster.Dlc;
-            foreach (var modification in RemovedClusters)
+            }
+
+            foreach (Cluster modification in RemovedClusters)
+            {
                 yield return modification.Dlc;
-            foreach (var modification in RemovedConnections)
+            }
+
+            foreach (RemovedConnection modification in RemovedConnections)
+            {
                 yield return modification.VanillaCluster.Dlc;
+            }
         }
     }
 

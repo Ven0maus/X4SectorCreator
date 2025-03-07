@@ -8,7 +8,7 @@ namespace X4SectorCreator.XmlGeneration
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             #region Custom Clusters File
-            var elements = GenerateClusters(modPrefix, clusters
+            XElement[] elements = GenerateClusters(modPrefix, clusters
                     .Where(a => !a.IsBaseGame)
                     .ToList())
                 .ToArray();
@@ -26,13 +26,17 @@ namespace X4SectorCreator.XmlGeneration
             #endregion
 
             #region BaseGame Clusters File
-            if (GalaxySettingsForm.IsCustomGalaxy) return; // No need to process these
-            var vanillaChangeElements = GenerateVanillaChanges(vanillaChanges)
+            if (GalaxySettingsForm.IsCustomGalaxy)
+            {
+                return; // No need to process these
+            }
+
+            IGrouping<string, (string dlc, XElement element)>[] vanillaChangeElements = GenerateVanillaChanges(vanillaChanges)
                 .GroupBy(a => a.dlc)
                 .ToArray();
             if (vanillaChangeElements.Length > 0)
             {
-                foreach (var group in vanillaChangeElements)
+                foreach (IGrouping<string, (string dlc, XElement element)> group in vanillaChangeElements)
                 {
                     string dlcMapping = group.Key == null ? null : $"{MainForm.Instance.DlcMappings[group.Key]}_";
                     XDocument xmlDocument = new(
@@ -137,41 +141,44 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
         {
-            foreach (var cluster in vanillaChanges.RemovedClusters)
+            foreach (Cluster cluster in vanillaChanges.RemovedClusters)
             {
-                var clusterCode = cluster.BaseGameMapping.CapitalizeFirstLetter();
+                string clusterCode = cluster.BaseGameMapping.CapitalizeFirstLetter();
                 yield return (cluster.Dlc, new XElement("remove", new XAttribute("sel", $"//macros/macro[@name='{clusterCode}_macro']")));
             }
-            foreach (var modification in vanillaChanges.ModifiedClusters)
+            foreach (ModifiedCluster modification in vanillaChanges.ModifiedClusters)
             {
-                var Old = modification.Old;
-                var New = modification.New;
+                Cluster Old = modification.Old;
+                Cluster New = modification.New;
                 if (!Old.BackgroundVisualMapping.Equals(New.BackgroundVisualMapping, StringComparison.OrdinalIgnoreCase))
                 {
-                    var clusterCode = Old.BaseGameMapping.CapitalizeFirstLetter();
+                    string clusterCode = Old.BaseGameMapping.CapitalizeFirstLetter();
                     yield return (Old.Dlc, new XElement("replace",
                         new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@ref='content']/macro/component/@ref"),
                         New.BackgroundVisualMapping
                         ));
                 }
             }
-            foreach (var sector in vanillaChanges.RemovedSectors)
+            foreach (RemovedSector sector in vanillaChanges.RemovedSectors)
             {
                 // Check if the cluster was removed, then skip this sector as its already part of the cluster deletion in galaxy.xml
-                if (vanillaChanges.RemovedClusters.Contains(sector.VanillaCluster)) continue;
+                if (vanillaChanges.RemovedClusters.Contains(sector.VanillaCluster))
+                {
+                    continue;
+                }
 
-                var clusterCode = sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
-                var sectorCode = $"{clusterCode}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
+                string clusterCode = sector.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
+                string sectorCode = $"{clusterCode}_{sector.Sector.BaseGameMapping.CapitalizeFirstLetter()}";
                 yield return (sector.VanillaCluster.Dlc, new XElement("remove",
                     new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{sectorCode}_connection']")));
             }
-            var handledConnections = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            foreach (var removedConnection in vanillaChanges.RemovedConnections)
+            HashSet<string> handledConnections = new(StringComparer.OrdinalIgnoreCase);
+            foreach (RemovedConnection removedConnection in vanillaChanges.RemovedConnections)
             {
                 if (removedConnection.Gate.IsHighwayGate && !handledConnections.Contains(removedConnection.Gate.ConnectionName))
                 {
-                    handledConnections.Add(removedConnection.Gate.ConnectionName);
-                    var clusterCode = removedConnection.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
+                    _ = handledConnections.Add(removedConnection.Gate.ConnectionName);
+                    string clusterCode = removedConnection.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
                     yield return (removedConnection.VanillaCluster.Dlc, new XElement("remove",
                     new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{removedConnection.Gate.ConnectionName}']")));
                 }
