@@ -24,6 +24,18 @@ namespace X4SectorCreator.Forms
                     txtSectorRadius.Text = ((int)(_sector.DiameterRadius / 1000f / 2f)).ToString();
                     chkAllowRandomAnomalies.Checked = _sector.AllowRandomAnomalies;
                     chkDisableFactionLogic.Checked = _sector.DisableFactionLogic;
+
+                    if (_selectedCluster.CustomSectorPositioning)
+                    {
+                        SetupPlacementValues();
+                        cmbPlacement.Enabled = true;
+                    }
+                    else
+                    {
+                        cmbPlacement.Items.Clear();
+                        cmbPlacement.SelectedIndex = -1;
+                        cmbPlacement.Enabled = false;
+                    }
                 }
                 else
                 {
@@ -41,11 +53,108 @@ namespace X4SectorCreator.Forms
         }
 
         private readonly Color _controlColor;
+        private readonly Cluster _selectedCluster;
+
+        public static readonly List<SectorPlacement[]> ValidSectorCombinations =
+        [
+            [SectorPlacement.TopLeft, SectorPlacement.BottomLeft, SectorPlacement.MiddleRight],
+            [SectorPlacement.TopRight, SectorPlacement.BottomRight, SectorPlacement.MiddleLeft],
+            [SectorPlacement.TopLeft, SectorPlacement.BottomRight],
+            [SectorPlacement.TopRight, SectorPlacement.BottomLeft],
+            [SectorPlacement.MiddleLeft, SectorPlacement.MiddleRight]
+        ];
 
         public SectorForm()
         {
             InitializeComponent();
             _controlColor = lblRadiusUnderText.ForeColor;
+
+            // Get the cluster that was selected in the mainform
+            string selectedClusterName = MainForm.Instance.ClustersListBox.SelectedItem as string;
+            _selectedCluster = MainForm.Instance.AllClusters
+                .First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase))
+                .Value;
+        }
+
+        /// <summary>
+        /// Automatically determines and sets the sector offset based on the SectorPlacement property of the sector.
+        /// </summary>
+        /// <param name="cluster"></param>
+        /// <param name="sector"></param>
+        public static void DetermineSectorOffset(Cluster cluster, Sector sector)
+        {
+            // If the sector is the only one in the cluster, use center (0, 0)
+            if (cluster.Sectors.Count <= 1)
+            {
+                // Either no sectors exist, or we're updating an existing sector
+                if (cluster.Sectors.Count == 0 || cluster.Sectors.First() == sector)
+                {
+                    sector.Offset = new(0, 0);
+                    return;
+                }
+            }
+
+            const int amount = 1000000; // 1000km should be enough
+            sector.Offset = sector.Placement switch
+            {
+                SectorPlacement.TopLeft => new(-amount, amount),
+                SectorPlacement.BottomLeft => new(-amount, -amount),
+                SectorPlacement.TopRight => new(amount, amount),
+                SectorPlacement.BottomRight => new(amount, -amount),
+                SectorPlacement.MiddleLeft => new(-amount, 0),
+                SectorPlacement.MiddleRight => new(amount, 0),
+                _ => new(0, 0) // Default case
+            };
+        }
+
+        private void SetupPlacementValues()
+        {
+            var placementValues = Enum.GetValues<SectorPlacement>().OrderBy(a => a).ToArray();
+
+            // Select selected placement value dynamically based on other sectors in the cluster
+            cmbPlacement.Items.Clear();
+            foreach (var placementValue in placementValues)
+            {
+                cmbPlacement.Items.Add(placementValue);
+            }
+
+            if (Sector != null)
+            {
+                cmbPlacement.SelectedItem = Sector.Placement;
+            }
+            else
+            {
+                cmbPlacement.SelectedItem = cmbPlacement.Items[0];
+            }
+        }
+
+        public static bool IsClusterPlacementValid(Cluster cluster)
+        {
+            if (cluster.Sectors.Count == 1) return true;
+
+            var sectorPlacements = cluster.Sectors
+                .Select(a => a.Placement)
+                .ToHashSet();
+
+            foreach (var combination in ValidSectorCombinations)
+            {
+                bool valid = true;
+                foreach (var placement in sectorPlacements)
+                {
+                    if (!combination.Contains(placement))
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+
+                if (valid)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void BtnCreate_Click(object sender, EventArgs e)
@@ -54,13 +163,6 @@ namespace X4SectorCreator.Forms
             if (string.IsNullOrWhiteSpace(name))
             {
                 _ = MessageBox.Show("Please select a valid (non empty / non whitespace) name.");
-                return;
-            }
-
-            string selectedClusterName = MainForm.Instance.ClustersListBox.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(selectedClusterName))
-            {
-                _ = MessageBox.Show("Please select a cluster in the main window.");
                 return;
             }
 
@@ -99,40 +201,21 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            KeyValuePair<(int, int), Cluster> selectedCluster = MainForm.Instance.AllClusters
-                .First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
-
+            SectorPlacement sectorPlacement = !_selectedCluster.CustomSectorPositioning ? default : (SectorPlacement)cmbPlacement.SelectedItem;
+            var sectorValue = Sector;
+            var beforePlacement = sectorValue?.Placement;
             switch (BtnCreate.Text)
             {
                 case "Create":
-                    int offSetX, offsetY;
-                    if (selectedCluster.Value.Sectors.Count == 0)
+                    if (_selectedCluster.Sectors.Count == 3)
                     {
-                        offSetX = 0;
-                        offsetY = 0;
-                    }
-                    else if (selectedCluster.Value.Sectors.Count == 1)
-                    {
-                        // Down
-                        offSetX = 0;
-                        offsetY = -1000000;
-                    }
-                    else if (selectedCluster.Value.Sectors.Count == 2)
-                    {
-                        // Right
-                        offSetX = 1000000;
-                        offsetY = -500000;
-                    }
-                    else
-                    {
-                        _ = MessageBox.Show($"Reached maximum allowed sectors for cluster \"{selectedCluster.Value.Name}\".");
+                        _ = MessageBox.Show($"Reached maximum allowed sectors for cluster \"{_selectedCluster.Name}\".");
                         return;
                     }
 
-                    // Create new sector in selected cluster
-                    selectedCluster.Value.Sectors.Add(new Sector
+                    sectorValue = new Sector
                     {
-                        Id = selectedCluster.Value.Sectors.DefaultIfEmpty(new Sector()).Max(a => a.Id) + 1,
+                        Id = _selectedCluster.Sectors.DefaultIfEmpty(new Sector()).Max(a => a.Id) + 1,
                         Name = name,
                         Owner = "None",
                         DiameterRadius = sectorRadius * 2 * 1000, // Convert to diameter + km
@@ -143,10 +226,13 @@ namespace X4SectorCreator.Forms
                         Tags = txtCustomTags.Text,
                         AllowRandomAnomalies = chkAllowRandomAnomalies.Checked,
                         DisableFactionLogic = chkDisableFactionLogic.Checked,
-                        Offset = new Point(offSetX, offsetY),
+                        Placement = sectorPlacement,
                         Zones = [],
                         Regions = []
-                    });
+                    };
+
+                    // Create new sector in selected cluster
+                    _selectedCluster.Sectors.Add(sectorValue);
 
                     // Add to sector listbox
                     _ = MainForm.Instance.SectorsListBox.Items.Add(name);
@@ -154,16 +240,8 @@ namespace X4SectorCreator.Forms
                     break;
 
                 case "Update":
-                    string selectedSector = MainForm.Instance.SectorsListBox.SelectedItem as string;
-                    if (string.IsNullOrEmpty(selectedSector))
-                    {
-                        ResetAndHide();
-                        return;
-                    }
-                    Sector sector = selectedCluster.Value.Sectors.First(a => a.Name.Equals(selectedSector));
-
                     // Adjust first the gates
-                    Gate[] gates = sector.Zones.SelectMany(a => a.Gates).ToArray();
+                    Gate[] gates = sectorValue.Zones.SelectMany(a => a.Gates).ToArray();
                     foreach (Gate gate in gates)
                     {
                         Sector sourceSector = MainForm.Instance.AllClusters.Values
@@ -171,24 +249,25 @@ namespace X4SectorCreator.Forms
                         .First(a => a.Name.Equals(gate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
                         Zone sourceZone = sourceSector.Zones
                             .First(a => a.Gates
-                                .Any(a => a.DestinationSectorName
-                                    .Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-                        Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                                .Any(a => a.SourcePath
+                                    .Equals(gate.DestinationPath, StringComparison.OrdinalIgnoreCase)));
+                        Gate sourceGate = sourceZone.Gates.First(a => a.SourcePath.Equals(gate.DestinationPath, StringComparison.OrdinalIgnoreCase));
 
                         sourceGate.DestinationSectorName = name;
                         gate.ParentSectorName = name;
                     }
 
                     // Update fields
-                    sector.Name = name;
-                    sector.Description = txtDescription.Text;
-                    sector.Sunlight = (float)Math.Round(sunlight / 100f, 2);
-                    sector.Economy = (float)Math.Round(economy / 100f, 2);
-                    sector.Security = (float)Math.Round(security / 100f, 2);
-                    sector.Tags = txtCustomTags.Text;
-                    sector.AllowRandomAnomalies = chkAllowRandomAnomalies.Checked;
-                    sector.DisableFactionLogic = chkDisableFactionLogic.Checked;
-                    sector.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
+                    sectorValue.Name = name;
+                    sectorValue.Description = txtDescription.Text;
+                    sectorValue.Sunlight = (float)Math.Round(sunlight / 100f, 2);
+                    sectorValue.Economy = (float)Math.Round(economy / 100f, 2);
+                    sectorValue.Security = (float)Math.Round(security / 100f, 2);
+                    sectorValue.Tags = txtCustomTags.Text;
+                    sectorValue.AllowRandomAnomalies = chkAllowRandomAnomalies.Checked;
+                    sectorValue.DisableFactionLogic = chkDisableFactionLogic.Checked;
+                    sectorValue.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
+                    sectorValue.Placement = sectorPlacement;
 
                     int index = MainForm.Instance.SectorsListBox.SelectedIndex;
                     MainForm.Instance.SectorsListBox.Items[index] = name;
@@ -196,7 +275,15 @@ namespace X4SectorCreator.Forms
                     break;
             }
 
+            // Reposition sectors in the cluster
+            if (!_selectedCluster.CustomSectorPositioning)
+            {
+                if (beforePlacement == null || (beforePlacement != Sector.Placement))
+                    _selectedCluster.AutoPositionSectors();
+            }
 
+            // Determines the position inside the cluster based on the selected placement
+            DetermineSectorOffset(_selectedCluster, sectorValue);
             ResetAndHide();
         }
 

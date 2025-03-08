@@ -279,21 +279,29 @@ namespace X4SectorCreator
                 {
                     (int x, int y) translatedCoordinate = TranslateCoordinate(q, r);
 
-                    // Define how many sectors should be in this cluster
-                    int children = 1;
-                    if (MainForm.Instance.AllClusters.TryGetValue(translatedCoordinate, out Cluster cluster))
-                    {
-                        children = cluster.Sectors.Count;
-                    }
+                    _ = MainForm.Instance.AllClusters.TryGetValue(translatedCoordinate, out Cluster cluster);
 
                     // Determine hex information
-                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, _defaultZoom, children);
+                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, cluster?.Sectors, _defaultZoom);
                     _hexagons[translatedCoordinate] = hex;
                 }
             }
         }
 
-        private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, float zoom = 1.0f, int children = 1)
+        /// <summary>
+        /// Determine's the calculations that need to be done based on the sector's placement value
+        /// </summary>
+        private static readonly Dictionary<SectorPlacement, Func<float, float, (float x, float y)>> _childPlacementMappings = new()
+        {
+            {SectorPlacement.TopRight, (float width, float childHeight) => (width * 0.375f, -(childHeight * 0.5f)) },
+            {SectorPlacement.TopLeft, (float width, float childHeight) => (width * 0.125f, -(childHeight * 0.5f)) },
+            {SectorPlacement.BottomRight, (float width, float childHeight) => (width * 0.375f, childHeight * 0.5f) },
+            {SectorPlacement.BottomLeft, (float width, float childHeight) => (width * 0.125f, childHeight * 0.5f) },
+            {SectorPlacement.MiddleRight, (float width, float childHeight) => (width * 0.5f, 0) },
+            {SectorPlacement.MiddleLeft, (float width, float childHeight) => (width * 0, 0) }
+        };
+
+        private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, List<Sector> sectors, float zoom = 1.0f)
         {
             // Scale parent hex
             height *= zoom;
@@ -327,34 +335,20 @@ namespace X4SectorCreator
             List<PointF[]> childHexes = [];
 
             // Child hex positions (equally spaced inside parent)
+            int children = sectors?.Count ?? 0;
 
-            PointF[] childCenters;
-            if (children == 2)
+            List<PointF> childHexPositions = [];
+            if (children == 2 || children == 3)
             {
                 // Child hex centers for top-left, bottom-right
-                childCenters =
-                [
-                    new PointF(xOffset + (width * 0.125f), yOffset - (childHeight * 0.5f)), // Top-left
-                    new PointF(xOffset + (width * 0.375f), yOffset + (childHeight * 0.5f)), // Bottom-right
-                ];
-            }
-            else if (children == 3)
-            {
-                // Child hex centers for top-left, bottom-left, and middle-right
-                childCenters =
-                [
-                    new PointF(xOffset + (width * 0.125f), yOffset - (childHeight * 0.5f)), // Top-left
-                    new PointF(xOffset + (width * 0.125f), yOffset + (childHeight * 0.5f)), // Bottom-left
-                    new PointF(xOffset  + (width * 0.5f), yOffset) // Middle-right
-                ];
-            }
-            else
-            {
-                // No children, if its other than 2 or 3
-                childCenters = [];
+                for (int i=0; i < children; i++)
+                {
+                    var (x, y) = _childPlacementMappings[sectors[i].Placement](width, childHeight);
+                    childHexPositions.Add(new PointF(xOffset + x, yOffset + y));
+                }
             }
 
-            foreach (PointF childCenter in childCenters)
+            foreach (PointF childCenter in childHexPositions)
             {
                 childHexes.Add(
                 [
@@ -630,6 +624,7 @@ namespace X4SectorCreator
                 .GroupBy(a => a.Sector.Name)
                 .ToDictionary(a => a.Key, a => a.ToArray(), StringComparer.OrdinalIgnoreCase);
 
+            var invalidConnections = new List<GateData>();
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
             {
@@ -638,7 +633,12 @@ namespace X4SectorCreator
                     continue;
 
                 GateData targetGateData = availableGateData
-                    .First(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
+                    .FirstOrDefault(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
+                if (targetGateData.Cluster == null) //Default
+                {
+                    invalidConnections.Add(sourceGateData);
+                    continue;
+                }
 
                 if (!IsSelectedDlcCluster(targetGateData.Cluster))
                     continue;
@@ -648,6 +648,12 @@ namespace X4SectorCreator
                     Source = sourceGateData,
                     Target = targetGateData
                 };
+            }
+
+            if (invalidConnections.Count > 0)
+            {
+                _ = MessageBox.Show("Some of your gate connections are invalid, please double check them:\n- " +
+                    string.Join("\n- ", invalidConnections.Select(a => a.Gate.ParentSectorName + " -> " + a.Gate.DestinationSectorName)));
             }
         }
 

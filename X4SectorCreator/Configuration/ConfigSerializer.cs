@@ -7,7 +7,7 @@ namespace X4SectorCreator.Configuration
 {
     internal static class ConfigSerializer
     {
-        private static readonly JsonSerializerOptions _serializerOptions = new()
+        public static readonly JsonSerializerOptions SerializerOptions = new()
         {
             WriteIndented = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
@@ -16,9 +16,12 @@ namespace X4SectorCreator.Configuration
 
         public static string Serialize(List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
+            // Make a deep copy so we don't modify anything
+            List<Cluster> clonedClusters = clusters.Select(a => (Cluster)a.Clone()).ToList();
+
             // First order everything correctly before exporting
-            clusters = [.. clusters.OrderBy(a => a.Id)];
-            foreach (Cluster cluster in clusters)
+            clonedClusters = [.. clonedClusters.OrderBy(a => a.Id)];
+            foreach (Cluster cluster in clonedClusters)
             {
                 cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];
                 foreach (Sector sector in cluster.Sectors)
@@ -48,14 +51,14 @@ namespace X4SectorCreator.Configuration
 
             ConfigurationObj configObj = new()
             {
-                Clusters = clusters,
+                Clusters = clonedClusters,
                 RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
                 GalaxyName = GalaxySettingsForm.GalaxyName,
                 VanillaChanges = vanillaChanges,
                 Version = new VersionChecker().CurrentVersion
             };
 
-            return JsonSerializer.Serialize(configObj, _serializerOptions);
+            return JsonSerializer.Serialize(configObj, SerializerOptions);
         }
 
         public static (List<Cluster> clusters, VanillaChanges vanillaChanges) Deserialize(string filePath)
@@ -63,7 +66,7 @@ namespace X4SectorCreator.Configuration
             ConfigurationObj configObj = null;
             try
             {
-                configObj = JsonSerializer.Deserialize<ConfigurationObj>(filePath, _serializerOptions);
+                configObj = JsonSerializer.Deserialize<ConfigurationObj>(filePath, SerializerOptions);
             }
             catch (Exception)
             {

@@ -170,9 +170,9 @@ namespace X4SectorCreator
                     .First(a => a.Name.Equals(pair.Gate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
                 Zone sourceZone = sourceSector.Zones
                     .First(a => a.Gates
-                        .Any(a => a.DestinationSectorName
-                            .Equals(pair.Gate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-                Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(pair.Gate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                        .Any(a => a.SourcePath
+                            .Equals(pair.Gate.DestinationPath, StringComparison.OrdinalIgnoreCase)));
+                Gate sourceGate = sourceZone.Gates.First(a => a.SourcePath.Equals(pair.Gate.DestinationPath, StringComparison.OrdinalIgnoreCase));
                 _ = sourceZone.Gates.Remove(sourceGate);
 
                 // Check to remove zone if empty
