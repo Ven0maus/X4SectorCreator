@@ -249,9 +249,9 @@ namespace X4SectorCreator.Forms
                         .First(a => a.Name.Equals(gate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
                         Zone sourceZone = sourceSector.Zones
                             .First(a => a.Gates
-                                .Any(a => a.DestinationSectorName
-                                    .Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-                        Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(gate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                                .Any(a => a.SourcePath
+                                    .Equals(gate.DestinationPath, StringComparison.OrdinalIgnoreCase)));
+                        Gate sourceGate = sourceZone.Gates.First(a => a.SourcePath.Equals(gate.DestinationPath, StringComparison.OrdinalIgnoreCase));
 
                         sourceGate.DestinationSectorName = name;
                         gate.ParentSectorName = name;

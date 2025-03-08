@@ -1007,16 +1007,10 @@ namespace X4SectorCreator
                             .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
                         Zone sourceZone = sourceSector.Zones
                             .FirstOrDefault(a => a.Gates
-                                .Any(a => a.DestinationSectorName
-                                    .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-                        if (sourceZone != null)
-                        {
-                            Gate sourceGate = sourceZone.Gates.FirstOrDefault(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
-                            if (sourceGate != null)
-                            {
-                                _ = sourceZone.Gates.Remove(sourceGate);
-                            }
-                        }
+                                .Any(a => a.SourcePath
+                                    .Equals(selectedGate.DestinationPath, StringComparison.OrdinalIgnoreCase)));
+                        Gate sourceGate = sourceZone.Gates.FirstOrDefault(a => a.SourcePath.Equals(selectedGate.DestinationPath, StringComparison.OrdinalIgnoreCase));
+                        _ = sourceZone.Gates.Remove(sourceGate);
                     }
                 }
             }
@@ -1150,9 +1144,9 @@ namespace X4SectorCreator
                         .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
                     Zone sourceZone = sourceSector.Zones
                         .First(a => a.Gates
-                            .Any(a => a.DestinationSectorName
-                                .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-                    Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                            .Any(a => a.SourcePath
+                                .Equals(selectedGate.DestinationPath, StringComparison.OrdinalIgnoreCase)));
+                    Gate sourceGate = sourceZone.Gates.First(a => a.SourcePath.Equals(selectedGate.DestinationPath, StringComparison.OrdinalIgnoreCase));
                     _ = sourceZone.Gates.Remove(sourceGate);
                 }
             }
@@ -1289,9 +1283,10 @@ namespace X4SectorCreator
                 .SelectMany(a => a.Sectors)
                 .First(a => a.Name.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
             Zone targetZone = targetSector.Zones
-                .First(a => a.Gates
+                .Where(a => a.Gates
                     .Any(a => a.DestinationSectorName
-                        .Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase)));
+                        .Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase)))
+                .First(a => a.Gates.Contains(selectedGate));
             _ = targetZone.Gates.Remove(selectedGate);
 
             // Check to remove zone if empty
@@ -1313,9 +1308,9 @@ namespace X4SectorCreator
                 .First(a => a.Name.Equals(selectedGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
             Zone sourceZone = sourceSector.Zones
                 .First(a => a.Gates
-                    .Any(a => a.DestinationSectorName
-                        .Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-            Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(selectedGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                    .Any(a => a.SourcePath
+                        .Equals(selectedGate.DestinationPath, StringComparison.OrdinalIgnoreCase)));
+            Gate sourceGate = sourceZone.Gates.First(a => a.SourcePath.Equals(selectedGate.DestinationPath, StringComparison.OrdinalIgnoreCase));
             _ = sourceZone.Gates.Remove(sourceGate);
 
             // Check to remove zone if empty
@@ -1363,13 +1358,15 @@ namespace X4SectorCreator
                 .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
                 .First(pair => pair.sector.Name.Equals(targetGate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
 
+            // Delete source connection
             Cluster sourceCluster = sourceQueryResult.cluster;
             Sector sourceSector = sourceQueryResult.sector;
             Zone sourceZone = sourceSector.Zones
                 .First(a => a.Gates
-                    .Any(a => a.DestinationSectorName
-                        .Equals(targetGate.ParentSectorName, StringComparison.OrdinalIgnoreCase)));
-            Gate sourceGate = sourceZone.Gates.First(a => a.DestinationSectorName.Equals(targetGate.ParentSectorName, StringComparison.OrdinalIgnoreCase));
+                    .Any(a => a.SourcePath
+                        .Equals(targetGate.DestinationPath, StringComparison.OrdinalIgnoreCase)));
+            Gate sourceGate = sourceZone.Gates.First(a => a.SourcePath.Equals(targetGate.DestinationPath, StringComparison.OrdinalIgnoreCase));
+
             // Set gates to be updated
             GateForm.UpdateInfoObject = new GateForm.UpdateInfo
             {
