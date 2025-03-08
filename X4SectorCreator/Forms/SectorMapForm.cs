@@ -624,6 +624,7 @@ namespace X4SectorCreator
                 .GroupBy(a => a.Sector.Name)
                 .ToDictionary(a => a.Key, a => a.ToArray(), StringComparer.OrdinalIgnoreCase);
 
+            var invalidConnections = new List<GateData>();
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
             {
@@ -632,7 +633,12 @@ namespace X4SectorCreator
                     continue;
 
                 GateData targetGateData = availableGateData
-                    .First(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
+                    .FirstOrDefault(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
+                if (targetGateData.Cluster == null) //Default
+                {
+                    invalidConnections.Add(sourceGateData);
+                    continue;
+                }
 
                 if (!IsSelectedDlcCluster(targetGateData.Cluster))
                     continue;
@@ -642,6 +648,12 @@ namespace X4SectorCreator
                     Source = sourceGateData,
                     Target = targetGateData
                 };
+            }
+
+            if (invalidConnections.Count > 0)
+            {
+                _ = MessageBox.Show("Some of your gate connections are invalid, please double check them:\n- " +
+                    string.Join("\n- ", invalidConnections.Select(a => a.Gate.ParentSectorName + " -> " + a.Gate.DestinationSectorName)));
             }
         }
 
