@@ -618,7 +618,7 @@ namespace X4SectorCreator
                         .ToList();
 
                     ClusterCollection nonModifiedBaseGameData = InitAllClusters(false);
-                    HashSet<string> gateConnections = InitAllClusters(false)
+                    HashSet<string> gateConnections = nonModifiedBaseGameData
                         .Clusters
                         .SelectMany(a => a.Sectors)
                         .SelectMany(a => a.Zones)

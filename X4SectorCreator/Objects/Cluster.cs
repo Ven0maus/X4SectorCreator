@@ -3,7 +3,7 @@ using X4SectorCreator.Forms;
 
 namespace X4SectorCreator.Objects
 {
-    public class Cluster
+    public class Cluster : ICloneable
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -29,6 +29,23 @@ namespace X4SectorCreator.Objects
             var combination = SectorForm.ValidSectorCombinations.First(a => a.Length == sectorCount);
             for (int i=0; i < sectorCount; i++)
                 Sectors[i].Placement = combination[i];
+        }
+
+        public object Clone()
+        {
+            return new Cluster
+            {
+                Id = Id,
+                Dlc = Dlc,
+                BackgroundVisualMapping = BackgroundVisualMapping,
+                BaseGameMapping = BaseGameMapping,
+                CustomSectorPositioning = CustomSectorPositioning,
+                Hexagon = Hexagon,
+                Name = Name,
+                Position = Position,
+                Description = Description,
+                Sectors = Sectors.Select(a => (Sector)a.Clone()).ToList()
+            };
         }
     }
 

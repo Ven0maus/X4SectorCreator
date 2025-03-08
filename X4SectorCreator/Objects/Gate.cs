@@ -2,7 +2,7 @@
 
 namespace X4SectorCreator.Objects
 {
-    public class Gate
+    public class Gate : ICloneable
     {
         public int Id { get; set; }
         public string ConnectionName { get; set; }
@@ -85,6 +85,27 @@ namespace X4SectorCreator.Objects
         public override string ToString()
         {
             return ParentSectorName;
+        }
+
+        public object Clone()
+        {
+            return new Gate
+            {
+                Position = Position,
+                Id = Id,
+                ConnectionName = ConnectionName,
+                Destination = Destination,
+                DestinationPath = DestinationPath,
+                DestinationSectorName = DestinationSectorName,
+                IsHighwayGate = IsHighwayGate,
+                ParentSectorName = ParentSectorName,
+                Pitch = Pitch,
+                Roll = Roll,
+                Source = Source,
+                SourcePath = SourcePath,
+                Type = Type,
+                Yaw = Yaw
+            };
         }
     }
 }

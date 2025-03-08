@@ -16,9 +16,12 @@ namespace X4SectorCreator.Configuration
 
         public static string Serialize(List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
+            // Make a deep copy so we don't modify anything
+            List<Cluster> clonedClusters = clusters.Select(a => (Cluster)a.Clone()).ToList();
+
             // First order everything correctly before exporting
-            clusters = [.. clusters.OrderBy(a => a.Id)];
-            foreach (Cluster cluster in clusters)
+            clonedClusters = [.. clonedClusters.OrderBy(a => a.Id)];
+            foreach (Cluster cluster in clonedClusters)
             {
                 cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];
                 foreach (Sector sector in cluster.Sectors)
@@ -48,7 +51,7 @@ namespace X4SectorCreator.Configuration
 
             ConfigurationObj configObj = new()
             {
-                Clusters = clusters,
+                Clusters = clonedClusters,
                 RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
                 GalaxyName = GalaxySettingsForm.GalaxyName,
                 VanillaChanges = vanillaChanges,
