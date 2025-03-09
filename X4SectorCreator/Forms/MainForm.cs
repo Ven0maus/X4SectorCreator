@@ -64,8 +64,8 @@ namespace X4SectorCreator
             // Set background visual mapping
             BackgroundVisualMapping = AllClusters
                 .Where(a => a.Value.IsBaseGame)
-                .Where(a => !string.IsNullOrWhiteSpace(a.Value.BaseGameMapping))
-                .ToDictionary(a => a.Value.Name, a => a.Value.BaseGameMapping);
+                .Where(a => !string.IsNullOrWhiteSpace(a.Value.BackgroundVisualMapping))
+                .ToDictionary(a => a.Value.Name, a => a.Value.BackgroundVisualMapping, StringComparer.OrdinalIgnoreCase);
 
             // Set dlc mappings
             string json = File.ReadAllText(_dlcMappingFilePath);
@@ -361,7 +361,7 @@ namespace X4SectorCreator
                     nonModifiedCluster.CustomSectorPositioning != modifiedCluster.CustomSectorPositioning)
                 {
                     // Add to modified clusters
-                    vanillaChanges.ModifiedClusters.Add(new ModifiedCluster { Old = nonModifiedCluster, New = modifiedCluster });
+                    vanillaChanges.ModifiedClusters.Add(new ModifiedCluster { Old = nonModifiedCluster, New = (Cluster)modifiedCluster.Clone() });
                 }
 
                 foreach (Sector nonModifiedSector in nonModifiedCluster.Sectors)
@@ -398,7 +398,7 @@ namespace X4SectorCreator
                         nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies)
                     {
                         // Add to modified clusters
-                        vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = modifiedSector });
+                        vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = (Sector)modifiedSector.Clone() });
                     }
 
                     // Connections
@@ -632,6 +632,13 @@ namespace X4SectorCreator
                     {
                         foreach (Sector sector in cluster.Sectors)
                         {
+                            // If sector doesn't exist in vanilla, we need to export it
+                            if (!sector.IsBaseGame)
+                            {
+                                allModifiedClusters.Add(cluster);
+                                continue;
+                            }
+
                             foreach (Zone zone in sector.Zones)
                             {
                                 foreach (Gate gate in zone.Gates)
@@ -695,11 +702,11 @@ namespace X4SectorCreator
                     // Import new configuration
                     foreach (Cluster cluster in clusters)
                     {
-                        // Adjust the cluster
-                        ReplaceClusterByImport(cluster);
-
                         // Apply support additions for new versions
                         Import_Support_NewVersions(cluster, vanillaClustersLazy);
+
+                        // Adjust the cluster
+                        ReplaceClusterByImport(cluster);
 
                         // Setup listboxes
                         if (!cluster.IsBaseGame)
@@ -751,6 +758,7 @@ namespace X4SectorCreator
                     continue;
                 }
 
+                // If sector doesn't exist its already removed, skip
                 Sector sector = cluster.Sectors.FirstOrDefault(a => a.Name.Equals(pair.Sector.Name, StringComparison.OrdinalIgnoreCase));
                 if (sector == null)
                 {
@@ -759,8 +767,9 @@ namespace X4SectorCreator
 
                 Zone zone = sector.Zones.FirstOrDefault(a =>
                 {
-                    return (!string.IsNullOrWhiteSpace(a.Name) && !string.IsNullOrWhiteSpace(pair.Zone.Name) && a.Name.Equals(pair.Zone.Name, StringComparison.OrdinalIgnoreCase))
-|| ((a.Id != 0 || pair.Zone.Id != 0) && a.Id == pair.Zone.Id);
+                    return (!string.IsNullOrWhiteSpace(a.Name) && !string.IsNullOrWhiteSpace(pair.Zone.Name) && 
+                        a.Name.Equals(pair.Zone.Name, StringComparison.OrdinalIgnoreCase)) || 
+                        ((a.Id != 0 || pair.Zone.Id != 0) && a.Id == pair.Zone.Id);
                 });
                 if (zone == null)
                 {
@@ -821,6 +830,7 @@ namespace X4SectorCreator
                 sector.Security = New.Security;
                 sector.Tags = New.Tags;
                 sector.AllowRandomAnomalies = New.AllowRandomAnomalies;
+                sector.Placement = New.Placement;
             }
         }
 
@@ -859,7 +869,7 @@ namespace X4SectorCreator
                 currentSector.DiameterRadius = newSector.DiameterRadius;
                 currentSector.AllowRandomAnomalies = newSector.AllowRandomAnomalies;
                 currentSector.DisableFactionLogic = newSector.DisableFactionLogic;
-                currentSector.Offset = newSector.Offset;
+                currentSector.Placement = newSector.Placement;
 
                 foreach (Zone newZone in newSector.Zones)
                 {
@@ -896,9 +906,26 @@ namespace X4SectorCreator
         private Dictionary<(int, int), Cluster> _clusterDlcLookup;
         private void Import_Support_NewVersions(Cluster cluster, Lazy<Cluster[]> vanillaClustersLazy)
         {
-            if (string.IsNullOrWhiteSpace(cluster.BackgroundVisualMapping))
+            // Fix background visual mapping
+            if (string.IsNullOrWhiteSpace(cluster.BackgroundVisualMapping) ||
+                !BackgroundVisualMapping.Values.Any(a => a.Equals(cluster.BackgroundVisualMapping, StringComparison.OrdinalIgnoreCase)))
             {
-                cluster.BackgroundVisualMapping = "cluster_01";
+                if (!cluster.IsBaseGame)
+                {
+                    cluster.BackgroundVisualMapping = BackgroundVisualMapping.Values.First();
+                }
+                else
+                {
+                    var matchingCluster = vanillaClustersLazy.Value.FirstOrDefault(a => a.BaseGameMapping.Equals(cluster.BaseGameMapping));
+                    if (matchingCluster != null)
+                    {
+                        cluster.BackgroundVisualMapping = matchingCluster.BackgroundVisualMapping;
+                    }
+                    else
+                    {
+                        cluster.BackgroundVisualMapping = BackgroundVisualMapping.Values.First();
+                    }
+                }
             }
 
             // Re-check DLCs

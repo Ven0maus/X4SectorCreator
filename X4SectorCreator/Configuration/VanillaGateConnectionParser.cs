@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using System.Numerics;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Xml.Linq;
 using X4SectorCreator.Objects;
 
@@ -37,9 +36,7 @@ namespace X4SectorCreator.Configuration
             ];
 
             // Verify existance
-            (string prefix, string path)[] nonExistant = filePaths
-                .Where(a => !Directory.Exists(Path.GetDirectoryName(a.path)))
-                .ToArray();
+            (string prefix, string path)[] nonExistant = [.. filePaths.Where(a => !Directory.Exists(Path.GetDirectoryName(a.path)))];
             if (nonExistant.Length > 0)
             {
                 Console.WriteLine("Unable to generate vanilla gate connection mappings file. Missing directories:\n- " +
@@ -70,9 +67,7 @@ namespace X4SectorCreator.Configuration
                 string json = File.ReadAllText(mappingsPath);
                 VanilaConnectionMapping vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json, ConfigSerializer.SerializerOptions);
 
-                Cluster[] baseGameClusters = allClusters.Values
-                    .Where(a => a.IsBaseGame)
-                    .ToArray();
+                Cluster[] baseGameClusters = [.. allClusters.Values.Where(a => a.IsBaseGame)];
 
                 foreach (Connection connection in vanillaMapping.Connections)
                 {
@@ -110,8 +105,7 @@ namespace X4SectorCreator.Configuration
             Zone targetZone = targetSector.Zones.FirstOrDefault(a => a.Name.Equals(connection.Destination.Zone, StringComparison.OrdinalIgnoreCase));
 
             // Can't filter out connections we already made (highways have always two 1to1 connections)
-            // Because the user needs option to delete both of them.. Looks ugly af on the sector map though..
-            // Maybe it makes sense to just render one of the two if its a highway gate when they point to same sectors
+            // Because the user needs option to delete both of them.. These are rendered out on the sector map atleast.
 
             // Collect known zone and gate infos for the given source & target
             ZoneGateInfo[] sourceZoneGateInfo = CollectZoneGateInfoForHighwaySector(vanillaMapping.ZoneGateInfos, sourceCluster, sourceSector).ToArray();

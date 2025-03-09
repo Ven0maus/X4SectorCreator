@@ -154,6 +154,7 @@
     {
       "Name": "Windfall IV Aurora's Dream",
       "BaseGameMapping": "Cluster_503",
+      "BackgroundVisualMapping": "Cluster_503t6",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -172,6 +173,7 @@
     {
       "Name": "Windfall III The Hoard",
       "BaseGameMapping": "Cluster_502",
+      "BackgroundVisualMapping": "Cluster_502t6",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -190,6 +192,7 @@
     {
       "Name": "Windfall I Union Summit",
       "BaseGameMapping": "Cluster_501",
+      "BackgroundVisualMapping": "Cluster_501t6",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -208,6 +211,7 @@
     {
       "Name": "Avarice",
       "BaseGameMapping": "Cluster_500",
+      "BackgroundVisualMapping": "Cluster_500t8",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -263,6 +267,7 @@
     {
       "Name": "Unknown System",
       "BaseGameMapping": "Cluster_504",
+      "BackgroundVisualMapping": "Cluster_504t4",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -721,6 +726,7 @@
     {
       "Name": "Mitsuno's Revelation",
       "BaseGameMapping": "cluster_701",
+      "BackgroundVisualMapping": "cluster_701_v1",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -739,6 +745,7 @@
     {
       "Name": "Mitsuno's Defiance",
       "BaseGameMapping": "cluster_702",
+      "BackgroundVisualMapping": "cluster_702_v1",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -757,6 +764,7 @@
     {
       "Name": "Mitsuno's Sacrifice",
       "BaseGameMapping": "cluster_703",
+      "BackgroundVisualMapping": "cluster_703_v1",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -1171,6 +1179,7 @@
     {
       "Name": "President's End",
       "BaseGameMapping": "cluster_704",
+      "BackgroundVisualMapping": "cluster_704_v1",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -1240,6 +1249,7 @@
     {
       "Name": "Matrix #101",
       "BaseGameMapping": "cluster_708",
+      "BackgroundVisualMapping": "cluster_708_v1",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -1646,6 +1656,7 @@
     {
       "Name": "Nopileos' Memorial",
       "BaseGameMapping": "cluster_705",
+      "BackgroundVisualMapping": "cluster_705_v1",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -1664,6 +1675,7 @@
     {
       "Name": "Hatikvah's Faith",
       "BaseGameMapping": "cluster_706",
+      "BackgroundVisualMapping": "cluster_706_v2",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -1716,6 +1728,7 @@
     {
       "Name": "Third Redemption",
       "BaseGameMapping": "cluster_730",
+      "BackgroundVisualMapping": "cluster_730_v2",
       "Dlc": "ego_dlc_mini_01",
       "Sectors": [
         {
@@ -1995,6 +2008,7 @@
     {
       "Name": "Barren Shores",
       "BaseGameMapping": "Cluster_602",
+      "BackgroundVisualMapping": "Cluster_602_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2013,6 +2027,7 @@
     {
       "Name": "Great Reef",
       "BaseGameMapping": "Cluster_603",
+      "BackgroundVisualMapping": "Cluster_603_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2067,6 +2082,7 @@
     {
       "Name": "Kingdom End",
       "BaseGameMapping": "Cluster_606",
+      "BackgroundVisualMapping": "Cluster_606_v3",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2105,6 +2121,7 @@
     {
       "Name": "Rolk's Demise",
       "BaseGameMapping": "Cluster_607",
+      "BackgroundVisualMapping": "Cluster_607_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2123,6 +2140,7 @@
     {
       "Name": "Atreus' Clouds",
       "BaseGameMapping": "Cluster_608",
+      "BackgroundVisualMapping": "Cluster_608_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2141,6 +2159,7 @@
     {
       "Name": "Menelaus' Oasis",
       "BaseGameMapping": "Cluster_609",
+      "BackgroundVisualMapping": "Cluster_609_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {

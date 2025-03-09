@@ -28,7 +28,7 @@ namespace X4SectorCreator
         private static float _zoom = _defaultZoom; // 1.0 means 100% scale
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
-        private static readonly Dictionary<string, string> _dlcMapping = new()
+        private static readonly Dictionary<string, string> _dlcMapping = new(StringComparer.OrdinalIgnoreCase)
         {
             { "Split Vendetta", "ego_dlc_split" },
             { "Tides Of Avarice", "ego_dlc_pirate" },
@@ -37,8 +37,11 @@ namespace X4SectorCreator
             { "Timelines", "ego_dlc_timelines" },
             { "Hyperion Pack", "ego_dlc_mini_01" }
         };
+
+        private static readonly Dictionary<string, int> _selectedDlcMapping = _dlcMapping
+            .Select((a, i) => (a.Value, index: i))
+            .ToDictionary(a => a.Value, a => a.index, StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<int, bool> _dlcsSelected = [];
-        private static readonly List<string> _dlcIndexOrder = [];
 
         private static bool _sectorMapFirstTimeOpen = true;
 
@@ -56,18 +59,17 @@ namespace X4SectorCreator
             MouseWheel += HandleMouseWheel;
 
             // Init dlcs
-            for (int i = 0; i < _dlcMapping.Count; i++)
+            foreach (var mapping in _selectedDlcMapping)
             {
-                if (!_dlcsSelected.TryGetValue(i, out bool value))
+                if (!_dlcsSelected.TryGetValue(mapping.Value, out bool value))
                 {
                     // If not yet initialized, it will be by default selected
-                    _dlcsSelected[i] = value = true;
+                    _dlcsSelected[mapping.Value] = value = true;
                 }
-
-                // Init listbox values and pre-check the cached selected dlcs
-                _dlcIndexOrder.Add(_dlcMapping.Keys.ElementAt(i));
-                _ = DlcListBox.Items.Add(_dlcIndexOrder[i]);
-                DlcListBox.SetItemChecked(i, value);
+                
+                // Init dlc list box
+                _ = DlcListBox.Items.Add(_dlcMapping.First(a => a.Value.Equals(mapping.Key)).Key);
+                DlcListBox.SetItemChecked(mapping.Value, value);
             }
         }
 
@@ -77,9 +79,7 @@ namespace X4SectorCreator
                 .Where(a => a.Value.IsBaseGame)
                 .ToDictionary(a => a.Key, a => a.Value);
 
-            _customClusters = MainForm.Instance.AllClusters.Values
-                .Where(a => !a.IsBaseGame)
-                .ToArray();
+            _customClusters = [.. MainForm.Instance.AllClusters.Values.Where(a => !a.IsBaseGame)];
 
             Dictionary<(int, int), Cluster>.ValueCollection allClusters = MainForm.Instance.AllClusters.Values;
 
@@ -413,7 +413,7 @@ namespace X4SectorCreator
                 foreach (Cluster cluster in _baseGameClusters.Values)
                 {
                     // Check if the dlc is selected
-                    if (!IsSelectedDlcCluster(cluster))
+                    if (!IsDlcClusterEnabled(cluster))
                     {
                         continue;
                     }
@@ -451,7 +451,7 @@ namespace X4SectorCreator
                 foreach (Cluster cluster in _baseGameClusters.Values)
                 {
                     // Check if the dlc is selected
-                    if (!IsSelectedDlcCluster(cluster))
+                    if (!IsDlcClusterEnabled(cluster))
                     {
                         continue;
                     }
@@ -465,7 +465,7 @@ namespace X4SectorCreator
         {
             // Render each non-existant hex first
             if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) ||
-                !IsSelectedDlcCluster(cluster) ||
+                !IsDlcClusterEnabled(cluster) ||
                 (!chkShowX4Sectors.Checked && cluster.IsBaseGame) ||
                 (!chkShowCustomSectors.Checked && !cluster.IsBaseGame))
             {
@@ -498,7 +498,7 @@ namespace X4SectorCreator
             }
         }
 
-        private static bool IsSelectedDlcCluster(Cluster cluster)
+        private static bool IsDlcClusterEnabled(Cluster cluster)
         {
             // If no dlc, its selected by default
             if (string.IsNullOrWhiteSpace(cluster.Dlc))
@@ -507,9 +507,7 @@ namespace X4SectorCreator
             }
 
             // Check if the dlc is selected
-            string key = _dlcMapping.First(a => a.Value.Equals(cluster.Dlc, StringComparison.OrdinalIgnoreCase)).Key;
-            int dlcIndex = _dlcIndexOrder.IndexOf(key);
-            return _dlcsSelected[dlcIndex];
+            return _dlcsSelected[_selectedDlcMapping[cluster.Dlc]];
         }
 
         private static PointF ConvertFromWorldCoordinate(PointF worldPos, float sectorDiameterRadius, float hexRadius)
@@ -549,35 +547,22 @@ namespace X4SectorCreator
                 foreach (KeyValuePair<(int, int), Cluster> cluster in _baseGameClusters)
                 {
                     // Check if the dlc is selected
-                    if (!IsSelectedDlcCluster(cluster.Value))
+                    if (!IsDlcClusterEnabled(cluster.Value))
                         continue;
                     gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
                 }
             }
 
             // Collect the source / target for each gate data in one connection
-            IEnumerable<GateConnection> connections = CollectConnectionsFromGateData(gatesData);
-            GateConnection[] filteredConnections = FilterOutDuplicates(connections).ToArray();
-            foreach (GateConnection connection in filteredConnections)
+            // Filter out highway connections they are always duped but they have different paths
+            // It's kinda difficult to filter them out properly, we do it for now based on sector name but its not the ideal solution.
+            // Because as a side effect this can cause multiple highways with the same from/to sector to be filtered out unintentionally
+            // But as far as I have seen, these type of connections don't exist in the base game.
+            GateConnection[] connections = [.. CollectConnectionsFromGateData(gatesData).FilterDuplicateHighwayConnections()];
+
+            foreach (GateConnection connection in connections)
             {
                 PaintConnection(connection, e);
-            }
-        }
-
-        private static IEnumerable<GateConnection> FilterOutDuplicates(IEnumerable<GateConnection> connections)
-        {
-            HashSet<(string, string)> dupes = [];
-            foreach (GateConnection con in connections)
-            {
-                string sourceSector = con.Source.Gate.ParentSectorName;
-                string targetSector = con.Target.Gate.ParentSectorName;
-                if (dupes.Contains((sourceSector, targetSector)) || dupes.Contains((targetSector, sourceSector)))
-                {
-                    continue;
-                }
-
-                _ = dupes.Add((sourceSector, targetSector));
-                yield return con;
             }
         }
 
@@ -624,12 +609,18 @@ namespace X4SectorCreator
                 .GroupBy(a => a.Sector.Name)
                 .ToDictionary(a => a.Key, a => a.ToArray(), StringComparer.OrdinalIgnoreCase);
 
+            // Make sure we don't double process target gates we already processed
+            // We still have an issue with highway type gates showing as a double because they have different paths
+            var processedTargets = new HashSet<Gate>();
+
+            // Any invalid connections will be recorded
             var invalidConnections = new List<GateData>();
+
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
             {
                 // Find the connection with the matching path
-                if (!sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out var availableGateData))
+                if (processedTargets.Contains(sourceGateData.Gate) || !sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out var availableGateData))
                     continue;
 
                 GateData targetGateData = availableGateData
@@ -640,7 +631,9 @@ namespace X4SectorCreator
                     continue;
                 }
 
-                if (!IsSelectedDlcCluster(targetGateData.Cluster))
+                processedTargets.Add(targetGateData.Gate);
+
+                if (!IsDlcClusterEnabled(targetGateData.Cluster))
                     continue;
 
                 yield return new GateConnection
@@ -991,13 +984,13 @@ namespace X4SectorCreator
             Invalidate();
         }
 
-        private struct GateConnection
+        internal struct GateConnection
         {
             public GateData Source { get; set; }
             public GateData Target { get; set; }
         }
 
-        private struct GateData
+        internal struct GateData
         {
             public float ScreenX { get; set; }
             public float ScreenY { get; set; }

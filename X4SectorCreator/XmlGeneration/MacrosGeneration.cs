@@ -8,7 +8,7 @@ namespace X4SectorCreator.XmlGeneration
         public static void Generate(string folder, string modName, string modPrefix, List<Cluster> clusters)
         {
             Cluster[] customClusters = clusters
-                .Where(a => !a.IsBaseGame)
+                .Where(a => !a.IsBaseGame || a.Sectors.Any(a => !a.IsBaseGame))
                 .ToArray();
 
             List<XElement> elements =

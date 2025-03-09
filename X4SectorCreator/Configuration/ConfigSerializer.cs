@@ -17,7 +17,7 @@ namespace X4SectorCreator.Configuration
         public static string Serialize(List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             // Make a deep copy so we don't modify anything
-            List<Cluster> clonedClusters = clusters.Select(a => (Cluster)a.Clone()).ToList();
+            List<Cluster> clonedClusters = [.. clusters.Select(a => (Cluster)a.Clone())];
 
             // First order everything correctly before exporting
             clonedClusters = [.. clonedClusters.OrderBy(a => a.Id)];
@@ -32,10 +32,12 @@ namespace X4SectorCreator.Configuration
                     if (cluster.IsBaseGame)
                     {
                         // For base game we need to make sure not to serialize everything, only the necessary
-                        sector.Zones = [.. sector.Zones.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
+                        if (sector.IsBaseGame)
+                            sector.Zones = [.. sector.Zones.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
                         foreach (Zone zone in sector.Zones)
                         {
-                            zone.Gates = [.. zone.Gates.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
+                            if (sector.IsBaseGame)
+                                zone.Gates = [.. zone.Gates.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
                         }
                     }
                     else
@@ -48,6 +50,9 @@ namespace X4SectorCreator.Configuration
                     }
                 }
             }
+
+            // Reduces some object hierarchy like VanillaCluster, we don't need all info exported
+            vanillaChanges.RemoveExportBloating();
 
             ConfigurationObj configObj = new()
             {

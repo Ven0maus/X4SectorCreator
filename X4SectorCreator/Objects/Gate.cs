@@ -51,7 +51,7 @@ namespace X4SectorCreator.Objects
 
         private static string ConvertToPath(string modPrefix, Cluster cluster, Sector sector, Zone zone, Gate gate)
         {
-            bool isBaseGame = cluster.IsBaseGame;
+            bool isBaseGame = cluster.IsBaseGame && sector.IsBaseGame;
 
             string path;
             if (isBaseGame)

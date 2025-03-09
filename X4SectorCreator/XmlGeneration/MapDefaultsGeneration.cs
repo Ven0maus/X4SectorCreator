@@ -46,28 +46,33 @@ namespace X4SectorCreator.XmlGeneration
         private static (string dlc, XElement element) GenerateNewClusterElements(string modPrefix, List<Cluster> clusters)
         {
             XElement addElement = new("add", new XAttribute("sel", $"/defaults"));
-            foreach (Cluster cluster in clusters.Where(a => !a.IsBaseGame))
+            foreach (Cluster cluster in clusters)
             {
-                XObject clusterFactionLogicTag = AddFactionLogic(cluster: cluster);
-                // Add Cluster XML
-                addElement.Add(
-                    new XElement("dataset",
-                        new XAttribute("macro", $"{modPrefix}_CL_c{cluster.Id:D3}_macro"),
-                        new XElement("properties",
-                            new XElement("identification",
-                                new XAttribute("name", cluster.Name),
-                                new XAttribute("description", cluster.Description ?? string.Empty),
-                                new XAttribute("image", "enc_cluster01") // By default point to img of cluster01
-                            ),
-                            clusterFactionLogicTag,
-                            new XElement("system")
+                XObject clusterFactionLogicTag = null;
+                if (!cluster.IsBaseGame)
+                {
+                    clusterFactionLogicTag = AddFactionLogic(cluster: cluster);
+                    // Add Cluster XML
+                    addElement.Add(
+                        new XElement("dataset",
+                            new XAttribute("macro", $"{modPrefix}_CL_c{cluster.Id:D3}_macro"),
+                            new XElement("properties",
+                                new XElement("identification",
+                                    new XAttribute("name", cluster.Name),
+                                    new XAttribute("description", cluster.Description ?? string.Empty),
+                                    new XAttribute("image", "enc_cluster01") // By default point to img of cluster01
+                                ),
+                                clusterFactionLogicTag,
+                                new XElement("system")
+                            )
                         )
-                    )
-                );
+                    );
+                }
 
                 // Add each Sector inside its Cluster
                 foreach (Sector sector in cluster.Sectors)
                 {
+                    if (sector.IsBaseGame) continue;
                     if (sector.AllowRandomAnomalies)
                     {
                         if (string.IsNullOrWhiteSpace(sector.Tags))
