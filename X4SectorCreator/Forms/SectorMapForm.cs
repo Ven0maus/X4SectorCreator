@@ -79,9 +79,7 @@ namespace X4SectorCreator
                 .Where(a => a.Value.IsBaseGame)
                 .ToDictionary(a => a.Key, a => a.Value);
 
-            _customClusters = MainForm.Instance.AllClusters.Values
-                .Where(a => !a.IsBaseGame)
-                .ToArray();
+            _customClusters = [.. MainForm.Instance.AllClusters.Values.Where(a => !a.IsBaseGame)];
 
             Dictionary<(int, int), Cluster>.ValueCollection allClusters = MainForm.Instance.AllClusters.Values;
 

@@ -17,7 +17,7 @@ namespace X4SectorCreator.Configuration
         public static string Serialize(List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             // Make a deep copy so we don't modify anything
-            List<Cluster> clonedClusters = clusters.Select(a => (Cluster)a.Clone()).ToList();
+            List<Cluster> clonedClusters = [.. clusters.Select(a => (Cluster)a.Clone())];
 
             // First order everything correctly before exporting
             clonedClusters = [.. clonedClusters.OrderBy(a => a.Id)];
@@ -48,6 +48,9 @@ namespace X4SectorCreator.Configuration
                     }
                 }
             }
+
+            // Reduces some object hierarchy like VanillaCluster, we don't need all info exported
+            vanillaChanges.RemoveExportBloating();
 
             ConfigurationObj configObj = new()
             {

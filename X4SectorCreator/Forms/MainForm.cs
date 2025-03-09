@@ -361,7 +361,7 @@ namespace X4SectorCreator
                     nonModifiedCluster.CustomSectorPositioning != modifiedCluster.CustomSectorPositioning)
                 {
                     // Add to modified clusters
-                    vanillaChanges.ModifiedClusters.Add(new ModifiedCluster { Old = nonModifiedCluster, New = modifiedCluster });
+                    vanillaChanges.ModifiedClusters.Add(new ModifiedCluster { Old = nonModifiedCluster, New = (Cluster)modifiedCluster.Clone() });
                 }
 
                 foreach (Sector nonModifiedSector in nonModifiedCluster.Sectors)
@@ -632,6 +632,13 @@ namespace X4SectorCreator
                     {
                         foreach (Sector sector in cluster.Sectors)
                         {
+                            // If sector doesn't exist in vanilla, we need to export it
+                            if (!sector.IsBaseGame)
+                            {
+                                allModifiedClusters.Add(cluster);
+                                continue;
+                            }
+
                             foreach (Zone zone in sector.Zones)
                             {
                                 foreach (Gate gate in zone.Gates)
@@ -751,6 +758,7 @@ namespace X4SectorCreator
                     continue;
                 }
 
+                // If sector doesn't exist its already removed, skip
                 Sector sector = cluster.Sectors.FirstOrDefault(a => a.Name.Equals(pair.Sector.Name, StringComparison.OrdinalIgnoreCase));
                 if (sector == null)
                 {
@@ -759,8 +767,9 @@ namespace X4SectorCreator
 
                 Zone zone = sector.Zones.FirstOrDefault(a =>
                 {
-                    return (!string.IsNullOrWhiteSpace(a.Name) && !string.IsNullOrWhiteSpace(pair.Zone.Name) && a.Name.Equals(pair.Zone.Name, StringComparison.OrdinalIgnoreCase))
-|| ((a.Id != 0 || pair.Zone.Id != 0) && a.Id == pair.Zone.Id);
+                    return (!string.IsNullOrWhiteSpace(a.Name) && !string.IsNullOrWhiteSpace(pair.Zone.Name) && 
+                        a.Name.Equals(pair.Zone.Name, StringComparison.OrdinalIgnoreCase)) || 
+                        ((a.Id != 0 || pair.Zone.Id != 0) && a.Id == pair.Zone.Id);
                 });
                 if (zone == null)
                 {

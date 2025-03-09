@@ -1,4 +1,5 @@
-﻿namespace X4SectorCreator.Objects
+﻿
+namespace X4SectorCreator.Objects
 {
     public class VanillaChanges
     {
@@ -36,6 +37,24 @@
             {
                 yield return modification.VanillaCluster.Dlc;
             }
+        }
+
+        internal void RemoveExportBloating()
+        {
+            // Remove bloating from export file
+            foreach (var rcc in RemovedClusters)
+                rcc.Sectors = null;
+            foreach (var mc in ModifiedClusters)
+            {
+                mc.Old.Sectors = null;
+                mc.New.Sectors = null;
+            }
+            foreach (var ms in ModifiedSectors)
+                ms.VanillaCluster.Sectors = null;
+            foreach (var rs in RemovedSectors)
+                rs.VanillaCluster.Sectors = null;
+            foreach (var rc in RemovedConnections)
+                rc.VanillaCluster.Sectors = null;
         }
     }
 
