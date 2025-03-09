@@ -32,10 +32,12 @@ namespace X4SectorCreator.Configuration
                     if (cluster.IsBaseGame)
                     {
                         // For base game we need to make sure not to serialize everything, only the necessary
-                        sector.Zones = [.. sector.Zones.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
+                        if (sector.IsBaseGame)
+                            sector.Zones = [.. sector.Zones.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
                         foreach (Zone zone in sector.Zones)
                         {
-                            zone.Gates = [.. zone.Gates.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
+                            if (sector.IsBaseGame)
+                                zone.Gates = [.. zone.Gates.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
                         }
                     }
                     else
