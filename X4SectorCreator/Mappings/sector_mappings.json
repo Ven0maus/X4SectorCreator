@@ -2002,6 +2002,7 @@
     {
       "Name": "Barren Shores",
       "BaseGameMapping": "Cluster_602",
+      "BackgroundVisualMapping": "Cluster_602_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2020,6 +2021,7 @@
     {
       "Name": "Great Reef",
       "BaseGameMapping": "Cluster_603",
+      "BackgroundVisualMapping": "Cluster_603_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2074,6 +2076,7 @@
     {
       "Name": "Kingdom End",
       "BaseGameMapping": "Cluster_606",
+      "BackgroundVisualMapping": "Cluster_606_v3",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2112,6 +2115,7 @@
     {
       "Name": "Rolk's Demise",
       "BaseGameMapping": "Cluster_607",
+      "BackgroundVisualMapping": "Cluster_607_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2130,6 +2134,7 @@
     {
       "Name": "Atreus' Clouds",
       "BaseGameMapping": "Cluster_608",
+      "BackgroundVisualMapping": "Cluster_608_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2148,6 +2153,7 @@
     {
       "Name": "Menelaus' Oasis",
       "BaseGameMapping": "Cluster_609",
+      "BackgroundVisualMapping": "Cluster_609_v1",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
