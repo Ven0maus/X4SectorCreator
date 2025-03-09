@@ -16,7 +16,9 @@ A tool to help mod new sectors and gate connections in *X4: Foundations*. This t
 - Export to XML (creates a mod folder with all the required files, it can be directly put in extensions folder and run)
 
 ## Installation
-1. Just download the latest release, it will contain the tool executable.
+1. Go to the releases page of this repository and download the latest release. (https://github.com/Ven0maus/X4SectorCreator/releases)
+2. Unpack the compressed zip archive
+3. Run the executable file
 
 ## Quick Guide
 
