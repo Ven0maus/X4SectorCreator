@@ -37,10 +37,11 @@ namespace X4SectorCreator
             { "Timelines", "ego_dlc_timelines" },
             { "Hyperion Pack", "ego_dlc_mini_01" }
         };
-        private static readonly Dictionary<string, string> _dlcMappingReverse = _dlcMapping
-            .ToDictionary(a => a.Value, a => a.Key, StringComparer.OrdinalIgnoreCase);
+
+        private static readonly Dictionary<string, int> _selectedDlcMapping = _dlcMapping
+            .Select((a, i) => (a.Value, index: i))
+            .ToDictionary(a => a.Value, a => a.index, StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<int, bool> _dlcsSelected = [];
-        private static readonly List<string> _dlcIndexOrder = [];
 
         private static bool _sectorMapFirstTimeOpen = true;
 
@@ -58,18 +59,17 @@ namespace X4SectorCreator
             MouseWheel += HandleMouseWheel;
 
             // Init dlcs
-            for (int i = 0; i < _dlcMapping.Count; i++)
+            foreach (var mapping in _selectedDlcMapping)
             {
-                if (!_dlcsSelected.TryGetValue(i, out bool value))
+                if (!_dlcsSelected.TryGetValue(mapping.Value, out bool value))
                 {
                     // If not yet initialized, it will be by default selected
-                    _dlcsSelected[i] = value = true;
+                    _dlcsSelected[mapping.Value] = value = true;
                 }
-
-                // Init listbox values and pre-check the cached selected dlcs
-                _dlcIndexOrder.Add(_dlcMapping.Keys.ElementAt(i));
-                _ = DlcListBox.Items.Add(_dlcIndexOrder[i]);
-                DlcListBox.SetItemChecked(i, value);
+                
+                // Init dlc list box
+                _ = DlcListBox.Items.Add(_dlcMapping.First(a => a.Value.Equals(mapping.Key)).Key);
+                DlcListBox.SetItemChecked(mapping.Value, value);
             }
         }
 
@@ -509,9 +509,7 @@ namespace X4SectorCreator
             }
 
             // Check if the dlc is selected
-            string value = _dlcMappingReverse[cluster.Dlc];
-            int dlcIndex = _dlcIndexOrder.IndexOf(value);
-            return _dlcsSelected[dlcIndex];
+            return _dlcsSelected[_selectedDlcMapping[cluster.Dlc]];
         }
 
         private static PointF ConvertFromWorldCoordinate(PointF worldPos, float sectorDiameterRadius, float hexRadius)
