@@ -28,7 +28,7 @@ namespace X4SectorCreator
         private static float _zoom = _defaultZoom; // 1.0 means 100% scale
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
-        private static readonly Dictionary<string, string> _dlcMapping = new()
+        private static readonly Dictionary<string, string> _dlcMapping = new(StringComparer.OrdinalIgnoreCase)
         {
             { "Split Vendetta", "ego_dlc_split" },
             { "Tides Of Avarice", "ego_dlc_pirate" },
@@ -37,6 +37,8 @@ namespace X4SectorCreator
             { "Timelines", "ego_dlc_timelines" },
             { "Hyperion Pack", "ego_dlc_mini_01" }
         };
+        private static readonly Dictionary<string, string> _dlcMappingReverse = _dlcMapping
+            .ToDictionary(a => a.Value, a => a.Key, StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<int, bool> _dlcsSelected = [];
         private static readonly List<string> _dlcIndexOrder = [];
 
@@ -413,7 +415,7 @@ namespace X4SectorCreator
                 foreach (Cluster cluster in _baseGameClusters.Values)
                 {
                     // Check if the dlc is selected
-                    if (!IsSelectedDlcCluster(cluster))
+                    if (!IsDlcClusterEnabled(cluster))
                     {
                         continue;
                     }
@@ -451,7 +453,7 @@ namespace X4SectorCreator
                 foreach (Cluster cluster in _baseGameClusters.Values)
                 {
                     // Check if the dlc is selected
-                    if (!IsSelectedDlcCluster(cluster))
+                    if (!IsDlcClusterEnabled(cluster))
                     {
                         continue;
                     }
@@ -465,7 +467,7 @@ namespace X4SectorCreator
         {
             // Render each non-existant hex first
             if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) ||
-                !IsSelectedDlcCluster(cluster) ||
+                !IsDlcClusterEnabled(cluster) ||
                 (!chkShowX4Sectors.Checked && cluster.IsBaseGame) ||
                 (!chkShowCustomSectors.Checked && !cluster.IsBaseGame))
             {
@@ -498,7 +500,7 @@ namespace X4SectorCreator
             }
         }
 
-        private static bool IsSelectedDlcCluster(Cluster cluster)
+        private static bool IsDlcClusterEnabled(Cluster cluster)
         {
             // If no dlc, its selected by default
             if (string.IsNullOrWhiteSpace(cluster.Dlc))
@@ -507,8 +509,8 @@ namespace X4SectorCreator
             }
 
             // Check if the dlc is selected
-            string key = _dlcMapping.First(a => a.Value.Equals(cluster.Dlc, StringComparison.OrdinalIgnoreCase)).Key;
-            int dlcIndex = _dlcIndexOrder.IndexOf(key);
+            string value = _dlcMappingReverse[cluster.Dlc];
+            int dlcIndex = _dlcIndexOrder.IndexOf(value);
             return _dlcsSelected[dlcIndex];
         }
 
@@ -549,7 +551,7 @@ namespace X4SectorCreator
                 foreach (KeyValuePair<(int, int), Cluster> cluster in _baseGameClusters)
                 {
                     // Check if the dlc is selected
-                    if (!IsSelectedDlcCluster(cluster.Value))
+                    if (!IsDlcClusterEnabled(cluster.Value))
                         continue;
                     gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
                 }
@@ -635,7 +637,7 @@ namespace X4SectorCreator
 
                 processedTargets.Add(targetGateData.Gate);
 
-                if (!IsSelectedDlcCluster(targetGateData.Cluster))
+                if (!IsDlcClusterEnabled(targetGateData.Cluster))
                     continue;
 
                 yield return new GateConnection
