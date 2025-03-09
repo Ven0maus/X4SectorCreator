@@ -25,17 +25,7 @@ namespace X4SectorCreator.Forms
                     chkAllowRandomAnomalies.Checked = _sector.AllowRandomAnomalies;
                     chkDisableFactionLogic.Checked = _sector.DisableFactionLogic;
 
-                    if (_selectedCluster.CustomSectorPositioning)
-                    {
-                        SetupPlacementValues();
-                        cmbPlacement.Enabled = true;
-                    }
-                    else
-                    {
-                        cmbPlacement.Items.Clear();
-                        cmbPlacement.SelectedIndex = -1;
-                        cmbPlacement.Enabled = false;
-                    }
+                    Init();
                 }
                 else
                 {
@@ -74,6 +64,21 @@ namespace X4SectorCreator.Forms
             _selectedCluster = MainForm.Instance.AllClusters
                 .First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase))
                 .Value;
+        }
+
+        public void Init()
+        {
+            if (_selectedCluster.CustomSectorPositioning)
+            {
+                SetupPlacementValues();
+                cmbPlacement.Enabled = true;
+            }
+            else
+            {
+                cmbPlacement.Items.Clear();
+                cmbPlacement.SelectedIndex = -1;
+                cmbPlacement.Enabled = false;
+            }
         }
 
         /// <summary>

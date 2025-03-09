@@ -1145,6 +1145,7 @@ namespace X4SectorCreator
 
             SectorForm.Sector = null;
             SectorForm.BtnCreate.Text = "Create";
+            SectorForm.Init();
             SectorForm.Show();
         }
 
