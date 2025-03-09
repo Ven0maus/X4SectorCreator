@@ -133,7 +133,7 @@ namespace X4SectorCreator.XmlGeneration
                 new XElement("macro",
                     new XElement("component",
                         new XAttribute("connection", "space"),
-                        new XAttribute("ref", cluster.BackgroundVisualMapping.CapitalizeFirstLetter())
+                        new XAttribute("ref", cluster.BackgroundVisualMapping)
                     )
                 )
             );
