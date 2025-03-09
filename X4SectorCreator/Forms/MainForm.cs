@@ -830,6 +830,7 @@ namespace X4SectorCreator
                 sector.Security = New.Security;
                 sector.Tags = New.Tags;
                 sector.AllowRandomAnomalies = New.AllowRandomAnomalies;
+                sector.Placement = New.Placement;
             }
         }
 
@@ -868,7 +869,7 @@ namespace X4SectorCreator
                 currentSector.DiameterRadius = newSector.DiameterRadius;
                 currentSector.AllowRandomAnomalies = newSector.AllowRandomAnomalies;
                 currentSector.DisableFactionLogic = newSector.DisableFactionLogic;
-                currentSector.Offset = newSector.Offset;
+                currentSector.Placement = newSector.Placement;
 
                 foreach (Zone newZone in newSector.Zones)
                 {
