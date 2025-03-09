@@ -144,7 +144,7 @@ namespace X4SectorCreator.Forms
         public static string FindBackgroundVisualMappingByCode(string mappingCode)
         {
             return MainForm.Instance.BackgroundVisualMapping
-                .Where(a => a.Value.Equals(mappingCode))
+                .Where(a => a.Value.Equals(mappingCode, StringComparison.OrdinalIgnoreCase))
                 .First()
                 .Key;
         }

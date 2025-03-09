@@ -65,7 +65,7 @@ namespace X4SectorCreator
             BackgroundVisualMapping = AllClusters
                 .Where(a => a.Value.IsBaseGame)
                 .Where(a => !string.IsNullOrWhiteSpace(a.Value.BackgroundVisualMapping))
-                .ToDictionary(a => a.Value.Name, a => a.Value.BackgroundVisualMapping);
+                .ToDictionary(a => a.Value.Name, a => a.Value.BackgroundVisualMapping, StringComparer.OrdinalIgnoreCase);
 
             // Set dlc mappings
             string json = File.ReadAllText(_dlcMappingFilePath);
@@ -702,11 +702,11 @@ namespace X4SectorCreator
                     // Import new configuration
                     foreach (Cluster cluster in clusters)
                     {
-                        // Adjust the cluster
-                        ReplaceClusterByImport(cluster);
-
                         // Apply support additions for new versions
                         Import_Support_NewVersions(cluster, vanillaClustersLazy);
+
+                        // Adjust the cluster
+                        ReplaceClusterByImport(cluster);
 
                         // Setup listboxes
                         if (!cluster.IsBaseGame)
@@ -906,9 +906,26 @@ namespace X4SectorCreator
         private Dictionary<(int, int), Cluster> _clusterDlcLookup;
         private void Import_Support_NewVersions(Cluster cluster, Lazy<Cluster[]> vanillaClustersLazy)
         {
-            if (string.IsNullOrWhiteSpace(cluster.BackgroundVisualMapping))
+            // Fix background visual mapping
+            if (string.IsNullOrWhiteSpace(cluster.BackgroundVisualMapping) ||
+                !BackgroundVisualMapping.Values.Any(a => a.Equals(cluster.BackgroundVisualMapping, StringComparison.OrdinalIgnoreCase)))
             {
-                cluster.BackgroundVisualMapping = "cluster_01";
+                if (!cluster.IsBaseGame)
+                {
+                    cluster.BackgroundVisualMapping = BackgroundVisualMapping.Values.First();
+                }
+                else
+                {
+                    var matchingCluster = vanillaClustersLazy.Value.FirstOrDefault(a => a.BaseGameMapping.Equals(cluster.BaseGameMapping));
+                    if (matchingCluster != null)
+                    {
+                        cluster.BackgroundVisualMapping = matchingCluster.BackgroundVisualMapping;
+                    }
+                    else
+                    {
+                        cluster.BackgroundVisualMapping = BackgroundVisualMapping.Values.First();
+                    }
+                }
             }
 
             // Re-check DLCs
