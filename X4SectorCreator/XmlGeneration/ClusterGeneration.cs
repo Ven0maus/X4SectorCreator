@@ -31,7 +31,7 @@ namespace X4SectorCreator.XmlGeneration
                 return; // No need to process these
             }
 
-            IGrouping<string, (string dlc, XElement element)>[] vanillaChangeElements = GenerateVanillaChanges(vanillaChanges)
+            IGrouping<string, (string dlc, XElement element)>[] vanillaChangeElements = GenerateVanillaChanges(modPrefix, clusters, vanillaChanges)
                 .GroupBy(a => a.dlc)
                 .ToArray();
             if (vanillaChangeElements.Length > 0)
@@ -139,7 +139,7 @@ namespace X4SectorCreator.XmlGeneration
             );
         }
 
-        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(VanillaChanges vanillaChanges)
+        private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             foreach (Cluster cluster in vanillaChanges.RemovedClusters)
             {
@@ -181,6 +181,36 @@ namespace X4SectorCreator.XmlGeneration
                     string clusterCode = removedConnection.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
                     yield return (removedConnection.VanillaCluster.Dlc, new XElement("remove",
                     new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{removedConnection.Gate.ConnectionName}']")));
+                }
+            }
+
+            // Added sectors in vanilla clusters
+            foreach (var cluster in clusters)
+            {
+                if (!cluster.IsBaseGame) continue;
+                foreach (var sector in cluster.Sectors)
+                {
+                    if (sector.IsBaseGame) continue;
+
+                    // New sector link
+                    yield return (cluster.Dlc, new XElement("add", 
+                        new XAttribute("sel", $"/macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"),
+                            new XElement("connection",
+                            new XAttribute("name", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection"),
+                            new XAttribute("ref", "sectors"),
+                            new XElement("offset",
+                                new XElement("position",
+                                    new XAttribute("x", sector.Offset.X),
+                                    new XAttribute("y", 0),
+                                    new XAttribute("z", sector.Offset.Y)
+                                )
+                            ),
+                            new XElement("macro",
+                                new XAttribute("ref", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro"),
+                                new XAttribute("connection", "cluster")
+                            )
+                        )
+                    ));
                 }
             }
         }
