@@ -64,8 +64,8 @@ namespace X4SectorCreator
             // Set background visual mapping
             BackgroundVisualMapping = AllClusters
                 .Where(a => a.Value.IsBaseGame)
-                .Where(a => !string.IsNullOrWhiteSpace(a.Value.BaseGameMapping))
-                .ToDictionary(a => a.Value.Name, a => a.Value.BaseGameMapping);
+                .Where(a => !string.IsNullOrWhiteSpace(a.Value.BackgroundVisualMapping))
+                .ToDictionary(a => a.Value.Name, a => a.Value.BackgroundVisualMapping);
 
             // Set dlc mappings
             string json = File.ReadAllText(_dlcMappingFilePath);
