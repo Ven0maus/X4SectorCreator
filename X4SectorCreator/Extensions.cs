@@ -5,6 +5,33 @@ namespace X4SectorCreator
 {
     internal static class Extensions
     {
+        /// <summary>
+        /// Removes duplicate highway connections from connections enumerable.
+        /// </summary>
+        /// <param name="connections"></param>
+        /// <returns></returns>
+        public static IEnumerable<SectorMapForm.GateConnection> FilterDuplicateHighwayConnections(this IEnumerable<SectorMapForm.GateConnection> connections)
+        {
+            var allConnections = connections
+                .ToHashSet();
+            var highways = connections
+                .Where(a => a.Source.Gate.IsHighwayGate || a.Target.Gate.IsHighwayGate)
+                .ToList();
+
+            var processedHighways = new HashSet<(string, string)>();
+            foreach (var highway in highways)
+            {
+                if (processedHighways.Contains((highway.Source.Gate.ParentSectorName, highway.Target.Gate.ParentSectorName)) ||
+                    processedHighways.Contains((highway.Target.Gate.ParentSectorName, highway.Source.Gate.ParentSectorName)))
+                {
+                    allConnections.Remove(highway);
+                }
+                processedHighways.Add((highway.Source.Gate.ParentSectorName, highway.Target.Gate.ParentSectorName));
+            }
+
+            return allConnections;
+        }
+
         public static Point Center(this Rectangle rect)
         {
             return new Point(rect.Left + (rect.Width / 2), rect.Top + (rect.Height / 2));

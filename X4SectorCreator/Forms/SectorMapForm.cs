@@ -556,28 +556,15 @@ namespace X4SectorCreator
             }
 
             // Collect the source / target for each gate data in one connection
-            IEnumerable<GateConnection> connections = CollectConnectionsFromGateData(gatesData);
-            GateConnection[] filteredConnections = FilterOutDuplicates(connections).ToArray();
-            foreach (GateConnection connection in filteredConnections)
+            // Filter out highway connections they are always duped but they have different paths
+            // It's kinda difficult to filter them out properly, we do it for now based on sector name but its not the ideal solution.
+            // Because as a side effect this can cause multiple highways with the same from/to sector to be filtered out unintentionally
+            // But as far as I have seen, these type of connections don't exist in the base game.
+            GateConnection[] connections = [.. CollectConnectionsFromGateData(gatesData).FilterDuplicateHighwayConnections()];
+
+            foreach (GateConnection connection in connections)
             {
                 PaintConnection(connection, e);
-            }
-        }
-
-        private static IEnumerable<GateConnection> FilterOutDuplicates(IEnumerable<GateConnection> connections)
-        {
-            HashSet<(string, string)> dupes = [];
-            foreach (GateConnection con in connections)
-            {
-                string sourceSector = con.Source.Gate.ParentSectorName;
-                string targetSector = con.Target.Gate.ParentSectorName;
-                if (dupes.Contains((sourceSector, targetSector)) || dupes.Contains((targetSector, sourceSector)))
-                {
-                    continue;
-                }
-
-                _ = dupes.Add((sourceSector, targetSector));
-                yield return con;
             }
         }
 
@@ -624,12 +611,18 @@ namespace X4SectorCreator
                 .GroupBy(a => a.Sector.Name)
                 .ToDictionary(a => a.Key, a => a.ToArray(), StringComparer.OrdinalIgnoreCase);
 
+            // Make sure we don't double process target gates we already processed
+            // We still have an issue with highway type gates showing as a double because they have different paths
+            var processedTargets = new HashSet<Gate>();
+
+            // Any invalid connections will be recorded
             var invalidConnections = new List<GateData>();
+
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
             {
                 // Find the connection with the matching path
-                if (!sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out var availableGateData))
+                if (processedTargets.Contains(sourceGateData.Gate) || !sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out var availableGateData))
                     continue;
 
                 GateData targetGateData = availableGateData
@@ -639,6 +632,8 @@ namespace X4SectorCreator
                     invalidConnections.Add(sourceGateData);
                     continue;
                 }
+
+                processedTargets.Add(targetGateData.Gate);
 
                 if (!IsSelectedDlcCluster(targetGateData.Cluster))
                     continue;
@@ -991,13 +986,13 @@ namespace X4SectorCreator
             Invalidate();
         }
 
-        private struct GateConnection
+        internal struct GateConnection
         {
             public GateData Source { get; set; }
             public GateData Target { get; set; }
         }
 
-        private struct GateData
+        internal struct GateData
         {
             public float ScreenX { get; set; }
             public float ScreenY { get; set; }
