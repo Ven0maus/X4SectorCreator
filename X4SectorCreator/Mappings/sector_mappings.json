@@ -272,6 +272,7 @@
       "Sectors": [
         {
           "Name": "Unknown System",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 0.05,
           "Economy": 0.25,
@@ -325,6 +326,7 @@
           "Name": "Nopileos Fortune II",
           "Owner": "None",
           "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": true,
           "Placement": "TopLeft",
           "Sunlight": 0.82,
           "Economy": 0.5,
@@ -334,6 +336,7 @@
           "Name": "Nopileos Fortune VI",
           "Owner": "None",
           "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": true,
           "Placement": "BottomRight",
           "Sunlight": 0.78,
           "Economy": 0.5,
@@ -419,6 +422,7 @@
       "Sectors": [
         {
           "Name": "Loomanckstrat's Legacy",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 0.02,
           "Economy": 0.1,
@@ -436,6 +440,7 @@
       "Sectors": [
         {
           "Name": "Mi Ton's Refuge",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 0.53,
           "Economy": 0.1,
@@ -453,6 +458,7 @@
       "Sectors": [
         {
           "Name": "Moo-Kye's Revenge",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 0.93,
           "Economy": 0.1,
@@ -610,6 +616,7 @@
         {
           "Name": "Hewa's Twin IV The Cove",
           "Owner": "None",
+          "DisableFactionLogic": true,
           "BaseGameMapping": "Sector002",
           "Placement": "BottomRight",
           "Sunlight": 0.91,
@@ -731,6 +738,7 @@
       "Sectors": [
         {
           "Name": "Mitsuno's Revelation",
+          "DisableFactionLogic": true,
           "Owner": "Quettanauts",
           "Sunlight": 1.18,
           "Economy": 0.5,
@@ -750,6 +758,7 @@
       "Sectors": [
         {
           "Name": "Mitsuno's Defiance",
+          "DisableFactionLogic": true,
           "Owner": "Quettanauts",
           "Sunlight": 1.11,
           "Economy": 0.5,
@@ -769,6 +778,7 @@
       "Sectors": [
         {
           "Name": "Mitsuno's Sacrifice",
+          "DisableFactionLogic": true,
           "Owner": "Quettanauts",
           "Sunlight": 1.06,
           "Economy": 0.75,
@@ -976,6 +986,7 @@
       "Sectors": [
         {
           "Name": "Heart of Acrimony I The Boneyard",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 0.64,
           "Economy": 0,
@@ -1179,11 +1190,12 @@
     {
       "Name": "President's End",
       "BaseGameMapping": "cluster_704",
-      "BackgroundVisualMapping": "cluster_704_v1",
+      "BackgroundVisualMapping": "cluster_704_v1",  
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
           "Name": "President's End",
+          "DisableFactionLogic": true,
           "Owner": "Argon",
           "Sunlight": 0.71,
           "Economy": 0.5,
@@ -1214,10 +1226,11 @@
     },
     {
       "Name": "Silent Witness XI",
-      "BaseGameMapping": "Cluster_44",
+      "BaseGameMapping": "Cluster_44",   
       "Sectors": [
         {
           "Name": "Silent Witness XI",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 1.18,
           "Economy": 0.75,
@@ -1231,10 +1244,11 @@
     },
     {
       "Name": "Silent Witness XII",
-      "BaseGameMapping": "Cluster_45",
+      "BaseGameMapping": "Cluster_45",   
       "Sectors": [
         {
           "Name": "Silent Witness XII",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 1.47,
           "Economy": 0.75,
@@ -1254,6 +1268,7 @@
       "Sectors": [
         {
           "Name": "Matrix #101",
+          "DisableFactionLogic": true,
           "Owner": "Xenon",
           "Sunlight": 4.08,
           "Economy": 0.25,
@@ -1596,6 +1611,7 @@
       "Sectors": [
         {
           "Name": "Heretic's End",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 1.81,
           "Economy": 0.25,
@@ -1661,6 +1677,7 @@
       "Sectors": [
         {
           "Name": "Nopileos' Memorial",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 1.63,
           "Economy": 0.25,
@@ -1681,6 +1698,7 @@
         {
           "Name": "Hatikvah's Faith",
           "Owner": "None",
+          "DisableFactionLogic": true,
           "Sunlight": 0.88,
           "Economy": 0.25,
           "Security": 0.25
@@ -1728,12 +1746,13 @@
     {
       "Name": "Third Redemption",
       "BaseGameMapping": "cluster_730",
-      "BackgroundVisualMapping": "cluster_730_v2",
+      "BackgroundVisualMapping": "cluster_730_v2",     
       "Dlc": "ego_dlc_mini_01",
       "Sectors": [
         {
           "Name": "Third Redemption",
           "Owner": "None",
+          "DisableFactionLogic": true,
           "Sunlight": 1,
           "Economy": 0.25,
           "Security": 0.25
@@ -1812,6 +1831,7 @@
       "Sectors": [
         {
           "Name": "Mists of Artemis",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 1.41,
           "Economy": 0.1,
@@ -1829,6 +1849,7 @@
       "Sectors": [
         {
           "Name": "Sanctum Verge",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 0.89,
           "Economy": 0.25,
@@ -1959,6 +1980,7 @@
       "Sectors": [
         {
           "Name": "Freedom's Reach",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 2.21,
           "Economy": 0.1,
@@ -1989,11 +2011,12 @@
     },
     {
       "Name": "Watchful Gaze",
-      "BaseGameMapping": "Cluster_601",
+      "BaseGameMapping": "Cluster_601",   
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
           "Name": "Watchful Gaze",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 0.41,
           "Economy": 0.25,
@@ -2068,6 +2091,7 @@
       "Sectors": [
         {
           "Name": "Sanctuary of Darkness",
+          "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 1.74,
           "Economy": 0.25,
