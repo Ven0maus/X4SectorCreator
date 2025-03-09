@@ -154,6 +154,7 @@
     {
       "Name": "Windfall IV Aurora's Dream",
       "BaseGameMapping": "Cluster_503",
+      "BackgroundVisualMapping": "Cluster_503t6",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -172,6 +173,7 @@
     {
       "Name": "Windfall III The Hoard",
       "BaseGameMapping": "Cluster_502",
+      "BackgroundVisualMapping": "Cluster_502t6",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -190,6 +192,7 @@
     {
       "Name": "Windfall I Union Summit",
       "BaseGameMapping": "Cluster_501",
+      "BackgroundVisualMapping": "Cluster_501t6",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -208,6 +211,7 @@
     {
       "Name": "Avarice",
       "BaseGameMapping": "Cluster_500",
+      "BackgroundVisualMapping": "Cluster_500t8",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -263,6 +267,7 @@
     {
       "Name": "Unknown System",
       "BaseGameMapping": "Cluster_504",
+      "BackgroundVisualMapping": "Cluster_504t4",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
