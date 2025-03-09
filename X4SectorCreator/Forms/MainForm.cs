@@ -398,7 +398,7 @@ namespace X4SectorCreator
                         nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies)
                     {
                         // Add to modified clusters
-                        vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = modifiedSector });
+                        vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = (Sector)modifiedSector.Clone() });
                     }
 
                     // Connections

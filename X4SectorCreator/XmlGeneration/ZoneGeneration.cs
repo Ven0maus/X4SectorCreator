@@ -79,14 +79,10 @@ namespace X4SectorCreator.XmlGeneration
         {
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
-                // Handle zone's in base game sectors in a seperate DIFF xml correctly in the base zones.xml
-                if (cluster.IsBaseGame)
-                {
-                    continue;
-                }
-
                 foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
                 {
+                    if (sector.IsBaseGame) continue;
+
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
                         yield return new XElement("macro",
@@ -145,13 +141,11 @@ namespace X4SectorCreator.XmlGeneration
 
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
-                if (!cluster.IsBaseGame)
-                {
-                    continue;
-                }
-
                 foreach (Sector sector in cluster.Sectors)
                 {
+                    if (!sector.IsBaseGame) 
+                        continue;
+
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
                         if (zoneCache.Contains(zone.Name))

@@ -9,7 +9,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             #region Custom Sector File
             // Save new sectors in custom clusters
-            XElement[] sectors = GenerateSectors(modPrefix, clusters.Where(a => !a.IsBaseGame).ToList()).ToArray();
+            XElement[] sectors = [.. GenerateSectors(modPrefix, clusters)];
             if (sectors.Length > 0)
             {
                 XDocument xmlDocument = new(
@@ -58,7 +58,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             foreach (Cluster cluster in clusters.OrderBy(a => a.Id))
             {
-                foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
+                foreach (Sector sector in cluster.Sectors.Where(a => !a.IsBaseGame).OrderBy(a => a.Id))
                 {
                     yield return new XElement("macro",
                         new XAttribute("name", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro"),
@@ -106,13 +106,11 @@ namespace X4SectorCreator.XmlGeneration
 
             foreach (Cluster cluster in clusters)
             {
-                if (!cluster.IsBaseGame)
-                {
-                    continue;
-                }
-
                 foreach (Sector sector in cluster.Sectors)
                 {
+                    if (!sector.IsBaseGame) 
+                        continue;
+
                     if (sector.Zones.Count == 0)
                     {
                         continue;

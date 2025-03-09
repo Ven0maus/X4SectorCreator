@@ -49,10 +49,18 @@ namespace X4SectorCreator.Objects
                 mc.Old.Sectors = null;
                 mc.New.Sectors = null;
             }
+            // TODO: Inspect if we can remove the zones/gates from sectors or if it will impact import process
             foreach (var ms in ModifiedSectors)
+            {
                 ms.VanillaCluster.Sectors = null;
+                ms.Old.Zones = null;
+                ms.New.Zones = null;
+            }
             foreach (var rs in RemovedSectors)
+            {
                 rs.VanillaCluster.Sectors = null;
+                rs.Sector.Zones = null;
+            }
             foreach (var rc in RemovedConnections)
                 rc.VanillaCluster.Sectors = null;
         }
