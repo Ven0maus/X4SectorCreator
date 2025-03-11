@@ -800,6 +800,13 @@ namespace X4SectorCreator
                 cluster.BackgroundVisualMapping = New.BackgroundVisualMapping;
                 cluster.Position = New.Position;
                 cluster.CustomSectorPositioning = New.CustomSectorPositioning;
+
+                // Re-adjust position in all clusters
+                if (Old.Position != New.Position)
+                {
+                    AllClusters.Remove((Old.Position.X, Old.Position.Y));
+                    AllClusters[(New.Position.X, New.Position.Y)] = cluster;
+                }
             }
 
             // Sector modification
@@ -836,7 +843,18 @@ namespace X4SectorCreator
 
         private void ReplaceClusterByImport(Cluster cluster)
         {
-            if (!AllClusters.TryGetValue((cluster.Position.X, cluster.Position.Y), out Cluster currentCluster))
+            Cluster currentCluster = null;
+            if (cluster.IsBaseGame)
+            {
+                currentCluster = AllClusters.Values.FirstOrDefault(a => a.BaseGameMapping.Equals(cluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
+                if (currentCluster != null && currentCluster.Position != cluster.Position)
+                {
+                    AllClusters.Remove((currentCluster.Position.X, currentCluster.Position.Y));
+                    AllClusters[(cluster.Position.X, cluster.Position.Y)] = currentCluster;
+                }
+            }
+
+            if (currentCluster == null && !AllClusters.TryGetValue((cluster.Position.X, cluster.Position.Y), out currentCluster))
             {
                 // Custom cluster
                 AllClusters[(cluster.Position.X, cluster.Position.Y)] = cluster;
