@@ -125,7 +125,7 @@ namespace X4SectorCreator.XmlGeneration
                     new XElement("knownspace", clusters
                         .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
                         .Select(a => new XElement("space", 
-                            new XAttribute("sector", ($"{modPrefix}_SE_c{a.cluster.Id:D3}_s{a.sector.Id:D3}_macro").ToLower()))))
+                            new XAttribute("sector", $"{modPrefix}_SE_c{a.cluster.Id:D3}_s{a.sector.Id:D3}_macro".ToLower()))))
                 )
             );
 
