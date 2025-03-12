@@ -51,12 +51,15 @@ namespace X4SectorCreator
 
             // Setup events
             DoubleBuffered = true;
+            KeyPreview = true;
             MouseDown += HandleMouseDown;
             MouseUp += HandleMouseUp;
             MouseMove += HandleMouseMove;
             Paint += DrawHexGrid;
             Resize += HandleResize;
             MouseWheel += HandleMouseWheel;
+            MouseClick += SectorMapForm_MouseClick;
+            KeyDown += SectorMapForm_KeyDown;
 
             // Init dlcs
             foreach (var mapping in _selectedDlcMapping)
@@ -73,8 +76,84 @@ namespace X4SectorCreator
             }
         }
 
+        private void SectorMapForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape && _movingCluster != null)
+            {
+                _movingCluster = null;
+                Invalidate();
+            }
+        }
+
+        private Cluster _movingCluster = null;
+        private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                PointF adjustedMousePos = new(
+                    (e.Location.X - _offset.X) / _zoom,
+                    (e.Location.Y - _offset.Y) / _zoom
+                );
+
+                if (_movingCluster == null)
+                {
+                    var cluster = GetClusterAtMousePos(adjustedMousePos, out _);
+                    if (cluster != null)
+                    {
+                        _movingCluster = cluster;
+                        Invalidate();
+                    }
+                }
+                else
+                {
+                    // Verify for valid position
+                    var clusterAtPos = GetClusterAtMousePos(adjustedMousePos, out var coordinate);
+                    if (clusterAtPos != null)
+                    {
+                        // Cancel because we're moving to the same position
+                        if (clusterAtPos == _movingCluster)
+                        {
+                            _movingCluster = null;
+                            Invalidate();
+                            return;
+                        }
+
+                        _ = MessageBox.Show("Cannot place cluster at the target location because another cluster already exists here.");
+                        return;
+                    }
+
+                    // Place cluster down at the new position if it is valid
+                    MainForm.Instance.AllClusters.Remove((_movingCluster.Position.X, _movingCluster.Position.Y));
+                    _movingCluster.Position = new Point(coordinate.Value.x, coordinate.Value.y);
+                    MainForm.Instance.AllClusters[coordinate.Value] = _movingCluster;
+                    _movingCluster = null;
+                    Reset();
+                }
+            }
+        }
+
+        private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
+        {
+            pos = null;
+            foreach (var hex in _hexagons)
+            {
+                // Determine if there is a cluster at the position we clicked
+                if (IsPointInPolygon(hex.Value.Points, mousePos))
+                {
+                    pos = hex.Key;
+                    if (MainForm.Instance.AllClusters.TryGetValue(hex.Key, out var cluster))
+                    {
+                        return cluster;
+                    }
+                    break;
+                }
+            }
+            return null;
+        }
+
         public void Reset()
         {
+            _movingCluster = null;
             _baseGameClusters = MainForm.Instance.AllClusters
                 .Where(a => a.Value.IsBaseGame)
                 .ToDictionary(a => a.Key, a => a.Value);
@@ -712,15 +791,21 @@ namespace X4SectorCreator
                 }
             }
 
+            var isMovingCluster = _movingCluster != null && _movingCluster == cluster;
+            if (isMovingCluster)
+            {
+                color = Color.Yellow;
+            }
+
             // Main hex outline
             int index = 0;
             using (Pen mainPen = new(color, 2))
             {
-                if (cluster.Sectors.Count > 1)
+                if (cluster.Sectors.Count > 1 && !isMovingCluster)
                 {
                     color = Color.Black;
                 }
-
+               
                 // Fill with darker color
                 using SolidBrush mainBrush = new(LerpColor(color, Color.Black, 0.85f));
                 e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
@@ -728,14 +813,12 @@ namespace X4SectorCreator
                 // Draw child hex outlines
                 foreach (Hexagon child in hex.Value.Children)
                 {
-                    // First child hex: up
-                    // Second child hex: down
-                    // Third child hex: right
                     Sector sector = cluster.Sectors[index];
                     Color ownerColor = !MainForm.Instance.FactionColorMapping.TryGetValue(sector.Owner, out Color value) ?
                         MainForm.Instance.FactionColorMapping["None"] : value;
                     using Pen pen = new(ownerColor, 2);
                     using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
+
                     e.Graphics.FillPolygon(brush, child.Points);
                     e.Graphics.DrawPolygon(pen, child.Points);
                     index++;
@@ -770,10 +853,31 @@ namespace X4SectorCreator
                 return;
             }
 
-            using Font fBoldAndUnderlined = new(Font, FontStyle.Bold | FontStyle.Underline);
-
             PointF hexCenter = GetHexCenter(hex.Value.Points);
             SizeF hexSize = GetHexSize(hex.Value.Points);
+
+            // Don't render hex names if we're moving this cluster at the moment
+            if (_movingCluster != null && _movingCluster == cluster)
+            {
+                SizeF textSize;
+                using Font fBold = new(Font, FontStyle.Bold);
+                string text = $"(Right-click again to move)";
+                textSize = e.Graphics.MeasureString(text, fBold);
+                e.Graphics.DrawString(text, fBold, Brushes.White,
+                    hexCenter.X - (textSize.Width / 2),
+                    hexCenter.Y - (textSize.Height / 2));
+
+                text = $"(Press ESC to cancel)";
+                textSize = e.Graphics.MeasureString(text, fBold);
+                e.Graphics.DrawString(text, fBold, Brushes.White,
+                    hexCenter.X - (textSize.Width / 2),
+                    hexCenter.Y + (textSize.Height / 2));
+
+                // Don't render any other text
+                return;
+            }
+
+            using Font fBoldAndUnderlined = new(Font, FontStyle.Bold | FontStyle.Underline);
 
             // Draw child names
             int index = 0; // reset for name rendering
