@@ -784,6 +784,8 @@ namespace X4SectorCreator
             }
 
             // Cluster modification
+            var moveMap = new Dictionary<(int, int), Cluster>(); // Stores where each cluster should move
+            var toRemove = new HashSet<(int, int)>(); // Stores old positions to remove
             foreach (ModifiedCluster modification in configuration.vanillaChanges.ModifiedClusters)
             {
                 Cluster Old = modification.Old;
@@ -801,12 +803,32 @@ namespace X4SectorCreator
                 cluster.Position = New.Position;
                 cluster.CustomSectorPositioning = New.CustomSectorPositioning;
 
+                if (cluster.Name.Equals("Mitsuno's Sacrifice", StringComparison.OrdinalIgnoreCase))
+                    Console.WriteLine();
+
                 // Re-adjust position in all clusters
                 if (Old.Position != New.Position)
                 {
-                    AllClusters.Remove((Old.Position.X, Old.Position.Y));
-                    AllClusters[(New.Position.X, New.Position.Y)] = cluster;
+                    moveMap[(New.Position.X, New.Position.Y)] = cluster;
+                    toRemove.Add((Old.Position.X, Old.Position.Y));
                 }
+            }
+
+            // Remove old positions
+            foreach (var oldPos in toRemove)
+            {
+                AllClusters.Remove(oldPos);
+            }
+
+            // Insert clusters into new positions safely
+            foreach (var (newPos, cluster) in moveMap)
+            {
+                if (AllClusters.ContainsKey(newPos))
+                {
+                    throw new Exception("Something went wrong, cluster already exists on moved position: " + newPos);
+                }
+
+                AllClusters[newPos] = cluster;
             }
 
             // Sector modification
