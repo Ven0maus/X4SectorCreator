@@ -153,6 +153,7 @@ namespace X4SectorCreator
 
         public void Reset()
         {
+            _movingCluster = null;
             _baseGameClusters = MainForm.Instance.AllClusters
                 .Where(a => a.Value.IsBaseGame)
                 .ToDictionary(a => a.Key, a => a.Value);
@@ -832,22 +833,6 @@ namespace X4SectorCreator
             SizeF hexSize = GetHexSize(hex.Value.Points);
 
             SizeF textSize;
-            if (isMovingCluster)
-            {
-                using Font fBold = new(Font, FontStyle.Bold);
-                string text = $"(Right-click again to move)";
-                textSize = e.Graphics.MeasureString(text, fBold);
-                e.Graphics.DrawString(text, fBold, Brushes.White,
-                    hexCenter.X - (textSize.Width / 2),
-                    hexCenter.Y - (textSize.Height / 2));
-
-                text = $"(Press ESC to cancel)";
-                textSize = e.Graphics.MeasureString(text, fBold);
-                e.Graphics.DrawString(text, fBold, Brushes.White,
-                    hexCenter.X - (textSize.Width / 2),
-                    hexCenter.Y + (textSize.Height / 2));
-            }
-
             if (chkShowCoordinates.Checked)
             {
                 using Font fBold = new(Font, FontStyle.Bold);
@@ -868,10 +853,31 @@ namespace X4SectorCreator
                 return;
             }
 
-            using Font fBoldAndUnderlined = new(Font, FontStyle.Bold | FontStyle.Underline);
-
             PointF hexCenter = GetHexCenter(hex.Value.Points);
             SizeF hexSize = GetHexSize(hex.Value.Points);
+
+            // Don't render hex names if we're moving this cluster at the moment
+            if (_movingCluster != null && _movingCluster == cluster)
+            {
+                SizeF textSize;
+                using Font fBold = new(Font, FontStyle.Bold);
+                string text = $"(Right-click again to move)";
+                textSize = e.Graphics.MeasureString(text, fBold);
+                e.Graphics.DrawString(text, fBold, Brushes.White,
+                    hexCenter.X - (textSize.Width / 2),
+                    hexCenter.Y - (textSize.Height / 2));
+
+                text = $"(Press ESC to cancel)";
+                textSize = e.Graphics.MeasureString(text, fBold);
+                e.Graphics.DrawString(text, fBold, Brushes.White,
+                    hexCenter.X - (textSize.Width / 2),
+                    hexCenter.Y + (textSize.Height / 2));
+
+                // Don't render any other text
+                return;
+            }
+
+            using Font fBoldAndUnderlined = new(Font, FontStyle.Bold | FontStyle.Underline);
 
             // Draw child names
             int index = 0; // reset for name rendering
