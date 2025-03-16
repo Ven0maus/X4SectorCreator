@@ -75,7 +75,8 @@ namespace X4SectorCreator.XmlGeneration
                             ),
                             new XElement("location",
                                 new XAttribute("class", "sector"),
-                                new XAttribute("macro", sectorMacro.ToLower())
+                                new XAttribute("macro", sectorMacro.ToLower()),
+                                new XAttribute("matchextension", "false")
                             ),
                             new XElement("station",
                                 new XElement("select",
