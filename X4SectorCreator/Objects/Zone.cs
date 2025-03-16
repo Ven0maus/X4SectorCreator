@@ -7,7 +7,8 @@ namespace X4SectorCreator.Objects
         public int Id { get; set; }
         public string Name { get; set; }
         public Point Position { get; set; }
-        public List<Gate> Gates { get; set; }
+        public List<Gate> Gates { get; set; } = [];
+        public List<Station> Stations { get; set; } = [];
 
         /// <summary>
         /// Determines if it is a base game zone.
@@ -22,7 +23,8 @@ namespace X4SectorCreator.Objects
                 Id = Id,
                 Name = Name,
                 Position = Position,
-                Gates = Gates.Select(a => (Gate)a.Clone()).ToList()
+                Gates = Gates.Select(a => (Gate)a.Clone()).ToList(),
+                Stations = Stations.Select(a => (Station)a.Clone()).ToList()
             };
         }
     }

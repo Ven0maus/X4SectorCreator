@@ -51,14 +51,23 @@ namespace X4SectorCreator.Objects
 
         private static string ConvertToPath(string modPrefix, Cluster cluster, Sector sector, Zone zone, Gate gate)
         {
-            bool isBaseGame = cluster.IsBaseGame && sector.IsBaseGame;
+            bool isFullBaseGame = cluster.IsBaseGame && sector.IsBaseGame;
+            bool isHalfBaseGame = cluster.IsBaseGame && !sector.IsBaseGame;
 
             string path;
-            if (isBaseGame)
+            if (isFullBaseGame)
             {
                 string clusterConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection";
                 string sectorConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_connection";
                 string zoneConnection = $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_connection";
+                string gateConnection = $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection";
+                path = $"{clusterConnection}/{sectorConnection}/{zoneConnection}/{gateConnection}";
+            }
+            else if (isHalfBaseGame)
+            {
+                string clusterConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection";
+                string sectorConnection = $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_connection";
+                string zoneConnection = $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}_connection";
                 string gateConnection = $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection";
                 path = $"{clusterConnection}/{sectorConnection}/{zoneConnection}/{gateConnection}";
             }

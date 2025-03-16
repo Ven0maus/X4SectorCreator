@@ -34,9 +34,12 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     foreach (Region region in sector.Regions)
                     {
+                        var name = cluster.IsBaseGame ? $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
+                            $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
+
                         // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
                         yield return new XElement("region",
-                            new XAttribute("name", $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}"),
+                            new XAttribute("name", name.ToLower()),
                             new XAttribute("density", region.Definition.Density),
                             new XAttribute("rotation", region.Definition.Rotation),
                             new XAttribute("noisescale", region.Definition.NoiseScale),

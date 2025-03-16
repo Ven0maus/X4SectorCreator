@@ -16,8 +16,8 @@ namespace X4SectorCreator.Objects
         public int DiameterRadius { get; set; } = 500000;
         public bool AllowRandomAnomalies { get; set; } = true;
         public string Tags { get; set; }
-        public List<Zone> Zones { get; set; }
-        public List<Region> Regions { get; set; }
+        public List<Zone> Zones { get; set; } = [];
+        public List<Region> Regions { get; set; } = [];
         public SectorPlacement Placement { get; set; }
 
         [JsonIgnore]
@@ -45,8 +45,13 @@ namespace X4SectorCreator.Objects
                 Sunlight = Sunlight,
                 Tags = Tags,
                 Zones = Zones.Select(a => (Zone)a.Clone()).ToList(),
-                Regions = Regions.Select(a => (Region)a.Clone()).ToList()
+                Regions = Regions.Select(a => (Region)a.Clone()).ToList(),
             };
+        }
+
+        public override string ToString()
+        {
+            return Name ?? "Unknown";
         }
     }
 

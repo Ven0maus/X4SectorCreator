@@ -9,7 +9,7 @@
     "Terran": "#bdebff",
     "Segaris": "#286d7a",
     "Zyarth": "#b87811",
-    "FreeFam": "#8c5906",
+    "FreeSplit": "#8c5906",
     "Hatikvah": "#00f2ff",
     "Xenon": "#ff0000",
     "Riptide": "#031f57",
@@ -797,7 +797,7 @@
       "Sectors": [
         {
           "Name": "Thuruk's Demise II First Impact",
-          "Owner": "FreeFam",
+          "Owner": "FreeSplit",
           "BaseGameMapping": "Sector002",
           "Placement": "TopLeft",
           "Sunlight": 0.71,
@@ -806,7 +806,7 @@
         },
         {
           "Name": "Thuruk's Demise III",
-          "Owner": "FreeFam",
+          "Owner": "FreeSplit",
           "BaseGameMapping": "Sector001",
           "Placement": "BottomRight",
           "Sunlight": 0.59,
@@ -826,7 +826,7 @@
       "Sectors": [
         {
           "Name": "Family Tkr",
-          "Owner": "FreeFam",
+          "Owner": "FreeSplit",
           "Sunlight": 0.89,
           "Economy": 0.5,
           "Security": 0.75
@@ -878,7 +878,7 @@
       "Sectors": [
         {
           "Name": "Fires of Defeat",
-          "Owner": "FreeFam",
+          "Owner": "FreeSplit",
           "Sunlight": 0.81,
           "Economy": 0.5,
           "Security": 0.75
@@ -896,7 +896,7 @@
       "Sectors": [
         {
           "Name": "Tharka's Ravine XXIV",
-          "Owner": "FreeFam",
+          "Owner": "FreeSplit",
           "Sunlight": 1.09,
           "Economy": 0.7,
           "Security": 0.25
@@ -914,7 +914,7 @@
       "Sectors": [
         {
           "Name": "Tharka's Ravine XVI",
-          "Owner": "FreeFam",
+          "Owner": "FreeSplit",
           "Sunlight": 1.17,
           "Economy": 0.25,
           "Security": 0.3
@@ -932,7 +932,7 @@
       "Sectors": [
         {
           "Name": "Tharka's Ravine VIII",
-          "Owner": "FreeFam",
+          "Owner": "FreeSplit",
           "Sunlight": 1.26,
           "Economy": 0.5,
           "Security": 0.7
@@ -968,7 +968,7 @@
       "Sectors": [
         {
           "Name": "Heart of Acrimony II",
-          "Owner": "FreeFam",
+          "Owner": "FreeSplit",
           "Sunlight": 2.45,
           "Economy": 0.5,
           "Security": 0.5
