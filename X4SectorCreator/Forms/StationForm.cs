@@ -27,6 +27,7 @@ namespace X4SectorCreator.Forms
                     txtPosition.Text = (_station.Position.X, _station.Position.Y).ToString();
                     _dotPosition = ConvertWorldToScreen(_station.Position);
                     txtSector.Text = Sector.Name.ToString();
+                    txtName.Text = _station.Name.ToString();
                     BtnCreate.Text = "Update";
                 }
                 else
@@ -36,6 +37,7 @@ namespace X4SectorCreator.Forms
                     txtPosition.Text = "(0, 0)";
                     txtSector.Text = Sector.Name.ToString();
                     _dotPosition = SectorHexagon.ClientRectangle.Center();
+                    txtName.ResetText();
                     BtnCreate.Text = "Create";
                 }
             }
@@ -117,6 +119,7 @@ namespace X4SectorCreator.Forms
                         Position = new Point(StationPosX, StationPosY)
                     };
                     Sector.Stations.Add(station);
+                    MainForm.Instance.ListStations.Items.Add(station);
                     break;
 
                 case "Update":

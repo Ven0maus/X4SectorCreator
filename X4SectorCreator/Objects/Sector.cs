@@ -16,9 +16,9 @@ namespace X4SectorCreator.Objects
         public int DiameterRadius { get; set; } = 500000;
         public bool AllowRandomAnomalies { get; set; } = true;
         public string Tags { get; set; }
-        public List<Zone> Zones { get; set; }
-        public List<Region> Regions { get; set; }
-        public List<Station> Stations { get; set; }
+        public List<Zone> Zones { get; set; } = [];
+        public List<Region> Regions { get; set; } = [];
+        public List<Station> Stations { get; set; } = [];
         public SectorPlacement Placement { get; set; }
 
         [JsonIgnore]

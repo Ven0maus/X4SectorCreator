@@ -117,6 +117,7 @@ namespace X4SectorCreator
 
                     sector.Regions ??= [];
                     sector.Zones ??= [];
+                    sector.Stations ??= [];
                     foreach (Zone zone in sector.Zones)
                     {
                         zone.Gates ??= [];
@@ -1277,6 +1278,8 @@ namespace X4SectorCreator
             RegionsListBox.SelectedItem = null;
             GatesListBox.Items.Clear();
             GatesListBox.SelectedItem = null;
+            ListStations.Items.Clear();
+            ListStations.SelectedItem = null;
 
             string selectedClusterName = ClustersListBox.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedClusterName))
@@ -1310,6 +1313,12 @@ namespace X4SectorCreator
             foreach (Region region in sector.Regions.OrderBy(a => a.Name))
             {
                 _ = RegionsListBox.Items.Add(region);
+            }
+
+            // Show all stations
+            foreach (Station station in sector.Stations.OrderBy(a => a.Name))
+            {
+                _ = ListStations.Items.Add(station);
             }
 
             // Set details

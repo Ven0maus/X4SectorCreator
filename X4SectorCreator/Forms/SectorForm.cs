@@ -231,9 +231,7 @@ namespace X4SectorCreator.Forms
                         Tags = txtCustomTags.Text,
                         AllowRandomAnomalies = chkAllowRandomAnomalies.Checked,
                         DisableFactionLogic = chkDisableFactionLogic.Checked,
-                        Placement = sectorPlacement,
-                        Zones = [],
-                        Regions = []
+                        Placement = sectorPlacement
                     };
 
                     // Create new sector in selected cluster
