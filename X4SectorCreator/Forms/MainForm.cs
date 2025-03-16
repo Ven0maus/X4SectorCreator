@@ -19,6 +19,7 @@ namespace X4SectorCreator
         private GateForm _gateForm;
         private RegionForm _regionForm;
         private VersionUpdateForm _versionUpdateForm;
+        private StationForm _stationForm;
 
         private string _currentX4Version;
 
@@ -42,6 +43,7 @@ namespace X4SectorCreator
         public VersionUpdateForm VersionUpdateForm => _versionUpdateForm != null && !_versionUpdateForm.IsDisposed
             ? _versionUpdateForm
             : (_versionUpdateForm = new VersionUpdateForm());
+        public StationForm StationForm => _stationForm != null && !_stationForm.IsDisposed ? _stationForm : (_stationForm = new StationForm());
 
         public readonly Dictionary<string, string> BackgroundVisualMapping;
         public readonly Dictionary<string, string> DlcMappings;
@@ -767,8 +769,8 @@ namespace X4SectorCreator
 
                 Zone zone = sector.Zones.FirstOrDefault(a =>
                 {
-                    return (!string.IsNullOrWhiteSpace(a.Name) && !string.IsNullOrWhiteSpace(pair.Zone.Name) && 
-                        a.Name.Equals(pair.Zone.Name, StringComparison.OrdinalIgnoreCase)) || 
+                    return (!string.IsNullOrWhiteSpace(a.Name) && !string.IsNullOrWhiteSpace(pair.Zone.Name) &&
+                        a.Name.Equals(pair.Zone.Name, StringComparison.OrdinalIgnoreCase)) ||
                         ((a.Id != 0 || pair.Zone.Id != 0) && a.Id == pair.Zone.Id);
                 });
                 if (zone == null)
@@ -1511,6 +1513,64 @@ namespace X4SectorCreator
             RegionForm.Sector = sector;
             RegionForm.CustomRegion = selectedRegion;
             RegionForm.Show();
+        }
+        #endregion
+
+        #region Stations
+        private void BtnNewStation_Click(object sender, EventArgs e)
+        {
+            string selectedSector = SectorsListBox.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedSector))
+            {
+                _ = MessageBox.Show("Please select a valid sector first.");
+                return;
+            }
+
+            string selectedCluster = ClustersListBox.SelectedItem as string;
+            Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
+
+            StationForm.Cluster = cluster;
+            StationForm.Sector = sector;
+            StationForm.Station = null;
+            StationForm.Show();
+        }
+
+        private void BtnRemoveStation_Click(object sender, EventArgs e)
+        {
+            if (ListStations.SelectedItem is not Station selectedStation) return;
+            string selectedSector = SectorsListBox.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedSector)) return;
+
+            string selectedCluster = ClustersListBox.SelectedItem as string;
+            Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
+
+            // Remove region from sector
+            _ = sector.Stations.Remove(selectedStation);
+
+            int index = ListStations.Items.IndexOf(ListStations.SelectedItem);
+            ListStations.Items.Remove(ListStations.SelectedItem);
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            ListStations.SelectedItem = index >= 0 && ListStations.Items.Count > 0 ? ListStations.Items[index] : null;
+        }
+
+        private void ListStations_DoubleClick(object sender, EventArgs e)
+        {
+            if (ListStations.SelectedItem is not Station selectedStation) return;
+
+            string selectedSector = SectorsListBox.SelectedItem as string;
+            string selectedCluster = ClustersListBox.SelectedItem as string;
+            Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
+            Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
+
+            StationForm.Cluster = cluster;
+            StationForm.Sector = sector;
+            StationForm.Station = selectedStation;
+            StationForm.Show();
         }
         #endregion
     }
