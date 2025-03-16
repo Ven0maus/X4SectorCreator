@@ -176,13 +176,6 @@ namespace X4SectorCreator
                     _ = pair.Sector.Zones.Remove(targetZone);
                 }
 
-                // Re-order zone ids if needed
-                int count = 0;
-                foreach (Zone tZone in pair.Sector.Zones.OrderBy(a => a.Id))
-                {
-                    tZone.Id = ++count;
-                }
-
                 // Delete source connection
                 Sector sourceSector = MainForm.Instance.AllClusters.Values
                     .SelectMany(a => a.Sectors)
@@ -198,13 +191,6 @@ namespace X4SectorCreator
                 if (sourceZone.Gates.Count == 0)
                 {
                     _ = sourceSector.Zones.Remove(sourceZone);
-                }
-
-                // Re-order zone ids if needed
-                count = 0;
-                foreach (Zone sZone in sourceSector.Zones.OrderBy(a => a.Id))
-                {
-                    sZone.Id = ++count;
                 }
             }
         }
