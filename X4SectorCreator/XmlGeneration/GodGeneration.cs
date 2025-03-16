@@ -62,6 +62,8 @@ namespace X4SectorCreator.XmlGeneration
                         var sectorMacro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
                             $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
 
+                        // TODO: Set zone for station based on location instead of sector
+
                         yield return new XElement("station",
                             new XAttribute("id", id.ToLower()),
                             new XAttribute("race", station.Race.ToLower()),
