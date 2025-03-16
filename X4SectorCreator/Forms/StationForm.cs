@@ -95,7 +95,7 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            if (Sector.Stations.Any(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && a != Station))
+            if (Sector.Zones.SelectMany(a => a.Stations).Any(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && a != Station))
             {
                 _ = MessageBox.Show("The selected station name must be unique in the sector the station belongs to, please try a name that is not yet used in the selected sector.");
                 return;
@@ -134,14 +134,20 @@ namespace X4SectorCreator.Forms
                 case "Create":
                     var station = new Station
                     {
-                        Id = Sector.Stations.DefaultIfEmpty(new Station()).Max(a => a.Id) + 1,
+                        Id = Sector.Zones.SelectMany(a => a.Stations).DefaultIfEmpty(new Station()).Max(a => a.Id) + 1,
                         Name = txtName.Text,
                         Faction = cmbFaction.SelectedItem as string,
                         Type = cmbStationType.SelectedItem as string,
                         Race = cmbRace.SelectedItem as string,
                         Position = new Point(StationPosX, StationPosY)
                     };
-                    Sector.Stations.Add(station);
+                    var zone = new Zone
+                    {
+                        Id = Sector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
+                        Position = new Point(StationPosX, StationPosY),
+                    };
+                    zone.Stations.Add(station);
+                    Sector.Zones.Add(zone);
                     MainForm.Instance.ListStations.Items.Add(station);
                     break;
 
@@ -151,6 +157,9 @@ namespace X4SectorCreator.Forms
                     Station.Type = cmbStationType.SelectedItem as string;
                     Station.Race = cmbRace.SelectedItem as string;
                     Station.Position = new Point(StationPosX, StationPosY);
+
+                    var existingZone = Sector.Zones.First(a => a.Stations.Contains(Station));
+                    existingZone.Position = Station.Position;
                     break;
             }
 

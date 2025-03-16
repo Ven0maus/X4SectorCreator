@@ -34,6 +34,8 @@
             BtnSave = new Button();
             BtnCancel = new Button();
             chkDisableAllStorylines = new CheckBox();
+            label2 = new Label();
+            cmbStartSector = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -69,7 +71,7 @@
             // 
             // BtnSave
             // 
-            BtnSave.Location = new Point(119, 71);
+            BtnSave.Location = new Point(119, 108);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(241, 33);
             BtnSave.TabIndex = 3;
@@ -79,7 +81,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 71);
+            BtnCancel.Location = new Point(12, 108);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(98, 33);
             BtnCancel.TabIndex = 4;
@@ -97,11 +99,32 @@
             chkDisableAllStorylines.Text = "Disable all storylines";
             chkDisableAllStorylines.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F);
+            label2.Location = new Point(2, 75);
+            label2.Name = "label2";
+            label2.Size = new Size(115, 21);
+            label2.TabIndex = 6;
+            label2.Text = "Starting Sector:";
+            // 
+            // cmbStartSector
+            // 
+            cmbStartSector.Enabled = false;
+            cmbStartSector.FormattingEnabled = true;
+            cmbStartSector.Location = new Point(119, 75);
+            cmbStartSector.Name = "cmbStartSector";
+            cmbStartSector.Size = new Size(241, 23);
+            cmbStartSector.TabIndex = 7;
+            // 
             // GalaxySettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(372, 111);
+            ClientSize = new Size(372, 148);
+            Controls.Add(cmbStartSector);
+            Controls.Add(label2);
             Controls.Add(chkDisableAllStorylines);
             Controls.Add(BtnCancel);
             Controls.Add(BtnSave);
@@ -125,5 +148,7 @@
         private Button BtnSave;
         private Button BtnCancel;
         private CheckBox chkDisableAllStorylines;
+        private Label label2;
+        private ComboBox cmbStartSector;
     }
 }

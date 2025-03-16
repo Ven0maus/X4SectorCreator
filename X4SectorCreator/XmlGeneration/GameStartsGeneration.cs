@@ -42,19 +42,29 @@ namespace X4SectorCreator.XmlGeneration
 
         private static XElement GenerateCustomGameStart(string modPrefix, List<Cluster> clusters)
         {
-            Cluster firstCluster = clusters.OrderBy(a => a.Name).FirstOrDefault(a => !a.IsBaseGame);
-            if (firstCluster == null)
-            {
+            if (clusters.Count == 0 || !clusters.SelectMany(a => a.Sectors).Any())
                 return null;
+
+            Cluster cluster = null;
+            Sector sector = null;
+            if (!string.IsNullOrWhiteSpace(GalaxySettingsForm.StartingSector))
+            {
+                var result = clusters
+                    .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
+                    .FirstOrDefault(x => x.sector.Name.Equals(GalaxySettingsForm.StartingSector, StringComparison.OrdinalIgnoreCase));
+                cluster = result?.cluster;
+                sector = result?.sector;
+            }
+            else
+            {
+                cluster = clusters.OrderBy(a => a.Name).FirstOrDefault(a => !a.IsBaseGame);
+                sector = cluster?.Sectors.FirstOrDefault();
             }
 
-            Sector sector = firstCluster.Sectors.FirstOrDefault();
-            if (sector == null)
-            {
+            if (cluster == null || sector == null) 
                 return null;
-            }
 
-            string sectorMacro = $"{modPrefix}_SE_c{firstCluster.Id:D3}_s{sector.Id:D3}_macro";
+            string sectorMacro = $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
             XElement gameStartElement = new("gamestart",
                 new XAttribute("id", $"{modPrefix}_sectorcreator_customgalaxy"),
                 new XAttribute("name", $"{GalaxySettingsForm.GalaxyName}"),

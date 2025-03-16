@@ -117,7 +117,6 @@ namespace X4SectorCreator
 
                     sector.Regions ??= [];
                     sector.Zones ??= [];
-                    sector.Stations ??= [];
                     foreach (Zone zone in sector.Zones)
                     {
                         zone.Gates ??= [];
@@ -646,6 +645,13 @@ namespace X4SectorCreator
                             bool breakout = false;
                             foreach (Zone zone in sector.Zones)
                             {
+                                if (zone.Stations.Count > 0)
+                                {
+                                    allModifiedClusters.Add(cluster);
+                                    breakout = true;
+                                    break;
+                                }
+
                                 foreach (Gate gate in zone.Gates)
                                 {
                                     // Check if gate exists in vanilla
@@ -656,17 +662,12 @@ namespace X4SectorCreator
                                         break;
                                     }
                                 }
+
                                 if (breakout)
                                     break;
                             }
                             if (breakout)
                                 break;
-
-                            if (sector.Stations.Count > 0)
-                            {
-                                allModifiedClusters.Add(cluster);
-                                break;
-                            }
                         }
                     }
 
@@ -956,23 +957,23 @@ namespace X4SectorCreator
                             continue;
                         }
                     }
-                }
 
-                foreach (Station newStation in newSector.Stations)
-                {
-                    Station currentStation = currentSector.Stations.FirstOrDefault(a => a.Id == newStation.Id);
-                    if (currentStation == null)
+                    foreach (Station newStation in newZone.Stations)
                     {
-                        currentSector.Stations.Add(newStation);
-                        continue;
-                    }
+                        Station currentStation = currentZone.Stations.FirstOrDefault(a => a.Id == newStation.Id);
+                        if (currentStation == null)
+                        {
+                            currentZone.Stations.Add(newStation);
+                            continue;
+                        }
 
-                    currentStation.Name = newStation.Name;
-                    currentStation.Position = newStation.Position;
-                    currentStation.Faction = newStation.Faction;
-                    currentStation.Race = newStation.Race;
-                    currentStation.Id = newStation.Id;
-                    currentStation.Type = newStation.Type;
+                        currentStation.Name = newStation.Name;
+                        currentStation.Position = newStation.Position;
+                        currentStation.Faction = newStation.Faction;
+                        currentStation.Race = newStation.Race;
+                        currentStation.Id = newStation.Id;
+                        currentStation.Type = newStation.Type;
+                    }
                 }
             }
         }
@@ -1347,7 +1348,7 @@ namespace X4SectorCreator
             }
 
             // Show all stations
-            foreach (Station station in sector.Stations.OrderBy(a => a.Name))
+            foreach (Station station in sector.Zones.SelectMany(a => a.Stations).OrderBy(a => a.Name))
             {
                 _ = ListStations.Items.Add(station);
             }
@@ -1586,8 +1587,9 @@ namespace X4SectorCreator
             Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
-            // Remove region from sector
-            _ = sector.Stations.Remove(selectedStation);
+            // Remove station from zone
+            var zone = sector.Zones.First(a => a.Stations.Contains(selectedStation));
+            _ = zone.Stations.Remove(selectedStation);
 
             int index = ListStations.Items.IndexOf(ListStations.SelectedItem);
             ListStations.Items.Remove(ListStations.SelectedItem);

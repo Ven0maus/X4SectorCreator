@@ -16,6 +16,9 @@ namespace X4SectorCreator
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static string GalaxyName { get; set; } = "xu_ep2_universe";
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public static string StartingSector { get; set; } = null;
+
         private static Dictionary<(int, int), Cluster> _baseGameClusters;
 
         public GalaxySettingsForm()
@@ -27,6 +30,20 @@ namespace X4SectorCreator
         {
             chkCustomGalaxy.Checked = IsCustomGalaxy;
             txtGalaxyName.Text = GalaxyName;
+
+            // Init sector values
+            cmbStartSector.Items.Clear();
+            var sectors = MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).ToArray();
+            foreach (var sector in sectors)
+                cmbStartSector.Items.Add(sector);
+
+            cmbStartSector.Enabled = IsCustomGalaxy;
+
+            if (StartingSector == null)
+                cmbStartSector.SelectedItem = null;
+            else
+                cmbStartSector.SelectedItem = !IsCustomGalaxy ? null : MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors)
+                    .FirstOrDefault(a => a.Name.Equals(StartingSector, StringComparison.OrdinalIgnoreCase));
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -41,6 +58,7 @@ namespace X4SectorCreator
             if (IsCustomGalaxy == chkCustomGalaxy.Checked)
             {
                 GalaxyName = txtGalaxyName.Text.ToLower();
+                StartingSector = (cmbStartSector.SelectedItem as Sector)?.Name;
                 Close();
                 return;
             }
@@ -107,6 +125,7 @@ namespace X4SectorCreator
             // Apply change
             IsCustomGalaxy = chkCustomGalaxy.Checked;
             DisableAllStorylines = chkDisableAllStorylines.Checked;
+            StartingSector = (cmbStartSector.SelectedItem as Sector)?.Name;
 
             // Toggle galaxy mode
             MainForm.Instance.ToggleGalaxyMode(mergedClusters);

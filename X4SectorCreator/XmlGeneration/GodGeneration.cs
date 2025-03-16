@@ -33,7 +33,6 @@ namespace X4SectorCreator.XmlGeneration
             {
                 if (stationsContent.Length > 0)
                 {
-                    XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
                     XDocument xmlDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
                         new XElement("diff",
@@ -54,42 +53,43 @@ namespace X4SectorCreator.XmlGeneration
             {
                 foreach (var sector in cluster.Sectors)
                 {
-                    foreach (var station in sector.Stations)
+                    foreach (var zone in sector.Zones)
                     {
-                        var id = cluster.IsBaseGame ? $"{modPrefix}_ST_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_st{station.Id:D3}" :
-                            $"{modPrefix}_ST_c{cluster.Id:D3}_s{sector.Id:D3}_st{station.Id:D3}";
+                        foreach (var station in zone.Stations)
+                        {
+                            var id = cluster.IsBaseGame ? $"{modPrefix}_ST_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_st{station.Id:D3}" :
+                                $"{modPrefix}_ST_c{cluster.Id:D3}_s{sector.Id:D3}_st{station.Id:D3}";
 
-                        var sectorMacro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
-                            $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
+                            var zoneMacro = cluster.IsBaseGame ? $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}_macro" :
+                                $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro";
 
-                        // TODO: Set zone for station based on location instead of sector
-
-                        yield return new XElement("station",
-                            new XAttribute("id", id.ToLower()),
-                            new XAttribute("race", station.Race.ToLower()),
-                            new XAttribute("owner", station.Faction.ToLower()),
-                            new XAttribute("type", "factory"),
-                            new XElement("quotas",
-                                new XElement("quota",
-                                    new XAttribute("galaxy", 1),
-                                    new XAttribute("sector", 1)
+                            yield return new XElement("station",
+                                new XAttribute("id", id.ToLower()),
+                                new XAttribute("race", station.Race.ToLower()),
+                                new XAttribute("owner", station.Faction.ToLower()),
+                                new XAttribute("type", "factory"),
+                                new XElement("quotas",
+                                    new XElement("quota",
+                                        new XAttribute("galaxy", 1),
+                                        new XAttribute("sector", 1)
+                                    )
+                                ),
+                                new XElement("location",
+                                    new XAttribute("class", "zone"),
+                                    new XAttribute("macro", zoneMacro.ToLower()),
+                                    new XAttribute("matchextension", "false")
+                                ),
+                                new XElement("station",
+                                    new XElement("select",
+                                        new XAttribute("faction", station.Faction.ToLower()),
+                                        new XAttribute("tags", $"[{station.Type.ToLower()}]")),
+                                    new XElement("loadout",
+                                        new XElement("level",
+                                            new XAttribute("exact", "1.0"))
+                                    )
                                 )
-                            ),
-                            new XElement("location",
-                                new XAttribute("class", "sector"),
-                                new XAttribute("macro", sectorMacro.ToLower()),
-                                new XAttribute("matchextension", "false")
-                            ),
-                            new XElement("station",
-                                new XElement("select",
-                                    new XAttribute("faction", station.Faction.ToLower()),
-                                    new XAttribute("tags", $"[{station.Type.ToLower()}]")),
-                                new XElement("loadout",
-                                    new XElement("level",
-                                        new XAttribute("exact", "1.0"))
-                                )
-                            )
-                        );
+                            );
+                        }
                     }
                 }
             }
