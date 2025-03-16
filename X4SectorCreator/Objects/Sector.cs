@@ -46,7 +46,8 @@ namespace X4SectorCreator.Objects
                 Sunlight = Sunlight,
                 Tags = Tags,
                 Zones = Zones.Select(a => (Zone)a.Clone()).ToList(),
-                Regions = Regions.Select(a => (Region)a.Clone()).ToList()
+                Regions = Regions.Select(a => (Region)a.Clone()).ToList(),
+                Stations = Stations.Select(a => (Station)a.Clone()).ToList()
             };
         }
     }

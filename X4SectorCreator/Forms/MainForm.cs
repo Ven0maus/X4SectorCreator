@@ -147,6 +147,7 @@ namespace X4SectorCreator
             SectorsListBox.Items.Clear();
             GatesListBox.Items.Clear();
             RegionsListBox.Items.Clear();
+            ListStations.Items.Clear();
             LblDetails.Text = string.Empty;
 
             switch (_selectedClusterOption)
@@ -639,9 +640,10 @@ namespace X4SectorCreator
                             if (!sector.IsBaseGame)
                             {
                                 allModifiedClusters.Add(cluster);
-                                continue;
+                                break;
                             }
 
+                            bool breakout = false;
                             foreach (Zone zone in sector.Zones)
                             {
                                 foreach (Gate gate in zone.Gates)
@@ -650,8 +652,20 @@ namespace X4SectorCreator
                                     if (!gate.IsBaseGame)
                                     {
                                         allModifiedClusters.Add(cluster);
+                                        breakout = true;
+                                        break;
                                     }
                                 }
+                                if (breakout)
+                                    break;
+                            }
+                            if (breakout)
+                                break;
+
+                            if (sector.Stations.Count > 0)
+                            {
+                                allModifiedClusters.Add(cluster);
+                                break;
                             }
                         }
                     }
@@ -942,6 +956,23 @@ namespace X4SectorCreator
                             continue;
                         }
                     }
+                }
+
+                foreach (Station newStation in newSector.Stations)
+                {
+                    Station currentStation = currentSector.Stations.FirstOrDefault(a => a.Id == newStation.Id);
+                    if (currentStation == null)
+                    {
+                        currentSector.Stations.Add(newStation);
+                        continue;
+                    }
+
+                    currentStation.Name = newStation.Name;
+                    currentStation.Position = newStation.Position;
+                    currentStation.Faction = newStation.Faction;
+                    currentStation.Race = newStation.Race;
+                    currentStation.Id = newStation.Id;
+                    currentStation.Type = newStation.Type;
                 }
             }
         }

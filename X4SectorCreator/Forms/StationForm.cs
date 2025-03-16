@@ -95,7 +95,7 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            if (Sector.Stations.Any(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+            if (Sector.Stations.Any(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && a != Station))
             {
                 _ = MessageBox.Show("The selected station name must be unique in the sector the station belongs to, please try a name that is not yet used in the selected sector.");
                 return;
@@ -134,6 +134,7 @@ namespace X4SectorCreator.Forms
                 case "Create":
                     var station = new Station
                     {
+                        Id = Sector.Stations.DefaultIfEmpty(new Station()).Max(a => a.Id) + 1,
                         Name = txtName.Text,
                         Faction = cmbFaction.SelectedItem as string,
                         Type = cmbStationType.SelectedItem as string,
