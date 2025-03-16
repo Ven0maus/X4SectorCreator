@@ -33,7 +33,7 @@ namespace X4SectorCreator
 
             // Init sector values
             cmbStartSector.Items.Clear();
-            var sectors = MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).ToArray();
+            var sectors = MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).OrderBy(a => a.Name).ToArray();
             foreach (var sector in sectors)
                 cmbStartSector.Items.Add(sector);
 
