@@ -100,8 +100,11 @@ namespace X4SectorCreator.XmlGeneration
                 // Return regions after sector connection
                 foreach (Objects.Region region in sector.Regions)
                 {
+                    var name = cluster.IsBaseGame ? $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
+                        $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
+
                     yield return new XElement("connection",
-                        new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}_connection"),
+                        new XAttribute("name", $"{name}_connection"),
                         new XAttribute("ref", "regions"),
                         new XElement("offset",
                             new XElement("position",
@@ -111,7 +114,7 @@ namespace X4SectorCreator.XmlGeneration
                             )
                         ),
                         new XElement("macro",
-                            new XAttribute("name", $"{modPrefix}_RE_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}_macro"),
+                            new XAttribute("name", $"{name}_macro"),
                             new XElement("component",
                                 new XAttribute("connection", "cluster"),
                                 new XAttribute("ref", "standardregion")
@@ -119,7 +122,7 @@ namespace X4SectorCreator.XmlGeneration
                             // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
                             new XElement("properties",
                                 new XElement("region",
-                                    new XAttribute("ref", $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}")
+                                    new XAttribute("ref", name.ToLower())
                                 )
                             )
                         )
@@ -192,11 +195,16 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     if (sector.IsBaseGame) continue;
 
+                    var macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
+                        $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
+                    var connection = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_connection" :
+                        $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection";
+
                     // New sector link
                     yield return (cluster.Dlc, new XElement("add", 
                         new XAttribute("sel", $"/macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"),
                             new XElement("connection",
-                            new XAttribute("name", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection"),
+                            new XAttribute("name", connection),
                             new XAttribute("ref", "sectors"),
                             new XElement("offset",
                                 new XElement("position",
@@ -206,7 +214,7 @@ namespace X4SectorCreator.XmlGeneration
                                 )
                             ),
                             new XElement("macro",
-                                new XAttribute("ref", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro"),
+                                new XAttribute("ref", macro),
                                 new XAttribute("connection", "cluster")
                             )
                         )

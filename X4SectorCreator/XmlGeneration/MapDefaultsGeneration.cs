@@ -93,9 +93,12 @@ namespace X4SectorCreator.XmlGeneration
                         string.IsNullOrWhiteSpace(sector.Tags) ? null : new XAttribute("tags", sector.Tags)
                     );
 
+                    var macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
+                        $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
+
                     addElement.Add(
                         new XElement("dataset",
-                            new XAttribute("macro", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro"),
+                            new XAttribute("macro", macro),
                             new XElement("properties",
                                 new XElement("identification",
                                     new XAttribute("name", sector.Name),

@@ -85,8 +85,11 @@ namespace X4SectorCreator.XmlGeneration
 
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
+                        var macro = cluster.IsBaseGame ? $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}_macro" :
+                            $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro";
+
                         yield return new XElement("macro",
-                            new XAttribute("name", $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro"),
+                            new XAttribute("name", macro),
                             new XAttribute("class", "zone"),
                             new XElement("component",
                                 new XAttribute("ref", "standardzone")

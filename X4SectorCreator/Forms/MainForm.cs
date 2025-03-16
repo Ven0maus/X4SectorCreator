@@ -307,7 +307,7 @@ namespace X4SectorCreator
                 RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters);
                 GameStartsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 DlcDisableGeneration.Generate(modFolder);
-                GodGeneration.Generate(modFolder);
+                GodGeneration.Generate(modFolder, modPrefix, clusters);
                 JobsGeneration.Generate(modFolder);
             }
             catch (Exception ex)

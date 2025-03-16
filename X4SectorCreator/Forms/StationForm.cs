@@ -28,12 +28,14 @@ namespace X4SectorCreator.Forms
                     _dotPosition = ConvertWorldToScreen(_station.Position);
                     txtSector.Text = Sector.Name.ToString();
                     txtName.Text = _station.Name.ToString();
+                    cmbRace.SelectedItem = _station.Race;
                     BtnCreate.Text = "Update";
                 }
                 else
                 {
                     cmbStationType.SelectedItem = null;
                     cmbFaction.SelectedItem = null;
+                    cmbRace.SelectedItem = null;
                     txtPosition.Text = "(0, 0)";
                     txtSector.Text = Sector.Name.ToString();
                     _dotPosition = SectorHexagon.ClientRectangle.Center();
@@ -42,6 +44,17 @@ namespace X4SectorCreator.Forms
                 }
             }
         }
+
+        private readonly HashSet<string> _races = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "argon",
+            "split",
+            "teladi",
+            "terran",
+            "boron",
+            "paranid",
+            "xenon"
+        };
 
         #region Hexagon Data
         private readonly int _hexRadius;
@@ -54,9 +67,11 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
 
-            // Init factions
+            // Init factions and races
             foreach (var faction in MainForm.Instance.FactionColorMapping.Where(a => !a.Key.Equals("None", StringComparison.OrdinalIgnoreCase)))
                 cmbFaction.Items.Add(faction.Key);
+            foreach (var race in _races)
+                cmbRace.Items.Add(race);
 
             // Create and define hexagon
             _hexagonPoints = new PointF[6];
@@ -98,6 +113,12 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            if (cmbRace.SelectedItem == null)
+            {
+                _ = MessageBox.Show("Please select a valid race.");
+                return;
+            }
+
             System.Text.RegularExpressions.Match stationPosition = RegexHelper.TupleLocationRegex().Match(txtPosition.Text);
             if (!stationPosition.Success)
             {
@@ -116,6 +137,7 @@ namespace X4SectorCreator.Forms
                         Name = txtName.Text,
                         Faction = cmbFaction.SelectedItem as string,
                         Type = cmbStationType.SelectedItem as string,
+                        Race = cmbRace.SelectedItem as string,
                         Position = new Point(StationPosX, StationPosY)
                     };
                     Sector.Stations.Add(station);
@@ -126,6 +148,7 @@ namespace X4SectorCreator.Forms
                     Station.Name = txtName.Text;
                     Station.Faction = cmbFaction.SelectedItem as string;
                     Station.Type = cmbStationType.SelectedItem as string;
+                    Station.Race = cmbRace.SelectedItem as string;
                     Station.Position = new Point(StationPosX, StationPosY);
                     break;
             }

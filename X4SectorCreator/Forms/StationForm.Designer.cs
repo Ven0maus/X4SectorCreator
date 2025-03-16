@@ -41,12 +41,14 @@
             txtSector = new TextBox();
             label5 = new Label();
             txtName = new TextBox();
+            label6 = new Label();
+            cmbRace = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).BeginInit();
             SuspendLayout();
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(110, 218);
+            BtnCreate.Location = new Point(110, 247);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(158, 33);
             BtnCreate.TabIndex = 0;
@@ -93,7 +95,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(10, 218);
+            BtnCancel.Location = new Point(10, 247);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(97, 33);
             BtnCancel.TabIndex = 5;
@@ -111,7 +113,7 @@
             // 
             // txtPosition
             // 
-            txtPosition.Location = new Point(110, 157);
+            txtPosition.Location = new Point(110, 186);
             txtPosition.Name = "txtPosition";
             txtPosition.ReadOnly = true;
             txtPosition.Size = new Size(158, 23);
@@ -121,7 +123,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(39, 157);
+            label3.Location = new Point(39, 186);
             label3.Name = "label3";
             label3.Size = new Size(68, 21);
             label3.TabIndex = 8;
@@ -131,7 +133,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(50, 189);
+            label4.Location = new Point(50, 218);
             label4.Name = "label4";
             label4.Size = new Size(57, 21);
             label4.TabIndex = 10;
@@ -139,7 +141,7 @@
             // 
             // txtSector
             // 
-            txtSector.Location = new Point(110, 189);
+            txtSector.Location = new Point(110, 218);
             txtSector.Name = "txtSector";
             txtSector.ReadOnly = true;
             txtSector.Size = new Size(158, 23);
@@ -162,11 +164,31 @@
             txtName.Size = new Size(158, 23);
             txtName.TabIndex = 11;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F);
+            label6.Location = new Point(61, 157);
+            label6.Name = "label6";
+            label6.Size = new Size(46, 21);
+            label6.TabIndex = 14;
+            label6.Text = "Race:";
+            // 
+            // cmbRace
+            // 
+            cmbRace.FormattingEnabled = true;
+            cmbRace.Location = new Point(110, 157);
+            cmbRace.Name = "cmbRace";
+            cmbRace.Size = new Size(158, 23);
+            cmbRace.TabIndex = 13;
+            // 
             // StationForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(582, 326);
+            Controls.Add(label6);
+            Controls.Add(cmbRace);
             Controls.Add(label5);
             Controls.Add(txtName);
             Controls.Add(label4);
@@ -205,5 +227,7 @@
         private TextBox txtSector;
         private Label label5;
         private TextBox txtName;
+        private Label label6;
+        private ComboBox cmbRace;
     }
 }

@@ -60,8 +60,11 @@ namespace X4SectorCreator.XmlGeneration
             {
                 foreach (Sector sector in cluster.Sectors.Where(a => !a.IsBaseGame).OrderBy(a => a.Id))
                 {
+                    var macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
+                        $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
+
                     yield return new XElement("macro",
-                        new XAttribute("name", $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro"),
+                        new XAttribute("name", macro),
                         new XAttribute("class", "sector"),
                         new XElement("component",
                             new XAttribute("ref", "standardsector")
@@ -78,8 +81,11 @@ namespace X4SectorCreator.XmlGeneration
         {
             foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
             {
+                var id = cluster.IsBaseGame ? $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}" :
+                    $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}";
+
                 yield return new XElement("connection",
-                    new XAttribute("name", $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_connection"),
+                    new XAttribute("name", $"{id}_connection"),
                     new XAttribute("ref", "zones"),
                     new XElement("offset",
                         new XElement("position",
@@ -89,7 +95,7 @@ namespace X4SectorCreator.XmlGeneration
                         )
                     ),
                     new XElement("macro",
-                        new XAttribute("ref", $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro"),
+                        new XAttribute("ref", $"{id}_macro"),
                         new XAttribute("connection", "sector")
                     )
                 );
