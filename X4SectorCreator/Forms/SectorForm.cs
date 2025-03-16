@@ -316,7 +316,7 @@ namespace X4SectorCreator.Forms
             }
             else
             {
-                lblRadiusUnderText.Text = $"From the center, {radiusText}km in every direction. {radiusText}km diameter.";
+                lblRadiusUnderText.Text = $"From the center, {radius}km in every direction. {radius * 2}km diameter.";
                 lblRadiusUnderText.ForeColor = _controlColor;
             }
         }

@@ -388,9 +388,9 @@
             label3.Font = new Font("Segoe UI", 15F);
             label3.Location = new Point(498, 276);
             label3.Name = "label3";
-            label3.Size = new Size(155, 28);
+            label3.Size = new Size(129, 28);
             label3.TabIndex = 45;
-            label3.Text = "Custom Factions";
+            label3.Text = "Coming soon";
             // 
             // BtnRemoveCustomFaction
             // 
@@ -409,7 +409,7 @@
             BtnJobs.Name = "BtnJobs";
             BtnJobs.Size = new Size(156, 31);
             BtnJobs.TabIndex = 48;
-            BtnJobs.Text = "Galaxy Jobs";
+            BtnJobs.Text = "Coming soon";
             BtnJobs.UseVisualStyleBackColor = true;
             // 
             // MainForm
