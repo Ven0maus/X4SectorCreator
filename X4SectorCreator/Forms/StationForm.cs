@@ -70,12 +70,14 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Init factions and races
-            foreach (var faction in MainForm.Instance.FactionColorMapping.Where(a => !a.Key.Equals("None", StringComparison.OrdinalIgnoreCase)))
+            foreach (var faction in MainForm.Instance.FactionColorMapping
+                .Where(a => !a.Key.Equals("None", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(a => a.Key))
             {
                 cmbFaction.Items.Add(faction.Key);
                 cmbOwner.Items.Add(faction.Key);
             }
-            foreach (var race in _races)
+            foreach (var race in _races.OrderBy(a => a))
                 cmbRace.Items.Add(race);
 
             // Create and define hexagon
