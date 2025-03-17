@@ -68,10 +68,30 @@ namespace X4SectorCreator.XmlGeneration
                             var id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
                             var zoneMacro = $"{modPrefix}_ZO_{clusterPrefix}_{sectorPrefix}_z{zone.Id:D3}_macro";
 
+                            string faction = station.Faction.ToLower();
+                            switch(faction)
+                            {
+                                case "vigor":
+                                    faction = "loanshark";
+                                    break;
+                                case "riptide":
+                                    faction = "scavenger";
+                                    break;
+                                case "quettanauts":
+                                    faction = "kaori";
+                                    break;
+                                case "zyarth":
+                                    faction = "split";
+                                    break;
+                                case "segaris":
+                                    faction = "pioneers";
+                                    break;
+                            }
+
                             yield return new XElement("station",
                                 new XAttribute("id", id.ToLower()),
                                 new XAttribute("race", station.Race.ToLower()),
-                                new XAttribute("owner", station.Faction.ToLower()),
+                                new XAttribute("owner", faction),
                                 new XAttribute("type", station.Type.Equals("tradestation", StringComparison.OrdinalIgnoreCase) ? "tradingstation" : "factory"),
                                 new XElement("quotas",
                                     new XElement("quota",
