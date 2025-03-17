@@ -69,29 +69,14 @@ namespace X4SectorCreator.XmlGeneration
                             var zoneMacro = $"{modPrefix}_ZO_{clusterPrefix}_{sectorPrefix}_z{zone.Id:D3}_macro";
 
                             string faction = station.Faction.ToLower();
-                            switch(faction)
-                            {
-                                case "vigor":
-                                    faction = "loanshark";
-                                    break;
-                                case "riptide":
-                                    faction = "scavenger";
-                                    break;
-                                case "quettanauts":
-                                    faction = "kaori";
-                                    break;
-                                case "zyarth":
-                                    faction = "split";
-                                    break;
-                                case "segaris":
-                                    faction = "pioneers";
-                                    break;
-                            }
+                            string owner = station.Owner.ToLower();
+                            faction = CorrectFactionNames(faction);
+                            owner = CorrectFactionNames(owner);
 
                             yield return new XElement("station",
                                 new XAttribute("id", id.ToLower()),
                                 new XAttribute("race", station.Race.ToLower()),
-                                new XAttribute("owner", faction),
+                                new XAttribute("owner", owner),
                                 new XAttribute("type", station.Type.Equals("tradestation", StringComparison.OrdinalIgnoreCase) ? "tradingstation" : "factory"),
                                 new XElement("quotas",
                                     new XElement("quota",
@@ -106,7 +91,7 @@ namespace X4SectorCreator.XmlGeneration
                                 ),
                                 new XElement("station",
                                     new XElement("select",
-                                        new XAttribute("faction", station.Faction.ToLower()),
+                                        new XAttribute("faction", faction),
                                         new XAttribute("tags", $"[{station.Type.ToLower()}]")),
                                     new XElement("loadout",
                                         new XElement("level",
@@ -118,6 +103,30 @@ namespace X4SectorCreator.XmlGeneration
                     }
                 }
             }
+        }
+
+        private static string CorrectFactionNames(string faction)
+        {
+            switch (faction)
+            {
+                case "vigor":
+                    faction = "loanshark";
+                    break;
+                case "riptide":
+                    faction = "scavenger";
+                    break;
+                case "quettanauts":
+                    faction = "kaori";
+                    break;
+                case "zyarth":
+                    faction = "split";
+                    break;
+                case "segaris":
+                    faction = "pioneers";
+                    break;
+            }
+
+            return faction;
         }
 
         private static string EnsureDirectoryExists(string filePath)

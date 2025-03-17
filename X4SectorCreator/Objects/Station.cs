@@ -6,6 +6,7 @@
         public string Name { get; set; }
         public string Type { get; set; }
         public string Faction { get; set; }
+        public string Owner { get; set; }
         public string Race { get; set; }
         public Point Position { get; set; }
 
@@ -17,6 +18,7 @@
                 Name = Name,
                 Type = Type,
                 Faction = Faction,
+                Owner = Owner,
                 Race = Race,
                 Position = Position
             };
