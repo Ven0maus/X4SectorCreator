@@ -16,7 +16,14 @@
     "Boron": "#00aeff",
     "Vigor": "#a19958",
     "Quettanauts": "#baa079",
-    "Yaki": "#ff00ea"
+    "Yaki": "#ff00ea",
+    "Scaleplate": "#524e34",
+    "FallenSplit": "#6e300c",
+    "Ministry": "#546339",
+    "Alliance": "#3d1f4d",
+    "Buccaneers": "#361f0d",
+    "Player": "#00ff15",
+    "Khaak": "#d16fba"
   },
   "Clusters": [
     {
