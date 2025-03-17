@@ -57,17 +57,22 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         foreach (var station in zone.Stations)
                         {
-                            var id = cluster.IsBaseGame ? $"{modPrefix}_ST_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_st{station.Id:D3}" :
-                                $"{modPrefix}_ST_c{cluster.Id:D3}_s{sector.Id:D3}_st{station.Id:D3}";
+                            string clusterPrefix = $"c{cluster.Id:D3}";
+                            if (cluster.IsBaseGame)
+                                clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter();
 
-                            var zoneMacro = cluster.IsBaseGame ? $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}_macro" :
-                                $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro";
+                            string sectorPrefix = $"s{sector.Id:D3}";
+                            if (sector.IsBaseGame)
+                                sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter();
+
+                            var id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
+                            var zoneMacro = $"{modPrefix}_ZO_{clusterPrefix}_{sectorPrefix}_z{zone.Id:D3}_macro";
 
                             yield return new XElement("station",
                                 new XAttribute("id", id.ToLower()),
                                 new XAttribute("race", station.Race.ToLower()),
                                 new XAttribute("owner", station.Faction.ToLower()),
-                                new XAttribute("type", "factory"),
+                                new XAttribute("type", station.Type.Equals("tradestation", StringComparison.OrdinalIgnoreCase) ? "tradingstation" : "factory"),
                                 new XElement("quotas",
                                     new XElement("quota",
                                         new XAttribute("galaxy", 1),
