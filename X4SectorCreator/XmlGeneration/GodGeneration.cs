@@ -59,11 +59,11 @@ namespace X4SectorCreator.XmlGeneration
                         {
                             string clusterPrefix = $"c{cluster.Id:D3}";
                             if (cluster.IsBaseGame)
-                                clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter();
+                                clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
 
                             string sectorPrefix = $"s{sector.Id:D3}";
                             if (sector.IsBaseGame)
-                                sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter();
+                                sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
 
                             var id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
                             var zoneMacro = $"{modPrefix}_ZO_{clusterPrefix}_{sectorPrefix}_z{zone.Id:D3}_macro";
