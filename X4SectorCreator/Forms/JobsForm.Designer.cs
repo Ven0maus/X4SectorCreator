@@ -113,6 +113,7 @@
             cmbFaction.Name = "cmbFaction";
             cmbFaction.Size = new Size(247, 23);
             cmbFaction.TabIndex = 6;
+            cmbFaction.SelectedIndexChanged += CmbFaction_SelectedIndexChanged;
             // 
             // label2
             // 
@@ -151,6 +152,7 @@
             cmbOrder.Name = "cmbOrder";
             cmbOrder.Size = new Size(247, 23);
             cmbOrder.TabIndex = 10;
+            cmbOrder.SelectedIndexChanged += CmbOrder_SelectedIndexChanged;
             // 
             // cmbCommandeerable
             // 
@@ -159,6 +161,7 @@
             cmbCommandeerable.Name = "cmbCommandeerable";
             cmbCommandeerable.Size = new Size(171, 23);
             cmbCommandeerable.TabIndex = 12;
+            cmbCommandeerable.SelectedIndexChanged += CmbCommandeerable_SelectedIndexChanged;
             // 
             // label5
             // 
@@ -187,6 +190,7 @@
             cmbBasket.Name = "cmbBasket";
             cmbBasket.Size = new Size(247, 23);
             cmbBasket.TabIndex = 14;
+            cmbBasket.SelectedIndexChanged += CmbBasket_SelectedIndexChanged;
             // 
             // cmbCluster
             // 
@@ -195,6 +199,7 @@
             cmbCluster.Name = "cmbCluster";
             cmbCluster.Size = new Size(247, 23);
             cmbCluster.TabIndex = 16;
+            cmbCluster.SelectedIndexChanged += CmbCluster_SelectedIndexChanged;
             // 
             // label7
             // 
@@ -213,6 +218,7 @@
             cmbSector.Name = "cmbSector";
             cmbSector.Size = new Size(247, 23);
             cmbSector.TabIndex = 18;
+            cmbSector.SelectedIndexChanged += CmbSector_SelectedIndexChanged;
             // 
             // label8
             // 
@@ -232,6 +238,7 @@
             BtnResetFilter.TabIndex = 19;
             BtnResetFilter.Text = "Reset Filter";
             BtnResetFilter.UseVisualStyleBackColor = true;
+            BtnResetFilter.Click += BtnResetFilter_Click;
             // 
             // BtnBaskets
             // 

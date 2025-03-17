@@ -4,13 +4,14 @@ namespace X4SectorCreator.Forms
 {
     public partial class JobsForm : Form
     {
-        private static readonly List<Job> _jobs = [];
-        public static IReadOnlyList<Job> Jobs => _jobs;
+        private static readonly List<Job> _allJobs = [];
+        public static IReadOnlyList<Job> AllJobs => _allJobs;
 
-        private static readonly List<Basket> _baskets = [];
-        public static IReadOnlyList<Basket> Baskets => _baskets;
+        private static readonly List<Basket> _allBaskets = [];
+        public static IReadOnlyList<Basket> AllBaskets => _allBaskets;
 
         private readonly string[] _factions;
+        private bool _applyFilter = true;
 
         public JobsForm()
         {
@@ -27,7 +28,7 @@ namespace X4SectorCreator.Forms
             ListJobs.Items.Clear();
 
             // Load job items into the listbox
-            foreach (var job in Jobs.OrderBy(a => a.Name))
+            foreach (var job in AllJobs.OrderBy(a => a.Name))
                 ListJobs.Items.Add(job);
 
             // Clear existing values for the filter options
@@ -41,7 +42,7 @@ namespace X4SectorCreator.Forms
             // Set new default values for filter options
 
             // Baskets
-            foreach (var basket in Baskets.OrderBy(a => a.Name))
+            foreach (var basket in AllBaskets.OrderBy(a => a.Name))
                 cmbBasket.Items.Add(basket.Name);
             cmbBasket.Items.Insert(0, "Any"); // Custom any filter
 
@@ -68,9 +69,11 @@ namespace X4SectorCreator.Forms
             cmbSector.Items.Insert(0, "Any");
 
             // By default set for each option "Any"
+            _applyFilter = false;
             var comboboxes = new[] { cmbBasket, cmbCommandeerable, cmbFaction, cmbOrder, cmbCluster, cmbSector };
             foreach (var cmb in comboboxes)
                 cmb.SelectedItem = "Any";
+            _applyFilter = true;
         }
 
         /// <summary>
@@ -80,7 +83,7 @@ namespace X4SectorCreator.Forms
         public static void InitJobsFromConfig(List<Job> jobs)
         {
             ClearAllJobs();
-            _jobs.AddRange(jobs);
+            _allJobs.AddRange(jobs);
         }
 
         /// <summary>
@@ -90,7 +93,7 @@ namespace X4SectorCreator.Forms
         public static void InitBasketsFromConfig(List<Basket> baskets)
         {
             ClearAllBaskets();
-            _baskets.AddRange(baskets);
+            _allBaskets.AddRange(baskets);
         }
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace X4SectorCreator.Forms
         /// </summary>
         public static void ClearAllJobs()
         {
-            _jobs.Clear();
+            _allJobs.Clear();
         }
 
         /// <summary>
@@ -106,12 +109,113 @@ namespace X4SectorCreator.Forms
         /// </summary>
         public static void ClearAllBaskets()
         {
-            _baskets.Clear();
+            _allBaskets.Clear();
         }
 
         private void BtnExitJobWindow_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void BtnResetFilter_Click(object sender, EventArgs e)
+        {
+            _applyFilter = false;
+            var comboboxes = new[] { cmbBasket, cmbCommandeerable, cmbFaction, cmbOrder, cmbCluster, cmbSector };
+            foreach (var cmb in comboboxes)
+                cmb.SelectedItem = "Any";
+            _applyFilter = true;
+
+            // Apply filter only once
+            ApplyCurrentFilter();
+        }
+
+        private void ApplyCurrentFilter()
+        {
+            if (!_applyFilter) return;
+
+            // TODO: Implement
+            var suitableJobs = AllJobs.ToList();
+
+            // Remove jobs based on rules
+            HandleFilterOption(cmbBasket, suitableJobs);
+            HandleFilterOption(cmbCommandeerable, suitableJobs);
+            HandleFilterOption(cmbFaction, suitableJobs);
+            HandleFilterOption(cmbOrder, suitableJobs);
+            HandleFilterOption(cmbCluster, suitableJobs);
+            HandleFilterOption(cmbSector, suitableJobs);
+
+            // Add all suitable jobs to the listbox
+            ListJobs.Items.Clear();
+            foreach (var job in suitableJobs)
+                ListJobs.Items.Add(job);
+        }
+
+        private void HandleFilterOption(ComboBox comboBox, List<Job> jobs)
+        {
+            // General "Any" check
+            var value = comboBox.SelectedItem as string;
+            if (!string.IsNullOrWhiteSpace(value) && value.Equals("Any", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            // TODO: Implement
+            if (comboBox == cmbBasket)
+            {
+
+            }
+            else if (comboBox == cmbCommandeerable)
+            {
+
+            }
+            else if (comboBox == cmbFaction)
+            {
+
+            }
+            else if (comboBox == cmbOrder)
+            {
+
+            }
+            else if (comboBox == cmbCluster)
+            {
+
+            }
+            else if (comboBox == cmbSector)
+            {
+
+            }
+            else
+            {
+                throw new NotImplementedException($"Combobox \"{comboBox.Name}\" implementation not available.");
+            }
+        }
+
+        private void CmbFaction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyCurrentFilter();
+        }
+
+        private void CmbOrder_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyCurrentFilter();
+        }
+
+        private void CmbCommandeerable_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyCurrentFilter();
+        }
+
+        private void CmbBasket_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyCurrentFilter();
+        }
+
+        private void CmbCluster_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyCurrentFilter();
+        }
+
+        private void CmbSector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyCurrentFilter();
         }
     }
 }
