@@ -108,6 +108,12 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            if (cmbStationType.SelectedItem == null)
+            {
+                _ = MessageBox.Show("Please select a valid station type.");
+                return;
+            }
+
             if (cmbFaction.SelectedItem == null)
             {
                 _ = MessageBox.Show("Please select a valid faction for which to take the station blueprint.");
@@ -117,12 +123,6 @@ namespace X4SectorCreator.Forms
             if (cmbOwner.SelectedItem == null)
             {
                 _ = MessageBox.Show("Please select a valid owner.");
-                return;
-            }
-
-            if (cmbStationType.SelectedItem == null)
-            {
-                _ = MessageBox.Show("Please select a valid station type.");
                 return;
             }
 
