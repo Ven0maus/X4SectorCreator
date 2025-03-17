@@ -104,6 +104,7 @@
             BtnExitJobWindow.TabIndex = 5;
             BtnExitJobWindow.Text = "Exit Jobs Window";
             BtnExitJobWindow.UseVisualStyleBackColor = true;
+            BtnExitJobWindow.Click += BtnExitJobWindow_Click;
             // 
             // cmbFaction
             // 

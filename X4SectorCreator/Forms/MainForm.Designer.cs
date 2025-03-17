@@ -404,7 +404,6 @@
             // 
             // BtnJobs
             // 
-            BtnJobs.Enabled = false;
             BtnJobs.Location = new Point(159, 10);
             BtnJobs.Name = "BtnJobs";
             BtnJobs.Size = new Size(156, 31);

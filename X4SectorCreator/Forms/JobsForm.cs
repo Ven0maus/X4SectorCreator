@@ -107,5 +107,10 @@ namespace X4SectorCreator.Forms
         {
             _baskets.Clear();
         }
+
+        private void BtnExitJobWindow_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
