@@ -409,8 +409,9 @@
             BtnJobs.Name = "BtnJobs";
             BtnJobs.Size = new Size(156, 31);
             BtnJobs.TabIndex = 48;
-            BtnJobs.Text = "Coming soon";
+            BtnJobs.Text = "Faction Jobs";
             BtnJobs.UseVisualStyleBackColor = true;
+            BtnJobs.Click += BtnJobs_Click;
             // 
             // MainForm
             // 

@@ -20,6 +20,7 @@ namespace X4SectorCreator
         private RegionForm _regionForm;
         private VersionUpdateForm _versionUpdateForm;
         private StationForm _stationForm;
+        private JobsForm _jobsForm;
 
         private string _currentX4Version;
 
@@ -44,6 +45,7 @@ namespace X4SectorCreator
             ? _versionUpdateForm
             : (_versionUpdateForm = new VersionUpdateForm());
         public StationForm StationForm => _stationForm != null && !_stationForm.IsDisposed ? _stationForm : (_stationForm = new StationForm());
+        public JobsForm JobsForm => _jobsForm != null && !_jobsForm.IsDisposed ? _jobsForm : (_jobsForm = new JobsForm());
 
         public readonly Dictionary<string, string> BackgroundVisualMapping;
         public readonly Dictionary<string, string> DlcMappings;
@@ -148,6 +150,9 @@ namespace X4SectorCreator
             RegionsListBox.Items.Clear();
             ListStations.Items.Clear();
             LblDetails.Text = string.Empty;
+
+            JobsForm.ClearAllJobs();
+            JobsForm.ClearAllBaskets();
 
             switch (_selectedClusterOption)
             {
@@ -1600,6 +1605,14 @@ namespace X4SectorCreator
             StationForm.Sector = sector;
             StationForm.Station = selectedStation;
             StationForm.Show();
+        }
+        #endregion
+
+        #region Jobs
+        private void BtnJobs_Click(object sender, EventArgs e)
+        {
+            JobsForm.Initialize();
+            JobsForm.Show();
         }
         #endregion
     }

@@ -47,6 +47,11 @@ namespace X4SectorCreator.Objects
                 Sectors = Sectors.Select(a => (Sector)a.Clone()).ToList()
             };
         }
+
+        public override string ToString()
+        {
+            return Name ?? "Unknown";
+        }
     }
 
     public enum ClusterOption
