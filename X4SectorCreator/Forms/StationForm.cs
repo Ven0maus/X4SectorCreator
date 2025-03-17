@@ -24,6 +24,7 @@ namespace X4SectorCreator.Forms
                 {
                     cmbStationType.SelectedItem = _station.Type;
                     cmbFaction.SelectedItem = _station.Faction;
+                    cmbOwner.SelectedItem = _station.Owner;
                     txtPosition.Text = (_station.Position.X, _station.Position.Y).ToString();
                     _dotPosition = ConvertWorldToScreen(_station.Position);
                     txtSector.Text = Sector.Name.ToString();
@@ -35,6 +36,7 @@ namespace X4SectorCreator.Forms
                 {
                     cmbStationType.SelectedItem = null;
                     cmbFaction.SelectedItem = null;
+                    cmbOwner.SelectedItem = null;
                     cmbRace.SelectedItem = null;
                     txtPosition.Text = "(0, 0)";
                     txtSector.Text = Sector.Name.ToString();
@@ -68,9 +70,14 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Init factions and races
-            foreach (var faction in MainForm.Instance.FactionColorMapping.Where(a => !a.Key.Equals("None", StringComparison.OrdinalIgnoreCase)))
+            foreach (var faction in MainForm.Instance.FactionColorMapping
+                .Where(a => !a.Key.Equals("None", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(a => a.Key))
+            {
                 cmbFaction.Items.Add(faction.Key);
-            foreach (var race in _races)
+                cmbOwner.Items.Add(faction.Key);
+            }
+            foreach (var race in _races.OrderBy(a => a))
                 cmbRace.Items.Add(race);
 
             // Create and define hexagon
@@ -101,15 +108,21 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            if (cmbFaction.SelectedItem == null)
-            {
-                _ = MessageBox.Show("Please select a valid faction.");
-                return;
-            }
-
             if (cmbStationType.SelectedItem == null)
             {
                 _ = MessageBox.Show("Please select a valid station type.");
+                return;
+            }
+
+            if (cmbFaction.SelectedItem == null)
+            {
+                _ = MessageBox.Show("Please select a valid faction for which to take the station blueprint.");
+                return;
+            }
+
+            if (cmbOwner.SelectedItem == null)
+            {
+                _ = MessageBox.Show("Please select a valid owner.");
                 return;
             }
 
@@ -137,6 +150,7 @@ namespace X4SectorCreator.Forms
                         Id = Sector.Zones.SelectMany(a => a.Stations).DefaultIfEmpty(new Station()).Max(a => a.Id) + 1,
                         Name = txtName.Text,
                         Faction = cmbFaction.SelectedItem as string,
+                        Owner = cmbOwner.SelectedItem as string,
                         Type = cmbStationType.SelectedItem as string,
                         Race = cmbRace.SelectedItem as string,
                         Position = new Point(StationPosX, StationPosY)
@@ -154,6 +168,7 @@ namespace X4SectorCreator.Forms
                 case "Update":
                     Station.Name = txtName.Text;
                     Station.Faction = cmbFaction.SelectedItem as string;
+                    Station.Owner = cmbOwner.SelectedItem as string;
                     Station.Type = cmbStationType.SelectedItem as string;
                     Station.Race = cmbRace.SelectedItem as string;
                     Station.Position = new Point(StationPosX, StationPosY);

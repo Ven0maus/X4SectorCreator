@@ -970,6 +970,7 @@ namespace X4SectorCreator
                         currentStation.Name = newStation.Name;
                         currentStation.Position = newStation.Position;
                         currentStation.Faction = newStation.Faction;
+                        currentStation.Owner = newStation.Owner;
                         currentStation.Race = newStation.Race;
                         currentStation.Id = newStation.Id;
                         currentStation.Type = newStation.Type;
