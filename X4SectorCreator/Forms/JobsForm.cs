@@ -55,6 +55,7 @@ namespace X4SectorCreator.Forms
 
             // Order
             // TODO: Extract all different types of possible orders from jobs and show them here
+            cmbOrder.Items.Insert(0, "Any");
 
             // Cluster
             foreach (var cluster in MainForm.Instance.AllClusters.OrderBy(a => a.Value.Name))
