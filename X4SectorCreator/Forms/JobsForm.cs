@@ -42,7 +42,6 @@ namespace X4SectorCreator.Forms
 
             // Clear existing values for the filter options
             cmbBasket.Items.Clear();
-            cmbCommandeerable.Items.Clear();
             cmbFaction.Items.Clear();
             cmbOrder.Items.Clear();
             cmbCluster.Items.Clear();
@@ -52,9 +51,6 @@ namespace X4SectorCreator.Forms
 
             // Baskets
             UpdateBasketsFilter();
-
-            // Commandeerable
-            cmbCommandeerable.Items.AddRange("Any", "False", "True");
 
             // Factions
             foreach (var faction in _factions)
@@ -77,7 +73,7 @@ namespace X4SectorCreator.Forms
 
             // By default set for each option "Any"
             _applyFilter = false;
-            var comboboxes = new[] { cmbBasket, cmbCommandeerable, cmbFaction, cmbOrder, cmbCluster, cmbSector };
+            var comboboxes = new[] { cmbBasket, cmbFaction, cmbOrder, cmbCluster, cmbSector };
             foreach (var cmb in comboboxes)
                 cmb.SelectedItem = "Any";
             _applyFilter = true;
@@ -138,7 +134,7 @@ namespace X4SectorCreator.Forms
         private void BtnResetFilter_Click(object sender, EventArgs e)
         {
             _applyFilter = false;
-            var comboboxes = new[] { cmbBasket, cmbCommandeerable, cmbFaction, cmbOrder, cmbCluster, cmbSector };
+            var comboboxes = new[] { cmbBasket, cmbFaction, cmbOrder, cmbCluster, cmbSector };
             foreach (var cmb in comboboxes)
                 cmb.SelectedItem = "Any";
             _applyFilter = true;
@@ -151,12 +147,10 @@ namespace X4SectorCreator.Forms
         {
             if (!_applyFilter) return;
 
-            // TODO: Implement
             var suitableJobs = AllJobs.ToList();
 
             // Remove jobs based on rules
             HandleFilterOption(cmbBasket, suitableJobs);
-            HandleFilterOption(cmbCommandeerable, suitableJobs);
             HandleFilterOption(cmbFaction, suitableJobs);
             HandleFilterOption(cmbOrder, suitableJobs);
             HandleFilterOption(cmbCluster, suitableJobs);
@@ -175,30 +169,30 @@ namespace X4SectorCreator.Forms
             if (!string.IsNullOrWhiteSpace(value) && value.Equals("Any", StringComparison.OrdinalIgnoreCase))
                 return;
 
-            // TODO: Implement
             if (comboBox == cmbBasket)
             {
-
-            }
-            else if (comboBox == cmbCommandeerable)
-            {
-
+                var basket = cmbBasket.SelectedItem as string;
+                jobs.RemoveAll(a => a.Basket == null || !a.Basket.Equals(basket, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbFaction)
             {
-
+                var faction = cmbFaction.SelectedItem as string;
+                jobs.RemoveAll(a => a.Category?.Faction == null || !a.Category.Faction.Equals(faction, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbOrder)
             {
-
+                var order = cmbOrder.SelectedItem as string;
+                jobs.RemoveAll(a => a.Orders == null || a.Orders.Count == 0 || !a.Orders.Any(a => a.Name.Equals(order, StringComparison.OrdinalIgnoreCase)));
             }
             else if (comboBox == cmbCluster)
             {
-
+                var cluster = (cmbCluster.SelectedItem as Cluster).Name;
+                jobs.RemoveAll(a => a.Location.Name == null || !a.Location.Name.Equals(cluster, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbSector)
             {
-
+                var sector = (cmbSector.SelectedItem as Sector).Name;
+                jobs.RemoveAll(a => a.Location.Name == null || !a.Location.Name.Equals(sector, StringComparison.OrdinalIgnoreCase));
             }
             else
             {
@@ -212,11 +206,6 @@ namespace X4SectorCreator.Forms
         }
 
         private void CmbOrder_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ApplyCurrentFilter();
-        }
-
-        private void CmbCommandeerable_SelectedIndexChanged(object sender, EventArgs e)
         {
             ApplyCurrentFilter();
         }

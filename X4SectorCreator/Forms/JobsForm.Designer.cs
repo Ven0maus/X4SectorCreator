@@ -39,8 +39,6 @@
             label3 = new Label();
             label4 = new Label();
             cmbOrder = new ComboBox();
-            cmbCommandeerable = new ComboBox();
-            label5 = new Label();
             label6 = new Label();
             cmbBasket = new ComboBox();
             cmbCluster = new ComboBox();
@@ -56,7 +54,7 @@
             ListJobs.FormattingEnabled = true;
             ListJobs.Location = new Point(12, 40);
             ListJobs.Name = "ListJobs";
-            ListJobs.Size = new Size(259, 424);
+            ListJobs.Size = new Size(259, 394);
             ListJobs.TabIndex = 0;
             ListJobs.DoubleClick += ListJobs_DoubleClick;
             // 
@@ -102,7 +100,7 @@
             // 
             // BtnExitJobWindow
             // 
-            BtnExitJobWindow.Location = new Point(277, 428);
+            BtnExitJobWindow.Location = new Point(277, 398);
             BtnExitJobWindow.Name = "BtnExitJobWindow";
             BtnExitJobWindow.Size = new Size(321, 36);
             BtnExitJobWindow.TabIndex = 5;
@@ -158,30 +156,11 @@
             cmbOrder.TabIndex = 10;
             cmbOrder.SelectedIndexChanged += CmbOrder_SelectedIndexChanged;
             // 
-            // cmbCommandeerable
-            // 
-            cmbCommandeerable.FormattingEnabled = true;
-            cmbCommandeerable.Location = new Point(421, 302);
-            cmbCommandeerable.Name = "cmbCommandeerable";
-            cmbCommandeerable.Size = new Size(171, 23);
-            cmbCommandeerable.TabIndex = 12;
-            cmbCommandeerable.SelectedIndexChanged += CmbCommandeerable_SelectedIndexChanged;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(278, 304);
-            label5.Name = "label5";
-            label5.Size = new Size(137, 21);
-            label5.TabIndex = 11;
-            label5.Text = "Commandeerable:";
-            // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(281, 332);
+            label6.Location = new Point(281, 301);
             label6.Name = "label6";
             label6.Size = new Size(58, 21);
             label6.TabIndex = 13;
@@ -190,7 +169,7 @@
             // cmbBasket
             // 
             cmbBasket.FormattingEnabled = true;
-            cmbBasket.Location = new Point(345, 332);
+            cmbBasket.Location = new Point(345, 301);
             cmbBasket.Name = "cmbBasket";
             cmbBasket.Size = new Size(247, 23);
             cmbBasket.TabIndex = 14;
@@ -199,7 +178,7 @@
             // cmbCluster
             // 
             cmbCluster.FormattingEnabled = true;
-            cmbCluster.Location = new Point(345, 363);
+            cmbCluster.Location = new Point(345, 332);
             cmbCluster.Name = "cmbCluster";
             cmbCluster.Size = new Size(247, 23);
             cmbCluster.TabIndex = 16;
@@ -209,7 +188,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(277, 364);
+            label7.Location = new Point(277, 333);
             label7.Name = "label7";
             label7.Size = new Size(62, 21);
             label7.TabIndex = 15;
@@ -218,7 +197,7 @@
             // cmbSector
             // 
             cmbSector.FormattingEnabled = true;
-            cmbSector.Location = new Point(345, 394);
+            cmbSector.Location = new Point(345, 363);
             cmbSector.Name = "cmbSector";
             cmbSector.Size = new Size(247, 23);
             cmbSector.TabIndex = 18;
@@ -228,7 +207,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(282, 392);
+            label8.Location = new Point(282, 361);
             label8.Name = "label8";
             label8.Size = new Size(57, 21);
             label8.TabIndex = 17;
@@ -258,7 +237,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(604, 470);
+            ClientSize = new Size(604, 440);
             Controls.Add(BtnBaskets);
             Controls.Add(BtnResetFilter);
             Controls.Add(cmbSector);
@@ -267,8 +246,6 @@
             Controls.Add(label7);
             Controls.Add(cmbBasket);
             Controls.Add(label6);
-            Controls.Add(cmbCommandeerable);
-            Controls.Add(label5);
             Controls.Add(cmbOrder);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -302,8 +279,6 @@
         private Label label3;
         private Label label4;
         private ComboBox cmbOrder;
-        private ComboBox cmbCommandeerable;
-        private Label label5;
         private Label label6;
         private ComboBox cmbBasket;
         private ComboBox cmbCluster;
