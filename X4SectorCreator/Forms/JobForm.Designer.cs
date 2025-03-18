@@ -89,22 +89,24 @@
             TxtShipMin = new TextBox();
             label28 = new Label();
             BtnEditBaskets = new Button();
+            label29 = new Label();
+            CmbRegionBasket = new ComboBox();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(499, 548);
+            button1.Location = new Point(418, 522);
             button1.Name = "button1";
-            button1.Size = new Size(109, 37);
+            button1.Size = new Size(190, 47);
             button1.TabIndex = 0;
             button1.Text = "Create Job";
             button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            button2.Location = new Point(415, 548);
+            button2.Location = new Point(418, 575);
             button2.Name = "button2";
-            button2.Size = new Size(78, 37);
+            button2.Size = new Size(190, 24);
             button2.TabIndex = 1;
             button2.Text = "Cancel";
             button2.UseVisualStyleBackColor = true;
@@ -147,7 +149,7 @@
             // 
             ChkRebuild.AutoSize = true;
             ChkRebuild.Font = new Font("Segoe UI", 12F);
-            ChkRebuild.Location = new Point(444, 414);
+            ChkRebuild.Location = new Point(434, 398);
             ChkRebuild.Name = "ChkRebuild";
             ChkRebuild.Size = new Size(82, 25);
             ChkRebuild.TabIndex = 6;
@@ -158,7 +160,7 @@
             // 
             ChkCommandeerable.AutoSize = true;
             ChkCommandeerable.Font = new Font("Segoe UI", 12F);
-            ChkCommandeerable.Location = new Point(443, 445);
+            ChkCommandeerable.Location = new Point(433, 429);
             ChkCommandeerable.Name = "ChkCommandeerable";
             ChkCommandeerable.Size = new Size(153, 25);
             ChkCommandeerable.TabIndex = 7;
@@ -169,7 +171,7 @@
             // 
             ChkBuildAtShipyard.AutoSize = true;
             ChkBuildAtShipyard.Font = new Font("Segoe UI", 12F);
-            ChkBuildAtShipyard.Location = new Point(443, 476);
+            ChkBuildAtShipyard.Location = new Point(433, 460);
             ChkBuildAtShipyard.Name = "ChkBuildAtShipyard";
             ChkBuildAtShipyard.Size = new Size(149, 25);
             ChkBuildAtShipyard.TabIndex = 8;
@@ -180,7 +182,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Underline);
-            label3.Location = new Point(230, 360);
+            label3.Location = new Point(213, 375);
             label3.Name = "label3";
             label3.Size = new Size(86, 21);
             label3.TabIndex = 10;
@@ -189,24 +191,24 @@
             // CmbOrder
             // 
             CmbOrder.FormattingEnabled = true;
-            CmbOrder.Location = new Point(230, 384);
+            CmbOrder.Location = new Point(213, 399);
             CmbOrder.Name = "CmbOrder";
-            CmbOrder.Size = new Size(162, 23);
+            CmbOrder.Size = new Size(196, 23);
             CmbOrder.TabIndex = 11;
             // 
             // ListOrderParams
             // 
             ListOrderParams.FormattingEnabled = true;
-            ListOrderParams.Location = new Point(230, 434);
+            ListOrderParams.Location = new Point(213, 449);
             ListOrderParams.Name = "ListOrderParams";
-            ListOrderParams.Size = new Size(162, 109);
+            ListOrderParams.Size = new Size(196, 109);
             ListOrderParams.TabIndex = 12;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(230, 410);
+            label4.Location = new Point(213, 425);
             label4.Name = "label4";
             label4.Size = new Size(136, 21);
             label4.TabIndex = 13;
@@ -214,16 +216,16 @@
             // 
             // BtnAddParam
             // 
-            BtnAddParam.Location = new Point(302, 549);
+            BtnAddParam.Location = new Point(285, 564);
             BtnAddParam.Name = "BtnAddParam";
-            BtnAddParam.Size = new Size(90, 27);
+            BtnAddParam.Size = new Size(124, 27);
             BtnAddParam.TabIndex = 14;
             BtnAddParam.Text = "Add";
             BtnAddParam.UseVisualStyleBackColor = true;
             // 
             // BtnRemoveParam
             // 
-            BtnRemoveParam.Location = new Point(230, 549);
+            BtnRemoveParam.Location = new Point(213, 564);
             BtnRemoveParam.Name = "BtnRemoveParam";
             BtnRemoveParam.Size = new Size(66, 27);
             BtnRemoveParam.TabIndex = 15;
@@ -234,7 +236,7 @@
             // 
             ChkSubordinate.AutoSize = true;
             ChkSubordinate.Font = new Font("Segoe UI", 12F);
-            ChkSubordinate.Location = new Point(443, 507);
+            ChkSubordinate.Location = new Point(433, 491);
             ChkSubordinate.Name = "ChkSubordinate";
             ChkSubordinate.Size = new Size(114, 25);
             ChkSubordinate.TabIndex = 16;
@@ -396,7 +398,7 @@
             // CmbLocationClass
             // 
             CmbLocationClass.FormattingEnabled = true;
-            CmbLocationClass.Location = new Point(214, 70);
+            CmbLocationClass.Location = new Point(214, 62);
             CmbLocationClass.Name = "CmbLocationClass";
             CmbLocationClass.Size = new Size(193, 23);
             CmbLocationClass.TabIndex = 35;
@@ -405,7 +407,7 @@
             // 
             label15.AutoSize = true;
             label15.Font = new Font("Segoe UI", 12F);
-            label15.Location = new Point(214, 46);
+            label15.Location = new Point(214, 38);
             label15.Name = "label15";
             label15.Size = new Size(49, 21);
             label15.TabIndex = 34;
@@ -414,7 +416,7 @@
             // CmbLocation
             // 
             CmbLocation.FormattingEnabled = true;
-            CmbLocation.Location = new Point(214, 120);
+            CmbLocation.Location = new Point(214, 112);
             CmbLocation.Name = "CmbLocation";
             CmbLocation.Size = new Size(193, 23);
             CmbLocation.TabIndex = 37;
@@ -423,7 +425,7 @@
             // 
             label16.AutoSize = true;
             label16.Font = new Font("Segoe UI", 12F);
-            label16.Location = new Point(214, 96);
+            label16.Location = new Point(214, 88);
             label16.Name = "label16";
             label16.Size = new Size(72, 21);
             label16.TabIndex = 36;
@@ -432,7 +434,7 @@
             // CmbLocationFaction
             // 
             CmbLocationFaction.FormattingEnabled = true;
-            CmbLocationFaction.Location = new Point(214, 169);
+            CmbLocationFaction.Location = new Point(214, 161);
             CmbLocationFaction.Name = "CmbLocationFaction";
             CmbLocationFaction.Size = new Size(193, 23);
             CmbLocationFaction.TabIndex = 39;
@@ -441,7 +443,7 @@
             // 
             label17.AutoSize = true;
             label17.Font = new Font("Segoe UI", 12F);
-            label17.Location = new Point(214, 145);
+            label17.Location = new Point(214, 137);
             label17.Name = "label17";
             label17.Size = new Size(62, 21);
             label17.TabIndex = 38;
@@ -450,7 +452,7 @@
             // CmbRelation
             // 
             CmbRelation.FormattingEnabled = true;
-            CmbRelation.Location = new Point(214, 220);
+            CmbRelation.Location = new Point(214, 212);
             CmbRelation.Name = "CmbRelation";
             CmbRelation.Size = new Size(193, 23);
             CmbRelation.TabIndex = 41;
@@ -459,7 +461,7 @@
             // 
             label18.AutoSize = true;
             label18.Font = new Font("Segoe UI", 12F);
-            label18.Location = new Point(214, 196);
+            label18.Location = new Point(214, 188);
             label18.Name = "label18";
             label18.Size = new Size(70, 21);
             label18.TabIndex = 40;
@@ -484,7 +486,7 @@
             // 
             // TxtComparison
             // 
-            TxtComparison.Location = new Point(214, 270);
+            TxtComparison.Location = new Point(214, 262);
             TxtComparison.Name = "TxtComparison";
             TxtComparison.Size = new Size(193, 23);
             TxtComparison.TabIndex = 45;
@@ -493,7 +495,7 @@
             // 
             label20.AutoSize = true;
             label20.Font = new Font("Segoe UI", 12F);
-            label20.Location = new Point(214, 246);
+            label20.Location = new Point(214, 238);
             label20.Name = "label20";
             label20.Size = new Size(98, 21);
             label20.TabIndex = 44;
@@ -511,7 +513,7 @@
             // 
             // TxtShipTags
             // 
-            TxtShipTags.Location = new Point(418, 120);
+            TxtShipTags.Location = new Point(415, 112);
             TxtShipTags.Name = "TxtShipTags";
             TxtShipTags.Size = new Size(193, 23);
             TxtShipTags.TabIndex = 52;
@@ -520,7 +522,7 @@
             // 
             label22.AutoSize = true;
             label22.Font = new Font("Segoe UI", 12F);
-            label22.Location = new Point(418, 96);
+            label22.Location = new Point(415, 88);
             label22.Name = "label22";
             label22.Size = new Size(43, 21);
             label22.TabIndex = 51;
@@ -529,7 +531,7 @@
             // CmbShipSize
             // 
             CmbShipSize.FormattingEnabled = true;
-            CmbShipSize.Location = new Point(418, 169);
+            CmbShipSize.Location = new Point(415, 161);
             CmbShipSize.Name = "CmbShipSize";
             CmbShipSize.Size = new Size(193, 23);
             CmbShipSize.TabIndex = 50;
@@ -538,7 +540,7 @@
             // 
             label23.AutoSize = true;
             label23.Font = new Font("Segoe UI", 12F);
-            label23.Location = new Point(418, 145);
+            label23.Location = new Point(415, 137);
             label23.Name = "label23";
             label23.Size = new Size(41, 21);
             label23.TabIndex = 49;
@@ -547,7 +549,7 @@
             // CmbShipFaction
             // 
             CmbShipFaction.FormattingEnabled = true;
-            CmbShipFaction.Location = new Point(418, 70);
+            CmbShipFaction.Location = new Point(415, 62);
             CmbShipFaction.Name = "CmbShipFaction";
             CmbShipFaction.Size = new Size(193, 23);
             CmbShipFaction.TabIndex = 48;
@@ -556,7 +558,7 @@
             // 
             label24.AutoSize = true;
             label24.Font = new Font("Segoe UI", 12F);
-            label24.Location = new Point(418, 46);
+            label24.Location = new Point(415, 38);
             label24.Name = "label24";
             label24.Size = new Size(62, 21);
             label24.TabIndex = 47;
@@ -565,7 +567,7 @@
             // CmbOwner
             // 
             CmbOwner.FormattingEnabled = true;
-            CmbOwner.Location = new Point(415, 220);
+            CmbOwner.Location = new Point(412, 212);
             CmbOwner.Name = "CmbOwner";
             CmbOwner.Size = new Size(193, 23);
             CmbOwner.TabIndex = 54;
@@ -574,7 +576,7 @@
             // 
             label25.AutoSize = true;
             label25.Font = new Font("Segoe UI", 12F);
-            label25.Location = new Point(415, 196);
+            label25.Location = new Point(412, 188);
             label25.Name = "label25";
             label25.Size = new Size(60, 21);
             label25.TabIndex = 53;
@@ -582,7 +584,7 @@
             // 
             // TxtShipExact
             // 
-            TxtShipExact.Location = new Point(415, 374);
+            TxtShipExact.Location = new Point(412, 366);
             TxtShipExact.Name = "TxtShipExact";
             TxtShipExact.Size = new Size(193, 23);
             TxtShipExact.TabIndex = 60;
@@ -591,7 +593,7 @@
             // 
             label26.AutoSize = true;
             label26.Font = new Font("Segoe UI", 12F);
-            label26.Location = new Point(415, 350);
+            label26.Location = new Point(412, 342);
             label26.Name = "label26";
             label26.Size = new Size(48, 21);
             label26.TabIndex = 59;
@@ -599,7 +601,7 @@
             // 
             // TxtShipMax
             // 
-            TxtShipMax.Location = new Point(415, 320);
+            TxtShipMax.Location = new Point(412, 312);
             TxtShipMax.Name = "TxtShipMax";
             TxtShipMax.Size = new Size(193, 23);
             TxtShipMax.TabIndex = 58;
@@ -608,7 +610,7 @@
             // 
             label27.AutoSize = true;
             label27.Font = new Font("Segoe UI", 12F);
-            label27.Location = new Point(415, 296);
+            label27.Location = new Point(412, 288);
             label27.Name = "label27";
             label27.Size = new Size(42, 21);
             label27.TabIndex = 57;
@@ -616,7 +618,7 @@
             // 
             // TxtShipMin
             // 
-            TxtShipMin.Location = new Point(415, 270);
+            TxtShipMin.Location = new Point(412, 262);
             TxtShipMin.Name = "TxtShipMin";
             TxtShipMin.Size = new Size(193, 23);
             TxtShipMin.TabIndex = 56;
@@ -625,7 +627,7 @@
             // 
             label28.AutoSize = true;
             label28.Font = new Font("Segoe UI", 12F);
-            label28.Location = new Point(415, 246);
+            label28.Location = new Point(412, 238);
             label28.Name = "label28";
             label28.Size = new Size(40, 21);
             label28.TabIndex = 55;
@@ -640,11 +642,31 @@
             BtnEditBaskets.Text = "Edit Baskets";
             BtnEditBaskets.UseVisualStyleBackColor = true;
             // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Font = new Font("Segoe UI", 12F);
+            label29.Location = new Point(213, 292);
+            label29.Name = "label29";
+            label29.Size = new Size(107, 21);
+            label29.TabIndex = 62;
+            label29.Text = "RegionBasket:";
+            // 
+            // CmbRegionBasket
+            // 
+            CmbRegionBasket.FormattingEnabled = true;
+            CmbRegionBasket.Location = new Point(214, 323);
+            CmbRegionBasket.Name = "CmbRegionBasket";
+            CmbRegionBasket.Size = new Size(193, 23);
+            CmbRegionBasket.TabIndex = 63;
+            // 
             // JobForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(623, 599);
+            ClientSize = new Size(623, 603);
+            Controls.Add(CmbRegionBasket);
+            Controls.Add(label29);
             Controls.Add(BtnEditBaskets);
             Controls.Add(TxtShipExact);
             Controls.Add(label26);
@@ -778,5 +800,7 @@
         private TextBox TxtShipMin;
         private Label label28;
         private Button BtnEditBaskets;
+        private Label label29;
+        private ComboBox CmbRegionBasket;
     }
 }
