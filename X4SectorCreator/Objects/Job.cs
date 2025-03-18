@@ -5,19 +5,21 @@
         public string Id { get; set; }
         public string Name { get; set; }
         public Modifiers Modifiers { get; set; }
-        public List<Order> Orders { get; set; }
+        public List<Order> Orders { get; set; } = [];
         public Category Category { get; set; }
         public Quota Quota { get; set; }
         public Location Location { get; set; }
         public Ship Ship { get; set; }
         public string Basket { get; set; }
         public bool BuildAtShipyard { get; set; }
+        public List<string> SubordinateJobIds { get; set; } = [];
     }
 
     public class Modifiers
     {
         public bool Rebuild { get; set; }
         public bool Commandeerable { get; set; }
+        public bool Subordinate { get; set; }
     }
 
     public class Param
@@ -29,7 +31,7 @@
 
     public class Order
     {
-        public List<Param> Param { get; set; }
+        public List<Param> Param { get; set; } = [];
         public string Name { get; set; }
         public bool Default { get; set; }
     }
@@ -62,9 +64,9 @@
     public class Ship
     {
         public Category Select { get; set; }
-        public double Min { get; set; }
-        public double Max { get; set; }
-        public string Exact { get; set; }
-        public bool Overridenpc { get; set; }
+        public double? Min { get; set; }
+        public double? Max { get; set; }
+        public double? Exact { get; set; }
+        public string Owner { get; set; }
     }
 }

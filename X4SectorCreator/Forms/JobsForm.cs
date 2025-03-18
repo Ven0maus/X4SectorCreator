@@ -176,8 +176,9 @@ namespace X4SectorCreator.Forms
             }
             else if (comboBox == cmbFaction)
             {
+                // Focus on jobs where the ship is owned by the selected faction
                 var faction = cmbFaction.SelectedItem as string;
-                jobs.RemoveAll(a => a.Category?.Faction == null || !a.Category.Faction.Equals(faction, StringComparison.OrdinalIgnoreCase));
+                jobs.RemoveAll(a => a.Ship?.Owner == null || !a.Ship.Owner.Equals(faction, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbOrder)
             {
