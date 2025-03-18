@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            button2 = new Button();
+            BtnCreateJob = new Button();
+            BtnCancelJob = new Button();
             label1 = new Label();
             TxtShipName = new TextBox();
             TxtJobName = new TextBox();
@@ -93,23 +93,23 @@
             CmbRegionBasket = new ComboBox();
             SuspendLayout();
             // 
-            // button1
+            // BtnCreateJob
             // 
-            button1.Location = new Point(418, 522);
-            button1.Name = "button1";
-            button1.Size = new Size(190, 47);
-            button1.TabIndex = 0;
-            button1.Text = "Create Job";
-            button1.UseVisualStyleBackColor = true;
+            BtnCreateJob.Location = new Point(418, 522);
+            BtnCreateJob.Name = "BtnCreateJob";
+            BtnCreateJob.Size = new Size(190, 47);
+            BtnCreateJob.TabIndex = 0;
+            BtnCreateJob.Text = "Create Job";
+            BtnCreateJob.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // BtnCancelJob
             // 
-            button2.Location = new Point(418, 575);
-            button2.Name = "button2";
-            button2.Size = new Size(190, 24);
-            button2.TabIndex = 1;
-            button2.Text = "Cancel";
-            button2.UseVisualStyleBackColor = true;
+            BtnCancelJob.Location = new Point(418, 575);
+            BtnCancelJob.Name = "BtnCancelJob";
+            BtnCancelJob.Size = new Size(190, 24);
+            BtnCancelJob.TabIndex = 1;
+            BtnCancelJob.Text = "Cancel";
+            BtnCancelJob.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -655,6 +655,7 @@
             // CmbRegionBasket
             // 
             CmbRegionBasket.FormattingEnabled = true;
+            CmbRegionBasket.Items.AddRange(new object[] { "minerals", "gases" });
             CmbRegionBasket.Location = new Point(214, 323);
             CmbRegionBasket.Name = "CmbRegionBasket";
             CmbRegionBasket.Size = new Size(193, 23);
@@ -726,8 +727,8 @@
             Controls.Add(label2);
             Controls.Add(TxtShipName);
             Controls.Add(label1);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(BtnCancelJob);
+            Controls.Add(BtnCreateJob);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -739,8 +740,8 @@
 
         #endregion
 
-        private Button button1;
-        private Button button2;
+        private Button BtnCreateJob;
+        private Button BtnCancelJob;
         private Label label1;
         private TextBox TxtShipName;
         private TextBox TxtJobName;
