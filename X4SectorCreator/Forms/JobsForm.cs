@@ -27,7 +27,7 @@ namespace X4SectorCreator.Forms
         {
             ListJobs.Items.Clear();
 
-            // Load job items into the listbox
+            // Load all job items into the listbox
             foreach (var job in AllJobs.OrderBy(a => a.Name))
                 ListJobs.Items.Add(job);
 
@@ -42,9 +42,7 @@ namespace X4SectorCreator.Forms
             // Set new default values for filter options
 
             // Baskets
-            foreach (var basket in AllBaskets.OrderBy(a => a.Name))
-                cmbBasket.Items.Add(basket.Name);
-            cmbBasket.Items.Insert(0, "Any"); // Custom any filter
+            UpdateBasketsFilter();
 
             // Commandeerable
             cmbCommandeerable.Items.AddRange("Any", "False", "True");
@@ -74,6 +72,17 @@ namespace X4SectorCreator.Forms
             foreach (var cmb in comboboxes)
                 cmb.SelectedItem = "Any";
             _applyFilter = true;
+        }
+
+        /// <summary>
+        /// This method should be called when a basket is created / removed through the basket interface.
+        /// <br>This will update the basket filters option to include the adjusted baskets.</br>
+        /// </summary>
+        private void UpdateBasketsFilter()
+        {
+            foreach (var basket in AllBaskets.OrderBy(a => a.Name))
+                cmbBasket.Items.Add(basket.Name);
+            cmbBasket.Items.Insert(0, "Any"); // Custom any filter
         }
 
         /// <summary>

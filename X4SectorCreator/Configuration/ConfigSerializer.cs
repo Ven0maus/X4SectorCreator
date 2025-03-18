@@ -94,6 +94,7 @@ namespace X4SectorCreator.Configuration
             // Set stored region definitions
             if (configObj.RegionDefinitions != null && configObj.RegionDefinitions.Count > 0)
             {
+                RegionDefinitionForm.RegionDefinitions.Clear();
                 RegionDefinitionForm.RegionDefinitions.AddRange(configObj.RegionDefinitions);
             }
 

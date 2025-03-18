@@ -151,9 +151,6 @@ namespace X4SectorCreator
             ListStations.Items.Clear();
             LblDetails.Text = string.Empty;
 
-            JobsForm.ClearAllJobs();
-            JobsForm.ClearAllBaskets();
-
             switch (_selectedClusterOption)
             {
                 case ClusterOption.Custom:
@@ -590,6 +587,10 @@ namespace X4SectorCreator
                 GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
                 GalaxySettingsForm.IsCustomGalaxy = false;
             }
+
+            // Reset jobs information
+            JobsForm.ClearAllJobs();
+            JobsForm.ClearAllBaskets();
 
             // Re-initialize all clusters properly
             _ = InitAllClusters();
