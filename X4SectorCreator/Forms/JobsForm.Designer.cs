@@ -58,6 +58,7 @@
             ListJobs.Name = "ListJobs";
             ListJobs.Size = new Size(259, 424);
             ListJobs.TabIndex = 0;
+            ListJobs.DoubleClick += ListJobs_DoubleClick;
             // 
             // label1
             // 
@@ -77,6 +78,7 @@
             BtnCreateFromTemplate.TabIndex = 2;
             BtnCreateFromTemplate.Text = "Create New Job From Template";
             BtnCreateFromTemplate.UseVisualStyleBackColor = true;
+            BtnCreateFromTemplate.Click += BtnCreateFromTemplate_Click;
             // 
             // BtnCreateCustom
             // 
@@ -86,6 +88,7 @@
             BtnCreateCustom.TabIndex = 3;
             BtnCreateCustom.Text = "Create New Custom Job";
             BtnCreateCustom.UseVisualStyleBackColor = true;
+            BtnCreateCustom.Click += BtnCreateCustom_Click;
             // 
             // BtnRemoveJob
             // 
@@ -95,6 +98,7 @@
             BtnRemoveJob.TabIndex = 4;
             BtnRemoveJob.Text = "Remove Selected Job";
             BtnRemoveJob.UseVisualStyleBackColor = true;
+            BtnRemoveJob.Click += BtnRemoveJob_Click;
             // 
             // BtnExitJobWindow
             // 
@@ -248,6 +252,7 @@
             BtnBaskets.TabIndex = 20;
             BtnBaskets.Text = "Baskets";
             BtnBaskets.UseVisualStyleBackColor = true;
+            BtnBaskets.Click += BtnBaskets_Click;
             // 
             // JobsForm
             // 

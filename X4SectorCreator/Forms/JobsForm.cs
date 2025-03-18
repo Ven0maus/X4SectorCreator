@@ -10,6 +10,15 @@ namespace X4SectorCreator.Forms
         private static readonly List<Basket> _allBaskets = [];
         public static IReadOnlyList<Basket> AllBaskets => _allBaskets;
 
+        private JobForm _jobForm;
+        public JobForm JobForm => _jobForm != null && !_jobForm.IsDisposed ? _jobForm : (_jobForm = new JobForm());
+
+        private JobTemplatesForm _jobTemplatesForm;
+        public JobTemplatesForm JobTemplatesForm => _jobTemplatesForm != null && !_jobTemplatesForm.IsDisposed ? _jobTemplatesForm : (_jobTemplatesForm = new JobTemplatesForm());
+
+        private BasketsForm _basketsForm;
+        public BasketsForm BasketsForm => _basketsForm != null && !_basketsForm.IsDisposed ? _basketsForm : (_basketsForm = new BasketsForm());
+
         private readonly string[] _factions;
         private bool _applyFilter = true;
 
@@ -225,6 +234,32 @@ namespace X4SectorCreator.Forms
         private void CmbSector_SelectedIndexChanged(object sender, EventArgs e)
         {
             ApplyCurrentFilter();
+        }
+
+        private void BtnCreateCustom_Click(object sender, EventArgs e)
+        {
+            JobForm.Show();
+        }
+
+        private void BtnBaskets_Click(object sender, EventArgs e)
+        {
+            BasketsForm.Show();
+        }
+
+        private void BtnCreateFromTemplate_Click(object sender, EventArgs e)
+        {
+            JobTemplatesForm.Show();
+        }
+
+        private void BtnRemoveJob_Click(object sender, EventArgs e)
+        {
+            // TODO: Remove selected job
+        }
+
+        private void ListJobs_DoubleClick(object sender, EventArgs e)
+        {
+            // TODO: Set selected job
+            JobForm.Show();
         }
     }
 }
