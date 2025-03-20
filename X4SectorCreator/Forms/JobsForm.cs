@@ -243,12 +243,28 @@ namespace X4SectorCreator.Forms
 
         private void BtnRemoveJob_Click(object sender, EventArgs e)
         {
-            // TODO: Remove selected job
+            var job = ListJobs.SelectedItem as Job;
+            if (job != null)
+            {
+                int index = ListJobs.Items.IndexOf(ListJobs.SelectedItem);
+                ListJobs.Items.Remove(ListJobs.SelectedItem);
+
+                // Ensure index is within valid range
+                index--;
+                index = Math.Max(0, index);
+                ListJobs.SelectedItem = index >= 0 && ListJobs.Items.Count > 0 ? ListJobs.Items[index] : null;
+
+                // Remove also from jobs collection itself
+                _allJobs.Remove(job);
+            }    
         }
 
         private void ListJobs_DoubleClick(object sender, EventArgs e)
         {
-            // TODO: Set selected job
+            var job = ListJobs.SelectedItem as Job;
+            if (job == null) return;
+
+            JobForm.Job = job;
             JobForm.Show();
         }
     }
