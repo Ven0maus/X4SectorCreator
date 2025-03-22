@@ -28,21 +28,98 @@
         /// </summary>
         private void InitializeComponent()
         {
+            BtnNewBasket = new Button();
+            ListBaskets = new ListBox();
+            label1 = new Label();
+            BtnRemoveSelected = new Button();
+            BtnExitBasketsWindow = new Button();
+            CmbFilterOptions = new ComboBox();
             SuspendLayout();
+            // 
+            // BtnNewBasket
+            // 
+            BtnNewBasket.Location = new Point(238, 33);
+            BtnNewBasket.Name = "BtnNewBasket";
+            BtnNewBasket.Size = new Size(152, 35);
+            BtnNewBasket.TabIndex = 0;
+            BtnNewBasket.Text = "New Basket";
+            BtnNewBasket.UseVisualStyleBackColor = true;
+            BtnNewBasket.Click += BtnNewBasket_Click;
+            // 
+            // ListBaskets
+            // 
+            ListBaskets.FormattingEnabled = true;
+            ListBaskets.Location = new Point(12, 33);
+            ListBaskets.Name = "ListBaskets";
+            ListBaskets.Size = new Size(220, 319);
+            ListBaskets.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(62, 21);
+            label1.TabIndex = 2;
+            label1.Text = "Baskets";
+            // 
+            // BtnRemoveSelected
+            // 
+            BtnRemoveSelected.Location = new Point(238, 74);
+            BtnRemoveSelected.Name = "BtnRemoveSelected";
+            BtnRemoveSelected.Size = new Size(152, 35);
+            BtnRemoveSelected.TabIndex = 3;
+            BtnRemoveSelected.Text = "Remove Selected";
+            BtnRemoveSelected.UseVisualStyleBackColor = true;
+            BtnRemoveSelected.Click += BtnRemoveSelected_Click;
+            // 
+            // BtnExitBasketsWindow
+            // 
+            BtnExitBasketsWindow.Location = new Point(238, 115);
+            BtnExitBasketsWindow.Name = "BtnExitBasketsWindow";
+            BtnExitBasketsWindow.Size = new Size(152, 35);
+            BtnExitBasketsWindow.TabIndex = 4;
+            BtnExitBasketsWindow.Text = "Exit Baskets Window";
+            BtnExitBasketsWindow.UseVisualStyleBackColor = true;
+            BtnExitBasketsWindow.Click += BtnExitBasketsWindow_Click;
+            // 
+            // CmbFilterOptions
+            // 
+            CmbFilterOptions.FormattingEnabled = true;
+            CmbFilterOptions.Location = new Point(80, 6);
+            CmbFilterOptions.Name = "CmbFilterOptions";
+            CmbFilterOptions.Size = new Size(152, 23);
+            CmbFilterOptions.TabIndex = 5;
+            CmbFilterOptions.SelectedIndexChanged += CmbFilterOptions_SelectedIndexChanged;
             // 
             // BasketsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(522, 456);
+            ClientSize = new Size(396, 357);
+            Controls.Add(CmbFilterOptions);
+            Controls.Add(BtnExitBasketsWindow);
+            Controls.Add(BtnRemoveSelected);
+            Controls.Add(label1);
+            Controls.Add(ListBaskets);
+            Controls.Add(BtnNewBasket);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "BasketsForm";
-            Text = "BasketForm";
+            Text = "X4 Sector Creator";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Button BtnNewBasket;
+        private ListBox ListBaskets;
+        private Label label1;
+        private Button BtnRemoveSelected;
+        private Button BtnExitBasketsWindow;
+        private ComboBox CmbFilterOptions;
     }
 }

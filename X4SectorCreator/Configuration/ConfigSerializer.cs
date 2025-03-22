@@ -60,6 +60,8 @@ namespace X4SectorCreator.Configuration
                 RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
                 GalaxyName = GalaxySettingsForm.GalaxyName,
                 VanillaChanges = vanillaChanges,
+                Jobs = JobsForm.AllJobs.Select(a => a.Value).ToList(),
+                Baskets = JobsForm.AllBaskets.Select(a => a.Value).ToList(),
                 Version = new VersionChecker().CurrentVersion
             };
 
@@ -87,16 +89,31 @@ namespace X4SectorCreator.Configuration
                 _ = MessageBox.Show("Please note, if you have any issues after importing your config,\nit is likely because the file was exported from an older app version and may be incompatible.");
             }
 
-            // Set static values
+            #region Static values
             GalaxySettingsForm.GalaxyName = configObj.GalaxyName;
             GalaxySettingsForm.IsCustomGalaxy = configObj.IsCustomGalaxy;
 
+            JobsForm.AllJobs.Clear();
+            if (configObj.Jobs != null && configObj.Jobs.Count > 0)
+            {
+                foreach (var job in configObj.Jobs)
+                    JobsForm.AllJobs.Add(job.Id, job);
+            }
+
+            JobsForm.AllBaskets.Clear();
+            if (configObj.Baskets != null && configObj.Baskets.Count > 0)
+            {
+                foreach (var basket in configObj.Baskets)
+                    JobsForm.AllBaskets.Add(basket.Id, basket);
+            }
+
             // Set stored region definitions
+            RegionDefinitionForm.RegionDefinitions.Clear();
             if (configObj.RegionDefinitions != null && configObj.RegionDefinitions.Count > 0)
             {
-                RegionDefinitionForm.RegionDefinitions.Clear();
                 RegionDefinitionForm.RegionDefinitions.AddRange(configObj.RegionDefinitions);
             }
+            #endregion
 
             // First order everything correctly before returning
             List<Cluster> clusters = [.. configObj.Clusters.OrderBy(a => a.Id)];

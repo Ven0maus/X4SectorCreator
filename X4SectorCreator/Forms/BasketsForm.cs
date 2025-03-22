@@ -16,5 +16,25 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
         }
+
+        private void BtnNewBasket_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnRemoveSelected_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnExitBasketsWindow_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void CmbFilterOptions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

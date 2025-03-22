@@ -34,12 +34,12 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(487, 451);
+            ClientSize = new Size(522, 456);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "BasketForm";
-            Text = "BasketForm";
+            Text = "X4 Sector Creator";
             ResumeLayout(false);
         }
 

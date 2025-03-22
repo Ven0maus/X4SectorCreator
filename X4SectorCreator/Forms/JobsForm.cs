@@ -1,12 +1,11 @@
-﻿using System.Diagnostics.Metrics;
-using X4SectorCreator.Objects;
+﻿using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
     public partial class JobsForm : Form
     {
         public static readonly Dictionary<string, Job> AllJobs = new(StringComparer.OrdinalIgnoreCase);
-        public static readonly Dictionary<string, BasketObj> AllBaskets = new(StringComparer.OrdinalIgnoreCase);
+        public static readonly Dictionary<string, Basket> AllBaskets = new(StringComparer.OrdinalIgnoreCase);
 
         private JobForm _jobForm;
         public JobForm JobForm => _jobForm != null && !_jobForm.IsDisposed ? _jobForm : (_jobForm = new JobForm());
@@ -14,8 +13,8 @@ namespace X4SectorCreator.Forms
         private JobTemplatesForm _jobTemplatesForm;
         public JobTemplatesForm JobTemplatesForm => _jobTemplatesForm != null && !_jobTemplatesForm.IsDisposed ? _jobTemplatesForm : (_jobTemplatesForm = new JobTemplatesForm());
 
-        private BasketsForm _basketsForm;
-        public BasketsForm BasketsForm => _basketsForm != null && !_basketsForm.IsDisposed ? _basketsForm : (_basketsForm = new BasketsForm());
+        private BasketForm _basketsForm;
+        public BasketForm BasketsForm => _basketsForm != null && !_basketsForm.IsDisposed ? _basketsForm : (_basketsForm = new BasketForm());
 
         private bool _applyFilter = true;
 

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics.Metrics;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -75,7 +74,7 @@ namespace X4SectorCreator.Forms
             var sectorName = modInfo[lblSector];
 
             // Create location if not exist yet
-            job.Location ??= new Location();
+            job.Location ??= new Job.LocationObject();
 
             switch(type)
             {
@@ -172,15 +171,29 @@ namespace X4SectorCreator.Forms
                 var job = TryDeserializeJob(true) ??
                     throw new Exception("No valid job exists within xml structure.");
 
-                // Validation on same id
                 if (!IsEditing)
                 {
+                    // If not editing, always validate job id
                     if (JobsForm.AllJobs.ContainsKey(job.Id))
                         throw new Exception($"A job with the id \"{job.Id}\" already exists, please use another id.");
+
+                    JobsForm.AllJobs.Add(job.Id, job);
+                }
+                else
+                {
+                    // If editing and job id was changed we need to validate
+                    if (Job.Id != job.Id)
+                    {
+                        if (JobsForm.AllJobs.ContainsKey(job.Id))
+                            throw new Exception($"A job with the id \"{job.Id}\" already exists, please use another id.");
+                    }
+
+                    // Remove old job
+                    JobsForm.AllJobs.Remove(Job.Id);
+                    // Replace with new job
+                    JobsForm.AllJobs.Add(job.Id, job);
                 }
 
-                // Set or update
-                JobsForm.AllJobs[job.Id] = job;
                 if (MainForm.Instance.JobsForm.Visible)
                 {
                     MainForm.Instance.JobsForm.UpdateAvailableFilterOptions();

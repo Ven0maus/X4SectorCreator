@@ -616,22 +616,17 @@ namespace X4SectorCreator
             {
                 GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
                 GalaxySettingsForm.IsCustomGalaxy = false;
-            }
 
-            // Reset jobs information
-            JobsForm.AllJobs.Clear();
-            JobsForm.AllBaskets.Clear();
+                RegionDefinitionForm.RegionDefinitions.Clear();
+                JobsForm.AllJobs.Clear();
+                JobsForm.AllBaskets.Clear();
+            }
 
             // Re-initialize all clusters properly
             _ = InitAllClusters();
 
             // Set the default value to be custom
             UpdateClusterOptions();
-
-            if (!fromImport)
-            {
-                RegionDefinitionForm.RegionDefinitions.Clear();
-            }
         }
         private void BtnReset_Click(object sender, EventArgs e)
         {
