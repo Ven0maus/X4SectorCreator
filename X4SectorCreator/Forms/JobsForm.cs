@@ -16,17 +16,11 @@ namespace X4SectorCreator.Forms
         private BasketsForm _basketsForm;
         public BasketsForm BasketsForm => _basketsForm != null && !_basketsForm.IsDisposed ? _basketsForm : (_basketsForm = new BasketsForm());
 
-        private readonly string[] _factions;
         private bool _applyFilter = true;
 
         public JobsForm()
         {
             InitializeComponent();
-
-            _factions = [.. MainForm.Instance.FactionColorMapping
-                .Select(a => a.Key)
-                .Where(a => !a.Equals("None", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(a => a)];
         }
 
         public void Initialize()
@@ -39,28 +33,7 @@ namespace X4SectorCreator.Forms
             cmbSector.Items.Clear();
 
             // Set new default values for filter options
-
-            // Baskets
-            UpdateBasketsFilter();
-
-            // Factions
-            foreach (var faction in _factions)
-                cmbFaction.Items.Add(faction);
-            cmbFaction.Items.Insert(0, "Any");
-
-            // Order
-            // TODO: Extract all different types of possible orders from jobs and show them here
-            cmbOrder.Items.Insert(0, "Any");
-
-            // Cluster
-            foreach (var cluster in MainForm.Instance.AllClusters.OrderBy(a => a.Value.Name))
-                cmbCluster.Items.Add(cluster.Value);
-            cmbCluster.Items.Insert(0, "Any");
-
-            // Sector
-            foreach (var sector in MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).OrderBy(a => a.Name))
-                cmbSector.Items.Add(sector);
-            cmbSector.Items.Insert(0, "Any");
+            UpdateAvailableFilterOptions();
 
             // By default set for each option "Any"
             _applyFilter = false;
@@ -69,18 +42,107 @@ namespace X4SectorCreator.Forms
                 cmb.SelectedItem = "Any";
             _applyFilter = true;
 
+            // Apply the filter
             ApplyCurrentFilter();
         }
 
-        /// <summary>
-        /// This method should be called when a basket is created / removed through the basket interface.
-        /// <br>This will update the basket filters option to include the adjusted baskets.</br>
-        /// </summary>
-        private void UpdateBasketsFilter()
+        public void UpdateAvailableFilterOptions()
         {
-            foreach (var basket in AllBaskets.OrderBy(a => a.Key))
-                cmbBasket.Items.Add(basket.Value.Basket);
-            cmbBasket.Items.Insert(0, "Any"); // Custom any filter
+            _applyFilter = false;
+            var originalFaction = cmbFaction.SelectedItem ?? "Any";
+            var originalBasket = cmbBasket.SelectedItem ?? "Any";
+            var originalOrder = cmbOrder.SelectedItem ?? "Any";
+            var originalCluster = cmbCluster.SelectedItem ?? "Any";
+            var originalSector = cmbSector.SelectedItem ?? "Any";
+
+            // Factions
+            cmbFaction.Items.Clear();
+            foreach (var value in AllJobs.Select(a => a.Value.Ship?.Owner?.Exact).Distinct(StringComparer.OrdinalIgnoreCase).Where(a => a != null).OrderBy(a => a))
+                cmbFaction.Items.Add(value);
+            cmbFaction.Items.Insert(0, "Any");
+
+            // Baskets
+            cmbBasket.Items.Clear();
+            foreach (var basket in AllJobs.Select(a => a.Value.Basket?.Basket).Distinct(StringComparer.OrdinalIgnoreCase).Where(a => a != null).OrderBy(a => a))
+                cmbBasket.Items.Add(basket);
+            cmbBasket.Items.Insert(0, "Any");
+
+            // Orders
+            cmbOrder.Items.Clear();
+            foreach (var value in AllJobs.Select(a => a.Value.Orders?.Order?.Order).Distinct(StringComparer.OrdinalIgnoreCase).Where(a => a != null).OrderBy(a => a))
+                cmbOrder.Items.Add(value);
+            cmbOrder.Items.Insert(0, "Any");
+
+            // Clusters
+            cmbCluster.Items.Clear();
+            foreach (var cluster in AllJobs.Values.Select(GetClusterFromJob).Where(a => a != null).Distinct().OrderBy(a => a.Name))
+                cmbCluster.Items.Add(cluster);
+            cmbCluster.Items.Insert(0, "Any");
+
+            // Reset original selected values if still available
+            cmbFaction.SelectedItem = cmbFaction.Items.Contains(originalFaction) ? originalFaction : "Any";
+            cmbBasket.SelectedItem = cmbBasket.Items.Contains(originalBasket) ? originalBasket : "Any";
+            cmbOrder.SelectedItem = cmbOrder.Items.Contains(originalOrder) ? originalOrder : "Any";
+            cmbCluster.SelectedItem = cmbCluster.Items.Contains(originalCluster) ? originalCluster : "Any";
+
+            // Sectors is exceptional, only populated when a cluster is selected
+            cmbSector.Items.Clear();
+            if (cmbCluster.SelectedItem != null)
+            {
+                if (cmbCluster.SelectedItem is Cluster cluster)
+                {
+                    foreach (var sector in cluster.Sectors.OrderBy(a => a.Name))
+                    {
+                        string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
+                        if (cluster.IsBaseGame && sector.IsBaseGame)
+                            sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_macro";
+                        else if (cluster.IsBaseGame)
+                            sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}_macro";
+
+                        // Check if a job exists for this sector, then add the sector
+                        if (AllJobs.Any(a => a.Value.Location?.Macro != null && a.Value.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase)))
+                            cmbSector.Items.Add(sector);
+                    }
+                }
+            }
+            cmbSector.Enabled = cmbSector.Items.Count > 0;
+            cmbSector.Items.Insert(0, "Any");
+
+            // Reset original sector selection
+            cmbSector.SelectedItem = cmbSector.Items.Contains(originalSector) ? originalSector : "Any";
+            _applyFilter = true;
+        }
+
+        private Cluster GetClusterFromJob(Job job)
+        {
+            if (job.Location?.Class == null) return null;
+
+            string jobLocation = job.Location.Macro;
+            var allClusters = MainForm.Instance.AllClusters;
+
+            foreach (var cluster in allClusters)
+            {
+                string clusterCode = $"PREFIX_CL_c{cluster.Value.Id:D3}_macro";
+                if (cluster.Value.IsBaseGame)
+                    clusterCode = $"{cluster.Value.BaseGameMapping}_macro";
+
+                if (jobLocation.Equals(clusterCode, StringComparison.OrdinalIgnoreCase))
+                    return cluster.Value;
+                
+                foreach (var sector in cluster.Value.Sectors)
+                {
+                    string sectorCode = $"PREFIX_SE_c{cluster.Value.Id:D3}_s{sector.Id:D3}_macro";
+                    if (cluster.Value.IsBaseGame && sector.IsBaseGame)
+                        sectorCode = $"{cluster.Value.BaseGameMapping}_{sector.BaseGameMapping}_macro";
+                    else if (cluster.Value.IsBaseGame)
+                        sectorCode = $"PREFIX_SE_c{cluster.Value.BaseGameMapping}_s{sector.Id}_macro";
+
+                    if (jobLocation.Equals(sectorCode, StringComparison.OrdinalIgnoreCase))
+                        return cluster.Value;
+                }
+            }
+
+            return null;
         }
 
         private void BtnExitJobWindow_Click(object sender, EventArgs e)
@@ -97,6 +159,7 @@ namespace X4SectorCreator.Forms
             _applyFilter = true;
 
             // Apply filter only once
+            UpdateAvailableFilterOptions();
             ApplyCurrentFilter();
         }
 
@@ -144,11 +207,24 @@ namespace X4SectorCreator.Forms
             }
             else if (comboBox == cmbCluster)
             {
-                // TODO
+                var cluster = cmbCluster.SelectedItem as Cluster;
+                string clusterCode = $"PREFIX_CL_c{cluster.Id:D3}";
+                if (cluster.IsBaseGame)
+                    clusterCode = $"{cluster.BaseGameMapping}";
+                jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbSector)
             {
-                // TODO
+                var sector = cmbSector.SelectedItem as Sector;
+                var cluster = cmbCluster.SelectedItem as Cluster;
+
+                string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
+                if (cluster.IsBaseGame && sector.IsBaseGame)
+                    sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
+                else if (cluster.IsBaseGame)
+                    sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
+
+                jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
             }
             else
             {
@@ -173,6 +249,9 @@ namespace X4SectorCreator.Forms
 
         private void CmbCluster_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // To adjust sector options
+            if (_applyFilter)
+                UpdateAvailableFilterOptions();
             ApplyCurrentFilter();
         }
 

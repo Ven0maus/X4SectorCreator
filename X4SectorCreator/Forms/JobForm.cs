@@ -54,7 +54,10 @@ namespace X4SectorCreator.Forms
                 // Set or update
                 JobsForm.AllJobs[job.Id] = job;
                 if (MainForm.Instance.JobsForm.Visible)
+                {
+                    MainForm.Instance.JobsForm.UpdateAvailableFilterOptions();
                     MainForm.Instance.JobsForm.ApplyCurrentFilter();
+                }
                 Close();
             }
             catch (Exception ex)

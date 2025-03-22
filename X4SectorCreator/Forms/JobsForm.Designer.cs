@@ -196,6 +196,7 @@
             // 
             // cmbSector
             // 
+            cmbSector.Enabled = false;
             cmbSector.FormattingEnabled = true;
             cmbSector.Location = new Point(345, 363);
             cmbSector.Name = "cmbSector";
