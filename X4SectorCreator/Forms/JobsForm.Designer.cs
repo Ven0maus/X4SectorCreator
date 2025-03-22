@@ -31,7 +31,6 @@
             ListJobs = new ListBox();
             label1 = new Label();
             BtnCreateFromTemplate = new Button();
-            BtnCreateCustom = new Button();
             BtnRemoveJob = new Button();
             BtnExitJobWindow = new Button();
             cmbFaction = new ComboBox();
@@ -70,27 +69,17 @@
             // 
             // BtnCreateFromTemplate
             // 
-            BtnCreateFromTemplate.Location = new Point(277, 83);
+            BtnCreateFromTemplate.Location = new Point(277, 40);
             BtnCreateFromTemplate.Name = "BtnCreateFromTemplate";
-            BtnCreateFromTemplate.Size = new Size(321, 36);
+            BtnCreateFromTemplate.Size = new Size(321, 78);
             BtnCreateFromTemplate.TabIndex = 2;
             BtnCreateFromTemplate.Text = "Create New Job From Template";
             BtnCreateFromTemplate.UseVisualStyleBackColor = true;
             BtnCreateFromTemplate.Click += BtnCreateFromTemplate_Click;
             // 
-            // BtnCreateCustom
-            // 
-            BtnCreateCustom.Location = new Point(277, 41);
-            BtnCreateCustom.Name = "BtnCreateCustom";
-            BtnCreateCustom.Size = new Size(321, 36);
-            BtnCreateCustom.TabIndex = 3;
-            BtnCreateCustom.Text = "Create New Custom Job";
-            BtnCreateCustom.UseVisualStyleBackColor = true;
-            BtnCreateCustom.Click += BtnCreateCustom_Click;
-            // 
             // BtnRemoveJob
             // 
-            BtnRemoveJob.Location = new Point(277, 125);
+            BtnRemoveJob.Location = new Point(277, 124);
             BtnRemoveJob.Name = "BtnRemoveJob";
             BtnRemoveJob.Size = new Size(321, 36);
             BtnRemoveJob.TabIndex = 4;
@@ -226,11 +215,11 @@
             // 
             // BtnBaskets
             // 
-            BtnBaskets.Location = new Point(277, 167);
+            BtnBaskets.Location = new Point(277, 166);
             BtnBaskets.Name = "BtnBaskets";
             BtnBaskets.Size = new Size(321, 36);
             BtnBaskets.TabIndex = 20;
-            BtnBaskets.Text = "Baskets";
+            BtnBaskets.Text = "Custom Baskets";
             BtnBaskets.UseVisualStyleBackColor = true;
             BtnBaskets.Click += BtnBaskets_Click;
             // 
@@ -254,7 +243,6 @@
             Controls.Add(cmbFaction);
             Controls.Add(BtnExitJobWindow);
             Controls.Add(BtnRemoveJob);
-            Controls.Add(BtnCreateCustom);
             Controls.Add(BtnCreateFromTemplate);
             Controls.Add(label1);
             Controls.Add(ListJobs);
@@ -272,7 +260,6 @@
         private ListBox ListJobs;
         private Label label1;
         private Button BtnCreateFromTemplate;
-        private Button BtnCreateCustom;
         private Button BtnRemoveJob;
         private Button BtnExitJobWindow;
         private ComboBox cmbFaction;

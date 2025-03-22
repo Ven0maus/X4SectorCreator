@@ -26,7 +26,7 @@ namespace X4SectorCreator.Forms
             CmbFilterOption.Items.Clear();
             foreach (var option in filterOptions)
                 CmbFilterOption.Items.Add(option);
-            
+
             // Show by default vanilla option if present
             if (filterOptions.Contains("Vanilla"))
                 CmbFilterOption.SelectedItem = "Vanilla";
@@ -104,6 +104,15 @@ namespace X4SectorCreator.Forms
             ListTemplateJobs.Items.Clear();
             foreach (var job in jobs)
                 ListTemplateJobs.Items.Add(job);
+        }
+
+        private void ListTemplateJobs_DoubleClick(object sender, EventArgs e)
+        {
+            var selectedFilterOption = CmbFilterOption.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedFilterOption)) return;
+
+            // Select
+            BtnSelectExampleJob.PerformClick();
         }
     }
 }

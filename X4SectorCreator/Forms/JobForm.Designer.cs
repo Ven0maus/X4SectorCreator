@@ -32,13 +32,14 @@
             TxtJobXml = new TextBox();
             BtnCreate = new Button();
             BtnCancel = new Button();
+            BtnSelectJobLocation = new Button();
             SuspendLayout();
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 15F);
-            label2.Location = new Point(12, 14);
+            label2.Location = new Point(8, 7);
             label2.Name = "label2";
             label2.Size = new Size(87, 28);
             label2.TabIndex = 5;
@@ -46,7 +47,7 @@
             // 
             // TxtJobXml
             // 
-            TxtJobXml.Location = new Point(12, 45);
+            TxtJobXml.Location = new Point(8, 38);
             TxtJobXml.Multiline = true;
             TxtJobXml.Name = "TxtJobXml";
             TxtJobXml.Size = new Size(747, 619);
@@ -54,9 +55,9 @@
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(329, 9);
+            BtnCreate.Location = new Point(249, 660);
             BtnCreate.Name = "BtnCreate";
-            BtnCreate.Size = new Size(430, 30);
+            BtnCreate.Size = new Size(506, 38);
             BtnCreate.TabIndex = 6;
             BtnCreate.Text = "Create";
             BtnCreate.UseVisualStyleBackColor = true;
@@ -64,19 +65,30 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(155, 9);
+            BtnCancel.Location = new Point(8, 660);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(168, 30);
+            BtnCancel.Size = new Size(235, 38);
             BtnCancel.TabIndex = 7;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
+            // BtnSelectJobLocation
+            // 
+            BtnSelectJobLocation.Location = new Point(602, 7);
+            BtnSelectJobLocation.Name = "BtnSelectJobLocation";
+            BtnSelectJobLocation.Size = new Size(153, 28);
+            BtnSelectJobLocation.TabIndex = 8;
+            BtnSelectJobLocation.Text = "Select Job Location";
+            BtnSelectJobLocation.UseVisualStyleBackColor = true;
+            BtnSelectJobLocation.Click += BtnSelectJobLocation_Click;
+            // 
             // JobForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(764, 670);
+            ClientSize = new Size(761, 701);
+            Controls.Add(BtnSelectJobLocation);
             Controls.Add(BtnCancel);
             Controls.Add(BtnCreate);
             Controls.Add(label2);
@@ -96,5 +108,6 @@
         private TextBox TxtJobXml;
         private Button BtnCreate;
         private Button BtnCancel;
+        private Button BtnSelectJobLocation;
     }
 }

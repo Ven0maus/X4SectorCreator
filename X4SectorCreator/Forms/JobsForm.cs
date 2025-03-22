@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Objects;
+﻿using System.Diagnostics.Metrics;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -113,9 +114,9 @@ namespace X4SectorCreator.Forms
             _applyFilter = true;
         }
 
-        private Cluster GetClusterFromJob(Job job)
+        private static Cluster GetClusterFromJob(Job job)
         {
-            if (job.Location?.Class == null) return null;
+            if (string.IsNullOrWhiteSpace(job.Location?.Macro)) return null;
 
             string jobLocation = job.Location.Macro;
             var allClusters = MainForm.Instance.AllClusters;

@@ -46,6 +46,7 @@
             ListTemplateJobs.Size = new Size(389, 544);
             ListTemplateJobs.TabIndex = 0;
             ListTemplateJobs.SelectedIndexChanged += ListTemplateJobs_SelectedIndexChanged;
+            ListTemplateJobs.DoubleClick += ListTemplateJobs_DoubleClick;
             // 
             // label1
             // 

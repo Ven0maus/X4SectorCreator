@@ -258,8 +258,9 @@ namespace X4SectorCreator
             const string lblModName = "Please enter the name you'd like to use for your mod folder:";
             const string lblModPrefix = "Please enter the prefix you'd like to use for your mod:";
             Dictionary<string, string> modInfo = MultiInputDialog.Show("Mod information",
-                lblModName,
-                lblModPrefix);
+                (lblModName, null, null),
+                (lblModPrefix, null, null)
+            );
             if (modInfo == null || modInfo.Count == 0)
             {
                 return;
