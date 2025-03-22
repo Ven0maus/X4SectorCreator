@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Xml;
+using System.Xml.Serialization;
 
 namespace X4SectorCreator.Objects
 {
@@ -48,6 +49,35 @@ namespace X4SectorCreator.Objects
         public override string ToString()
         {
             return Id ?? GetHashCode().ToString();
+        }
+
+        internal string SerializeBasket()
+        {
+            // Create an XmlSerializer for the Jobs type
+            XmlSerializer serializer = new(typeof(Basket));
+
+            // Create a StringWriter to hold the serialized XML string
+            using StringWriter stringWriter = new();
+            // Create XmlWriterSettings to format the XML with indentation
+            XmlWriterSettings settings = new()
+            {
+                Indent = true,
+                OmitXmlDeclaration = true
+            };
+
+            // Create an XmlWriter with the specified settings
+            using (XmlWriter writer = XmlWriter.Create(stringWriter, settings))
+            {
+                // Create XmlSerializerNamespaces to avoid writing the default namespace
+                XmlSerializerNamespaces namespaces = new();
+                namespaces.Add("", "");  // Add an empty namespace
+
+                // Serialize the Jobs object to the XmlWriter
+                serializer.Serialize(writer, this, namespaces);
+            }
+
+            // Return the formatted XML string
+            return stringWriter.ToString();
         }
     }
 }
