@@ -219,7 +219,7 @@
             BtnBaskets.Name = "BtnBaskets";
             BtnBaskets.Size = new Size(321, 36);
             BtnBaskets.TabIndex = 20;
-            BtnBaskets.Text = "Custom Baskets";
+            BtnBaskets.Text = "See Available Baskets";
             BtnBaskets.UseVisualStyleBackColor = true;
             BtnBaskets.Click += BtnBaskets_Click;
             // 
