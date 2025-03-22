@@ -1,20 +1,157 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using X4SectorCreator.CustomComponents;
+using X4SectorCreator.Objects;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace X4SectorCreator.Forms
 {
     public partial class BasketForm : Form
     {
+        private readonly MultiSelectCombo _mscWares;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public BasketsForm BasketsForm { get; set; }
+
+        private Basket _basket;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Basket Basket
+        {
+            get => _basket;
+            set
+            {
+                _basket = value;
+                if (_basket != null)
+                {
+                    TxtName.Text = _basket.Id;
+                    _mscWares.ResetSelection();
+                    _mscWares.Select(_basket.Wares.Wares.Select(a => a.Ware).ToArray());
+                    BtnCreate.Text = "Update";
+                    BtnCreate.Enabled = !_basket.IsBaseGame;
+                }
+            }
+        }
+
+        private readonly string[] _wares =
+        [
+            "advancedelectronics",
+            "antimattercells",
+            "antimatterconverters",
+            "advancedcomposites",
+            "claytronics",
+            "dronecomponents",
+            "energycells",
+            "engineparts",
+            "fieldcoils",
+            "foodrations",
+            "graphene",
+            "helium",
+            "hullparts",
+            "hydrogen",
+            "ice",
+            "majadust",
+            "majasnails",
+            "meat",
+            "medicalsupplies",
+            "methane",
+            "microchips",
+            "missilecomponents",
+            "nividium",
+            "nostropoil",
+            "ore",
+            "plasmaconductors",
+            "quantumtubes",
+            "refinedmetals",
+            "scanningarrays",
+            "shieldcomponents",
+            "silicon",
+            "siliconwafers",
+            "smartchips",
+            "sojabeans",
+            "sojahusk",
+            "spacefuel",
+            "spaceweed",
+            "spices",
+            "sunriseflowers",
+            "superfluidcoolant",
+            "swampplant",
+            "teladianium",
+            "turretcomponents",
+            "water",
+            "weaponcomponents",
+            "wheat",
+            "computronicsubstrate",
+            "metallicmicrolattice",
+            "siliconcarbide",
+            "proteinpaste",
+            "terranmre",
+            "stimulants",
+            "cheltmeat",
+            "scruffinfruits",
+            "bofu",
+            "plankton",
+            "bogas"
+        ];
+
         public BasketForm()
         {
             InitializeComponent();
+
+            // Init wares
+            foreach (var ware in _wares.OrderBy(a => a))
+                CmbWares.Items.Add(ware);
+            _mscWares = new MultiSelectCombo(CmbWares);
+        }
+
+        private void BtnCreate_Click(object sender, EventArgs e)
+        {
+            if (Basket != null && Basket.IsBaseGame) return;
+            if (string.IsNullOrWhiteSpace(TxtName.Text))
+            {
+                _ = MessageBox.Show("Please fill in a valid basket name.");
+                return;
+            }
+
+            if (_mscWares.SelectedItems.Count == 0)
+            {
+                _ = MessageBox.Show("You must select atleast one ware.");
+                return;
+            }
+
+            if (JobsForm.AllBaskets.ContainsKey(TxtName.Text) && Basket == null)
+            {
+                _ = MessageBox.Show("A basket with this name already exists, please use another name.");
+                return;
+            }
+
+            if (BtnCreate.Text == "Update")
+            {
+                Basket.Id = TxtName.Text;
+                Basket.Wares.Wares.Clear();
+                foreach (var ware in _mscWares.SelectedItems.Cast<string>())
+                    Basket.Wares.Wares.Add(new Basket.WareObjects.WareObj { Ware = ware });
+            }
+            else
+            {
+                var basket = new Basket
+                {
+                    Id = TxtName.Text,
+                    IsBaseGame = false,
+                    Wares = new Basket.WareObjects()
+                };
+
+                basket.Wares.Wares = [];
+                foreach (var ware in _mscWares.SelectedItems.Cast<string>())
+                    basket.Wares.Wares.Add(new Basket.WareObjects.WareObj { Ware = ware });
+
+                JobsForm.AllBaskets.Add(basket.Id, basket);
+            }
+
+            BasketsForm.UpdateBaskets();
+            Close();
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

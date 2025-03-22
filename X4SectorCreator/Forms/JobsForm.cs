@@ -13,8 +13,8 @@ namespace X4SectorCreator.Forms
         private JobTemplatesForm _jobTemplatesForm;
         public JobTemplatesForm JobTemplatesForm => _jobTemplatesForm != null && !_jobTemplatesForm.IsDisposed ? _jobTemplatesForm : (_jobTemplatesForm = new JobTemplatesForm());
 
-        private BasketForm _basketsForm;
-        public BasketForm BasketsForm => _basketsForm != null && !_basketsForm.IsDisposed ? _basketsForm : (_basketsForm = new BasketForm());
+        private BasketsForm _basketsForm;
+        public BasketsForm BasketsForm => _basketsForm != null && !_basketsForm.IsDisposed ? _basketsForm : (_basketsForm = new BasketsForm());
 
         private bool _applyFilter = true;
 

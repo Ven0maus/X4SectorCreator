@@ -41,7 +41,7 @@ namespace X4SectorCreator.Forms
             // Collect all jobs.xml files in the sub directories and returns them
             foreach (var subDirectory in Directory.GetDirectories(directoryPath))
             {
-                string templateName = Path.GetFileName(subDirectory); // Extracts "BaseGameJobs", "DLCJobs"
+                string templateName = Path.GetFileName(subDirectory);
                 string jobFilePath = Path.Combine(subDirectory, "jobs.xml");
 
                 if (File.Exists(jobFilePath))

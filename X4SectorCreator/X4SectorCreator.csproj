@@ -23,6 +23,9 @@
     <None Update="Data\Mappings\sector_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Mappings\vanilla_baskets.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Mappings\vanilla_connection_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

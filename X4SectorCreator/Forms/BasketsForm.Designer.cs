@@ -34,6 +34,7 @@
             BtnRemoveSelected = new Button();
             BtnExitBasketsWindow = new Button();
             CmbFilterOptions = new ComboBox();
+            BtnCopyToClipboard = new Button();
             SuspendLayout();
             // 
             // BtnNewBasket
@@ -53,6 +54,7 @@
             ListBaskets.Name = "ListBaskets";
             ListBaskets.Size = new Size(220, 319);
             ListBaskets.TabIndex = 1;
+            ListBaskets.DoubleClick += ListBaskets_DoubleClick;
             // 
             // label1
             // 
@@ -76,7 +78,7 @@
             // 
             // BtnExitBasketsWindow
             // 
-            BtnExitBasketsWindow.Location = new Point(238, 115);
+            BtnExitBasketsWindow.Location = new Point(238, 168);
             BtnExitBasketsWindow.Name = "BtnExitBasketsWindow";
             BtnExitBasketsWindow.Size = new Size(152, 35);
             BtnExitBasketsWindow.TabIndex = 4;
@@ -87,17 +89,29 @@
             // CmbFilterOptions
             // 
             CmbFilterOptions.FormattingEnabled = true;
+            CmbFilterOptions.Items.AddRange(new object[] { "Vanilla", "Custom", "Both" });
             CmbFilterOptions.Location = new Point(80, 6);
             CmbFilterOptions.Name = "CmbFilterOptions";
             CmbFilterOptions.Size = new Size(152, 23);
             CmbFilterOptions.TabIndex = 5;
             CmbFilterOptions.SelectedIndexChanged += CmbFilterOptions_SelectedIndexChanged;
             // 
+            // BtnCopyToClipboard
+            // 
+            BtnCopyToClipboard.Location = new Point(238, 115);
+            BtnCopyToClipboard.Name = "BtnCopyToClipboard";
+            BtnCopyToClipboard.Size = new Size(152, 47);
+            BtnCopyToClipboard.TabIndex = 6;
+            BtnCopyToClipboard.Text = "Copy Selected To Clipboard";
+            BtnCopyToClipboard.UseVisualStyleBackColor = true;
+            BtnCopyToClipboard.Click += BtnCopyToClipboard_Click;
+            // 
             // BasketsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(396, 357);
+            Controls.Add(BtnCopyToClipboard);
             Controls.Add(CmbFilterOptions);
             Controls.Add(BtnExitBasketsWindow);
             Controls.Add(BtnRemoveSelected);
@@ -121,5 +135,6 @@
         private Button BtnRemoveSelected;
         private Button BtnExitBasketsWindow;
         private ComboBox CmbFilterOptions;
+        private Button BtnCopyToClipboard;
     }
 }
