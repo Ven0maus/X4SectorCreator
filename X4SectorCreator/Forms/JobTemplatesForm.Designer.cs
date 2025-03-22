@@ -103,6 +103,7 @@
             CmbFilterOption.Name = "CmbFilterOption";
             CmbFilterOption.Size = new Size(242, 23);
             CmbFilterOption.TabIndex = 6;
+            CmbFilterOption.SelectedIndexChanged += CmbFilterOption_SelectedIndexChanged;
             // 
             // JobTemplatesForm
             // 

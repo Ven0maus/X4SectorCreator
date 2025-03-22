@@ -15,10 +15,21 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
 
-            // Init jobs into listbox
-            ListTemplateJobs.Items.Clear();
-            foreach (var job in _templateJobs.Value)
-                ListTemplateJobs.Items.Add(job);
+            // Collect all filter options
+            var filterOptions = _templateJobs.Value
+                .GroupBy(a => a.TemplateDirectory)
+                .Select(a => a.Key)
+                .OrderBy(a => a)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            // Setup filter options
+            CmbFilterOption.Items.Clear();
+            foreach (var option in filterOptions)
+                CmbFilterOption.Items.Add(option);
+            
+            // Show by default vanilla option if present
+            if (filterOptions.Contains("Vanilla"))
+                CmbFilterOption.SelectedItem = "Vanilla";
         }
 
         private static IEnumerable<Job> InitTemplateJobs()
@@ -79,6 +90,26 @@ namespace X4SectorCreator.Forms
             }
 
             TxtExampleJob.Text = selectedJob.SerializeJob();
+        }
+
+        private void CmbFilterOption_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedFilterOption = CmbFilterOption.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedFilterOption))
+            {
+                ListTemplateJobs.Items.Clear();
+                ListTemplateJobs.ClearSelected();
+                return;
+            }
+
+            var jobs = _templateJobs.Value
+                .Where(a => a.TemplateDirectory.Equals(selectedFilterOption))
+                .OrderBy(a => a.ToString())
+                .ToArray();
+
+            ListTemplateJobs.Items.Clear();
+            foreach (var job in jobs)
+                ListTemplateJobs.Items.Add(job);
         }
     }
 }
