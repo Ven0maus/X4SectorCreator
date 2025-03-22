@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
@@ -267,6 +268,9 @@ namespace X4SectorCreator
             string modName = modInfo[lblModName];
             string modPrefix = modInfo[lblModPrefix];
 
+            // Sanitize prefix
+            modPrefix = SanitizeText(modPrefix)?.ToLower();
+
             if (string.IsNullOrWhiteSpace(modName))
             {
                 _ = MessageBox.Show($"Please enter a valid non empty non whitespace mod folder name.");
@@ -277,9 +281,6 @@ namespace X4SectorCreator
                 _ = MessageBox.Show($"Please enter a valid non empty non whitespace mod prefix.");
                 return;
             }
-
-            // lowercase modPrefix just incase
-            modPrefix = modPrefix.ToLower();
 
             List<Cluster> clusters = [.. AllClusters.Values];
 
@@ -323,6 +324,34 @@ namespace X4SectorCreator
 
             // Show succes message
             _ = MessageBox.Show("XML Files were succesfully generated in the xml folder.");
+        }
+
+        public static string SanitizeText(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return null;
+            }
+
+            // Trim leading and trailing whitespace
+            string sanitizedText = input.Trim();
+
+            // Replace spaces with empty
+            sanitizedText = sanitizedText.Replace(" ", "");
+
+            // Replace other unsafe characters with empty
+            sanitizedText = SanitizeUnsafe().Replace(sanitizedText, "");
+
+            // Optionally, remove any non-alphanumeric characters (including underscores)
+            sanitizedText = SanitizeNonAlphaNumeric().Replace(sanitizedText, "_");
+
+            // Ensure the string isn't empty
+            if (string.IsNullOrWhiteSpace(sanitizedText))
+            {
+                return null;
+            }
+
+            return sanitizedText;
         }
 
         private VanillaChanges CollectVanillaChanges(ClusterCollection nonModifiedBaseGameData)
@@ -1615,6 +1644,11 @@ namespace X4SectorCreator
             JobsForm.Initialize();
             JobsForm.Show();
         }
+
+        [GeneratedRegex(@"[<>:""/\\|?*]")]
+        private static partial Regex SanitizeUnsafe();
+        [GeneratedRegex(@"[^a-zA-Z0-9_]")]
+        private static partial Regex SanitizeNonAlphaNumeric();
         #endregion
     }
 }
