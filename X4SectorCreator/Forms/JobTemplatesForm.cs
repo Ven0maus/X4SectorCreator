@@ -68,15 +68,11 @@ namespace X4SectorCreator.Forms
 
             JobForm.Job = selectedJob;
             JobForm.Show();
-            TxtExampleJob.Clear();
-            ListTemplateJobs.ClearSelected();
             Close();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            TxtExampleJob.Clear();
-            ListTemplateJobs.ClearSelected();
             Close();
         }
 

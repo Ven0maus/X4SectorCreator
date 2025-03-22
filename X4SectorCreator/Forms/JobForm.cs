@@ -15,7 +15,7 @@ namespace X4SectorCreator.Forms
                 _job = value;
                 if (_job != null)
                 {
-                    // TODO
+                    FillAllFieldsFromJob(_job);
                 }
             }
         }
@@ -23,6 +23,11 @@ namespace X4SectorCreator.Forms
         public JobForm()
         {
             InitializeComponent();
+        }
+
+        private void FillAllFieldsFromJob(Job job)
+        {
+
         }
     }
 }

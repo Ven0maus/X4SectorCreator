@@ -226,6 +226,12 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreateCustom_Click(object sender, EventArgs e)
         {
+            // Job creation/edit is ongoing at the moment
+            if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible) return;
+
+            // Template selection is ongoing at the moment
+            if (JobTemplatesForm != null && !JobTemplatesForm.IsDisposed && JobTemplatesForm.Visible) return;
+
             JobForm.Show();
         }
 
@@ -236,11 +242,21 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreateFromTemplate_Click(object sender, EventArgs e)
         {
+            // Job creation/edit is ongoing at the moment
+            if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible) return;
+
+            // Template selection is ongoing at the moment
+            if (JobTemplatesForm != null && !JobTemplatesForm.IsDisposed && JobTemplatesForm.Visible) return;
+
+            JobTemplatesForm.JobForm = JobForm;
             JobTemplatesForm.Show();
         }
 
         private void BtnRemoveJob_Click(object sender, EventArgs e)
         {
+            // Job creation/edit is ongoing at the moment
+            if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible) return;
+
             var job = ListJobs.SelectedItem as Job;
             if (job != null)
             {
@@ -261,6 +277,12 @@ namespace X4SectorCreator.Forms
         {
             var job = ListJobs.SelectedItem as Job;
             if (job == null) return;
+
+            // Template selection is ongoing at the moment
+            if (JobTemplatesForm != null && !JobTemplatesForm.IsDisposed && JobTemplatesForm.Visible) return;
+
+            // Job creation/edit is ongoing at the moment
+            if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible) return;
 
             JobForm.Job = job;
             JobForm.Show();
