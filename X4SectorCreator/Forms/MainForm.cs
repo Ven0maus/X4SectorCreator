@@ -24,8 +24,8 @@ namespace X4SectorCreator
 
         private string _currentX4Version;
 
-        private readonly string _sectorMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/sector_mappings.json");
-        private readonly string _dlcMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/dlc_mappings.json");
+        private readonly string _sectorMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/sector_mappings.json");
+        private readonly string _dlcMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/dlc_mappings.json");
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Dictionary<(int, int), Cluster> AllClusters { get; private set; }

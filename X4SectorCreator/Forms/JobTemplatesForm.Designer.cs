@@ -44,6 +44,7 @@
             ListTemplateJobs.Name = "ListTemplateJobs";
             ListTemplateJobs.Size = new Size(244, 544);
             ListTemplateJobs.TabIndex = 0;
+            ListTemplateJobs.SelectedIndexChanged += ListTemplateJobs_SelectedIndexChanged;
             // 
             // label1
             // 

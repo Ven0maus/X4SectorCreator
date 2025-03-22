@@ -8,7 +8,7 @@ namespace X4SectorCreator
     {
         private readonly string _versionFilePath = Path.Combine(Application.StartupPath, "version.json");
         private const string _versionUrl = "https://raw.githubusercontent.com/Ven0maus/X4SectorCreator/main/X4SectorCreator/version.json";
-        private const string _sectorMappingUrl = "https://raw.githubusercontent.com/Ven0maus/X4SectorCreator/main/X4SectorCreator/Mappings/sector_mappings.json";
+        private const string _sectorMappingUrl = "https://raw.githubusercontent.com/Ven0maus/X4SectorCreator/main/X4SectorCreator/Data/Mappings/sector_mappings.json";
 
         public string CurrentVersion { get; }
         public string TargetGameVersion { get; private set; }

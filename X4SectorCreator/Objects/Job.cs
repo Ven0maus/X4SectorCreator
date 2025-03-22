@@ -1,72 +1,520 @@
-﻿namespace X4SectorCreator.Objects
+﻿using System.Xml;
+using System.Xml.Serialization;
+
+namespace X4SectorCreator.Objects
 {
-    public class Job
+    [XmlRoot(ElementName = "jobs")]
+    public class Jobs
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public Modifiers Modifiers { get; set; }
-        public List<Order> Orders { get; set; } = [];
-        public Category Category { get; set; }
-        public Quota Quota { get; set; }
-        public Location Location { get; set; }
-        public Ship Ship { get; set; }
-        public string Basket { get; set; }
-        public bool BuildAtShipyard { get; set; }
-        public List<string> SubordinateJobIds { get; set; } = [];
+        [XmlElement(ElementName = "job")]
+        public List<Job> JobList { get; set; }
+
+        [XmlAttribute(AttributeName = "xsi")]
+        public string Xsi { get; set; }
+
+        [XmlAttribute(AttributeName = "noNamespaceSchemaLocation")]
+        public string NoNamespaceSchemaLocation { get; set; }
+
+        public string SerializeJobs()
+        {
+            // Create an XmlSerializer for the Jobs type
+            XmlSerializer serializer = new(typeof(Jobs));
+
+            // Create a StringWriter to hold the serialized XML string
+            using (StringWriter stringWriter = new())
+            {
+                // Create XmlWriterSettings to format the XML with indentation
+                XmlWriterSettings settings = new()
+                {
+                    Indent = true
+                };
+
+                // Create an XmlWriter with the specified settings
+                using (XmlWriter writer = XmlWriter.Create(stringWriter, settings))
+                {
+                    // Serialize the Jobs object to the XmlWriter
+                    serializer.Serialize(writer, this);
+                }
+
+                // Return the formatted XML string
+                return stringWriter.ToString();
+            }
+        }
+
+        public static Jobs DeserializeJobs(string xml)
+        {
+            // Create an XmlSerializer for the Jobs type
+            XmlSerializer serializer = new(typeof(Jobs));
+
+            using (StringReader stringReader = new(xml))
+            {
+                // Deserialize the XML to a Jobs object
+                return (Jobs)serializer.Deserialize(stringReader);
+            }
+        }
     }
 
+    [XmlRoot(ElementName = "job")]
+    public class Job
+    {
+        [XmlElement(ElementName = "modifiers")]
+        public Modifiers Modifiers { get; set; }
+
+        [XmlElement(ElementName = "orders")]
+        public Orders Orders { get; set; }
+
+        [XmlElement(ElementName = "basket")]
+        public BasketObj Basket { get; set; }
+
+        [XmlElement(ElementName = "category")]
+        public Category Category { get; set; }
+
+        [XmlElement(ElementName = "quota")]
+        public Quota Quota { get; set; }
+
+        [XmlElement(ElementName = "location")]
+        public Location Location { get; set; }
+
+        [XmlElement(ElementName = "environment")]
+        public Environment Environment { get; set; }
+
+        [XmlElement(ElementName = "ship")]
+        public Ship Ship { get; set; }
+
+        [XmlAttribute(AttributeName = "id")]
+        public string Id { get; set; }
+
+        [XmlAttribute(AttributeName = "name")]
+        public string Name { get; set; }
+
+        [XmlElement(ElementName = "subordinates")]
+        public Subordinates Subordinates { get; set; }
+
+        [XmlAttribute(AttributeName = "comment")]
+        public string Comment { get; set; }
+
+        [XmlAttribute(AttributeName = "startactive")]
+        public bool Startactive { get; set; }
+
+        [XmlAttribute(AttributeName = "disabled")]
+        public bool Disabled { get; set; }
+
+        [XmlElement(ElementName = "encounters")]
+        public Encounters Encounters { get; set; }
+
+        [XmlElement(ElementName = "time")]
+        public Time Time { get; set; }
+
+        [XmlElement(ElementName = "task")]
+        public Task Task { get; set; }
+
+        [XmlElement(ElementName = "masstraffic")]
+        public Masstraffic Masstraffic { get; set; }
+
+        [XmlIgnore]
+        public string TemplateDirectory { get; set; }
+
+        public string SerializeJob()
+        {
+            // Create an XmlSerializer for the Jobs type
+            XmlSerializer serializer = new(typeof(Job));
+
+            // Create a StringWriter to hold the serialized XML string
+            using (StringWriter stringWriter = new())
+            {
+                // Create XmlWriterSettings to format the XML with indentation
+                XmlWriterSettings settings = new()
+                {
+                    Indent = true,
+                    OmitXmlDeclaration = true
+                };
+
+                // Create an XmlWriter with the specified settings
+                using (XmlWriter writer = XmlWriter.Create(stringWriter, settings))
+                {
+                    // Create XmlSerializerNamespaces to avoid writing the default namespace
+                    XmlSerializerNamespaces namespaces = new();
+                    namespaces.Add("", "");  // Add an empty namespace
+
+                    // Serialize the Jobs object to the XmlWriter
+                    serializer.Serialize(writer, this, namespaces);
+                }
+
+                // Return the formatted XML string
+                return stringWriter.ToString();
+            }
+        }
+    }
+
+    [XmlRoot(ElementName = "modifiers")]
     public class Modifiers
     {
+        [XmlAttribute(AttributeName = "rebuild")]
         public bool Rebuild { get; set; }
+
+        [XmlAttribute(AttributeName = "commandeerable")]
         public bool Commandeerable { get; set; }
+
+        [XmlAttribute(AttributeName = "subordinate")]
         public bool Subordinate { get; set; }
     }
 
+    [XmlRoot(ElementName = "param")]
     public class Param
     {
+        [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
-        public int Value { get; set; }
+        [XmlAttribute(AttributeName = "value")]
+        public string Value { get; set; }
     }
 
-    public class Order
+    [XmlRoot(ElementName = "order")]
+    public class OrderObj
     {
-        public List<Param> Param { get; set; } = [];
-        public string Name { get; set; }
+        [XmlElement(ElementName = "param")]
+        public List<Param> Param { get; set; }
+
+        [XmlAttribute(AttributeName = "order")]
+        public string Order { get; set; }
+
+        [XmlAttribute(AttributeName = "default")]
         public bool Default { get; set; }
     }
 
+    [XmlRoot(ElementName = "orders")]
+    public class Orders
+    {
+        [XmlElement(ElementName = "order")]
+        public OrderObj Order { get; set; }
+    }
+
+    [XmlRoot(ElementName = "basket")]
+    public class BasketObj
+    {
+        [XmlAttribute(AttributeName = "basket")]
+        public string Basket { get; set; }
+    }
+
+    [XmlRoot(ElementName = "category")]
     public class Category
     {
+        [XmlAttribute(AttributeName = "faction")]
         public string Faction { get; set; }
+
+        [XmlAttribute(AttributeName = "tags")]
         public string Tags { get; set; }
+
+        [XmlAttribute(AttributeName = "size")]
         public string Size { get; set; }
     }
 
+    [XmlRoot(ElementName = "quota")]
     public class Quota
     {
+        [XmlAttribute(AttributeName = "galaxy")]
         public int Galaxy { get; set; }
+
+        [XmlAttribute(AttributeName = "cluster")]
         public int Cluster { get; set; }
+
+        [XmlAttribute(AttributeName = "sector")]
         public int Sector { get; set; }
+
+        [XmlAttribute(AttributeName = "maxgalaxy")]
+        public int Maxgalaxy { get; set; }
+
+        [XmlAttribute(AttributeName = "zone")]
+        public int Zone { get; set; }
+
+        [XmlAttribute(AttributeName = "wing")]
+        public int Wing { get; set; }
+
+        [XmlAttribute(AttributeName = "variation")]
+        public int Variation { get; set; }
+
+        [XmlAttribute(AttributeName = "station")]
+        public int Station { get; set; }
     }
 
+    [XmlRoot(ElementName = "location")]
     public class Location
     {
+        [XmlAttribute(AttributeName = "class")]
         public string Class { get; set; }
+
+        [XmlAttribute(AttributeName = "macro")]
         public string Macro { get; set; }
+
+        [XmlAttribute(AttributeName = "faction")]
         public string Faction { get; set; }
+
+        [XmlAttribute(AttributeName = "relation")]
         public string Relation { get; set; }
+
+        [XmlAttribute(AttributeName = "comparison")]
         public string Comparison { get; set; }
-        public bool MatchExtension { get; set; }
-        public string Name { get; set; }
+
+        [XmlAttribute(AttributeName = "stationfaction")]
+        public string Stationfaction { get; set; }
+
+        [XmlAttribute(AttributeName = "stationtype")]
+        public string Stationtype { get; set; }
+
+        [XmlAttribute(AttributeName = "matchextension")]
+        public bool Matchextension { get; set; }
+
+        [XmlAttribute(AttributeName = "regionbasket")]
+        public string Regionbasket { get; set; }
+
+        [XmlAttribute(AttributeName = "policefaction")]
+        public string Policefaction { get; set; }
+
+        [XmlAttribute(AttributeName = "excludedtags")]
+        public string Excludedtags { get; set; }
+
+        [XmlElement(ElementName = "stationfactions")]
+        public Stationfactions Stationfactions { get; set; }
+
+        [XmlAttribute(AttributeName = "tags")]
+        public string Tags { get; set; }
+
+        [XmlAttribute(AttributeName = "hasgravidarregion")]
+        public bool Hasgravidarregion { get; set; }
+
+        [XmlAttribute(AttributeName = "factionrace")]
+        public string Factionrace { get; set; }
     }
 
+    [XmlRoot(ElementName = "environment")]
+    public class Environment
+    {
+        [XmlAttribute(AttributeName = "buildatshipyard")]
+        public bool Buildatshipyard { get; set; }
+
+        [XmlAttribute(AttributeName = "preferbuilding")]
+        public bool Preferbuilding { get; set; }
+
+        [XmlAttribute(AttributeName = "gate")]
+        public bool Gate { get; set; }
+    }
+
+    [XmlRoot(ElementName = "select")]
+    public class Select
+    {
+        [XmlAttribute(AttributeName = "faction")]
+        public string Faction { get; set; }
+
+        [XmlAttribute(AttributeName = "tags")]
+        public string Tags { get; set; }
+
+        [XmlAttribute(AttributeName = "size")]
+        public string Size { get; set; }
+    }
+
+    [XmlRoot(ElementName = "level")]
+    public class Level
+    {
+        [XmlAttribute(AttributeName = "min")]
+        public double Min { get; set; }
+
+        [XmlAttribute(AttributeName = "max")]
+        public double Max { get; set; }
+
+        [XmlAttribute(AttributeName = "exact")]
+        public double Exact { get; set; }
+    }
+
+    [XmlRoot(ElementName = "loadout")]
+    public class Loadout
+    {
+        [XmlElement(ElementName = "level")]
+        public Level Level { get; set; }
+
+        [XmlElement(ElementName = "variation")]
+        public Variation Variation { get; set; }
+    }
+
+    [XmlRoot(ElementName = "owner")]
+    public class Owner
+    {
+        [XmlAttribute(AttributeName = "exact")]
+        public string Exact { get; set; }
+
+        [XmlAttribute(AttributeName = "overridenpc")]
+        public bool Overridenpc { get; set; }
+    }
+
+    [XmlRoot(ElementName = "ship")]
     public class Ship
     {
-        public Category Select { get; set; }
-        public double? Min { get; set; }
-        public double? Max { get; set; }
-        public double? Exact { get; set; }
-        public string Owner { get; set; }
+        [XmlElement(ElementName = "select")]
+        public Select Select { get; set; }
+
+        [XmlElement(ElementName = "loadout")]
+        public Loadout Loadout { get; set; }
+
+        [XmlElement(ElementName = "owner")]
+        public Owner Owner { get; set; }
+
+        [XmlElement(ElementName = "cargo")]
+        public Cargo Cargo { get; set; }
+
+        [XmlElement(ElementName = "units")]
+        public Units Units { get; set; }
+
+        [XmlElement(ElementName = "pilot")]
+        public Pilot Pilot { get; set; }
+    }
+
+    [XmlRoot(ElementName = "fillpercent")]
+    public class Fillpercent
+    {
+        [XmlAttribute(AttributeName = "min")]
+        public int Min { get; set; }
+
+        [XmlAttribute(AttributeName = "max")]
+        public int Max { get; set; }
+
+        [XmlAttribute(AttributeName = "profile")]
+        public string Profile { get; set; }
+    }
+
+    [XmlRoot(ElementName = "wares")]
+    public class Wares
+    {
+        [XmlElement(ElementName = "fillpercent")]
+        public Fillpercent Fillpercent { get; set; }
+
+        [XmlAttribute(AttributeName = "multiple")]
+        public bool Multiple { get; set; }
+    }
+
+    [XmlRoot(ElementName = "cargo")]
+    public class Cargo
+    {
+        [XmlElement(ElementName = "wares")]
+        public Wares Wares { get; set; }
+    }
+
+    [XmlRoot(ElementName = "variation")]
+    public class Variation
+    {
+        [XmlAttribute(AttributeName = "exact")]
+        public int Exact { get; set; }
+    }
+
+    [XmlRoot(ElementName = "subordinate")]
+    public class Subordinate
+    {
+        [XmlAttribute(AttributeName = "job")]
+        public string Job { get; set; }
+
+        [XmlAttribute(AttributeName = "assignment")]
+        public string Assignment { get; set; }
+
+        [XmlAttribute(AttributeName = "group")]
+        public int Group { get; set; }
+    }
+
+    [XmlRoot(ElementName = "subordinates")]
+    public class Subordinates
+    {
+        [XmlElement(ElementName = "subordinate")]
+        public List<Subordinate> Subordinate { get; set; }
+    }
+
+    [XmlRoot(ElementName = "unit")]
+    public class Unit
+    {
+        [XmlAttribute(AttributeName = "category")]
+        public string Category { get; set; }
+
+        [XmlAttribute(AttributeName = "min")]
+        public int Min { get; set; }
+
+        [XmlAttribute(AttributeName = "max")]
+        public int Max { get; set; }
+    }
+
+    [XmlRoot(ElementName = "units")]
+    public class Units
+    {
+        [XmlElement(ElementName = "unit")]
+        public Unit Unit { get; set; }
+    }
+
+    [XmlRoot(ElementName = "encounters")]
+    public class Encounters
+    {
+        [XmlAttribute(AttributeName = "id")]
+        public string Id { get; set; }
+    }
+
+    [XmlRoot(ElementName = "time")]
+    public class Time
+    {
+        [XmlAttribute(AttributeName = "interval")]
+        public int Interval { get; set; }
+
+        [XmlAttribute(AttributeName = "start")]
+        public int Start { get; set; }
+    }
+
+    [XmlRoot(ElementName = "page")]
+    public class Page
+    {
+        [XmlAttribute(AttributeName = "exact")]
+        public int Exact { get; set; }
+
+        [XmlAttribute(AttributeName = "comment")]
+        public string Comment { get; set; }
+    }
+
+    [XmlRoot(ElementName = "pilot")]
+    public class Pilot
+    {
+        [XmlElement(ElementName = "page")]
+        public Page Page { get; set; }
+
+        [XmlAttribute(AttributeName = "macro")]
+        public string Macro { get; set; }
+    }
+
+    [XmlRoot(ElementName = "stationfaction")]
+    public class StationFaction
+    {
+        [XmlAttribute(AttributeName = "stationfaction")]
+        public string Stationfaction { get; set; }
+    }
+
+    [XmlRoot(ElementName = "stationfactions")]
+    public class Stationfactions
+    {
+        [XmlElement(ElementName = "stationfaction")]
+        public StationFaction StationFaction { get; set; }
+    }
+
+    [XmlRoot(ElementName = "task")]
+    public class TaskObj
+    {
+        [XmlAttribute(AttributeName = "task")]
+        public string Task { get; set; }
+    }
+
+    [XmlRoot(ElementName = "masstraffic")]
+    public class Masstraffic
+    {
+        [XmlAttribute(AttributeName = "ref")]
+        public string Ref { get; set; }
+
+        [XmlElement(ElementName = "owner")]
+        public Owner Owner { get; set; }
+
+        [XmlAttribute(AttributeName = "respawndelay")]
+        public int Respawndelay { get; set; }
+
+        [XmlAttribute(AttributeName = "relaunchdelay")]
+        public int Relaunchdelay { get; set; }
     }
 }

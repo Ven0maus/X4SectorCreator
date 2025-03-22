@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -16,33 +8,77 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public JobForm JobForm { get; set; }
 
+        private static readonly Lazy<Job[]> _templateJobs = new(() => InitTemplateJobs().ToArray());
+        private const string _templateJobsPath = "Data/TemplateJobs";
+
         public JobTemplatesForm()
         {
             InitializeComponent();
+
+            // Init jobs into listbox
+            ListTemplateJobs.Items.Clear();
+            foreach (var job in _templateJobs.Value)
+                ListTemplateJobs.Items.Add(job);
+        }
+
+        private static IEnumerable<Job> InitTemplateJobs()
+        {
+            var directoryPath = Path.Combine(Application.StartupPath, _templateJobsPath);
+            if (!Directory.Exists(directoryPath))
+                yield break;
+
+            // Collect all jobs.xml files in the sub directories and returns them
+            foreach (var subDirectory in Directory.GetDirectories(directoryPath))
+            {
+                string templateName = Path.GetFileName(subDirectory); // Extracts "BaseGameJobs", "DLCJobs"
+                string jobFilePath = Path.Combine(subDirectory, "jobs.xml");
+
+                if (File.Exists(jobFilePath))
+                {
+                    var xml = File.ReadAllText(jobFilePath);
+                    Jobs jobs = Jobs.DeserializeJobs(xml);
+                    foreach (var job in jobs.JobList)
+                    {
+                        job.TemplateDirectory = templateName;
+                        yield return job;
+                    }
+                }
+            }
         }
 
         private void BtnSelectExampleJob_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TxtExampleJob.Text))
+            var selectedJob = ListTemplateJobs.SelectedItem as Job;
+            if (selectedJob == null)
             {
                 _ = MessageBox.Show("Please select a template first.");
                 return;
             }
 
-            JobForm.Job = ConvertToJob(TxtExampleJob.Text);
+            JobForm.Job = selectedJob;
             JobForm.Show();
+            TxtExampleJob.Clear();
+            ListTemplateJobs.ClearSelected();
             Close();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
+            TxtExampleJob.Clear();
+            ListTemplateJobs.ClearSelected();
             Close();
         }
 
-        private Job ConvertToJob(string exampleJobXml)
+        private void ListTemplateJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // TODO
-            return null;
+            var selectedJob = ListTemplateJobs.SelectedItem as Job;
+            if (selectedJob == null)
+            {
+                TxtExampleJob.Clear();
+                return;
+            }
+
+            TxtExampleJob.Text = selectedJob.SerializeJob();
         }
     }
 }

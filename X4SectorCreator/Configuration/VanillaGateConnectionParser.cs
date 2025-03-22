@@ -63,7 +63,7 @@ namespace X4SectorCreator.Configuration
         {
             try
             {
-                string mappingsPath = Path.Combine(Application.StartupPath, "Mappings/vanilla_connection_mappings.json");
+                string mappingsPath = Path.Combine(Application.StartupPath, "Data/Mappings/vanilla_connection_mappings.json");
                 string json = File.ReadAllText(mappingsPath);
                 VanilaConnectionMapping vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json, ConfigSerializer.SerializerOptions);
 

@@ -7,8 +7,8 @@ namespace X4SectorCreator.Forms
         private static readonly List<Job> _allJobs = [];
         public static IReadOnlyList<Job> AllJobs => _allJobs;
 
-        private static readonly List<Basket> _allBaskets = [];
-        public static IReadOnlyList<Basket> AllBaskets => _allBaskets;
+        private static readonly List<BasketObj> _allBaskets = [];
+        public static IReadOnlyList<BasketObj> AllBaskets => _allBaskets;
 
         private JobForm _jobForm;
         public JobForm JobForm => _jobForm != null && !_jobForm.IsDisposed ? _jobForm : (_jobForm = new JobForm());
@@ -85,8 +85,8 @@ namespace X4SectorCreator.Forms
         /// </summary>
         private void UpdateBasketsFilter()
         {
-            foreach (var basket in AllBaskets.OrderBy(a => a.Name))
-                cmbBasket.Items.Add(basket.Name);
+            foreach (var basket in AllBaskets.OrderBy(a => a.Basket))
+                cmbBasket.Items.Add(basket.Basket);
             cmbBasket.Items.Insert(0, "Any"); // Custom any filter
         }
 
@@ -104,7 +104,7 @@ namespace X4SectorCreator.Forms
         /// Used to initialize baskets from a config file.
         /// </summary>
         /// <param name="jobs"></param>
-        public static void InitBasketsFromConfig(List<Basket> baskets)
+        public static void InitBasketsFromConfig(List<BasketObj> baskets)
         {
             ClearAllBaskets();
             _allBaskets.AddRange(baskets);
@@ -172,28 +172,26 @@ namespace X4SectorCreator.Forms
             if (comboBox == cmbBasket)
             {
                 var basket = cmbBasket.SelectedItem as string;
-                jobs.RemoveAll(a => a.Basket == null || !a.Basket.Equals(basket, StringComparison.OrdinalIgnoreCase));
+                jobs.RemoveAll(a => a.Basket?.Basket == null || !a.Basket.Basket.Equals(basket, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbFaction)
             {
                 // Focus on jobs where the ship is owned by the selected faction
                 var faction = cmbFaction.SelectedItem as string;
-                jobs.RemoveAll(a => a.Ship?.Owner == null || !a.Ship.Owner.Equals(faction, StringComparison.OrdinalIgnoreCase));
+                jobs.RemoveAll(a => a.Ship?.Owner == null || !a.Ship.Owner.Exact.Equals(faction, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbOrder)
             {
                 var order = cmbOrder.SelectedItem as string;
-                jobs.RemoveAll(a => a.Orders == null || a.Orders.Count == 0 || !a.Orders.Any(a => a.Name.Equals(order, StringComparison.OrdinalIgnoreCase)));
+                jobs.RemoveAll(a => a.Orders?.Order?.Order == null || !a.Orders.Order.Order.Equals(order, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbCluster)
             {
-                var cluster = (cmbCluster.SelectedItem as Cluster).Name;
-                jobs.RemoveAll(a => a.Location.Name == null || !a.Location.Name.Equals(cluster, StringComparison.OrdinalIgnoreCase));
+                // TODO
             }
             else if (comboBox == cmbSector)
             {
-                var sector = (cmbSector.SelectedItem as Sector).Name;
-                jobs.RemoveAll(a => a.Location.Name == null || !a.Location.Name.Equals(sector, StringComparison.OrdinalIgnoreCase));
+                // TODO
             }
             else
             {

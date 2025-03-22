@@ -7,7 +7,7 @@ namespace X4SectorCreator.Forms
 {
     public partial class RegionPredefinedFieldsForm : Form
     {
-        private readonly string _predefinedFieldMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/predefinedfield_mappings.json");
+        private readonly string _predefinedFieldMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/predefinedfield_mappings.json");
 
         private readonly MultiSelectCombo _mscAsteroids, _mscDebris, _mscGravidar, _mscNebula, _mscPositional, _mscObjects, _mscVolumetricfog, _mscAmbientSound;
 
