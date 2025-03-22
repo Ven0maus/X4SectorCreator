@@ -59,8 +59,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnSelectExampleJob_Click(object sender, EventArgs e)
         {
-            var selectedJob = ListTemplateJobs.SelectedItem as Job;
-            if (selectedJob == null)
+            if (ListTemplateJobs.SelectedItem is not Job selectedJob)
             {
                 _ = MessageBox.Show("Please select a template first.");
                 return;
@@ -78,8 +77,7 @@ namespace X4SectorCreator.Forms
 
         private void ListTemplateJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedJob = ListTemplateJobs.SelectedItem as Job;
-            if (selectedJob == null)
+            if (ListTemplateJobs.SelectedItem is not Job selectedJob)
             {
                 TxtExampleJob.Clear();
                 return;

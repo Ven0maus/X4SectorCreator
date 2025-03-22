@@ -15,8 +15,20 @@ namespace X4SectorCreator.Forms
                 _job = value;
                 if (_job != null)
                 {
-                    FillAllFieldsFromJob(_job);
+                    TxtJobXml.Text = _job.SerializeJob();
                 }
+            }
+        }
+
+        private bool _isEditing;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool IsEditing
+        {
+            get => _isEditing;
+            set
+            {
+                _isEditing = value;
+                BtnCreate.Text = _isEditing ? "Update" : "Create";
             }
         }
 
@@ -25,9 +37,35 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
         }
 
-        private void FillAllFieldsFromJob(Job job)
+        private void BtnCreate_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var job = Job.DeserializeJob(TxtJobXml.Text) ?? 
+                    throw new Exception("No valid job exists within xml structure.");
 
+                // Validation on same id
+                if (!IsEditing)
+                {
+                    if (JobsForm.AllJobs.ContainsKey(job.Id))
+                        throw new Exception($"A job with the id \"{job.Id}\" already exists, please use another id.");
+                }
+
+                // Set or update
+                JobsForm.AllJobs[job.Id] = job;
+                if (MainForm.Instance.JobsForm.Visible)
+                    MainForm.Instance.JobsForm.ApplyCurrentFilter();
+                Close();
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show("Invalid XML: " + ex.Message);
+            }
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

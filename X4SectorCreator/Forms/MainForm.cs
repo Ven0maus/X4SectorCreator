@@ -589,8 +589,8 @@ namespace X4SectorCreator
             }
 
             // Reset jobs information
-            JobsForm.ClearAllJobs();
-            JobsForm.ClearAllBaskets();
+            JobsForm.AllJobs.Clear();
+            JobsForm.AllBaskets.Clear();
 
             // Re-initialize all clusters properly
             _ = InitAllClusters();

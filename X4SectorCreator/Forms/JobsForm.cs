@@ -4,11 +4,8 @@ namespace X4SectorCreator.Forms
 {
     public partial class JobsForm : Form
     {
-        private static readonly List<Job> _allJobs = [];
-        public static IReadOnlyList<Job> AllJobs => _allJobs;
-
-        private static readonly List<BasketObj> _allBaskets = [];
-        public static IReadOnlyList<BasketObj> AllBaskets => _allBaskets;
+        public static readonly Dictionary<string, Job> AllJobs = new(StringComparer.OrdinalIgnoreCase);
+        public static readonly Dictionary<string, BasketObj> AllBaskets = new(StringComparer.OrdinalIgnoreCase);
 
         private JobForm _jobForm;
         public JobForm JobForm => _jobForm != null && !_jobForm.IsDisposed ? _jobForm : (_jobForm = new JobForm());
@@ -34,12 +31,6 @@ namespace X4SectorCreator.Forms
 
         public void Initialize()
         {
-            ListJobs.Items.Clear();
-
-            // Load all job items into the listbox
-            foreach (var job in AllJobs.OrderBy(a => a.Name))
-                ListJobs.Items.Add(job);
-
             // Clear existing values for the filter options
             cmbBasket.Items.Clear();
             cmbFaction.Items.Clear();
@@ -77,6 +68,8 @@ namespace X4SectorCreator.Forms
             foreach (var cmb in comboboxes)
                 cmb.SelectedItem = "Any";
             _applyFilter = true;
+
+            ApplyCurrentFilter();
         }
 
         /// <summary>
@@ -85,45 +78,9 @@ namespace X4SectorCreator.Forms
         /// </summary>
         private void UpdateBasketsFilter()
         {
-            foreach (var basket in AllBaskets.OrderBy(a => a.Basket))
-                cmbBasket.Items.Add(basket.Basket);
+            foreach (var basket in AllBaskets.OrderBy(a => a.Key))
+                cmbBasket.Items.Add(basket.Value.Basket);
             cmbBasket.Items.Insert(0, "Any"); // Custom any filter
-        }
-
-        /// <summary>
-        /// Used to initialize jobs from a config file.
-        /// </summary>
-        /// <param name="jobs"></param>
-        public static void InitJobsFromConfig(List<Job> jobs)
-        {
-            ClearAllJobs();
-            _allJobs.AddRange(jobs);
-        }
-
-        /// <summary>
-        /// Used to initialize baskets from a config file.
-        /// </summary>
-        /// <param name="jobs"></param>
-        public static void InitBasketsFromConfig(List<BasketObj> baskets)
-        {
-            ClearAllBaskets();
-            _allBaskets.AddRange(baskets);
-        }
-
-        /// <summary>
-        /// Used to clear all stored jobs.
-        /// </summary>
-        public static void ClearAllJobs()
-        {
-            _allJobs.Clear();
-        }
-
-        /// <summary>
-        /// Used to clear all stored baskets.
-        /// </summary>
-        public static void ClearAllBaskets()
-        {
-            _allBaskets.Clear();
         }
 
         private void BtnExitJobWindow_Click(object sender, EventArgs e)
@@ -143,11 +100,11 @@ namespace X4SectorCreator.Forms
             ApplyCurrentFilter();
         }
 
-        private void ApplyCurrentFilter()
+        public void ApplyCurrentFilter()
         {
             if (!_applyFilter) return;
 
-            var suitableJobs = AllJobs.ToList();
+            var suitableJobs = AllJobs.Values.ToList();
 
             // Remove jobs based on rules
             HandleFilterOption(cmbBasket, suitableJobs);
@@ -257,8 +214,7 @@ namespace X4SectorCreator.Forms
             // Job creation/edit is ongoing at the moment
             if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible) return;
 
-            var job = ListJobs.SelectedItem as Job;
-            if (job != null)
+            if (ListJobs.SelectedItem is Job job)
             {
                 int index = ListJobs.Items.IndexOf(ListJobs.SelectedItem);
                 ListJobs.Items.Remove(ListJobs.SelectedItem);
@@ -269,14 +225,13 @@ namespace X4SectorCreator.Forms
                 ListJobs.SelectedItem = index >= 0 && ListJobs.Items.Count > 0 ? ListJobs.Items[index] : null;
 
                 // Remove also from jobs collection itself
-                _allJobs.Remove(job);
-            }    
+                AllJobs.Remove(job.Id);
+            }
         }
 
         private void ListJobs_DoubleClick(object sender, EventArgs e)
         {
-            var job = ListJobs.SelectedItem as Job;
-            if (job == null) return;
+            if (ListJobs.SelectedItem is not Job job) return;
 
             // Template selection is ongoing at the moment
             if (JobTemplatesForm != null && !JobTemplatesForm.IsDisposed && JobTemplatesForm.Visible) return;
@@ -284,6 +239,7 @@ namespace X4SectorCreator.Forms
             // Job creation/edit is ongoing at the moment
             if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible) return;
 
+            JobForm.IsEditing = true;
             JobForm.Job = job;
             JobForm.Show();
         }

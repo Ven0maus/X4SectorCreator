@@ -21,24 +21,22 @@ namespace X4SectorCreator.Objects
             XmlSerializer serializer = new(typeof(Jobs));
 
             // Create a StringWriter to hold the serialized XML string
-            using (StringWriter stringWriter = new())
+            using StringWriter stringWriter = new();
+            // Create XmlWriterSettings to format the XML with indentation
+            XmlWriterSettings settings = new()
             {
-                // Create XmlWriterSettings to format the XML with indentation
-                XmlWriterSettings settings = new()
-                {
-                    Indent = true
-                };
+                Indent = true
+            };
 
-                // Create an XmlWriter with the specified settings
-                using (XmlWriter writer = XmlWriter.Create(stringWriter, settings))
-                {
-                    // Serialize the Jobs object to the XmlWriter
-                    serializer.Serialize(writer, this);
-                }
-
-                // Return the formatted XML string
-                return stringWriter.ToString();
+            // Create an XmlWriter with the specified settings
+            using (XmlWriter writer = XmlWriter.Create(stringWriter, settings))
+            {
+                // Serialize the Jobs object to the XmlWriter
+                serializer.Serialize(writer, this);
             }
+
+            // Return the formatted XML string
+            return stringWriter.ToString();
         }
 
         public static Jobs DeserializeJobs(string xml)
@@ -46,11 +44,9 @@ namespace X4SectorCreator.Objects
             // Create an XmlSerializer for the Jobs type
             XmlSerializer serializer = new(typeof(Jobs));
 
-            using (StringReader stringReader = new(xml))
-            {
-                // Deserialize the XML to a Jobs object
-                return (Jobs)serializer.Deserialize(stringReader);
-            }
+            using StringReader stringReader = new(xml);
+            // Deserialize the XML to a Jobs object
+            return (Jobs)serializer.Deserialize(stringReader);
         }
     }
 
@@ -120,29 +116,37 @@ namespace X4SectorCreator.Objects
             XmlSerializer serializer = new(typeof(Job));
 
             // Create a StringWriter to hold the serialized XML string
-            using (StringWriter stringWriter = new())
+            using StringWriter stringWriter = new();
+            // Create XmlWriterSettings to format the XML with indentation
+            XmlWriterSettings settings = new()
             {
-                // Create XmlWriterSettings to format the XML with indentation
-                XmlWriterSettings settings = new()
-                {
-                    Indent = true,
-                    OmitXmlDeclaration = true
-                };
+                Indent = true,
+                OmitXmlDeclaration = true
+            };
 
-                // Create an XmlWriter with the specified settings
-                using (XmlWriter writer = XmlWriter.Create(stringWriter, settings))
-                {
-                    // Create XmlSerializerNamespaces to avoid writing the default namespace
-                    XmlSerializerNamespaces namespaces = new();
-                    namespaces.Add("", "");  // Add an empty namespace
+            // Create an XmlWriter with the specified settings
+            using (XmlWriter writer = XmlWriter.Create(stringWriter, settings))
+            {
+                // Create XmlSerializerNamespaces to avoid writing the default namespace
+                XmlSerializerNamespaces namespaces = new();
+                namespaces.Add("", "");  // Add an empty namespace
 
-                    // Serialize the Jobs object to the XmlWriter
-                    serializer.Serialize(writer, this, namespaces);
-                }
-
-                // Return the formatted XML string
-                return stringWriter.ToString();
+                // Serialize the Jobs object to the XmlWriter
+                serializer.Serialize(writer, this, namespaces);
             }
+
+            // Return the formatted XML string
+            return stringWriter.ToString();
+        }
+
+        public static Job DeserializeJob(string xml)
+        {
+            // Create an XmlSerializer for the Jobs type
+            XmlSerializer serializer = new(typeof(Job));
+
+            using StringReader stringReader = new(xml);
+            // Deserialize the XML to a Jobs object
+            return (Job)serializer.Deserialize(stringReader);
         }
 
         public override string ToString()
@@ -172,6 +176,11 @@ namespace X4SectorCreator.Objects
 
         [XmlAttribute(AttributeName = "value")]
         public string Value { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name} | {Value}";
+        }
     }
 
     [XmlRoot(ElementName = "order")]
