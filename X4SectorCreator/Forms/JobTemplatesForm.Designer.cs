@@ -40,9 +40,10 @@
             // ListTemplateJobs
             // 
             ListTemplateJobs.FormattingEnabled = true;
+            ListTemplateJobs.HorizontalScrollbar = true;
             ListTemplateJobs.Location = new Point(12, 36);
             ListTemplateJobs.Name = "ListTemplateJobs";
-            ListTemplateJobs.Size = new Size(244, 544);
+            ListTemplateJobs.Size = new Size(389, 544);
             ListTemplateJobs.TabIndex = 0;
             ListTemplateJobs.SelectedIndexChanged += ListTemplateJobs_SelectedIndexChanged;
             // 
@@ -58,18 +59,18 @@
             // 
             // TxtExampleJob
             // 
-            TxtExampleJob.Location = new Point(262, 36);
+            TxtExampleJob.Location = new Point(407, 36);
             TxtExampleJob.Multiline = true;
             TxtExampleJob.Name = "TxtExampleJob";
             TxtExampleJob.ReadOnly = true;
-            TxtExampleJob.Size = new Size(460, 500);
+            TxtExampleJob.Size = new Size(654, 500);
             TxtExampleJob.TabIndex = 2;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(262, 12);
+            label2.Location = new Point(407, 12);
             label2.Name = "label2";
             label2.Size = new Size(69, 21);
             label2.TabIndex = 3;
@@ -77,9 +78,9 @@
             // 
             // BtnSelectExampleJob
             // 
-            BtnSelectExampleJob.Location = new Point(376, 542);
+            BtnSelectExampleJob.Location = new Point(574, 542);
             BtnSelectExampleJob.Name = "BtnSelectExampleJob";
-            BtnSelectExampleJob.Size = new Size(346, 38);
+            BtnSelectExampleJob.Size = new Size(487, 38);
             BtnSelectExampleJob.TabIndex = 4;
             BtnSelectExampleJob.Text = "Select";
             BtnSelectExampleJob.UseVisualStyleBackColor = true;
@@ -87,9 +88,9 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(262, 542);
+            BtnCancel.Location = new Point(407, 542);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(108, 38);
+            BtnCancel.Size = new Size(161, 38);
             BtnCancel.TabIndex = 5;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
@@ -98,16 +99,16 @@
             // CmbFilterOption
             // 
             CmbFilterOption.FormattingEnabled = true;
-            CmbFilterOption.Location = new Point(91, 10);
+            CmbFilterOption.Location = new Point(159, 11);
             CmbFilterOption.Name = "CmbFilterOption";
-            CmbFilterOption.Size = new Size(165, 23);
+            CmbFilterOption.Size = new Size(242, 23);
             CmbFilterOption.TabIndex = 6;
             // 
             // JobTemplatesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(734, 586);
+            ClientSize = new Size(1066, 586);
             Controls.Add(CmbFilterOption);
             Controls.Add(BtnCancel);
             Controls.Add(BtnSelectExampleJob);

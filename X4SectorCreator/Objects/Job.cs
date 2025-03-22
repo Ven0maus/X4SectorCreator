@@ -93,11 +93,11 @@ namespace X4SectorCreator.Objects
         [XmlAttribute(AttributeName = "comment")]
         public string Comment { get; set; }
 
-        [XmlAttribute(AttributeName = "startactive")]
-        public bool Startactive { get; set; }
+        [XmlAttribute(AttributeName = "Startactive")]
+        public string Startactive { get; set; }
 
         [XmlAttribute(AttributeName = "disabled")]
-        public bool Disabled { get; set; }
+        public string Disabled { get; set; }
 
         [XmlElement(ElementName = "encounters")]
         public Encounters Encounters { get; set; }
@@ -144,19 +144,24 @@ namespace X4SectorCreator.Objects
                 return stringWriter.ToString();
             }
         }
+
+        public override string ToString()
+        {
+            return Id ?? Name ?? GetHashCode().ToString();
+        }
     }
 
     [XmlRoot(ElementName = "modifiers")]
     public class Modifiers
     {
         [XmlAttribute(AttributeName = "rebuild")]
-        public bool Rebuild { get; set; }
+        public string Rebuild { get; set; }
 
         [XmlAttribute(AttributeName = "commandeerable")]
-        public bool Commandeerable { get; set; }
+        public string Commandeerable { get; set; }
 
         [XmlAttribute(AttributeName = "subordinate")]
-        public bool Subordinate { get; set; }
+        public string Subordinate { get; set; }
     }
 
     [XmlRoot(ElementName = "param")]
@@ -179,7 +184,7 @@ namespace X4SectorCreator.Objects
         public string Order { get; set; }
 
         [XmlAttribute(AttributeName = "default")]
-        public bool Default { get; set; }
+        public string Default { get; set; }
     }
 
     [XmlRoot(ElementName = "orders")]
@@ -213,28 +218,28 @@ namespace X4SectorCreator.Objects
     public class Quota
     {
         [XmlAttribute(AttributeName = "galaxy")]
-        public int Galaxy { get; set; }
+        public string Galaxy { get; set; }
 
         [XmlAttribute(AttributeName = "cluster")]
-        public int Cluster { get; set; }
+        public string Cluster { get; set; }
 
         [XmlAttribute(AttributeName = "sector")]
-        public int Sector { get; set; }
+        public string Sector { get; set; }
 
         [XmlAttribute(AttributeName = "maxgalaxy")]
-        public int Maxgalaxy { get; set; }
+        public string Maxgalaxy { get; set; }
 
         [XmlAttribute(AttributeName = "zone")]
-        public int Zone { get; set; }
+        public string Zone { get; set; }
 
         [XmlAttribute(AttributeName = "wing")]
-        public int Wing { get; set; }
+        public string Wing { get; set; }
 
         [XmlAttribute(AttributeName = "variation")]
-        public int Variation { get; set; }
+        public string Variation { get; set; }
 
         [XmlAttribute(AttributeName = "station")]
-        public int Station { get; set; }
+        public string Station { get; set; }
     }
 
     [XmlRoot(ElementName = "location")]
@@ -262,7 +267,7 @@ namespace X4SectorCreator.Objects
         public string Stationtype { get; set; }
 
         [XmlAttribute(AttributeName = "matchextension")]
-        public bool Matchextension { get; set; }
+        public string Matchextension { get; set; }
 
         [XmlAttribute(AttributeName = "regionbasket")]
         public string Regionbasket { get; set; }
@@ -280,7 +285,7 @@ namespace X4SectorCreator.Objects
         public string Tags { get; set; }
 
         [XmlAttribute(AttributeName = "hasgravidarregion")]
-        public bool Hasgravidarregion { get; set; }
+        public string Hasgravidarregion { get; set; }
 
         [XmlAttribute(AttributeName = "factionrace")]
         public string Factionrace { get; set; }
@@ -290,13 +295,13 @@ namespace X4SectorCreator.Objects
     public class Environment
     {
         [XmlAttribute(AttributeName = "buildatshipyard")]
-        public bool Buildatshipyard { get; set; }
+        public string Buildatshipyard { get; set; }
 
         [XmlAttribute(AttributeName = "preferbuilding")]
-        public bool Preferbuilding { get; set; }
+        public string Preferbuilding { get; set; }
 
         [XmlAttribute(AttributeName = "gate")]
-        public bool Gate { get; set; }
+        public string Gate { get; set; }
     }
 
     [XmlRoot(ElementName = "select")]
@@ -316,13 +321,13 @@ namespace X4SectorCreator.Objects
     public class Level
     {
         [XmlAttribute(AttributeName = "min")]
-        public double Min { get; set; }
+        public string Min { get; set; }
 
         [XmlAttribute(AttributeName = "max")]
-        public double Max { get; set; }
+        public string Max { get; set; }
 
         [XmlAttribute(AttributeName = "exact")]
-        public double Exact { get; set; }
+        public string Exact { get; set; }
     }
 
     [XmlRoot(ElementName = "loadout")]
@@ -342,7 +347,7 @@ namespace X4SectorCreator.Objects
         public string Exact { get; set; }
 
         [XmlAttribute(AttributeName = "overridenpc")]
-        public bool Overridenpc { get; set; }
+        public string Overridenpc { get; set; }
     }
 
     [XmlRoot(ElementName = "ship")]
@@ -371,10 +376,10 @@ namespace X4SectorCreator.Objects
     public class Fillpercent
     {
         [XmlAttribute(AttributeName = "min")]
-        public int Min { get; set; }
+        public string Min { get; set; }
 
         [XmlAttribute(AttributeName = "max")]
-        public int Max { get; set; }
+        public string Max { get; set; }
 
         [XmlAttribute(AttributeName = "profile")]
         public string Profile { get; set; }
@@ -387,7 +392,7 @@ namespace X4SectorCreator.Objects
         public Fillpercent Fillpercent { get; set; }
 
         [XmlAttribute(AttributeName = "multiple")]
-        public bool Multiple { get; set; }
+        public string Multiple { get; set; }
     }
 
     [XmlRoot(ElementName = "cargo")]
@@ -401,7 +406,7 @@ namespace X4SectorCreator.Objects
     public class Variation
     {
         [XmlAttribute(AttributeName = "exact")]
-        public int Exact { get; set; }
+        public string Exact { get; set; }
     }
 
     [XmlRoot(ElementName = "subordinate")]
@@ -414,7 +419,7 @@ namespace X4SectorCreator.Objects
         public string Assignment { get; set; }
 
         [XmlAttribute(AttributeName = "group")]
-        public int Group { get; set; }
+        public string Group { get; set; }
     }
 
     [XmlRoot(ElementName = "subordinates")]
@@ -431,10 +436,10 @@ namespace X4SectorCreator.Objects
         public string Category { get; set; }
 
         [XmlAttribute(AttributeName = "min")]
-        public int Min { get; set; }
+        public string Min { get; set; }
 
         [XmlAttribute(AttributeName = "max")]
-        public int Max { get; set; }
+        public string Max { get; set; }
     }
 
     [XmlRoot(ElementName = "units")]
@@ -455,17 +460,17 @@ namespace X4SectorCreator.Objects
     public class Time
     {
         [XmlAttribute(AttributeName = "interval")]
-        public int Interval { get; set; }
+        public string Interval { get; set; }
 
         [XmlAttribute(AttributeName = "start")]
-        public int Start { get; set; }
+        public string Start { get; set; }
     }
 
     [XmlRoot(ElementName = "page")]
     public class Page
     {
         [XmlAttribute(AttributeName = "exact")]
-        public int Exact { get; set; }
+        public string Exact { get; set; }
 
         [XmlAttribute(AttributeName = "comment")]
         public string Comment { get; set; }
@@ -512,9 +517,9 @@ namespace X4SectorCreator.Objects
         public Owner Owner { get; set; }
 
         [XmlAttribute(AttributeName = "respawndelay")]
-        public int Respawndelay { get; set; }
+        public string Respawndelay { get; set; }
 
         [XmlAttribute(AttributeName = "relaunchdelay")]
-        public int Relaunchdelay { get; set; }
+        public string Relaunchdelay { get; set; }
     }
 }
