@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using X4SectorCreator.Objects;
+﻿using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -7,6 +6,9 @@ namespace X4SectorCreator.Forms
     {
         private BasketForm _basketForm;
         public BasketForm BasketForm => _basketForm != null && !_basketForm.IsDisposed ? _basketForm : (_basketForm = new BasketForm());
+
+        // Remember the selected option through app use
+        private static string _selectedFilterOption = "Both";
 
         public static readonly Lazy<List<Basket>> VanillaBaskets = new(() =>
         {
@@ -30,15 +32,16 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Set default
-            CmbFilterOptions.SelectedItem = "Both";
+            CmbFilterOptions.SelectedItem = _selectedFilterOption;
         }
 
         public void UpdateBaskets()
         {
             var option = CmbFilterOptions.SelectedItem as string;
+            _selectedFilterOption = option;
 
             ListBaskets.Items.Clear();
-            switch (option.ToLower())
+            switch (_selectedFilterOption.ToLower())
             {
                 case "vanilla":
                     foreach (var basket in VanillaBaskets.Value.OrderBy(a => a.Id))
