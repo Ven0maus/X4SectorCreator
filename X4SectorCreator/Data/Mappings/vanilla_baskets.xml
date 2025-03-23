@@ -287,6 +287,9 @@
 			<ware ware="majasnails" />
 			<ware ware="sunriseflowers" />
 			<ware ware="swampplant" />
+			<ware ware="plankton" />
+			<ware ware="bofu" />
+			<ware ware="proteinpaste" />
 		</wares>
 	</basket>
 
@@ -373,6 +376,9 @@
 			<ware ware="smartchips" />
 			<ware ware="turretcomponents" />
 			<ware ware="weaponcomponents" />
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
 		</wares>
 	</basket>
 
@@ -383,6 +389,10 @@
 			<ware ware="sojahusk" />
 			<ware ware="nostropoil" />
 			<ware ware="water" />
+			<ware ware="bofu" />
+			<ware ware="cheltmeat" />
+			<ware ware="scruffinfruits" />
+			<ware ware="terranmre" />
 		</wares>
 	</basket>
 
@@ -486,9 +496,24 @@
 			<ware ware="plasmaconductors" />
 			<ware ware="quantumtubes" />
 			<ware ware="scanningarrays" />
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
+		</wares>
+	</basket>
+	
+	<basket id="cheltmeat">
+		<wares>
+			<ware ware="cheltmeat" />
 		</wares>
 	</basket>
 
+	<basket id="scruffinfruits">
+		<wares>
+			<ware ware="scruffinfruits" />
+		</wares>
+	</basket>
+	
 	<basket id="argon_agriculture" name="Argon Agricultural Wares" description="Basket that perscribes to Argon food wares">
 		<wares>
 			<ware ware="foodrations" />
@@ -514,11 +539,119 @@
 		</wares>
 	</basket>
 
+	<basket id="computronicsubstrate">
+		<wares>
+			<ware ware="computronicsubstrate" />
+		</wares>
+	</basket>
+
+	<basket id="metallicmicrolattice">
+		<wares>
+			<ware ware="metallicmicrolattice" />
+		</wares>
+	</basket>
+
+	<basket id="siliconcarbide">
+		<wares>
+			<ware ware="siliconcarbide" />
+		</wares>
+	</basket>
+
+	<basket id="proteinpaste">
+		<wares>
+			<ware ware="proteinpaste" />
+		</wares>
+	</basket>
+
+	<basket id="terranmre">
+		<wares>
+			<ware ware="terranmre" />
+		</wares>
+	</basket>
+
+	<basket id="stimulants">
+		<wares>
+			<ware ware="stimulants" />
+		</wares>
+	</basket>
+
+	<basket id="construction_ships_terran" name="Ship Construction Wares" description="Basket for wares necessary for Terran ship construction">
+		<wares>
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
+		</wares>
+	</basket>
+
+	<basket id="construction_stations_terran" name="Station Construction Wares" description="Basket for wares necessary for Terran station construction">
+		<wares>
+			<ware ware="computronicsubstrate" />
+			<ware ware="siliconcarbide" />
+		</wares>
+	</basket>
+
+	<basket id="bio_terran" name="Terran Bio Wares" description="Basket for all tradable bio-level wares relevant to the Terran economy">
+		<wares>
+			<ware ware="proteinpaste" />
+		</wares>
+	</basket>
+
+	<basket id="food_terran" name="Terran Food Wares" description="Basket for all tradable Terran food-level wares">
+		<wares>
+			<ware ware="terranmre" />
+			<ware ware="medicalsupplies" />
+		</wares>
+	</basket>
+
+	<basket id="tech_terran" name="Tech Wares" description="Basket for all tradable Terran tech-level wares">
+		<wares>
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
+		</wares>
+	</basket>
+
+	<basket id="refined_gas_terran" name="Refined Gas Wares" description="Basket for all refined gas wares. High throughput.">
+		<wares>
+			<ware ware="antimattercells" />
+			<ware ware="graphene" />
+			<ware ware="superfluidcoolant" />
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
+		</wares>
+	</basket>
+
+	<basket id="refined_mineral_terran" name="Refined Mineral Wares" description="Basket for all refined mineral wares. High throughput.">
+		<wares>
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
+			<ware ware="refinedmetals" />
+			<ware ware="siliconwafers" />
+			<ware ware="teladianium" />
+		</wares>
+	</basket>
+
+	<basket id="all_container_terran" name="All Container Wares used by Terran race" description="Basket for all Terran container wares">
+		<wares>
+			<ware ware="energycells" />
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
+			<ware ware="proteinpaste" />
+			<ware ware="terranmre" />
+			<ware ware="medicalsupplies" />
+			<ware ware="stimulants" />
+		</wares>
+	</basket>
+
 	<basket id="global_illegal" name="Illegal Goods" description="Basket for all container wares that are illegal to at least one faction.">
 		<wares>
 			<ware ware="majadust"/>
 			<ware ware="spacefuel"/>
 			<ware ware="spaceweed"/>
+			<ware ware="stimulants" />
 		</wares>
 	</basket>
 
@@ -564,6 +697,9 @@
 			<ware ware="turretcomponents" />
 			<ware ware="weaponcomponents" />
 			<!--<ware ware="wheat" />-->
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
 		</wares>
 	</basket>
 
@@ -604,6 +740,77 @@
 			<ware ware="turretcomponents" />
 			<ware ware="weaponcomponents" />
 			<ware ware="wheat" />
+			<ware ware="bofu" />
+			<ware ware="plankton" />
+			<ware ware="bogas" />
+			<ware ware="cheltmeat" />
+			<ware ware="scruffinfruits" />
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
+			<ware ware="proteinpaste" />
+			<ware ware="terranmre" />
+			<ware ware="stimulants" />
+		</wares>
+	</basket>
+
+	<basket id="all" name="All Wares" description="Basket for all kinds of wares">
+		<wares>
+			<ware ware="advancedelectronics" />
+			<ware ware="antimattercells" />
+			<ware ware="antimatterconverters" />
+			<ware ware="advancedcomposites" />
+			<ware ware="claytronics" />
+			<ware ware="dronecomponents" />
+			<ware ware="energycells" />
+			<ware ware="engineparts" />
+			<ware ware="fieldcoils" />
+			<ware ware="foodrations" />
+			<ware ware="graphene" />
+			<ware ware="helium" />
+			<ware ware="hullparts" />
+			<ware ware="hydrogen" />
+			<ware ware="ice" />
+			<ware ware="majadust" />
+			<ware ware="majasnails" />
+			<ware ware="meat" />
+			<ware ware="medicalsupplies" />
+			<ware ware="methane" />
+			<ware ware="microchips" />
+			<ware ware="missilecomponents" />
+			<ware ware="nostropoil" />
+			<ware ware="ore" />
+			<ware ware="plasmaconductors" />
+			<ware ware="quantumtubes" />
+			<ware ware="refinedmetals" />
+			<ware ware="scanningarrays" />
+			<ware ware="shieldcomponents" />
+			<ware ware="silicon" />
+			<ware ware="siliconwafers" />
+			<ware ware="smartchips" />
+			<ware ware="sojabeans" />
+			<ware ware="sojahusk" />
+			<ware ware="spacefuel" />
+			<ware ware="spaceweed" />
+			<ware ware="spices" />
+			<ware ware="sunriseflowers" />
+			<ware ware="superfluidcoolant" />
+			<ware ware="swampplant" />
+			<ware ware="teladianium" />
+			<ware ware="turretcomponents" />
+			<ware ware="water" />
+			<ware ware="weaponcomponents" />
+			<ware ware="wheat" />
+			<ware ware="bofu" />
+			<ware ware="plankton" />
+			<ware ware="cheltmeat" />
+			<ware ware="scruffinfruits" />
+			<ware ware="computronicsubstrate" />
+			<ware ware="metallicmicrolattice" />
+			<ware ware="siliconcarbide" />
+			<ware ware="proteinpaste" />
+			<ware ware="terranmre" />
+			<ware ware="stimulants" />
 		</wares>
 	</basket>
 
@@ -623,4 +830,23 @@
 			<ware ware="methane" />
 		</wares>
 	</basket>
+
+	<basket id="bofu">
+		<wares>
+			<ware ware="bofu" />
+		</wares>
+	</basket>
+
+	<basket id="plankton">
+		<wares>
+			<ware ware="plankton" />
+		</wares>
+	</basket>
+
+	<basket id="bogas">
+		<wares>
+			<ware ware="bogas" />
+		</wares>
+	</basket>
+	
 </baskets>
