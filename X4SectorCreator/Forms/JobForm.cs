@@ -41,6 +41,45 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
         }
 
+        private void BtnSelectFaction_Click(object sender, EventArgs e)
+        {
+            var job = TryDeserializeJob(false);
+            if (job == null)
+            {
+                _ = MessageBox.Show("The xml must be valid, if you want to select a basket for the job.");
+                return;
+            }
+
+            const string lblFaction = "Factions:";
+            Dictionary<string, string> modInfo = MultiInputDialog.Show("Select Faction",
+                (lblFaction, [.. MainForm.Instance.FactionColorMapping.Keys.OrderBy(a => a)], null)
+            );
+
+            if (modInfo == null || modInfo.Count != 1)
+                return;
+
+            var factionName = (modInfo[lblFaction] ?? "").ToLower();
+
+            if (string.IsNullOrWhiteSpace(factionName))
+            {
+                _ = MessageBox.Show("Please select a faction.");
+                return;
+            }
+
+            // Set faction on various objects
+            if (job.Category != null)
+                job.Category.Faction = factionName;
+            if (job.Location != null)
+                job.Location.Faction = factionName;
+            if (job.Ship?.Select != null)
+                job.Ship.Select.Faction = factionName;
+            if (job.Ship?.Owner != null)
+                job.Ship.Owner.Exact = factionName;
+
+            TxtJobXml.Text = job.SerializeJob();
+            TxtJobXml.SelectionStart = TxtJobXml.Text.Length;
+        }
+
         private void BtnSelectBasket_Click(object sender, EventArgs e)
         {
             var job = TryDeserializeJob(false);
@@ -66,6 +105,12 @@ namespace X4SectorCreator.Forms
                 basketName = modInfo[lblCustomBasket] ?? "";
                 if (!string.IsNullOrWhiteSpace(basketName))
                     basketName = $"PREFIX_{basketName}";
+            }
+
+            if (string.IsNullOrWhiteSpace(basketName))
+            {
+                _ = MessageBox.Show("Please select a basket.");
+                return;
             }
 
             job.Basket ??= new Job.BasketObj();

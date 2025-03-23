@@ -34,6 +34,7 @@
             BtnCancel = new Button();
             BtnSelectJobLocation = new Button();
             BtnSelectBasket = new Button();
+            BtnSelectFaction = new Button();
             SuspendLayout();
             // 
             // label2
@@ -94,11 +95,22 @@
             BtnSelectBasket.UseVisualStyleBackColor = true;
             BtnSelectBasket.Click += BtnSelectBasket_Click;
             // 
+            // BtnSelectFaction
+            // 
+            BtnSelectFaction.Location = new Point(284, 7);
+            BtnSelectFaction.Name = "BtnSelectFaction";
+            BtnSelectFaction.Size = new Size(153, 28);
+            BtnSelectFaction.TabIndex = 10;
+            BtnSelectFaction.Text = "Select Job Faction";
+            BtnSelectFaction.UseVisualStyleBackColor = true;
+            BtnSelectFaction.Click += BtnSelectFaction_Click;
+            // 
             // JobForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(761, 701);
+            Controls.Add(BtnSelectFaction);
             Controls.Add(BtnSelectBasket);
             Controls.Add(BtnSelectJobLocation);
             Controls.Add(BtnCancel);
@@ -122,5 +134,6 @@
         private Button BtnCancel;
         private Button BtnSelectJobLocation;
         private Button BtnSelectBasket;
+        private Button BtnSelectFaction;
     }
 }
