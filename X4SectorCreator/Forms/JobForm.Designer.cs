@@ -33,6 +33,7 @@
             BtnCreate = new Button();
             BtnCancel = new Button();
             BtnSelectJobLocation = new Button();
+            BtnSelectBasket = new Button();
             SuspendLayout();
             // 
             // label2
@@ -83,11 +84,22 @@
             BtnSelectJobLocation.UseVisualStyleBackColor = true;
             BtnSelectJobLocation.Click += BtnSelectJobLocation_Click;
             // 
+            // BtnSelectBasket
+            // 
+            BtnSelectBasket.Location = new Point(443, 7);
+            BtnSelectBasket.Name = "BtnSelectBasket";
+            BtnSelectBasket.Size = new Size(153, 28);
+            BtnSelectBasket.TabIndex = 9;
+            BtnSelectBasket.Text = "Select Job Basket";
+            BtnSelectBasket.UseVisualStyleBackColor = true;
+            BtnSelectBasket.Click += BtnSelectBasket_Click;
+            // 
             // JobForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(761, 701);
+            Controls.Add(BtnSelectBasket);
             Controls.Add(BtnSelectJobLocation);
             Controls.Add(BtnCancel);
             Controls.Add(BtnCreate);
@@ -109,5 +121,6 @@
         private Button BtnCreate;
         private Button BtnCancel;
         private Button BtnSelectJobLocation;
+        private Button BtnSelectBasket;
     }
 }

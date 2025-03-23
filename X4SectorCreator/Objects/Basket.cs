@@ -23,11 +23,11 @@ namespace X4SectorCreator.Objects
     [XmlRoot(ElementName = "basket")]
     public class Basket
     {
-        [XmlElement(ElementName = "wares")]
-        public WareObjects Wares { get; set; }
-
         [XmlAttribute(AttributeName = "id")]
         public string Id { get; set; }
+
+        [XmlElement(ElementName = "wares")]
+        public WareObjects Wares { get; set; }
 
         [XmlIgnore]
         public bool IsBaseGame { get; set; }
@@ -48,7 +48,7 @@ namespace X4SectorCreator.Objects
 
         public override string ToString()
         {
-            return Id ?? GetHashCode().ToString();
+            return (Id ?? GetHashCode().ToString()).Replace("PREFIX_", "");
         }
 
         internal string SerializeBasket()

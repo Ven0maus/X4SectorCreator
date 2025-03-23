@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Data;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -39,6 +40,39 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
         }
 
+        private void BtnSelectBasket_Click(object sender, EventArgs e)
+        {
+            var job = TryDeserializeJob(false);
+            if (job == null)
+            {
+                _ = MessageBox.Show("The xml must be valid, if you want to select a basket for the job.");
+                return;
+            }
+
+            const string lblVanillaBasket = "Vanilla Baskets:";
+            const string lblCustomBasket = "Custom Baskets:";
+            Dictionary<string, string> modInfo = MultiInputDialog.Show("Select Basket (Pick Vanilla Or Custom)",
+                (lblVanillaBasket, [.. BasketsForm.VanillaBaskets.Value.Select(a => a.Id).OrderBy(a => a)], null),
+                (lblCustomBasket, [.. JobsForm.AllBaskets.Values.Select(a => a.Id.Replace("PREFIX_", "")).OrderBy(a => a)], null)
+            );
+
+            if (modInfo == null || modInfo.Count != 2)
+                return;
+
+            var basketName = modInfo[lblVanillaBasket];
+            if (string.IsNullOrWhiteSpace(basketName))
+            {
+                basketName = modInfo[lblCustomBasket] ?? "";
+                if (!string.IsNullOrWhiteSpace(basketName))
+                    basketName = $"PREFIX_{basketName}";
+            }
+
+            job.Basket ??= new Job.BasketObj();
+            job.Basket.Basket = basketName;
+
+            TxtJobXml.Text = job.SerializeJob();
+        }
+
         private void BtnSelectJobLocation_Click(object sender, EventArgs e)
         {
             var job = TryDeserializeJob(false);
@@ -54,10 +88,10 @@ namespace X4SectorCreator.Forms
             const string lblType = "Location Type:";
             const string lblCluster = "Location Cluster (only if type is cluster):";
             const string lblSector = "Location Sector (only if type is sector):";
-            Dictionary<string, string> modInfo = MultiInputDialog.Show("Mod information",
+            Dictionary<string, string> modInfo = MultiInputDialog.Show("Select Location",
                 (lblType, _typeLabels, jobSector != null ? "sector" : jobCluster != null ? "cluster" : "galaxy"),
-                (lblCluster, MainForm.Instance.AllClusters.Values.Select(a => a.Name).ToArray(), jobCluster?.Name),
-                (lblSector, MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).Select(a => a.Name).ToArray(), jobSector?.Name)
+                (lblCluster, MainForm.Instance.AllClusters.Values.Select(a => a.Name).OrderBy(a => a).ToArray(), jobCluster?.Name),
+                (lblSector, MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).Select(a => a.Name).OrderBy(a => a).ToArray(), jobSector?.Name)
             );
 
             if (modInfo == null || modInfo.Count != 3)
@@ -76,7 +110,7 @@ namespace X4SectorCreator.Forms
             // Create location if not exist yet
             job.Location ??= new Job.LocationObject();
 
-            switch(type)
+            switch (type)
             {
                 case "galaxy":
                     job.Location.Class = "galaxy";

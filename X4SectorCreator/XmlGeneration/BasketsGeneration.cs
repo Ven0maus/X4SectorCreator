@@ -5,7 +5,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class BasketsGeneration
     {
-        public static void Generate(string folder)
+        public static void Generate(string folder, string modPrefix)
         {
             if (JobsForm.AllBaskets.Count == 0) return;
 
@@ -13,19 +13,29 @@ namespace X4SectorCreator.XmlGeneration
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("diff",
-                    CollectBaskets()
+                    CollectBaskets(modPrefix)
                 )
             );
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/baskets.xml")));
         }
 
-        private static XElement CollectBaskets()
+        private static XElement CollectBaskets(string modPrefix)
         {
             var addElement = new XElement("add", new XAttribute("sel", "//baskets"));
 
             foreach (var basket in JobsForm.AllBaskets)
             {
+                var originalId = basket.Value.Id;
+
+                // Replace prefix
+                basket.Value.Id = basket.Value.Id.Replace("PREFIX", modPrefix);
+
+                // Serialize
                 var basketElementXml = basket.Value.SerializeBasket();
+
+                // Reset
+                basket.Value.Id = originalId;
+
                 var basketElement = XElement.Parse(basketElementXml);
                 addElement.Add(basketElement);
             }

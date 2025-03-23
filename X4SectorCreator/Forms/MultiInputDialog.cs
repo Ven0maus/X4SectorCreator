@@ -41,7 +41,7 @@ namespace X4SectorCreator.Forms
             {
                 Label lbl = new() { Text = label.label, Left = 10, Top = y, Width = maxLabelWidth };
                 Control ctrl;
-                if (label.values != null && label.values.Length > 0)
+                if (label.values != null)
                 {
                     var cmb = new ComboBox() { Left = maxLabelWidth + 10, Top = y, Width = textBoxWidth };
                     ctrl = cmb;

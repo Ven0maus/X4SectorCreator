@@ -21,7 +21,7 @@ namespace X4SectorCreator.Forms
                 _basket = value;
                 if (_basket != null)
                 {
-                    TxtName.Text = _basket.Id;
+                    TxtName.Text = _basket.Id.Replace("PREFIX_", "");
                     _mscWares.ResetSelection();
                     _mscWares.Select(_basket.Wares.Wares.Select(a => a.Ware).ToArray());
                     BtnCreate.Text = "Update";
@@ -124,7 +124,7 @@ namespace X4SectorCreator.Forms
 
             if (BtnCreate.Text == "Update")
             {
-                Basket.Id = TxtName.Text;
+                Basket.Id = $"PREFIX_{TxtName.Text.ToLower()}";
                 Basket.Wares.Wares.Clear();
                 foreach (var ware in _mscWares.SelectedItems.Cast<string>())
                     Basket.Wares.Wares.Add(new Basket.WareObjects.WareObj { Ware = ware });
@@ -133,7 +133,7 @@ namespace X4SectorCreator.Forms
             {
                 var basket = new Basket
                 {
-                    Id = TxtName.Text,
+                    Id = $"PREFIX_{TxtName.Text.ToLower()}",
                     IsBaseGame = false,
                     Wares = new Basket.WareObjects()
                 };

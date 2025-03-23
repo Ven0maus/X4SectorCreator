@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Objects;
+﻿using System.Linq;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -7,14 +8,10 @@ namespace X4SectorCreator.Forms
         private BasketForm _basketForm;
         public BasketForm BasketForm => _basketForm != null && !_basketForm.IsDisposed ? _basketForm : (_basketForm = new BasketForm());
 
-        private readonly List<Basket> _vanillaBaskets = [];
-
-        public BasketsForm()
+        public static readonly Lazy<List<Basket>> VanillaBaskets = new(() =>
         {
-            InitializeComponent();
-
-            // Init baskets from config
             var vanillaBasketsPath = Path.Combine(Application.StartupPath, "Data/Mappings/vanilla_baskets.xml");
+            var list = new List<Basket>();
             if (File.Exists(vanillaBasketsPath))
             {
                 var xml = File.ReadAllText(vanillaBasketsPath);
@@ -22,9 +19,15 @@ namespace X4SectorCreator.Forms
                 foreach (var basket in baskets.BasketList)
                 {
                     basket.IsBaseGame = true;
-                    _vanillaBaskets.Add(basket);
+                    list.Add(basket);
                 }
             }
+            return list;
+        });
+
+        public BasketsForm()
+        {
+            InitializeComponent();
 
             // Set default
             CmbFilterOptions.SelectedItem = "Both";
@@ -38,7 +41,7 @@ namespace X4SectorCreator.Forms
             switch (option.ToLower())
             {
                 case "vanilla":
-                    foreach (var basket in _vanillaBaskets.OrderBy(a => a.Id))
+                    foreach (var basket in VanillaBaskets.Value.OrderBy(a => a.Id))
                         ListBaskets.Items.Add(basket);
                     break;
                 case "custom":
@@ -46,7 +49,7 @@ namespace X4SectorCreator.Forms
                         ListBaskets.Items.Add(basket);
                     break;
                 case "both":
-                    foreach (var basket in JobsForm.AllBaskets.Values.Concat(_vanillaBaskets).OrderBy(a => a.Id))
+                    foreach (var basket in JobsForm.AllBaskets.Values.Concat(VanillaBaskets.Value).OrderBy(a => a.Id))
                         ListBaskets.Items.Add(basket);
                     break;
             }
@@ -104,7 +107,7 @@ namespace X4SectorCreator.Forms
         private void BtnCopyToClipboard_Click(object sender, EventArgs e)
         {
             if (ListBaskets.SelectedItem is not Basket basket) return;
-            Clipboard.SetText(ListBaskets.SelectedItem.ToString());
+            Clipboard.SetText(basket.ToString());
         }
     }
 }
