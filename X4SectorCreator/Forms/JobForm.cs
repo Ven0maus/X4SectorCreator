@@ -17,6 +17,7 @@ namespace X4SectorCreator.Forms
                 if (_job != null)
                 {
                     TxtJobXml.Text = _job.SerializeJob();
+                    TxtJobXml.SelectionStart = TxtJobXml.Text.Length;
                 }
             }
         }
@@ -71,6 +72,7 @@ namespace X4SectorCreator.Forms
             job.Basket.Basket = basketName;
 
             TxtJobXml.Text = job.SerializeJob();
+            TxtJobXml.SelectionStart = TxtJobXml.Text.Length;
         }
 
         private void BtnSelectJobLocation_Click(object sender, EventArgs e)
@@ -146,6 +148,7 @@ namespace X4SectorCreator.Forms
             }
 
             TxtJobXml.Text = job.SerializeJob();
+            TxtJobXml.SelectionStart = TxtJobXml.Text.Length;
         }
 
         private static Cluster GetClusterFromJob(Job job)
