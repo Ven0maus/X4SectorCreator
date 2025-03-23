@@ -46,6 +46,7 @@
             label8 = new Label();
             BtnResetFilter = new Button();
             BtnBaskets = new Button();
+            label5 = new Label();
             SuspendLayout();
             // 
             // ListJobs
@@ -223,11 +224,22 @@
             BtnBaskets.UseVisualStyleBackColor = true;
             BtnBaskets.Click += BtnBaskets_Click;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 10F);
+            label5.Location = new Point(61, 15);
+            label5.Name = "label5";
+            label5.Size = new Size(377, 19);
+            label5.TabIndex = 21;
+            label5.Text = "(determines the amount and purpose of ships in the galaxy.)";
+            // 
             // JobsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(604, 440);
+            Controls.Add(label5);
             Controls.Add(BtnBaskets);
             Controls.Add(BtnResetFilter);
             Controls.Add(cmbSector);
@@ -275,5 +287,6 @@
         private Label label8;
         private Button BtnResetFilter;
         private Button BtnBaskets;
+        private Label label5;
     }
 }
