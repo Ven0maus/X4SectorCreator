@@ -305,6 +305,8 @@ namespace X4SectorCreator.Forms
 
                 // Remove also from jobs collection itself
                 AllJobs.Remove(job.Id);
+
+                UpdateAvailableFilterOptions();
             }
         }
 
