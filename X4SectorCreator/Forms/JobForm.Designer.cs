@@ -49,6 +49,7 @@
             // 
             // TxtJobXml
             // 
+            TxtJobXml.Font = new Font("Segoe UI", 10F);
             TxtJobXml.Location = new Point(8, 38);
             TxtJobXml.Multiline = true;
             TxtJobXml.Name = "TxtJobXml";

@@ -60,6 +60,7 @@
             // 
             // TxtExampleJob
             // 
+            TxtExampleJob.Font = new Font("Segoe UI", 10F);
             TxtExampleJob.Location = new Point(407, 36);
             TxtExampleJob.Multiline = true;
             TxtExampleJob.Name = "TxtExampleJob";

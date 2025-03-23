@@ -8,7 +8,7 @@ namespace X4SectorCreator.Forms
         public BasketForm BasketForm => _basketForm != null && !_basketForm.IsDisposed ? _basketForm : (_basketForm = new BasketForm());
 
         // Remember the selected option through app use
-        private static string _selectedFilterOption = "Both";
+        private static string _selectedFilterOption = "Custom";
 
         public static readonly Lazy<List<Basket>> VanillaBaskets = new(() =>
         {
