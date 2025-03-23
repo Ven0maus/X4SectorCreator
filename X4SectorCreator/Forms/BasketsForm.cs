@@ -35,7 +35,7 @@ namespace X4SectorCreator.Forms
             CmbFilterOptions.SelectedItem = _selectedFilterOption;
         }
 
-        public void UpdateBaskets()
+        public void UpdateBaskets(Basket selected = null)
         {
             var option = CmbFilterOptions.SelectedItem as string;
             _selectedFilterOption = option;
@@ -57,7 +57,7 @@ namespace X4SectorCreator.Forms
                     break;
             }
 
-            ListBaskets.SelectedItem = null;
+            ListBaskets.SelectedItem = selected;
         }
 
         private void BtnNewBasket_Click(object sender, EventArgs e)
@@ -110,7 +110,7 @@ namespace X4SectorCreator.Forms
         private void BtnCopyToClipboard_Click(object sender, EventArgs e)
         {
             if (ListBaskets.SelectedItem is not Basket basket) return;
-            Clipboard.SetText(basket.ToString());
+            Clipboard.SetText(basket.IsBaseGame ? basket.ToString() : $"PREFIX_{basket.ToString()}");
         }
     }
 }

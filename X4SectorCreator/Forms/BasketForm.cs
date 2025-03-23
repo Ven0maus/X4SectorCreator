@@ -122,6 +122,7 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            Basket selected = Basket;
             if (BtnCreate.Text == "Update")
             {
                 Basket.Id = $"PREFIX_{TxtName.Text.ToLower()}";
@@ -141,11 +142,12 @@ namespace X4SectorCreator.Forms
                 basket.Wares.Wares = [];
                 foreach (var ware in _mscWares.SelectedItems.Cast<string>())
                     basket.Wares.Wares.Add(new Basket.WareObjects.WareObj { Ware = ware });
+                selected = basket;
 
                 JobsForm.AllBaskets.Add(basket.Id, basket);
             }
 
-            BasketsForm.UpdateBaskets();
+            BasketsForm.UpdateBaskets(selected);
             Close();
         }
 
