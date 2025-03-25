@@ -4,20 +4,20 @@ using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
-    public partial class JobForm : Form
+    public partial class FactoryForm : Form
     {
-        private Job _job;
+        private Factory _factory;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Job Job
+        public Factory Factory
         {
-            get => _job;
+            get => _factory;
             set
             {
-                _job = value;
-                if (_job != null)
+                _factory = value;
+                if (_factory != null)
                 {
-                    TxtJobXml.Text = _job.SerializeJob();
-                    TxtJobXml.SelectionStart = TxtJobXml.Text.Length;
+                    TxtFactoryXml.Text = _factory.SerializeFactory();
+                    TxtFactoryXml.SelectionStart = TxtFactoryXml.Text.Length;
                 }
             }
         }
@@ -36,17 +36,17 @@ namespace X4SectorCreator.Forms
 
         private static readonly string[] _typeLabels = ["galaxy", "cluster", "sector"];
 
-        public JobForm()
+        public FactoryForm()
         {
             InitializeComponent();
         }
 
         private void BtnSelectFaction_Click(object sender, EventArgs e)
         {
-            var job = TryDeserializeJob(false);
-            if (job == null)
+            var factory = TryDeserializeFactory(false);
+            if (factory == null)
             {
-                _ = MessageBox.Show("The xml must be valid, if you want to select a faction for the job.");
+                _ = MessageBox.Show("The xml must be valid, if you want to select a faction for the factory.");
                 return;
             }
 
@@ -67,78 +67,38 @@ namespace X4SectorCreator.Forms
             }
 
             // Set faction on various objects
-            if (job.Category != null)
-                job.Category.Faction = factionName;
-            if (job.Location != null)
-                job.Location.Faction = factionName;
-            if (job.Ship?.Select != null)
-                job.Ship.Select.Faction = factionName;
-            if (job.Ship?.Owner != null)
-                job.Ship.Owner.Exact = factionName;
+            if (factory.Category != null)
+                factory.Category.Faction = factionName;
+            if (factory.Location != null)
+                factory.Location.Faction = factionName;
+            if (factory.Ship?.Select != null)
+                factory.Ship.Select.Faction = factionName;
+            if (factory.Ship?.Owner != null)
+                factory.Ship.Owner.Exact = factionName;
 
-            TxtJobXml.Text = job.SerializeJob();
-            TxtJobXml.SelectionStart = TxtJobXml.Text.Length;
+            TxtFactoryXml.Text = factory.SerializeFactory();
+            TxtFactoryXml.SelectionStart = TxtFactoryXml.Text.Length;
         }
 
-        private void BtnSelectBasket_Click(object sender, EventArgs e)
+        private void BtnSelectFactoryLocation_Click(object sender, EventArgs e)
         {
-            var job = TryDeserializeJob(false);
-            if (job == null)
+            var factory = TryDeserializeFactory(false);
+            if (factory == null)
             {
-                _ = MessageBox.Show("The xml must be valid, if you want to select a basket for the job.");
+                _ = MessageBox.Show("The xml must be valid, if you want to select a location for the factory.");
                 return;
             }
 
-            const string lblVanillaBasket = "Vanilla Baskets:";
-            const string lblCustomBasket = "Custom Baskets:";
-            Dictionary<string, string> modInfo = MultiInputDialog.Show("Select Basket (Pick Vanilla Or Custom)",
-                (lblVanillaBasket, [.. BasketsForm.VanillaBaskets.Value.Select(a => a.Id).OrderBy(a => a)], null),
-                (lblCustomBasket, [.. JobsForm.AllBaskets.Values.Select(a => a.Id.Replace("PREFIX_", "")).OrderBy(a => a)], null)
-            );
-
-            if (modInfo == null || modInfo.Count != 2)
-                return;
-
-            var basketName = modInfo[lblVanillaBasket];
-            if (string.IsNullOrWhiteSpace(basketName))
-            {
-                basketName = modInfo[lblCustomBasket] ?? "";
-                if (!string.IsNullOrWhiteSpace(basketName))
-                    basketName = $"PREFIX_{basketName}";
-            }
-
-            if (string.IsNullOrWhiteSpace(basketName))
-            {
-                _ = MessageBox.Show("Please select a basket.");
-                return;
-            }
-
-            job.Basket ??= new Job.BasketObj();
-            job.Basket.Basket = basketName;
-
-            TxtJobXml.Text = job.SerializeJob();
-            TxtJobXml.SelectionStart = TxtJobXml.Text.Length;
-        }
-
-        private void BtnSelectJobLocation_Click(object sender, EventArgs e)
-        {
-            var job = TryDeserializeJob(false);
-            if (job == null)
-            {
-                _ = MessageBox.Show("The xml must be valid, if you want to select a location for the job.");
-                return;
-            }
-
-            var jobCluster = GetClusterFromJob(job);
-            var jobSector = GetSectorFromJob(job, jobCluster);
+            var factoryCluster = GetClusterFromFactory(factory);
+            var factorySector = GetSectorFromFactory(factory, factoryCluster);
 
             const string lblType = "Location Type:";
             const string lblCluster = "Location Cluster (only if type is cluster):";
             const string lblSector = "Location Sector (only if type is sector):";
             Dictionary<string, string> modInfo = MultiInputDialog.Show("Select Location",
-                (lblType, _typeLabels, jobSector != null ? "sector" : jobCluster != null ? "cluster" : "galaxy"),
-                (lblCluster, MainForm.Instance.AllClusters.Values.Select(a => a.Name).OrderBy(a => a).ToArray(), jobCluster?.Name),
-                (lblSector, MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).Select(a => a.Name).OrderBy(a => a).ToArray(), jobSector?.Name)
+                (lblType, _typeLabels, factorySector != null ? "sector" : factoryCluster != null ? "cluster" : "galaxy"),
+                (lblCluster, MainForm.Instance.AllClusters.Values.Select(a => a.Name).OrderBy(a => a).ToArray(), factoryCluster?.Name),
+                (lblSector, MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).Select(a => a.Name).OrderBy(a => a).ToArray(), factorySector?.Name)
             );
 
             if (modInfo == null || modInfo.Count != 3)
@@ -155,13 +115,13 @@ namespace X4SectorCreator.Forms
             var sectorName = modInfo[lblSector];
 
             // Create location if not exist yet
-            job.Location ??= new Job.LocationObject();
+            factory.Location ??= new Factory.LocationObject();
 
             switch (type)
             {
                 case "galaxy":
-                    job.Location.Class = "galaxy";
-                    job.Location.Macro = $"{GalaxySettingsForm.GalaxyName}_macro";
+                    factory.Location.Class = "galaxy";
+                    factory.Location.Macro = $"{GalaxySettingsForm.GalaxyName}_macro";
                     break;
                 case "cluster":
                     var clusterValue = MainForm.Instance.AllClusters.Values
@@ -171,8 +131,8 @@ namespace X4SectorCreator.Forms
                     if (clusterValue.IsBaseGame)
                         clusterCode = $"{clusterValue.BaseGameMapping}_macro";
 
-                    job.Location.Class = "cluster";
-                    job.Location.Macro = clusterCode;
+                    factory.Location.Class = "cluster";
+                    factory.Location.Macro = clusterCode;
                     break;
                 case "sector":
                     var sectorValue = MainForm.Instance.AllClusters.Values
@@ -187,20 +147,20 @@ namespace X4SectorCreator.Forms
                     else if (cluster.IsBaseGame)
                         sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}_macro";
 
-                    job.Location.Class = "sector";
-                    job.Location.Macro = sectorCode;
+                    factory.Location.Class = "sector";
+                    factory.Location.Macro = sectorCode;
                     break;
             }
 
-            TxtJobXml.Text = job.SerializeJob();
-            TxtJobXml.SelectionStart = TxtJobXml.Text.Length;
+            TxtFactoryXml.Text = factory.SerializeFactory();
+            TxtFactoryXml.SelectionStart = TxtFactoryXml.Text.Length;
         }
 
-        private static Cluster GetClusterFromJob(Job job)
+        private static Cluster GetClusterFromFactory(Factory factory)
         {
-            if (string.IsNullOrWhiteSpace(job.Location?.Macro)) return null;
+            if (string.IsNullOrWhiteSpace(factory.Location?.Macro)) return null;
 
-            string jobLocation = job.Location.Macro;
+            string factoryLocation = factory.Location.Macro;
             var allClusters = MainForm.Instance.AllClusters;
 
             foreach (var cluster in allClusters)
@@ -209,7 +169,7 @@ namespace X4SectorCreator.Forms
                 if (cluster.Value.IsBaseGame)
                     clusterCode = $"{cluster.Value.BaseGameMapping}_macro";
 
-                if (jobLocation.Equals(clusterCode, StringComparison.OrdinalIgnoreCase))
+                if (factoryLocation.Equals(clusterCode, StringComparison.OrdinalIgnoreCase))
                     return cluster.Value;
 
                 foreach (var sector in cluster.Value.Sectors)
@@ -220,7 +180,7 @@ namespace X4SectorCreator.Forms
                     else if (cluster.Value.IsBaseGame)
                         sectorCode = $"PREFIX_SE_c{cluster.Value.BaseGameMapping}_s{sector.Id}_macro";
 
-                    if (jobLocation.Equals(sectorCode, StringComparison.OrdinalIgnoreCase))
+                    if (factoryLocation.Equals(sectorCode, StringComparison.OrdinalIgnoreCase))
                         return cluster.Value;
                 }
             }
@@ -228,9 +188,9 @@ namespace X4SectorCreator.Forms
             return null;
         }
 
-        private static Sector GetSectorFromJob(Job job, Cluster cluster)
+        private static Sector GetSectorFromFactory(Factory factory, Cluster cluster)
         {
-            if (string.IsNullOrWhiteSpace(job.Location?.Macro) || cluster == null) return null;
+            if (string.IsNullOrWhiteSpace(factory.Location?.Macro) || cluster == null) return null;
 
             foreach (var sector in cluster.Sectors)
             {
@@ -240,7 +200,7 @@ namespace X4SectorCreator.Forms
                 else if (cluster.IsBaseGame)
                     sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}_macro";
 
-                if (job.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase))
+                if (factory.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase))
                     return sector;
             }
             return null;
@@ -250,36 +210,36 @@ namespace X4SectorCreator.Forms
         {
             try
             {
-                var job = TryDeserializeJob(true) ??
-                    throw new Exception("No valid job exists within xml structure.");
+                var factory = TryDeserializeFactory(true) ??
+                    throw new Exception("No valid factory exists within xml structure.");
 
                 if (!IsEditing)
                 {
-                    // If not editing, always validate job id
-                    if (JobsForm.AllJobs.ContainsKey(job.Id))
-                        throw new Exception($"A job with the id \"{job.Id}\" already exists, please use another id.");
+                    // If not editing, always validate factory id
+                    if (FactoriesForm.AllFactories.ContainsKey(factory.Id))
+                        throw new Exception($"A factory with the id \"{factory.Id}\" already exists, please use another id.");
 
-                    JobsForm.AllJobs.Add(job.Id, job);
+                    FactoriesForm.AllFactories.Add(factory.Id, factory);
                 }
                 else
                 {
-                    // If editing and job id was changed we need to validate
-                    if (Job.Id != job.Id)
+                    // If editing and factory id was changed we need to validate
+                    if (Factory.Id != factory.Id)
                     {
-                        if (JobsForm.AllJobs.ContainsKey(job.Id))
-                            throw new Exception($"A job with the id \"{job.Id}\" already exists, please use another id.");
+                        if (FactoriesForm.AllFactories.ContainsKey(factory.Id))
+                            throw new Exception($"A factory with the id \"{factory.Id}\" already exists, please use another id.");
                     }
 
-                    // Remove old job
-                    JobsForm.AllJobs.Remove(Job.Id);
-                    // Replace with new job
-                    JobsForm.AllJobs.Add(job.Id, job);
+                    // Remove old factory
+                    FactoriesForm.AllFactories.Remove((string)Factory.Id);
+                    // Replace with new factory
+                    FactoriesForm.AllFactories.Add(factory.Id, factory);
                 }
 
-                if (MainForm.Instance.JobsForm.Visible)
+                if (MainForm.Instance.FactoriesForm.Visible)
                 {
-                    MainForm.Instance.JobsForm.UpdateAvailableFilterOptions();
-                    MainForm.Instance.JobsForm.ApplyCurrentFilter();
+                    MainForm.Instance.FactoriesForm.UpdateAvailableFilterOptions();
+                    MainForm.Instance.FactoriesForm.ApplyCurrentFilter();
                 }
                 Close();
             }
@@ -294,11 +254,11 @@ namespace X4SectorCreator.Forms
             Close();
         }
 
-        private Job TryDeserializeJob(bool throwException)
+        private Factory TryDeserializeFactory(bool throwException)
         {
             try
             {
-                return Job.DeserializeJob(TxtJobXml.Text);
+                return Factory.DeserializeFactory(TxtFactoryXml.Text);
             }
             catch (Exception)
             {

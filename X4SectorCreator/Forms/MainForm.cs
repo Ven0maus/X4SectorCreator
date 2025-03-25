@@ -22,6 +22,7 @@ namespace X4SectorCreator
         private VersionUpdateForm _versionUpdateForm;
         private StationForm _stationForm;
         private JobsForm _jobsForm;
+        private FactoriesForm _factoriesForm;
 
         private string _currentX4Version;
 
@@ -47,6 +48,7 @@ namespace X4SectorCreator
             : (_versionUpdateForm = new VersionUpdateForm());
         public StationForm StationForm => _stationForm != null && !_stationForm.IsDisposed ? _stationForm : (_stationForm = new StationForm());
         public JobsForm JobsForm => _jobsForm != null && !_jobsForm.IsDisposed ? _jobsForm : (_jobsForm = new JobsForm());
+        public FactoriesForm FactoriesForm => _factoriesForm != null && !_factoriesForm.IsDisposed ? _factoriesForm : (_factoriesForm = new FactoriesForm());
 
         public readonly Dictionary<string, string> BackgroundVisualMapping;
         public readonly Dictionary<string, string> DlcMappings;
@@ -1651,7 +1653,8 @@ namespace X4SectorCreator
         #region Products
         private void BtnProducts_Click(object sender, EventArgs e)
         {
-            // TODO
+            FactoriesForm.Initialize();
+            FactoriesForm.Show();
         }
         #endregion
     }
