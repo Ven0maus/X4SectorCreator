@@ -368,7 +368,7 @@
             BtnJobs.Name = "BtnJobs";
             BtnJobs.Size = new Size(156, 31);
             BtnJobs.TabIndex = 48;
-            BtnJobs.Text = "Jobs";
+            BtnJobs.Text = "Custom Jobs";
             BtnJobs.UseVisualStyleBackColor = true;
             BtnJobs.Click += BtnJobs_Click;
             // 
@@ -378,7 +378,7 @@
             BtnFactories.Name = "BtnFactories";
             BtnFactories.Size = new Size(156, 31);
             BtnFactories.TabIndex = 49;
-            BtnFactories.Text = "Factories";
+            BtnFactories.Text = "Custom Factories";
             BtnFactories.UseVisualStyleBackColor = true;
             BtnFactories.Click += BtnFactories_Click;
             // 
