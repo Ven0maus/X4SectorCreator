@@ -572,7 +572,7 @@ namespace X4SectorCreator
             }
         }
 
-        private void SetDetailsText(Cluster cluster, Sector sector)
+        public void SetDetailsText(Cluster cluster, Sector sector)
         {
             StringBuilder sb = new();
             _ = sb.Append($"[{cluster.Name}]");
@@ -587,6 +587,11 @@ namespace X4SectorCreator
                 _ = sb.AppendLine($"Sunlight: {(int)(sector.Sunlight * 100f)}%");
                 _ = sb.AppendLine($"Economy: {(int)(sector.Economy * 100f)}%");
                 _ = sb.AppendLine($"Security: {(int)(sector.Security * 100f)}%");
+
+                // Show ownership
+                SetOwnershipInDetails(sector, sb);
+
+                // Random anomalies
                 if (!sector.AllowRandomAnomalies)
                 {
                     _ = sb.AppendLine("No random anomalies");
@@ -609,6 +614,41 @@ namespace X4SectorCreator
                 }
             }
             LblDetails.Text = sb.ToString();
+        }
+
+        private static void SetOwnershipInDetails(Sector sector, StringBuilder sb)
+        {
+            var factions = sector.Zones.SelectMany(a => a.Stations)
+                .Select(a => a.Faction)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            if (sector.IsBaseGame)
+            {
+                if (sector.Owner.Equals("None", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (factions.Count == 1)
+                        _ = sb.AppendLine($"Ownership: {factions.First()}");
+                    else if (factions.Count > 1)
+                        _ = sb.AppendLine($"Ownership: (cannot be determined)");
+                    else
+                        _ = sb.AppendLine($"Ownership: ownerless");
+                }
+                else
+                {
+                    if (factions.Count == 0 || (factions.Count == 1 && factions.First().Equals(sector.Owner, StringComparison.OrdinalIgnoreCase)))
+                        _ = sb.AppendLine($"Ownership: {sector.Owner}");
+                    else
+                        _ = sb.AppendLine($"Ownership: (cannot be determined)");
+                }
+            }
+            else
+            {
+                if (factions.Count == 1)
+                    _ = sb.AppendLine($"Ownership: {factions.First()}");
+                else if (factions.Count > 1)
+                    _ = sb.AppendLine($"Ownership: (cannot be determined)");
+                else
+                    _ = sb.AppendLine($"Ownership: ownerless");
+            }
         }
 
         #region Configuration
@@ -1619,6 +1659,9 @@ namespace X4SectorCreator
             index--;
             index = Math.Max(0, index);
             ListStations.SelectedItem = index >= 0 && ListStations.Items.Count > 0 ? ListStations.Items[index] : null;
+
+            // Set details
+            SetDetailsText(cluster, sector);
         }
 
         private void ListStations_DoubleClick(object sender, EventArgs e)

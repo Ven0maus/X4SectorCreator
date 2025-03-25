@@ -179,6 +179,7 @@ namespace X4SectorCreator.Forms
                     break;
             }
 
+            MainForm.Instance.SetDetailsText(Cluster, Sector);
             Close();
         }
 
