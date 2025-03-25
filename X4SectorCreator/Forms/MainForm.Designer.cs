@@ -58,12 +58,9 @@
             ListStations = new ListBox();
             label2 = new Label();
             BtnRemoveStation = new Button();
-            BtnNewCustomFaction = new Button();
-            ListCustomFactions = new ListBox();
-            label3 = new Label();
-            BtnRemoveCustomFaction = new Button();
             BtnJobs = new Button();
             BtnFactories = new Button();
+            BtnCustomFactions = new Button();
             SuspendLayout();
             // 
             // BtnRemoveCluster
@@ -152,7 +149,7 @@
             BtnGenerateDiffs.Name = "BtnGenerateDiffs";
             BtnGenerateDiffs.Size = new Size(318, 23);
             BtnGenerateDiffs.TabIndex = 18;
-            BtnGenerateDiffs.Text = "Generate XML";
+            BtnGenerateDiffs.Text = "Generate MOD";
             BtnGenerateDiffs.UseVisualStyleBackColor = true;
             BtnGenerateDiffs.Click += BtnGenerateDiffs_Click;
             // 
@@ -217,9 +214,9 @@
             // 
             // BtnExportConfig
             // 
-            BtnExportConfig.Location = new Point(464, 10);
+            BtnExportConfig.Location = new Point(336, 10);
             BtnExportConfig.Name = "BtnExportConfig";
-            BtnExportConfig.Size = new Size(89, 31);
+            BtnExportConfig.Size = new Size(156, 31);
             BtnExportConfig.TabIndex = 29;
             BtnExportConfig.Text = "Export Config";
             BtnExportConfig.UseVisualStyleBackColor = true;
@@ -227,9 +224,9 @@
             // 
             // BtnImportConfig
             // 
-            BtnImportConfig.Location = new Point(559, 10);
+            BtnImportConfig.Location = new Point(498, 10);
             BtnImportConfig.Name = "BtnImportConfig";
-            BtnImportConfig.Size = new Size(95, 31);
+            BtnImportConfig.Size = new Size(156, 31);
             BtnImportConfig.TabIndex = 30;
             BtnImportConfig.Text = "Import Config";
             BtnImportConfig.UseVisualStyleBackColor = true;
@@ -247,9 +244,9 @@
             // 
             // BtnReset
             // 
-            BtnReset.Location = new Point(366, 10);
+            BtnReset.Location = new Point(174, 10);
             BtnReset.Name = "BtnReset";
-            BtnReset.Size = new Size(92, 31);
+            BtnReset.Size = new Size(156, 31);
             BtnReset.TabIndex = 32;
             BtnReset.Text = "Reset All";
             BtnReset.UseVisualStyleBackColor = true;
@@ -365,49 +362,11 @@
             BtnRemoveStation.UseVisualStyleBackColor = true;
             BtnRemoveStation.Click += BtnRemoveStation_Click;
             // 
-            // BtnNewCustomFaction
-            // 
-            BtnNewCustomFaction.Enabled = false;
-            BtnNewCustomFaction.Location = new Point(498, 482);
-            BtnNewCustomFaction.Name = "BtnNewCustomFaction";
-            BtnNewCustomFaction.Size = new Size(75, 23);
-            BtnNewCustomFaction.TabIndex = 47;
-            BtnNewCustomFaction.Text = "New";
-            BtnNewCustomFaction.UseVisualStyleBackColor = true;
-            // 
-            // ListCustomFactions
-            // 
-            ListCustomFactions.FormattingEnabled = true;
-            ListCustomFactions.Location = new Point(498, 307);
-            ListCustomFactions.Name = "ListCustomFactions";
-            ListCustomFactions.Size = new Size(156, 169);
-            ListCustomFactions.TabIndex = 46;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 15F);
-            label3.Location = new Point(498, 276);
-            label3.Name = "label3";
-            label3.Size = new Size(129, 28);
-            label3.TabIndex = 45;
-            label3.Text = "Coming soon";
-            // 
-            // BtnRemoveCustomFaction
-            // 
-            BtnRemoveCustomFaction.Enabled = false;
-            BtnRemoveCustomFaction.Location = new Point(579, 482);
-            BtnRemoveCustomFaction.Name = "BtnRemoveCustomFaction";
-            BtnRemoveCustomFaction.Size = new Size(75, 23);
-            BtnRemoveCustomFaction.TabIndex = 44;
-            BtnRemoveCustomFaction.Text = "Remove";
-            BtnRemoveCustomFaction.UseVisualStyleBackColor = true;
-            // 
             // BtnJobs
             // 
-            BtnJobs.Location = new Point(174, 10);
+            BtnJobs.Location = new Point(498, 307);
             BtnJobs.Name = "BtnJobs";
-            BtnJobs.Size = new Size(90, 31);
+            BtnJobs.Size = new Size(156, 31);
             BtnJobs.TabIndex = 48;
             BtnJobs.Text = "Jobs";
             BtnJobs.UseVisualStyleBackColor = true;
@@ -415,25 +374,32 @@
             // 
             // BtnFactories
             // 
-            BtnFactories.Location = new Point(271, 10);
+            BtnFactories.Location = new Point(498, 344);
             BtnFactories.Name = "BtnFactories";
-            BtnFactories.Size = new Size(87, 31);
+            BtnFactories.Size = new Size(156, 31);
             BtnFactories.TabIndex = 49;
             BtnFactories.Text = "Factories";
             BtnFactories.UseVisualStyleBackColor = true;
             BtnFactories.Click += BtnFactories_Click;
+            // 
+            // BtnCustomFactions
+            // 
+            BtnCustomFactions.Enabled = false;
+            BtnCustomFactions.Location = new Point(498, 381);
+            BtnCustomFactions.Name = "BtnCustomFactions";
+            BtnCustomFactions.Size = new Size(156, 31);
+            BtnCustomFactions.TabIndex = 50;
+            BtnCustomFactions.Text = "Custom Factions";
+            BtnCustomFactions.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(661, 570);
+            Controls.Add(BtnCustomFactions);
             Controls.Add(BtnFactories);
             Controls.Add(BtnJobs);
-            Controls.Add(BtnNewCustomFaction);
-            Controls.Add(ListCustomFactions);
-            Controls.Add(label3);
-            Controls.Add(BtnRemoveCustomFaction);
             Controls.Add(BtnNewStation);
             Controls.Add(ListStations);
             Controls.Add(label2);
@@ -505,11 +471,8 @@
         internal ListBox ListStations;
         private Label label2;
         private Button BtnRemoveStation;
-        private Button BtnNewCustomFaction;
-        internal ListBox ListCustomFactions;
-        private Label label3;
-        private Button BtnRemoveCustomFaction;
         private Button BtnJobs;
         private Button BtnFactories;
+        private Button BtnCustomFactions;
     }
 }
