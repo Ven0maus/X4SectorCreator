@@ -74,7 +74,7 @@ namespace X4SectorCreator.Forms
             // Set owner faction
             factory.Owner = owner;
             factory.Location ??= new Factory.LocationObj();
-            factory.Location.Faction = factionSpaceName;
+            factory.Location.Faction = "[" + factionSpaceName + "]";
 
             TxtFactoryXml.Text = factory.SerializeFactory();
             TxtFactoryXml.SelectionStart = TxtFactoryXml.Text.Length;
