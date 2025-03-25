@@ -112,7 +112,7 @@ namespace X4SectorCreator.Objects
 
         public string SerializeJob()
         {
-            // Create an XmlSerializer for the Jobs type
+            // Create an XmlSerializer for the Job type
             XmlSerializer serializer = new(typeof(Job));
 
             // Create a StringWriter to hold the serialized XML string
@@ -131,7 +131,7 @@ namespace X4SectorCreator.Objects
                 XmlSerializerNamespaces namespaces = new();
                 namespaces.Add("", "");  // Add an empty namespace
 
-                // Serialize the Jobs object to the XmlWriter
+                // Serialize the Job object to the XmlWriter
                 serializer.Serialize(writer, this, namespaces);
             }
 

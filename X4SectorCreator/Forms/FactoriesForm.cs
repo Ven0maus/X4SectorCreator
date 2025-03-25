@@ -46,7 +46,7 @@ namespace X4SectorCreator.Forms
 
             // Factions
             cmbFaction.Items.Clear();
-            foreach (var value in AllFactories.Select(a => a.Value.Ship?.Owner?.Exact).Distinct(StringComparer.OrdinalIgnoreCase).Where(a => a != null).OrderBy(a => a))
+            foreach (var value in AllFactories.Select(a => a.Value.Location?.Faction).Where(a => a != null).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(a => a))
                 cmbFaction.Items.Add(value);
             cmbFaction.Items.Insert(0, "Any");
 

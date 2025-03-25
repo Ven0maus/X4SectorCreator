@@ -47,7 +47,7 @@ namespace X4SectorCreator.Forms
                 if (File.Exists(godFilePath))
                 {
                     var xml = File.ReadAllText(godFilePath);
-                    Factories factories = Factories.DeserializeJobs(xml);
+                    Factories factories = Factories.DeserializeFactories(xml);
                     foreach (var factory in factories.FactoryList)
                     {
                         factory.TemplateDirectory = templateName;

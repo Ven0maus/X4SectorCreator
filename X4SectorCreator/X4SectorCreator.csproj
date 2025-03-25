@@ -41,12 +41,19 @@
     <None Update="Data\Mappings\vanilla_connection_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\TemplateFactories\Vanilla\god.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\TemplateJobs\Vanilla\jobs.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="version.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\TemplateFactories\Vanilla\" />
   </ItemGroup>
 
 </Project>

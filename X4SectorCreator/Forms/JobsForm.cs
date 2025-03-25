@@ -57,19 +57,19 @@ namespace X4SectorCreator.Forms
 
             // Factions
             cmbFaction.Items.Clear();
-            foreach (var value in AllJobs.Select(a => a.Value.Ship?.Owner?.Exact).Distinct(StringComparer.OrdinalIgnoreCase).Where(a => a != null).OrderBy(a => a))
+            foreach (var value in AllJobs.Select(a => a.Value.Ship?.Owner?.Exact).Where(a => a != null).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(a => a))
                 cmbFaction.Items.Add(value);
             cmbFaction.Items.Insert(0, "Any");
 
             // Baskets
             cmbBasket.Items.Clear();
-            foreach (var basket in AllJobs.Select(a => a.Value.Basket?.Basket).Distinct(StringComparer.OrdinalIgnoreCase).Where(a => a != null).OrderBy(a => a))
+            foreach (var basket in AllJobs.Select(a => a.Value.Basket?.Basket).Where(a => a != null).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(a => a))
                 cmbBasket.Items.Add(basket);
             cmbBasket.Items.Insert(0, "Any");
 
             // Orders
             cmbOrder.Items.Clear();
-            foreach (var value in AllJobs.Select(a => a.Value.Orders?.Order?.Order).Distinct(StringComparer.OrdinalIgnoreCase).Where(a => a != null).OrderBy(a => a))
+            foreach (var value in AllJobs.Select(a => a.Value.Orders?.Order?.Order).Where(a => a != null).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(a => a))
                 cmbOrder.Items.Add(value);
             cmbOrder.Items.Insert(0, "Any");
 

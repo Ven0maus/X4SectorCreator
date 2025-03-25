@@ -67,14 +67,8 @@ namespace X4SectorCreator.Forms
             }
 
             // Set faction on various objects
-            if (factory.Category != null)
-                factory.Category.Faction = factionName;
             if (factory.Location != null)
                 factory.Location.Faction = factionName;
-            if (factory.Ship?.Select != null)
-                factory.Ship.Select.Faction = factionName;
-            if (factory.Ship?.Owner != null)
-                factory.Ship.Owner.Exact = factionName;
 
             TxtFactoryXml.Text = factory.SerializeFactory();
             TxtFactoryXml.SelectionStart = TxtFactoryXml.Text.Length;
@@ -115,7 +109,7 @@ namespace X4SectorCreator.Forms
             var sectorName = modInfo[lblSector];
 
             // Create location if not exist yet
-            factory.Location ??= new Factory.LocationObject();
+            factory.Location ??= new Factory.LocationObj();
 
             switch (type)
             {
