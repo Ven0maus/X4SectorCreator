@@ -202,10 +202,10 @@ namespace X4SectorCreator.Forms
         private void BtnCreateCustom_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitializedAndValid && FactoryForm.Value.Visible) return;
+            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible) return;
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitializedAndValid && FactoryTemplatesForm.Value.Visible) return;
+            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible) return;
 
             FactoryForm.Value.Show();
         }
@@ -213,10 +213,10 @@ namespace X4SectorCreator.Forms
         private void BtnCreateFromTemplate_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitializedAndValid && FactoryForm.Value.Visible) return;
+            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible) return;
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitializedAndValid && FactoryTemplatesForm.Value.Visible) return;
+            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible) return;
 
             FactoryTemplatesForm.Value.ProductForm = FactoryForm.Value;
             FactoryTemplatesForm.Value.Show();
@@ -225,7 +225,7 @@ namespace X4SectorCreator.Forms
         private void BtnRemoveFactory_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitializedAndValid && FactoryForm.Value.Visible) return;
+            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible) return;
 
             if (ListFactories.SelectedItem is Factory factory)
             {
@@ -249,10 +249,10 @@ namespace X4SectorCreator.Forms
             if (ListFactories.SelectedItem is not Factory factory) return;
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitializedAndValid && FactoryTemplatesForm.Value.Visible) return;
+            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible) return;
 
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitializedAndValid && FactoryForm.Value.Visible) return;
+            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible) return;
 
             FactoryForm.Value.IsEditing = true;
             FactoryForm.Value.Factory = factory;
