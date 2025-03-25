@@ -50,31 +50,34 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            const string lblFaction = "Factions:";
+            const string lblOwner = "Owner:";
+            const string lblFactionSpace = "Spawn in space owned by:";
             Dictionary<string, string> modInfo = MultiInputDialog.Show("Select Faction",
-                (lblFaction, [.. MainForm.Instance.FactionColorMapping.Keys.OrderBy(a => a)], null)
+                (lblOwner, [.. MainForm.Instance.FactionColorMapping.Keys.OrderBy(a => a)], null),
+                (lblFactionSpace, [.. MainForm.Instance.FactionColorMapping.Keys.OrderBy(a => a)], null)
             );
 
-            if (modInfo == null || modInfo.Count != 1)
+            if (modInfo == null || modInfo.Count != 2)
                 return;
 
-            var factionName = (modInfo[lblFaction] ?? "").ToLower();
+            var owner = (modInfo[lblOwner] ?? "").ToLower();
+            var factionSpaceName = (modInfo[lblFactionSpace] ?? "").ToLower();
 
-            if (string.IsNullOrWhiteSpace(factionName))
+            if (string.IsNullOrWhiteSpace(owner) || string.IsNullOrWhiteSpace(factionSpaceName))
             {
-                _ = MessageBox.Show("Please select a faction.");
+                _ = MessageBox.Show("Please fill in the faction fields.");
                 return;
             }
 
             // Set faction on various objects
             if (job.Category != null)
-                job.Category.Faction = factionName;
+                job.Category.Faction = owner;
             if (job.Location != null)
-                job.Location.Faction = factionName;
+                job.Location.Faction = factionSpaceName;
             if (job.Ship?.Select != null)
-                job.Ship.Select.Faction = factionName;
+                job.Ship.Select.Faction = owner;
             if (job.Ship?.Owner != null)
-                job.Ship.Owner.Exact = factionName;
+                job.Ship.Owner.Exact = owner;
 
             TxtJobXml.Text = job.SerializeJob();
             TxtJobXml.SelectionStart = TxtJobXml.Text.Length;

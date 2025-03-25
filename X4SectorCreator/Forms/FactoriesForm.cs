@@ -164,15 +164,29 @@ namespace X4SectorCreator.Forms
 
             if (comboBox == cmbFaction)
             {
-
+                var owner = cmbFaction.SelectedItem as string;
+                factories.RemoveAll(a => string.IsNullOrWhiteSpace(a.Owner) || !a.Owner.Equals(owner, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbCluster)
             {
-
+                var cluster = cmbCluster.SelectedItem as Cluster;
+                string clusterCode = $"PREFIX_CL_c{cluster.Id:D3}";
+                if (cluster.IsBaseGame)
+                    clusterCode = $"{cluster.BaseGameMapping}";
+                factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbSector)
             {
+                var sector = cmbSector.SelectedItem as Sector;
+                var cluster = cmbCluster.SelectedItem as Cluster;
 
+                string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
+                if (cluster.IsBaseGame && sector.IsBaseGame)
+                    sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
+                else if (cluster.IsBaseGame)
+                    sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
+
+                factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
             }
             else
             {
