@@ -389,7 +389,7 @@
             BtnCustomFactions.Name = "BtnCustomFactions";
             BtnCustomFactions.Size = new Size(156, 31);
             BtnCustomFactions.TabIndex = 50;
-            BtnCustomFactions.Text = "Custom Factions";
+            BtnCustomFactions.Text = "Coming soon";
             BtnCustomFactions.UseVisualStyleBackColor = true;
             // 
             // MainForm
