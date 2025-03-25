@@ -1647,5 +1647,12 @@ namespace X4SectorCreator
         [GeneratedRegex(@"[^a-zA-Z0-9_]")]
         private static partial Regex SanitizeNonAlphaNumeric();
         #endregion
+
+        #region Products
+        private void BtnProducts_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
+        #endregion
     }
 }

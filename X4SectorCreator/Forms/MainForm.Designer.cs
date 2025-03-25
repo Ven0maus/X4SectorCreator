@@ -421,6 +421,7 @@
             BtnProducts.TabIndex = 49;
             BtnProducts.Text = "Products";
             BtnProducts.UseVisualStyleBackColor = true;
+            BtnProducts.Click += BtnProducts_Click;
             // 
             // MainForm
             // 
