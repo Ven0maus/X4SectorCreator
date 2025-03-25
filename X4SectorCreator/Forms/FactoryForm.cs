@@ -236,10 +236,10 @@ namespace X4SectorCreator.Forms
                     FactoriesForm.AllFactories.Add(factory.Id, factory);
                 }
 
-                if (MainForm.Instance.FactoriesForm.Visible)
+                if (MainForm.Instance.FactoriesForm.IsInitialized && MainForm.Instance.FactoriesForm.Value.Visible)
                 {
-                    MainForm.Instance.FactoriesForm.UpdateAvailableFilterOptions();
-                    MainForm.Instance.FactoriesForm.ApplyCurrentFilter();
+                    MainForm.Instance.FactoriesForm.Value.UpdateAvailableFilterOptions();
+                    MainForm.Instance.FactoriesForm.Value.ApplyCurrentFilter();
                 }
                 Close();
             }

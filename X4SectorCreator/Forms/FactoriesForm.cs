@@ -6,7 +6,6 @@ namespace X4SectorCreator.Forms
     public partial class FactoriesForm : Form
     {
         public static readonly Dictionary<string, Factory> AllFactories = new(StringComparer.OrdinalIgnoreCase);
-
         public readonly LazyEvaluated<FactoryForm> FactoryForm = new(() => new FactoryForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactoryTemplatesForm> FactoryTemplatesForm = new(() => new FactoryTemplatesForm(), a => !a.IsDisposed);
 

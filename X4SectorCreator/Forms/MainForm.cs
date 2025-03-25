@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 using X4SectorCreator.XmlGeneration;
 using Region = X4SectorCreator.Objects.Region;
@@ -22,7 +23,6 @@ namespace X4SectorCreator
         private VersionUpdateForm _versionUpdateForm;
         private StationForm _stationForm;
         private JobsForm _jobsForm;
-        private FactoriesForm _factoriesForm;
 
         private string _currentX4Version;
 
@@ -48,7 +48,7 @@ namespace X4SectorCreator
             : (_versionUpdateForm = new VersionUpdateForm());
         public StationForm StationForm => _stationForm != null && !_stationForm.IsDisposed ? _stationForm : (_stationForm = new StationForm());
         public JobsForm JobsForm => _jobsForm != null && !_jobsForm.IsDisposed ? _jobsForm : (_jobsForm = new JobsForm());
-        public FactoriesForm FactoriesForm => _factoriesForm != null && !_factoriesForm.IsDisposed ? _factoriesForm : (_factoriesForm = new FactoriesForm());
+        public readonly LazyEvaluated<FactoriesForm> FactoriesForm = new(() => new FactoriesForm(), a => !a.IsDisposed);
 
         public readonly Dictionary<string, string> BackgroundVisualMapping;
         public readonly Dictionary<string, string> DlcMappings;
@@ -1653,8 +1653,8 @@ namespace X4SectorCreator
         #region Products
         private void BtnProducts_Click(object sender, EventArgs e)
         {
-            FactoriesForm.Initialize();
-            FactoriesForm.Show();
+            FactoriesForm.Value.Initialize();
+            FactoriesForm.Value.Show();
         }
         #endregion
     }
