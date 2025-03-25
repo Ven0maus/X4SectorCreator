@@ -28,6 +28,8 @@ namespace X4SectorCreator
         private static PointF _offset;
         private static float _zoom = _defaultZoom; // 1.0 means 100% scale
 
+        private const float _stationIconSize = 24f;
+
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
         private static readonly Dictionary<string, string> _dlcMapping = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -460,8 +462,70 @@ namespace X4SectorCreator
             // Render gate connections above hexes + selected hex
             RenderGateConnections(e);
 
+            // Render station icons
+            RenderStationIcons(e);
+
             // Hex names draw on top of everything
             RenderAllHexNames(e);
+        }
+
+        private void RenderStationIcons(PaintEventArgs e)
+        {
+            var relevantClusters = _baseGameClusters.Values
+                .Concat(_customClusters)
+                .Where(cluster => cluster.Sectors.Any(sector => sector.Zones.Any(zone => zone.Stations.Count != 0)))
+                .ToList();
+            if (relevantClusters.Count == 0) return;
+
+            // Calculate hex size and radius based on zoom and sector size
+            float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
+            float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+
+            int sectorIndex = 0;
+            foreach (var cluster in relevantClusters)
+            {
+                foreach (Sector sector in cluster.Sectors)
+                {
+                    // Collect the child hexagon points
+                    Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                    PointF hexCenter = GetHexCenter(childHexagon.Points);
+                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
+
+                    foreach (Zone zone in sector.Zones)
+                    {
+                        foreach (Station station in zone.Stations)
+                        {
+                            // Convert the zone position from world to screen space
+                            PointF stationScreenPosition = ConvertFromWorldCoordinate(station.Position, sector.DiameterRadius, correctHexRadius);
+
+                            stationScreenPosition.X += hexCenter.X;
+                            stationScreenPosition.Y += hexCenter.Y;
+
+                            Color color = !MainForm.Instance.FactionColorMapping.TryGetValue(station.Owner, out Color value) ? 
+                                MainForm.Instance.FactionColorMapping["None"] : value;
+
+                            using SolidBrush brush = new(color);
+                            string character = station.Type.ToLower() switch
+                            {
+                                "defence" => "■",
+                                "wharf" => "Δ",
+                                "shipyard" => "▲",
+                                "equipmentdock" => "⎕",
+                                "tradestation" => "⨁",
+                                _ => throw new NotSupportedException($"Station type not supported: {station.Type}"),
+                            };
+
+                            using Font bigFont = new("Arial", cluster.Sectors.Count > 1 ? _stationIconSize / 2f : _stationIconSize, FontStyle.Bold);
+                            SizeF textSize = e.Graphics.MeasureString(character, bigFont);
+                            float textHeightOffset = textSize.Height / 2;
+                            float textWidthOffset = textSize.Width / 2;
+
+                            e.Graphics.DrawString(character, bigFont, brush, stationScreenPosition.X - textWidthOffset, stationScreenPosition.Y - textHeightOffset);
+                        }
+                    }
+                    sectorIndex++;
+                }
+            }
         }
 
         private void RenderHexSelection(PaintEventArgs e)
