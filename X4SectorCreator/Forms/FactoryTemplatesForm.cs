@@ -6,7 +6,7 @@ namespace X4SectorCreator.Forms
     public partial class FactoryTemplatesForm : Form
     {
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public FactoryForm ProductForm { get; set; }
+        public FactoryForm FactoryForm { get; set; }
 
         private static readonly Lazy<Factory[]> _templateFactories = new(() => InitTemplateFactories().ToArray());
         private const string _templateProductsPath = "Data/TemplateFactories";
@@ -65,8 +65,8 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            ProductForm.Factory = selectedFactory;
-            ProductForm.Show();
+            FactoryForm.Factory = selectedFactory;
+            FactoryForm.Show();
             Close();
         }
 

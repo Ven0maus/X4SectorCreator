@@ -32,7 +32,7 @@
             TxtFactoryXml = new TextBox();
             BtnCreate = new Button();
             BtnCancel = new Button();
-            BtnSelectJobLocation = new Button();
+            BtnSelectFactoryLocation = new Button();
             BtnSelectFaction = new Button();
             SuspendLayout();
             // 
@@ -75,15 +75,15 @@
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
-            // BtnSelectJobLocation
+            // BtnSelectFactoryLocation
             // 
-            BtnSelectJobLocation.Location = new Point(602, 7);
-            BtnSelectJobLocation.Name = "BtnSelectJobLocation";
-            BtnSelectJobLocation.Size = new Size(153, 28);
-            BtnSelectJobLocation.TabIndex = 8;
-            BtnSelectJobLocation.Text = "Select Factory Location";
-            BtnSelectJobLocation.UseVisualStyleBackColor = true;
-            BtnSelectJobLocation.Click += BtnSelectFactoryLocation_Click;
+            BtnSelectFactoryLocation.Location = new Point(602, 7);
+            BtnSelectFactoryLocation.Name = "BtnSelectFactoryLocation";
+            BtnSelectFactoryLocation.Size = new Size(153, 28);
+            BtnSelectFactoryLocation.TabIndex = 8;
+            BtnSelectFactoryLocation.Text = "Select Factory Location";
+            BtnSelectFactoryLocation.UseVisualStyleBackColor = true;
+            BtnSelectFactoryLocation.Click += BtnSelectFactoryLocation_Click;
             // 
             // BtnSelectFaction
             // 
@@ -95,13 +95,13 @@
             BtnSelectFaction.UseVisualStyleBackColor = true;
             BtnSelectFaction.Click += BtnSelectFaction_Click;
             // 
-            // ProductForm
+            // FactoryForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(761, 701);
             Controls.Add(BtnSelectFaction);
-            Controls.Add(BtnSelectJobLocation);
+            Controls.Add(BtnSelectFactoryLocation);
             Controls.Add(BtnCancel);
             Controls.Add(BtnCreate);
             Controls.Add(label2);
@@ -109,7 +109,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "ProductForm";
+            Name = "FactoryForm";
             Text = "X4 Sector Creator";
             ResumeLayout(false);
             PerformLayout();
@@ -121,7 +121,7 @@
         private TextBox TxtFactoryXml;
         private Button BtnCreate;
         private Button BtnCancel;
-        private Button BtnSelectJobLocation;
+        private Button BtnSelectFactoryLocation;
         private Button BtnSelectFaction;
     }
 }

@@ -107,7 +107,7 @@
             CmbFilterOption.TabIndex = 6;
             CmbFilterOption.SelectedIndexChanged += CmbFilterOption_SelectedIndexChanged;
             // 
-            // ProductTemplatesForm
+            // FactoryTemplatesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -122,7 +122,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "ProductTemplatesForm";
+            Name = "FactoryTemplatesForm";
             Text = "X4 Sector Creator";
             ResumeLayout(false);
             PerformLayout();

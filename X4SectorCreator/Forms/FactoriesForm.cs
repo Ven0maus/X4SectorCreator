@@ -217,7 +217,7 @@ namespace X4SectorCreator.Forms
             // Template selection is ongoing at the moment
             if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible) return;
 
-            FactoryTemplatesForm.Value.ProductForm = FactoryForm.Value;
+            FactoryTemplatesForm.Value.FactoryForm = FactoryForm.Value;
             FactoryTemplatesForm.Value.Show();
         }
 

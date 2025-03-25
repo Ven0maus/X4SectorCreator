@@ -181,7 +181,7 @@
             label5.TabIndex = 21;
             label5.Text = "(determines the amount of factory stations in the galaxy.)";
             // 
-            // ProductsForm
+            // FactoriesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -203,7 +203,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "ProductsForm";
+            Name = "FactoriesForm";
             Text = "X4 Sector Creator";
             ResumeLayout(false);
             PerformLayout();

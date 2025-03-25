@@ -1650,8 +1650,8 @@ namespace X4SectorCreator
         private static partial Regex SanitizeNonAlphaNumeric();
         #endregion
 
-        #region Products
-        private void BtnProducts_Click(object sender, EventArgs e)
+        #region Factories
+        private void BtnFactories_Click(object sender, EventArgs e)
         {
             FactoriesForm.Value.Initialize();
             FactoriesForm.Value.Show();

@@ -63,7 +63,7 @@
             label3 = new Label();
             BtnRemoveCustomFaction = new Button();
             BtnJobs = new Button();
-            BtnProducts = new Button();
+            BtnFactories = new Button();
             SuspendLayout();
             // 
             // BtnRemoveCluster
@@ -413,22 +413,22 @@
             BtnJobs.UseVisualStyleBackColor = true;
             BtnJobs.Click += BtnJobs_Click;
             // 
-            // BtnProducts
+            // BtnFactories
             // 
-            BtnProducts.Location = new Point(271, 10);
-            BtnProducts.Name = "BtnProducts";
-            BtnProducts.Size = new Size(87, 31);
-            BtnProducts.TabIndex = 49;
-            BtnProducts.Text = "Products";
-            BtnProducts.UseVisualStyleBackColor = true;
-            BtnProducts.Click += BtnProducts_Click;
+            BtnFactories.Location = new Point(271, 10);
+            BtnFactories.Name = "BtnFactories";
+            BtnFactories.Size = new Size(87, 31);
+            BtnFactories.TabIndex = 49;
+            BtnFactories.Text = "Factories";
+            BtnFactories.UseVisualStyleBackColor = true;
+            BtnFactories.Click += BtnFactories_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(661, 570);
-            Controls.Add(BtnProducts);
+            Controls.Add(BtnFactories);
             Controls.Add(BtnJobs);
             Controls.Add(BtnNewCustomFaction);
             Controls.Add(ListCustomFactions);
@@ -510,6 +510,6 @@
         private Label label3;
         private Button BtnRemoveCustomFaction;
         private Button BtnJobs;
-        private Button BtnProducts;
+        private Button BtnFactories;
     }
 }
