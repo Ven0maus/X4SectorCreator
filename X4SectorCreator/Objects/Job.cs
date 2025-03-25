@@ -532,5 +532,5 @@ namespace X4SectorCreator.Objects
         }
     }
 
-    
+
 }

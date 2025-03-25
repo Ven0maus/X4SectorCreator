@@ -101,7 +101,7 @@ namespace X4SectorCreator.XmlGeneration
                 // Return regions after sector connection
                 foreach (Objects.Region region in sector.Regions)
                 {
-                    var name = cluster.IsBaseGame ? $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
+                    string name = cluster.IsBaseGame ? $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
                         $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
 
                     yield return new XElement("connection",
@@ -189,20 +189,27 @@ namespace X4SectorCreator.XmlGeneration
             }
 
             // Added sectors in vanilla clusters
-            foreach (var cluster in clusters)
+            foreach (Cluster cluster in clusters)
             {
-                if (!cluster.IsBaseGame) continue;
-                foreach (var sector in cluster.Sectors)
+                if (!cluster.IsBaseGame)
                 {
-                    if (sector.IsBaseGame) continue;
+                    continue;
+                }
 
-                    var macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
+                foreach (Sector sector in cluster.Sectors)
+                {
+                    if (sector.IsBaseGame)
+                    {
+                        continue;
+                    }
+
+                    string macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
                         $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
-                    var connection = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_connection" :
+                    string connection = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_connection" :
                         $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection";
 
                     // New sector link
-                    yield return (cluster.Dlc, new XElement("add", 
+                    yield return (cluster.Dlc, new XElement("add",
                         new XAttribute("sel", $"/macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"),
                             new XElement("connection",
                             new XAttribute("name", connection),

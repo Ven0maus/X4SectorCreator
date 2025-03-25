@@ -33,17 +33,18 @@ namespace X4SectorCreator
 
             // Init sector values
             cmbStartSector.Items.Clear();
-            var sectors = MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).OrderBy(a => a.Name).ToArray();
-            foreach (var sector in sectors)
-                cmbStartSector.Items.Add(sector);
+            Sector[] sectors = MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).OrderBy(a => a.Name).ToArray();
+            foreach (Sector sector in sectors)
+            {
+                _ = cmbStartSector.Items.Add(sector);
+            }
 
             cmbStartSector.Enabled = IsCustomGalaxy;
 
-            if (StartingSector == null)
-                cmbStartSector.SelectedItem = null;
-            else
-                cmbStartSector.SelectedItem = !IsCustomGalaxy ? null : MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors)
-                    .FirstOrDefault(a => a.Name.Equals(StartingSector, StringComparison.OrdinalIgnoreCase));
+            cmbStartSector.SelectedItem = StartingSector == null
+                ? null
+                : (object)(!IsCustomGalaxy ? null : MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors)
+                    .FirstOrDefault(a => a.Name.Equals(StartingSector, StringComparison.OrdinalIgnoreCase)));
         }
 
         private void BtnSave_Click(object sender, EventArgs e)

@@ -24,7 +24,7 @@ namespace X4SectorCreator.Forms
 
             using (Graphics g = CreateGraphics())
             {
-                foreach (var label in labels)
+                foreach ((string label, string[] values, string defaultValue) label in labels)
                 {
                     int labelWidth = (int)g.MeasureString(label.label, Font).Width;
                     maxLabelWidth = Math.Max(maxLabelWidth, labelWidth);
@@ -37,24 +37,31 @@ namespace X4SectorCreator.Forms
             Width = formWidth;
             int y = 20;
 
-            foreach (var label in labels)
+            foreach ((string label, string[] values, string defaultValue) label in labels)
             {
                 Label lbl = new() { Text = label.label, Left = 10, Top = y, Width = maxLabelWidth };
                 Control ctrl;
                 if (label.values != null)
                 {
-                    var cmb = new ComboBox() { Left = maxLabelWidth + 10, Top = y, Width = textBoxWidth };
+                    ComboBox cmb = new() { Left = maxLabelWidth + 10, Top = y, Width = textBoxWidth };
                     ctrl = cmb;
-                    foreach (var value in label.values)
-                        cmb.Items.Add(value);
+                    foreach (string value in label.values)
+                    {
+                        _ = cmb.Items.Add(value);
+                    }
+
                     if (!string.IsNullOrWhiteSpace(label.defaultValue))
+                    {
                         cmb.SelectedItem = label.defaultValue;
+                    }
                 }
                 else
                 {
                     ctrl = new TextBox() { Left = maxLabelWidth + 10, Top = y, Width = textBoxWidth };
                     if (!string.IsNullOrWhiteSpace(label.defaultValue))
+                    {
                         ctrl.Text = label.defaultValue;
+                    }
                 }
 
                 _inputs[label.label] = ctrl;
@@ -76,9 +83,13 @@ namespace X4SectorCreator.Forms
                 foreach (KeyValuePair<string, Control> kvp in _inputs)
                 {
                     if (kvp.Value is TextBox txt)
+                    {
                         InputValues[kvp.Key] = string.IsNullOrWhiteSpace(txt.Text) ? null : txt.Text;
+                    }
                     else if (kvp.Value is ComboBox cmb)
+                    {
                         InputValues[kvp.Key] = cmb.SelectedItem as string;
+                    }
                 }
 
                 DialogResult = DialogResult.OK;

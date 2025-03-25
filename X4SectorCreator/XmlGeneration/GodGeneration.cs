@@ -9,16 +9,16 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            var stationsContent = CollectStationsContent(modPrefix, clusters).ToArray();
-            var productsContent = CollectProductsContent(modPrefix).ToArray();
+            XElement[] stationsContent = CollectStationsContent(modPrefix, clusters).ToArray();
+            XElement[] productsContent = CollectProductsContent(modPrefix).ToArray();
 
             // Replace entire god file
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
-                var stationsNode = stationsContent.Length == 0 ? null :
+                XElement stationsNode = stationsContent.Length == 0 ? null :
                     new XElement("stations", stationsContent);
 
-                var productsNode = productsContent.Length == 0 ? null :
+                XElement productsNode = productsContent.Length == 0 ? null :
                     new XElement("products", productsContent);
 
                 XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
@@ -38,7 +38,7 @@ namespace X4SectorCreator.XmlGeneration
             }
             else
             {
-                var diffContent = new XElement("diff");
+                XElement diffContent = new("diff");
 
                 if (productsContent.Length > 0)
                 {
@@ -69,44 +69,48 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> CollectProductsContent(string modPrefix)
         {
-            foreach (var factory in FactoriesForm.AllFactories)
+            foreach (KeyValuePair<string, Factory> factory in FactoriesForm.AllFactories)
             {
-                var originalId = factory.Value.Id;
+                string originalId = factory.Value.Id;
 
                 // Prepend prefix
                 factory.Value.Id = $"{modPrefix}_{factory.Value.Id}";
 
                 // Serialize
-                var factoryElementXml = factory.Value.SerializeFactory();
+                string factoryElementXml = factory.Value.SerializeFactory();
 
                 // Reset
                 factory.Value.Id = originalId;
 
-                var factoryElement = XElement.Parse(factoryElementXml);
+                XElement factoryElement = XElement.Parse(factoryElementXml);
                 yield return factoryElement;
             }
         }
 
         private static IEnumerable<XElement> CollectStationsContent(string modPrefix, List<Cluster> clusters)
         {
-            foreach (var cluster in clusters)
+            foreach (Cluster cluster in clusters)
             {
-                foreach (var sector in cluster.Sectors)
+                foreach (Sector sector in cluster.Sectors)
                 {
-                    foreach (var zone in sector.Zones)
+                    foreach (Zone zone in sector.Zones)
                     {
-                        foreach (var station in zone.Stations)
+                        foreach (Station station in zone.Stations)
                         {
                             string clusterPrefix = $"c{cluster.Id:D3}";
                             if (cluster.IsBaseGame)
+                            {
                                 clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
+                            }
 
                             string sectorPrefix = $"s{sector.Id:D3}";
                             if (sector.IsBaseGame)
+                            {
                                 sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
+                            }
 
-                            var id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
-                            var zoneMacro = $"{modPrefix}_ZO_{clusterPrefix}_{sectorPrefix}_z{zone.Id:D3}_macro";
+                            string id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
+                            string zoneMacro = $"{modPrefix}_ZO_{clusterPrefix}_{sectorPrefix}_z{zone.Id:D3}_macro";
 
                             string faction = station.Faction.ToLower();
                             string owner = station.Owner.ToLower();

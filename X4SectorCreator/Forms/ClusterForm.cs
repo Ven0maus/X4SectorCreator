@@ -67,7 +67,7 @@ namespace X4SectorCreator.Forms
             }
             string backgroundVisualMapping = MainForm.Instance.BackgroundVisualMapping[selectedBackgroundVisual];
 
-            var beforeAutoPos = Cluster?.CustomSectorPositioning ?? false;
+            bool beforeAutoPos = Cluster?.CustomSectorPositioning ?? false;
             Match match = RegexHelper.TupleLocationRegex().Match(location);
             if (match.Success)
             {
@@ -133,7 +133,9 @@ namespace X4SectorCreator.Forms
 
                 // If auto positioning was enabled, re position current sectors automatically
                 if (beforeAutoPos != Cluster.CustomSectorPositioning && !Cluster.CustomSectorPositioning)
+                {
                     Cluster.AutoPositionSectors();
+                }
 
                 ResetAndHide();
             }

@@ -71,15 +71,17 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Init factions and races
-            foreach (var faction in MainForm.Instance.FactionColorMapping
+            foreach (KeyValuePair<string, Color> faction in MainForm.Instance.FactionColorMapping
                 .Where(a => !a.Key.Equals("None", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(a => a.Key))
             {
-                cmbFaction.Items.Add(faction.Key);
-                cmbOwner.Items.Add(faction.Key);
+                _ = cmbFaction.Items.Add(faction.Key);
+                _ = cmbOwner.Items.Add(faction.Key);
             }
-            foreach (var race in _races.OrderBy(a => a))
-                cmbRace.Items.Add(race);
+            foreach (string race in _races.OrderBy(a => a))
+            {
+                _ = cmbRace.Items.Add(race);
+            }
 
             // Create and define hexagon
             _hexagonPoints = new PointF[6];
@@ -96,7 +98,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
-            var name = txtName.Text;
+            string name = txtName.Text;
             if (string.IsNullOrWhiteSpace(name))
             {
                 _ = MessageBox.Show("Station name cannot be empty.");
@@ -146,7 +148,7 @@ namespace X4SectorCreator.Forms
             switch (BtnCreate.Text)
             {
                 case "Create":
-                    var station = new Station
+                    Station station = new()
                     {
                         Id = Sector.Zones.SelectMany(a => a.Stations).DefaultIfEmpty(new Station()).Max(a => a.Id) + 1,
                         Name = txtName.Text,
@@ -156,14 +158,14 @@ namespace X4SectorCreator.Forms
                         Race = cmbRace.SelectedItem as string,
                         Position = new Point(StationPosX, StationPosY)
                     };
-                    var zone = new Zone
+                    Zone zone = new()
                     {
                         Id = Sector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
                         Position = new Point(StationPosX, StationPosY),
                     };
                     zone.Stations.Add(station);
                     Sector.Zones.Add(zone);
-                    MainForm.Instance.ListStations.Items.Add(station);
+                    _ = MainForm.Instance.ListStations.Items.Add(station);
                     break;
 
                 case "Update":
@@ -174,7 +176,7 @@ namespace X4SectorCreator.Forms
                     Station.Race = cmbRace.SelectedItem as string;
                     Station.Position = new Point(StationPosX, StationPosY);
 
-                    var existingZone = Sector.Zones.First(a => a.Stations.Contains(Station));
+                    Zone existingZone = Sector.Zones.First(a => a.Stations.Contains(Station));
                     existingZone.Position = Station.Position;
                     break;
             }

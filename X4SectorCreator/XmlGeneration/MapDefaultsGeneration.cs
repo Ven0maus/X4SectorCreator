@@ -74,7 +74,11 @@ namespace X4SectorCreator.XmlGeneration
                 // Add each Sector inside its Cluster
                 foreach (Sector sector in cluster.Sectors)
                 {
-                    if (sector.IsBaseGame) continue;
+                    if (sector.IsBaseGame)
+                    {
+                        continue;
+                    }
+
                     if (sector.AllowRandomAnomalies)
                     {
                         if (string.IsNullOrWhiteSpace(sector.Tags))
@@ -95,7 +99,7 @@ namespace X4SectorCreator.XmlGeneration
                         string.IsNullOrWhiteSpace(sector.Tags) ? null : new XAttribute("tags", sector.Tags)
                     );
 
-                    var macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
+                    string macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
                         $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
 
                     addElement.Add(

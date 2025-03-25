@@ -16,7 +16,7 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Collect all filter options
-            var filterOptions = _templateFactories.Value
+            HashSet<string> filterOptions = _templateFactories.Value
                 .GroupBy(a => a.TemplateDirectory)
                 .Select(a => a.Key)
                 .OrderBy(a => a)
@@ -24,31 +24,37 @@ namespace X4SectorCreator.Forms
 
             // Setup filter options
             CmbFilterOption.Items.Clear();
-            foreach (var option in filterOptions)
-                CmbFilterOption.Items.Add(option);
+            foreach (string option in filterOptions)
+            {
+                _ = CmbFilterOption.Items.Add(option);
+            }
 
             // Show by default vanilla option if present
             if (filterOptions.Contains("Vanilla"))
+            {
                 CmbFilterOption.SelectedItem = "Vanilla";
+            }
         }
 
         private static IEnumerable<Factory> InitTemplateFactories()
         {
-            var directoryPath = Path.Combine(Application.StartupPath, _templateProductsPath);
+            string directoryPath = Path.Combine(Application.StartupPath, _templateProductsPath);
             if (!Directory.Exists(directoryPath))
+            {
                 yield break;
+            }
 
             // Collect all god.xml files in the sub directories and returns them
-            foreach (var subDirectory in Directory.GetDirectories(directoryPath))
+            foreach (string subDirectory in Directory.GetDirectories(directoryPath))
             {
                 string templateName = Path.GetFileName(subDirectory);
                 string godFilePath = Path.Combine(subDirectory, "god.xml");
 
                 if (File.Exists(godFilePath))
                 {
-                    var xml = File.ReadAllText(godFilePath);
+                    string xml = File.ReadAllText(godFilePath);
                     Factories factories = Factories.DeserializeFactories(xml);
-                    foreach (var factory in factories.FactoryList)
+                    foreach (Factory factory in factories.FactoryList)
                     {
                         factory.TemplateDirectory = templateName;
                         yield return factory;
@@ -88,7 +94,7 @@ namespace X4SectorCreator.Forms
 
         private void CmbFilterOption_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedFilterOption = CmbFilterOption.SelectedItem as string;
+            string selectedFilterOption = CmbFilterOption.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedFilterOption))
             {
                 ListTemplateFactories.Items.Clear();
@@ -96,20 +102,25 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            var factories = _templateFactories.Value
+            Factory[] factories = _templateFactories.Value
                 .Where(a => a.TemplateDirectory.Equals(selectedFilterOption))
                 .OrderBy(a => a.ToString())
                 .ToArray();
 
             ListTemplateFactories.Items.Clear();
-            foreach (var factory in factories)
-                ListTemplateFactories.Items.Add(factory);
+            foreach (Factory factory in factories)
+            {
+                _ = ListTemplateFactories.Items.Add(factory);
+            }
         }
 
         private void ListTemplateJobs_DoubleClick(object sender, EventArgs e)
         {
-            var selectedFilterOption = CmbFilterOption.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(selectedFilterOption)) return;
+            string selectedFilterOption = CmbFilterOption.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedFilterOption))
+            {
+                return;
+            }
 
             // Select
             BtnSelectExampleFactory.PerformClick();

@@ -65,14 +65,14 @@ namespace X4SectorCreator
             KeyDown += SectorMapForm_KeyDown;
 
             // Init dlcs
-            foreach (var mapping in _selectedDlcMapping)
+            foreach (KeyValuePair<string, int> mapping in _selectedDlcMapping)
             {
                 if (!_dlcsSelected.TryGetValue(mapping.Value, out bool value))
                 {
                     // If not yet initialized, it will be by default selected
                     _dlcsSelected[mapping.Value] = value = true;
                 }
-                
+
                 // Init dlc list box
                 _ = DlcListBox.Items.Add(_dlcMapping.First(a => a.Value.Equals(mapping.Key)).Key);
                 DlcListBox.SetItemChecked(mapping.Value, value);
@@ -100,7 +100,7 @@ namespace X4SectorCreator
 
                 if (_movingCluster == null)
                 {
-                    var cluster = GetClusterAtMousePos(adjustedMousePos, out _);
+                    Cluster cluster = GetClusterAtMousePos(adjustedMousePos, out _);
                     if (cluster != null)
                     {
                         _movingCluster = cluster;
@@ -110,7 +110,7 @@ namespace X4SectorCreator
                 else
                 {
                     // Verify for valid position
-                    var clusterAtPos = GetClusterAtMousePos(adjustedMousePos, out var coordinate);
+                    Cluster clusterAtPos = GetClusterAtMousePos(adjustedMousePos, out (int x, int y)? coordinate);
                     if (clusterAtPos != null)
                     {
                         // Cancel because we're moving to the same position
@@ -126,7 +126,7 @@ namespace X4SectorCreator
                     }
 
                     // Place cluster down at the new position if it is valid
-                    MainForm.Instance.AllClusters.Remove((_movingCluster.Position.X, _movingCluster.Position.Y));
+                    _ = MainForm.Instance.AllClusters.Remove((_movingCluster.Position.X, _movingCluster.Position.Y));
                     _movingCluster.Position = new Point(coordinate.Value.x, coordinate.Value.y);
                     MainForm.Instance.AllClusters[coordinate.Value] = _movingCluster;
                     _movingCluster = null;
@@ -138,13 +138,13 @@ namespace X4SectorCreator
         private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
         {
             pos = null;
-            foreach (var hex in _hexagons)
+            foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
             {
                 // Determine if there is a cluster at the position we clicked
                 if (IsPointInPolygon(hex.Value.Points, mousePos))
                 {
                     pos = hex.Key;
-                    if (MainForm.Instance.AllClusters.TryGetValue(hex.Key, out var cluster))
+                    if (MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster))
                     {
                         return cluster;
                     }
@@ -420,12 +420,12 @@ namespace X4SectorCreator
             int children = sectors?.Count ?? 0;
 
             List<PointF> childHexPositions = [];
-            if (children == 2 || children == 3)
+            if (children is 2 or 3)
             {
                 // Child hex centers for top-left, bottom-right
-                for (int i=0; i < children; i++)
+                for (int i = 0; i < children; i++)
                 {
-                    var (x, y) = _childPlacementMappings[sectors[i].Placement](width, childHeight);
+                    (float x, float y) = _childPlacementMappings[sectors[i].Placement](width, childHeight);
                     childHexPositions.Add(new PointF(xOffset + x, yOffset + y));
                 }
             }
@@ -471,18 +471,21 @@ namespace X4SectorCreator
 
         private void RenderStationIcons(PaintEventArgs e)
         {
-            var relevantClusters = _baseGameClusters.Values
+            List<Cluster> relevantClusters = _baseGameClusters.Values
                 .Concat(_customClusters)
                 .Where(cluster => cluster.Sectors.Any(sector => sector.Zones.Any(zone => zone.Stations.Count != 0)))
                 .ToList();
-            if (relevantClusters.Count == 0) return;
+            if (relevantClusters.Count == 0)
+            {
+                return;
+            }
 
             // Calculate hex size and radius based on zoom and sector size
             float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
 
             int sectorIndex = 0;
-            foreach (var cluster in relevantClusters)
+            foreach (Cluster cluster in relevantClusters)
             {
                 foreach (Sector sector in cluster.Sectors)
                 {
@@ -501,7 +504,7 @@ namespace X4SectorCreator
                             stationScreenPosition.X += hexCenter.X;
                             stationScreenPosition.Y += hexCenter.Y;
 
-                            Color color = !MainForm.Instance.FactionColorMapping.TryGetValue(station.Owner, out Color value) ? 
+                            Color color = !MainForm.Instance.FactionColorMapping.TryGetValue(station.Owner, out Color value) ?
                                 MainForm.Instance.FactionColorMapping["None"] : value;
 
                             using SolidBrush brush = new(color);
@@ -692,7 +695,10 @@ namespace X4SectorCreator
                 {
                     // Check if the dlc is selected
                     if (!IsDlcClusterEnabled(cluster.Value))
+                    {
                         continue;
+                    }
+
                     gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
                 }
             }
@@ -755,17 +761,19 @@ namespace X4SectorCreator
 
             // Make sure we don't double process target gates we already processed
             // We still have an issue with highway type gates showing as a double because they have different paths
-            var processedTargets = new HashSet<Gate>();
+            HashSet<Gate> processedTargets = new();
 
             // Any invalid connections will be recorded
-            var invalidConnections = new List<GateData>();
+            List<GateData> invalidConnections = new();
 
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
             {
                 // Find the connection with the matching path
-                if (processedTargets.Contains(sourceGateData.Gate) || !sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out var availableGateData))
+                if (processedTargets.Contains(sourceGateData.Gate) || !sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out GateData[] availableGateData))
+                {
                     continue;
+                }
 
                 GateData targetGateData = availableGateData
                     .FirstOrDefault(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
@@ -775,10 +783,12 @@ namespace X4SectorCreator
                     continue;
                 }
 
-                processedTargets.Add(targetGateData.Gate);
+                _ = processedTargets.Add(targetGateData.Gate);
 
                 if (!IsDlcClusterEnabled(targetGateData.Cluster))
+                {
                     continue;
+                }
 
                 yield return new GateConnection
                 {
@@ -856,7 +866,7 @@ namespace X4SectorCreator
                 }
             }
 
-            var isMovingCluster = _movingCluster != null && _movingCluster == cluster;
+            bool isMovingCluster = _movingCluster != null && _movingCluster == cluster;
             if (isMovingCluster)
             {
                 color = Color.Yellow;
@@ -870,7 +880,7 @@ namespace X4SectorCreator
                 {
                     color = Color.Black;
                 }
-               
+
                 // Fill with darker color
                 using SolidBrush mainBrush = new(LerpColor(color, Color.Black, 0.85f));
                 e.Graphics.FillPolygon(mainBrush, hex.Value.Points);

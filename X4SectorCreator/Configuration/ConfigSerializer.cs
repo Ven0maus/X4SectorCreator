@@ -33,11 +33,16 @@ namespace X4SectorCreator.Configuration
                     {
                         // For base game we need to make sure not to serialize everything, only the necessary
                         if (sector.IsBaseGame)
+                        {
                             sector.Zones = [.. sector.Zones.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
+                        }
+
                         foreach (Zone zone in sector.Zones)
                         {
                             if (sector.IsBaseGame)
+                            {
                                 zone.Gates = [.. zone.Gates.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
+                            }
                         }
                     }
                     else
@@ -97,22 +102,28 @@ namespace X4SectorCreator.Configuration
             FactoriesForm.AllFactories.Clear();
             if (configObj.Factories != null && configObj.Factories.Count > 0)
             {
-                foreach (var factory in configObj.Factories)
+                foreach (Factory factory in configObj.Factories)
+                {
                     FactoriesForm.AllFactories.Add(factory.Id, factory);
+                }
             }
 
             JobsForm.AllJobs.Clear();
             if (configObj.Jobs != null && configObj.Jobs.Count > 0)
             {
-                foreach (var job in configObj.Jobs)
+                foreach (Job job in configObj.Jobs)
+                {
                     JobsForm.AllJobs.Add(job.Id, job);
+                }
             }
 
             JobsForm.AllBaskets.Clear();
             if (configObj.Baskets != null && configObj.Baskets.Count > 0)
             {
-                foreach (var basket in configObj.Baskets)
+                foreach (Basket basket in configObj.Baskets)
+                {
                     JobsForm.AllBaskets.Add(basket.Id, basket);
+                }
             }
 
             // Set stored region definitions

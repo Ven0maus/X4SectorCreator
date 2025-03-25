@@ -1,6 +1,6 @@
-﻿using X4SectorCreator.CustomComponents;
+﻿using System.ComponentModel;
+using X4SectorCreator.CustomComponents;
 using X4SectorCreator.Objects;
-using System.ComponentModel;
 
 namespace X4SectorCreator.Forms
 {
@@ -96,14 +96,21 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Init wares
-            foreach (var ware in _wares.OrderBy(a => a))
-                CmbWares.Items.Add(ware);
+            foreach (string ware in _wares.OrderBy(a => a))
+            {
+                _ = CmbWares.Items.Add(ware);
+            }
+
             _mscWares = new MultiSelectCombo(CmbWares);
         }
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
-            if (Basket != null && Basket.IsBaseGame) return;
+            if (Basket != null && Basket.IsBaseGame)
+            {
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(TxtName.Text))
             {
                 _ = MessageBox.Show("Please fill in a valid basket name.");
@@ -127,12 +134,14 @@ namespace X4SectorCreator.Forms
             {
                 Basket.Id = $"PREFIX_{TxtName.Text.ToLower()}";
                 Basket.Wares.Wares.Clear();
-                foreach (var ware in _mscWares.SelectedItems.Cast<string>())
+                foreach (string ware in _mscWares.SelectedItems.Cast<string>())
+                {
                     Basket.Wares.Wares.Add(new Basket.WareObjects.WareObj { Ware = ware });
+                }
             }
             else
             {
-                var basket = new Basket
+                Basket basket = new()
                 {
                     Id = $"PREFIX_{TxtName.Text.ToLower()}",
                     IsBaseGame = false,
@@ -140,8 +149,11 @@ namespace X4SectorCreator.Forms
                 };
 
                 basket.Wares.Wares = [];
-                foreach (var ware in _mscWares.SelectedItems.Cast<string>())
+                foreach (string ware in _mscWares.SelectedItems.Cast<string>())
+                {
                     basket.Wares.Wares.Add(new Basket.WareObjects.WareObj { Ware = ware });
+                }
+
                 selected = basket;
 
                 JobsForm.AllBaskets.Add(basket.Id, basket);

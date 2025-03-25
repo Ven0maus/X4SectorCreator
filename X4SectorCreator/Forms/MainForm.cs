@@ -110,7 +110,9 @@ namespace X4SectorCreator
 
                 // By default all vanilla multi clusters should have custom positioning enabled
                 if (cluster.Value.IsBaseGame && cluster.Value.Sectors.Count > 1)
+                {
                     cluster.Value.CustomSectorPositioning = true;
+                }
 
                 foreach (Sector sector in cluster.Value.Sectors)
                 {
@@ -350,12 +352,7 @@ namespace X4SectorCreator
             sanitizedText = SanitizeNonAlphaNumeric().Replace(sanitizedText, "_");
 
             // Ensure the string isn't empty
-            if (string.IsNullOrWhiteSpace(sanitizedText))
-            {
-                return null;
-            }
-
-            return sanitizedText;
+            return string.IsNullOrWhiteSpace(sanitizedText) ? null : sanitizedText;
         }
 
         private VanillaChanges CollectVanillaChanges(ClusterCollection nonModifiedBaseGameData)
@@ -618,7 +615,7 @@ namespace X4SectorCreator
 
         private static void SetOwnershipInDetails(Sector sector, StringBuilder sb)
         {
-            var factions = sector.Zones.SelectMany(a => a.Stations)
+            HashSet<string> factions = sector.Zones.SelectMany(a => a.Stations)
                 .Select(a => a.Faction)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
             if (sector.IsBaseGame)
@@ -626,28 +623,31 @@ namespace X4SectorCreator
                 if (sector.Owner.Equals("None", StringComparison.OrdinalIgnoreCase))
                 {
                     if (factions.Count == 1)
+                    {
                         _ = sb.AppendLine($"Ownership: {factions.First()}");
-                    else if (factions.Count > 1)
-                        _ = sb.AppendLine($"Ownership: (cannot be determined)");
+                    }
                     else
-                        _ = sb.AppendLine($"Ownership: ownerless");
+                    {
+                        _ = factions.Count > 1 ? sb.AppendLine($"Ownership: (cannot be determined)") : sb.AppendLine($"Ownership: ownerless");
+                    }
                 }
                 else
                 {
-                    if (factions.Count == 0 || (factions.Count == 1 && factions.First().Equals(sector.Owner, StringComparison.OrdinalIgnoreCase)))
-                        _ = sb.AppendLine($"Ownership: {sector.Owner}");
-                    else
-                        _ = sb.AppendLine($"Ownership: (cannot be determined)");
+                    _ = factions.Count == 0 || (factions.Count == 1 && factions.First().Equals(sector.Owner, StringComparison.OrdinalIgnoreCase))
+                        ? sb.AppendLine($"Ownership: {sector.Owner}")
+                        : sb.AppendLine($"Ownership: (cannot be determined)");
                 }
             }
             else
             {
                 if (factions.Count == 1)
+                {
                     _ = sb.AppendLine($"Ownership: {factions.First()}");
-                else if (factions.Count > 1)
-                    _ = sb.AppendLine($"Ownership: (cannot be determined)");
+                }
                 else
-                    _ = sb.AppendLine($"Ownership: ownerless");
+                {
+                    _ = factions.Count > 1 ? sb.AppendLine($"Ownership: (cannot be determined)") : sb.AppendLine($"Ownership: ownerless");
+                }
             }
         }
 
@@ -739,10 +739,14 @@ namespace X4SectorCreator
                                 }
 
                                 if (breakout)
+                                {
                                     break;
+                                }
                             }
                             if (breakout)
+                            {
                                 break;
+                            }
                         }
                     }
 
@@ -790,7 +794,7 @@ namespace X4SectorCreator
                         SupportVanillaChangesInConfigImport(configuration);
                     }
 
-                    var vanillaClustersLazy = new Lazy<Cluster[]>(() => InitAllClusters(false).Clusters.Where(a => a.IsBaseGame).ToArray());
+                    Lazy<Cluster[]> vanillaClustersLazy = new(() => InitAllClusters(false).Clusters.Where(a => a.IsBaseGame).ToArray());
 
                     // Import new configuration
                     foreach (Cluster cluster in clusters)
@@ -877,8 +881,8 @@ namespace X4SectorCreator
             }
 
             // Cluster modification
-            var moveMap = new Dictionary<(int, int), Cluster>(); // Stores where each cluster should move
-            var toRemove = new HashSet<(int, int)>(); // Stores old positions to remove
+            Dictionary<(int, int), Cluster> moveMap = new(); // Stores where each cluster should move
+            HashSet<(int, int)> toRemove = new(); // Stores old positions to remove
             foreach (ModifiedCluster modification in configuration.vanillaChanges.ModifiedClusters)
             {
                 Cluster Old = modification.Old;
@@ -897,24 +901,26 @@ namespace X4SectorCreator
                 cluster.CustomSectorPositioning = New.CustomSectorPositioning;
 
                 if (cluster.Name.Equals("Mitsuno's Sacrifice", StringComparison.OrdinalIgnoreCase))
+                {
                     Console.WriteLine();
+                }
 
                 // Re-adjust position in all clusters
                 if (Old.Position != New.Position)
                 {
                     moveMap[(New.Position.X, New.Position.Y)] = cluster;
-                    toRemove.Add((Old.Position.X, Old.Position.Y));
+                    _ = toRemove.Add((Old.Position.X, Old.Position.Y));
                 }
             }
 
             // Remove old positions
-            foreach (var oldPos in toRemove)
+            foreach ((int, int) oldPos in toRemove)
             {
-                AllClusters.Remove(oldPos);
+                _ = AllClusters.Remove(oldPos);
             }
 
             // Insert clusters into new positions safely
-            foreach (var (newPos, cluster) in moveMap)
+            foreach (((int, int) newPos, Cluster cluster) in moveMap)
             {
                 if (AllClusters.ContainsKey(newPos))
                 {
@@ -964,7 +970,7 @@ namespace X4SectorCreator
                 currentCluster = AllClusters.Values.FirstOrDefault(a => a.BaseGameMapping.Equals(cluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
                 if (currentCluster != null && currentCluster.Position != cluster.Position)
                 {
-                    AllClusters.Remove((currentCluster.Position.X, currentCluster.Position.Y));
+                    _ = AllClusters.Remove((currentCluster.Position.X, currentCluster.Position.Y));
                     AllClusters[(cluster.Position.X, cluster.Position.Y)] = currentCluster;
                 }
             }
@@ -1067,15 +1073,8 @@ namespace X4SectorCreator
                 }
                 else
                 {
-                    var matchingCluster = vanillaClustersLazy.Value.FirstOrDefault(a => a.BaseGameMapping.Equals(cluster.BaseGameMapping));
-                    if (matchingCluster != null)
-                    {
-                        cluster.BackgroundVisualMapping = matchingCluster.BackgroundVisualMapping;
-                    }
-                    else
-                    {
-                        cluster.BackgroundVisualMapping = BackgroundVisualMapping.Values.First();
-                    }
+                    Cluster matchingCluster = vanillaClustersLazy.Value.FirstOrDefault(a => a.BaseGameMapping.Equals(cluster.BaseGameMapping));
+                    cluster.BackgroundVisualMapping = matchingCluster != null ? matchingCluster.BackgroundVisualMapping : BackgroundVisualMapping.Values.First();
                 }
             }
 
@@ -1099,22 +1098,22 @@ namespace X4SectorCreator
             // Support for dynamic placement, if all are the same we need to init some changes dynamically
             if (cluster.Sectors.Count > 1 && cluster.Sectors.All(a => a.Placement == default))
             {
-                var placements = Enum.GetValues<SectorPlacement>().OrderBy(a => a).ToList();
-                foreach (var sector in cluster.Sectors)
+                List<SectorPlacement> placements = Enum.GetValues<SectorPlacement>().OrderBy(a => a).ToList();
+                foreach (Sector sector in cluster.Sectors)
                 {
                     bool placementSet = false;
                     if (sector.IsBaseGame)
                     {
                         // Determine if sector is vanilla, then copy over the original values
-                        var vanillaClusters = vanillaClustersLazy.Value;
-                        var matchingCluster = vanillaClusters.FirstOrDefault(a => a.BaseGameMapping.Equals(cluster.BaseGameMapping));
+                        Cluster[] vanillaClusters = vanillaClustersLazy.Value;
+                        Cluster matchingCluster = vanillaClusters.FirstOrDefault(a => a.BaseGameMapping.Equals(cluster.BaseGameMapping));
                         if (matchingCluster != null)
                         {
-                            var matchingSector = matchingCluster.Sectors.FirstOrDefault(a => a.BaseGameMapping.Equals(sector.BaseGameMapping));
+                            Sector matchingSector = matchingCluster.Sectors.FirstOrDefault(a => a.BaseGameMapping.Equals(sector.BaseGameMapping));
                             if (matchingSector != null)
                             {
                                 sector.Placement = matchingSector.Placement;
-                                placements.Remove(sector.Placement);
+                                _ = placements.Remove(sector.Placement);
                                 placementSet = true;
                             }
                         }
@@ -1123,7 +1122,7 @@ namespace X4SectorCreator
                     if (!placementSet)
                     {
                         sector.Placement = placements[^1];
-                        placements.Remove(sector.Placement);
+                        _ = placements.Remove(sector.Placement);
                     }
 
                     SectorForm.DetermineSectorOffset(cluster, sector);
@@ -1132,7 +1131,7 @@ namespace X4SectorCreator
             else if (cluster.Sectors.Count > 1)
             {
                 // Determine offset dynamically based on placements
-                foreach (var sector in cluster.Sectors)
+                foreach (Sector sector in cluster.Sectors)
                 {
                     SectorForm.DetermineSectorOffset(cluster, sector);
                 }
@@ -1641,16 +1640,23 @@ namespace X4SectorCreator
 
         private void BtnRemoveStation_Click(object sender, EventArgs e)
         {
-            if (ListStations.SelectedItem is not Station selectedStation) return;
+            if (ListStations.SelectedItem is not Station selectedStation)
+            {
+                return;
+            }
+
             string selectedSector = SectorsListBox.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(selectedSector)) return;
+            if (string.IsNullOrWhiteSpace(selectedSector))
+            {
+                return;
+            }
 
             string selectedCluster = ClustersListBox.SelectedItem as string;
             Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
             // Remove station from zone
-            var zone = sector.Zones.First(a => a.Stations.Contains(selectedStation));
+            Zone zone = sector.Zones.First(a => a.Stations.Contains(selectedStation));
             _ = zone.Stations.Remove(selectedStation);
 
             int index = ListStations.Items.IndexOf(ListStations.SelectedItem);
@@ -1667,7 +1673,10 @@ namespace X4SectorCreator
 
         private void ListStations_DoubleClick(object sender, EventArgs e)
         {
-            if (ListStations.SelectedItem is not Station selectedStation) return;
+            if (ListStations.SelectedItem is not Station selectedStation)
+            {
+                return;
+            }
 
             string selectedSector = SectorsListBox.SelectedItem as string;
             string selectedCluster = ClustersListBox.SelectedItem as string;

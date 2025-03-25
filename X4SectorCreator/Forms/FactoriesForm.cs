@@ -28,9 +28,12 @@ namespace X4SectorCreator.Forms
 
             // By default set for each option "Any"
             _applyFilter = false;
-            var comboboxes = new[] { cmbFaction, cmbCluster, cmbSector };
-            foreach (var cmb in comboboxes)
+            ComboBox[] comboboxes = new[] { cmbFaction, cmbCluster, cmbSector };
+            foreach (ComboBox cmb in comboboxes)
+            {
                 cmb.SelectedItem = "Any";
+            }
+
             _applyFilter = true;
 
             // Apply the filter
@@ -40,20 +43,26 @@ namespace X4SectorCreator.Forms
         public void UpdateAvailableFilterOptions()
         {
             _applyFilter = false;
-            var originalFaction = cmbFaction.SelectedItem ?? "Any";
-            var originalCluster = cmbCluster.SelectedItem ?? "Any";
-            var originalSector = cmbSector.SelectedItem ?? "Any";
+            object originalFaction = cmbFaction.SelectedItem ?? "Any";
+            object originalCluster = cmbCluster.SelectedItem ?? "Any";
+            object originalSector = cmbSector.SelectedItem ?? "Any";
 
             // Factions
             cmbFaction.Items.Clear();
-            foreach (var value in AllFactories.Select(a => a.Value.Location?.Faction).Where(a => a != null).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(a => a))
-                cmbFaction.Items.Add(value);
+            foreach (string value in AllFactories.Select(a => a.Value.Location?.Faction).Where(a => a != null).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(a => a))
+            {
+                _ = cmbFaction.Items.Add(value);
+            }
+
             cmbFaction.Items.Insert(0, "Any");
 
             // Clusters
             cmbCluster.Items.Clear();
-            foreach (var cluster in AllFactories.Values.Select(GetClusterFromFactory).Where(a => a != null).Distinct().OrderBy(a => a.Name))
-                cmbCluster.Items.Add(cluster);
+            foreach (Cluster cluster in AllFactories.Values.Select(GetClusterFromFactory).Where(a => a != null).Distinct().OrderBy(a => a.Name))
+            {
+                _ = cmbCluster.Items.Add(cluster);
+            }
+
             cmbCluster.Items.Insert(0, "Any");
 
             // Reset original selected values if still available
@@ -66,17 +75,23 @@ namespace X4SectorCreator.Forms
             {
                 if (cmbCluster.SelectedItem is Cluster cluster)
                 {
-                    foreach (var sector in cluster.Sectors.OrderBy(a => a.Name))
+                    foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Name))
                     {
                         string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
                         if (cluster.IsBaseGame && sector.IsBaseGame)
+                        {
                             sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_macro";
+                        }
                         else if (cluster.IsBaseGame)
+                        {
                             sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}_macro";
+                        }
 
                         // Check if a factory exists for this sector, then add the sector
                         if (AllFactories.Any(a => a.Value.Location?.Macro != null && a.Value.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase)))
-                            cmbSector.Items.Add(sector);
+                        {
+                            _ = cmbSector.Items.Add(sector);
+                        }
                     }
                 }
             }
@@ -90,30 +105,43 @@ namespace X4SectorCreator.Forms
 
         private static Cluster GetClusterFromFactory(Factory factory)
         {
-            if (string.IsNullOrWhiteSpace(factory.Location?.Macro)) return null;
+            if (string.IsNullOrWhiteSpace(factory.Location?.Macro))
+            {
+                return null;
+            }
 
             string factoryLocation = factory.Location.Macro;
-            var allClusters = MainForm.Instance.AllClusters;
+            Dictionary<(int, int), Cluster> allClusters = MainForm.Instance.AllClusters;
 
-            foreach (var cluster in allClusters)
+            foreach (KeyValuePair<(int, int), Cluster> cluster in allClusters)
             {
                 string clusterCode = $"PREFIX_CL_c{cluster.Value.Id:D3}_macro";
                 if (cluster.Value.IsBaseGame)
+                {
                     clusterCode = $"{cluster.Value.BaseGameMapping}_macro";
+                }
 
                 if (factoryLocation.Equals(clusterCode, StringComparison.OrdinalIgnoreCase))
+                {
                     return cluster.Value;
-                
-                foreach (var sector in cluster.Value.Sectors)
+                }
+
+                foreach (Sector sector in cluster.Value.Sectors)
                 {
                     string sectorCode = $"PREFIX_SE_c{cluster.Value.Id:D3}_s{sector.Id:D3}_macro";
                     if (cluster.Value.IsBaseGame && sector.IsBaseGame)
+                    {
                         sectorCode = $"{cluster.Value.BaseGameMapping}_{sector.BaseGameMapping}_macro";
+                    }
                     else if (cluster.Value.IsBaseGame)
+                    {
                         sectorCode = $"PREFIX_SE_c{cluster.Value.BaseGameMapping}_s{sector.Id}_macro";
+                    }
 
                     if (factoryLocation.Equals(sectorCode, StringComparison.OrdinalIgnoreCase))
+                    {
                         return cluster.Value;
+                    }
                 }
             }
 
@@ -128,9 +156,12 @@ namespace X4SectorCreator.Forms
         private void BtnResetFilter_Click(object sender, EventArgs e)
         {
             _applyFilter = false;
-            var comboboxes = new[] { cmbFaction, cmbCluster, cmbSector };
-            foreach (var cmb in comboboxes)
+            ComboBox[] comboboxes = new[] { cmbFaction, cmbCluster, cmbSector };
+            foreach (ComboBox cmb in comboboxes)
+            {
                 cmb.SelectedItem = "Any";
+            }
+
             _applyFilter = true;
 
             // Apply filter only once
@@ -140,9 +171,12 @@ namespace X4SectorCreator.Forms
 
         public void ApplyCurrentFilter()
         {
-            if (!_applyFilter) return;
+            if (!_applyFilter)
+            {
+                return;
+            }
 
-            var suitableFactories = AllFactories.Values.ToList();
+            List<Factory> suitableFactories = AllFactories.Values.ToList();
 
             // Remove factories based on rules
             HandleFilterOption(cmbFaction, suitableFactories);
@@ -151,42 +185,53 @@ namespace X4SectorCreator.Forms
 
             // Add all suitable factories to the listbox
             ListFactories.Items.Clear();
-            foreach (var factory in suitableFactories)
-                ListFactories.Items.Add(factory);
+            foreach (Factory factory in suitableFactories)
+            {
+                _ = ListFactories.Items.Add(factory);
+            }
         }
 
         private void HandleFilterOption(ComboBox comboBox, List<Factory> factories)
         {
             // General "Any" check
-            var value = comboBox.SelectedItem as string;
+            string value = comboBox.SelectedItem as string;
             if (!string.IsNullOrWhiteSpace(value) && value.Equals("Any", StringComparison.OrdinalIgnoreCase))
+            {
                 return;
+            }
 
             if (comboBox == cmbFaction)
             {
-                var owner = cmbFaction.SelectedItem as string;
-                factories.RemoveAll(a => string.IsNullOrWhiteSpace(a.Owner) || !a.Owner.Equals(owner, StringComparison.OrdinalIgnoreCase));
+                string owner = cmbFaction.SelectedItem as string;
+                _ = factories.RemoveAll(a => string.IsNullOrWhiteSpace(a.Owner) || !a.Owner.Equals(owner, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbCluster)
             {
-                var cluster = cmbCluster.SelectedItem as Cluster;
+                Cluster cluster = cmbCluster.SelectedItem as Cluster;
                 string clusterCode = $"PREFIX_CL_c{cluster.Id:D3}";
                 if (cluster.IsBaseGame)
+                {
                     clusterCode = $"{cluster.BaseGameMapping}";
-                factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
+                }
+
+                _ = factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
             }
             else if (comboBox == cmbSector)
             {
-                var sector = cmbSector.SelectedItem as Sector;
-                var cluster = cmbCluster.SelectedItem as Cluster;
+                Sector sector = cmbSector.SelectedItem as Sector;
+                Cluster cluster = cmbCluster.SelectedItem as Cluster;
 
                 string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
                 if (cluster.IsBaseGame && sector.IsBaseGame)
+                {
                     sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
+                }
                 else if (cluster.IsBaseGame)
+                {
                     sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
+                }
 
-                factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
+                _ = factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
             }
             else
             {
@@ -203,7 +248,10 @@ namespace X4SectorCreator.Forms
         {
             // To adjust sector options
             if (_applyFilter)
+            {
                 UpdateAvailableFilterOptions();
+            }
+
             ApplyCurrentFilter();
         }
 
@@ -215,10 +263,16 @@ namespace X4SectorCreator.Forms
         private void BtnCreateCustom_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible) return;
+            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            {
+                return;
+            }
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible) return;
+            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible)
+            {
+                return;
+            }
 
             FactoryForm.Value.Show();
         }
@@ -226,10 +280,16 @@ namespace X4SectorCreator.Forms
         private void BtnCreateFromTemplate_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible) return;
+            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            {
+                return;
+            }
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible) return;
+            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible)
+            {
+                return;
+            }
 
             FactoryTemplatesForm.Value.FactoryForm = FactoryForm.Value;
             FactoryTemplatesForm.Value.Show();
@@ -238,7 +298,10 @@ namespace X4SectorCreator.Forms
         private void BtnRemoveFactory_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible) return;
+            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            {
+                return;
+            }
 
             if (ListFactories.SelectedItem is Factory factory)
             {
@@ -251,7 +314,7 @@ namespace X4SectorCreator.Forms
                 ListFactories.SelectedItem = index >= 0 && ListFactories.Items.Count > 0 ? ListFactories.Items[index] : null;
 
                 // Remove also from factories collection itself
-                AllFactories.Remove(factory.Id);
+                _ = AllFactories.Remove(factory.Id);
 
                 UpdateAvailableFilterOptions();
             }
@@ -259,13 +322,22 @@ namespace X4SectorCreator.Forms
 
         private void ListFactories_DoubleClick(object sender, EventArgs e)
         {
-            if (ListFactories.SelectedItem is not Factory factory) return;
+            if (ListFactories.SelectedItem is not Factory factory)
+            {
+                return;
+            }
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible) return;
+            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible)
+            {
+                return;
+            }
 
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible) return;
+            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            {
+                return;
+            }
 
             FactoryForm.Value.IsEditing = true;
             FactoryForm.Value.Factory = factory;

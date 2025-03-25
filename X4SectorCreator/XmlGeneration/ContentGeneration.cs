@@ -44,7 +44,7 @@ namespace X4SectorCreator.XmlGeneration
                     }
 
                     bool breaked = false;
-                    foreach (var zone in sector.Zones)
+                    foreach (Zone zone in sector.Zones)
                     {
                         if (!zone.IsBaseGame)
                         {
@@ -63,7 +63,9 @@ namespace X4SectorCreator.XmlGeneration
                         }
                     }
                     if (breaked)
+                    {
                         break;
+                    }
                 }
             }
 

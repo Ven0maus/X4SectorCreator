@@ -25,12 +25,17 @@ namespace X4SectorCreator.XmlGeneration
             }
             else
             {
-                if (JobsForm.AllJobs.Count == 0) return;
+                if (JobsForm.AllJobs.Count == 0)
+                {
+                    return;
+                }
 
-                var addElement = new XElement("add", new XAttribute("sel", "//jobs"));
-                var jobs = CollectJobs(modPrefix);
-                foreach (var job in jobs)
+                XElement addElement = new("add", new XAttribute("sel", "//jobs"));
+                IEnumerable<XElement> jobs = CollectJobs(modPrefix);
+                foreach (XElement job in jobs)
+                {
                     addElement.Add(job);
+                }
 
                 // Replace entire job file
                 XDocument xmlDocument = new(
@@ -45,25 +50,29 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> CollectJobs(string modPrefix)
         {
-            foreach (var job in JobsForm.AllJobs)
+            foreach (KeyValuePair<string, Objects.Job> job in JobsForm.AllJobs)
             {
-                var originalId = job.Value.Id;
-                var originalBasket = job.Value.Basket?.Basket;
+                string originalId = job.Value.Id;
+                string originalBasket = job.Value.Basket?.Basket;
 
                 // Prepend prefix
                 job.Value.Id = $"{modPrefix}_{job.Value.Id}";
                 if (job.Value.Basket?.Basket != null)
+                {
                     job.Value.Basket.Basket = job.Value.Basket.Basket.Replace("PREFIX", modPrefix);
+                }
 
                 // Serialize
-                var jobElementXml = job.Value.SerializeJob();
+                string jobElementXml = job.Value.SerializeJob();
 
                 // Reset
                 job.Value.Id = originalId;
                 if (job.Value.Basket?.Basket != null)
+                {
                     job.Value.Basket.Basket = originalBasket;
+                }
 
-                var jobElement = XElement.Parse(jobElementXml);
+                XElement jobElement = XElement.Parse(jobElementXml);
                 yield return jobElement;
             }
         }

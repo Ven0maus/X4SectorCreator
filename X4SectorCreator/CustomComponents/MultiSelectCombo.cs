@@ -37,13 +37,16 @@ namespace X4SectorCreator.CustomComponents
 
         public void Select(params object[] objs)
         {
-            foreach (var obj in objs)
+            foreach (object obj in objs)
             {
                 if (_container.Items.Contains(obj))
                 {
-                    var index = _container.Items.IndexOf(obj);
-                    var prevState = _container.GetItemCheckState(index);
-                    if (prevState == CheckState.Checked) return;
+                    int index = _container.Items.IndexOf(obj);
+                    CheckState prevState = _container.GetItemCheckState(index);
+                    if (prevState == CheckState.Checked)
+                    {
+                        return;
+                    }
 
                     _container.SetItemChecked(index, true);
                 }

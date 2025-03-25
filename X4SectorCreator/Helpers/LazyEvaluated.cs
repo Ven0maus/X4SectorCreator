@@ -20,7 +20,10 @@
             get
             {
                 if (_value == null || !_evaluator.Invoke(_value))
+                {
                     _value = _initializer.Invoke();
+                }
+
                 return _value;
             }
         }

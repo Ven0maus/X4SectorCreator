@@ -23,12 +23,17 @@ namespace X4SectorCreator.Objects
 
         public void AutoPositionSectors()
         {
-            var sectorCount = Sectors.Count;
-            if (sectorCount <= 1) return; // Always centered, placement has no effect
+            int sectorCount = Sectors.Count;
+            if (sectorCount <= 1)
+            {
+                return; // Always centered, placement has no effect
+            }
 
-            var combination = SectorForm.ValidSectorCombinations.First(a => a.Length == sectorCount);
-            for (int i=0; i < sectorCount; i++)
+            SectorPlacement[] combination = SectorForm.ValidSectorCombinations.First(a => a.Length == sectorCount);
+            for (int i = 0; i < sectorCount; i++)
+            {
                 Sectors[i].Placement = combination[i];
+            }
         }
 
         public object Clone()

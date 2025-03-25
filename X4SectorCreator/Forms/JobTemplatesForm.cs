@@ -16,7 +16,7 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Collect all filter options
-            var filterOptions = _templateJobs.Value
+            HashSet<string> filterOptions = _templateJobs.Value
                 .GroupBy(a => a.TemplateDirectory)
                 .Select(a => a.Key)
                 .OrderBy(a => a)
@@ -24,31 +24,37 @@ namespace X4SectorCreator.Forms
 
             // Setup filter options
             CmbFilterOption.Items.Clear();
-            foreach (var option in filterOptions)
-                CmbFilterOption.Items.Add(option);
+            foreach (string option in filterOptions)
+            {
+                _ = CmbFilterOption.Items.Add(option);
+            }
 
             // Show by default vanilla option if present
             if (filterOptions.Contains("Vanilla"))
+            {
                 CmbFilterOption.SelectedItem = "Vanilla";
+            }
         }
 
         private static IEnumerable<Job> InitTemplateJobs()
         {
-            var directoryPath = Path.Combine(Application.StartupPath, _templateJobsPath);
+            string directoryPath = Path.Combine(Application.StartupPath, _templateJobsPath);
             if (!Directory.Exists(directoryPath))
+            {
                 yield break;
+            }
 
             // Collect all jobs.xml files in the sub directories and returns them
-            foreach (var subDirectory in Directory.GetDirectories(directoryPath))
+            foreach (string subDirectory in Directory.GetDirectories(directoryPath))
             {
                 string templateName = Path.GetFileName(subDirectory);
                 string jobFilePath = Path.Combine(subDirectory, "jobs.xml");
 
                 if (File.Exists(jobFilePath))
                 {
-                    var xml = File.ReadAllText(jobFilePath);
+                    string xml = File.ReadAllText(jobFilePath);
                     Jobs jobs = Jobs.DeserializeJobs(xml);
-                    foreach (var job in jobs.JobList)
+                    foreach (Job job in jobs.JobList)
                     {
                         job.TemplateDirectory = templateName;
                         yield return job;
@@ -88,7 +94,7 @@ namespace X4SectorCreator.Forms
 
         private void CmbFilterOption_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedFilterOption = CmbFilterOption.SelectedItem as string;
+            string selectedFilterOption = CmbFilterOption.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(selectedFilterOption))
             {
                 ListTemplateJobs.Items.Clear();
@@ -96,20 +102,25 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            var jobs = _templateJobs.Value
+            Job[] jobs = _templateJobs.Value
                 .Where(a => a.TemplateDirectory.Equals(selectedFilterOption))
                 .OrderBy(a => a.ToString())
                 .ToArray();
 
             ListTemplateJobs.Items.Clear();
-            foreach (var job in jobs)
-                ListTemplateJobs.Items.Add(job);
+            foreach (Job job in jobs)
+            {
+                _ = ListTemplateJobs.Items.Add(job);
+            }
         }
 
         private void ListTemplateJobs_DoubleClick(object sender, EventArgs e)
         {
-            var selectedFilterOption = CmbFilterOption.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(selectedFilterOption)) return;
+            string selectedFilterOption = CmbFilterOption.SelectedItem as string;
+            if (string.IsNullOrWhiteSpace(selectedFilterOption))
+            {
+                return;
+            }
 
             // Select
             BtnSelectExampleJob.PerformClick();
