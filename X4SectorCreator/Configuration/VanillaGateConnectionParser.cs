@@ -2,6 +2,7 @@
 using System.Numerics;
 using System.Text.Json;
 using System.Xml.Linq;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Configuration

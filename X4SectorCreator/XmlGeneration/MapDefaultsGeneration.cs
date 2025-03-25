@@ -1,6 +1,8 @@
 ﻿using System.Globalization;
 using System.Xml.Linq;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
+using Extensions = X4SectorCreator.Helpers.Extensions;
 
 namespace X4SectorCreator.XmlGeneration
 {

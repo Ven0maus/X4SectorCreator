@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Objects;
+﻿using X4SectorCreator.Helpers;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -6,11 +7,8 @@ namespace X4SectorCreator.Forms
     {
         public static readonly Dictionary<string, Factory> AllFactories = new(StringComparer.OrdinalIgnoreCase);
 
-        private FactoryForm _factoryForm;
-        public FactoryForm FactoryForm => _factoryForm != null && !_factoryForm.IsDisposed ? _factoryForm : (_factoryForm = new FactoryForm());
-
-        private FactoryTemplatesForm _factoryTemplatesForm;
-        public FactoryTemplatesForm FactoryTemplatesForm => _factoryTemplatesForm != null && !_factoryTemplatesForm.IsDisposed ? _factoryTemplatesForm : (_factoryTemplatesForm = new FactoryTemplatesForm());
+        public readonly LazyEvaluated<FactoryForm> FactoryForm = new(() => new FactoryForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<FactoryTemplatesForm> FactoryTemplatesForm = new(() => new FactoryTemplatesForm(), a => !a.IsDisposed);
 
         private bool _applyFilter = true;
 
@@ -123,7 +121,7 @@ namespace X4SectorCreator.Forms
             return null;
         }
 
-        private void BtnExitJobWindow_Click(object sender, EventArgs e)
+        private void BtnExitFactoryWindow_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -203,31 +201,31 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreateCustom_Click(object sender, EventArgs e)
         {
-            // Job creation/edit is ongoing at the moment
-            if (FactoryForm != null && !FactoryForm.IsDisposed && FactoryForm.Visible) return;
+            // Factory creation/edit is ongoing at the moment
+            if (FactoryForm.IsInitializedAndValid && FactoryForm.Value.Visible) return;
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm != null && !FactoryTemplatesForm.IsDisposed && FactoryTemplatesForm.Visible) return;
+            if (FactoryTemplatesForm.IsInitializedAndValid && FactoryTemplatesForm.Value.Visible) return;
 
-            FactoryForm.Show();
+            FactoryForm.Value.Show();
         }
 
         private void BtnCreateFromTemplate_Click(object sender, EventArgs e)
         {
-            // Job creation/edit is ongoing at the moment
-            if (FactoryForm != null && !FactoryForm.IsDisposed && FactoryForm.Visible) return;
+            // Factory creation/edit is ongoing at the moment
+            if (FactoryForm.IsInitializedAndValid && FactoryForm.Value.Visible) return;
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm != null && !FactoryTemplatesForm.IsDisposed && FactoryTemplatesForm.Visible) return;
+            if (FactoryTemplatesForm.IsInitializedAndValid && FactoryTemplatesForm.Value.Visible) return;
 
-            FactoryTemplatesForm.ProductForm = FactoryForm;
-            FactoryTemplatesForm.Show();
+            FactoryTemplatesForm.Value.ProductForm = FactoryForm.Value;
+            FactoryTemplatesForm.Value.Show();
         }
 
-        private void BtnRemoveJob_Click(object sender, EventArgs e)
+        private void BtnRemoveFactory_Click(object sender, EventArgs e)
         {
-            // Job creation/edit is ongoing at the moment
-            if (FactoryForm != null && !FactoryForm.IsDisposed && FactoryForm.Visible) return;
+            // Factory creation/edit is ongoing at the moment
+            if (FactoryForm.IsInitializedAndValid && FactoryForm.Value.Visible) return;
 
             if (ListFactories.SelectedItem is Factory factory)
             {
@@ -246,19 +244,19 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private void ListJobs_DoubleClick(object sender, EventArgs e)
+        private void ListFactories_DoubleClick(object sender, EventArgs e)
         {
             if (ListFactories.SelectedItem is not Factory factory) return;
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm != null && !FactoryTemplatesForm.IsDisposed && FactoryTemplatesForm.Visible) return;
+            if (FactoryTemplatesForm.IsInitializedAndValid && FactoryTemplatesForm.Value.Visible) return;
 
-            // Job creation/edit is ongoing at the moment
-            if (FactoryForm != null && !FactoryForm.IsDisposed && FactoryForm.Visible) return;
+            // Factory creation/edit is ongoing at the moment
+            if (FactoryForm.IsInitializedAndValid && FactoryForm.Value.Visible) return;
 
-            FactoryForm.IsEditing = true;
-            FactoryForm.Factory = factory;
-            FactoryForm.Show();
+            FactoryForm.Value.IsEditing = true;
+            FactoryForm.Value.Factory = factory;
+            FactoryForm.Value.Show();
         }
     }
 }

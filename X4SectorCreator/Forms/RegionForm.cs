@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 using Region = X4SectorCreator.Objects.Region;
 

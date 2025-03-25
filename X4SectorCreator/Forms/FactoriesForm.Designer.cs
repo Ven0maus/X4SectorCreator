@@ -51,7 +51,7 @@
             ListFactories.Name = "ListFactories";
             ListFactories.Size = new Size(259, 394);
             ListFactories.TabIndex = 0;
-            ListFactories.DoubleClick += ListJobs_DoubleClick;
+            ListFactories.DoubleClick += ListFactories_DoubleClick;
             // 
             // label1
             // 
@@ -81,7 +81,7 @@
             BtnRemoveFactory.TabIndex = 4;
             BtnRemoveFactory.Text = "Remove Selected Factory";
             BtnRemoveFactory.UseVisualStyleBackColor = true;
-            BtnRemoveFactory.Click += BtnRemoveJob_Click;
+            BtnRemoveFactory.Click += BtnRemoveFactory_Click;
             // 
             // BtnExitFactoriesWindow
             // 
@@ -91,7 +91,7 @@
             BtnExitFactoriesWindow.TabIndex = 5;
             BtnExitFactoriesWindow.Text = "Exit Factories Window";
             BtnExitFactoriesWindow.UseVisualStyleBackColor = true;
-            BtnExitFactoriesWindow.Click += BtnExitJobWindow_Click;
+            BtnExitFactoriesWindow.Click += BtnExitFactoryWindow_Click;
             // 
             // cmbFaction
             // 
