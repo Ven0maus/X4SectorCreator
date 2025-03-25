@@ -60,6 +60,7 @@ namespace X4SectorCreator.Configuration
                 RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
                 GalaxyName = GalaxySettingsForm.GalaxyName,
                 VanillaChanges = vanillaChanges,
+                Factories = FactoriesForm.AllFactories.Select(a => a.Value).ToList(),
                 Jobs = JobsForm.AllJobs.Select(a => a.Value).ToList(),
                 Baskets = JobsForm.AllBaskets.Select(a => a.Value).ToList(),
                 Version = new VersionChecker().CurrentVersion
