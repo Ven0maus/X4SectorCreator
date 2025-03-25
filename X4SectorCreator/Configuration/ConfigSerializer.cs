@@ -93,6 +93,13 @@ namespace X4SectorCreator.Configuration
             GalaxySettingsForm.GalaxyName = configObj.GalaxyName;
             GalaxySettingsForm.IsCustomGalaxy = configObj.IsCustomGalaxy;
 
+            FactoriesForm.AllFactories.Clear();
+            if (configObj.Factories != null && configObj.Factories.Count > 0)
+            {
+                foreach (var factory in configObj.Factories)
+                    FactoriesForm.AllFactories.Add(factory.Id, factory);
+            }
+
             JobsForm.AllJobs.Clear();
             if (configObj.Jobs != null && configObj.Jobs.Count > 0)
             {

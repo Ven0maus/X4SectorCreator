@@ -661,6 +661,7 @@ namespace X4SectorCreator
                 GalaxySettingsForm.IsCustomGalaxy = false;
 
                 RegionDefinitionForm.RegionDefinitions.Clear();
+                Forms.FactoriesForm.AllFactories.Clear();
                 JobsForm.AllJobs.Clear();
                 JobsForm.AllBaskets.Clear();
             }

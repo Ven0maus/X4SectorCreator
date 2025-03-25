@@ -53,8 +53,8 @@ namespace X4SectorCreator.Forms
             const string lblOwner = "Owner:";
             const string lblFactionSpace = "Spawn in space owned by:";
             Dictionary<string, string> modInfo = MultiInputDialog.Show("Select Faction",
-                (lblOwner, [.. MainForm.Instance.FactionColorMapping.Keys.OrderBy(a => a)], null),
-                (lblFactionSpace, [.. MainForm.Instance.FactionColorMapping.Keys.OrderBy(a => a)], null)
+                (lblOwner, [.. MainForm.Instance.FactionColorMapping.Keys.Append("Ownerless").OrderBy(a => a)], null),
+                (lblFactionSpace, [.. MainForm.Instance.FactionColorMapping.Keys.Append("Ownerless").OrderBy(a => a)], null)
             );
 
             if (modInfo == null || modInfo.Count != 2)

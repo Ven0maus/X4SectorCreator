@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -9,12 +10,16 @@ namespace X4SectorCreator.XmlGeneration
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
             var stationsContent = CollectStationsContent(modPrefix, clusters).ToArray();
+            var productsContent = CollectProductsContent(modPrefix).ToArray();
 
             // Replace entire god file
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
                 var stationsNode = stationsContent.Length == 0 ? null :
                     new XElement("stations", stationsContent);
+
+                var productsNode = productsContent.Length == 0 ? null :
+                    new XElement("products", productsContent);
 
                 XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
                 XDocument xmlDocument = new(
@@ -23,6 +28,7 @@ namespace X4SectorCreator.XmlGeneration
                         new XElement("replace", new XAttribute("sel", "//god"),
                         new XElement("god", new XAttribute(XNamespace.Xmlns + "xsi", xsi),
                             new XAttribute(xsi + "noNamespaceSchemaLocation", "libraries.xsd"),
+                            productsNode,
                             stationsNode
                             )
                         )
@@ -32,19 +38,52 @@ namespace X4SectorCreator.XmlGeneration
             }
             else
             {
+                var diffContent = new XElement("diff");
+
+                if (productsContent.Length > 0)
+                {
+                    diffContent.Add(new XElement("add",
+                                new XAttribute("sel", "/god/products"),
+                                productsContent
+                            ));
+                }
+
                 if (stationsContent.Length > 0)
+                {
+                    diffContent.Add(new XElement("add",
+                                new XAttribute("sel", "/god/stations"),
+                                stationsContent
+                            ));
+                }
+
+                if (!diffContent.IsEmpty)
                 {
                     XDocument xmlDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
-                        new XElement("diff",
-                            new XElement("add", 
-                                new XAttribute("sel", "/god/stations"),
-                                stationsContent
-                            )
-                        )
+                        diffContent
                     );
                     xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/god.xml")));
                 }
+            }
+        }
+
+        private static IEnumerable<XElement> CollectProductsContent(string modPrefix)
+        {
+            foreach (var factory in FactoriesForm.AllFactories)
+            {
+                var originalId = factory.Value.Id;
+
+                // Prepend prefix
+                factory.Value.Id = $"{modPrefix}_{factory.Value.Id}";
+
+                // Serialize
+                var factoryElementXml = factory.Value.SerializeFactory();
+
+                // Reset
+                factory.Value.Id = originalId;
+
+                var factoryElement = XElement.Parse(factoryElementXml);
+                yield return factoryElement;
             }
         }
 
