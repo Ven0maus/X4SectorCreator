@@ -1,29 +1,15 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
     public partial class RegionDefinitionForm : Form
     {
-        private RegionResourcesForm _regionResourcesForm;
-        public RegionResourcesForm RegionResourcesForm => _regionResourcesForm != null && !_regionResourcesForm.IsDisposed
-            ? _regionResourcesForm
-            : (_regionResourcesForm = new RegionResourcesForm());
-
-        private RegionFalloffForm _regionFalloffForm;
-        public RegionFalloffForm RegionFalloffForm => _regionFalloffForm != null && !_regionFalloffForm.IsDisposed
-            ? _regionFalloffForm
-            : (_regionFalloffForm = new RegionFalloffForm());
-
-        private RegionFieldsForm _regionFieldsForm;
-        public RegionFieldsForm RegionFieldsForm => _regionFieldsForm != null && !_regionFieldsForm.IsDisposed
-            ? _regionFieldsForm
-            : (_regionFieldsForm = new RegionFieldsForm());
-
-        private RegionPredefinedFieldsForm _regionPredefinedFieldsForm;
-        public RegionPredefinedFieldsForm RegionPredefinedFieldsForm => _regionPredefinedFieldsForm != null && !_regionPredefinedFieldsForm.IsDisposed
-            ? _regionPredefinedFieldsForm
-            : (_regionPredefinedFieldsForm = new RegionPredefinedFieldsForm());
+        public readonly LazyEvaluated<RegionResourcesForm> RegionResourcesForm = new(() => new RegionResourcesForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<RegionFalloffForm> RegionFalloffForm = new(() => new RegionFalloffForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<RegionFieldsForm> RegionFieldsForm = new(() => new RegionFieldsForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<RegionPredefinedFieldsForm> RegionPredefinedFieldsForm = new(() => new RegionPredefinedFieldsForm(), a => !a.IsDisposed);
 
         public static readonly List<RegionDefinition> RegionDefinitions = [];
 
@@ -208,7 +194,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnResourcesAdd_Click(object sender, EventArgs e)
         {
-            RegionResourcesForm.Show();
+            RegionResourcesForm.Value.Show();
         }
 
         private void BtnResourcesDel_Click(object sender, EventArgs e)
@@ -229,7 +215,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnFalloffAdd_Click(object sender, EventArgs e)
         {
-            RegionFalloffForm.Show();
+            RegionFalloffForm.Value.Show();
         }
 
         private void BtnFalloffDel_Click(object sender, EventArgs e)
@@ -291,7 +277,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnFieldsAddCustom_Click(object sender, EventArgs e)
         {
-            RegionFieldsForm.Show();
+            RegionFieldsForm.Value.Show();
         }
 
         private void BtnFieldsDel_Click(object sender, EventArgs e)
@@ -312,7 +298,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnAddPredefined_Click(object sender, EventArgs e)
         {
-            RegionPredefinedFieldsForm.Show();
+            RegionPredefinedFieldsForm.Value.Show();
         }
 
         private void ListBoxFields_DoubleClick(object sender, EventArgs e)
@@ -322,8 +308,8 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            RegionFieldsForm.FieldObj = selectedField;
-            RegionFieldsForm.Show();
+            RegionFieldsForm.Value.FieldObj = selectedField;
+            RegionFieldsForm.Value.Show();
         }
 
         private void ListBoxResources_DoubleClick(object sender, EventArgs e)
@@ -333,8 +319,8 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            RegionResourcesForm.Resource = selectedResource;
-            RegionResourcesForm.Show();
+            RegionResourcesForm.Value.Resource = selectedResource;
+            RegionResourcesForm.Value.Show();
         }
 
         private void ListBoxLateral_DoubleClick(object sender, EventArgs e)
@@ -344,8 +330,8 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            RegionFalloffForm.StepObj = selectedStep;
-            RegionFalloffForm.Show();
+            RegionFalloffForm.Value.StepObj = selectedStep;
+            RegionFalloffForm.Value.Show();
         }
 
         private void ListBoxRadial_DoubleClick(object sender, EventArgs e)
@@ -355,8 +341,8 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            RegionFalloffForm.StepObj = selectedStep;
-            RegionFalloffForm.Show();
+            RegionFalloffForm.Value.StepObj = selectedStep;
+            RegionFalloffForm.Value.Show();
         }
     }
 }

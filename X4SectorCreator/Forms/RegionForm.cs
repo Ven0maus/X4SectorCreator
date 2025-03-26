@@ -52,8 +52,7 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private RegionDefinitionForm _regionDefinitionForm;
-        public RegionDefinitionForm RegionDefinitionForm => _regionDefinitionForm != null && !_regionDefinitionForm.IsDisposed ? _regionDefinitionForm : (_regionDefinitionForm = new RegionDefinitionForm());
+        public readonly LazyEvaluated<RegionDefinitionForm> RegionDefinitionForm = new(() => new RegionDefinitionForm(), a => !a.IsDisposed);
 
         #region Hexagon Data
         private readonly int _hexRadius;
@@ -263,13 +262,13 @@ namespace X4SectorCreator.Forms
             UpdateRegionPosition();
 
             // Init listbox definitions stored by user
-            foreach (RegionDefinition definition in RegionDefinitionForm.RegionDefinitions.OrderBy(a => a.Name))
+            foreach (RegionDefinition definition in Forms.RegionDefinitionForm.RegionDefinitions.OrderBy(a => a.Name))
             {
                 _ = ListBoxRegionDefinitions.Items.Add(definition);
             }
 
-            ListBoxRegionDefinitions.SelectedItem = RegionDefinitionForm.RegionDefinitions.Count > 0 ?
-                RegionDefinitionForm.RegionDefinitions.OrderBy(a => a.Name).First() : null;
+            ListBoxRegionDefinitions.SelectedItem = Forms.RegionDefinitionForm.RegionDefinitions.Count > 0 ?
+                Forms.RegionDefinitionForm.RegionDefinitions.OrderBy(a => a.Name).First() : null;
         }
 
         private void BtnCreateRegion_Click(object sender, EventArgs e)
@@ -343,8 +342,8 @@ namespace X4SectorCreator.Forms
 
         private void BtnNewDefinition_Click(object sender, EventArgs e)
         {
-            RegionDefinitionForm.InitDefaultFalloff();
-            RegionDefinitionForm.Show();
+            RegionDefinitionForm.Value.InitDefaultFalloff();
+            RegionDefinitionForm.Value.Show();
         }
 
         private void BtnRemoveDefinition_Click(object sender, EventArgs e)
@@ -376,7 +375,7 @@ namespace X4SectorCreator.Forms
 
             int index = ListBoxRegionDefinitions.Items.IndexOf(selectedRegionDefinition);
             ListBoxRegionDefinitions.Items.Remove(selectedRegionDefinition);
-            _ = RegionDefinitionForm.RegionDefinitions.Remove(selectedRegionDefinition); // remove from static cache
+            _ = Forms.RegionDefinitionForm.RegionDefinitions.Remove(selectedRegionDefinition); // remove from static cache
 
             // Ensure index is within valid range
             index--;
@@ -391,8 +390,8 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            RegionDefinitionForm.RegionDefinition = selectedRegionDefinition;
-            RegionDefinitionForm.Show();
+            RegionDefinitionForm.Value.RegionDefinition = selectedRegionDefinition;
+            RegionDefinitionForm.Value.Show();
         }
     }
 }

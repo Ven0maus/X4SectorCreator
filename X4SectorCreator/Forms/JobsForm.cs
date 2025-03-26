@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Objects;
+﻿using X4SectorCreator.Helpers;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
@@ -7,14 +8,9 @@ namespace X4SectorCreator.Forms
         public static readonly Dictionary<string, Job> AllJobs = new(StringComparer.OrdinalIgnoreCase);
         public static readonly Dictionary<string, Basket> AllBaskets = new(StringComparer.OrdinalIgnoreCase);
 
-        private JobForm _jobForm;
-        public JobForm JobForm => _jobForm != null && !_jobForm.IsDisposed ? _jobForm : (_jobForm = new JobForm());
-
-        private JobTemplatesForm _jobTemplatesForm;
-        public JobTemplatesForm JobTemplatesForm => _jobTemplatesForm != null && !_jobTemplatesForm.IsDisposed ? _jobTemplatesForm : (_jobTemplatesForm = new JobTemplatesForm());
-
-        private BasketsForm _basketsForm;
-        public BasketsForm BasketsForm => _basketsForm != null && !_basketsForm.IsDisposed ? _basketsForm : (_basketsForm = new BasketsForm());
+        public readonly LazyEvaluated<JobForm> JobForm = new(() => new JobForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<JobTemplatesForm> JobTemplatesForm = new(() => new JobTemplatesForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<BasketsForm> BasketsForm = new(() => new BasketsForm(), a => !a.IsDisposed);
 
         private bool _applyFilter = true;
 
@@ -317,47 +313,47 @@ namespace X4SectorCreator.Forms
         private void BtnCreateCustom_Click(object sender, EventArgs e)
         {
             // Job creation/edit is ongoing at the moment
-            if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible)
+            if (JobForm.IsInitialized && JobForm.Value.Visible)
             {
                 return;
             }
 
             // Template selection is ongoing at the moment
-            if (JobTemplatesForm != null && !JobTemplatesForm.IsDisposed && JobTemplatesForm.Visible)
+            if (JobTemplatesForm.IsInitialized && JobTemplatesForm.Value.Visible)
             {
                 return;
             }
 
-            JobForm.Show();
+            JobForm.Value.Show();
         }
 
         private void BtnBaskets_Click(object sender, EventArgs e)
         {
-            BasketsForm.Show();
+            BasketsForm.Value.Show();
         }
 
         private void BtnCreateFromTemplate_Click(object sender, EventArgs e)
         {
             // Job creation/edit is ongoing at the moment
-            if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible)
+            if (JobForm.IsInitialized && JobForm.Value.Visible)
             {
                 return;
             }
 
             // Template selection is ongoing at the moment
-            if (JobTemplatesForm != null && !JobTemplatesForm.IsDisposed && JobTemplatesForm.Visible)
+            if (JobTemplatesForm.IsInitialized && JobTemplatesForm.Value.Visible)
             {
                 return;
             }
 
-            JobTemplatesForm.JobForm = JobForm;
-            JobTemplatesForm.Show();
+            JobTemplatesForm.Value.JobForm = JobForm.Value;
+            JobTemplatesForm.Value.Show();
         }
 
         private void BtnRemoveJob_Click(object sender, EventArgs e)
         {
             // Job creation/edit is ongoing at the moment
-            if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible)
+            if (JobForm.IsInitialized && JobForm.Value.Visible)
             {
                 return;
             }
@@ -387,20 +383,20 @@ namespace X4SectorCreator.Forms
             }
 
             // Template selection is ongoing at the moment
-            if (JobTemplatesForm != null && !JobTemplatesForm.IsDisposed && JobTemplatesForm.Visible)
+            if (JobTemplatesForm.IsInitialized && JobTemplatesForm.Value.Visible)
             {
                 return;
             }
 
             // Job creation/edit is ongoing at the moment
-            if (JobForm != null && !JobForm.IsDisposed && JobForm.Visible)
+            if (JobForm.IsInitialized && JobForm.Value.Visible)
             {
                 return;
             }
 
-            JobForm.IsEditing = true;
-            JobForm.Job = job;
-            JobForm.Show();
+            JobForm.Value.IsEditing = true;
+            JobForm.Value.Job = job;
+            JobForm.Value.Show();
         }
     }
 }

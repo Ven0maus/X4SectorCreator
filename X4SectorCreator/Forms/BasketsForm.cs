@@ -1,11 +1,11 @@
-﻿using X4SectorCreator.Objects;
+﻿using X4SectorCreator.Helpers;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
     public partial class BasketsForm : Form
     {
-        private BasketForm _basketForm;
-        public BasketForm BasketForm => _basketForm != null && !_basketForm.IsDisposed ? _basketForm : (_basketForm = new BasketForm());
+        public readonly LazyEvaluated<BasketForm> BasketForm = new(() => new BasketForm(), a => !a.IsDisposed);
 
         // Remember the selected option through app use
         private static string _selectedFilterOption = "Custom";
@@ -70,8 +70,8 @@ namespace X4SectorCreator.Forms
 
         private void BtnNewBasket_Click(object sender, EventArgs e)
         {
-            BasketForm.BasketsForm = this;
-            BasketForm.Show();
+            BasketForm.Value.BasketsForm = this;
+            BasketForm.Value.Show();
         }
 
         private void BtnRemoveSelected_Click(object sender, EventArgs e)
@@ -116,9 +116,9 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            BasketForm.BasketsForm = this;
-            BasketForm.Basket = basket;
-            BasketForm.Show();
+            BasketForm.Value.BasketsForm = this;
+            BasketForm.Value.Basket = basket;
+            BasketForm.Value.Show();
         }
 
         private void BtnCopyToClipboard_Click(object sender, EventArgs e)
