@@ -4,7 +4,7 @@ A tool to help mod new sectors and gate connections in *X4: Foundations*. This t
 
 ## Features
 - Clusters
-- Sectors (3 per sector)
+- Sectors (3 per cluster)
 - Gate connections
 - Regions (minerals, gases)
 - Stations
