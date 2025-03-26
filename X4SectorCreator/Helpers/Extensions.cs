@@ -5,6 +5,36 @@ namespace X4SectorCreator.Helpers
 {
     internal static class Extensions
     {
+        public static Color HexToColor(this string hexstring)
+        {
+            // Remove '#' if present
+            if (hexstring.StartsWith('#'))
+            {
+                hexstring = hexstring[1..];
+            }
+
+            // Convert hex to RGB
+            if (hexstring.Length == 6)
+            {
+                int r = Convert.ToInt32(hexstring[..2], 16);
+                int g = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                return Color.FromArgb(r, g, b);
+            }
+            else if (hexstring.Length == 8) // If it includes alpha (ARGB)
+            {
+                int a = Convert.ToInt32(hexstring[..2], 16);
+                int r = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int g = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(6, 2), 16);
+                return Color.FromArgb(a, r, g, b);
+            }
+            else
+            {
+                throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
+            }
+        }
+
         /// <summary>
         /// Removes duplicate highway connections from connections enumerable.
         /// </summary>

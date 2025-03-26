@@ -548,7 +548,7 @@ namespace X4SectorCreator
         private void RenderAllHexes(PaintEventArgs e)
         {
             // First step render non existant hexagons
-            Color nonExistantHexColor = HexToColor("#121212");
+            Color nonExistantHexColor = "#121212".HexToColor();
             foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
             {
                 RenderNonSectorGrid(e, nonExistantHexColor, hex);
@@ -736,7 +736,7 @@ namespace X4SectorCreator
             }
 
             using Pen circlePen = new(color, 2);
-            using SolidBrush circleBrush = new(HexToColor("#575757"));
+            using SolidBrush circleBrush = new("#575757".HexToColor());
 
             // Draw source and target gates
             e.Graphics.FillEllipse(circleBrush, sourceX, sourceY, diameter, diameter);
@@ -1044,36 +1044,6 @@ namespace X4SectorCreator
                 j = i;
             }
             return inside;
-        }
-
-        private static Color HexToColor(string hexstring)
-        {
-            // Remove '#' if present
-            if (hexstring.StartsWith('#'))
-            {
-                hexstring = hexstring[1..];
-            }
-
-            // Convert hex to RGB
-            if (hexstring.Length == 6)
-            {
-                int r = Convert.ToInt32(hexstring[..2], 16);
-                int g = Convert.ToInt32(hexstring.Substring(2, 2), 16);
-                int b = Convert.ToInt32(hexstring.Substring(4, 2), 16);
-                return Color.FromArgb(r, g, b);
-            }
-            else if (hexstring.Length == 8) // If it includes alpha (ARGB)
-            {
-                int a = Convert.ToInt32(hexstring[..2], 16);
-                int r = Convert.ToInt32(hexstring.Substring(2, 2), 16);
-                int g = Convert.ToInt32(hexstring.Substring(4, 2), 16);
-                int b = Convert.ToInt32(hexstring.Substring(6, 2), 16);
-                return Color.FromArgb(a, r, g, b);
-            }
-            else
-            {
-                throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
-            }
         }
 
         public static Color LerpColor(Color color1, Color color2, float t)
