@@ -7,7 +7,9 @@ A tool to help mod new sectors and gate connections in *X4: Foundations*. This t
 - Sectors (3 per cluster)
 - Gate connections
 - Regions (minerals, gases)
-- Stations
+- Unique Stations (wharf, shipyard, ..)
+- Jobs (ship quotas)
+- Factories (products)
 
 ## Installation
 1. Go to the releases page of this repository and download the latest release. (https://github.com/Ven0maus/X4SectorCreator/releases)
@@ -22,7 +24,7 @@ A tool to help mod new sectors and gate connections in *X4: Foundations*. This t
 - Use Export/Import Config to save your setup so you can continue editing it later
 
 ## Finishing and installing the mod
-1. Press **"Generate XML"**.
+1. Press **"Generate MOD"**.
 2. A prompt will appear asking for:
    - The **name of your mod folder**. (Subsequently this is the name of your mod)
    - A **unique prefix** to prevent overlap with other mods. (Prefered if you use your name to prevent conflicts with other peoples mods)
