@@ -330,10 +330,10 @@ namespace X4SectorCreator.Forms
                     JobsForm.AllJobs.Add(job.Id, job);
                 }
 
-                if (MainForm.Instance.JobsForm.Visible)
+                if (MainForm.Instance.JobsForm.Value.Visible)
                 {
-                    MainForm.Instance.JobsForm.UpdateAvailableFilterOptions();
-                    MainForm.Instance.JobsForm.ApplyCurrentFilter();
+                    MainForm.Instance.JobsForm.Value.UpdateAvailableFilterOptions();
+                    MainForm.Instance.JobsForm.Value.ApplyCurrentFilter();
                 }
                 Close();
             }

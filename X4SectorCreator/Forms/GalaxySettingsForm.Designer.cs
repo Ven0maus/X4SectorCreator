@@ -1,4 +1,4 @@
-﻿namespace X4SectorCreator
+﻿namespace X4SectorCreator.Forms
 {
     partial class GalaxySettingsForm
     {

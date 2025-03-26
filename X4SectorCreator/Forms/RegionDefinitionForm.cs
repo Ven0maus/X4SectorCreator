@@ -160,8 +160,8 @@ namespace X4SectorCreator.Forms
                     regionDefinition.Resources.AddRange(ListBoxResources.Items.Cast<Resource>());
 
                     RegionDefinitions.Add(regionDefinition);
-                    _ = MainForm.Instance.RegionForm.ListBoxRegionDefinitions.Items.Add(regionDefinition);
-                    MainForm.Instance.RegionForm.ListBoxRegionDefinitions.SelectedItem = regionDefinition;
+                    _ = MainForm.Instance.RegionForm.Value.ListBoxRegionDefinitions.Items.Add(regionDefinition);
+                    MainForm.Instance.RegionForm.Value.ListBoxRegionDefinitions.SelectedItem = regionDefinition;
                     break;
                 case "Update Region Definition":
                     RegionDefinition.Density = density.ToString("0.##");
@@ -180,10 +180,10 @@ namespace X4SectorCreator.Forms
                         .ToList();
                     RegionDefinition.Resources = ListBoxResources.Items.Cast<Resource>().ToList();
 
-                    int index = MainForm.Instance.RegionForm.ListBoxRegionDefinitions.SelectedIndex;
-                    MainForm.Instance.RegionForm.ListBoxRegionDefinitions.Items.Remove(RegionDefinition);
-                    MainForm.Instance.RegionForm.ListBoxRegionDefinitions.Items.Insert(index, RegionDefinition);
-                    MainForm.Instance.RegionForm.ListBoxRegionDefinitions.SelectedItem = RegionDefinition;
+                    int index = MainForm.Instance.RegionForm.Value.ListBoxRegionDefinitions.SelectedIndex;
+                    MainForm.Instance.RegionForm.Value.ListBoxRegionDefinitions.Items.Remove(RegionDefinition);
+                    MainForm.Instance.RegionForm.Value.ListBoxRegionDefinitions.Items.Insert(index, RegionDefinition);
+                    MainForm.Instance.RegionForm.Value.ListBoxRegionDefinitions.SelectedItem = RegionDefinition;
                     break;
             }
 

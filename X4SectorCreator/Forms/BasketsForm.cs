@@ -12,11 +12,10 @@ namespace X4SectorCreator.Forms
 
         public static readonly Lazy<List<Basket>> VanillaBaskets = new(() =>
         {
-            string vanillaBasketsPath = Path.Combine(Application.StartupPath, "Data/Mappings/vanilla_baskets.xml");
             List<Basket> list = new();
-            if (File.Exists(vanillaBasketsPath))
+            if (File.Exists(Constants.DataPaths.VanillaBasketsPath))
             {
-                string xml = File.ReadAllText(vanillaBasketsPath);
+                string xml = File.ReadAllText(Constants.DataPaths.VanillaBasketsPath);
                 Baskets baskets = Baskets.DeserializeBaskets(xml);
                 foreach (Basket basket in baskets.BasketList)
                 {

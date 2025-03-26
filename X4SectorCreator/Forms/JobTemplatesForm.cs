@@ -9,7 +9,6 @@ namespace X4SectorCreator.Forms
         public JobForm JobForm { get; set; }
 
         private static readonly Lazy<Job[]> _templateJobs = new(() => InitTemplateJobs().ToArray());
-        private const string _templateJobsPath = "Data/TemplateJobs";
 
         public JobTemplatesForm()
         {
@@ -38,7 +37,7 @@ namespace X4SectorCreator.Forms
 
         private static IEnumerable<Job> InitTemplateJobs()
         {
-            string directoryPath = Path.Combine(Application.StartupPath, _templateJobsPath);
+            string directoryPath = Constants.DataPaths.TemplateJobsDirectoryPath;
             if (!Directory.Exists(directoryPath))
             {
                 yield break;

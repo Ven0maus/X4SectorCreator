@@ -14,46 +14,31 @@ namespace X4SectorCreator
 {
     public partial class MainForm : Form
     {
-        private GalaxySettingsForm _galaxySettingsForm;
-        private SectorMapForm _sectorMapForm;
-        private ClusterForm _clusterForm;
-        private SectorForm _sectorForm;
-        private GateForm _gateForm;
-        private RegionForm _regionForm;
-        private VersionUpdateForm _versionUpdateForm;
-        private StationForm _stationForm;
-        private JobsForm _jobsForm;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public static MainForm Instance { get; private set; }
 
-        private string _currentX4Version;
-
-        private readonly string _sectorMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/sector_mappings.json");
-        private readonly string _dlcMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/dlc_mappings.json");
+        /* FORMS */
+        public readonly LazyEvaluated<GalaxySettingsForm> GalaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<RegionForm> RegionForm = new(() => new RegionForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<SectorMapForm> SectorMapForm = new(() => new SectorMapForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<ClusterForm> ClusterForm = new(() => new ClusterForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<SectorForm> SectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<GateForm> GateForm = new(() => new GateForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<VersionUpdateForm> VersionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<StationForm> StationForm = new(() => new StationForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<JobsForm> JobsForm = new(() => new JobsForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<FactoriesForm> FactoriesForm = new(() => new FactoriesForm(), a => !a.IsDisposed);
+        /* END OF FORMS */
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Dictionary<(int, int), Cluster> AllClusters { get; private set; }
 
-        public readonly Dictionary<string, Color> FactionColorMapping;
-
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public static MainForm Instance { get; private set; }
-
-        public GalaxySettingsForm GalaxySettingsForm => _galaxySettingsForm != null && !_galaxySettingsForm.IsDisposed ? _galaxySettingsForm : (_galaxySettingsForm = new GalaxySettingsForm());
-        public RegionForm RegionForm => _regionForm != null && !_regionForm.IsDisposed ? _regionForm : (_regionForm = new RegionForm());
-        public SectorMapForm SectorMapForm => _sectorMapForm != null && !_sectorMapForm.IsDisposed ? _sectorMapForm : (_sectorMapForm = new SectorMapForm());
-        public ClusterForm ClusterForm => _clusterForm != null && !_clusterForm.IsDisposed ? _clusterForm : (_clusterForm = new ClusterForm());
-        public SectorForm SectorForm => _sectorForm != null && !_sectorForm.IsDisposed ? _sectorForm : (_sectorForm = new SectorForm());
-        public GateForm GateForm => _gateForm != null && !_gateForm.IsDisposed ? _gateForm : (_gateForm = new GateForm());
-        public VersionUpdateForm VersionUpdateForm => _versionUpdateForm != null && !_versionUpdateForm.IsDisposed
-            ? _versionUpdateForm
-            : (_versionUpdateForm = new VersionUpdateForm());
-        public StationForm StationForm => _stationForm != null && !_stationForm.IsDisposed ? _stationForm : (_stationForm = new StationForm());
-        public JobsForm JobsForm => _jobsForm != null && !_jobsForm.IsDisposed ? _jobsForm : (_jobsForm = new JobsForm());
-        public readonly LazyEvaluated<FactoriesForm> FactoriesForm = new(() => new FactoriesForm(), a => !a.IsDisposed);
-
         public readonly Dictionary<string, string> BackgroundVisualMapping;
         public readonly Dictionary<string, string> DlcMappings;
+        public readonly Dictionary<string, Color> FactionColorMapping;
 
         private ClusterOption _selectedClusterOption = ClusterOption.Custom;
+        private string _currentX4Version;
 
         public MainForm()
         {
@@ -75,7 +60,7 @@ namespace X4SectorCreator
                 .ToDictionary(a => a.Value.Name, a => a.Value.BackgroundVisualMapping, StringComparer.OrdinalIgnoreCase);
 
             // Set dlc mappings
-            string json = File.ReadAllText(_dlcMappingFilePath);
+            string json = File.ReadAllText(Constants.DataPaths.DlcMappingFilePath);
             DlcMappings = JsonSerializer.Deserialize<List<DlcMapping>>(json, ConfigSerializer.SerializerOptions)
                 .ToDictionary(a => a.Dlc, a => a.Prefix);
 
@@ -88,7 +73,7 @@ namespace X4SectorCreator
 
         public ClusterCollection InitAllClusters(bool replaceAllClusters = true)
         {
-            string json = File.ReadAllText(_sectorMappingFilePath);
+            string json = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
             ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.SerializerOptions);
 
             Dictionary<(int X, int Y), Cluster> clusterLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
@@ -130,7 +115,7 @@ namespace X4SectorCreator
                     }
 
                     // Auto-determine offset for each sector
-                    SectorForm.DetermineSectorOffset(cluster.Value, sector);
+                    Forms.SectorForm.DetermineSectorOffset(cluster.Value, sector);
                 }
             }
 
@@ -187,7 +172,7 @@ namespace X4SectorCreator
 
         private void UpdateClusterOptions()
         {
-            if (GalaxySettingsForm.IsCustomGalaxy)
+            if (Forms.GalaxySettingsForm.IsCustomGalaxy)
             {
                 cmbClusterOption.Items.Clear();
                 _ = cmbClusterOption.Items.Add(ClusterOption.Custom);
@@ -208,7 +193,7 @@ namespace X4SectorCreator
         /// </summary>
         public void ToggleGalaxyMode(Dictionary<(int, int), Cluster> mergedClusters)
         {
-            AllClusters = GalaxySettingsForm.IsCustomGalaxy
+            AllClusters = Forms.GalaxySettingsForm.IsCustomGalaxy
                 ? AllClusters
                     .Where(a => !a.Value.IsBaseGame)
                     .ToDictionary(a => a.Key, a => a.Value)
@@ -219,20 +204,20 @@ namespace X4SectorCreator
 
         private void BtnGalaxySettings_Click(object sender, EventArgs e)
         {
-            GalaxySettingsForm.Initialize();
-            GalaxySettingsForm.Show();
+            GalaxySettingsForm.Value.Initialize();
+            GalaxySettingsForm.Value.Show();
         }
 
         private void BtnShowSectorMap_Click(object sender, EventArgs e)
         {
-            SectorMapForm.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
-            SectorMapForm.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
-            SectorMapForm.GateSectorSelection = false;
-            SectorMapForm.BtnSelectLocation.Enabled = false;
-            SectorMapForm.ControlPanel.Size = new Size(176, 241);
-            SectorMapForm.BtnSelectLocation.Hide();
-            SectorMapForm.Reset();
-            SectorMapForm.Show();
+            SectorMapForm.Value.DlcListBox.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
+            SectorMapForm.Value.chkShowX4Sectors.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
+            SectorMapForm.Value.GateSectorSelection = false;
+            SectorMapForm.Value.BtnSelectLocation.Enabled = false;
+            SectorMapForm.Value.ControlPanel.Size = new Size(176, 241);
+            SectorMapForm.Value.BtnSelectLocation.Hide();
+            SectorMapForm.Value.Reset();
+            SectorMapForm.Value.Show();
         }
 
         private void BtnGenerateDiffs_Click(object sender, EventArgs e)
@@ -250,7 +235,7 @@ namespace X4SectorCreator
 
             // Validate if all clusters have valid sector placements
             invalidClusters = AllClusters.Values
-                .Where(a => !SectorForm.IsClusterPlacementValid(a))
+                .Where(a => !Forms.SectorForm.IsClusterPlacementValid(a))
                 .ToArray();
             if (invalidClusters.Length != 0)
             {
@@ -294,8 +279,8 @@ namespace X4SectorCreator
             VanillaChanges vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
 
             // Generate each xml
-            string mainFolder = Path.Combine(Application.StartupPath, "GeneratedXml");
-            string modFolder = Path.Combine(Application.StartupPath, "GeneratedXml", modName);
+            string mainFolder = Constants.DataPaths.ModDirectoryPath;
+            string modFolder = Path.Combine(mainFolder, modName);
             try
             {
                 // Clear up any previous xml
@@ -357,7 +342,7 @@ namespace X4SectorCreator
 
         private VanillaChanges CollectVanillaChanges(ClusterCollection nonModifiedBaseGameData)
         {
-            if (GalaxySettingsForm.IsCustomGalaxy)
+            if (Forms.GalaxySettingsForm.IsCustomGalaxy)
             {
                 return new VanillaChanges();
             }
@@ -480,13 +465,13 @@ namespace X4SectorCreator
                 if (result.VersionInfo.AppVersion.Equals(versionChecker.CurrentVersion))
                 {
                     string newSectorMappingJson = await VersionChecker.GetUpdatedSectorMappingAsync();
-                    string oldSectorMappingJson = File.ReadAllText(_sectorMappingFilePath);
+                    string oldSectorMappingJson = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
                     if (newSectorMappingJson != null && !oldSectorMappingJson.Equals(newSectorMappingJson))
                     {
                         try
                         {
                             // Update mapping file
-                            File.WriteAllText(_sectorMappingFilePath, newSectorMappingJson);
+                            File.WriteAllText(Constants.DataPaths.SectorMappingFilePath, newSectorMappingJson);
                             ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(newSectorMappingJson, ConfigSerializer.SerializerOptions);
 
                             // Replace clusters
@@ -519,11 +504,11 @@ namespace X4SectorCreator
                 else
                 {
                     // Show update form when a new app version is available
-                    VersionUpdateForm.txtCurrentVersion.Text = $"v{versionChecker.CurrentVersion}";
-                    VersionUpdateForm.txtCurrentX4Version.Text = $"v{versionChecker.TargetGameVersion}";
-                    VersionUpdateForm.txtUpdateVersion.Text = $"v{result.VersionInfo.AppVersion}";
-                    VersionUpdateForm.txtUpdateX4Version.Text = $"v{result.VersionInfo.X4Version}";
-                    VersionUpdateForm.Show();
+                    VersionUpdateForm.Value.txtCurrentVersion.Text = $"v{versionChecker.CurrentVersion}";
+                    VersionUpdateForm.Value.txtCurrentX4Version.Text = $"v{versionChecker.TargetGameVersion}";
+                    VersionUpdateForm.Value.txtUpdateVersion.Text = $"v{result.VersionInfo.AppVersion}";
+                    VersionUpdateForm.Value.txtUpdateX4Version.Text = $"v{result.VersionInfo.X4Version}";
+                    VersionUpdateForm.Value.Show();
                 }
             }
 
@@ -657,13 +642,13 @@ namespace X4SectorCreator
             // Reset
             if (!fromImport)
             {
-                GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
-                GalaxySettingsForm.IsCustomGalaxy = false;
+                Forms.GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
+                Forms.GalaxySettingsForm.IsCustomGalaxy = false;
 
                 RegionDefinitionForm.RegionDefinitions.Clear();
                 Forms.FactoriesForm.AllFactories.Clear();
-                JobsForm.AllJobs.Clear();
-                JobsForm.AllBaskets.Clear();
+                Forms.JobsForm.AllJobs.Clear();
+                Forms.JobsForm.AllBaskets.Clear();
             }
 
             // Re-initialize all clusters properly
@@ -783,7 +768,7 @@ namespace X4SectorCreator
                     // Reset configuration
                     Reset(true);
 
-                    if (GalaxySettingsForm.IsCustomGalaxy)
+                    if (Forms.GalaxySettingsForm.IsCustomGalaxy)
                     {
                         ToggleGalaxyMode(null);
                     }
@@ -1084,7 +1069,7 @@ namespace X4SectorCreator
                 if (_clusterDlcLookup == null)
                 {
                     // Create new lookup table
-                    string json = File.ReadAllText(_sectorMappingFilePath);
+                    string json = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
                     ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.SerializerOptions);
                     _clusterDlcLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
                 }
@@ -1125,7 +1110,7 @@ namespace X4SectorCreator
                         _ = placements.Remove(sector.Placement);
                     }
 
-                    SectorForm.DetermineSectorOffset(cluster, sector);
+                    Forms.SectorForm.DetermineSectorOffset(cluster, sector);
                 }
             }
             else if (cluster.Sectors.Count > 1)
@@ -1133,14 +1118,14 @@ namespace X4SectorCreator
                 // Determine offset dynamically based on placements
                 foreach (Sector sector in cluster.Sectors)
                 {
-                    SectorForm.DetermineSectorOffset(cluster, sector);
+                    Forms.SectorForm.DetermineSectorOffset(cluster, sector);
                 }
             }
         }
 
         private void BtnOpenFolder_Click(object sender, EventArgs e)
         {
-            string directoryPath = Path.Combine(Application.StartupPath, "GeneratedXml");
+            string directoryPath = Constants.DataPaths.ModDirectoryPath;
             if (!Directory.Exists(directoryPath))
             {
                 _ = Directory.CreateDirectory(directoryPath);
@@ -1153,13 +1138,13 @@ namespace X4SectorCreator
         #region Clusters
         private void BtnNewCluster_Click(object sender, EventArgs e)
         {
-            ClusterForm.Cluster = null;
-            ClusterForm.BtnCreate.Text = "Create";
-            ClusterForm.TxtName.Text = string.Empty;
-            ClusterForm.txtDescription.Text = string.Empty;
-            ClusterForm.cmbBackgroundVisual.SelectedItem = ClusterForm.cmbBackgroundVisual.Items[0];
-            ClusterForm.TxtLocation.Text = string.Empty;
-            ClusterForm.Show();
+            ClusterForm.Value.Cluster = null;
+            ClusterForm.Value.BtnCreate.Text = "Create";
+            ClusterForm.Value.TxtName.Text = string.Empty;
+            ClusterForm.Value.txtDescription.Text = string.Empty;
+            ClusterForm.Value.cmbBackgroundVisual.SelectedItem = ClusterForm.Value.cmbBackgroundVisual.Items[0];
+            ClusterForm.Value.TxtLocation.Text = string.Empty;
+            ClusterForm.Value.Show();
         }
 
         private void BtnRemoveCluster_Click(object sender, EventArgs e)
@@ -1265,14 +1250,14 @@ namespace X4SectorCreator
 
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
 
-            ClusterForm.Cluster = cluster.Value;
-            ClusterForm.BtnCreate.Text = "Update";
-            ClusterForm.TxtName.Text = selectedClusterName;
-            ClusterForm.txtDescription.Text = cluster.Value.Description;
-            ClusterForm.cmbBackgroundVisual.SelectedItem = ClusterForm.FindBackgroundVisualMappingByCode(cluster.Value.BackgroundVisualMapping ?? cluster.Value.BaseGameMapping);
-            ClusterForm.TxtLocation.Text = cluster.Key.ToString();
-            ClusterForm.ChkAutoPlacement.Checked = !cluster.Value.CustomSectorPositioning;
-            ClusterForm.Show();
+            ClusterForm.Value.Cluster = cluster.Value;
+            ClusterForm.Value.BtnCreate.Text = "Update";
+            ClusterForm.Value.TxtName.Text = selectedClusterName;
+            ClusterForm.Value.txtDescription.Text = cluster.Value.Description;
+            ClusterForm.Value.cmbBackgroundVisual.SelectedItem = Forms.ClusterForm.FindBackgroundVisualMappingByCode(cluster.Value.BackgroundVisualMapping ?? cluster.Value.BaseGameMapping);
+            ClusterForm.Value.TxtLocation.Text = cluster.Key.ToString();
+            ClusterForm.Value.ChkAutoPlacement.Checked = !cluster.Value.CustomSectorPositioning;
+            ClusterForm.Value.Show();
         }
         #endregion
 
@@ -1293,10 +1278,10 @@ namespace X4SectorCreator
                 return;
             }
 
-            SectorForm.Sector = null;
-            SectorForm.BtnCreate.Text = "Create";
-            SectorForm.Init();
-            SectorForm.Show();
+            SectorForm.Value.Sector = null;
+            SectorForm.Value.BtnCreate.Text = "Create";
+            SectorForm.Value.Init();
+            SectorForm.Value.Show();
         }
 
         private void BtnRemoveSector_Click(object sender, EventArgs e)
@@ -1374,9 +1359,9 @@ namespace X4SectorCreator
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
-            SectorForm.Sector = sector;
-            SectorForm.BtnCreate.Text = "Update";
-            SectorForm.Show();
+            SectorForm.Value.Sector = sector;
+            SectorForm.Value.BtnCreate.Text = "Update";
+            SectorForm.Value.Show();
         }
 
         private void SectorsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1448,10 +1433,10 @@ namespace X4SectorCreator
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
-            GateForm.BtnCreateConnection.Text = "Create Connection";
-            GateForm.SourceCluster = cluster.Value;
-            GateForm.SourceSector = sector;
-            GateForm.Show();
+            GateForm.Value.BtnCreateConnection.Text = "Create Connection";
+            GateForm.Value.SourceCluster = cluster.Value;
+            GateForm.Value.SourceSector = sector;
+            GateForm.Value.Show();
         }
 
         private void BtnRemoveGate_Click(object sender, EventArgs e)
@@ -1540,7 +1525,7 @@ namespace X4SectorCreator
             Gate sourceGate = sourceZone.Gates.First(a => a.SourcePath.Equals(targetGate.DestinationPath, StringComparison.OrdinalIgnoreCase));
 
             // Set gates to be updated
-            GateForm.UpdateInfoObject = new GateForm.UpdateInfo
+            GateForm.Value.UpdateInfoObject = new GateForm.UpdateInfo
             {
                 SourceGate = sourceGate,
                 SourceZone = sourceZone,
@@ -1552,9 +1537,9 @@ namespace X4SectorCreator
                 TargetSector = targetSector,
                 TargetCluster = targetCluster
             };
-            GateForm.BtnCreateConnection.Text = "Update Connection";
-            GateForm.PrepareForUpdate();
-            GateForm.Show();
+            GateForm.Value.BtnCreateConnection.Text = "Update Connection";
+            GateForm.Value.PrepareForUpdate();
+            GateForm.Value.Show();
         }
         #endregion
 
@@ -1572,8 +1557,8 @@ namespace X4SectorCreator
             Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
-            RegionForm.Sector = sector;
-            RegionForm.Show();
+            RegionForm.Value.Sector = sector;
+            RegionForm.Value.Show();
         }
 
         private void BtnRemoveRegion_Click(object sender, EventArgs e)
@@ -1612,9 +1597,9 @@ namespace X4SectorCreator
             Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
-            RegionForm.Sector = sector;
-            RegionForm.CustomRegion = selectedRegion;
-            RegionForm.Show();
+            RegionForm.Value.Sector = sector;
+            RegionForm.Value.CustomRegion = selectedRegion;
+            RegionForm.Value.Show();
         }
         #endregion
 
@@ -1632,10 +1617,10 @@ namespace X4SectorCreator
             Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
-            StationForm.Cluster = cluster;
-            StationForm.Sector = sector;
-            StationForm.Station = null;
-            StationForm.Show();
+            StationForm.Value.Cluster = cluster;
+            StationForm.Value.Sector = sector;
+            StationForm.Value.Station = null;
+            StationForm.Value.Show();
         }
 
         private void BtnRemoveStation_Click(object sender, EventArgs e)
@@ -1683,18 +1668,18 @@ namespace X4SectorCreator
             Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
-            StationForm.Cluster = cluster;
-            StationForm.Sector = sector;
-            StationForm.Station = selectedStation;
-            StationForm.Show();
+            StationForm.Value.Cluster = cluster;
+            StationForm.Value.Sector = sector;
+            StationForm.Value.Station = selectedStation;
+            StationForm.Value.Show();
         }
         #endregion
 
         #region Jobs
         private void BtnJobs_Click(object sender, EventArgs e)
         {
-            JobsForm.Initialize();
-            JobsForm.Show();
+            JobsForm.Value.Initialize();
+            JobsForm.Value.Show();
         }
 
         [GeneratedRegex(@"[<>:""/\\|?*]")]

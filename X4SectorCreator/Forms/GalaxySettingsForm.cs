@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text;
 using X4SectorCreator.Objects;
 
-namespace X4SectorCreator
+namespace X4SectorCreator.Forms
 {
     public partial class GalaxySettingsForm : Form
     {

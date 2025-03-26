@@ -729,12 +729,12 @@ namespace X4SectorCreator.Forms
 
         private void BtnSelectSector_Click(object sender, EventArgs e)
         {
-            MainForm.Instance.SectorMapForm.GateSectorSelection = true;
-            MainForm.Instance.SectorMapForm.BtnSelectLocation.Enabled = false;
-            MainForm.Instance.SectorMapForm.ControlPanel.Size = new Size(176, 277);
-            MainForm.Instance.SectorMapForm.BtnSelectLocation.Show();
-            MainForm.Instance.SectorMapForm.Reset();
-            MainForm.Instance.SectorMapForm.Show();
+            MainForm.Instance.SectorMapForm.Value.GateSectorSelection = true;
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Enabled = false;
+            MainForm.Instance.SectorMapForm.Value.ControlPanel.Size = new Size(176, 277);
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
+            MainForm.Instance.SectorMapForm.Value.Reset();
+            MainForm.Instance.SectorMapForm.Value.Show();
         }
     }
 }

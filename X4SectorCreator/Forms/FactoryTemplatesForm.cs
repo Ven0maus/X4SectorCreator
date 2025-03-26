@@ -9,7 +9,6 @@ namespace X4SectorCreator.Forms
         public FactoryForm FactoryForm { get; set; }
 
         private static readonly Lazy<Factory[]> _templateFactories = new(() => InitTemplateFactories().ToArray());
-        private const string _templateProductsPath = "Data/TemplateFactories";
 
         public FactoryTemplatesForm()
         {
@@ -38,7 +37,7 @@ namespace X4SectorCreator.Forms
 
         private static IEnumerable<Factory> InitTemplateFactories()
         {
-            string directoryPath = Path.Combine(Application.StartupPath, _templateProductsPath);
+            string directoryPath = Constants.DataPaths.TemplateFactoriesDirectoryPath;
             if (!Directory.Exists(directoryPath))
             {
                 yield break;

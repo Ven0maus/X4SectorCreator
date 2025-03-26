@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using X4SectorCreator.Forms;
 
 namespace X4SectorCreator.XmlGeneration
 {
