@@ -7,8 +7,6 @@ namespace X4SectorCreator.Forms
 {
     public partial class RegionPredefinedFieldsForm : Form
     {
-        private readonly string _predefinedFieldMappingFilePath = Path.Combine(Application.StartupPath, "Mappings/predefinedfield_mappings.json");
-
         private readonly MultiSelectCombo _mscAsteroids, _mscDebris, _mscGravidar, _mscNebula, _mscPositional, _mscObjects, _mscVolumetricfog, _mscAmbientSound;
 
         public RegionPredefinedFieldsForm()
@@ -16,7 +14,7 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Init each field with its mapping
-            string json = File.ReadAllText(_predefinedFieldMappingFilePath);
+            string json = File.ReadAllText(Constants.DataPaths.PredefinedFieldMappingFilePath);
             IEnumerable<IGrouping<string, FieldObj>> mappingGroups = JsonSerializer.Deserialize<List<FieldObj>>(json, ConfigSerializer.SerializerOptions).GroupBy(a => a.Type);
             foreach (IGrouping<string, FieldObj> group in mappingGroups)
             {
@@ -77,12 +75,12 @@ namespace X4SectorCreator.Forms
 
             foreach (FieldObj item in selectedFieldObjects)
             {
-                _ = MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxFields.Items.Add(item);
+                _ = MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value.ListBoxFields.Items.Add(item);
             }
 
             if (selectedFieldObjects.Length == 1)
             {
-                MainForm.Instance.RegionForm.RegionDefinitionForm.ListBoxFields.SelectedItem = selectedFieldObjects[0];
+                MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value.ListBoxFields.SelectedItem = selectedFieldObjects[0];
             }
 
             Close();

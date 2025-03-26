@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
@@ -43,7 +44,9 @@ namespace X4SectorCreator.XmlGeneration
         private static XElement GenerateCustomGameStart(string modPrefix, List<Cluster> clusters)
         {
             if (clusters.Count == 0 || !clusters.SelectMany(a => a.Sectors).Any())
+            {
                 return null;
+            }
 
             Cluster cluster = null;
             Sector sector = null;
@@ -61,8 +64,10 @@ namespace X4SectorCreator.XmlGeneration
                 sector = cluster?.Sectors.FirstOrDefault();
             }
 
-            if (cluster == null || sector == null) 
+            if (cluster == null || sector == null)
+            {
                 return null;
+            }
 
             string sectorMacro = $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
             XElement gameStartElement = new("gamestart",
@@ -134,7 +139,7 @@ namespace X4SectorCreator.XmlGeneration
                     new XElement("theme", new XAttribute("paint", "painttheme_player_01")),
                     new XElement("knownspace", clusters
                         .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
-                        .Select(a => new XElement("space", 
+                        .Select(a => new XElement("space",
                             new XAttribute("sector", $"{modPrefix}_SE_c{a.cluster.Id:D3}_s{a.sector.Id:D3}_macro".ToLower()))))
                 )
             );

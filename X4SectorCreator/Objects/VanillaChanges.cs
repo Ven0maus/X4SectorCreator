@@ -42,26 +42,31 @@ namespace X4SectorCreator.Objects
         internal void RemoveExportBloating()
         {
             // Remove bloating from export file
-            foreach (var rcc in RemovedClusters)
+            foreach (Cluster rcc in RemovedClusters)
+            {
                 rcc.Sectors = null;
-            foreach (var mc in ModifiedClusters)
+            }
+
+            foreach (ModifiedCluster mc in ModifiedClusters)
             {
                 mc.Old.Sectors = null;
                 mc.New.Sectors = null;
             }
-            foreach (var ms in ModifiedSectors)
+            foreach (ModifiedSector ms in ModifiedSectors)
             {
                 ms.VanillaCluster.Sectors = null;
                 ms.Old.Zones = null;
                 ms.New.Zones = null;
             }
-            foreach (var rs in RemovedSectors)
+            foreach (RemovedSector rs in RemovedSectors)
             {
                 rs.VanillaCluster.Sectors = null;
                 rs.Sector.Zones = null;
             }
-            foreach (var rc in RemovedConnections)
+            foreach (RemovedConnection rc in RemovedConnections)
+            {
                 rc.VanillaCluster.Sectors = null;
+            }
         }
     }
 

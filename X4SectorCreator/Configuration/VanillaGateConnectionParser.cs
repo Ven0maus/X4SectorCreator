@@ -2,6 +2,7 @@
 using System.Numerics;
 using System.Text.Json;
 using System.Xml.Linq;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Configuration
@@ -63,8 +64,7 @@ namespace X4SectorCreator.Configuration
         {
             try
             {
-                string mappingsPath = Path.Combine(Application.StartupPath, "Mappings/vanilla_connection_mappings.json");
-                string json = File.ReadAllText(mappingsPath);
+                string json = File.ReadAllText(Constants.DataPaths.VanillaConnectionMappingFilePath);
                 VanilaConnectionMapping vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json, ConfigSerializer.SerializerOptions);
 
                 Cluster[] baseGameClusters = [.. allClusters.Values.Where(a => a.IsBaseGame)];

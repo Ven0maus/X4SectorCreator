@@ -114,37 +114,33 @@ namespace X4SectorCreator.Forms
 
         private void SetupPlacementValues()
         {
-            var placementValues = Enum.GetValues<SectorPlacement>().OrderBy(a => a).ToArray();
+            SectorPlacement[] placementValues = Enum.GetValues<SectorPlacement>().OrderBy(a => a).ToArray();
 
             // Select selected placement value dynamically based on other sectors in the cluster
             cmbPlacement.Items.Clear();
-            foreach (var placementValue in placementValues)
+            foreach (SectorPlacement placementValue in placementValues)
             {
-                cmbPlacement.Items.Add(placementValue);
+                _ = cmbPlacement.Items.Add(placementValue);
             }
 
-            if (Sector != null)
-            {
-                cmbPlacement.SelectedItem = Sector.Placement;
-            }
-            else
-            {
-                cmbPlacement.SelectedItem = cmbPlacement.Items[0];
-            }
+            cmbPlacement.SelectedItem = Sector != null ? Sector.Placement : cmbPlacement.Items[0];
         }
 
         public static bool IsClusterPlacementValid(Cluster cluster)
         {
-            if (cluster.Sectors.Count == 1) return true;
+            if (cluster.Sectors.Count == 1)
+            {
+                return true;
+            }
 
-            var sectorPlacements = cluster.Sectors
+            HashSet<SectorPlacement> sectorPlacements = cluster.Sectors
                 .Select(a => a.Placement)
                 .ToHashSet();
 
-            foreach (var combination in ValidSectorCombinations)
+            foreach (SectorPlacement[] combination in ValidSectorCombinations)
             {
                 bool valid = true;
-                foreach (var placement in sectorPlacements)
+                foreach (SectorPlacement placement in sectorPlacements)
                 {
                     if (!combination.Contains(placement))
                     {
@@ -207,8 +203,8 @@ namespace X4SectorCreator.Forms
             }
 
             SectorPlacement sectorPlacement = !_selectedCluster.CustomSectorPositioning ? default : (SectorPlacement)cmbPlacement.SelectedItem;
-            var sectorValue = Sector;
-            var beforePlacement = sectorValue?.Placement;
+            Sector sectorValue = Sector;
+            SectorPlacement? beforePlacement = sectorValue?.Placement;
             switch (BtnCreate.Text)
             {
                 case "Create":
@@ -282,7 +278,9 @@ namespace X4SectorCreator.Forms
             if (!_selectedCluster.CustomSectorPositioning)
             {
                 if (beforePlacement == null || (beforePlacement != Sector.Placement))
+                {
                     _selectedCluster.AutoPositionSectors();
+                }
             }
 
             // Determines the position inside the cluster based on the selected placement

@@ -45,12 +45,9 @@
 
         public override string ToString()
         {
-            if (!string.IsNullOrEmpty(SoundId))
-            {
-                return $"{Type}=\"{SoundId}\"";
-            }
-
-            return !string.IsNullOrWhiteSpace(Medium)
+            return !string.IsNullOrEmpty(SoundId)
+                ? $"{Type}=\"{SoundId}\""
+                : !string.IsNullOrWhiteSpace(Medium)
                 ? !string.IsNullOrWhiteSpace(Ref) ? $"{Type}=\"{Ref}\"=\"{Medium}\"" : $"{Type}=\"{Medium}\""
                 : !string.IsNullOrWhiteSpace(GroupRef)
                 ? $"{Type}=\"{GroupRef}\""

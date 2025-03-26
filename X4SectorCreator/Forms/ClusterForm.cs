@@ -21,14 +21,14 @@ namespace X4SectorCreator.Forms
 
         private void BtnPick_Click(object sender, EventArgs e)
         {
-            MainForm.Instance.SectorMapForm.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
-            MainForm.Instance.SectorMapForm.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
-            MainForm.Instance.SectorMapForm.GateSectorSelection = false;
-            MainForm.Instance.SectorMapForm.BtnSelectLocation.Enabled = false;
-            MainForm.Instance.SectorMapForm.ControlPanel.Size = new Size(176, 277);
-            MainForm.Instance.SectorMapForm.BtnSelectLocation.Show();
-            MainForm.Instance.SectorMapForm.Reset();
-            MainForm.Instance.SectorMapForm.Show();
+            MainForm.Instance.SectorMapForm.Value.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            MainForm.Instance.SectorMapForm.Value.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            MainForm.Instance.SectorMapForm.Value.GateSectorSelection = false;
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Enabled = false;
+            MainForm.Instance.SectorMapForm.Value.ControlPanel.Size = new Size(176, 277);
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
+            MainForm.Instance.SectorMapForm.Value.Reset();
+            MainForm.Instance.SectorMapForm.Value.Show();
         }
 
         private void BtnCreate_Click(object sender, EventArgs e)
@@ -67,7 +67,7 @@ namespace X4SectorCreator.Forms
             }
             string backgroundVisualMapping = MainForm.Instance.BackgroundVisualMapping[selectedBackgroundVisual];
 
-            var beforeAutoPos = Cluster?.CustomSectorPositioning ?? false;
+            bool beforeAutoPos = Cluster?.CustomSectorPositioning ?? false;
             Match match = RegexHelper.TupleLocationRegex().Match(location);
             if (match.Success)
             {
@@ -133,7 +133,9 @@ namespace X4SectorCreator.Forms
 
                 // If auto positioning was enabled, re position current sectors automatically
                 if (beforeAutoPos != Cluster.CustomSectorPositioning && !Cluster.CustomSectorPositioning)
+                {
                     Cluster.AutoPositionSectors();
+                }
 
                 ResetAndHide();
             }

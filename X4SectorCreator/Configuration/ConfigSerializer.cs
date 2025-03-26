@@ -33,11 +33,16 @@ namespace X4SectorCreator.Configuration
                     {
                         // For base game we need to make sure not to serialize everything, only the necessary
                         if (sector.IsBaseGame)
+                        {
                             sector.Zones = [.. sector.Zones.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
+                        }
+
                         foreach (Zone zone in sector.Zones)
                         {
                             if (sector.IsBaseGame)
+                            {
                                 zone.Gates = [.. zone.Gates.Where(a => !a.IsBaseGame).OrderBy(a => a.Id)];
+                            }
                         }
                     }
                     else
@@ -60,6 +65,9 @@ namespace X4SectorCreator.Configuration
                 RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
                 GalaxyName = GalaxySettingsForm.GalaxyName,
                 VanillaChanges = vanillaChanges,
+                Factories = FactoriesForm.AllFactories.Select(a => a.Value).ToList(),
+                Jobs = JobsForm.AllJobs.Select(a => a.Value).ToList(),
+                Baskets = JobsForm.AllBaskets.Select(a => a.Value).ToList(),
                 Version = new VersionChecker().CurrentVersion
             };
 
@@ -87,15 +95,44 @@ namespace X4SectorCreator.Configuration
                 _ = MessageBox.Show("Please note, if you have any issues after importing your config,\nit is likely because the file was exported from an older app version and may be incompatible.");
             }
 
-            // Set static values
+            #region Static values
             GalaxySettingsForm.GalaxyName = configObj.GalaxyName;
             GalaxySettingsForm.IsCustomGalaxy = configObj.IsCustomGalaxy;
 
+            FactoriesForm.AllFactories.Clear();
+            if (configObj.Factories != null && configObj.Factories.Count > 0)
+            {
+                foreach (Factory factory in configObj.Factories)
+                {
+                    FactoriesForm.AllFactories.Add(factory.Id, factory);
+                }
+            }
+
+            JobsForm.AllJobs.Clear();
+            if (configObj.Jobs != null && configObj.Jobs.Count > 0)
+            {
+                foreach (Job job in configObj.Jobs)
+                {
+                    JobsForm.AllJobs.Add(job.Id, job);
+                }
+            }
+
+            JobsForm.AllBaskets.Clear();
+            if (configObj.Baskets != null && configObj.Baskets.Count > 0)
+            {
+                foreach (Basket basket in configObj.Baskets)
+                {
+                    JobsForm.AllBaskets.Add(basket.Id, basket);
+                }
+            }
+
             // Set stored region definitions
+            RegionDefinitionForm.RegionDefinitions.Clear();
             if (configObj.RegionDefinitions != null && configObj.RegionDefinitions.Count > 0)
             {
                 RegionDefinitionForm.RegionDefinitions.AddRange(configObj.RegionDefinitions);
             }
+            #endregion
 
             // First order everything correctly before returning
             List<Cluster> clusters = [.. configObj.Clusters.OrderBy(a => a.Id)];

@@ -4,14 +4,14 @@ namespace X4SectorCreator.Forms
 {
     internal class MultiInputDialog : Form
     {
-        private readonly Dictionary<string, TextBox> _inputs = [];
+        private readonly Dictionary<string, Control> _inputs = [];
         private readonly Button _btnOk;
         private readonly Button _btnCancel;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Dictionary<string, string> InputValues { get; private set; }
 
-        public MultiInputDialog(string title, params string[] labels)
+        public MultiInputDialog(string title, params (string label, string[] values, string defaultValue)[] labels)
         {
             Text = title;
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -24,9 +24,9 @@ namespace X4SectorCreator.Forms
 
             using (Graphics g = CreateGraphics())
             {
-                foreach (string label in labels)
+                foreach ((string label, string[] values, string defaultValue) label in labels)
                 {
-                    int labelWidth = (int)g.MeasureString(label, Font).Width;
+                    int labelWidth = (int)g.MeasureString(label.label, Font).Width;
                     maxLabelWidth = Math.Max(maxLabelWidth, labelWidth);
                 }
             }
@@ -37,13 +37,36 @@ namespace X4SectorCreator.Forms
             Width = formWidth;
             int y = 20;
 
-            foreach (string label in labels)
+            foreach ((string label, string[] values, string defaultValue) label in labels)
             {
-                Label lbl = new() { Text = label, Left = 10, Top = y, Width = maxLabelWidth };
-                TextBox txtBox = new() { Left = maxLabelWidth + 10, Top = y, Width = textBoxWidth };
-                _inputs[label] = txtBox;
+                Label lbl = new() { Text = label.label, Left = 10, Top = y, Width = maxLabelWidth };
+                Control ctrl;
+                if (label.values != null)
+                {
+                    ComboBox cmb = new() { Left = maxLabelWidth + 10, Top = y, Width = textBoxWidth };
+                    ctrl = cmb;
+                    foreach (string value in label.values)
+                    {
+                        _ = cmb.Items.Add(value);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(label.defaultValue))
+                    {
+                        cmb.SelectedItem = label.defaultValue;
+                    }
+                }
+                else
+                {
+                    ctrl = new TextBox() { Left = maxLabelWidth + 10, Top = y, Width = textBoxWidth };
+                    if (!string.IsNullOrWhiteSpace(label.defaultValue))
+                    {
+                        ctrl.Text = label.defaultValue;
+                    }
+                }
+
+                _inputs[label.label] = ctrl;
                 Controls.Add(lbl);
-                Controls.Add(txtBox);
+                Controls.Add(ctrl);
                 y += 30;
             }
 
@@ -57,9 +80,16 @@ namespace X4SectorCreator.Forms
             _btnOk.Click += (sender, e) =>
             {
                 InputValues = [];
-                foreach (KeyValuePair<string, TextBox> kvp in _inputs)
+                foreach (KeyValuePair<string, Control> kvp in _inputs)
                 {
-                    InputValues[kvp.Key] = kvp.Value.Text;
+                    if (kvp.Value is TextBox txt)
+                    {
+                        InputValues[kvp.Key] = string.IsNullOrWhiteSpace(txt.Text) ? null : txt.Text;
+                    }
+                    else if (kvp.Value is ComboBox cmb)
+                    {
+                        InputValues[kvp.Key] = cmb.SelectedItem as string;
+                    }
                 }
 
                 DialogResult = DialogResult.OK;
@@ -67,24 +97,10 @@ namespace X4SectorCreator.Forms
             };
         }
 
-        public static Dictionary<string, string> Show(string title, params string[] labels)
+        public static Dictionary<string, string> Show(string title, params (string label, string[] values, string defaultValue)[] labels)
         {
             using MultiInputDialog form = new(title, labels);
             return form.ShowDialog() == DialogResult.OK ? form.InputValues : null;
-        }
-
-        private void InitializeComponent()
-        {
-            SuspendLayout();
-            // 
-            // MultiInputDialog
-            // 
-            ClientSize = new Size(284, 261);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "MultiInputDialog";
-            ResumeLayout(false);
         }
     }
 }

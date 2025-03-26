@@ -1,4 +1,6 @@
 ﻿using System.Xml.Linq;
+using X4SectorCreator.Forms;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
@@ -60,7 +62,7 @@ namespace X4SectorCreator.XmlGeneration
             {
                 foreach (Sector sector in cluster.Sectors.Where(a => !a.IsBaseGame).OrderBy(a => a.Id))
                 {
-                    var macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
+                    string macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
                         $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
 
                     yield return new XElement("macro",
@@ -81,7 +83,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
             {
-                var id = cluster.IsBaseGame ? $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}" :
+                string id = cluster.IsBaseGame ? $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}" :
                     $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}";
 
                 yield return new XElement("connection",
@@ -114,8 +116,10 @@ namespace X4SectorCreator.XmlGeneration
             {
                 foreach (Sector sector in cluster.Sectors)
                 {
-                    if (!sector.IsBaseGame) 
+                    if (!sector.IsBaseGame)
+                    {
                         continue;
+                    }
 
                     if (sector.Zones.Count == 0)
                     {

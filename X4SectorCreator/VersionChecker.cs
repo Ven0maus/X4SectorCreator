@@ -6,16 +6,15 @@ namespace X4SectorCreator
 {
     internal class VersionChecker
     {
-        private readonly string _versionFilePath = Path.Combine(Application.StartupPath, "version.json");
         private const string _versionUrl = "https://raw.githubusercontent.com/Ven0maus/X4SectorCreator/main/X4SectorCreator/version.json";
-        private const string _sectorMappingUrl = "https://raw.githubusercontent.com/Ven0maus/X4SectorCreator/main/X4SectorCreator/Mappings/sector_mappings.json";
+        private const string _sectorMappingUrl = "https://raw.githubusercontent.com/Ven0maus/X4SectorCreator/main/X4SectorCreator/Data/Mappings/sector_mappings.json";
 
         public string CurrentVersion { get; }
         public string TargetGameVersion { get; private set; }
 
         public VersionChecker()
         {
-            string versionContent = File.ReadAllText(_versionFilePath);
+            string versionContent = File.ReadAllText(Constants.DataPaths.VersionFilePath);
             VersionInfo versionInfo = JsonSerializer.Deserialize<VersionInfo>(versionContent, ConfigSerializer.SerializerOptions);
 
             CurrentVersion = versionInfo.AppVersion;
@@ -68,7 +67,7 @@ namespace X4SectorCreator
                         X4Version = versionInfo.X4Version,
                     };
                     string json = JsonSerializer.Serialize(newVersionInfo, ConfigSerializer.SerializerOptions);
-                    File.WriteAllText(_versionFilePath, json);
+                    File.WriteAllText(Constants.DataPaths.VersionFilePath, json);
                 }
             }
         }

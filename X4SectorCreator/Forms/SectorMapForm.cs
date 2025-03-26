@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator
@@ -26,6 +27,8 @@ namespace X4SectorCreator
         private const float _defaultZoom = 1f;
         private static PointF _offset;
         private static float _zoom = _defaultZoom; // 1.0 means 100% scale
+
+        private const float _stationIconSize = 24f;
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
         private static readonly Dictionary<string, string> _dlcMapping = new(StringComparer.OrdinalIgnoreCase)
@@ -62,14 +65,14 @@ namespace X4SectorCreator
             KeyDown += SectorMapForm_KeyDown;
 
             // Init dlcs
-            foreach (var mapping in _selectedDlcMapping)
+            foreach (KeyValuePair<string, int> mapping in _selectedDlcMapping)
             {
                 if (!_dlcsSelected.TryGetValue(mapping.Value, out bool value))
                 {
                     // If not yet initialized, it will be by default selected
                     _dlcsSelected[mapping.Value] = value = true;
                 }
-                
+
                 // Init dlc list box
                 _ = DlcListBox.Items.Add(_dlcMapping.First(a => a.Value.Equals(mapping.Key)).Key);
                 DlcListBox.SetItemChecked(mapping.Value, value);
@@ -97,7 +100,7 @@ namespace X4SectorCreator
 
                 if (_movingCluster == null)
                 {
-                    var cluster = GetClusterAtMousePos(adjustedMousePos, out _);
+                    Cluster cluster = GetClusterAtMousePos(adjustedMousePos, out _);
                     if (cluster != null)
                     {
                         _movingCluster = cluster;
@@ -107,7 +110,7 @@ namespace X4SectorCreator
                 else
                 {
                     // Verify for valid position
-                    var clusterAtPos = GetClusterAtMousePos(adjustedMousePos, out var coordinate);
+                    Cluster clusterAtPos = GetClusterAtMousePos(adjustedMousePos, out (int x, int y)? coordinate);
                     if (clusterAtPos != null)
                     {
                         // Cancel because we're moving to the same position
@@ -123,7 +126,7 @@ namespace X4SectorCreator
                     }
 
                     // Place cluster down at the new position if it is valid
-                    MainForm.Instance.AllClusters.Remove((_movingCluster.Position.X, _movingCluster.Position.Y));
+                    _ = MainForm.Instance.AllClusters.Remove((_movingCluster.Position.X, _movingCluster.Position.Y));
                     _movingCluster.Position = new Point(coordinate.Value.x, coordinate.Value.y);
                     MainForm.Instance.AllClusters[coordinate.Value] = _movingCluster;
                     _movingCluster = null;
@@ -135,13 +138,13 @@ namespace X4SectorCreator
         private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
         {
             pos = null;
-            foreach (var hex in _hexagons)
+            foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
             {
                 // Determine if there is a cluster at the position we clicked
                 if (IsPointInPolygon(hex.Value.Points, mousePos))
                 {
                     pos = hex.Key;
-                    if (MainForm.Instance.AllClusters.TryGetValue(hex.Key, out var cluster))
+                    if (MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster))
                     {
                         return cluster;
                     }
@@ -417,12 +420,12 @@ namespace X4SectorCreator
             int children = sectors?.Count ?? 0;
 
             List<PointF> childHexPositions = [];
-            if (children == 2 || children == 3)
+            if (children is 2 or 3)
             {
                 // Child hex centers for top-left, bottom-right
-                for (int i=0; i < children; i++)
+                for (int i = 0; i < children; i++)
                 {
-                    var (x, y) = _childPlacementMappings[sectors[i].Placement](width, childHeight);
+                    (float x, float y) = _childPlacementMappings[sectors[i].Placement](width, childHeight);
                     childHexPositions.Add(new PointF(xOffset + x, yOffset + y));
                 }
             }
@@ -459,8 +462,73 @@ namespace X4SectorCreator
             // Render gate connections above hexes + selected hex
             RenderGateConnections(e);
 
+            // Render station icons
+            RenderStationIcons(e);
+
             // Hex names draw on top of everything
             RenderAllHexNames(e);
+        }
+
+        private void RenderStationIcons(PaintEventArgs e)
+        {
+            List<Cluster> relevantClusters = _baseGameClusters.Values
+                .Concat(_customClusters)
+                .Where(cluster => cluster.Sectors.Any(sector => sector.Zones.Any(zone => zone.Stations.Count != 0)))
+                .ToList();
+            if (relevantClusters.Count == 0)
+            {
+                return;
+            }
+
+            // Calculate hex size and radius based on zoom and sector size
+            float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
+            float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+
+            int sectorIndex = 0;
+            foreach (Cluster cluster in relevantClusters)
+            {
+                foreach (Sector sector in cluster.Sectors)
+                {
+                    // Collect the child hexagon points
+                    Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                    PointF hexCenter = GetHexCenter(childHexagon.Points);
+                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
+
+                    foreach (Zone zone in sector.Zones)
+                    {
+                        foreach (Station station in zone.Stations)
+                        {
+                            // Convert the zone position from world to screen space
+                            PointF stationScreenPosition = ConvertFromWorldCoordinate(station.Position, sector.DiameterRadius, correctHexRadius);
+
+                            stationScreenPosition.X += hexCenter.X;
+                            stationScreenPosition.Y += hexCenter.Y;
+
+                            Color color = !MainForm.Instance.FactionColorMapping.TryGetValue(station.Owner, out Color value) ?
+                                MainForm.Instance.FactionColorMapping["None"] : value;
+
+                            using SolidBrush brush = new(color);
+                            string character = station.Type.ToLower() switch
+                            {
+                                "defence" => "■",
+                                "wharf" => "Δ",
+                                "shipyard" => "▲",
+                                "equipmentdock" => "⎕",
+                                "tradestation" => "⨁",
+                                _ => throw new NotSupportedException($"Station type not supported: {station.Type}"),
+                            };
+
+                            using Font bigFont = new("Arial", cluster.Sectors.Count > 1 ? _stationIconSize / 2f : _stationIconSize, FontStyle.Bold);
+                            SizeF textSize = e.Graphics.MeasureString(character, bigFont);
+                            float textHeightOffset = textSize.Height / 2;
+                            float textWidthOffset = textSize.Width / 2;
+
+                            e.Graphics.DrawString(character, bigFont, brush, stationScreenPosition.X - textWidthOffset, stationScreenPosition.Y - textHeightOffset);
+                        }
+                    }
+                    sectorIndex++;
+                }
+            }
         }
 
         private void RenderHexSelection(PaintEventArgs e)
@@ -480,7 +548,7 @@ namespace X4SectorCreator
         private void RenderAllHexes(PaintEventArgs e)
         {
             // First step render non existant hexagons
-            Color nonExistantHexColor = HexToColor("#121212");
+            Color nonExistantHexColor = "#121212".HexToColor();
             foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
             {
                 RenderNonSectorGrid(e, nonExistantHexColor, hex);
@@ -627,7 +695,10 @@ namespace X4SectorCreator
                 {
                     // Check if the dlc is selected
                     if (!IsDlcClusterEnabled(cluster.Value))
+                    {
                         continue;
+                    }
+
                     gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
                 }
             }
@@ -665,7 +736,7 @@ namespace X4SectorCreator
             }
 
             using Pen circlePen = new(color, 2);
-            using SolidBrush circleBrush = new(HexToColor("#575757"));
+            using SolidBrush circleBrush = new("#575757".HexToColor());
 
             // Draw source and target gates
             e.Graphics.FillEllipse(circleBrush, sourceX, sourceY, diameter, diameter);
@@ -690,17 +761,19 @@ namespace X4SectorCreator
 
             // Make sure we don't double process target gates we already processed
             // We still have an issue with highway type gates showing as a double because they have different paths
-            var processedTargets = new HashSet<Gate>();
+            HashSet<Gate> processedTargets = new();
 
             // Any invalid connections will be recorded
-            var invalidConnections = new List<GateData>();
+            List<GateData> invalidConnections = new();
 
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
             {
                 // Find the connection with the matching path
-                if (processedTargets.Contains(sourceGateData.Gate) || !sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out var availableGateData))
+                if (processedTargets.Contains(sourceGateData.Gate) || !sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out GateData[] availableGateData))
+                {
                     continue;
+                }
 
                 GateData targetGateData = availableGateData
                     .FirstOrDefault(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
@@ -710,10 +783,12 @@ namespace X4SectorCreator
                     continue;
                 }
 
-                processedTargets.Add(targetGateData.Gate);
+                _ = processedTargets.Add(targetGateData.Gate);
 
                 if (!IsDlcClusterEnabled(targetGateData.Cluster))
+                {
                     continue;
+                }
 
                 yield return new GateConnection
                 {
@@ -791,7 +866,7 @@ namespace X4SectorCreator
                 }
             }
 
-            var isMovingCluster = _movingCluster != null && _movingCluster == cluster;
+            bool isMovingCluster = _movingCluster != null && _movingCluster == cluster;
             if (isMovingCluster)
             {
                 color = Color.Yellow;
@@ -805,7 +880,7 @@ namespace X4SectorCreator
                 {
                     color = Color.Black;
                 }
-               
+
                 // Fill with darker color
                 using SolidBrush mainBrush = new(LerpColor(color, Color.Black, 0.85f));
                 e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
@@ -971,36 +1046,6 @@ namespace X4SectorCreator
             return inside;
         }
 
-        private static Color HexToColor(string hexstring)
-        {
-            // Remove '#' if present
-            if (hexstring.StartsWith('#'))
-            {
-                hexstring = hexstring[1..];
-            }
-
-            // Convert hex to RGB
-            if (hexstring.Length == 6)
-            {
-                int r = Convert.ToInt32(hexstring[..2], 16);
-                int g = Convert.ToInt32(hexstring.Substring(2, 2), 16);
-                int b = Convert.ToInt32(hexstring.Substring(4, 2), 16);
-                return Color.FromArgb(r, g, b);
-            }
-            else if (hexstring.Length == 8) // If it includes alpha (ARGB)
-            {
-                int a = Convert.ToInt32(hexstring[..2], 16);
-                int r = Convert.ToInt32(hexstring.Substring(2, 2), 16);
-                int g = Convert.ToInt32(hexstring.Substring(4, 2), 16);
-                int b = Convert.ToInt32(hexstring.Substring(6, 2), 16);
-                return Color.FromArgb(a, r, g, b);
-            }
-            else
-            {
-                throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
-            }
-        }
-
         public static Color LerpColor(Color color1, Color color2, float t)
         {
             // Clamp t between 0 and 1
@@ -1049,13 +1094,13 @@ namespace X4SectorCreator
                     }
                 }
 
-                MainForm.Instance.GateForm.txtTargetSector.Text = selectedSector.Name;
-                MainForm.Instance.GateForm.txtTargetSectorLocation.Text = position.ToString() + $" [{_selectedChildHexIndex?.ToString() ?? "0"}]";
-                MainForm.Instance.GateForm.TargetSectorSelection = null; // Recalibrates automatically
+                MainForm.Instance.GateForm.Value.txtTargetSector.Text = selectedSector.Name;
+                MainForm.Instance.GateForm.Value.txtTargetSectorLocation.Text = position.ToString() + $" [{_selectedChildHexIndex?.ToString() ?? "0"}]";
+                MainForm.Instance.GateForm.Value.TargetSectorSelection = null; // Recalibrates automatically
             }
             else
             {
-                MainForm.Instance.ClusterForm.TxtLocation.Text = position.ToString();
+                MainForm.Instance.ClusterForm.Value.TxtLocation.Text = position.ToString();
             }
 
             DeselectHex();

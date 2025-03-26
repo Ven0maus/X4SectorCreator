@@ -1,4 +1,6 @@
 ﻿using System.Xml.Linq;
+using X4SectorCreator.Forms;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
@@ -7,13 +9,17 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters)
         {
-            var stationsContent = CollectStationsContent(modPrefix, clusters).ToArray();
+            XElement[] stationsContent = CollectStationsContent(modPrefix, clusters).ToArray();
+            XElement[] productsContent = CollectProductsContent(modPrefix).ToArray();
 
             // Replace entire god file
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
-                var stationsNode = stationsContent.Length == 0 ? null :
+                XElement stationsNode = stationsContent.Length == 0 ? null :
                     new XElement("stations", stationsContent);
+
+                XElement productsNode = productsContent.Length == 0 ? null :
+                    new XElement("products", productsContent);
 
                 XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
                 XDocument xmlDocument = new(
@@ -22,6 +28,7 @@ namespace X4SectorCreator.XmlGeneration
                         new XElement("replace", new XAttribute("sel", "//god"),
                         new XElement("god", new XAttribute(XNamespace.Xmlns + "xsi", xsi),
                             new XAttribute(xsi + "noNamespaceSchemaLocation", "libraries.xsd"),
+                            productsNode,
                             stationsNode
                             )
                         )
@@ -31,42 +38,79 @@ namespace X4SectorCreator.XmlGeneration
             }
             else
             {
+                XElement diffContent = new("diff");
+
+                if (productsContent.Length > 0)
+                {
+                    diffContent.Add(new XElement("add",
+                                new XAttribute("sel", "/god/products"),
+                                productsContent
+                            ));
+                }
+
                 if (stationsContent.Length > 0)
+                {
+                    diffContent.Add(new XElement("add",
+                                new XAttribute("sel", "/god/stations"),
+                                stationsContent
+                            ));
+                }
+
+                if (!diffContent.IsEmpty)
                 {
                     XDocument xmlDocument = new(
                         new XDeclaration("1.0", "utf-8", null),
-                        new XElement("diff",
-                            new XElement("add", 
-                                new XAttribute("sel", "/god/stations"),
-                                stationsContent
-                            )
-                        )
+                        diffContent
                     );
                     xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/god.xml")));
                 }
             }
         }
 
+        private static IEnumerable<XElement> CollectProductsContent(string modPrefix)
+        {
+            foreach (KeyValuePair<string, Factory> factory in FactoriesForm.AllFactories)
+            {
+                string originalId = factory.Value.Id;
+
+                // Prepend prefix
+                factory.Value.Id = $"{modPrefix}_{factory.Value.Id}";
+
+                // Serialize
+                string factoryElementXml = factory.Value.SerializeFactory();
+
+                // Reset
+                factory.Value.Id = originalId;
+
+                XElement factoryElement = XElement.Parse(factoryElementXml);
+                yield return factoryElement;
+            }
+        }
+
         private static IEnumerable<XElement> CollectStationsContent(string modPrefix, List<Cluster> clusters)
         {
-            foreach (var cluster in clusters)
+            foreach (Cluster cluster in clusters)
             {
-                foreach (var sector in cluster.Sectors)
+                foreach (Sector sector in cluster.Sectors)
                 {
-                    foreach (var zone in sector.Zones)
+                    foreach (Zone zone in sector.Zones)
                     {
-                        foreach (var station in zone.Stations)
+                        foreach (Station station in zone.Stations)
                         {
                             string clusterPrefix = $"c{cluster.Id:D3}";
                             if (cluster.IsBaseGame)
+                            {
                                 clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
+                            }
 
                             string sectorPrefix = $"s{sector.Id:D3}";
                             if (sector.IsBaseGame)
+                            {
                                 sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
+                            }
 
-                            var id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
-                            var zoneMacro = $"{modPrefix}_ZO_{clusterPrefix}_{sectorPrefix}_z{zone.Id:D3}_macro";
+                            string id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
+                            string zoneMacro = $"{modPrefix}_ZO_{clusterPrefix}_{sectorPrefix}_z{zone.Id:D3}_macro";
 
                             string faction = station.Faction.ToLower();
                             string owner = station.Owner.ToLower();

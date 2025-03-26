@@ -1,4 +1,6 @@
 ﻿using System.Xml.Linq;
+using X4SectorCreator.Forms;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
@@ -81,11 +83,14 @@ namespace X4SectorCreator.XmlGeneration
             {
                 foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Id))
                 {
-                    if (sector.IsBaseGame) continue;
+                    if (sector.IsBaseGame)
+                    {
+                        continue;
+                    }
 
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {
-                        var macro = cluster.IsBaseGame ? $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}_macro" :
+                        string macro = cluster.IsBaseGame ? $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}_macro" :
                             $"{modPrefix}_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro";
 
                         yield return new XElement("macro",
@@ -146,8 +151,10 @@ namespace X4SectorCreator.XmlGeneration
             {
                 foreach (Sector sector in cluster.Sectors)
                 {
-                    if (!sector.IsBaseGame) 
+                    if (!sector.IsBaseGame)
+                    {
                         continue;
+                    }
 
                     foreach (Zone zone in sector.Zones.OrderBy(a => a.Id))
                     {

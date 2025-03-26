@@ -1,10 +1,40 @@
 ﻿using System.Numerics;
 using X4SectorCreator.Configuration;
 
-namespace X4SectorCreator
+namespace X4SectorCreator.Helpers
 {
     internal static class Extensions
     {
+        public static Color HexToColor(this string hexstring)
+        {
+            // Remove '#' if present
+            if (hexstring.StartsWith('#'))
+            {
+                hexstring = hexstring[1..];
+            }
+
+            // Convert hex to RGB
+            if (hexstring.Length == 6)
+            {
+                int r = Convert.ToInt32(hexstring[..2], 16);
+                int g = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                return Color.FromArgb(r, g, b);
+            }
+            else if (hexstring.Length == 8) // If it includes alpha (ARGB)
+            {
+                int a = Convert.ToInt32(hexstring[..2], 16);
+                int r = Convert.ToInt32(hexstring.Substring(2, 2), 16);
+                int g = Convert.ToInt32(hexstring.Substring(4, 2), 16);
+                int b = Convert.ToInt32(hexstring.Substring(6, 2), 16);
+                return Color.FromArgb(a, r, g, b);
+            }
+            else
+            {
+                throw new ArgumentException($"Parsing error: \"{hexstring}\" is an invalid hex color format.");
+            }
+        }
+
         /// <summary>
         /// Removes duplicate highway connections from connections enumerable.
         /// </summary>
@@ -12,21 +42,21 @@ namespace X4SectorCreator
         /// <returns></returns>
         public static IEnumerable<SectorMapForm.GateConnection> FilterDuplicateHighwayConnections(this IEnumerable<SectorMapForm.GateConnection> connections)
         {
-            var allConnections = connections
+            HashSet<SectorMapForm.GateConnection> allConnections = connections
                 .ToHashSet();
-            var highways = connections
+            List<SectorMapForm.GateConnection> highways = connections
                 .Where(a => a.Source.Gate.IsHighwayGate || a.Target.Gate.IsHighwayGate)
                 .ToList();
 
-            var processedHighways = new HashSet<(string, string)>();
-            foreach (var highway in highways)
+            HashSet<(string, string)> processedHighways = new();
+            foreach (SectorMapForm.GateConnection highway in highways)
             {
                 if (processedHighways.Contains((highway.Source.Gate.ParentSectorName, highway.Target.Gate.ParentSectorName)) ||
                     processedHighways.Contains((highway.Target.Gate.ParentSectorName, highway.Source.Gate.ParentSectorName)))
                 {
-                    allConnections.Remove(highway);
+                    _ = allConnections.Remove(highway);
                 }
-                processedHighways.Add((highway.Source.Gate.ParentSectorName, highway.Target.Gate.ParentSectorName));
+                _ = processedHighways.Add((highway.Source.Gate.ParentSectorName, highway.Target.Gate.ParentSectorName));
             }
 
             return allConnections;

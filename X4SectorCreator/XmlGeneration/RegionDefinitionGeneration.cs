@@ -34,7 +34,7 @@ namespace X4SectorCreator.XmlGeneration
                 {
                     foreach (Region region in sector.Regions)
                     {
-                        var name = cluster.IsBaseGame ? $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
+                        string name = cluster.IsBaseGame ? $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
                             $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
 
                         // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!

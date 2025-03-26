@@ -30,9 +30,27 @@ namespace X4SectorCreator.CustomComponents
             }
 
             // Setup toolstrip
-            ToolStripControlHost host = new(_container) { AutoSize = false, Width = combobox.Width, Height = 100 };
+            ToolStripControlHost host = new(_container) { AutoSize = false, Width = combobox.Width, Height = 200 };
             _dropDown = new ToolStripDropDown();
             _ = _dropDown.Items.Add(host);
+        }
+
+        public void Select(params object[] objs)
+        {
+            foreach (object obj in objs)
+            {
+                if (_container.Items.Contains(obj))
+                {
+                    int index = _container.Items.IndexOf(obj);
+                    CheckState prevState = _container.GetItemCheckState(index);
+                    if (prevState == CheckState.Checked)
+                    {
+                        return;
+                    }
+
+                    _container.SetItemChecked(index, true);
+                }
+            }
         }
 
         private void ComboBoxKeyDown(object sender, KeyEventArgs e)
