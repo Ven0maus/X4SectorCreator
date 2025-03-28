@@ -377,9 +377,13 @@ namespace X4SectorCreator
             {
                 // Clear up corrupted xml
                 Directory.Delete(mainFolder, true);
-                _ = MessageBox.Show("Something went wrong during xml generation: " + ex.Message,
+                #if DEBUG
+                throw;
+                #else
+                _ = MessageBox.Show("Something went wrong during xml generation: \"" + ex.Message + "\".\nPlease create a bug report. (Be sure to provide the export xml or exact reproduction steps)",
                     "Error in XML Generation", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+                #endif
             }
 
             // Show succes message
@@ -408,7 +412,7 @@ namespace X4SectorCreator
             // Ensure the string isn't empty
             return string.IsNullOrWhiteSpace(sanitizedText) ? null : sanitizedText;
         }
-        #endregion
+#endregion
 
         #region Configuration
         public void Reset(bool fromImport)
@@ -518,12 +522,12 @@ namespace X4SectorCreator
                 }
                 catch (Exception)
                 {
-                    #if DEBUG
+#if DEBUG
                     throw;
-                    #else
+#else
                     _ = MessageBox.Show("Invalid JSON content in file, please try another file.",
                         "Invalid JSON Content", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    #endif
+#endif
                 }
             }
         }
