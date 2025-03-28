@@ -478,7 +478,6 @@ namespace X4SectorCreator
                 _ = MessageBox.Show("An error occured when trying to render the map view: \"" + ex.Message + "\".\nPlease create a bug report. (Be sure to provide the export xml or exact reproduction steps).");
                 Close();
                 #endif
-
             }
         }
 
