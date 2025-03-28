@@ -518,8 +518,12 @@ namespace X4SectorCreator
                 }
                 catch (Exception)
                 {
+                    #if DEBUG
+                    throw;
+                    #else
                     _ = MessageBox.Show("Invalid JSON content in file, please try another file.",
                         "Invalid JSON Content", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    #endif
                 }
             }
         }
