@@ -448,25 +448,38 @@ namespace X4SectorCreator
 
         private void DrawHexGrid(object sender, PaintEventArgs e)
         {
-            // Init graphics properly with offset and scaling
-            e.Graphics.Clear(Color.Black);
-            e.Graphics.TranslateTransform(_offset.X, _offset.Y);
-            e.Graphics.ScaleTransform(_zoom, _zoom);
+            try 
+            {
+                // Init graphics properly with offset and scaling
+                e.Graphics.Clear(Color.Black);
+                e.Graphics.TranslateTransform(_offset.X, _offset.Y);
+                e.Graphics.ScaleTransform(_zoom, _zoom);
 
-            // Renders all the hexagons in the screen
-            RenderAllHexes(e);
+                // Renders all the hexagons in the screen
+                RenderAllHexes(e);
 
-            // Highlight selected hex
-            RenderHexSelection(e);
+                // Highlight selected hex
+                RenderHexSelection(e);
 
-            // Render gate connections above hexes + selected hex
-            RenderGateConnections(e);
+                // Render gate connections above hexes + selected hex
+                RenderGateConnections(e);
 
-            // Render station icons
-            RenderStationIcons(e);
+                // Render station icons
+                RenderStationIcons(e);
 
-            // Hex names draw on top of everything
-            RenderAllHexNames(e);
+                // Hex names draw on top of everything
+                RenderAllHexNames(e);
+            }
+            catch(Exception ex)
+            {
+                #if DEBUG
+                throw;
+                #else
+                _ = MessageBox.Show("An error occured when trying to render the map view: \"" + ex.Message + "\".\nPlease create a bug report, (Be sure to provide the export xml or exact reproduction steps).");
+                Close();
+                #endif
+
+            }
         }
 
         private void RenderStationIcons(PaintEventArgs e)
