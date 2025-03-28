@@ -497,9 +497,9 @@ namespace X4SectorCreator
             float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
 
-            int sectorIndex = 0;
             foreach (Cluster cluster in relevantClusters)
             {
+                int sectorIndex = 0;
                 foreach (Sector sector in cluster.Sectors)
                 {
                     // Collect the child hexagon points
