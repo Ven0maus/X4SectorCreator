@@ -365,7 +365,7 @@ namespace X4SectorCreator
                 ClusterGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 SectorGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
                 ZoneGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
-                ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty) + "0", clusters, vanillaChanges);
+                ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty), clusters, vanillaChanges);
                 RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters);
                 GameStartsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 DlcDisableGeneration.Generate(modFolder);
