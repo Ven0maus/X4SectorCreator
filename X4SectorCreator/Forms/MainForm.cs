@@ -480,6 +480,12 @@ namespace X4SectorCreator
                                 break;
                             }
 
+                            if (sector.Regions.Count > 0)
+                            {
+                                allModifiedClusters.Add(cluster);
+                                break;
+                            }
+
                             bool breakout = false;
                             foreach (Zone zone in sector.Zones)
                             {
@@ -506,6 +512,7 @@ namespace X4SectorCreator
                                     break;
                                 }
                             }
+
                             if (breakout)
                             {
                                 break;
@@ -823,6 +830,22 @@ namespace X4SectorCreator
                         currentStation.Id = newStation.Id;
                         currentStation.Type = newStation.Type;
                     }
+                }
+
+                foreach (var newRegion in newSector.Regions)
+                {
+                    var currentRegion = currentSector.Regions.FirstOrDefault(a => a.Id == newRegion.Id);
+                    if (currentRegion == null)
+                    {
+                        currentSector.Regions.Add(newRegion);
+                        continue;
+                    }
+
+                    currentRegion.Name = newRegion.Name;
+                    currentRegion.Position = newRegion.Position;
+                    currentRegion.BoundaryRadius = newRegion.BoundaryRadius;
+                    currentRegion.Definition = newRegion.Definition;
+                    currentRegion.BoundaryLinear = newRegion.BoundaryLinear;
                 }
             }
         }
