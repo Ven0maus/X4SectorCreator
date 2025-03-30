@@ -209,9 +209,10 @@ namespace X4SectorCreator.XmlGeneration
                     string connection = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_connection" :
                         $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection";
 
-                    // New sector link
-                    yield return (cluster.Dlc, new XElement("add",
-                        new XAttribute("sel", $"/macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"),
+                    var addElement = new XElement("add", new XAttribute("sel", $"/macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"));
+
+                    // Add new sector
+                    addElement.Add(
                             new XElement("connection",
                             new XAttribute("name", connection),
                             new XAttribute("ref", "sectors"),
@@ -227,7 +228,44 @@ namespace X4SectorCreator.XmlGeneration
                                 new XAttribute("connection", "cluster")
                             )
                         )
-                    ));
+                    );
+
+                    if (sector.Regions != null && sector.Regions.Count > 0)
+                    {
+                        // Add regions after sector connection
+                        foreach (Objects.Region region in sector.Regions)
+                        {
+                            string name = cluster.IsBaseGame ? $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
+                                $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
+
+                            addElement.Add(new XElement("connection",
+                                new XAttribute("name", $"{name}_connection"),
+                                new XAttribute("ref", "regions"),
+                                new XElement("offset",
+                                    new XElement("position",
+                                        new XAttribute("x", sector.Offset.X + region.Position.X),
+                                        new XAttribute("y", 0),
+                                        new XAttribute("z", sector.Offset.Y + region.Position.Y)
+                                    )
+                                ),
+                                new XElement("macro",
+                                    new XAttribute("name", $"{name}_macro"),
+                                    new XElement("component",
+                                        new XAttribute("connection", "cluster"),
+                                        new XAttribute("ref", "standardregion")
+                                    ),
+                                    // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
+                                    new XElement("properties",
+                                        new XElement("region",
+                                            new XAttribute("ref", name.ToLower())
+                                        )
+                                    )
+                                )
+                            ));
+                        }
+                    }
+
+                    yield return (cluster.Dlc, addElement);
                 }
             }
         }
