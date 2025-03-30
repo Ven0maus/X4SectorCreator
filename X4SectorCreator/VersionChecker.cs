@@ -11,6 +11,7 @@ namespace X4SectorCreator
 
         public string CurrentVersion { get; }
         public string TargetGameVersion { get; private set; }
+        public string ModTargetGameVersion { get; private set; }
 
         public VersionChecker()
         {
@@ -19,6 +20,7 @@ namespace X4SectorCreator
 
             CurrentVersion = versionInfo.AppVersion;
             TargetGameVersion = versionInfo.X4Version;
+            ModTargetGameVersion = versionInfo.X4ModTargetVersion;
         }
 
         public async Task<(bool NewVersionAvailable, VersionInfo VersionInfo)> CheckForUpdatesAsync()

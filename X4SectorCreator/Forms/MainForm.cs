@@ -38,7 +38,7 @@ namespace X4SectorCreator
         public readonly Dictionary<string, Color> FactionColorMapping;
 
         private ClusterOption _selectedClusterOption = ClusterOption.Custom;
-        private string _currentX4Version;
+        private string _currentX4Version, _currentModTargetVersion;
 
         public MainForm()
         {
@@ -196,6 +196,7 @@ namespace X4SectorCreator
             // Set form title
             Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
             _currentX4Version = versionChecker.TargetGameVersion;
+            _currentModTargetVersion = versionChecker.ModTargetGameVersion;
 
             // Check for update
             (bool NewVersionAvailable, VersionInfo VersionInfo) result = await versionChecker.CheckForUpdatesAsync();
@@ -232,6 +233,7 @@ namespace X4SectorCreator
                             // Update title text with new version
                             Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
                             _currentX4Version = versionChecker.TargetGameVersion;
+                            _currentModTargetVersion = versionChecker.ModTargetGameVersion;
 
                             _ = MessageBox.Show($"Your cluster mapping has been automatically updated with the latest X4 version ({result.VersionInfo.X4Version}).");
                         }
@@ -365,7 +367,7 @@ namespace X4SectorCreator
                 ClusterGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 SectorGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
                 ZoneGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
-                ContentGeneration.Generate(modFolder, modName, _currentX4Version.Replace(".", string.Empty), clusters, vanillaChanges);
+                ContentGeneration.Generate(modFolder, modName, _currentModTargetVersion.Replace(".", string.Empty), clusters, vanillaChanges);
                 RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters);
                 GameStartsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
                 DlcDisableGeneration.Generate(modFolder);

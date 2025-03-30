@@ -9,5 +9,8 @@ namespace X4SectorCreator.Objects
 
         [JsonPropertyName("x4_version")]
         public string X4Version { get; set; }
+
+        [JsonPropertyName("x4_mod_target_version")]
+        public string X4ModTargetVersion { get; set; }
     }
 }
