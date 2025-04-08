@@ -38,7 +38,7 @@ namespace X4SectorCreator
         public readonly Dictionary<string, Color> FactionColorMapping;
 
         private ClusterOption _selectedClusterOption = ClusterOption.Custom;
-        private string _currentX4Version, _currentModTargetVersion;
+        private string _currentModTargetVersion;
 
         public MainForm()
         {
@@ -195,7 +195,6 @@ namespace X4SectorCreator
 
             // Set form title
             Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
-            _currentX4Version = versionChecker.TargetGameVersion;
             _currentModTargetVersion = versionChecker.ModTargetGameVersion;
 
             // Check for update
@@ -232,7 +231,6 @@ namespace X4SectorCreator
 
                             // Update title text with new version
                             Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
-                            _currentX4Version = versionChecker.TargetGameVersion;
                             _currentModTargetVersion = versionChecker.ModTargetGameVersion;
 
                             _ = MessageBox.Show($"Your cluster mapping has been automatically updated with the latest X4 version ({result.VersionInfo.X4Version}).");
