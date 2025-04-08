@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegionDefinitionForm));
             txtRegionDefinitionName = new TextBox();
             label14 = new Label();
             TabControlFalloff = new TabControl();
@@ -64,6 +65,10 @@
             label13 = new Label();
             txtMaxNoiseValue = new TextBox();
             BtnAddPredefined = new Button();
+            label5 = new Label();
+            label7 = new Label();
+            label8 = new Label();
+            label15 = new Label();
             TabControlFalloff.SuspendLayout();
             tabLateral.SuspendLayout();
             tabRadial.SuspendLayout();
@@ -419,11 +424,51 @@
             BtnAddPredefined.UseVisualStyleBackColor = true;
             BtnAddPredefined.Click += BtnAddPredefined_Click;
             // 
+            // label5
+            // 
+            label5.Font = new Font("Segoe UI", 9F);
+            label5.Location = new Point(462, 281);
+            label5.Name = "label5";
+            label5.Size = new Size(248, 111);
+            label5.TabIndex = 83;
+            label5.Text = resources.GetString("label5.Text");
+            // 
+            // label7
+            // 
+            label7.Font = new Font("Segoe UI", 9F);
+            label7.Location = new Point(462, 401);
+            label7.Name = "label7";
+            label7.Size = new Size(248, 81);
+            label7.TabIndex = 84;
+            label7.Text = "Fields defines what objects are spawned inside the region, and how densely and variably they appear. Most commonly, this includes things like asteroids, gas clouds, or debris fields.";
+            // 
+            // label8
+            // 
+            label8.Font = new Font("Segoe UI", 9F);
+            label8.Location = new Point(462, 487);
+            label8.Name = "label8";
+            label8.Size = new Size(248, 56);
+            label8.TabIndex = 85;
+            label8.Text = "Region Resources defines what mineable materials are available within a region and how rich those resources are.";
+            // 
+            // label15
+            // 
+            label15.Font = new Font("Segoe UI", 9F);
+            label15.Location = new Point(462, 543);
+            label15.Name = "label15";
+            label15.Size = new Size(248, 33);
+            label15.TabIndex = 86;
+            label15.Text = "Noise values determines the generation and spread of the asteroids within the region.";
+            // 
             // RegionDefinitionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(763, 667);
+            Controls.Add(label15);
+            Controls.Add(label8);
+            Controls.Add(label7);
+            Controls.Add(label5);
             Controls.Add(BtnAddPredefined);
             Controls.Add(label13);
             Controls.Add(txtMaxNoiseValue);
@@ -505,5 +550,9 @@
         internal ListBox ListBoxRadial;
         internal ListBox ListBoxFields;
         private Button BtnAddPredefined;
+        private Label label5;
+        private Label label7;
+        private Label label8;
+        private Label label15;
     }
 }
