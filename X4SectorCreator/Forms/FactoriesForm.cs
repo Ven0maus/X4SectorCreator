@@ -348,5 +348,10 @@ namespace X4SectorCreator.Forms
             FactoryForm.Value.Factory = factory;
             FactoryForm.Value.Show();
         }
+
+        private void BtnQuickQuotaEditor_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -505,7 +505,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "RegionDefinitionForm";
-            Text = "X4 Sector Creator";
+            Text = "Region Definition Editor";
             TabControlFalloff.ResumeLayout(false);
             tabLateral.ResumeLayout(false);
             tabRadial.ResumeLayout(false);

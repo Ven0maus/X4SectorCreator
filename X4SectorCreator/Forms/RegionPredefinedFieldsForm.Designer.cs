@@ -250,7 +250,7 @@ namespace X4SectorCreator.Forms
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "RegionPredefinedFieldsForm";
-            Text = "X4 Sector Creator";
+            Text = "Region Predefined Fields Selector";
             ResumeLayout(false);
             PerformLayout();
         }

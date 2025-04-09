@@ -110,7 +110,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FactoryForm";
-            Text = "X4 Sector Creator";
+            Text = "Factory Editor";
             ResumeLayout(false);
             PerformLayout();
         }

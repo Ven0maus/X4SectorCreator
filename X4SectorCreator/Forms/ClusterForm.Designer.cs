@@ -187,7 +187,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ClusterForm";
-            Text = "X4 Sector Creator";
+            Text = "Cluster Editor";
             ResumeLayout(false);
             PerformLayout();
         }

@@ -652,7 +652,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "RegionFieldsForm";
-            Text = "X4 Sector Creator";
+            Text = "Region Field Editor";
             ResumeLayout(false);
             PerformLayout();
         }

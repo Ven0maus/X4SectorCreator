@@ -42,6 +42,7 @@
             label8 = new Label();
             BtnResetFilter = new Button();
             label5 = new Label();
+            BtnQuickQuotaEditor = new Button();
             SuspendLayout();
             // 
             // ListFactories
@@ -85,7 +86,7 @@
             // 
             // BtnExitFactoriesWindow
             // 
-            BtnExitFactoriesWindow.Location = new Point(277, 284);
+            BtnExitFactoriesWindow.Location = new Point(277, 326);
             BtnExitFactoriesWindow.Name = "BtnExitFactoriesWindow";
             BtnExitFactoriesWindow.Size = new Size(321, 36);
             BtnExitFactoriesWindow.TabIndex = 5;
@@ -96,7 +97,7 @@
             // cmbFaction
             // 
             cmbFaction.FormattingEnabled = true;
-            cmbFaction.Location = new Point(345, 195);
+            cmbFaction.Location = new Point(345, 237);
             cmbFaction.Name = "cmbFaction";
             cmbFaction.Size = new Size(247, 23);
             cmbFaction.TabIndex = 6;
@@ -106,7 +107,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14F, FontStyle.Underline);
-            label2.Location = new Point(277, 163);
+            label2.Location = new Point(277, 205);
             label2.Name = "label2";
             label2.Size = new Size(152, 25);
             label2.TabIndex = 7;
@@ -116,7 +117,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(277, 193);
+            label3.Location = new Point(277, 235);
             label3.Name = "label3";
             label3.Size = new Size(62, 21);
             label3.TabIndex = 8;
@@ -125,7 +126,7 @@
             // cmbCluster
             // 
             cmbCluster.FormattingEnabled = true;
-            cmbCluster.Location = new Point(345, 223);
+            cmbCluster.Location = new Point(345, 265);
             cmbCluster.Name = "cmbCluster";
             cmbCluster.Size = new Size(247, 23);
             cmbCluster.TabIndex = 16;
@@ -135,7 +136,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(277, 223);
+            label7.Location = new Point(277, 265);
             label7.Name = "label7";
             label7.Size = new Size(62, 21);
             label7.TabIndex = 15;
@@ -145,7 +146,7 @@
             // 
             cmbSector.Enabled = false;
             cmbSector.FormattingEnabled = true;
-            cmbSector.Location = new Point(345, 255);
+            cmbSector.Location = new Point(345, 297);
             cmbSector.Name = "cmbSector";
             cmbSector.Size = new Size(247, 23);
             cmbSector.TabIndex = 18;
@@ -155,7 +156,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(282, 256);
+            label8.Location = new Point(282, 298);
             label8.Name = "label8";
             label8.Size = new Size(57, 21);
             label8.TabIndex = 17;
@@ -163,7 +164,7 @@
             // 
             // BtnResetFilter
             // 
-            BtnResetFilter.Location = new Point(435, 163);
+            BtnResetFilter.Location = new Point(435, 205);
             BtnResetFilter.Name = "BtnResetFilter";
             BtnResetFilter.Size = new Size(157, 25);
             BtnResetFilter.TabIndex = 19;
@@ -181,11 +182,22 @@
             label5.TabIndex = 21;
             label5.Text = "(determines the amount of factory stations in the galaxy.)";
             // 
+            // BtnQuickQuotaEditor
+            // 
+            BtnQuickQuotaEditor.Location = new Point(277, 166);
+            BtnQuickQuotaEditor.Name = "BtnQuickQuotaEditor";
+            BtnQuickQuotaEditor.Size = new Size(321, 36);
+            BtnQuickQuotaEditor.TabIndex = 22;
+            BtnQuickQuotaEditor.Text = "Quick Quota Editor";
+            BtnQuickQuotaEditor.UseVisualStyleBackColor = true;
+            BtnQuickQuotaEditor.Click += BtnQuickQuotaEditor_Click;
+            // 
             // FactoriesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(604, 440);
+            Controls.Add(BtnQuickQuotaEditor);
             Controls.Add(label5);
             Controls.Add(BtnResetFilter);
             Controls.Add(cmbSector);
@@ -204,7 +216,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FactoriesForm";
-            Text = "X4 Sector Creator";
+            Text = "Factories";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -225,5 +237,6 @@
         private Label label8;
         private Button BtnResetFilter;
         private Label label5;
+        private Button BtnQuickQuotaEditor;
     }
 }

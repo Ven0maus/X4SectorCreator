@@ -122,7 +122,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "JobForm";
-            Text = "X4 Sector Creator";
+            Text = "Job Editor";
             ResumeLayout(false);
             PerformLayout();
         }

@@ -398,5 +398,10 @@ namespace X4SectorCreator.Forms
             JobForm.Value.Job = job;
             JobForm.Value.Show();
         }
+
+        private void BtnQuickQuotaEditor_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

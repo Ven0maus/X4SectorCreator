@@ -223,7 +223,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "RegionForm";
-            Text = "X4 Sector Creator";
+            Text = "Region Editor";
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).EndInit();
             ResumeLayout(false);
             PerformLayout();

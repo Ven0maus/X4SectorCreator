@@ -58,12 +58,12 @@
             label1.TabIndex = 1;
             label1.Text = "Templates";
             // 
-            // TxtExampleJob
+            // TxtExampleFactory
             // 
             TxtExampleFactory.Font = new Font("Segoe UI", 10F);
             TxtExampleFactory.Location = new Point(407, 36);
             TxtExampleFactory.Multiline = true;
-            TxtExampleFactory.Name = "TxtExampleJob";
+            TxtExampleFactory.Name = "TxtExampleFactory";
             TxtExampleFactory.ReadOnly = true;
             TxtExampleFactory.Size = new Size(654, 500);
             TxtExampleFactory.TabIndex = 2;
@@ -123,7 +123,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FactoryTemplatesForm";
-            Text = "X4 Sector Creator";
+            Text = "Factory Template Selector";
             ResumeLayout(false);
             PerformLayout();
         }

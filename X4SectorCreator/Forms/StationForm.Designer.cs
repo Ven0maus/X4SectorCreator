@@ -248,7 +248,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "StationForm";
-            Text = "X4 Sector Creator";
+            Text = "Station Editor";
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).EndInit();
             ResumeLayout(false);
             PerformLayout();
