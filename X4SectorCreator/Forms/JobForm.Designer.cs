@@ -130,11 +130,11 @@
         #endregion
 
         private Label label2;
-        private TextBox TxtJobXml;
         private Button BtnCreate;
         private Button BtnCancel;
         private Button BtnSelectJobLocation;
         private Button BtnSelectBasket;
         private Button BtnSelectFaction;
+        internal TextBox TxtJobXml;
     }
 }

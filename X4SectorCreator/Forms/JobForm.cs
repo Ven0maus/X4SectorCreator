@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Data;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -34,6 +35,7 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        private readonly LazyEvaluated<FactionSelectionForm> FactionSelectionForm = new(() => new FactionSelectionForm(), a => !a.IsDisposed);
         private static readonly string[] _typeLabels = ["galaxy", "cluster", "sector"];
 
         public JobForm()
@@ -50,50 +52,9 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            const string lblOwner = "Owner:";
-            const string lblFactionSpace = "Spawn in space owned by:";
-            Dictionary<string, string> modInfo = MultiInputDialog.Show("Select Faction",
-                (lblOwner, [.. MainForm.Instance.FactionColorMapping.Keys.Append("Ownerless").OrderBy(a => a)], null),
-                (lblFactionSpace, [.. MainForm.Instance.FactionColorMapping.Keys.Append("Ownerless").OrderBy(a => a)], null)
-            );
-
-            if (modInfo == null || modInfo.Count != 2)
-            {
-                return;
-            }
-
-            string owner = (modInfo[lblOwner] ?? "").ToLower();
-            string factionSpaceName = (modInfo[lblFactionSpace] ?? "").ToLower();
-
-            if (string.IsNullOrWhiteSpace(owner) || string.IsNullOrWhiteSpace(factionSpaceName))
-            {
-                _ = MessageBox.Show("Please fill in the faction fields.");
-                return;
-            }
-
-            // Set faction on various objects
-            if (job.Category != null)
-            {
-                job.Category.Faction = owner;
-            }
-
-            if (job.Location != null)
-            {
-                job.Location.Faction = factionSpaceName;
-            }
-
-            if (job.Ship?.Select != null)
-            {
-                job.Ship.Select.Faction = owner;
-            }
-
-            if (job.Ship?.Owner != null)
-            {
-                job.Ship.Owner.Exact = owner;
-            }
-
-            TxtJobXml.Text = job.SerializeJob();
-            TxtJobXml.SelectionStart = TxtJobXml.Text.Length;
+            FactionSelectionForm.Value.Job = job;
+            FactionSelectionForm.Value.JobForm = this;
+            FactionSelectionForm.Value.Show();
         }
 
         private void BtnSelectBasket_Click(object sender, EventArgs e)

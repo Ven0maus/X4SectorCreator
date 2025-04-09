@@ -274,9 +274,6 @@ namespace X4SectorCreator.Objects
             [XmlAttribute(AttributeName = "stationtype")]
             public string Stationtype { get; set; }
 
-            [XmlAttribute(AttributeName = "matchextension")]
-            public string Matchextension { get; set; }
-
             [XmlAttribute(AttributeName = "regionbasket")]
             public string Regionbasket { get; set; }
 

@@ -63,7 +63,7 @@ namespace X4SectorCreator.Forms
             label1.Name = "label1";
             label1.Size = new Size(106, 20);
             label1.TabIndex = 2;
-            label1.Text = "Factory Owner:";
+            label1.Text = "Owner Faction:";
             // 
             // label2
             // 
