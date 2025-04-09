@@ -48,12 +48,17 @@ namespace X4SectorCreator.Forms
             object originalSector = cmbSector.SelectedItem ?? "Any";
 
             // Factions
+            var allFactions = new HashSet<string>(AllFactories
+                .Select(obj => obj.Value.Owner)
+                .Where(a => a != null)
+                .Select(f => f.Trim()) // clean up whitespace
+                .Where(f => !string.IsNullOrWhiteSpace(f)) // ignore blanks
+            );
             cmbFaction.Items.Clear();
-            foreach (string value in AllFactories.Select(a => a.Value.Location?.Faction).Where(a => a != null).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(a => a))
+            foreach (string value in allFactions.OrderBy(a => a))
             {
                 _ = cmbFaction.Items.Add(value);
             }
-
             cmbFaction.Items.Insert(0, "Any");
 
             // Clusters
