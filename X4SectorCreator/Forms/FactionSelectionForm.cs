@@ -24,6 +24,7 @@ namespace X4SectorCreator.Forms
 
             var factions = MainForm.Instance.FactionColorMapping.Keys
                 .Append("Ownerless")
+                .Select(a => a.ToLower())
                 .OrderBy(a => a);
 
             foreach (var faction in factions)
