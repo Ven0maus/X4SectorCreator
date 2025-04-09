@@ -98,12 +98,16 @@ namespace X4SectorCreator.Forms
                         });
 
                         // Create also a sector and one zone with the same name
-                        Cluster.Sectors.Add(new Sector
+                        var sector = new Sector
                         {
                             Id = 1,
                             Name = name,
                             Owner = "None"
-                        });
+                        };
+                        Cluster.Sectors.Add(sector);
+
+                        // Create initial zones based on the sector range
+                        sector.InitializeOrUpdateZones();
 
                         // Add to listbox and select it
                         _ = MainForm.Instance.ClustersListBox.Items.Add(name);

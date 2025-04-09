@@ -233,6 +233,9 @@ namespace X4SectorCreator.Forms
                     // Create new sector in selected cluster
                     _selectedCluster.Sectors.Add(sectorValue);
 
+                    // Create zones based on the sector range
+                    sectorValue.InitializeOrUpdateZones();
+
                     // Add to sector listbox
                     _ = MainForm.Instance.SectorsListBox.Items.Add(name);
                     MainForm.Instance.SectorsListBox.SelectedItem = name;

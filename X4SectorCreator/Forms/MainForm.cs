@@ -926,6 +926,13 @@ namespace X4SectorCreator
                     Forms.SectorForm.DetermineSectorOffset(cluster, sector);
                 }
             }
+
+            // Support new generated zones in new sectors that don't have them yet
+            foreach (var sector in cluster.Sectors)
+            {
+                if (sector.IsBaseGame || sector.Zones.Any(a => a.IsGeneratedZone)) continue;
+                sector.InitializeOrUpdateZones();
+            }
         }
 
         private void BtnOpenFolder_Click(object sender, EventArgs e)
