@@ -6,8 +6,10 @@ namespace X4SectorCreator.Forms
     public partial class FactoriesForm : Form
     {
         public static readonly Dictionary<string, Factory> AllFactories = new(StringComparer.OrdinalIgnoreCase);
-        public readonly LazyEvaluated<FactoryForm> FactoryForm = new(() => new FactoryForm(), a => !a.IsDisposed);
-        public readonly LazyEvaluated<FactoryTemplatesForm> FactoryTemplatesForm = new(() => new FactoryTemplatesForm(), a => !a.IsDisposed);
+
+        private readonly LazyEvaluated<FactoryForm> _factoryForm = new(() => new FactoryForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<FactoryTemplatesForm> _factoryTemplatesForm = new(() => new FactoryTemplatesForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<QuickQuotaEditorForm> _quickQuotaEditorForm = new(() => new QuickQuotaEditorForm(), a => !a.IsDisposed);
 
         private bool _applyFilter = true;
 
@@ -268,42 +270,42 @@ namespace X4SectorCreator.Forms
         private void BtnCreateCustom_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            if (_factoryForm.IsInitialized && _factoryForm.Value.Visible)
             {
                 return;
             }
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible)
+            if (_factoryTemplatesForm.IsInitialized && _factoryTemplatesForm.Value.Visible)
             {
                 return;
             }
 
-            FactoryForm.Value.Show();
+            _factoryForm.Value.Show();
         }
 
         private void BtnCreateFromTemplate_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            if (_factoryForm.IsInitialized && _factoryForm.Value.Visible)
             {
                 return;
             }
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible)
+            if (_factoryTemplatesForm.IsInitialized && _factoryTemplatesForm.Value.Visible)
             {
                 return;
             }
 
-            FactoryTemplatesForm.Value.FactoryForm = FactoryForm.Value;
-            FactoryTemplatesForm.Value.Show();
+            _factoryTemplatesForm.Value.FactoryForm = _factoryForm.Value;
+            _factoryTemplatesForm.Value.Show();
         }
 
         private void BtnRemoveFactory_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            if (_factoryForm.IsInitialized && _factoryForm.Value.Visible)
             {
                 return;
             }
@@ -333,25 +335,27 @@ namespace X4SectorCreator.Forms
             }
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible)
+            if (_factoryTemplatesForm.IsInitialized && _factoryTemplatesForm.Value.Visible)
             {
                 return;
             }
 
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            if (_factoryForm.IsInitialized && _factoryForm.Value.Visible)
             {
                 return;
             }
 
-            FactoryForm.Value.IsEditing = true;
-            FactoryForm.Value.Factory = factory;
-            FactoryForm.Value.Show();
+            _factoryForm.Value.IsEditing = true;
+            _factoryForm.Value.Factory = factory;
+            _factoryForm.Value.Show();
         }
 
         private void BtnQuickQuotaEditor_Click(object sender, EventArgs e)
         {
-
+            _quickQuotaEditorForm.Value.FactoriesForm = this;
+            _quickQuotaEditorForm.Value.Initialize();
+            _quickQuotaEditorForm.Value.Show();
         }
     }
 }
