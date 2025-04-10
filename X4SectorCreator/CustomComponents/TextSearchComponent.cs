@@ -3,64 +3,33 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace X4SectorCreator.CustomComponents
 {
-    public partial class TextSearchComponent<T> : IDisposable
+    internal partial class TextSearchComponent : IDisposable
     {
-        private readonly Func<T, string> _filterCriteriaSelector;
-        private readonly List<T> _items;
-        private readonly Action<List<T>> _onFiltered;
-        private readonly Timer _debounceTimer;
-        private readonly TextBox _textBox;
+        protected TextBox TextBox { get; }
+        protected Timer DebounceTimer { get; }
 
-        public TextSearchComponent(TextBox textBox, List<T> items, 
-            Func<T, string> filterCriteriaSelector, 
-            Action<List<T>> onFiltered, 
-            int debounceDelayMilliseconds = 500)
+        private bool _isDisposed = false;
+
+        public TextSearchComponent(TextBox textBox, int debounceDelayMilliseconds = 500)
         {
-            ArgumentNullException.ThrowIfNull(filterCriteriaSelector, nameof(filterCriteriaSelector));
-            ArgumentNullException.ThrowIfNull(onFiltered, nameof(onFiltered));
-            ArgumentNullException.ThrowIfNull(items, nameof(items));
-
-            _filterCriteriaSelector = filterCriteriaSelector;
-            _onFiltered = onFiltered;
-            _items = items;
-            _textBox = textBox;
-            _debounceTimer = new Timer { Interval = debounceDelayMilliseconds };
-
-            // Hook events
-            _debounceTimer.Tick += DebounceTimer_Tick;
-            _textBox.TextChanged += TextBox_TextChanged;
+            TextBox = textBox;
+            TextBox.TextChanged += TextBox_TextChanged;
+            DebounceTimer = new Timer { Interval = debounceDelayMilliseconds };
+            DebounceTimer.Tick += DebounceTimer_Tick;
         }
 
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
-            _debounceTimer.Stop();
-            _debounceTimer.Start();
+            DebounceTimer.Stop();
+            DebounceTimer.Start();
         }
 
-        private void DebounceTimer_Tick(object sender, EventArgs e)
+        protected virtual void DebounceTimer_Tick(object sender, EventArgs e)
         {
-            _debounceTimer.Stop();
-            _onFiltered.Invoke(FilterItems());
+            DebounceTimer.Stop();
         }
 
-        private List<T> FilterItems()
-        {
-            // Return all items if empty
-            if (string.IsNullOrWhiteSpace(_textBox.Text))
-                return [.. _items]; // Create new list instance always
-
-            return [.. _items
-                .Select(item => new
-                {
-                    Item = item,
-                    Score = GetMatchScore(_filterCriteriaSelector(item), _textBox.Text)
-                })
-                .Where(x => x.Score > 0)
-                .OrderByDescending(x => x.Score)
-                .Select(x => x.Item)];
-        }
-
-        private static int GetMatchScore(string text, string search)
+        protected static int GetMatchScore(string text, string search)
         {
             if (string.IsNullOrWhiteSpace(text) || string.IsNullOrWhiteSpace(search))
                 return 0;
@@ -101,14 +70,13 @@ namespace X4SectorCreator.CustomComponents
             return d[s.Length, t.Length];
         }
 
-        private bool _isDisposed = false;
         public void Dispose()
         {
             if (_isDisposed) return;
             GC.SuppressFinalize(this);
-            _textBox.TextChanged -= TextBox_TextChanged;
-            _debounceTimer.Stop();
-            _debounceTimer.Dispose();
+            TextBox.TextChanged -= TextBox_TextChanged;
+            DebounceTimer.Stop();
+            DebounceTimer.Dispose();
             _isDisposed = true;
         }
 
@@ -121,5 +89,49 @@ namespace X4SectorCreator.CustomComponents
         private static partial Regex NormalizeRegex();
         [GeneratedRegex(@"([a-z])([A-Z])")]
         private static partial Regex TokenizeRegex();
+    }
+
+    internal class TextSearchComponent<T> : TextSearchComponent, IDisposable
+    {
+        private readonly Func<T, string> _filterCriteriaSelector;
+        private readonly List<T> _items;
+        private readonly Action<List<T>> _onFiltered;
+
+        public TextSearchComponent(TextBox textBox, List<T> items, 
+            Func<T, string> filterCriteriaSelector, 
+            Action<List<T>> onFiltered, 
+            int debounceDelayMilliseconds = 500) : base(textBox, debounceDelayMilliseconds)
+        {
+            ArgumentNullException.ThrowIfNull(filterCriteriaSelector, nameof(filterCriteriaSelector));
+            ArgumentNullException.ThrowIfNull(onFiltered, nameof(onFiltered));
+            ArgumentNullException.ThrowIfNull(items, nameof(items));
+
+            _filterCriteriaSelector = filterCriteriaSelector;
+            _onFiltered = onFiltered;
+            _items = items;
+        }
+
+        protected override void DebounceTimer_Tick(object sender, EventArgs e)
+        {
+            base.DebounceTimer_Tick(sender, e);
+            _onFiltered.Invoke(FilterItems());
+        }
+
+        private List<T> FilterItems()
+        {
+            // Return all items if empty
+            if (string.IsNullOrWhiteSpace(TextBox.Text))
+                return [.. _items]; // Create new list instance always
+
+            return [.. _items
+                .Select(item => new
+                {
+                    Item = item,
+                    Score = GetMatchScore(_filterCriteriaSelector(item), TextBox.Text)
+                })
+                .Where(x => x.Score > 0)
+                .OrderByDescending(x => x.Score)
+                .Select(x => x.Item)];
+        }
     }
 }

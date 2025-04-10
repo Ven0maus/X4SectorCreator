@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
-using X4SectorCreator.CustomComponents;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -16,20 +16,24 @@ namespace X4SectorCreator.Forms
         private bool _applyFilter = true;
 
         private readonly List<DataGridObject> _dataGridObjects = new();
-        private readonly TextSearchComponent<DataGridObject> _searchComponent;
 
         public QuickQuotaEditorForm()
         {
             InitializeComponent();
 
-            _searchComponent = new TextSearchComponent<DataGridObject>(TxtSearch,
-                _dataGridObjects,
-                a => a.Id,
-                ApplyCurrentFilter);
+            // Enables text search component
+            TxtSearch.EnableTextSearch(_dataGridObjects, a => a.Id, ApplyCurrentFilter);
 
             QuotaView.CellBeginEdit += QuotaView_CellBeginEdit;
             QuotaView.CellValidating += QuotaView_CellValidating;
             QuotaView.CellValidated += QuotaView_CellValidated;
+
+            Disposed += QuickQuotaEditorForm_Disposed;
+        }
+
+        private void QuickQuotaEditorForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
         }
 
         public void Initialize()
