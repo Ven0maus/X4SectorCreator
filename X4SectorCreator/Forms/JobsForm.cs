@@ -18,6 +18,14 @@ namespace X4SectorCreator.Forms
         public JobsForm()
         {
             InitializeComponent();
+
+            TxtSearch.EnableTextSearch(() => AllJobs.Values.ToList(), a => a.Id, ApplyCurrentFilter);
+            Disposed += JobsForm_Disposed;
+        }
+
+        private void JobsForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
         }
 
         public void Initialize()
@@ -197,14 +205,14 @@ namespace X4SectorCreator.Forms
             ApplyCurrentFilter();
         }
 
-        public void ApplyCurrentFilter()
+        public void ApplyCurrentFilter(List<Job> jobs = null)
         {
             if (!_applyFilter)
             {
                 return;
             }
 
-            List<Job> suitableJobs = AllJobs.Values.ToList();
+            List<Job> suitableJobs = jobs ?? [.. AllJobs.Values];
 
             // Remove jobs based on rules
             HandleFilterOption(cmbBasket, suitableJobs);

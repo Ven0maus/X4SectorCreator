@@ -13,6 +13,12 @@ namespace X4SectorCreator.Helpers
             _textSearchComponents[textBox] = new TextSearchComponent<T>(textBox, items, filterCriteriaSelector, onFiltered, debounceDelayMilliseconds);
         }
 
+        public static void EnableTextSearch<T>(this TextBox textBox, Func<List<T>> itemGetter, Func<T, string> filterCriteriaSelector, Action<List<T>> onFiltered, int debounceDelayMilliseconds = 500)
+        {
+            if (_textSearchComponents.ContainsKey(textBox)) return;
+            _textSearchComponents[textBox] = new TextSearchComponent<T>(textBox, itemGetter, filterCriteriaSelector, onFiltered, debounceDelayMilliseconds);
+        }
+
         public static void DisableTextSearch(this TextBox textBox)
         {
             if (!_textSearchComponents.TryGetValue(textBox, out var component)) return;

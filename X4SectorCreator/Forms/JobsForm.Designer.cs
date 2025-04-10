@@ -48,14 +48,16 @@
             BtnBaskets = new Button();
             label5 = new Label();
             BtnQuickQuotaEditor = new Button();
+            label9 = new Label();
+            TxtSearch = new TextBox();
             SuspendLayout();
             // 
             // ListJobs
             // 
             ListJobs.FormattingEnabled = true;
-            ListJobs.Location = new Point(12, 40);
+            ListJobs.Location = new Point(12, 70);
             ListJobs.Name = "ListJobs";
-            ListJobs.Size = new Size(259, 424);
+            ListJobs.Size = new Size(259, 394);
             ListJobs.TabIndex = 0;
             ListJobs.DoubleClick += ListJobs_DoubleClick;
             // 
@@ -245,11 +247,30 @@
             BtnQuickQuotaEditor.UseVisualStyleBackColor = true;
             BtnQuickQuotaEditor.Click += BtnQuickQuotaEditor_Click;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F);
+            label9.Location = new Point(12, 42);
+            label9.Name = "label9";
+            label9.Size = new Size(60, 21);
+            label9.TabIndex = 24;
+            label9.Text = "Search:";
+            // 
+            // TxtSearch
+            // 
+            TxtSearch.Location = new Point(78, 42);
+            TxtSearch.Name = "TxtSearch";
+            TxtSearch.Size = new Size(193, 23);
+            TxtSearch.TabIndex = 25;
+            // 
             // JobsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(604, 478);
+            Controls.Add(TxtSearch);
+            Controls.Add(label9);
             Controls.Add(BtnQuickQuotaEditor);
             Controls.Add(label5);
             Controls.Add(BtnBaskets);
@@ -301,5 +322,7 @@
         private Button BtnBaskets;
         private Label label5;
         private Button BtnQuickQuotaEditor;
+        private Label label9;
+        private TextBox TxtSearch;
     }
 }

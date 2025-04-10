@@ -96,6 +96,7 @@ namespace X4SectorCreator.CustomComponents
         private readonly Func<T, string> _filterCriteriaSelector;
         private readonly List<T> _items;
         private readonly Action<List<T>> _onFiltered;
+        private readonly Func<List<T>> _itemGetter;
 
         public TextSearchComponent(TextBox textBox, List<T> items, 
             Func<T, string> filterCriteriaSelector, 
@@ -111,6 +112,21 @@ namespace X4SectorCreator.CustomComponents
             _items = items;
         }
 
+        public TextSearchComponent(TextBox textBox, Func<List<T>> itemGetter,
+            Func<T, string> filterCriteriaSelector,
+            Action<List<T>> onFiltered,
+            int debounceDelayMilliseconds = 500) : base(textBox, debounceDelayMilliseconds)
+        {
+            ArgumentNullException.ThrowIfNull(filterCriteriaSelector, nameof(filterCriteriaSelector));
+            ArgumentNullException.ThrowIfNull(onFiltered, nameof(onFiltered));
+            ArgumentNullException.ThrowIfNull(itemGetter, nameof(itemGetter));
+
+            _filterCriteriaSelector = filterCriteriaSelector;
+            _onFiltered = onFiltered;
+            _itemGetter = itemGetter;
+        }
+
+
         protected override void DebounceTimer_Tick(object sender, EventArgs e)
         {
             base.DebounceTimer_Tick(sender, e);
@@ -121,9 +137,9 @@ namespace X4SectorCreator.CustomComponents
         {
             // Return all items if empty
             if (string.IsNullOrWhiteSpace(TextBox.Text))
-                return [.. _items]; // Create new list instance always
+                return [.. _items ?? _itemGetter.Invoke()]; // Create new list instance always
 
-            return [.. _items
+            return [.. (_items ?? _itemGetter.Invoke())
                 .Select(item => new
                 {
                     Item = item,

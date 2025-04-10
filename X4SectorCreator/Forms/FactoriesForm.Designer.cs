@@ -43,14 +43,16 @@
             BtnResetFilter = new Button();
             label5 = new Label();
             BtnQuickQuotaEditor = new Button();
+            label4 = new Label();
+            TxtSearch = new TextBox();
             SuspendLayout();
             // 
             // ListFactories
             // 
             ListFactories.FormattingEnabled = true;
-            ListFactories.Location = new Point(12, 40);
+            ListFactories.Location = new Point(12, 70);
             ListFactories.Name = "ListFactories";
-            ListFactories.Size = new Size(259, 394);
+            ListFactories.Size = new Size(259, 364);
             ListFactories.TabIndex = 0;
             ListFactories.DoubleClick += ListFactories_DoubleClick;
             // 
@@ -192,11 +194,30 @@
             BtnQuickQuotaEditor.UseVisualStyleBackColor = true;
             BtnQuickQuotaEditor.Click += BtnQuickQuotaEditor_Click;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 12F);
+            label4.Location = new Point(12, 42);
+            label4.Name = "label4";
+            label4.Size = new Size(60, 21);
+            label4.TabIndex = 23;
+            label4.Text = "Search:";
+            // 
+            // TxtSearch
+            // 
+            TxtSearch.Location = new Point(78, 42);
+            TxtSearch.Name = "TxtSearch";
+            TxtSearch.Size = new Size(193, 23);
+            TxtSearch.TabIndex = 24;
+            // 
             // FactoriesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(604, 440);
+            Controls.Add(TxtSearch);
+            Controls.Add(label4);
             Controls.Add(BtnQuickQuotaEditor);
             Controls.Add(label5);
             Controls.Add(BtnResetFilter);
@@ -238,5 +259,7 @@
         private Button BtnResetFilter;
         private Label label5;
         private Button BtnQuickQuotaEditor;
+        private Label label4;
+        private TextBox TxtSearch;
     }
 }

@@ -16,6 +16,14 @@ namespace X4SectorCreator.Forms
         public FactoriesForm()
         {
             InitializeComponent();
+
+            TxtSearch.EnableTextSearch(() => AllFactories.Values.ToList(), a => a.Id, ApplyCurrentFilter);
+            Disposed += FactoriesForm_Disposed;
+        }
+
+        private void FactoriesForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
         }
 
         public void Initialize()
@@ -176,14 +184,14 @@ namespace X4SectorCreator.Forms
             ApplyCurrentFilter();
         }
 
-        public void ApplyCurrentFilter()
+        public void ApplyCurrentFilter(List<Factory> factories = null)
         {
             if (!_applyFilter)
             {
                 return;
             }
 
-            List<Factory> suitableFactories = AllFactories.Values.ToList();
+            List<Factory> suitableFactories = factories ?? [.. AllFactories.Values];
 
             // Remove factories based on rules
             HandleFilterOption(cmbFaction, suitableFactories);
