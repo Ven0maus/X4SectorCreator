@@ -233,46 +233,61 @@ namespace X4SectorCreator.Forms
             if (comboBox == cmbBasket)
             {
                 string basket = cmbBasket.SelectedItem as string;
-                _ = jobs.RemoveAll(a => a.Basket?.Basket == null || !a.Basket.Basket.Equals(basket, StringComparison.OrdinalIgnoreCase));
+                if (basket != null)
+                {
+                    _ = jobs.RemoveAll(a => a.Basket?.Basket == null || !a.Basket.Basket.Equals(basket, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbFaction)
             {
                 // Focus on jobs where the ship is owned by the selected faction
                 string faction = cmbFaction.SelectedItem as string;
-                _ = jobs.RemoveAll(a => a.Ship?.Owner == null || !a.Ship.Owner.Exact.Equals(faction, StringComparison.OrdinalIgnoreCase));
+                if (faction != null)
+                {
+                    _ = jobs.RemoveAll(a => a.Ship?.Owner == null || !a.Ship.Owner.Exact.Equals(faction, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbOrder)
             {
                 string order = cmbOrder.SelectedItem as string;
-                _ = jobs.RemoveAll(a => a.Orders?.Order?.Order == null || !a.Orders.Order.Order.Equals(order, StringComparison.OrdinalIgnoreCase));
+                if (order != null)
+                {
+                    _ = jobs.RemoveAll(a => a.Orders?.Order?.Order == null || !a.Orders.Order.Order.Equals(order, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbCluster)
             {
                 Cluster cluster = cmbCluster.SelectedItem as Cluster;
-                string clusterCode = $"PREFIX_CL_c{cluster.Id:D3}";
-                if (cluster.IsBaseGame)
+                if (cluster != null)
                 {
-                    clusterCode = $"{cluster.BaseGameMapping}";
-                }
+                    string clusterCode = $"PREFIX_CL_c{cluster.Id:D3}";
+                    if (cluster.IsBaseGame)
+                    {
+                        clusterCode = $"{cluster.BaseGameMapping}";
+                    }
 
-                _ = jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
+                    _ = jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbSector)
             {
                 Sector sector = cmbSector.SelectedItem as Sector;
                 Cluster cluster = cmbCluster.SelectedItem as Cluster;
 
-                string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
-                if (cluster.IsBaseGame && sector.IsBaseGame)
+                if (cluster != null && sector != null)
                 {
-                    sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
-                }
-                else if (cluster.IsBaseGame)
-                {
-                    sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
-                }
+                    string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
+                    if (cluster.IsBaseGame && sector.IsBaseGame)
+                    {
+                        sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
+                    }
+                    else if (cluster.IsBaseGame)
+                    {
+                        sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
+                    }
 
-                _ = jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
+                    _ = jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else
             {
