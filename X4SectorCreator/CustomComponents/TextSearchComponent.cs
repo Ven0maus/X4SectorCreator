@@ -3,7 +3,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace X4SectorCreator.CustomComponents
 {
-    internal partial class TextSearchComponent : IDisposable
+    internal abstract partial class TextSearchComponent : IDisposable
     {
         protected TextBox TextBox { get; }
         protected Timer DebounceTimer { get; }
@@ -91,7 +91,7 @@ namespace X4SectorCreator.CustomComponents
         private static partial Regex TokenizeRegex();
     }
 
-    internal class TextSearchComponent<T> : TextSearchComponent, IDisposable
+    internal sealed class TextSearchComponent<T> : TextSearchComponent, IDisposable
     {
         private readonly Func<T, string> _filterCriteriaSelector;
         private readonly List<T> _items;
