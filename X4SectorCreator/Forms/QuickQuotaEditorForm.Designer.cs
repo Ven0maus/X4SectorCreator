@@ -59,7 +59,7 @@
             QuotaView.Location = new Point(12, 12);
             QuotaView.Name = "QuotaView";
             QuotaView.ScrollBars = ScrollBars.Vertical;
-            QuotaView.Size = new Size(601, 433);
+            QuotaView.Size = new Size(601, 565);
             QuotaView.TabIndex = 0;
             // 
             // Column1
@@ -186,7 +186,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(920, 452);
+            ClientSize = new Size(920, 585);
             Controls.Add(BtnResetFilter);
             Controls.Add(cmbSector);
             Controls.Add(label8);
