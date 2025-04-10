@@ -3,7 +3,7 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace X4SectorCreator.CustomComponents
 {
-    public class TextSearchComponent<T> : IDisposable
+    public partial class TextSearchComponent<T> : IDisposable
     {
         private readonly Func<T, string> _filterCriteriaSelector;
         private readonly List<T> _items;
@@ -68,8 +68,8 @@ namespace X4SectorCreator.CustomComponents
             text = text.ToLower();
             search = search.ToLower();
 
-            string normalizedId = Regex.Replace(text, @"[_\-]", "");
-            string tokenizedId = Regex.Replace(text, @"([a-z])([A-Z])", "$1 $2").Replace("_", " ").Replace("-", " ");
+            string normalizedId = NormalizeRegex().Replace(text, "");
+            string tokenizedId = TokenizeRegex().Replace(text, "$1 $2").Replace("_", " ").Replace("-", " ");
 
             if (text == search) return 100;
             if (normalizedId.StartsWith(search)) return 90;
@@ -116,5 +116,10 @@ namespace X4SectorCreator.CustomComponents
         {
             Dispose();
         }
+
+        [GeneratedRegex(@"[_\-]")]
+        private static partial Regex NormalizeRegex();
+        [GeneratedRegex(@"([a-z])([A-Z])")]
+        private static partial Regex TokenizeRegex();
     }
 }
