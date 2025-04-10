@@ -200,7 +200,6 @@
             TxtSearch.Name = "TxtSearch";
             TxtSearch.Size = new Size(526, 23);
             TxtSearch.TabIndex = 29;
-            TxtSearch.TextChanged += TxtSearch_TextChanged;
             // 
             // QuickQuotaEditorForm
             // 
