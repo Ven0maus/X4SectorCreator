@@ -135,7 +135,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "GalaxySettingsForm";
-            Text = "X4 Sector Creator";
+            Text = "Galaxy Settings";
             ResumeLayout(false);
             PerformLayout();
         }

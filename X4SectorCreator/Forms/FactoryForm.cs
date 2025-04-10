@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Data;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -34,6 +35,8 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        private readonly LazyEvaluated<FactionSelectionForm> FactionSelectionForm = new(() => new FactionSelectionForm(), a => !a.IsDisposed);
+
         private static readonly string[] _typeLabels = ["galaxy", "cluster", "sector"];
 
         public FactoryForm()
@@ -50,34 +53,10 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            const string lblOwner = "Owner:";
-            const string lblFactionSpace = "Spawn in space owned by:";
-            Dictionary<string, string> modInfo = MultiInputDialog.Show("Select Faction",
-                (lblOwner, [.. MainForm.Instance.FactionColorMapping.Keys.Append("Ownerless").OrderBy(a => a)], null),
-                (lblFactionSpace, [.. MainForm.Instance.FactionColorMapping.Keys.Append("Ownerless").OrderBy(a => a)], null)
-            );
-
-            if (modInfo == null || modInfo.Count != 2)
-            {
-                return;
-            }
-
-            string owner = (modInfo[lblOwner] ?? "").ToLower();
-            string factionSpaceName = (modInfo[lblFactionSpace] ?? "").ToLower();
-
-            if (string.IsNullOrWhiteSpace(owner) || string.IsNullOrWhiteSpace(factionSpaceName))
-            {
-                _ = MessageBox.Show("Please fill in the faction fields.");
-                return;
-            }
-
-            // Set owner faction
-            factory.Owner = owner;
-            factory.Location ??= new Factory.LocationObj();
-            factory.Location.Faction = "[" + factionSpaceName + "]";
-
-            TxtFactoryXml.Text = factory.SerializeFactory();
-            TxtFactoryXml.SelectionStart = TxtFactoryXml.Text.Length;
+            // Set factoryform & factory in factoryselectionform
+            FactionSelectionForm.Value.FactoryForm = this;
+            FactionSelectionForm.Value.Factory = factory;
+            FactionSelectionForm.Value.Show();
         }
 
         private void BtnSelectFactoryLocation_Click(object sender, EventArgs e)

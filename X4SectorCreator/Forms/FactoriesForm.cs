@@ -6,14 +6,24 @@ namespace X4SectorCreator.Forms
     public partial class FactoriesForm : Form
     {
         public static readonly Dictionary<string, Factory> AllFactories = new(StringComparer.OrdinalIgnoreCase);
-        public readonly LazyEvaluated<FactoryForm> FactoryForm = new(() => new FactoryForm(), a => !a.IsDisposed);
-        public readonly LazyEvaluated<FactoryTemplatesForm> FactoryTemplatesForm = new(() => new FactoryTemplatesForm(), a => !a.IsDisposed);
+
+        private readonly LazyEvaluated<FactoryForm> _factoryForm = new(() => new FactoryForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<FactoryTemplatesForm> _factoryTemplatesForm = new(() => new FactoryTemplatesForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<QuickQuotaEditorForm> _quickQuotaEditorForm = new(() => new QuickQuotaEditorForm(), a => !a.IsDisposed);
 
         private bool _applyFilter = true;
 
         public FactoriesForm()
         {
             InitializeComponent();
+
+            TxtSearch.EnableTextSearch(() => AllFactories.Values.ToList(), a => a.Id, ApplyCurrentFilter);
+            Disposed += FactoriesForm_Disposed;
+        }
+
+        private void FactoriesForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
         }
 
         public void Initialize()
@@ -48,12 +58,17 @@ namespace X4SectorCreator.Forms
             object originalSector = cmbSector.SelectedItem ?? "Any";
 
             // Factions
+            var allFactions = new HashSet<string>(AllFactories
+                .Select(obj => obj.Value.Owner)
+                .Where(a => a != null)
+                .Select(f => f.Trim()) // clean up whitespace
+                .Where(f => !string.IsNullOrWhiteSpace(f)) // ignore blanks
+            );
             cmbFaction.Items.Clear();
-            foreach (string value in AllFactories.Select(a => a.Value.Location?.Faction).Where(a => a != null).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(a => a))
+            foreach (string value in allFactions.OrderBy(a => a))
             {
                 _ = cmbFaction.Items.Add(value);
             }
-
             cmbFaction.Items.Insert(0, "Any");
 
             // Clusters
@@ -169,14 +184,14 @@ namespace X4SectorCreator.Forms
             ApplyCurrentFilter();
         }
 
-        public void ApplyCurrentFilter()
+        public void ApplyCurrentFilter(List<Factory> factories = null)
         {
             if (!_applyFilter)
             {
                 return;
             }
 
-            List<Factory> suitableFactories = AllFactories.Values.ToList();
+            List<Factory> suitableFactories = factories ?? [.. AllFactories.Values];
 
             // Remove factories based on rules
             HandleFilterOption(cmbFaction, suitableFactories);
@@ -203,35 +218,44 @@ namespace X4SectorCreator.Forms
             if (comboBox == cmbFaction)
             {
                 string owner = cmbFaction.SelectedItem as string;
-                _ = factories.RemoveAll(a => string.IsNullOrWhiteSpace(a.Owner) || !a.Owner.Equals(owner, StringComparison.OrdinalIgnoreCase));
+                if (owner != null)
+                {
+                    _ = factories.RemoveAll(a => string.IsNullOrWhiteSpace(a.Owner) || !a.Owner.Equals(owner, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbCluster)
             {
                 Cluster cluster = cmbCluster.SelectedItem as Cluster;
-                string clusterCode = $"PREFIX_CL_c{cluster.Id:D3}";
-                if (cluster.IsBaseGame)
+                if (cluster != null)
                 {
-                    clusterCode = $"{cluster.BaseGameMapping}";
-                }
+                    string clusterCode = $"PREFIX_CL_c{cluster.Id:D3}";
+                    if (cluster.IsBaseGame)
+                    {
+                        clusterCode = $"{cluster.BaseGameMapping}";
+                    }
 
-                _ = factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
+                    _ = factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbSector)
             {
                 Sector sector = cmbSector.SelectedItem as Sector;
                 Cluster cluster = cmbCluster.SelectedItem as Cluster;
 
-                string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
-                if (cluster.IsBaseGame && sector.IsBaseGame)
+                if (cluster != null && sector != null)
                 {
-                    sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
-                }
-                else if (cluster.IsBaseGame)
-                {
-                    sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
-                }
+                    string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
+                    if (cluster.IsBaseGame && sector.IsBaseGame)
+                    {
+                        sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
+                    }
+                    else if (cluster.IsBaseGame)
+                    {
+                        sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
+                    }
 
-                _ = factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
+                    _ = factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else
             {
@@ -263,42 +287,42 @@ namespace X4SectorCreator.Forms
         private void BtnCreateCustom_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            if (_factoryForm.IsInitialized && _factoryForm.Value.Visible)
             {
                 return;
             }
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible)
+            if (_factoryTemplatesForm.IsInitialized && _factoryTemplatesForm.Value.Visible)
             {
                 return;
             }
 
-            FactoryForm.Value.Show();
+            _factoryForm.Value.Show();
         }
 
         private void BtnCreateFromTemplate_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            if (_factoryForm.IsInitialized && _factoryForm.Value.Visible)
             {
                 return;
             }
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible)
+            if (_factoryTemplatesForm.IsInitialized && _factoryTemplatesForm.Value.Visible)
             {
                 return;
             }
 
-            FactoryTemplatesForm.Value.FactoryForm = FactoryForm.Value;
-            FactoryTemplatesForm.Value.Show();
+            _factoryTemplatesForm.Value.FactoryForm = _factoryForm.Value;
+            _factoryTemplatesForm.Value.Show();
         }
 
         private void BtnRemoveFactory_Click(object sender, EventArgs e)
         {
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            if (_factoryForm.IsInitialized && _factoryForm.Value.Visible)
             {
                 return;
             }
@@ -328,20 +352,27 @@ namespace X4SectorCreator.Forms
             }
 
             // Template selection is ongoing at the moment
-            if (FactoryTemplatesForm.IsInitialized && FactoryTemplatesForm.Value.Visible)
+            if (_factoryTemplatesForm.IsInitialized && _factoryTemplatesForm.Value.Visible)
             {
                 return;
             }
 
             // Factory creation/edit is ongoing at the moment
-            if (FactoryForm.IsInitialized && FactoryForm.Value.Visible)
+            if (_factoryForm.IsInitialized && _factoryForm.Value.Visible)
             {
                 return;
             }
 
-            FactoryForm.Value.IsEditing = true;
-            FactoryForm.Value.Factory = factory;
-            FactoryForm.Value.Show();
+            _factoryForm.Value.IsEditing = true;
+            _factoryForm.Value.Factory = factory;
+            _factoryForm.Value.Show();
+        }
+
+        private void BtnQuickQuotaEditor_Click(object sender, EventArgs e)
+        {
+            _quickQuotaEditorForm.Value.FactoriesForm = this;
+            _quickQuotaEditorForm.Value.Initialize();
+            _quickQuotaEditorForm.Value.Show();
         }
     }
 }

@@ -117,7 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Fall-off defines how the intensity or density of a region's contents (like asteroids, gas, or visuals) changes from the center toward the edge of the region. It's essentially a fade-in and fade-out curve, allowing for smooth transitions rather than hard cutoffs at the region's boundary.</value>
-  </data>
 </root>

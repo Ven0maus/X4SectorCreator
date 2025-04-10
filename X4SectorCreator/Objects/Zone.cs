@@ -7,6 +7,7 @@ namespace X4SectorCreator.Objects
         public int Id { get; set; }
         public string Name { get; set; }
         public Point Position { get; set; }
+        public bool IsGeneratedZone { get; set; }
         public List<Gate> Gates { get; set; } = [];
         public List<Station> Stations { get; set; } = [];
 
@@ -23,6 +24,7 @@ namespace X4SectorCreator.Objects
                 Id = Id,
                 Name = Name,
                 Position = Position,
+                IsGeneratedZone = IsGeneratedZone,
                 Gates = Gates.Select(a => (Gate)a.Clone()).ToList(),
                 Stations = Stations.Select(a => (Station)a.Clone()).ToList()
             };

@@ -61,11 +61,12 @@
             BtnJobs = new Button();
             BtnFactories = new Button();
             BtnCustomFactions = new Button();
+            TxtSearch = new TextBox();
             SuspendLayout();
             // 
             // BtnRemoveCluster
             // 
-            BtnRemoveCluster.Location = new Point(93, 250);
+            BtnRemoveCluster.Location = new Point(94, 279);
             BtnRemoveCluster.Name = "BtnRemoveCluster";
             BtnRemoveCluster.Size = new Size(75, 23);
             BtnRemoveCluster.TabIndex = 0;
@@ -76,7 +77,7 @@
             // ClustersListBox
             // 
             ClustersListBox.FormattingEnabled = true;
-            ClustersListBox.Location = new Point(12, 75);
+            ClustersListBox.Location = new Point(13, 104);
             ClustersListBox.Name = "ClustersListBox";
             ClustersListBox.Size = new Size(156, 169);
             ClustersListBox.TabIndex = 8;
@@ -95,7 +96,7 @@
             // 
             // BtnNewCluster
             // 
-            BtnNewCluster.Location = new Point(12, 250);
+            BtnNewCluster.Location = new Point(13, 279);
             BtnNewCluster.Name = "BtnNewCluster";
             BtnNewCluster.Size = new Size(75, 23);
             BtnNewCluster.TabIndex = 9;
@@ -105,7 +106,7 @@
             // 
             // BtnNewSector
             // 
-            BtnNewSector.Location = new Point(174, 250);
+            BtnNewSector.Location = new Point(174, 279);
             BtnNewSector.Name = "BtnNewSector";
             BtnNewSector.Size = new Size(75, 23);
             BtnNewSector.TabIndex = 13;
@@ -118,7 +119,7 @@
             SectorsListBox.FormattingEnabled = true;
             SectorsListBox.Location = new Point(174, 75);
             SectorsListBox.Name = "SectorsListBox";
-            SectorsListBox.Size = new Size(156, 169);
+            SectorsListBox.Size = new Size(156, 199);
             SectorsListBox.TabIndex = 12;
             SectorsListBox.SelectedIndexChanged += SectorsListBox_SelectedIndexChanged;
             SectorsListBox.DoubleClick += SectorsListBox_DoubleClick;
@@ -135,7 +136,7 @@
             // 
             // BtnRemoveSector
             // 
-            BtnRemoveSector.Location = new Point(255, 250);
+            BtnRemoveSector.Location = new Point(255, 279);
             BtnRemoveSector.Name = "BtnRemoveSector";
             BtnRemoveSector.Size = new Size(75, 23);
             BtnRemoveSector.TabIndex = 10;
@@ -145,7 +146,7 @@
             // 
             // BtnGenerateDiffs
             // 
-            BtnGenerateDiffs.Location = new Point(336, 511);
+            BtnGenerateDiffs.Location = new Point(336, 540);
             BtnGenerateDiffs.Name = "BtnGenerateDiffs";
             BtnGenerateDiffs.Size = new Size(318, 23);
             BtnGenerateDiffs.TabIndex = 18;
@@ -155,7 +156,7 @@
             // 
             // BtnNewGate
             // 
-            BtnNewGate.Location = new Point(336, 250);
+            BtnNewGate.Location = new Point(336, 279);
             BtnNewGate.Name = "BtnNewGate";
             BtnNewGate.Size = new Size(75, 23);
             BtnNewGate.TabIndex = 22;
@@ -168,7 +169,7 @@
             GatesListBox.FormattingEnabled = true;
             GatesListBox.Location = new Point(336, 75);
             GatesListBox.Name = "GatesListBox";
-            GatesListBox.Size = new Size(156, 169);
+            GatesListBox.Size = new Size(156, 199);
             GatesListBox.TabIndex = 21;
             GatesListBox.DoubleClick += GatesListBox_DoubleClick;
             // 
@@ -184,7 +185,7 @@
             // 
             // BtnRemoveGate
             // 
-            BtnRemoveGate.Location = new Point(417, 250);
+            BtnRemoveGate.Location = new Point(417, 279);
             BtnRemoveGate.Name = "BtnRemoveGate";
             BtnRemoveGate.Size = new Size(75, 23);
             BtnRemoveGate.TabIndex = 19;
@@ -196,7 +197,7 @@
             // 
             lblSelectionInfo.AutoSize = true;
             lblSelectionInfo.Font = new Font("Segoe UI", 15F, FontStyle.Underline);
-            lblSelectionInfo.Location = new Point(12, 276);
+            lblSelectionInfo.Location = new Point(12, 305);
             lblSelectionInfo.Name = "lblSelectionInfo";
             lblSelectionInfo.Size = new Size(80, 28);
             lblSelectionInfo.TabIndex = 24;
@@ -207,7 +208,7 @@
             LblDetails.BackColor = SystemColors.ButtonHighlight;
             LblDetails.BorderStyle = BorderStyle.FixedSingle;
             LblDetails.Font = new Font("Segoe UI", 12F);
-            LblDetails.Location = new Point(12, 307);
+            LblDetails.Location = new Point(12, 336);
             LblDetails.Name = "LblDetails";
             LblDetails.Size = new Size(318, 256);
             LblDetails.TabIndex = 25;
@@ -254,7 +255,7 @@
             // 
             // BtnShowSectorMap
             // 
-            BtnShowSectorMap.Location = new Point(93, 276);
+            BtnShowSectorMap.Location = new Point(93, 305);
             BtnShowSectorMap.Name = "BtnShowSectorMap";
             BtnShowSectorMap.Size = new Size(237, 28);
             BtnShowSectorMap.TabIndex = 33;
@@ -264,7 +265,7 @@
             // 
             // BtnOpenFolder
             // 
-            BtnOpenFolder.Location = new Point(336, 540);
+            BtnOpenFolder.Location = new Point(336, 569);
             BtnOpenFolder.Name = "BtnOpenFolder";
             BtnOpenFolder.Size = new Size(318, 23);
             BtnOpenFolder.TabIndex = 34;
@@ -274,7 +275,7 @@
             // 
             // BtnNewRegion
             // 
-            BtnNewRegion.Location = new Point(335, 482);
+            BtnNewRegion.Location = new Point(335, 511);
             BtnNewRegion.Name = "BtnNewRegion";
             BtnNewRegion.Size = new Size(75, 23);
             BtnNewRegion.TabIndex = 38;
@@ -285,7 +286,7 @@
             // RegionsListBox
             // 
             RegionsListBox.FormattingEnabled = true;
-            RegionsListBox.Location = new Point(335, 307);
+            RegionsListBox.Location = new Point(335, 336);
             RegionsListBox.Name = "RegionsListBox";
             RegionsListBox.Size = new Size(156, 169);
             RegionsListBox.TabIndex = 37;
@@ -295,7 +296,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(335, 276);
+            label1.Location = new Point(335, 305);
             label1.Name = "label1";
             label1.Size = new Size(81, 28);
             label1.TabIndex = 36;
@@ -303,7 +304,7 @@
             // 
             // BtnRemoveRegion
             // 
-            BtnRemoveRegion.Location = new Point(416, 482);
+            BtnRemoveRegion.Location = new Point(416, 511);
             BtnRemoveRegion.Name = "BtnRemoveRegion";
             BtnRemoveRegion.Size = new Size(75, 23);
             BtnRemoveRegion.TabIndex = 35;
@@ -325,7 +326,7 @@
             // 
             // BtnNewStation
             // 
-            BtnNewStation.Location = new Point(498, 250);
+            BtnNewStation.Location = new Point(498, 279);
             BtnNewStation.Name = "BtnNewStation";
             BtnNewStation.Size = new Size(75, 23);
             BtnNewStation.TabIndex = 43;
@@ -338,7 +339,7 @@
             ListStations.FormattingEnabled = true;
             ListStations.Location = new Point(498, 75);
             ListStations.Name = "ListStations";
-            ListStations.Size = new Size(156, 169);
+            ListStations.Size = new Size(156, 199);
             ListStations.TabIndex = 42;
             ListStations.DoubleClick += ListStations_DoubleClick;
             // 
@@ -354,7 +355,7 @@
             // 
             // BtnRemoveStation
             // 
-            BtnRemoveStation.Location = new Point(579, 250);
+            BtnRemoveStation.Location = new Point(579, 279);
             BtnRemoveStation.Name = "BtnRemoveStation";
             BtnRemoveStation.Size = new Size(75, 23);
             BtnRemoveStation.TabIndex = 40;
@@ -364,7 +365,7 @@
             // 
             // BtnJobs
             // 
-            BtnJobs.Location = new Point(498, 307);
+            BtnJobs.Location = new Point(498, 336);
             BtnJobs.Name = "BtnJobs";
             BtnJobs.Size = new Size(156, 31);
             BtnJobs.TabIndex = 48;
@@ -374,7 +375,7 @@
             // 
             // BtnFactories
             // 
-            BtnFactories.Location = new Point(498, 344);
+            BtnFactories.Location = new Point(498, 373);
             BtnFactories.Name = "BtnFactories";
             BtnFactories.Size = new Size(156, 31);
             BtnFactories.TabIndex = 49;
@@ -385,18 +386,27 @@
             // BtnCustomFactions
             // 
             BtnCustomFactions.Enabled = false;
-            BtnCustomFactions.Location = new Point(498, 381);
+            BtnCustomFactions.Location = new Point(498, 410);
             BtnCustomFactions.Name = "BtnCustomFactions";
             BtnCustomFactions.Size = new Size(156, 31);
             BtnCustomFactions.TabIndex = 50;
             BtnCustomFactions.Text = "Coming soon";
             BtnCustomFactions.UseVisualStyleBackColor = true;
             // 
+            // TxtSearch
+            // 
+            TxtSearch.Location = new Point(13, 77);
+            TxtSearch.Name = "TxtSearch";
+            TxtSearch.PlaceholderText = "Search..";
+            TxtSearch.Size = new Size(155, 23);
+            TxtSearch.TabIndex = 51;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(661, 570);
+            ClientSize = new Size(661, 596);
+            Controls.Add(TxtSearch);
             Controls.Add(BtnCustomFactions);
             Controls.Add(BtnFactories);
             Controls.Add(BtnJobs);
@@ -474,5 +484,6 @@
         private Button BtnJobs;
         private Button BtnFactories;
         private Button BtnCustomFactions;
+        private TextBox TxtSearch;
     }
 }

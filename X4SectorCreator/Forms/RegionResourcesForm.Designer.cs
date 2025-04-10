@@ -109,7 +109,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "RegionResourcesForm";
-            Text = "X4 Sector Creator";
+            Text = "Region Resource Editor";
             ResumeLayout(false);
             PerformLayout();
         }

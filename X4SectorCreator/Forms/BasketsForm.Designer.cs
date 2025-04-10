@@ -122,7 +122,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "BasketsForm";
-            Text = "X4 Sector Creator";
+            Text = "Baskets";
             ResumeLayout(false);
             PerformLayout();
         }

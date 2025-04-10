@@ -43,6 +43,7 @@
             BtnNewDefinition = new Button();
             BtnRemoveDefinition = new Button();
             BtnCreateRegion = new Button();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).BeginInit();
             SuspendLayout();
             // 
@@ -50,7 +51,7 @@
             // 
             label15.AutoSize = true;
             label15.Font = new Font("Segoe UI", 12F);
-            label15.Location = new Point(14, 63);
+            label15.Location = new Point(10, 63);
             label15.Name = "label15";
             label15.Size = new Size(109, 21);
             label15.TabIndex = 91;
@@ -59,7 +60,7 @@
             // txtRegionLinear
             // 
             txtRegionLinear.Enabled = false;
-            txtRegionLinear.Location = new Point(14, 87);
+            txtRegionLinear.Location = new Point(10, 87);
             txtRegionLinear.Name = "txtRegionLinear";
             txtRegionLinear.Size = new Size(230, 23);
             txtRegionLinear.TabIndex = 90;
@@ -69,7 +70,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(14, 164);
+            label8.Location = new Point(10, 164);
             label8.Name = "label8";
             label8.Size = new Size(113, 21);
             label8.TabIndex = 89;
@@ -77,7 +78,7 @@
             // 
             // txtRegionRadius
             // 
-            txtRegionRadius.Location = new Point(14, 188);
+            txtRegionRadius.Location = new Point(10, 188);
             txtRegionRadius.Name = "txtRegionRadius";
             txtRegionRadius.ReadOnly = true;
             txtRegionRadius.Size = new Size(230, 23);
@@ -88,7 +89,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(14, 113);
+            label7.Location = new Point(10, 113);
             label7.Name = "label7";
             label7.Size = new Size(121, 21);
             label7.TabIndex = 87;
@@ -96,7 +97,7 @@
             // 
             // txtRegionPosition
             // 
-            txtRegionPosition.Location = new Point(14, 137);
+            txtRegionPosition.Location = new Point(10, 137);
             txtRegionPosition.Name = "txtRegionPosition";
             txtRegionPosition.ReadOnly = true;
             txtRegionPosition.Size = new Size(230, 23);
@@ -117,7 +118,7 @@
             // 
             label14.AutoSize = true;
             label14.Font = new Font("Segoe UI", 12F);
-            label14.Location = new Point(14, 13);
+            label14.Location = new Point(10, 13);
             label14.Name = "label14";
             label14.Size = new Size(105, 21);
             label14.TabIndex = 84;
@@ -125,7 +126,7 @@
             // 
             // txtRegionName
             // 
-            txtRegionName.Location = new Point(14, 37);
+            txtRegionName.Location = new Point(10, 37);
             txtRegionName.Name = "txtRegionName";
             txtRegionName.Size = new Size(230, 23);
             txtRegionName.TabIndex = 83;
@@ -141,7 +142,7 @@
             // ListBoxRegionDefinitions
             // 
             ListBoxRegionDefinitions.FormattingEnabled = true;
-            ListBoxRegionDefinitions.Location = new Point(14, 238);
+            ListBoxRegionDefinitions.Location = new Point(12, 265);
             ListBoxRegionDefinitions.Name = "ListBoxRegionDefinitions";
             ListBoxRegionDefinitions.Size = new Size(230, 139);
             ListBoxRegionDefinitions.TabIndex = 92;
@@ -152,7 +153,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 214);
+            label1.Location = new Point(10, 241);
             label1.Name = "label1";
             label1.Size = new Size(194, 21);
             label1.TabIndex = 93;
@@ -160,7 +161,7 @@
             // 
             // BtnNewDefinition
             // 
-            BtnNewDefinition.Location = new Point(14, 381);
+            BtnNewDefinition.Location = new Point(12, 408);
             BtnNewDefinition.Name = "BtnNewDefinition";
             BtnNewDefinition.Size = new Size(149, 23);
             BtnNewDefinition.TabIndex = 94;
@@ -170,7 +171,7 @@
             // 
             // BtnRemoveDefinition
             // 
-            BtnRemoveDefinition.Location = new Point(169, 381);
+            BtnRemoveDefinition.Location = new Point(167, 408);
             BtnRemoveDefinition.Name = "BtnRemoveDefinition";
             BtnRemoveDefinition.Size = new Size(75, 23);
             BtnRemoveDefinition.TabIndex = 95;
@@ -180,19 +181,29 @@
             // 
             // BtnCreateRegion
             // 
-            BtnCreateRegion.Location = new Point(252, 343);
+            BtnCreateRegion.Location = new Point(248, 343);
             BtnCreateRegion.Name = "BtnCreateRegion";
-            BtnCreateRegion.Size = new Size(300, 63);
+            BtnCreateRegion.Size = new Size(304, 43);
             BtnCreateRegion.TabIndex = 96;
             BtnCreateRegion.Text = "Create Region";
             BtnCreateRegion.UseVisualStyleBackColor = true;
             BtnCreateRegion.Click += BtnCreateRegion_Click;
             // 
+            // label2
+            // 
+            label2.Font = new Font("Segoe UI", 8F);
+            label2.Location = new Point(10, 214);
+            label2.Name = "label2";
+            label2.Size = new Size(230, 27);
+            label2.TabIndex = 97;
+            label2.Text = "(Hold right-click and drag the region to resize the radius.)";
+            // 
             // RegionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(564, 414);
+            ClientSize = new Size(564, 437);
+            Controls.Add(label2);
             Controls.Add(BtnCreateRegion);
             Controls.Add(BtnRemoveDefinition);
             Controls.Add(BtnNewDefinition);
@@ -212,7 +223,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "RegionForm";
-            Text = "X4 Sector Creator";
+            Text = "Region Editor";
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -235,5 +246,6 @@
         private Button BtnRemoveDefinition;
         private Button BtnCreateRegion;
         internal ListBox ListBoxRegionDefinitions;
+        private Label label2;
     }
 }

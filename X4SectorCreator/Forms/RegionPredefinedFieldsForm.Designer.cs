@@ -57,9 +57,9 @@ namespace X4SectorCreator.Forms
             label1.Font = new Font("Segoe UI", 12F);
             label1.Location = new Point(11, 13);
             label1.Name = "label1";
-            label1.Size = new Size(75, 21);
+            label1.Size = new Size(149, 21);
             label1.TabIndex = 1;
-            label1.Text = "Asteroids";
+            label1.Text = "Asteroids (Minerals)";
             // 
             // label2
             // 
@@ -67,9 +67,9 @@ namespace X4SectorCreator.Forms
             label2.Font = new Font("Segoe UI", 12F);
             label2.Location = new Point(11, 68);
             label2.Name = "label2";
-            label2.Size = new Size(60, 21);
+            label2.Size = new Size(115, 21);
             label2.TabIndex = 3;
-            label2.Text = "Nebula";
+            label2.Text = "Nebula (Gases)";
             // 
             // cmbNebula
             // 
@@ -86,9 +86,9 @@ namespace X4SectorCreator.Forms
             label3.Font = new Font("Segoe UI", 12F);
             label3.Location = new Point(11, 123);
             label3.Name = "label3";
-            label3.Size = new Size(115, 21);
+            label3.Size = new Size(198, 21);
             label3.TabIndex = 5;
-            label3.Text = "Volumetric Fog";
+            label3.Text = "Volumetric Fog (Visual fog)";
             // 
             // cmbVolumetricfog
             // 
@@ -105,9 +105,9 @@ namespace X4SectorCreator.Forms
             label4.Font = new Font("Segoe UI", 12F);
             label4.Location = new Point(11, 178);
             label4.Name = "label4";
-            label4.Size = new Size(62, 21);
+            label4.Size = new Size(148, 21);
             label4.TabIndex = 7;
-            label4.Text = "Objects";
+            label4.Text = "Objects (Lockboxes)";
             // 
             // cmbObjects
             // 
@@ -124,9 +124,9 @@ namespace X4SectorCreator.Forms
             label5.Font = new Font("Segoe UI", 12F);
             label5.Location = new Point(11, 233);
             label5.Name = "label5";
-            label5.Size = new Size(70, 21);
+            label5.Size = new Size(196, 21);
             label5.TabIndex = 9;
-            label5.Text = "Gravidar";
+            label5.Text = "Gravidar (Radar distortion)";
             // 
             // cmbGravidar
             // 
@@ -143,9 +143,9 @@ namespace X4SectorCreator.Forms
             label6.Font = new Font("Segoe UI", 12F);
             label6.Location = new Point(11, 288);
             label6.Name = "label6";
-            label6.Size = new Size(77, 21);
+            label6.Size = new Size(140, 21);
             label6.TabIndex = 11;
-            label6.Text = "Positional";
+            label6.Text = "Positional (Visuals)";
             // 
             // cmbPositional
             // 
@@ -182,9 +182,9 @@ namespace X4SectorCreator.Forms
             label7.Font = new Font("Segoe UI", 12F);
             label7.Location = new Point(12, 343);
             label7.Name = "label7";
-            label7.Size = new Size(55, 21);
+            label7.Size = new Size(120, 21);
             label7.TabIndex = 15;
-            label7.Text = "Debris";
+            label7.Text = "Debris (Wrecks)";
             // 
             // cmbDebris
             // 
@@ -250,7 +250,7 @@ namespace X4SectorCreator.Forms
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "RegionPredefinedFieldsForm";
-            Text = "X4 Sector Creator";
+            Text = "Region Predefined Fields Selector";
             ResumeLayout(false);
             PerformLayout();
         }

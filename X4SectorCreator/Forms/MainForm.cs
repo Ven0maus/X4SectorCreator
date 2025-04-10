@@ -38,7 +38,7 @@ namespace X4SectorCreator
         public readonly Dictionary<string, Color> FactionColorMapping;
 
         private ClusterOption _selectedClusterOption = ClusterOption.Custom;
-        private string _currentX4Version, _currentModTargetVersion;
+        private string _currentModTargetVersion;
 
         public MainForm()
         {
@@ -51,6 +51,8 @@ namespace X4SectorCreator
 
             Instance = this;
 
+            TxtSearch.EnableTextSearch(() => AllClusters.Values.ToList(), a => a.Name, ApplyFilter);
+            Disposed += MainForm_Disposed;
             ClusterCollection clusterCollection = InitAllClusters();
 
             // Set background visual mapping
@@ -69,6 +71,39 @@ namespace X4SectorCreator
 
             // Set the default value to be custom always
             UpdateClusterOptions();
+        }
+
+        private void MainForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
+        }
+
+        private void ApplyFilter(List<Cluster> clusters)
+        {
+            var selectedCluster = ClustersListBox.SelectedItem as string;
+
+            // Reset
+            CmbClusterOption_SelectedIndexChanged(this, null);
+
+            var clusterNames = clusters
+                .Select(a => a.Name)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            // Apply text filter search
+            foreach (var item in ClustersListBox.Items.Cast<string>().ToList())
+            {
+                if (!clusterNames.Contains(item))
+                    ClustersListBox.Items.Remove(item);
+                else if (!ClustersListBox.Items.Contains(item))
+                    ClustersListBox.Items.Add(item);
+            }
+
+            if (selectedCluster != null && ClustersListBox.Items.Contains(selectedCluster))
+                ClustersListBox.SelectedItem = selectedCluster;
+            else if (ClustersListBox.Items.Count > 0)
+                ClustersListBox.SelectedIndex = 0;
+            else
+                ClustersListBox.SelectedIndex = -1;
         }
 
         #region Initialization
@@ -141,6 +176,8 @@ namespace X4SectorCreator
             RegionsListBox.Items.Clear();
             ListStations.Items.Clear();
             LblDetails.Text = string.Empty;
+            if (e != null) // if not called from apply filter method
+                TxtSearch.Text = string.Empty;
 
             switch (_selectedClusterOption)
             {
@@ -195,7 +232,6 @@ namespace X4SectorCreator
 
             // Set form title
             Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
-            _currentX4Version = versionChecker.TargetGameVersion;
             _currentModTargetVersion = versionChecker.ModTargetGameVersion;
 
             // Check for update
@@ -232,7 +268,6 @@ namespace X4SectorCreator
 
                             // Update title text with new version
                             Text += $" [APP v{versionChecker.CurrentVersion} | X4 v{versionChecker.TargetGameVersion}]";
-                            _currentX4Version = versionChecker.TargetGameVersion;
                             _currentModTargetVersion = versionChecker.ModTargetGameVersion;
 
                             _ = MessageBox.Show($"Your cluster mapping has been automatically updated with the latest X4 version ({result.VersionInfo.X4Version}).");
@@ -927,6 +962,13 @@ namespace X4SectorCreator
                 {
                     Forms.SectorForm.DetermineSectorOffset(cluster, sector);
                 }
+            }
+
+            // Support new generated zones in new sectors that don't have them yet
+            foreach (var sector in cluster.Sectors)
+            {
+                if (sector.IsBaseGame || sector.Zones.Any(a => a.IsGeneratedZone)) continue;
+                sector.InitializeOrUpdateZones();
             }
         }
 

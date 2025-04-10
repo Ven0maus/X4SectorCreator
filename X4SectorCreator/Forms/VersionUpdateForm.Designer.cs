@@ -40,6 +40,7 @@
             txtUpdateX4Version = new TextBox();
             txtUpdateVersion = new TextBox();
             label5 = new Label();
+            label6 = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -160,11 +161,21 @@
             label5.Text = "AVAILABLE UPDATE";
             label5.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // label6
+            // 
+            label6.Location = new Point(14, 210);
+            label6.Name = "label6";
+            label6.Size = new Size(321, 36);
+            label6.TabIndex = 8;
+            label6.Text = "It is highly advised to update the tool when possible to benefit from the latest bugfixes and features!";
+            label6.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // VersionUpdateForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(346, 216);
+            ClientSize = new Size(346, 250);
+            Controls.Add(label6);
             Controls.Add(panel1);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -197,5 +208,6 @@
         internal TextBox txtCurrentX4Version;
         internal TextBox txtUpdateX4Version;
         internal TextBox txtUpdateVersion;
+        private Label label6;
     }
 }

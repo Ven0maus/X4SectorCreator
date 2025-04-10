@@ -123,7 +123,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "JobTemplatesForm";
-            Text = "X4 Sector Creator";
+            Text = "Job Template Selector";
             ResumeLayout(false);
             PerformLayout();
         }

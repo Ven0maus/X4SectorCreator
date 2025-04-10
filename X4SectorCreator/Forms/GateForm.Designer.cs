@@ -437,7 +437,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "GateForm";
-            Text = "X4 Sector Creator";
+            Text = "Gate Editor";
             ((System.ComponentModel.ISupportInitialize)SourceSectorHexagon).EndInit();
             ((System.ComponentModel.ISupportInitialize)TargetSectorHexagon).EndInit();
             ResumeLayout(false);

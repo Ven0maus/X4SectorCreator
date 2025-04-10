@@ -313,7 +313,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "SectorForm";
-            Text = "X4 Sector Creator";
+            Text = "Sector Editor";
             ResumeLayout(false);
             PerformLayout();
         }

@@ -8,15 +8,24 @@ namespace X4SectorCreator.Forms
         public static readonly Dictionary<string, Job> AllJobs = new(StringComparer.OrdinalIgnoreCase);
         public static readonly Dictionary<string, Basket> AllBaskets = new(StringComparer.OrdinalIgnoreCase);
 
-        public readonly LazyEvaluated<JobForm> JobForm = new(() => new JobForm(), a => !a.IsDisposed);
-        public readonly LazyEvaluated<JobTemplatesForm> JobTemplatesForm = new(() => new JobTemplatesForm(), a => !a.IsDisposed);
-        public readonly LazyEvaluated<BasketsForm> BasketsForm = new(() => new BasketsForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<JobForm> _jobForm = new(() => new JobForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<JobTemplatesForm> _jobTemplatesForm = new(() => new JobTemplatesForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<BasketsForm> _basketsForm = new(() => new BasketsForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<QuickQuotaEditorForm> _quickQuotaEditorForm = new(() => new QuickQuotaEditorForm(), a => !a.IsDisposed);
 
         private bool _applyFilter = true;
 
         public JobsForm()
         {
             InitializeComponent();
+
+            TxtSearch.EnableTextSearch(() => AllJobs.Values.ToList(), a => a.Id, ApplyCurrentFilter);
+            Disposed += JobsForm_Disposed;
+        }
+
+        private void JobsForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
         }
 
         public void Initialize()
@@ -196,14 +205,14 @@ namespace X4SectorCreator.Forms
             ApplyCurrentFilter();
         }
 
-        public void ApplyCurrentFilter()
+        public void ApplyCurrentFilter(List<Job> jobs = null)
         {
             if (!_applyFilter)
             {
                 return;
             }
 
-            List<Job> suitableJobs = AllJobs.Values.ToList();
+            List<Job> suitableJobs = jobs ?? [.. AllJobs.Values];
 
             // Remove jobs based on rules
             HandleFilterOption(cmbBasket, suitableJobs);
@@ -232,46 +241,61 @@ namespace X4SectorCreator.Forms
             if (comboBox == cmbBasket)
             {
                 string basket = cmbBasket.SelectedItem as string;
-                _ = jobs.RemoveAll(a => a.Basket?.Basket == null || !a.Basket.Basket.Equals(basket, StringComparison.OrdinalIgnoreCase));
+                if (basket != null)
+                {
+                    _ = jobs.RemoveAll(a => a.Basket?.Basket == null || !a.Basket.Basket.Equals(basket, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbFaction)
             {
                 // Focus on jobs where the ship is owned by the selected faction
                 string faction = cmbFaction.SelectedItem as string;
-                _ = jobs.RemoveAll(a => a.Ship?.Owner == null || !a.Ship.Owner.Exact.Equals(faction, StringComparison.OrdinalIgnoreCase));
+                if (faction != null)
+                {
+                    _ = jobs.RemoveAll(a => a.Ship?.Owner == null || !a.Ship.Owner.Exact.Equals(faction, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbOrder)
             {
                 string order = cmbOrder.SelectedItem as string;
-                _ = jobs.RemoveAll(a => a.Orders?.Order?.Order == null || !a.Orders.Order.Order.Equals(order, StringComparison.OrdinalIgnoreCase));
+                if (order != null)
+                {
+                    _ = jobs.RemoveAll(a => a.Orders?.Order?.Order == null || !a.Orders.Order.Order.Equals(order, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbCluster)
             {
                 Cluster cluster = cmbCluster.SelectedItem as Cluster;
-                string clusterCode = $"PREFIX_CL_c{cluster.Id:D3}";
-                if (cluster.IsBaseGame)
+                if (cluster != null)
                 {
-                    clusterCode = $"{cluster.BaseGameMapping}";
-                }
+                    string clusterCode = $"PREFIX_CL_c{cluster.Id:D3}";
+                    if (cluster.IsBaseGame)
+                    {
+                        clusterCode = $"{cluster.BaseGameMapping}";
+                    }
 
-                _ = jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
+                    _ = jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.StartsWith(clusterCode, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else if (comboBox == cmbSector)
             {
                 Sector sector = cmbSector.SelectedItem as Sector;
                 Cluster cluster = cmbCluster.SelectedItem as Cluster;
 
-                string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
-                if (cluster.IsBaseGame && sector.IsBaseGame)
+                if (cluster != null && sector != null)
                 {
-                    sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
-                }
-                else if (cluster.IsBaseGame)
-                {
-                    sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
-                }
+                    string sectorCode = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
+                    if (cluster.IsBaseGame && sector.IsBaseGame)
+                    {
+                        sectorCode = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
+                    }
+                    else if (cluster.IsBaseGame)
+                    {
+                        sectorCode = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
+                    }
 
-                _ = jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
+                    _ = jobs.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
+                }
             }
             else
             {
@@ -313,47 +337,47 @@ namespace X4SectorCreator.Forms
         private void BtnCreateCustom_Click(object sender, EventArgs e)
         {
             // Job creation/edit is ongoing at the moment
-            if (JobForm.IsInitialized && JobForm.Value.Visible)
+            if (_jobForm.IsInitialized && _jobForm.Value.Visible)
             {
                 return;
             }
 
             // Template selection is ongoing at the moment
-            if (JobTemplatesForm.IsInitialized && JobTemplatesForm.Value.Visible)
+            if (_jobTemplatesForm.IsInitialized && _jobTemplatesForm.Value.Visible)
             {
                 return;
             }
 
-            JobForm.Value.Show();
+            _jobForm.Value.Show();
         }
 
         private void BtnBaskets_Click(object sender, EventArgs e)
         {
-            BasketsForm.Value.Show();
+            _basketsForm.Value.Show();
         }
 
         private void BtnCreateFromTemplate_Click(object sender, EventArgs e)
         {
             // Job creation/edit is ongoing at the moment
-            if (JobForm.IsInitialized && JobForm.Value.Visible)
+            if (_jobForm.IsInitialized && _jobForm.Value.Visible)
             {
                 return;
             }
 
             // Template selection is ongoing at the moment
-            if (JobTemplatesForm.IsInitialized && JobTemplatesForm.Value.Visible)
+            if (_jobTemplatesForm.IsInitialized && _jobTemplatesForm.Value.Visible)
             {
                 return;
             }
 
-            JobTemplatesForm.Value.JobForm = JobForm.Value;
-            JobTemplatesForm.Value.Show();
+            _jobTemplatesForm.Value.JobForm = _jobForm.Value;
+            _jobTemplatesForm.Value.Show();
         }
 
         private void BtnRemoveJob_Click(object sender, EventArgs e)
         {
             // Job creation/edit is ongoing at the moment
-            if (JobForm.IsInitialized && JobForm.Value.Visible)
+            if (_jobForm.IsInitialized && _jobForm.Value.Visible)
             {
                 return;
             }
@@ -383,20 +407,27 @@ namespace X4SectorCreator.Forms
             }
 
             // Template selection is ongoing at the moment
-            if (JobTemplatesForm.IsInitialized && JobTemplatesForm.Value.Visible)
+            if (_jobTemplatesForm.IsInitialized && _jobTemplatesForm.Value.Visible)
             {
                 return;
             }
 
             // Job creation/edit is ongoing at the moment
-            if (JobForm.IsInitialized && JobForm.Value.Visible)
+            if (_jobForm.IsInitialized && _jobForm.Value.Visible)
             {
                 return;
             }
 
-            JobForm.Value.IsEditing = true;
-            JobForm.Value.Job = job;
-            JobForm.Value.Show();
+            _jobForm.Value.IsEditing = true;
+            _jobForm.Value.Job = job;
+            _jobForm.Value.Show();
+        }
+
+        private void BtnQuickQuotaEditor_Click(object sender, EventArgs e)
+        {
+            _quickQuotaEditorForm.Value.JobsForm = this;
+            _quickQuotaEditorForm.Value.Initialize();
+            _quickQuotaEditorForm.Value.Show();
         }
     }
 }

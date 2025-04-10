@@ -110,7 +110,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FactoryForm";
-            Text = "X4 Sector Creator";
+            Text = "Factory Editor";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -118,10 +118,10 @@
         #endregion
 
         private Label label2;
-        private TextBox TxtFactoryXml;
         private Button BtnCreate;
         private Button BtnCancel;
         private Button BtnSelectFactoryLocation;
         private Button BtnSelectFaction;
+        internal TextBox TxtFactoryXml;
     }
 }

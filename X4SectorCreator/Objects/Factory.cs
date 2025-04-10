@@ -197,6 +197,10 @@ namespace X4SectorCreator.Objects
 
             [XmlElement(ElementName = "security")]
             public Security Security { get; set; }
+
+            // By default always include this as false
+            [XmlAttribute(AttributeName = "matchextension")]
+            public string MatchExtension { get; set; } = "false";
         }
 
         [XmlRoot(ElementName = "position")]

@@ -105,7 +105,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "RegionFalloffForm";
-            Text = "X4 Sector Creator";
+            Text = "Region Falloff Editor";
             ResumeLayout(false);
             PerformLayout();
         }

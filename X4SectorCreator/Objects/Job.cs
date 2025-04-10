@@ -274,9 +274,6 @@ namespace X4SectorCreator.Objects
             [XmlAttribute(AttributeName = "stationtype")]
             public string Stationtype { get; set; }
 
-            [XmlAttribute(AttributeName = "matchextension")]
-            public string Matchextension { get; set; }
-
             [XmlAttribute(AttributeName = "regionbasket")]
             public string Regionbasket { get; set; }
 
@@ -297,6 +294,10 @@ namespace X4SectorCreator.Objects
 
             [XmlAttribute(AttributeName = "factionrace")]
             public string Factionrace { get; set; }
+
+            // By default always include this as false
+            [XmlAttribute(AttributeName = "matchextension")]
+            public string MatchExtension { get; set; } = "false";
         }
 
         [XmlRoot(ElementName = "environment")]
