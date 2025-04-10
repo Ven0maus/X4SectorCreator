@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using X4SectorCreator.Objects;
+using Timer = System.Windows.Forms.Timer;
 
 namespace X4SectorCreator.Forms
 {
@@ -15,10 +17,16 @@ namespace X4SectorCreator.Forms
         private bool _applyFilter = true;
 
         private readonly List<DataGridObject> _dataGridObjects = new();
+        private readonly Timer _searchDebounceTimer;
+        private const int _debounceInterval = 400; // 400ms
 
         public QuickQuotaEditorForm()
         {
             InitializeComponent();
+
+            _searchDebounceTimer = new Timer();
+            _searchDebounceTimer.Interval = _debounceInterval;
+            _searchDebounceTimer.Tick += SearchDebounceTimer_Tick;
 
             QuotaView.CellBeginEdit += QuotaView_CellBeginEdit;
             QuotaView.CellValidating += QuotaView_CellValidating;
@@ -202,7 +210,7 @@ namespace X4SectorCreator.Forms
             ApplyCurrentFilter();
         }
 
-        public void ApplyCurrentFilter()
+        public void ApplyCurrentFilter(string matchText = null)
         {
             if (!_applyFilter)
             {
@@ -216,12 +224,71 @@ namespace X4SectorCreator.Forms
             HandleFilterOption(cmbCluster, suitableObjects);
             HandleFilterOption(cmbSector, suitableObjects);
 
+            if (!string.IsNullOrWhiteSpace(matchText))
+            {
+                matchText = matchText.Trim();
+                suitableObjects = suitableObjects
+                    .Select(o => new { Obj = o, Score = GetMatchScore(o.Id, matchText) })
+                    .Where(x => x.Score > 0)
+                    .OrderByDescending(x => x.Score)
+                    .Select(x => x.Obj)
+                    .ToList();
+            }
+
             // Add all suitable factories to the listbox
             QuotaView.Rows.Clear();
             foreach (DataGridObject dataGridObject in suitableObjects)
             {
                 _ = QuotaView.Rows.Add(dataGridObject.Id, dataGridObject.GalaxyQuota, dataGridObject.ClusterQuota, dataGridObject.SectorQuota);
             }
+        }
+
+        private void SearchDebounceTimer_Tick(object sender, EventArgs e)
+        {
+            _searchDebounceTimer.Stop();
+            string searchText = TxtSearch.Text;
+            ApplyCurrentFilter(searchText);
+        }
+
+        private int GetMatchScore(string id, string search)
+        {
+            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(search))
+                return 0;
+
+            id = id.ToLower();
+            search = search.ToLower();
+
+            string normalizedId = Regex.Replace(id, @"[_\-]", "");
+            string tokenizedId = Regex.Replace(id, @"([a-z])([A-Z])", "$1 $2").Replace("_", " ").Replace("-", " ");
+
+            if (id == search) return 100;
+            if (normalizedId.StartsWith(search)) return 90;
+            if (tokenizedId.Contains(search)) return 75;
+            if (normalizedId.Contains(search)) return 60;
+
+            int distance = LevenshteinDistance(id, search);
+            return distance <= 2 ? 50 - distance * 10 : 0;
+        }
+
+        public int LevenshteinDistance(string s, string t)
+        {
+            int[,] d = new int[s.Length + 1, t.Length + 1];
+
+            for (int i = 0; i <= s.Length; i++) d[i, 0] = i;
+            for (int j = 0; j <= t.Length; j++) d[0, j] = j;
+
+            for (int i = 1; i <= s.Length; i++)
+            {
+                for (int j = 1; j <= t.Length; j++)
+                {
+                    int cost = s[i - 1] == t[j - 1] ? 0 : 1;
+                    d[i, j] = Math.Min(
+                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                        d[i - 1, j - 1] + cost);
+                }
+            }
+
+            return d[s.Length, t.Length];
         }
 
         private void HandleFilterOption(ComboBox comboBox, List<DataGridObject> dataGridObjects)
@@ -562,6 +629,12 @@ namespace X4SectorCreator.Forms
             // Apply filter only once
             UpdateAvailableFilterOptions();
             ApplyCurrentFilter();
+        }
+
+        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        {
+            _searchDebounceTimer.Stop();
+            _searchDebounceTimer.Start();
         }
     }
 }

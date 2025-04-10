@@ -43,6 +43,8 @@
             label3 = new Label();
             label2 = new Label();
             cmbFaction = new ComboBox();
+            label1 = new Label();
+            TxtSearch = new TextBox();
             ((System.ComponentModel.ISupportInitialize)QuotaView).BeginInit();
             SuspendLayout();
             // 
@@ -56,10 +58,10 @@
             QuotaView.BorderStyle = BorderStyle.Fixed3D;
             QuotaView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             QuotaView.Columns.AddRange(new DataGridViewColumn[] { Column1, Galaxy, Cluster, Sector });
-            QuotaView.Location = new Point(12, 12);
+            QuotaView.Location = new Point(12, 42);
             QuotaView.Name = "QuotaView";
             QuotaView.ScrollBars = ScrollBars.Vertical;
-            QuotaView.Size = new Size(601, 565);
+            QuotaView.Size = new Size(601, 535);
             QuotaView.TabIndex = 0;
             // 
             // Column1
@@ -182,11 +184,31 @@
             cmbFaction.TabIndex = 20;
             cmbFaction.SelectedIndexChanged += cmbFaction_SelectedIndexChanged;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 13F);
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(68, 25);
+            label1.TabIndex = 28;
+            label1.Text = "Search:";
+            // 
+            // TxtSearch
+            // 
+            TxtSearch.Location = new Point(86, 12);
+            TxtSearch.Name = "TxtSearch";
+            TxtSearch.Size = new Size(526, 23);
+            TxtSearch.TabIndex = 29;
+            TxtSearch.TextChanged += TxtSearch_TextChanged;
+            // 
             // QuickQuotaEditorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(920, 585);
+            Controls.Add(TxtSearch);
+            Controls.Add(label1);
             Controls.Add(BtnResetFilter);
             Controls.Add(cmbSector);
             Controls.Add(label8);
@@ -222,5 +244,7 @@
         private Label label3;
         private Label label2;
         private ComboBox cmbFaction;
+        private Label label1;
+        private TextBox TxtSearch;
     }
 }
