@@ -60,7 +60,7 @@ namespace X4SectorCreator.Objects
             {
                 string clusterConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection";
                 string sectorConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_connection";
-                string zoneConnection = $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_connection";
+                string zoneConnection = $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_z{zone.Id:D3}_connection";
                 string gateConnection = $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection";
                 path = $"{clusterConnection}/{sectorConnection}/{zoneConnection}/{gateConnection}";
             }

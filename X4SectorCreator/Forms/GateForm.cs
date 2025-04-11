@@ -706,7 +706,7 @@ namespace X4SectorCreator.Forms
             string value = string.Empty;
             if (cluster.IsBaseGame)
             {
-                value += $"{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}";
+                value += $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}";
             }
             else
             {
@@ -715,7 +715,7 @@ namespace X4SectorCreator.Forms
 
             if (sector.IsBaseGame)
             {
-                value += $"_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}";
+                value += $"_{sector.BaseGameMapping.CapitalizeFirstLetter()}";
             }
             else
             {

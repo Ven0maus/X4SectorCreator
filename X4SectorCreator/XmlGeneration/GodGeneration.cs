@@ -100,13 +100,13 @@ namespace X4SectorCreator.XmlGeneration
                             string clusterPrefix = $"c{cluster.Id:D3}";
                             if (cluster.IsBaseGame)
                             {
-                                clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
+                                clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter();
                             }
 
                             string sectorPrefix = $"s{sector.Id:D3}";
                             if (sector.IsBaseGame)
                             {
-                                sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
+                                sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter();
                             }
 
                             string id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
