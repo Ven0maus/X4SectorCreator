@@ -18,16 +18,18 @@ namespace X4SectorCreator
         public static MainForm Instance { get; private set; }
 
         /* FORMS */
-        public readonly LazyEvaluated<GalaxySettingsForm> GalaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<RegionForm> RegionForm = new(() => new RegionForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<SectorMapForm> SectorMapForm = new(() => new SectorMapForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<ClusterForm> ClusterForm = new(() => new ClusterForm(), a => !a.IsDisposed);
-        public readonly LazyEvaluated<SectorForm> SectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<GateForm> GateForm = new(() => new GateForm(), a => !a.IsDisposed);
-        public readonly LazyEvaluated<VersionUpdateForm> VersionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
-        public readonly LazyEvaluated<StationForm> StationForm = new(() => new StationForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<JobsForm> JobsForm = new(() => new JobsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactoriesForm> FactoriesForm = new(() => new FactoriesForm(), a => !a.IsDisposed);
+
+        private readonly LazyEvaluated<GalaxySettingsForm> _galaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<SectorForm> _sectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<StationForm> _stationForm = new(() => new StationForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<ObjectOverviewForm> _objectOverviewForm = new(() => new ObjectOverviewForm(), a => !a.IsDisposed);
         /* END OF FORMS */
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -280,11 +282,11 @@ namespace X4SectorCreator
                 else
                 {
                     // Show update form when a new app version is available
-                    VersionUpdateForm.Value.txtCurrentVersion.Text = $"v{versionChecker.CurrentVersion}";
-                    VersionUpdateForm.Value.txtCurrentX4Version.Text = $"v{versionChecker.TargetGameVersion}";
-                    VersionUpdateForm.Value.txtUpdateVersion.Text = $"v{result.VersionInfo.AppVersion}";
-                    VersionUpdateForm.Value.txtUpdateX4Version.Text = $"v{result.VersionInfo.X4Version}";
-                    VersionUpdateForm.Value.Show();
+                    _versionUpdateForm.Value.txtCurrentVersion.Text = $"v{versionChecker.CurrentVersion}";
+                    _versionUpdateForm.Value.txtCurrentX4Version.Text = $"v{versionChecker.TargetGameVersion}";
+                    _versionUpdateForm.Value.txtUpdateVersion.Text = $"v{result.VersionInfo.AppVersion}";
+                    _versionUpdateForm.Value.txtUpdateX4Version.Text = $"v{result.VersionInfo.X4Version}";
+                    _versionUpdateForm.Value.Show();
                 }
             }
 
@@ -318,8 +320,8 @@ namespace X4SectorCreator
 
         private void BtnGalaxySettings_Click(object sender, EventArgs e)
         {
-            GalaxySettingsForm.Value.Initialize();
-            GalaxySettingsForm.Value.Show();
+            _galaxySettingsForm.Value.Initialize();
+            _galaxySettingsForm.Value.Show();
         }
         #endregion
 
@@ -412,13 +414,13 @@ namespace X4SectorCreator
             {
                 // Clear up corrupted xml
                 Directory.Delete(mainFolder, true);
-                #if DEBUG
+#if DEBUG
                 throw;
-                #else
+#else
                 _ = MessageBox.Show("Something went wrong during xml generation: \"" + ex.Message + "\".\nPlease create a bug report. (Be sure to provide the export xml or exact reproduction steps)",
                     "Error in XML Generation", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-                #endif
+#endif
             }
 
             // Show succes message
@@ -447,7 +449,7 @@ namespace X4SectorCreator
             // Ensure the string isn't empty
             return string.IsNullOrWhiteSpace(sanitizedText) ? null : sanitizedText;
         }
-#endregion
+        #endregion
 
         #region Configuration
         public void Reset(bool fromImport)
@@ -1137,13 +1139,6 @@ namespace X4SectorCreator
 
             _ = AllClusters.Remove(cluster.Key);
 
-            // Re-align ids
-            int count = 0;
-            foreach (Cluster clust in AllClusters.Values.Where(a => !a.IsBaseGame).OrderBy(a => a.Id))
-            {
-                clust.Id = ++count;
-            }
-
             int index = ClustersListBox.Items.IndexOf(ClustersListBox.SelectedItem);
             ClustersListBox.Items.Remove(ClustersListBox.SelectedItem);
 
@@ -1238,10 +1233,10 @@ namespace X4SectorCreator
                 return;
             }
 
-            SectorForm.Value.Sector = null;
-            SectorForm.Value.BtnCreate.Text = "Create";
-            SectorForm.Value.Init();
-            SectorForm.Value.Show();
+            _sectorForm.Value.Sector = null;
+            _sectorForm.Value.BtnCreate.Text = "Create";
+            _sectorForm.Value.Init();
+            _sectorForm.Value.Show();
         }
 
         private void BtnRemoveSector_Click(object sender, EventArgs e)
@@ -1275,13 +1270,6 @@ namespace X4SectorCreator
             }
 
             _ = cluster.Value.Sectors.Remove(sector);
-
-            // Re-align ids before re-calculate
-            int count = 0;
-            foreach (Sector sect in cluster.Value.Sectors.OrderBy(a => a.Id))
-            {
-                sect.Id = ++count;
-            }
 
             RegionsListBox.Items.Clear();
             GatesListBox.Items.Clear();
@@ -1319,9 +1307,9 @@ namespace X4SectorCreator
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
-            SectorForm.Value.Sector = sector;
-            SectorForm.Value.BtnCreate.Text = "Update";
-            SectorForm.Value.Show();
+            _sectorForm.Value.Sector = sector;
+            _sectorForm.Value.BtnCreate.Text = "Update";
+            _sectorForm.Value.Show();
         }
 
         private void SectorsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1671,10 +1659,10 @@ namespace X4SectorCreator
             Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
-            StationForm.Value.Cluster = cluster;
-            StationForm.Value.Sector = sector;
-            StationForm.Value.Station = null;
-            StationForm.Value.Show();
+            _stationForm.Value.Cluster = cluster;
+            _stationForm.Value.Sector = sector;
+            _stationForm.Value.Station = null;
+            _stationForm.Value.Show();
         }
 
         private void BtnRemoveStation_Click(object sender, EventArgs e)
@@ -1722,10 +1710,10 @@ namespace X4SectorCreator
             Cluster cluster = AllClusters.Values.First(a => a.Name.Equals(selectedCluster, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Sectors.First(a => a.Name.Equals(selectedSector, StringComparison.OrdinalIgnoreCase));
 
-            StationForm.Value.Cluster = cluster;
-            StationForm.Value.Sector = sector;
-            StationForm.Value.Station = selectedStation;
-            StationForm.Value.Show();
+            _stationForm.Value.Cluster = cluster;
+            _stationForm.Value.Sector = sector;
+            _stationForm.Value.Station = selectedStation;
+            _stationForm.Value.Show();
         }
         #endregion
 
@@ -1747,6 +1735,13 @@ namespace X4SectorCreator
         {
             FactoriesForm.Value.Initialize();
             FactoriesForm.Value.Show();
+        }
+        #endregion
+
+        #region ObjectsOverview
+        private void BtnObjectsOverview_Click(object sender, EventArgs e)
+        {
+            _objectOverviewForm.Value.Show();
         }
         #endregion
     }

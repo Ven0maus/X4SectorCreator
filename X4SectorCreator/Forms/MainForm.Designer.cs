@@ -60,7 +60,7 @@
             BtnRemoveStation = new Button();
             BtnJobs = new Button();
             BtnFactories = new Button();
-            BtnCustomFactions = new Button();
+            BtnObjectsOverview = new Button();
             TxtSearch = new TextBox();
             SuspendLayout();
             // 
@@ -383,15 +383,15 @@
             BtnFactories.UseVisualStyleBackColor = true;
             BtnFactories.Click += BtnFactories_Click;
             // 
-            // BtnCustomFactions
+            // BtnObjectsOverview
             // 
-            BtnCustomFactions.Enabled = false;
-            BtnCustomFactions.Location = new Point(498, 410);
-            BtnCustomFactions.Name = "BtnCustomFactions";
-            BtnCustomFactions.Size = new Size(156, 31);
-            BtnCustomFactions.TabIndex = 50;
-            BtnCustomFactions.Text = "Coming soon";
-            BtnCustomFactions.UseVisualStyleBackColor = true;
+            BtnObjectsOverview.Location = new Point(498, 410);
+            BtnObjectsOverview.Name = "BtnObjectsOverview";
+            BtnObjectsOverview.Size = new Size(156, 31);
+            BtnObjectsOverview.TabIndex = 50;
+            BtnObjectsOverview.Text = "Objects Overview";
+            BtnObjectsOverview.UseVisualStyleBackColor = true;
+            BtnObjectsOverview.Click += BtnObjectsOverview_Click;
             // 
             // TxtSearch
             // 
@@ -407,7 +407,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(661, 596);
             Controls.Add(TxtSearch);
-            Controls.Add(BtnCustomFactions);
+            Controls.Add(BtnObjectsOverview);
             Controls.Add(BtnFactories);
             Controls.Add(BtnJobs);
             Controls.Add(BtnNewStation);
@@ -483,7 +483,7 @@
         private Button BtnRemoveStation;
         private Button BtnJobs;
         private Button BtnFactories;
-        private Button BtnCustomFactions;
+        private Button BtnObjectsOverview;
         private TextBox TxtSearch;
     }
 }

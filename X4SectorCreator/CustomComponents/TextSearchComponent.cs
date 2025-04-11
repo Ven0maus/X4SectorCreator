@@ -29,6 +29,14 @@ namespace X4SectorCreator.CustomComponents
             DebounceTimer.Stop();
         }
 
+        /// <summary>
+        /// Forces a calculation to happen on the current Text value and calls OnFiltered.
+        /// </summary>
+        public virtual void ForceCalculate()
+        {
+
+        }
+
         protected static int GetMatchScore(string text, string search)
         {
             if (string.IsNullOrWhiteSpace(text) || string.IsNullOrWhiteSpace(search))
@@ -126,6 +134,11 @@ namespace X4SectorCreator.CustomComponents
             _itemGetter = itemGetter;
         }
 
+        /// <inheritdoc/>
+        public override void ForceCalculate()
+        {
+            _onFiltered.Invoke(FilterItems());
+        }
 
         protected override void DebounceTimer_Tick(object sender, EventArgs e)
         {
