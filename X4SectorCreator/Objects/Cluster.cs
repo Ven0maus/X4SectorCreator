@@ -10,6 +10,7 @@ namespace X4SectorCreator.Objects
         public string Description { get; set; }
         public string BackgroundVisualMapping { get; set; }
         public string BaseGameMapping { get; set; }
+        public string Soundtrack { get; set; }
         public string Dlc { get; set; }
         public List<Sector> Sectors { get; set; }
         public Point Position { get; set; }
@@ -44,6 +45,7 @@ namespace X4SectorCreator.Objects
                 Dlc = Dlc,
                 BackgroundVisualMapping = BackgroundVisualMapping,
                 BaseGameMapping = BaseGameMapping,
+                Soundtrack = Soundtrack,
                 CustomSectorPositioning = CustomSectorPositioning,
                 Hexagon = Hexagon,
                 Name = Name,

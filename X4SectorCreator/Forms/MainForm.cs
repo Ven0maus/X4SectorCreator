@@ -63,7 +63,7 @@ namespace X4SectorCreator
 
             // Set dlc mappings
             string json = File.ReadAllText(Constants.DataPaths.DlcMappingFilePath);
-            DlcMappings = JsonSerializer.Deserialize<List<DlcMapping>>(json, ConfigSerializer.SerializerOptions)
+            DlcMappings = JsonSerializer.Deserialize<List<DlcMapping>>(json, ConfigSerializer.JsonSerializerOptions)
                 .ToDictionary(a => a.Dlc, a => a.Prefix);
 
             // Set faction color mapping
@@ -80,8 +80,6 @@ namespace X4SectorCreator
 
         private void ApplyFilter(List<Cluster> clusters)
         {
-            var selectedCluster = ClustersListBox.SelectedItem as string;
-
             // Reset
             CmbClusterOption_SelectedIndexChanged(this, null);
 
@@ -98,7 +96,7 @@ namespace X4SectorCreator
                     ClustersListBox.Items.Add(item);
             }
 
-            if (selectedCluster != null && ClustersListBox.Items.Contains(selectedCluster))
+            if (ClustersListBox.SelectedItem is string selectedCluster && ClustersListBox.Items.Contains(selectedCluster))
                 ClustersListBox.SelectedItem = selectedCluster;
             else if (ClustersListBox.Items.Count > 0)
                 ClustersListBox.SelectedIndex = 0;
@@ -110,7 +108,7 @@ namespace X4SectorCreator
         public ClusterCollection InitAllClusters(bool replaceAllClusters = true)
         {
             string json = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
-            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.SerializerOptions);
+            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.JsonSerializerOptions);
 
             Dictionary<(int X, int Y), Cluster> clusterLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
             // Create lookups
@@ -250,7 +248,7 @@ namespace X4SectorCreator
                         {
                             // Update mapping file
                             File.WriteAllText(Constants.DataPaths.SectorMappingFilePath, newSectorMappingJson);
-                            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(newSectorMappingJson, ConfigSerializer.SerializerOptions);
+                            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(newSectorMappingJson, ConfigSerializer.JsonSerializerOptions);
 
                             // Replace clusters
                             Dictionary<(int X, int Y), Cluster> newClusters = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
@@ -710,6 +708,7 @@ namespace X4SectorCreator
                 cluster.BackgroundVisualMapping = New.BackgroundVisualMapping;
                 cluster.Position = New.Position;
                 cluster.CustomSectorPositioning = New.CustomSectorPositioning;
+                cluster.Soundtrack = New.Soundtrack;
 
                 if (cluster.Name.Equals("Mitsuno's Sacrifice", StringComparison.OrdinalIgnoreCase))
                 {
@@ -799,6 +798,7 @@ namespace X4SectorCreator
             currentCluster.Name = cluster.Name;
             currentCluster.BackgroundVisualMapping = cluster.BackgroundVisualMapping;
             currentCluster.CustomSectorPositioning = cluster.CustomSectorPositioning;
+            currentCluster.Soundtrack = cluster.Soundtrack;
 
             foreach (Sector newSector in cluster.Sectors)
             {
@@ -912,7 +912,7 @@ namespace X4SectorCreator
                 {
                     // Create new lookup table
                     string json = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
-                    ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.SerializerOptions);
+                    ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.JsonSerializerOptions);
                     _clusterDlcLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
                 }
 
@@ -1021,7 +1021,8 @@ namespace X4SectorCreator
                     nonModifiedCluster.Description != modifiedCluster.Description ||
                     nonModifiedCluster.BackgroundVisualMapping != modifiedCluster.BackgroundVisualMapping ||
                     nonModifiedCluster.Position != modifiedCluster.Position ||
-                    nonModifiedCluster.CustomSectorPositioning != modifiedCluster.CustomSectorPositioning)
+                    nonModifiedCluster.CustomSectorPositioning != modifiedCluster.CustomSectorPositioning ||
+                    nonModifiedCluster.Soundtrack != modifiedCluster.Soundtrack)
                 {
                     // Add to modified clusters
                     vanillaChanges.ModifiedClusters.Add(new ModifiedCluster { Old = nonModifiedCluster, New = (Cluster)modifiedCluster.Clone() });
@@ -1214,6 +1215,8 @@ namespace X4SectorCreator
             ClusterForm.Value.cmbBackgroundVisual.SelectedItem = Forms.ClusterForm.FindBackgroundVisualMappingByCode(cluster.Value.BackgroundVisualMapping ?? cluster.Value.BaseGameMapping);
             ClusterForm.Value.TxtLocation.Text = cluster.Key.ToString();
             ClusterForm.Value.ChkAutoPlacement.Checked = !cluster.Value.CustomSectorPositioning;
+            if (!string.IsNullOrWhiteSpace(cluster.Value.Soundtrack))
+                ClusterForm.Value.TxtSoundtrack.Text = cluster.Value.Soundtrack;
             ClusterForm.Value.Show();
         }
         #endregion

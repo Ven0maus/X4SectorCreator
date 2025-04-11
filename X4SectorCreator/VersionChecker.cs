@@ -16,7 +16,7 @@ namespace X4SectorCreator
         public VersionChecker()
         {
             string versionContent = File.ReadAllText(Constants.DataPaths.VersionFilePath);
-            VersionInfo versionInfo = JsonSerializer.Deserialize<VersionInfo>(versionContent, ConfigSerializer.SerializerOptions);
+            VersionInfo versionInfo = JsonSerializer.Deserialize<VersionInfo>(versionContent, ConfigSerializer.JsonSerializerOptions);
 
             CurrentVersion = versionInfo.AppVersion;
             TargetGameVersion = versionInfo.X4Version;
@@ -30,7 +30,7 @@ namespace X4SectorCreator
                 using HttpClient client = new();
                 string response = await client.GetStringAsync(_versionUrl);
 
-                VersionInfo versionInfo = JsonSerializer.Deserialize<VersionInfo>(response, ConfigSerializer.SerializerOptions);
+                VersionInfo versionInfo = JsonSerializer.Deserialize<VersionInfo>(response, ConfigSerializer.JsonSerializerOptions);
                 return versionInfo != null && (IsNewVersionAvailable(versionInfo.AppVersion, CurrentVersion) || IsNewVersionAvailable(versionInfo.X4Version, TargetGameVersion)) ?
                     ((bool NewVersionAvailable, VersionInfo VersionInfo))(true, versionInfo) : ((bool NewVersionAvailable, VersionInfo VersionInfo))(false, versionInfo);
             }
@@ -68,7 +68,7 @@ namespace X4SectorCreator
                         AppVersion = CurrentVersion,
                         X4Version = versionInfo.X4Version,
                     };
-                    string json = JsonSerializer.Serialize(newVersionInfo, ConfigSerializer.SerializerOptions);
+                    string json = JsonSerializer.Serialize(newVersionInfo, ConfigSerializer.JsonSerializerOptions);
                     File.WriteAllText(Constants.DataPaths.VersionFilePath, json);
                 }
             }

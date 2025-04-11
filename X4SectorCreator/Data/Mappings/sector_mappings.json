@@ -29,6 +29,7 @@
     {
       "Name": "Grand Exchange",
       "BaseGameMapping": "Cluster_01",
+      "Soundtrack": "music_soundtrack_teladi",
       "Sectors": [
         {
           "Name": "Grand Exchange IV",
@@ -66,6 +67,7 @@
     {
       "Name": "Path to Profit",
       "BaseGameMapping": "Cluster_05",
+      "Soundtrack": "music_soundtrack_teladi",
       "Sectors": [
         {
           "Name": "Path to Profit",
@@ -83,6 +85,7 @@
     {
       "Name": "Black Hole Sun",
       "BaseGameMapping": "Cluster_06",
+      "Soundtrack": "music_soundtrack_argon",
       "Sectors": [
         {
           "Name": "Black Hole Sun IV",
@@ -163,6 +166,7 @@
       "Name": "Windfall IV Aurora's Dream",
       "BaseGameMapping": "Cluster_503",
       "BackgroundVisualMapping": "Cluster_503t6",
+      "Soundtrack": "music_dlc_pirate_soundtrack_windfall",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -182,6 +186,7 @@
       "Name": "Windfall III The Hoard",
       "BaseGameMapping": "Cluster_502",
       "BackgroundVisualMapping": "Cluster_502t6",
+      "Soundtrack": "music_dlc_pirate_soundtrack_windfall",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -201,6 +206,7 @@
       "Name": "Windfall I Union Summit",
       "BaseGameMapping": "Cluster_501",
       "BackgroundVisualMapping": "Cluster_501t6",
+      "Soundtrack": "music_dlc_pirate_soundtrack_windfall",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -220,6 +226,7 @@
       "Name": "Avarice",
       "BaseGameMapping": "Cluster_500",
       "BackgroundVisualMapping": "Cluster_500t8",
+      "Soundtrack": "music_dlc_pirate_soundtrack_avarice",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
@@ -258,6 +265,7 @@
     {
       "Name": "Eighteen Billion",
       "BaseGameMapping": "Cluster_02",
+      "Soundtrack": "music_soundtrack_teladi",
       "Sectors": [
         {
           "Name": "Eighteen Billion",
@@ -273,13 +281,14 @@
       }
     },
     {
-      "Name": "Unknown System",
+      "Name": "Leap of Faith",
       "BaseGameMapping": "Cluster_504",
       "BackgroundVisualMapping": "Cluster_504t4",
+      "Soundtrack": "music_dlc_pirate_soundtrack_leap_of_faith",
       "Dlc": "ego_dlc_pirate",
       "Sectors": [
         {
-          "Name": "Unknown System",
+          "Name": "Leap of Faith",
           "DisableFactionLogic": true,
           "Owner": "None",
           "Sunlight": 0.05,
@@ -376,6 +385,7 @@
     {
       "Name": "Trinity Sanctum VII",
       "BaseGameMapping": "Cluster_47",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Trinity Sanctum VII",
@@ -393,6 +403,7 @@
     {
       "Name": "Trinity Sanctum III",
       "BaseGameMapping": "Cluster_18",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Trinity Sanctum III",
@@ -410,6 +421,7 @@
     {
       "Name": "Unholy Retribution",
       "BaseGameMapping": "Cluster_10",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Unholy Retribution",
@@ -481,6 +493,7 @@
     {
       "Name": "Pious Mists II",
       "BaseGameMapping": "Cluster_22",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Pious Mists II",
@@ -498,6 +511,7 @@
     {
       "Name": "Pious Mists IV",
       "BaseGameMapping": "Cluster_37",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Pious Mists IV",
@@ -515,6 +529,7 @@
     {
       "Name": "Pious Mists XI",
       "BaseGameMapping": "Cluster_38",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Pious Mists XI",
@@ -532,6 +547,7 @@
     {
       "Name": "Sacred Relic",
       "BaseGameMapping": "Cluster_23",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Sacred Relic",
@@ -549,6 +565,7 @@
     {
       "Name": "Cardinal's Domain",
       "BaseGameMapping": "cluster_709",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Cardinal's Domain",
@@ -640,6 +657,7 @@
     {
       "Name": "Scale Plate Green",
       "BaseGameMapping": "Cluster_21",
+      "Soundtrack": "music_soundtrack_xenon",
       "Sectors": [
         {
           "Name": "Scale Plate Green VII",
@@ -668,6 +686,7 @@
     {
       "Name": "Turquoise Sea",
       "BaseGameMapping": "Cluster_50",
+      "Soundtrack": "music_cluster_turquoise_sea",
       "Sectors": [
         {
           "Name": "Turquoise Sea IX",
@@ -713,6 +732,7 @@
     {
       "Name": "Ianamus Zura",
       "BaseGameMapping": "Cluster_15",
+      "Soundtrack": "music_soundtrack_teladi",
       "Sectors": [
         {
           "Name": "Ianamus Zura VII",
@@ -742,6 +762,7 @@
       "Name": "Mitsuno's Revelation",
       "BaseGameMapping": "cluster_701",
       "BackgroundVisualMapping": "cluster_701_v1",
+      "Soundtrack": "music_dlc_timelines_cluster_mitsuno",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -762,6 +783,7 @@
       "Name": "Mitsuno's Defiance",
       "BaseGameMapping": "cluster_702",
       "BackgroundVisualMapping": "cluster_702_v1",
+      "Soundtrack": "music_dlc_timelines_cluster_mitsuno",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -782,6 +804,7 @@
       "Name": "Mitsuno's Sacrifice",
       "BaseGameMapping": "cluster_703",
       "BackgroundVisualMapping": "cluster_703_v1",
+      "Soundtrack": "music_dlc_timelines_cluster_mitsuno",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -801,6 +824,7 @@
     {
       "Name": "Thuruk's Demise II First Impact",
       "BaseGameMapping": "Cluster_408",
+      "Soundtrack": "music_dlc_split_soundtrack_periphery",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -830,6 +854,7 @@
     {
       "Name": "Family Tkr",
       "BaseGameMapping": "Cluster_407",
+      "Soundtrack": "music_dlc_split_soundtrack_periphery",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -848,6 +873,7 @@
     {
       "Name": "Matrix #451",
       "BaseGameMapping": "Cluster_16",
+      "Soundtrack": "music_soundtrack_xenon",
       "Sectors": [
         {
           "Name": "Matrix #451",
@@ -865,6 +891,7 @@
     {
       "Name": "Matrix #9",
       "BaseGameMapping": "Cluster_17",
+      "Soundtrack": "music_soundtrack_xenon",
       "Sectors": [
         {
           "Name": "Matrix #9",
@@ -882,6 +909,7 @@
     {
       "Name": "Fires of Defeat",
       "BaseGameMapping": "Cluster_421",
+      "Soundtrack": "music_dlc_split_soundtrack_periphery",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -900,6 +928,7 @@
     {
       "Name": "Tharka's Ravine XXIV",
       "BaseGameMapping": "Cluster_409",
+      "Soundtrack": "music_dlc_split_soundtrack_ravine",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -918,6 +947,7 @@
     {
       "Name": "Tharka's Ravine XVI",
       "BaseGameMapping": "Cluster_410",
+      "Soundtrack": "music_dlc_split_soundtrack_ravine",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -936,6 +966,7 @@
     {
       "Name": "Tharka's Ravine VIII",
       "BaseGameMapping": "Cluster_412",
+      "Soundtrack": "music_dlc_split_soundtrack_ravine",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -954,6 +985,7 @@
     {
       "Name": "Tharka's Ravine IV Tharka's Fall",
       "BaseGameMapping": "Cluster_413",
+      "Soundtrack": "music_dlc_split_soundtrack_ravine",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -972,6 +1004,7 @@
     {
       "Name": "Heart of Acrimony II",
       "BaseGameMapping": "Cluster_411",
+      "Soundtrack": "music_dlc_split_cluster_heart_of_acrimony",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -990,6 +1023,7 @@
     {
       "Name": "Heart of Acrimony I The Boneyard",
       "BaseGameMapping": "Cluster_425",
+      "Soundtrack": "music_dlc_split_cluster_heart_of_acrimony",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1009,6 +1043,7 @@
     {
       "Name": "Bright Promise",
       "BaseGameMapping": "Cluster_09",
+      "Soundtrack": "music_soundtrack_teladi",
       "Sectors": [
         {
           "Name": "Bright Promise",
@@ -1026,6 +1061,7 @@
     {
       "Name": "Profit Center Alpha",
       "BaseGameMapping": "Cluster_34",
+      "Soundtrack": "music_soundtrack_teladi",
       "Sectors": [
         {
           "Name": "Profit Center Alpha",
@@ -1043,6 +1079,7 @@
     {
       "Name": "Two Grand",
       "BaseGameMapping": "Cluster_420",
+      "Soundtrack": "music_dlc_split_soundtrack_periphery",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1061,6 +1098,7 @@
     {
       "Name": "Open Market",
       "BaseGameMapping": "Cluster_419",
+      "Soundtrack": "music_dlc_split_soundtrack_periphery",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1079,6 +1117,7 @@
     {
       "Name": "Family Nhuut",
       "BaseGameMapping": "Cluster_418",
+      "Soundtrack": "music_dlc_split_soundtrack_loyal_families",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1097,6 +1136,7 @@
     {
       "Name": "Zyarth's Dominion IV",
       "BaseGameMapping": "Cluster_405",
+      "Soundtrack": "music_dlc_split_soundtrack_patriarchy",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1115,6 +1155,7 @@
     {
       "Name": "Zyarth's Dominion I",
       "BaseGameMapping": "Cluster_404",
+      "Soundtrack": "music_dlc_split_soundtrack_patriarchy",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1133,6 +1174,7 @@
     {
       "Name": "Zyarth's Dominion X",
       "BaseGameMapping": "Cluster_406",
+      "Soundtrack": "music_dlc_split_soundtrack_patriarchy",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1151,6 +1193,7 @@
     {
       "Name": "Eleventh Hour",
       "BaseGameMapping": "Cluster_417",
+      "Soundtrack": "music_dlc_split_soundtrack_argon",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1169,6 +1212,7 @@
     {
       "Name": "Guiding Star",
       "BaseGameMapping": "Cluster_416",
+      "Soundtrack": "music_dlc_split_soundtrack_argon",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1198,7 +1242,8 @@
     {
       "Name": "President's End",
       "BaseGameMapping": "cluster_704",
-      "BackgroundVisualMapping": "cluster_704_v1",  
+      "BackgroundVisualMapping": "cluster_704_v1",
+      "Soundtrack": "music_dlc_timelines_cluster_presidents_end",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -1272,6 +1317,7 @@
       "Name": "Matrix #101",
       "BaseGameMapping": "cluster_708",
       "BackgroundVisualMapping": "cluster_708_v1",
+      "Soundtrack": "music_soundtrack_xenon",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -1291,6 +1337,7 @@
     {
       "Name": "Tharka's Cascade",
       "BaseGameMapping": "Cluster_32",
+      "Soundtrack": "music_soundtrack_xenon",
       "Sectors": [
         {
           "Name": "Tharka's Cascade XVII",
@@ -1319,6 +1366,7 @@
     {
       "Name": "Matrix #79B",
       "BaseGameMapping": "Cluster_33",
+      "Soundtrack": "music_soundtrack_xenon",
       "Sectors": [
         {
           "Name": "Matrix #79B",
@@ -1336,6 +1384,7 @@
     {
       "Name": "Family Zhin",
       "BaseGameMapping": "Cluster_401",
+      "Soundtrack": "music_dlc_split_soundtrack_loyal_families",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1354,6 +1403,7 @@
     {
       "Name": "Family Kritt",
       "BaseGameMapping": "Cluster_402",
+      "Soundtrack": "music_dlc_split_soundtrack_loyal_families",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1372,6 +1422,7 @@
     {
       "Name": "Rhy's Defiance",
       "BaseGameMapping": "Cluster_414",
+      "Soundtrack": "music_dlc_split_soundtrack_xenon",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1390,6 +1441,7 @@
     {
       "Name": "Matrix #598",
       "BaseGameMapping": "Cluster_415",
+      "Soundtrack": "music_dlc_split_soundtrack_xenon",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1408,6 +1460,7 @@
     {
       "Name": "Wretched Skies IV Family Valka",
       "BaseGameMapping": "Cluster_400",
+      "Soundtrack": "music_dlc_split_soundtrack_periphery",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1426,6 +1479,7 @@
     {
       "Name": "Wretched Skies V Family Phi",
       "BaseGameMapping": "Cluster_403",
+      "Soundtrack": "music_dlc_split_soundtrack_periphery",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1444,6 +1498,7 @@
     {
       "Name": "Wretched Skies X",
       "BaseGameMapping": "Cluster_422",
+      "Soundtrack": "music_dlc_split_soundtrack_periphery",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1462,6 +1517,7 @@
     {
       "Name": "Litany of Fury",
       "BaseGameMapping": "Cluster_423",
+      "Soundtrack": "music_dlc_split_soundtrack_paranid",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1491,6 +1547,7 @@
     {
       "Name": "Emperor's Pride",
       "BaseGameMapping": "Cluster_424",
+      "Soundtrack": "music_dlc_split_soundtrack_paranid",
       "Dlc": "ego_dlc_split",
       "Sectors": [
         {
@@ -1548,6 +1605,7 @@
     {
       "Name": "Morning Star III",
       "BaseGameMapping": "Cluster_30",
+      "Soundtrack": "music_soundtrack_argon",
       "Sectors": [
         {
           "Name": "Morning Star III",
@@ -1582,6 +1640,7 @@
     {
       "Name": "Argon Prime",
       "BaseGameMapping": "Cluster_14",
+      "Soundtrack": "music_soundtrack_argon",
       "Sectors": [
         {
           "Name": "Argon Prime",
@@ -1634,6 +1693,7 @@
     {
       "Name": "Savage Spur",
       "BaseGameMapping": "Cluster_112",
+      "Soundtrack": "music_dlc_terran_soundtrack_yaki",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -1663,6 +1723,7 @@
     {
       "Name": "Getsu Fune",
       "BaseGameMapping": "Cluster_48",
+      "Soundtrack": "music_cluster_getsu_fune",
       "Sectors": [
         {
           "Name": "Getsu Fune",
@@ -1681,6 +1742,7 @@
       "Name": "Nopileos' Memorial",
       "BaseGameMapping": "cluster_705",
       "BackgroundVisualMapping": "cluster_705_v1",
+      "Soundtrack": "music_dlc_timelines_cluster_nopileos_memorial",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -1701,6 +1763,7 @@
       "Name": "Hatikvah's Faith",
       "BaseGameMapping": "cluster_706",
       "BackgroundVisualMapping": "cluster_706_v2",
+      "Soundtrack": "music_dlc_timelines_cluster_hatikvahs_faith",
       "Dlc": "ego_dlc_timelines",
       "Sectors": [
         {
@@ -1737,6 +1800,7 @@
     {
       "Name": "Antigone Memorial",
       "BaseGameMapping": "Cluster_28",
+      "Soundtrack": "music_cluster_antigone_memorial",
       "Sectors": [
         {
           "Name": "Antigone Memorial",
@@ -1754,7 +1818,8 @@
     {
       "Name": "Third Redemption",
       "BaseGameMapping": "cluster_730",
-      "BackgroundVisualMapping": "cluster_730_v2",     
+      "BackgroundVisualMapping": "cluster_730_v2",
+      "Soundtrack": "music_dlc_mini_01_cluster_third_redemption",
       "Dlc": "ego_dlc_mini_01",
       "Sectors": [
         {
@@ -1774,6 +1839,7 @@
     {
       "Name": "Frontier Edge",
       "BaseGameMapping": "Cluster_49",
+      "Soundtrack": "music_cluster_frontier_edge",
       "Sectors": [
         {
           "Name": "Frontier Edge",
@@ -1791,6 +1857,7 @@
     {
       "Name": "Ore Belt",
       "BaseGameMapping": "cluster_720",
+      "Soundtrack": "music_cluster_ore_belt",
       "Sectors": [
         {
           "Name": "Ore Belt",
@@ -1808,6 +1875,7 @@
     {
       "Name": "Atiya's Misfortune",
       "BaseGameMapping": "Cluster_26",
+      "Soundtrack": "music_soundtrack_xenon",
       "Sectors": [
         {
           "Name": "Atiya's Misfortune I",
@@ -1854,6 +1922,7 @@
     {
       "Name": "Sanctum Verge",
       "BaseGameMapping": "cluster_722",
+      "Soundtrack": "music_cluster_sanctum_verge",
       "Sectors": [
         {
           "Name": "Sanctum Verge",
@@ -1872,6 +1941,7 @@
     {
       "Name": "Faulty Logic",
       "BaseGameMapping": "Cluster_25",
+      "Soundtrack": "music_soundtrack_xenon",
       "Sectors": [
         {
           "Name": "Faulty Logic I",
@@ -1900,6 +1970,7 @@
     {
       "Name": "True Sight",
       "BaseGameMapping": "Cluster_12",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "True Sight",
@@ -1917,6 +1988,7 @@
     {
       "Name": "Holy Vision",
       "BaseGameMapping": "Cluster_24",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Holy Vision",
@@ -1934,6 +2006,7 @@
     {
       "Name": "Cardinal's Redress",
       "BaseGameMapping": "Cluster_36",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Cardinal's Redress",
@@ -1951,6 +2024,7 @@
     {
       "Name": "Pontifex's Claim",
       "BaseGameMapping": "Cluster_11",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Pontifex's Claim",
@@ -1968,6 +2042,7 @@
     {
       "Name": "Lasting Vengeance",
       "BaseGameMapping": "Cluster_35",
+      "Soundtrack": "music_soundtrack_paranid",
       "Sectors": [
         {
           "Name": "Lasting Vengeance",
@@ -2003,6 +2078,7 @@
     {
       "Name": "Tempting Fumes",
       "BaseGameMapping": "cluster_723",
+      "Soundtrack": "music_cluster_tempting_fumes",
       "Sectors": [
         {
           "Name": "Tempting Fumes",
@@ -2019,7 +2095,8 @@
     },
     {
       "Name": "Watchful Gaze",
-      "BaseGameMapping": "Cluster_601",   
+      "BaseGameMapping": "Cluster_601",
+      "Soundtrack": "music_dlc_boron_soundtrack_border",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2040,6 +2117,7 @@
       "Name": "Barren Shores",
       "BaseGameMapping": "Cluster_602",
       "BackgroundVisualMapping": "Cluster_602_v1",
+      "Soundtrack": "music_dlc_boron_soundtrack_outer_bubble",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2059,6 +2137,7 @@
       "Name": "Great Reef",
       "BaseGameMapping": "Cluster_603",
       "BackgroundVisualMapping": "Cluster_603_v1",
+      "Soundtrack": "music_dlc_boron_soundtrack_outer_bubble",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2077,6 +2156,7 @@
     {
       "Name": "Ocean of Fantasy",
       "BaseGameMapping": "Cluster_604",
+      "Soundtrack": "music_dlc_boron_soundtrack_outer_bubble",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2095,6 +2175,7 @@
     {
       "Name": "Sanctuary of Darkness",
       "BaseGameMapping": "Cluster_605",
+      "Soundtrack": "music_dlc_boron_soundtrack_border",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2115,6 +2196,7 @@
       "Name": "Kingdom End",
       "BaseGameMapping": "Cluster_606",
       "BackgroundVisualMapping": "Cluster_606_v3",
+      "Soundtrack": "music_dlc_boron_soundtrack_kingdom_end",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2154,6 +2236,7 @@
       "Name": "Rolk's Demise",
       "BaseGameMapping": "Cluster_607",
       "BackgroundVisualMapping": "Cluster_607_v1",
+      "Soundtrack": "music_dlc_boron_soundtrack_inner_bubble",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2173,6 +2256,7 @@
       "Name": "Atreus' Clouds",
       "BaseGameMapping": "Cluster_608",
       "BackgroundVisualMapping": "Cluster_608_v1",
+      "Soundtrack": "music_dlc_boron_soundtrack_inner_bubble",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2192,6 +2276,7 @@
       "Name": "Menelaus' Oasis",
       "BaseGameMapping": "Cluster_609",
       "BackgroundVisualMapping": "Cluster_609_v1",
+      "Soundtrack": "music_dlc_boron_soundtrack_inner_bubble",
       "Dlc": "ego_dlc_boron",
       "Sectors": [
         {
@@ -2246,6 +2331,7 @@
     {
       "Name": "Brennan's Triumph",
       "BaseGameMapping": "Cluster_115",
+      "Soundtrack": "music_cluster_complete",
       "Dlc": "ego_dlc_terran",
       "Sectors": [
         {
@@ -2264,6 +2350,7 @@
     {
       "Name": "Circle of Deceit",
       "BaseGameMapping": "cluster_724",
+      "Soundtrack": "music_cluster_circle_of_deceit",
       "Sectors": [
         {
           "Name": "Circle of Deceit",
@@ -2510,6 +2597,7 @@
     {
       "Name": "Adventure's Promise",
       "BaseGameMapping": "cluster_721",
+      "Soundtrack": "music_cluster_adventures_promise",
       "Sectors": [
         {
           "Name": "Adventure's Promise",

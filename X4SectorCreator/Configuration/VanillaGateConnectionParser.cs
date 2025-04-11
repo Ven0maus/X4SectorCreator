@@ -56,7 +56,7 @@ namespace X4SectorCreator.Configuration
             };
 
             // Generate the mappings based on these connections
-            string json = JsonSerializer.Serialize(mapping, ConfigSerializer.SerializerOptions);
+            string json = JsonSerializer.Serialize(mapping, ConfigSerializer.JsonSerializerOptions);
             File.WriteAllText($"{_resultsPath}/vanilla_connection_mappings.json", json);
         }
 
@@ -65,7 +65,7 @@ namespace X4SectorCreator.Configuration
             try
             {
                 string json = File.ReadAllText(Constants.DataPaths.VanillaConnectionMappingFilePath);
-                VanilaConnectionMapping vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json, ConfigSerializer.SerializerOptions);
+                VanilaConnectionMapping vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(json, ConfigSerializer.JsonSerializerOptions);
 
                 Cluster[] baseGameClusters = [.. allClusters.Values.Where(a => a.IsBaseGame)];
 

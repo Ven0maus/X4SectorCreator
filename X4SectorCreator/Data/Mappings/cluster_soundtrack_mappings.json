@@ -1,0 +1,62 @@
+﻿{
+  "Soundtracks": {
+    "vanilla": [
+      "music_soundtrack_periphery",
+      "music_complete_soundtrack",
+      "music_soundtrack_argon",
+      "music_soundtrack_paranid",
+      "music_soundtrack_teladi",
+      "music_soundtrack_xenon",
+      "music_cluster_adventures_promise",
+      "music_cluster_circle_of_deceit",
+      "music_cluster_ore_belt",
+      "music_cluster_sanctum_verge",
+      "music_cluster_tempting_fumes",
+      "music_cluster_getsu_fune",
+      "music_cluster_turquoise_sea",
+      "music_cluster_frontier_edge",
+      "music_cluster_antigone_memorial"
+    ],
+    "ego_dlc_split": [
+      "music_dlc_split_soundtrack_periphery",
+      "music_dlc_split_soundtrack_patriarchy",
+      "music_dlc_split_soundtrack_loyal_families",
+      "music_dlc_split_soundtrack_argon",
+      "music_dlc_split_soundtrack_xenon",
+      "music_dlc_split_soundtrack_paranid",
+      "music_dlc_split_soundtrack_ravine"
+    ],
+    "ego_dlc_pirate": [
+      "music_dlc_pirate_soundtrack_avarice",
+      "music_dlc_pirate_soundtrack_windfall",
+      "music_dlc_pirate_soundtrack_leap_of_faith"
+    ],
+    "ego_dlc_terran": [
+      "music_dlc_terran_soundtrack_earth",
+      "music_dlc_terran_soundtrack_terran_core",
+      "music_dlc_terran_soundtrack_mars",
+      "music_dlc_terran_soundtrack_terran_periphery",
+      "music_dlc_terran_soundtrack_jupiter_saturn",
+      "music_dlc_terran_soundtrack_oort_cloud",
+      "music_dlc_terran_soundtrack_terran_pioneers",
+      "music_dlc_terran_soundtrack_pioneers",
+      "music_dlc_terran_soundtrack_brennans_triumph",
+      "music_dlc_terran_soundtrack_yaki"
+    ],
+    "ego_dlc_boron": [
+      "music_dlc_boron_soundtrack_border",
+      "music_dlc_boron_soundtrack_outer_bubble",
+      "music_dlc_boron_soundtrack_kingdom_end",
+      "music_dlc_boron_soundtrack_inner_bubble"
+    ],
+    "ego_dlc_timelines": [
+      "music_dlc_timelines_cluster_mitsuno",
+      "music_dlc_timelines_cluster_presidents_end",
+      "music_dlc_timelines_cluster_nopileos_memorial",
+      "music_dlc_timelines_cluster_hatikvahs_faith"
+    ],
+    "ego_dlc_mini_01": [
+      "music_dlc_mini_01_cluster_third_redemption"
+    ]
+  }
+}
