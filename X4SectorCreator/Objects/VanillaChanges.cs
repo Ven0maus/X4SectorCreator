@@ -1,5 +1,4 @@
-﻿
-namespace X4SectorCreator.Objects
+﻿namespace X4SectorCreator.Objects
 {
     public class VanillaChanges
     {
@@ -14,6 +13,12 @@ namespace X4SectorCreator.Objects
             // Modifications
             foreach (ModifiedCluster modification in ModifiedClusters)
             {
+                if (modification.New.Soundtrack != null)
+                {
+                    var kvp = SoundtrackCollection.Instance.Soundtracks.FirstOrDefault(a => a.Value.Contains(modification.New.Soundtrack));
+                    if (kvp.Key != null && kvp.Value != null && !kvp.Key.Equals("vanilla", StringComparison.OrdinalIgnoreCase))
+                        yield return kvp.Key;
+                }
                 yield return modification.New.Dlc;
             }
 
