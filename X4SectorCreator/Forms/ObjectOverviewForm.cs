@@ -9,10 +9,10 @@ namespace X4SectorCreator.Forms
     {
         private readonly List<DataObject> _dataObjects = [];
         private readonly MultiSelectCombo _mscFilterType;
-        private readonly HashSet<string> _defaultShownInFilter = new(StringComparer.OrdinalIgnoreCase) 
-        { 
-            "Sector" 
-        }; 
+        private readonly HashSet<string> _defaultShownInFilter = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "Sector"
+        };
 
         public ObjectOverviewForm()
         {
@@ -83,6 +83,9 @@ namespace X4SectorCreator.Forms
                 objects.RemoveAll(a => !selectedTypes.Contains(a.Type));
             }
 
+            if (ChkExcludeVanillaObjects.Checked)
+                objects.RemoveAll(a => a.IsBaseGame);
+
             ObjectView.Rows.Clear();
             foreach (var obj in objects.OrderBy(a => a.Name))
                 ObjectView.Rows.Add(obj.Type, obj.Name, obj.Code);
@@ -106,15 +109,17 @@ namespace X4SectorCreator.Forms
 
         class DataObject
         {
-            public string Type { get; set; }
-            public string Name { get; set; }
-            public string Code { get; set; }
+            public bool IsBaseGame { get; }
+            public string Type { get; }
+            public string Name { get; }
+            public string Code { get; }
 
             public DataObject(Cluster cluster)
             {
                 Type = "Cluster";
                 Name = cluster.Name;
                 Code = cluster.IsBaseGame ? $"{cluster.BaseGameMapping}" : $"PREFIX_CL_c{cluster.Id:D3}";
+                IsBaseGame = cluster.IsBaseGame;
             }
 
             public DataObject(Cluster cluster, Sector sector)
@@ -130,6 +135,7 @@ namespace X4SectorCreator.Forms
                 {
                     Code = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
                 }
+                IsBaseGame = sector.IsBaseGame;
             }
 
             public DataObject(Gate gate)
@@ -148,6 +154,7 @@ namespace X4SectorCreator.Forms
 
                 Name = $"{gate.ParentSectorName} -> {sourceGate.ParentSectorName}";
                 Code = gate.DestinationPath;
+                IsBaseGame = gate.IsBaseGame;
             }
 
             public DataObject(Cluster cluster, Sector sector, Zone zone)
@@ -159,6 +166,7 @@ namespace X4SectorCreator.Forms
                     Code = $"PREFIX_ZO_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_z{zone.Id:D3}_macro";
                 else if (cluster.IsBaseGame)
                     Code = $"PREFIX_ZO_{cluster.BaseGameMapping}_s{sector.Id:D3}_z{zone.Id:D3}_macro";
+                IsBaseGame = zone.IsBaseGame;
             }
 
             public DataObject(Cluster cluster, Sector sector, Station station)
@@ -172,6 +180,7 @@ namespace X4SectorCreator.Forms
                 if (sector.IsBaseGame)
                     sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter();
                 Code = $"PREFIX_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
+                IsBaseGame = false;
             }
 
             public DataObject(Cluster cluster, Sector sector, Region region)
@@ -184,12 +193,18 @@ namespace X4SectorCreator.Forms
                 else if (cluster.IsBaseGame)
                     Code = $"re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}";
                 Code = $"PREFIX_{Code.ToLower()}";
+                IsBaseGame = false;
             }
         }
 
         private void ObjectOverviewForm_Load(object sender, EventArgs e)
         {
             _mscFilterType.Select(CmbFilterType.Items.Cast<string>().Where(_defaultShownInFilter.Contains).ToArray());
+        }
+
+        private void ChkExcludeVanillaObjects_CheckedChanged(object sender, EventArgs e)
+        {
+            TxtSearch.GetTextSearchComponent()?.ForceCalculate();
         }
     }
 }

@@ -31,15 +31,16 @@ namespace X4SectorCreator.Forms
         private void InitializeComponent()
         {
             ObjectView = new DataGridView();
+            TypeDataGridColumn = new DataGridViewTextBoxColumn();
+            NameDataGridColumn = new DataGridViewTextBoxColumn();
+            CodeDataGridColumn = new DataGridViewTextBoxColumn();
             BtnExit = new Button();
             label1 = new Label();
             TxtSearch = new TextBox();
             label2 = new Label();
             CmbFilterType = new MultiSelectCombo.NoDropDownComboBox();
             label3 = new Label();
-            TypeDataGridColumn = new DataGridViewTextBoxColumn();
-            NameDataGridColumn = new DataGridViewTextBoxColumn();
-            CodeDataGridColumn = new DataGridViewTextBoxColumn();
+            ChkExcludeVanillaObjects = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)ObjectView).BeginInit();
             SuspendLayout();
             // 
@@ -55,6 +56,28 @@ namespace X4SectorCreator.Forms
             ObjectView.Name = "ObjectView";
             ObjectView.Size = new Size(1042, 570);
             ObjectView.TabIndex = 0;
+            // 
+            // TypeDataGridColumn
+            // 
+            TypeDataGridColumn.HeaderText = "Type";
+            TypeDataGridColumn.Name = "TypeDataGridColumn";
+            TypeDataGridColumn.ReadOnly = true;
+            TypeDataGridColumn.Width = 150;
+            // 
+            // NameDataGridColumn
+            // 
+            NameDataGridColumn.HeaderText = "Name";
+            NameDataGridColumn.Name = "NameDataGridColumn";
+            NameDataGridColumn.ReadOnly = true;
+            NameDataGridColumn.Width = 300;
+            // 
+            // CodeDataGridColumn
+            // 
+            CodeDataGridColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            CodeDataGridColumn.HeaderText = "Code";
+            CodeDataGridColumn.Name = "CodeDataGridColumn";
+            CodeDataGridColumn.ReadOnly = true;
+            CodeDataGridColumn.Width = 60;
             // 
             // BtnExit
             // 
@@ -104,40 +127,33 @@ namespace X4SectorCreator.Forms
             // label3
             // 
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(12, 35);
+            label3.Location = new Point(317, 35);
             label3.Name = "label3";
-            label3.Size = new Size(1039, 25);
+            label3.Size = new Size(734, 25);
             label3.TabIndex = 6;
             label3.Text = "This form is mainly intended for modders to be able to quickly lookup xml codes from the available data.";
             label3.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // TypeDataGridColumn
+            // ChkExcludeVanillaObjects
             // 
-            TypeDataGridColumn.HeaderText = "Type";
-            TypeDataGridColumn.Name = "TypeDataGridColumn";
-            TypeDataGridColumn.ReadOnly = true;
-            TypeDataGridColumn.Width = 150;
-            // 
-            // NameDataGridColumn
-            // 
-            NameDataGridColumn.HeaderText = "Name";
-            NameDataGridColumn.Name = "NameDataGridColumn";
-            NameDataGridColumn.ReadOnly = true;
-            NameDataGridColumn.Width = 300;
-            // 
-            // CodeDataGridColumn
-            // 
-            CodeDataGridColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            CodeDataGridColumn.HeaderText = "Code";
-            CodeDataGridColumn.Name = "CodeDataGridColumn";
-            CodeDataGridColumn.ReadOnly = true;
-            CodeDataGridColumn.Width = 60;
+            ChkExcludeVanillaObjects.AutoSize = true;
+            ChkExcludeVanillaObjects.Checked = true;
+            ChkExcludeVanillaObjects.CheckState = CheckState.Checked;
+            ChkExcludeVanillaObjects.Font = new Font("Segoe UI", 12F);
+            ChkExcludeVanillaObjects.Location = new Point(12, 35);
+            ChkExcludeVanillaObjects.Name = "ChkExcludeVanillaObjects";
+            ChkExcludeVanillaObjects.Size = new Size(183, 25);
+            ChkExcludeVanillaObjects.TabIndex = 7;
+            ChkExcludeVanillaObjects.Text = "Exclude vanilla objects";
+            ChkExcludeVanillaObjects.UseVisualStyleBackColor = true;
+            ChkExcludeVanillaObjects.CheckedChanged += ChkExcludeVanillaObjects_CheckedChanged;
             // 
             // ObjectOverviewForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1055, 637);
+            Controls.Add(ChkExcludeVanillaObjects);
             Controls.Add(label3);
             Controls.Add(CmbFilterType);
             Controls.Add(label2);
@@ -165,5 +181,6 @@ namespace X4SectorCreator.Forms
         private DataGridViewTextBoxColumn TypeDataGridColumn;
         private DataGridViewTextBoxColumn NameDataGridColumn;
         private DataGridViewTextBoxColumn CodeDataGridColumn;
+        private CheckBox ChkExcludeVanillaObjects;
     }
 }
