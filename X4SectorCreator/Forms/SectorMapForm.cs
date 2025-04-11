@@ -527,6 +527,7 @@ namespace X4SectorCreator
                                 "shipyard" => "▲",
                                 "equipmentdock" => "⎕",
                                 "tradestation" => "⨁",
+                                "piratebase" => "±",
                                 _ => throw new NotSupportedException($"Station type not supported: {station.Type}"),
                             };
 
