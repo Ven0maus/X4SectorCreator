@@ -149,7 +149,7 @@ namespace X4SectorCreator.XmlGeneration
                 }
 
                 yield return new XElement("connection",
-                    new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_connection"),
+                    new XAttribute("name", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_z{zone.Id:D3}_connection"),
                     new XAttribute("ref", "zones"),
                     new XElement("offset",
                         new XElement("position",
@@ -159,7 +159,7 @@ namespace X4SectorCreator.XmlGeneration
                         )
                     ),
                     new XElement("macro",
-                        new XAttribute("ref", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_{sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "")}_z{zone.Id:D3}_macro"),
+                        new XAttribute("ref", $"{modPrefix}_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_z{zone.Id:D3}_macro"),
                         new XAttribute("connection", "sector")
                     )
                 );

@@ -100,13 +100,13 @@ namespace X4SectorCreator.XmlGeneration
                             string clusterPrefix = $"c{cluster.Id:D3}";
                             if (cluster.IsBaseGame)
                             {
-                                clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
+                                clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter();
                             }
 
                             string sectorPrefix = $"s{sector.Id:D3}";
                             if (sector.IsBaseGame)
                             {
-                                sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter().Replace("_", "");
+                                sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter();
                             }
 
                             string id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
@@ -114,14 +114,32 @@ namespace X4SectorCreator.XmlGeneration
 
                             string faction = station.Faction.ToLower();
                             string owner = station.Owner.ToLower();
+                            var type = station.Type.ToLower();
                             faction = CorrectFactionNames(faction);
                             owner = CorrectFactionNames(owner);
+
+                            string realType = "factory";
+
+                            // Xenon work differently compared to others
+                            if (station.Faction.Equals("xenon", StringComparison.OrdinalIgnoreCase) ||
+                                station.Owner.Equals("xenon", StringComparison.OrdinalIgnoreCase))
+                            {
+                                if (type == "defence")
+                                    realType = "defence";
+                                if (type == "wharf" || type == "shipyard")
+                                    realType = "shipyard";
+                            }
+
+                            if (type == "tradestation")
+                                realType = "tradingstation";
+                            if (type == "piratebase")
+                                realType = "piratebase";
 
                             yield return new XElement("station",
                                 new XAttribute("id", id.ToLower()),
                                 new XAttribute("race", station.Race.ToLower()),
                                 new XAttribute("owner", owner),
-                                new XAttribute("type", station.Type.Equals("tradestation", StringComparison.OrdinalIgnoreCase) ? "tradingstation" : "factory"),
+                                new XAttribute("type", realType),
                                 new XElement("quotas",
                                     new XElement("quota",
                                         new XAttribute("galaxy", 1),
@@ -131,12 +149,13 @@ namespace X4SectorCreator.XmlGeneration
                                 new XElement("location",
                                     new XAttribute("class", "zone"),
                                     new XAttribute("macro", zoneMacro.ToLower()),
+                                    type == "piratebase" ? new XAttribute("solitary", "true") : null,
                                     new XAttribute("matchextension", "false")
                                 ),
                                 new XElement("station",
                                     new XElement("select",
                                         new XAttribute("faction", faction),
-                                        new XAttribute("tags", $"[{station.Type.ToLower()}]")),
+                                        new XAttribute("tags", $"[{type}]")),
                                     new XElement("loadout",
                                         new XElement("level",
                                             new XAttribute("exact", "1.0"))
