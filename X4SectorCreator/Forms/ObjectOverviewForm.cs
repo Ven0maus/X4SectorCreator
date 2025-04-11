@@ -8,6 +8,10 @@ namespace X4SectorCreator.Forms
     {
         private readonly List<DataObject> _dataObjects = [];
         private readonly MultiSelectCombo _mscFilterType;
+        private readonly HashSet<string> _defaultShownInFilter = new(StringComparer.OrdinalIgnoreCase) 
+        { 
+            "Sector" 
+        }; 
 
         public ObjectOverviewForm()
         {
@@ -32,6 +36,15 @@ namespace X4SectorCreator.Forms
             _dataObjects.AddRange(MainForm.Instance.AllClusters
                 .SelectMany(a => a.Value.Sectors, (cluster, sector) => new { Cluster = cluster.Value, Sector = sector })
                 .Select(a => new DataObject(a.Cluster, a.Sector)));
+
+            // Add zones
+            _dataObjects.AddRange(MainForm.Instance.AllClusters
+                .SelectMany(a => a.Value.Sectors
+                    .SelectMany(a => a.Zones, 
+                        (sector, zone) => new {Sector = sector, Zone = zone}), 
+                    (cluster, sectordata) => new {Cluster = cluster.Value, SectorData = sectordata})
+                .Where(a => !a.SectorData.Zone.IsBaseGame)
+                .Select(a => new DataObject(a.Cluster, a.SectorData.Sector, a.SectorData.Zone)));
 
             // Add connections
             _dataObjects.AddRange(MainForm.Instance.AllClusters
@@ -68,6 +81,7 @@ namespace X4SectorCreator.Forms
         private void ObjectOverviewForm_Disposed(object sender, EventArgs e)
         {
             TxtSearch.DisableTextSearch();
+            _dataObjects.Clear(); // Garbage collection
         }
 
         private void CmbFilterType_OnItemChecked(object sender, ItemCheckEventArgs e)
@@ -92,14 +106,14 @@ namespace X4SectorCreator.Forms
             {
                 Type = "Sector";
                 Name = sector.Name;
-                Code = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
+                Code = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}";
                 if (cluster.IsBaseGame && sector.IsBaseGame)
                 {
-                    Code = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_macro";
+                    Code = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
                 }
                 else if (cluster.IsBaseGame)
                 {
-                    Code = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}_macro";
+                    Code = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}";
                 }
             }
 
@@ -120,11 +134,22 @@ namespace X4SectorCreator.Forms
                 Name = $"{gate.ParentSectorName} -> {sourceGate.ParentSectorName}";
                 Code = gate.DestinationPath;
             }
+
+            public DataObject(Cluster cluster, Sector sector, Zone zone)
+            {
+                Type = "Zone";
+                Name = $"{sector.Name} Zone {zone.Id:D3}";
+                Code = $"PREFIX_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_macro";
+                if (cluster.IsBaseGame && sector.IsBaseGame)
+                    Code = $"PREFIX_ZO_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_z{zone.Id:D3}_macro";
+                else if (cluster.IsBaseGame)
+                    Code = $"PREFIX_ZO_{cluster.BaseGameMapping}_s{sector.Id:D3}_z{zone.Id:D3}_macro";
+            }
         }
 
         private void ObjectOverviewForm_Load(object sender, EventArgs e)
         {
-            _mscFilterType.Select(CmbFilterType.Items.Cast<string>().ToArray());
+            _mscFilterType.Select(CmbFilterType.Items.Cast<string>().Where(_defaultShownInFilter.Contains).ToArray());
         }
     }
 }
