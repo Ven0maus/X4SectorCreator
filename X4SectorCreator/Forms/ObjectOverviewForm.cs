@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using X4SectorCreator.CustomComponents;
+﻿using X4SectorCreator.CustomComponents;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
