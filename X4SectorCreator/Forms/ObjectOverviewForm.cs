@@ -29,27 +29,35 @@ namespace X4SectorCreator.Forms
 
         private void InitObjects()
         {
-            // Add clusters
-            _dataObjects.AddRange(MainForm.Instance.AllClusters.Select(a => new DataObject(a.Value)));
+            foreach (var cluster in MainForm.Instance.AllClusters.Values)
+            {
+                // Add cluster
+                _dataObjects.Add(new DataObject(cluster));
 
-            // Add sectors
-            _dataObjects.AddRange(MainForm.Instance.AllClusters
-                .SelectMany(a => a.Value.Sectors, (cluster, sector) => new { Cluster = cluster.Value, Sector = sector })
-                .Select(a => new DataObject(a.Cluster, a.Sector)));
+                foreach (var sector in cluster.Sectors)
+                {
+                    // Add sector
+                    _dataObjects.Add(new DataObject(cluster, sector));
 
-            // Add zones
-            _dataObjects.AddRange(MainForm.Instance.AllClusters
-                .SelectMany(a => a.Value.Sectors
-                    .SelectMany(a => a.Zones, 
-                        (sector, zone) => new {Sector = sector, Zone = zone}), 
-                    (cluster, sectordata) => new {Cluster = cluster.Value, SectorData = sectordata})
-                .Where(a => !a.SectorData.Zone.IsBaseGame)
-                .Select(a => new DataObject(a.Cluster, a.SectorData.Sector, a.SectorData.Zone)));
+                    foreach (var zone in sector.Zones)
+                    {
+                        // Add only non-basegame zones
+                        if (!zone.IsBaseGame)
+                            _dataObjects.Add(new DataObject(cluster, sector, zone));
 
-            // Add connections
-            _dataObjects.AddRange(MainForm.Instance.AllClusters
-                .SelectMany(a => a.Value.Sectors.SelectMany(b => b.Zones).SelectMany(c => c.Gates))
-                .Select(a => new DataObject(a)));
+                        foreach (var gate in zone.Gates)
+                        {
+                            // Add connection (also basegame)
+                            _dataObjects.Add(new DataObject(gate));
+                        }
+
+                        foreach (var station in zone.Stations)
+                        {
+                            _dataObjects.Add(new DataObject(cluster, sector, station));
+                        }
+                    }
+                }
+            }
 
             // Add all possible types to combobox filter type
             var types = _dataObjects.Select(a => a.Type).ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -144,6 +152,19 @@ namespace X4SectorCreator.Forms
                     Code = $"PREFIX_ZO_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_z{zone.Id:D3}_macro";
                 else if (cluster.IsBaseGame)
                     Code = $"PREFIX_ZO_{cluster.BaseGameMapping}_s{sector.Id:D3}_z{zone.Id:D3}_macro";
+            }
+
+            public DataObject(Cluster cluster, Sector sector, Station station)
+            {
+                Type = "Station";
+                Name = $"{sector.Name} {station.Name}";
+                string clusterPrefix = $"c{cluster.Id:D3}";
+                if (cluster.IsBaseGame)
+                    clusterPrefix = cluster.BaseGameMapping.CapitalizeFirstLetter();
+                string sectorPrefix = $"s{sector.Id:D3}";
+                if (sector.IsBaseGame)
+                    sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter();
+                Code = $"PREFIX_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
             }
         }
 

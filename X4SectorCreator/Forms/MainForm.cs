@@ -1686,6 +1686,9 @@ namespace X4SectorCreator
             Zone zone = sector.Zones.First(a => a.Stations.Contains(selectedStation));
             _ = zone.Stations.Remove(selectedStation);
 
+            // Also remove the left-over zone of the station
+            sector.Zones.Remove(zone);
+
             int index = ListStations.Items.IndexOf(ListStations.SelectedItem);
             ListStations.Items.Remove(ListStations.SelectedItem);
 
