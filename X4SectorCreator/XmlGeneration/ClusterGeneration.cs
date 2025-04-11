@@ -102,8 +102,11 @@ namespace X4SectorCreator.XmlGeneration
                 // Return regions after sector connection
                 foreach (Objects.Region region in sector.Regions)
                 {
-                    string name = cluster.IsBaseGame ? $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
-                        $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
+                    string name = $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
+                    if (cluster.IsBaseGame && sector.IsBaseGame)
+                        name = $"{modPrefix}_re_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
+                    else if (cluster.IsBaseGame)
+                        name = $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}";
 
                     yield return new XElement("connection",
                         new XAttribute("name", $"{name}_connection"),
@@ -199,17 +202,49 @@ namespace X4SectorCreator.XmlGeneration
 
                 foreach (Sector sector in cluster.Sectors)
                 {
-                    if (sector.IsBaseGame)
-                    {
-                        continue;
-                    }
-
                     string macro = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_macro" :
                         $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
                     string connection = cluster.IsBaseGame ? $"{modPrefix}_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_connection" :
                         $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection";
 
                     var addElement = new XElement("add", new XAttribute("sel", $"/macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"));
+
+                    if (sector.IsBaseGame)
+                    {
+                        // Check if regions exist, then generate these too
+                        foreach (Objects.Region region in sector.Regions)
+                        {
+                            string name = $"{modPrefix}_re_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
+
+                            addElement.Add(new XElement("connection",
+                                new XAttribute("name", $"{name}_connection"),
+                                new XAttribute("ref", "regions"),
+                                new XElement("offset",
+                                    new XElement("position",
+                                        new XAttribute("x", sector.Offset.X + region.Position.X),
+                                        new XAttribute("y", 0),
+                                        new XAttribute("z", sector.Offset.Y + region.Position.Y)
+                                    )
+                                ),
+                                new XElement("macro",
+                                    new XAttribute("name", $"{name}_macro"),
+                                    new XElement("component",
+                                        new XAttribute("connection", "cluster"),
+                                        new XAttribute("ref", "standardregion")
+                                    ),
+                                    // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
+                                    new XElement("properties",
+                                        new XElement("region",
+                                            new XAttribute("ref", name.ToLower())
+                                        )
+                                    )
+                                )
+                            ));
+                        }
+                        if (!addElement.IsEmpty)
+                            yield return (cluster.Dlc, addElement);
+                        continue;
+                    }
 
                     // Add new sector
                     addElement.Add(

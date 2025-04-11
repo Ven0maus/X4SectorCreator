@@ -7,10 +7,11 @@ namespace X4SectorCreator.Configuration
 {
     internal static class ConfigSerializer
     {
-        public static readonly JsonSerializerOptions SerializerOptions = new()
+        public static readonly JsonSerializerOptions JsonSerializerOptions = new()
         {
             WriteIndented = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            PropertyNameCaseInsensitive = true,
             Converters = { new JsonStringEnumConverter() }
         };
 
@@ -71,7 +72,7 @@ namespace X4SectorCreator.Configuration
                 Version = new VersionChecker().CurrentVersion
             };
 
-            return JsonSerializer.Serialize(configObj, SerializerOptions);
+            return JsonSerializer.Serialize(configObj, JsonSerializerOptions);
         }
 
         public static (List<Cluster> clusters, VanillaChanges vanillaChanges) Deserialize(string filePath)
@@ -79,7 +80,7 @@ namespace X4SectorCreator.Configuration
             ConfigurationObj configObj = null;
             try
             {
-                configObj = JsonSerializer.Deserialize<ConfigurationObj>(filePath, SerializerOptions);
+                configObj = JsonSerializer.Deserialize<ConfigurationObj>(filePath, JsonSerializerOptions);
             }
             catch (Exception)
             {

@@ -26,6 +26,13 @@ namespace X4SectorCreator.Helpers
             _textSearchComponents.Remove(textBox);
         }
 
+        public static TextSearchComponent GetTextSearchComponent(this TextBox textBox)
+        {
+            if (_textSearchComponents.TryGetValue(textBox, out var component))
+                return component;
+            return null;
+        }
+
         public static Color HexToColor(this string hexstring)
         {
             // Remove '#' if present

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Text.RegularExpressions;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -9,6 +10,8 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster Cluster { get; set; }
 
+        private readonly LazyEvaluated<SoundtrackSelectorForm> _soundtrackSelectorForm = new(() => new SoundtrackSelectorForm(), a => !a.IsDisposed);
+
         public ClusterForm()
         {
             InitializeComponent();
@@ -17,18 +20,6 @@ namespace X4SectorCreator.Forms
             {
                 _ = cmbBackgroundVisual.Items.Add(mapping.Key);
             }
-        }
-
-        private void BtnPick_Click(object sender, EventArgs e)
-        {
-            MainForm.Instance.SectorMapForm.Value.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
-            MainForm.Instance.SectorMapForm.Value.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
-            MainForm.Instance.SectorMapForm.Value.GateSectorSelection = false;
-            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Enabled = false;
-            MainForm.Instance.SectorMapForm.Value.ControlPanel.Size = new Size(176, 277);
-            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
-            MainForm.Instance.SectorMapForm.Value.Reset();
-            MainForm.Instance.SectorMapForm.Value.Show();
         }
 
         private void BtnCreate_Click(object sender, EventArgs e)
@@ -92,6 +83,7 @@ namespace X4SectorCreator.Forms
                             Name = name,
                             Description = txtDescription.Text,
                             BackgroundVisualMapping = backgroundVisualMapping,
+                            Soundtrack = string.IsNullOrWhiteSpace(TxtSoundtrack.Text) ? null : TxtSoundtrack.Text,
                             Position = new Point(coordinate.X, coordinate.Y),
                             CustomSectorPositioning = !ChkAutoPlacement.Checked,
                             Sectors = []
@@ -124,6 +116,7 @@ namespace X4SectorCreator.Forms
                         Cluster.Name = name;
                         Cluster.Description = txtDescription.Text;
                         Cluster.BackgroundVisualMapping = backgroundVisualMapping;
+                        Cluster.Soundtrack = string.IsNullOrWhiteSpace(TxtSoundtrack.Text) ? null : TxtSoundtrack.Text;
                         Cluster.CustomSectorPositioning = !ChkAutoPlacement.Checked;
                         MainForm.Instance.AllClusters.Add(coordinate, Cluster);
 
@@ -165,6 +158,24 @@ namespace X4SectorCreator.Forms
             TxtLocation.Text = string.Empty;
             BtnCreate.Text = "Create";
             Close();
+        }
+
+        private void TxtSoundtrack_MouseClick(object sender, MouseEventArgs e)
+        {
+            _soundtrackSelectorForm.Value.ClusterForm = this;
+            _soundtrackSelectorForm.Value.Show();
+        }
+
+        private void TxtLocation_MouseClick(object sender, MouseEventArgs e)
+        {
+            MainForm.Instance.SectorMapForm.Value.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            MainForm.Instance.SectorMapForm.Value.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            MainForm.Instance.SectorMapForm.Value.GateSectorSelection = false;
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Enabled = false;
+            MainForm.Instance.SectorMapForm.Value.ControlPanel.Size = new Size(176, 277);
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
+            MainForm.Instance.SectorMapForm.Value.Reset();
+            MainForm.Instance.SectorMapForm.Value.Show();
         }
     }
 

@@ -15,7 +15,7 @@ namespace X4SectorCreator.Forms
 
             // Init each field with its mapping
             string json = File.ReadAllText(Constants.DataPaths.PredefinedFieldMappingFilePath);
-            IEnumerable<IGrouping<string, FieldObj>> mappingGroups = JsonSerializer.Deserialize<List<FieldObj>>(json, ConfigSerializer.SerializerOptions).GroupBy(a => a.Type);
+            IEnumerable<IGrouping<string, FieldObj>> mappingGroups = JsonSerializer.Deserialize<List<FieldObj>>(json, ConfigSerializer.JsonSerializerOptions).GroupBy(a => a.Type);
             foreach (IGrouping<string, FieldObj> group in mappingGroups)
             {
                 ComboBox cmb = group.Key.ToLower() switch

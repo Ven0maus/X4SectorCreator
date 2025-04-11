@@ -109,6 +109,7 @@ namespace X4SectorCreator.Forms
             MinimizeBox = false;
             Name = "BasketForm";
             Text = "Basket Editor";
+            Load += BasketForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -22,8 +22,6 @@ namespace X4SectorCreator.Forms
                 if (_basket != null)
                 {
                     TxtName.Text = _basket.Id.Replace("PREFIX_", "");
-                    _mscWares.ResetSelection();
-                    _mscWares.Select(_basket.Wares.Wares.Select(a => a.Ware).ToArray());
                     BtnCreate.Text = "Update";
                     BtnCreate.Enabled = !_basket.IsBaseGame;
                 }
@@ -166,6 +164,15 @@ namespace X4SectorCreator.Forms
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void BasketForm_Load(object sender, EventArgs e)
+        {
+            if (Basket != null)
+            {
+                _mscWares.ResetSelection();
+                _mscWares.Select(_basket.Wares.Wares.Select(a => a.Ware).ToArray());
+            }
         }
     }
 }

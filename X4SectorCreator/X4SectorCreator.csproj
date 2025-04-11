@@ -26,6 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\Mappings\cluster_soundtrack_mappings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Mappings\dlc_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

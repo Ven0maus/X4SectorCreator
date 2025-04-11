@@ -64,6 +64,8 @@ namespace X4SectorCreator.XmlGeneration
                                     new XAttribute("description", cluster.Description ?? string.Empty),
                                     new XAttribute("image", "enc_cluster01") // By default point to img of cluster01
                                 ),
+                                !string.IsNullOrWhiteSpace(cluster.Soundtrack) ? 
+                                    new XElement("sounds", new XElement("music", new XAttribute("ref", cluster.Soundtrack))) : null,
                                 clusterFactionLogicTag,
                                 new XElement("system")
                             )
@@ -164,6 +166,11 @@ namespace X4SectorCreator.XmlGeneration
                 // Identification nodes
                 elements.Add((Old.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name)));
                 elements.Add((Old.Dlc, CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description)));
+
+                // Soundtrack
+                var soundtrackElement = HandleElementSoundtrack(Old.Soundtrack, New.Soundtrack, macro);
+                if (soundtrackElement != null)
+                    elements.Add((Old.Dlc, soundtrackElement));
             }
             foreach (ModifiedSector modification in vanillaChanges.ModifiedSectors)
             {
@@ -255,6 +262,36 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
             return elements.Where(a => a.element != null);
+        }
+
+        private static XElement HandleElementSoundtrack(string old, string @new, string macro)
+        {
+            // Nothing changed, skip
+            if (!Extensions.HasStringChanged(old, @new)) return null;
+
+            // If old was null and new is not, then add new sounds node
+            if (string.IsNullOrWhiteSpace(old) && !string.IsNullOrWhiteSpace(@new))
+            {
+                // Add
+                return new XElement("add", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties"), 
+                    new XElement("sounds", new XElement("music", new XAttribute("ref", @new))));
+            }
+
+            // If old was not null and new is null, then remove sounds node
+            if (!string.IsNullOrWhiteSpace(old) && string.IsNullOrWhiteSpace(@new))
+            {
+                // Remove
+                return new XElement("remove", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/sounds"));
+            }
+
+            // If old was not null and new is not null then add replace sounds node
+            if (!string.IsNullOrWhiteSpace(old) && !string.IsNullOrWhiteSpace(@new))
+            {
+                // Replace
+                return new XElement("replace", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/sounds/music/@ref"), @new);
+            }
+
+            return null;
         }
 
         private static XElement CreateReplaceElement(string checkOne, string checkTwo, string macro, string property, string field, string value)

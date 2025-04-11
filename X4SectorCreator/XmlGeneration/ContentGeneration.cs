@@ -48,6 +48,13 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         if (!zone.IsBaseGame)
                         {
+                            if (cluster.Soundtrack != null)
+                            {
+                                var kvp = SoundtrackCollection.Instance.Soundtracks.FirstOrDefault(a => a.Value.Contains(cluster.Soundtrack));
+                                if (kvp.Key != null && kvp.Value != null && !kvp.Key.Equals("vanilla", StringComparison.OrdinalIgnoreCase))
+                                    dlcDependencies.Add(kvp.Key);
+                            }
+
                             if (!string.IsNullOrWhiteSpace(cluster.Dlc))
                             {
                                 if (dlcDependencies.Contains(cluster.Dlc))
