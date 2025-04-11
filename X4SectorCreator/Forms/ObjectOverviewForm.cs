@@ -1,6 +1,7 @@
 ﻿using X4SectorCreator.CustomComponents;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
+using Region = X4SectorCreator.Objects.Region;
 
 namespace X4SectorCreator.Forms
 {
@@ -38,6 +39,12 @@ namespace X4SectorCreator.Forms
                 {
                     // Add sector
                     _dataObjects.Add(new DataObject(cluster, sector));
+
+                    foreach (var region in sector.Regions)
+                    {
+                        // Add region
+                        _dataObjects.Add(new DataObject(cluster, sector, region));
+                    }
 
                     foreach (var zone in sector.Zones)
                     {
@@ -165,6 +172,18 @@ namespace X4SectorCreator.Forms
                 if (sector.IsBaseGame)
                     sectorPrefix = sector.BaseGameMapping.CapitalizeFirstLetter();
                 Code = $"PREFIX_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
+            }
+
+            public DataObject(Cluster cluster, Sector sector, Region region)
+            {
+                Type = "Region";
+                Name = $"{sector.Name} {region.Name}";
+                Code = $"re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
+                if (cluster.IsBaseGame && sector.IsBaseGame)
+                    Code = $"re_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
+                else if (cluster.IsBaseGame)
+                    Code = $"re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}";
+                Code = $"PREFIX_{Code.ToLower()}";
             }
         }
 
