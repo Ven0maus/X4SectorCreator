@@ -69,6 +69,7 @@ namespace X4SectorCreator.Configuration
                 Factories = FactoriesForm.AllFactories.Select(a => a.Value).ToList(),
                 Jobs = JobsForm.AllJobs.Select(a => a.Value).ToList(),
                 Baskets = JobsForm.AllBaskets.Select(a => a.Value).ToList(),
+                CustomFactions = FactionsForm.AllCustomFactions.Select(a => a.Value).ToList(),
                 Version = new VersionChecker().CurrentVersion
             };
 
@@ -124,6 +125,15 @@ namespace X4SectorCreator.Configuration
                 foreach (Basket basket in configObj.Baskets)
                 {
                     JobsForm.AllBaskets.Add(basket.Id, basket);
+                }
+            }
+
+            FactionsForm.AllCustomFactions.Clear();
+            if (configObj.CustomFactions != null && configObj.CustomFactions.Count > 0)
+            {
+                foreach (Faction faction in configObj.CustomFactions)
+                {
+                    FactionsForm.AllCustomFactions.Add(faction.Name, faction);
                 }
             }
 

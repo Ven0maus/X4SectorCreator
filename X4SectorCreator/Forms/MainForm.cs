@@ -30,6 +30,7 @@ namespace X4SectorCreator
         private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<StationForm> _stationForm = new(() => new StationForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ObjectOverviewForm> _objectOverviewForm = new(() => new ObjectOverviewForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<FactionsForm> _factionsForm = new(() => new FactionsForm(), a => !a.IsDisposed);
         /* END OF FORMS */
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -464,6 +465,7 @@ namespace X4SectorCreator
                 Forms.FactoriesForm.AllFactories.Clear();
                 Forms.JobsForm.AllJobs.Clear();
                 Forms.JobsForm.AllBaskets.Clear();
+                Forms.FactionsForm.AllCustomFactions.Clear();
             }
 
             // Re-initialize all clusters properly
@@ -1745,6 +1747,13 @@ namespace X4SectorCreator
         private void BtnObjectsOverview_Click(object sender, EventArgs e)
         {
             _objectOverviewForm.Value.Show();
+        }
+        #endregion
+
+        #region Custom Factions
+        private void BtnCustomFactions_Click(object sender, EventArgs e)
+        {
+            _factionsForm.Value.Show();
         }
         #endregion
     }

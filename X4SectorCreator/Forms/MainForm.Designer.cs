@@ -62,6 +62,7 @@
             BtnFactories = new Button();
             BtnObjectsOverview = new Button();
             TxtSearch = new TextBox();
+            BtnCustomFactions = new Button();
             SuspendLayout();
             // 
             // BtnRemoveCluster
@@ -385,7 +386,7 @@
             // 
             // BtnObjectsOverview
             // 
-            BtnObjectsOverview.Location = new Point(498, 410);
+            BtnObjectsOverview.Location = new Point(498, 447);
             BtnObjectsOverview.Name = "BtnObjectsOverview";
             BtnObjectsOverview.Size = new Size(156, 31);
             BtnObjectsOverview.TabIndex = 50;
@@ -401,11 +402,22 @@
             TxtSearch.Size = new Size(155, 23);
             TxtSearch.TabIndex = 51;
             // 
+            // BtnCustomFactions
+            // 
+            BtnCustomFactions.Location = new Point(498, 410);
+            BtnCustomFactions.Name = "BtnCustomFactions";
+            BtnCustomFactions.Size = new Size(156, 31);
+            BtnCustomFactions.TabIndex = 52;
+            BtnCustomFactions.Text = "Custom Factions";
+            BtnCustomFactions.UseVisualStyleBackColor = true;
+            BtnCustomFactions.Click += BtnCustomFactions_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(661, 596);
+            Controls.Add(BtnCustomFactions);
             Controls.Add(TxtSearch);
             Controls.Add(BtnObjectsOverview);
             Controls.Add(BtnFactories);
@@ -485,5 +497,6 @@
         private Button BtnFactories;
         private Button BtnObjectsOverview;
         private TextBox TxtSearch;
+        private Button BtnCustomFactions;
     }
 }

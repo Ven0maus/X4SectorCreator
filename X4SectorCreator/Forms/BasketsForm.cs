@@ -12,7 +12,7 @@ namespace X4SectorCreator.Forms
 
         public static readonly Lazy<List<Basket>> VanillaBaskets = new(() =>
         {
-            List<Basket> list = new();
+            List<Basket> list = [];
             if (File.Exists(Constants.DataPaths.VanillaBasketsPath))
             {
                 string xml = File.ReadAllText(Constants.DataPaths.VanillaBasketsPath);
