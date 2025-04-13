@@ -13,6 +13,7 @@ namespace X4SectorCreator.Configuration
         public List<Faction> CustomFactions { get; set; }
         public VanillaChanges VanillaChanges { get; set; }
         public string GalaxyName { get; set; }
+        public string StartingSector { get; set; }
         public string Version { get; set; }
 
         [JsonIgnore]

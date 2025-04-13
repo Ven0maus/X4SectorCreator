@@ -459,6 +459,7 @@ namespace X4SectorCreator
             if (!fromImport)
             {
                 Forms.GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
+                Forms.GalaxySettingsForm.StartingSector = null;
                 Forms.GalaxySettingsForm.IsCustomGalaxy = false;
 
                 RegionDefinitionForm.RegionDefinitions.Clear();

@@ -54,12 +54,29 @@ namespace X4SectorCreator.XmlGeneration
             {
                 string originalId = job.Value.Id;
                 string originalBasket = job.Value.Basket?.Basket;
+                string originalMacro = job.Value.Location?.Macro;
 
-                // Prepend prefix
+                // Prepend prefix & replace subordinate job prefix
                 job.Value.Id = $"{modPrefix}_{job.Value.Id}";
+                if (job.Value.Subordinates?.Subordinate != null)
+                {
+                    foreach (var subordinate in job.Value.Subordinates.Subordinate)
+                    {
+                        if (JobsForm.AllJobs.ContainsKey(subordinate.Job))
+                            subordinate.Job = $"{modPrefix}_{subordinate.Job}";
+                    }
+                }
+
+                // Replace basket prefix
                 if (job.Value.Basket?.Basket != null)
                 {
                     job.Value.Basket.Basket = job.Value.Basket.Basket.Replace("PREFIX", modPrefix);
+                }
+
+                // Replace location macro prefix
+                if (job.Value.Location?.Macro != null && job.Value.Location.Macro.Contains("PREFIX"))
+                {
+                    job.Value.Location.Macro = job.Value.Location.Macro.Replace("PREFIX", modPrefix);
                 }
 
                 // Serialize
@@ -70,6 +87,10 @@ namespace X4SectorCreator.XmlGeneration
                 if (job.Value.Basket?.Basket != null)
                 {
                     job.Value.Basket.Basket = originalBasket;
+                }
+                if (job.Value.Location?.Macro != null)
+                {
+                    job.Value.Location.Macro = originalMacro;
                 }
 
                 XElement jobElement = XElement.Parse(jobElementXml);
