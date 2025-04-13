@@ -43,7 +43,7 @@ namespace X4SectorCreator.Forms
                 _ = cmbStartSector.Items.Add(sector);
             }
 
-            cmbStartSector.Enabled = IsCustomGalaxy;
+            cmbStartSector.Enabled = IsCustomGalaxy && cmbStartSector.Items.Count > 0;
             cmbStartSector.SelectedItem = StartingSector == null
                 ? null
                 : (object)(!IsCustomGalaxy ? null : MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors)
