@@ -33,14 +33,17 @@ namespace X4SectorCreator.Forms
 
             // Init sector values
             cmbStartSector.Items.Clear();
-            Sector[] sectors = MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).OrderBy(a => a.Name).ToArray();
+            Sector[] sectors = MainForm.Instance.AllClusters.Values
+                .SelectMany(a => a.Sectors)
+                .Where(a => !a.IsBaseGame)
+                .OrderBy(a => a.Name)
+                .ToArray();
             foreach (Sector sector in sectors)
             {
                 _ = cmbStartSector.Items.Add(sector);
             }
 
             cmbStartSector.Enabled = IsCustomGalaxy;
-
             cmbStartSector.SelectedItem = StartingSector == null
                 ? null
                 : (object)(!IsCustomGalaxy ? null : MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors)
@@ -217,6 +220,7 @@ namespace X4SectorCreator.Forms
                 txtGalaxyName.Enabled = false;
                 chkDisableAllStorylines.Enabled = true;
                 chkDisableAllStorylines.Checked = false;
+                cmbStartSector.Enabled = false;
             }
             else
             {
@@ -224,6 +228,7 @@ namespace X4SectorCreator.Forms
                 chkDisableAllStorylines.Checked = true;
                 txtGalaxyName.Enabled = true;
                 txtGalaxyName.Text = string.Empty;
+                cmbStartSector.Enabled = true;
             }
         }
 

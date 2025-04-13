@@ -65,6 +65,7 @@ namespace X4SectorCreator.Configuration
                 Clusters = clonedClusters,
                 RegionDefinitions = RegionDefinitionForm.RegionDefinitions,
                 GalaxyName = GalaxySettingsForm.GalaxyName,
+                StartingSector = GalaxySettingsForm.StartingSector,
                 VanillaChanges = vanillaChanges,
                 Factories = FactoriesForm.AllFactories.Select(a => a.Value).ToList(),
                 Jobs = JobsForm.AllJobs.Select(a => a.Value).ToList(),
@@ -99,6 +100,7 @@ namespace X4SectorCreator.Configuration
             #region Static values
             GalaxySettingsForm.GalaxyName = configObj.GalaxyName;
             GalaxySettingsForm.IsCustomGalaxy = configObj.IsCustomGalaxy;
+            GalaxySettingsForm.StartingSector = configObj.StartingSector;
 
             FactoriesForm.AllFactories.Clear();
             if (configObj.Factories != null && configObj.Factories.Count > 0)
