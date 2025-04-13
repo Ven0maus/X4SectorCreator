@@ -44,6 +44,7 @@ namespace X4SectorCreator.Forms
             }
 
             cmbStartSector.Enabled = IsCustomGalaxy && cmbStartSector.Items.Count > 0;
+            LblStartingSector.Visible = !cmbStartSector.Enabled;
             cmbStartSector.SelectedItem = StartingSector == null
                 ? null
                 : (object)(!IsCustomGalaxy ? null : MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors)
@@ -228,8 +229,10 @@ namespace X4SectorCreator.Forms
                 chkDisableAllStorylines.Checked = true;
                 txtGalaxyName.Enabled = true;
                 txtGalaxyName.Text = string.Empty;
-                cmbStartSector.Enabled = true;
+                cmbStartSector.Enabled = cmbStartSector.Items.Count > 0;
             }
+
+            LblStartingSector.Visible = !cmbStartSector.Enabled;
         }
 
         private readonly char[] _invalidChars = Path.GetInvalidFileNameChars();

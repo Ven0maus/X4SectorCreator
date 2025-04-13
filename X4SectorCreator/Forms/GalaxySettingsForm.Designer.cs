@@ -36,6 +36,7 @@
             chkDisableAllStorylines = new CheckBox();
             label2 = new Label();
             cmbStartSector = new ComboBox();
+            LblStartingSector = new Label();
             SuspendLayout();
             // 
             // label1
@@ -71,7 +72,7 @@
             // 
             // BtnSave
             // 
-            BtnSave.Location = new Point(119, 108);
+            BtnSave.Location = new Point(119, 136);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(241, 33);
             BtnSave.TabIndex = 3;
@@ -81,7 +82,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 108);
+            BtnCancel.Location = new Point(12, 136);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(98, 33);
             BtnCancel.TabIndex = 4;
@@ -118,11 +119,21 @@
             cmbStartSector.Size = new Size(241, 23);
             cmbStartSector.TabIndex = 7;
             // 
+            // LblStartingSector
+            // 
+            LblStartingSector.Font = new Font("Segoe UI", 9F);
+            LblStartingSector.Location = new Point(119, 100);
+            LblStartingSector.Name = "LblStartingSector";
+            LblStartingSector.Size = new Size(247, 32);
+            LblStartingSector.TabIndex = 8;
+            LblStartingSector.Text = "(Selection becomes active for Custom Galaxy once atleast one custom sector exists.)";
+            // 
             // GalaxySettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(372, 148);
+            ClientSize = new Size(372, 175);
+            Controls.Add(LblStartingSector);
             Controls.Add(cmbStartSector);
             Controls.Add(label2);
             Controls.Add(chkDisableAllStorylines);
@@ -150,5 +161,6 @@
         private CheckBox chkDisableAllStorylines;
         private Label label2;
         private ComboBox cmbStartSector;
+        private Label LblStartingSector;
     }
 }
