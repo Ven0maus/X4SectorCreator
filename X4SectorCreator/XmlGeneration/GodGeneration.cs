@@ -72,15 +72,26 @@ namespace X4SectorCreator.XmlGeneration
             foreach (KeyValuePair<string, Factory> factory in FactoriesForm.AllFactories)
             {
                 string originalId = factory.Value.Id;
+                string originalMacro = factory.Value.Location?.Macro;
 
                 // Prepend prefix
                 factory.Value.Id = $"{modPrefix}_{factory.Value.Id}";
+
+                // Replace location macro prefix
+                if (factory.Value.Location?.Macro != null && factory.Value.Location.Macro.Contains("PREFIX"))
+                {
+                    factory.Value.Location.Macro = factory.Value.Location.Macro.Replace("PREFIX", modPrefix);
+                }
 
                 // Serialize
                 string factoryElementXml = factory.Value.SerializeFactory();
 
                 // Reset
                 factory.Value.Id = originalId;
+                if (factory.Value.Location?.Macro != null)
+                {
+                    factory.Value.Location.Macro = originalMacro;
+                }
 
                 XElement factoryElement = XElement.Parse(factoryElementXml);
                 yield return factoryElement;
