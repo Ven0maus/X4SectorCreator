@@ -1,10 +1,13 @@
 ﻿using System.Text.RegularExpressions;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
     public partial class FactionForm : Form
     {
+        private readonly LazyEvaluated<FactionRelationsForm> _factionRelationsForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
+
         public FactionForm()
         {
             InitializeComponent();
@@ -42,6 +45,16 @@ namespace X4SectorCreator.Forms
                 case "Update":
                     break;
             }
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void BtnFactionRelations_Click(object sender, EventArgs e)
+        {
+            _factionRelationsForm.Value.Show();
         }
 
         private static string SanitizeId(string text)
