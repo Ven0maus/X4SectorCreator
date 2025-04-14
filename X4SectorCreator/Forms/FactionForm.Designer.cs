@@ -46,14 +46,10 @@
             BtnAddTag = new Button();
             BtnDeleteTag = new Button();
             BtnUseTagsPreset = new Button();
-            BtnDeleteLicense = new Button();
-            BtnAddLicense = new Button();
-            label7 = new Label();
-            LicensesListBox = new ListBox();
             BtnCancel = new Button();
             IconBox = new PictureBox();
             BtnSetIcon = new Button();
-            BtnUseLicensesPreset = new Button();
+            BtnEditXml = new Button();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -163,13 +159,13 @@
             BtnFactionRelations.Name = "BtnFactionRelations";
             BtnFactionRelations.Size = new Size(199, 33);
             BtnFactionRelations.TabIndex = 14;
-            BtnFactionRelations.Text = "Set Faction Relations";
+            BtnFactionRelations.Text = "Edit Faction Relations";
             BtnFactionRelations.UseVisualStyleBackColor = true;
             BtnFactionRelations.Click += BtnFactionRelations_Click;
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(324, 419);
+            BtnCreate.Location = new Point(324, 304);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(303, 33);
             BtnCreate.TabIndex = 15;
@@ -182,7 +178,7 @@
             TagsListBox.FormattingEnabled = true;
             TagsListBox.Location = new Point(324, 39);
             TagsListBox.Name = "TagsListBox";
-            TagsListBox.Size = new Size(194, 109);
+            TagsListBox.Size = new Size(194, 154);
             TagsListBox.TabIndex = 16;
             // 
             // label6
@@ -222,45 +218,9 @@
             BtnUseTagsPreset.Text = "Use Preset";
             BtnUseTagsPreset.UseVisualStyleBackColor = true;
             // 
-            // BtnDeleteLicense
-            // 
-            BtnDeleteLicense.Location = new Point(524, 224);
-            BtnDeleteLicense.Name = "BtnDeleteLicense";
-            BtnDeleteLicense.Size = new Size(103, 33);
-            BtnDeleteLicense.TabIndex = 24;
-            BtnDeleteLicense.Text = "Delete License";
-            BtnDeleteLicense.UseVisualStyleBackColor = true;
-            // 
-            // BtnAddLicense
-            // 
-            BtnAddLicense.Location = new Point(524, 185);
-            BtnAddLicense.Name = "BtnAddLicense";
-            BtnAddLicense.Size = new Size(103, 33);
-            BtnAddLicense.TabIndex = 23;
-            BtnAddLicense.Text = "Add License";
-            BtnAddLicense.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 11F);
-            label7.Location = new Point(324, 161);
-            label7.Name = "label7";
-            label7.Size = new Size(63, 20);
-            label7.TabIndex = 22;
-            label7.Text = "Licenses";
-            // 
-            // LicensesListBox
-            // 
-            LicensesListBox.FormattingEnabled = true;
-            LicensesListBox.Location = new Point(324, 183);
-            LicensesListBox.Name = "LicensesListBox";
-            LicensesListBox.Size = new Size(194, 229);
-            LicensesListBox.TabIndex = 21;
-            // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(11, 419);
+            BtnCancel.Location = new Point(11, 304);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(307, 33);
             BtnCancel.TabIndex = 25;
@@ -271,7 +231,7 @@
             // IconBox
             // 
             IconBox.BorderStyle = BorderStyle.FixedSingle;
-            IconBox.Location = new Point(218, 304);
+            IconBox.Location = new Point(324, 198);
             IconBox.Name = "IconBox";
             IconBox.Size = new Size(100, 100);
             IconBox.TabIndex = 26;
@@ -279,35 +239,31 @@
             // 
             // BtnSetIcon
             // 
-            BtnSetIcon.Location = new Point(119, 371);
+            BtnSetIcon.Location = new Point(430, 197);
             BtnSetIcon.Name = "BtnSetIcon";
-            BtnSetIcon.Size = new Size(93, 33);
+            BtnSetIcon.Size = new Size(88, 33);
             BtnSetIcon.TabIndex = 27;
             BtnSetIcon.Text = "Set Icon";
             BtnSetIcon.UseVisualStyleBackColor = true;
             // 
-            // BtnUseLicensesPreset
+            // BtnEditXml
             // 
-            BtnUseLicensesPreset.Location = new Point(524, 263);
-            BtnUseLicensesPreset.Name = "BtnUseLicensesPreset";
-            BtnUseLicensesPreset.Size = new Size(103, 33);
-            BtnUseLicensesPreset.TabIndex = 28;
-            BtnUseLicensesPreset.Text = "Use Preset";
-            BtnUseLicensesPreset.UseVisualStyleBackColor = true;
+            BtnEditXml.Location = new Point(430, 265);
+            BtnEditXml.Name = "BtnEditXml";
+            BtnEditXml.Size = new Size(197, 33);
+            BtnEditXml.TabIndex = 28;
+            BtnEditXml.Text = "Edit XML";
+            BtnEditXml.UseVisualStyleBackColor = true;
             // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(639, 460);
-            Controls.Add(BtnUseLicensesPreset);
+            ClientSize = new Size(639, 342);
+            Controls.Add(BtnEditXml);
             Controls.Add(BtnSetIcon);
             Controls.Add(IconBox);
             Controls.Add(BtnCancel);
-            Controls.Add(BtnDeleteLicense);
-            Controls.Add(BtnAddLicense);
-            Controls.Add(label7);
-            Controls.Add(LicensesListBox);
             Controls.Add(BtnUseTagsPreset);
             Controls.Add(BtnDeleteTag);
             Controls.Add(BtnAddTag);
@@ -353,13 +309,9 @@
         private Button BtnAddTag;
         private Button BtnDeleteTag;
         private Button BtnUseTagsPreset;
-        private Button BtnDeleteLicense;
-        private Button BtnAddLicense;
-        private Label label7;
-        private ListBox LicensesListBox;
         private Button BtnCancel;
         private PictureBox IconBox;
         private Button BtnSetIcon;
-        private Button BtnUseLicensesPreset;
+        private Button BtnEditXml;
     }
 }
