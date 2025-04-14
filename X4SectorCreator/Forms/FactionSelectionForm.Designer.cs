@@ -93,6 +93,9 @@ namespace X4SectorCreator.Forms
             Controls.Add(label1);
             Controls.Add(CmbOwner);
             Controls.Add(BtnSave);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FactionSelectionForm";
             Text = "Select Faction";
             ResumeLayout(false);

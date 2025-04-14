@@ -34,7 +34,7 @@
             label3 = new Label();
             TxtDescription = new TextBox();
             label2 = new Label();
-            TxtPrefix = new TextBox();
+            TxtShortName = new TextBox();
             CmbRace = new ComboBox();
             label4 = new Label();
             label5 = new Label();
@@ -50,6 +50,8 @@
             IconBox = new PictureBox();
             BtnSetIcon = new Button();
             BtnEditXml = new Button();
+            TxtPrefix = new TextBox();
+            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -72,9 +74,9 @@
             // 
             // BtnPickColor
             // 
-            BtnPickColor.Location = new Point(119, 168);
+            BtnPickColor.Location = new Point(11, 257);
             BtnPickColor.Name = "BtnPickColor";
-            BtnPickColor.Size = new Size(199, 33);
+            BtnPickColor.Size = new Size(102, 41);
             BtnPickColor.TabIndex = 4;
             BtnPickColor.Text = "Pick Faction Color";
             BtnPickColor.UseVisualStyleBackColor = true;
@@ -102,33 +104,34 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 11F);
-            label2.Location = new Point(64, 139);
+            label2.Location = new Point(26, 140);
             label2.Name = "label2";
-            label2.Size = new Size(49, 20);
+            label2.Size = new Size(87, 20);
             label2.TabIndex = 8;
-            label2.Text = "Prefix:";
+            label2.Text = "ShortName:";
             // 
-            // TxtPrefix
+            // TxtShortName
             // 
-            TxtPrefix.Location = new Point(119, 139);
-            TxtPrefix.Name = "TxtPrefix";
-            TxtPrefix.Size = new Size(199, 23);
-            TxtPrefix.TabIndex = 9;
+            TxtShortName.Location = new Point(119, 139);
+            TxtShortName.Name = "TxtShortName";
+            TxtShortName.Size = new Size(199, 23);
+            TxtShortName.TabIndex = 9;
             // 
             // CmbRace
             // 
             CmbRace.FormattingEnabled = true;
-            CmbRace.Items.AddRange(new object[] { "argon", "paranid", "teladi", "terran", "split", "xenon" });
-            CmbRace.Location = new Point(119, 207);
+            CmbRace.Items.AddRange(new object[] { "Argon", "Paranid", "Teladi", "Terran", "Split", "Xenon" });
+            CmbRace.Location = new Point(119, 199);
             CmbRace.Name = "CmbRace";
             CmbRace.Size = new Size(199, 23);
             CmbRace.TabIndex = 10;
+            CmbRace.Text = "Argon";
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 11F);
-            label4.Location = new Point(69, 207);
+            label4.Location = new Point(69, 199);
             label4.Name = "label4";
             label4.Size = new Size(44, 20);
             label4.TabIndex = 11;
@@ -138,7 +141,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 11F);
-            label5.Location = new Point(11, 236);
+            label5.Location = new Point(11, 228);
             label5.Name = "label5";
             label5.Size = new Size(102, 20);
             label5.TabIndex = 13;
@@ -147,17 +150,18 @@
             // CmbPoliceFaction
             // 
             CmbPoliceFaction.FormattingEnabled = true;
-            CmbPoliceFaction.Items.AddRange(new object[] { "argon", "paranid", "teladi", "terran", "split", "xenon" });
-            CmbPoliceFaction.Location = new Point(119, 236);
+            CmbPoliceFaction.Items.AddRange(new object[] { "None" });
+            CmbPoliceFaction.Location = new Point(119, 228);
             CmbPoliceFaction.Name = "CmbPoliceFaction";
             CmbPoliceFaction.Size = new Size(199, 23);
             CmbPoliceFaction.TabIndex = 12;
+            CmbPoliceFaction.Text = "None";
             // 
             // BtnFactionRelations
             // 
-            BtnFactionRelations.Location = new Point(119, 265);
+            BtnFactionRelations.Location = new Point(119, 257);
             BtnFactionRelations.Name = "BtnFactionRelations";
-            BtnFactionRelations.Size = new Size(199, 33);
+            BtnFactionRelations.Size = new Size(199, 41);
             BtnFactionRelations.TabIndex = 14;
             BtnFactionRelations.Text = "Edit Faction Relations";
             BtnFactionRelations.UseVisualStyleBackColor = true;
@@ -252,14 +256,34 @@
             BtnEditXml.Name = "BtnEditXml";
             BtnEditXml.Size = new Size(197, 33);
             BtnEditXml.TabIndex = 28;
-            BtnEditXml.Text = "Edit XML";
+            BtnEditXml.Text = "Edit XML (Advanced)";
             BtnEditXml.UseVisualStyleBackColor = true;
+            BtnEditXml.Click += BtnEditXml_Click;
+            // 
+            // TxtPrefix
+            // 
+            TxtPrefix.Location = new Point(119, 168);
+            TxtPrefix.Name = "TxtPrefix";
+            TxtPrefix.Size = new Size(199, 23);
+            TxtPrefix.TabIndex = 30;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 11F);
+            label7.Location = new Point(64, 168);
+            label7.Name = "label7";
+            label7.Size = new Size(49, 20);
+            label7.TabIndex = 29;
+            label7.Text = "Prefix:";
             // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(639, 342);
+            ClientSize = new Size(632, 342);
+            Controls.Add(TxtPrefix);
+            Controls.Add(label7);
             Controls.Add(BtnEditXml);
             Controls.Add(BtnSetIcon);
             Controls.Add(IconBox);
@@ -275,13 +299,16 @@
             Controls.Add(CmbPoliceFaction);
             Controls.Add(label4);
             Controls.Add(CmbRace);
-            Controls.Add(TxtPrefix);
+            Controls.Add(TxtShortName);
             Controls.Add(label2);
             Controls.Add(TxtDescription);
             Controls.Add(label3);
             Controls.Add(BtnPickColor);
             Controls.Add(TxtFactionName);
             Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FactionForm";
             Text = "Custom Faction Editor";
             ((System.ComponentModel.ISupportInitialize)IconBox).EndInit();
@@ -297,7 +324,7 @@
         private Label label3;
         private TextBox TxtDescription;
         private Label label2;
-        private TextBox TxtPrefix;
+        private TextBox TxtShortName;
         private ComboBox CmbRace;
         private Label label4;
         private Label label5;
@@ -313,5 +340,7 @@
         private PictureBox IconBox;
         private Button BtnSetIcon;
         private Button BtnEditXml;
+        private TextBox TxtPrefix;
+        private Label label7;
     }
 }

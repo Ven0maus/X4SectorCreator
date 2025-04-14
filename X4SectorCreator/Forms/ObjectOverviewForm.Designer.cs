@@ -161,6 +161,9 @@ namespace X4SectorCreator.Forms
             Controls.Add(label1);
             Controls.Add(BtnExit);
             Controls.Add(ObjectView);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "ObjectOverviewForm";
             Text = "Mod Content Overview";
             Load += ObjectOverviewForm_Load;

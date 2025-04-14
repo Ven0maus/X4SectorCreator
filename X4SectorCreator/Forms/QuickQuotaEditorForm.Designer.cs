@@ -219,6 +219,9 @@
             Controls.Add(BtnCancel);
             Controls.Add(BtnSave);
             Controls.Add(QuotaView);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "QuickQuotaEditorForm";
             Text = "Quick Quota Editor";
             ((System.ComponentModel.ISupportInitialize)QuotaView).EndInit();

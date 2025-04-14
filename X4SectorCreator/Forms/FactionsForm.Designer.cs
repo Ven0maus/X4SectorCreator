@@ -93,6 +93,9 @@
             Controls.Add(BtnCreate);
             Controls.Add(CustomFactionsListBox);
             Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FactionsForm";
             Text = "Custom Factions";
             ResumeLayout(false);

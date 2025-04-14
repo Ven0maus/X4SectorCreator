@@ -57,6 +57,9 @@
             ClientSize = new Size(590, 481);
             Controls.Add(BtnCancel);
             Controls.Add(BtnUpdate);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FactionRelationsForm";
             Text = "Faction Relations Editor";
             ResumeLayout(false);

@@ -1,6 +1,6 @@
 ﻿namespace X4SectorCreator.Forms
 {
-    partial class SoundtrackSelectorForm
+    partial class FactionXmlForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,83 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SoundtracksListBox = new ListBox();
+            TxtFactionXml = new TextBox();
             label1 = new Label();
-            TxtSearch = new TextBox();
-            BtnSelect = new Button();
             BtnCancel = new Button();
+            BtnUpdate = new Button();
             SuspendLayout();
             // 
-            // SoundtracksListBox
+            // TxtFactionXml
             // 
-            SoundtracksListBox.FormattingEnabled = true;
-            SoundtracksListBox.Location = new Point(8, 38);
-            SoundtracksListBox.Name = "SoundtracksListBox";
-            SoundtracksListBox.Size = new Size(471, 394);
-            SoundtracksListBox.TabIndex = 0;
+            TxtFactionXml.Location = new Point(12, 33);
+            TxtFactionXml.Multiline = true;
+            TxtFactionXml.Name = "TxtFactionXml";
+            TxtFactionXml.ScrollBars = ScrollBars.Both;
+            TxtFactionXml.Size = new Size(728, 574);
+            TxtFactionXml.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(8, 9);
+            label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(60, 21);
+            label1.Size = new Size(90, 21);
             label1.TabIndex = 1;
-            label1.Text = "Search:";
-            // 
-            // TxtSearch
-            // 
-            TxtSearch.Location = new Point(68, 9);
-            TxtSearch.Name = "TxtSearch";
-            TxtSearch.Size = new Size(411, 23);
-            TxtSearch.TabIndex = 2;
-            // 
-            // BtnSelect
-            // 
-            BtnSelect.Location = new Point(151, 438);
-            BtnSelect.Name = "BtnSelect";
-            BtnSelect.Size = new Size(328, 33);
-            BtnSelect.TabIndex = 3;
-            BtnSelect.Text = "Select";
-            BtnSelect.UseVisualStyleBackColor = true;
-            BtnSelect.Click += BtnSelect_Click;
+            label1.Text = "Faction Xml";
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(8, 438);
+            BtnCancel.Location = new Point(12, 613);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(137, 33);
-            BtnCancel.TabIndex = 4;
+            BtnCancel.Size = new Size(198, 34);
+            BtnCancel.TabIndex = 2;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
-            // SoundtrackSelectorForm
+            // BtnUpdate
+            // 
+            BtnUpdate.Location = new Point(216, 613);
+            BtnUpdate.Name = "BtnUpdate";
+            BtnUpdate.Size = new Size(524, 34);
+            BtnUpdate.TabIndex = 3;
+            BtnUpdate.Text = "Update";
+            BtnUpdate.UseVisualStyleBackColor = true;
+            BtnUpdate.Click += BtnUpdate_Click;
+            // 
+            // FactionXmlForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(485, 476);
+            ClientSize = new Size(747, 652);
+            Controls.Add(BtnUpdate);
             Controls.Add(BtnCancel);
-            Controls.Add(BtnSelect);
-            Controls.Add(TxtSearch);
             Controls.Add(label1);
-            Controls.Add(SoundtracksListBox);
+            Controls.Add(TxtFactionXml);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "SoundtrackSelectorForm";
-            Text = "Soundtrack Selector";
+            Name = "FactionXmlForm";
+            Text = "Faction Xml Editor";
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private ListBox SoundtracksListBox;
+        internal TextBox TxtFactionXml;
         private Label label1;
-        private TextBox TxtSearch;
-        private Button BtnSelect;
         private Button BtnCancel;
+        private Button BtnUpdate;
     }
 }

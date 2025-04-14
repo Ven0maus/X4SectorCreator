@@ -102,5 +102,10 @@ namespace X4SectorCreator.Forms
             using MultiInputDialog form = new(title, labels);
             return form.ShowDialog() == DialogResult.OK ? form.InputValues : null;
         }
+
+        private void InitializeComponent()
+        {
+
+        }
     }
 }
