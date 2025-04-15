@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using X4SectorCreator.Objects;
 using X4SectorCreator.CustomComponents;
+using X4SectorCreator.XmlGeneration;
 
 namespace X4SectorCreator.Forms
 {
@@ -55,36 +56,12 @@ namespace X4SectorCreator.Forms
             Close();
         }
 
-        private static string CorrectFactionName(string faction)
-        {
-            switch (faction)
-            {
-                case "vigor":
-                    faction = "loanshark";
-                    break;
-                case "riptide":
-                    faction = "scavenger";
-                    break;
-                case "quettanauts":
-                    faction = "kaori";
-                    break;
-                case "zyarth":
-                    faction = "split";
-                    break;
-                case "segaris":
-                    faction = "pioneers";
-                    break;
-            }
-
-            return faction;
-        }
-
         private void HandleFactorySave()
         {
             // Set owner faction
-            Factory.Owner = CorrectFactionName(CmbOwner.SelectedItem as string);
+            Factory.Owner = GodGeneration.CorrectFactionName(CmbOwner.SelectedItem as string);
             Factory.Location ??= new Factory.LocationObj();
-            Factory.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(CorrectFactionName)) + "]";
+            Factory.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
 
             FactoryForm.TxtFactoryXml.Text = Factory.SerializeFactory();
             FactoryForm.TxtFactoryXml.SelectionStart = FactoryForm.TxtFactoryXml.Text.Length;
@@ -92,7 +69,7 @@ namespace X4SectorCreator.Forms
 
         private void HandleJobSave()
         {
-            var owner = CorrectFactionName(CmbOwner.SelectedItem as string);
+            var owner = GodGeneration.CorrectFactionName(CmbOwner.SelectedItem as string);
 
             // Set faction on various objects
             if (Job.Category != null)
@@ -102,7 +79,7 @@ namespace X4SectorCreator.Forms
 
             if (Job.Location != null)
             {
-                Job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(CorrectFactionName)) + "]";
+                Job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
             }
 
             if (Job.Ship?.Select != null)
