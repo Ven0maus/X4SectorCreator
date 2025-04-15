@@ -203,6 +203,7 @@
             BtnAddTag.TabIndex = 18;
             BtnAddTag.Text = "Add Tag";
             BtnAddTag.UseVisualStyleBackColor = true;
+            BtnAddTag.Click += BtnAddTag_Click;
             // 
             // BtnDeleteTag
             // 
@@ -212,6 +213,7 @@
             BtnDeleteTag.TabIndex = 19;
             BtnDeleteTag.Text = "Delete Tag";
             BtnDeleteTag.UseVisualStyleBackColor = true;
+            BtnDeleteTag.Click += BtnDeleteTag_Click;
             // 
             // BtnUseTagsPreset
             // 
@@ -221,6 +223,7 @@
             BtnUseTagsPreset.TabIndex = 20;
             BtnUseTagsPreset.Text = "Use Preset";
             BtnUseTagsPreset.UseVisualStyleBackColor = true;
+            BtnUseTagsPreset.Click += BtnUseTagsPreset_Click;
             // 
             // BtnCancel
             // 
@@ -249,6 +252,7 @@
             BtnSetIcon.TabIndex = 27;
             BtnSetIcon.Text = "Set Icon";
             BtnSetIcon.UseVisualStyleBackColor = true;
+            BtnSetIcon.Click += BtnSetIcon_Click;
             // 
             // BtnEditXml
             // 

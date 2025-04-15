@@ -64,6 +64,12 @@ namespace X4SectorCreator.Forms
             { "tradesubscription", "Trade Offer Subscription" }
         };
 
+        private readonly Dictionary<string, HashSet<string>> _tagPresets = new()
+        {
+            { "Main faction", new HashSet<string> { "claimspace", "economic", "police", "privateloadout", "privateship", "protective", "publicloadout", "publicship", "standard", "watchdoguser" } },
+            { "Pirate faction", new HashSet<string> { "economic", "pirate", "plunder", "privateloadout", "privateship", "protective", "watchdoguser" } },
+        };
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Color? FactionColor { get; set; }
 
@@ -293,6 +299,63 @@ namespace X4SectorCreator.Forms
             _factionRelationsForm.Value.FactionForm = this;
             _factionRelationsForm.Value.Faction = Faction.Deserialize(_factionXml);
             _factionRelationsForm.Value.Show();
+        }
+
+        private void BtnAddTag_Click(object sender, EventArgs e)
+        {
+            const string lblTag = "Tag:";
+            Dictionary<string, string> data = MultiInputDialog.Show("Create New Tag",
+                (lblTag, null, null)
+            );
+            if (data == null || data.Count == 0)
+                return;
+
+            string tag = data[lblTag];
+            if (string.IsNullOrWhiteSpace(tag)) 
+                return;
+
+            if (TagsListBox.Items.Cast<string>().Any(a => a.Equals(tag, StringComparison.InvariantCultureIgnoreCase)))
+                return;
+
+            TagsListBox.Items.Add(tag);
+        }
+
+        private void BtnDeleteTag_Click(object sender, EventArgs e)
+        {
+            if (TagsListBox.SelectedItem is string tag && !string.IsNullOrWhiteSpace(tag))
+            {
+                int index = TagsListBox.Items.IndexOf(TagsListBox.SelectedItem);
+                TagsListBox.Items.Remove(TagsListBox.SelectedItem);
+
+                // Ensure index is within valid range
+                index--;
+                index = Math.Max(0, index);
+                TagsListBox.SelectedItem = index >= 0 && TagsListBox.Items.Count > 0 ?
+                    TagsListBox.Items[index] : null;
+            }
+        }
+
+        private void BtnUseTagsPreset_Click(object sender, EventArgs e)
+        {
+            const string lblPreset = "Preset:";
+            Dictionary<string, string> data = MultiInputDialog.Show("Select Tags Preset",
+                (lblPreset, _tagPresets.Keys.ToArray(), _tagPresets.Keys.First())
+            );
+            if (data == null || data.Count == 0)
+                return;
+
+            string preset = data[lblPreset];
+            if (string.IsNullOrWhiteSpace(preset))
+                return;
+
+            TagsListBox.Items.Clear();
+            foreach (var tag in _tagPresets[preset])
+                TagsListBox.Items.Add(tag);
+        }
+
+        private void BtnSetIcon_Click(object sender, EventArgs e)
+        {
+            // TODO
         }
 
         public static string Sanitize(string text, bool allowWhitespace = false, bool convertLowercase = true)
