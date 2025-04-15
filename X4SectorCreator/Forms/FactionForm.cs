@@ -129,6 +129,20 @@ namespace X4SectorCreator.Forms
             if (!ApplyFieldsContentToFactionXml())
                 return;
 
+            // Validate color
+            if (FactionColor == null)
+            {
+                _ = MessageBox.Show("Faction Color must be set.");
+                return;
+            }
+
+            // Validate icon
+            if (string.IsNullOrWhiteSpace(IconData))
+            {
+                _ = MessageBox.Show("Faction Icon must be set.");
+                return;
+            }
+
             var faction = Faction.Deserialize(_factionXml);
             faction.Color = FactionColor.Value;
             faction.IconData = IconData;
@@ -272,12 +286,6 @@ namespace X4SectorCreator.Forms
                 return false;
             }
 
-            if (FactionColor == null)
-            {
-                _ = MessageBox.Show("Please first provide a valid faction color.");
-                return false;
-            }
-
             var policeFaction = CmbPoliceFaction.SelectedItem as string;
             if (policeFaction.Equals("None", StringComparison.OrdinalIgnoreCase))
                 policeFaction = null;
@@ -290,7 +298,6 @@ namespace X4SectorCreator.Forms
             faction.Shortname = shortName;
             faction.Prefixname = prefix;
             faction.Primaryrace = (CmbRace.SelectedItem as string).ToLower();
-            faction.Color = FactionColor.Value;
             faction.PoliceFaction = policeFaction;
             faction.Description = TxtDescription.Text;
             faction.Tags = string.Join(" ", TagsListBox.Items.Cast<string>().Select(a => a.ToLower()));
