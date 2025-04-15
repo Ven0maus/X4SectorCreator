@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -73,6 +74,9 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Color? FactionColor { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string IconData { get; set; }
+
         private Faction _faction;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Faction Faction
@@ -85,6 +89,8 @@ namespace X4SectorCreator.Forms
                 {
                     _factionXml = _faction.Serialize();
                     FactionColor = _faction.Color;
+                    IconData = _faction.IconData;
+                    IconBox.Image = Base64ToImage(IconData);
                     ApplyFactionXmlToFieldsContent();
                 }
             }
@@ -125,6 +131,7 @@ namespace X4SectorCreator.Forms
 
             var faction = Faction.Deserialize(_factionXml);
             faction.Color = FactionColor.Value;
+            faction.IconData = IconData;
 
             switch (BtnCreate.Text)
             {
@@ -355,7 +362,45 @@ namespace X4SectorCreator.Forms
 
         private void BtnSetIcon_Click(object sender, EventArgs e)
         {
-            // TODO
+            using OpenFileDialog openFileDialog = new();
+            openFileDialog.Filter = "PNG files (*.png)|*.png";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                Image image = Image.FromFile(filePath);
+
+                if (image.Width != 256 && image.Height != 256)
+                {
+                    _ = MessageBox.Show("Image size must be 256x256 please try upload another image.");
+                    return;
+                }
+
+                // Optional: Display the image
+                IconBox.Image = image;
+                IconBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                // Convert to Base64
+                string base64String = ImageToBase64(image, ImageFormat.Png);
+
+                // Store in your object
+                IconData = base64String;
+            }
+        }
+
+        private static string ImageToBase64(Image image, ImageFormat format)
+        {
+            using MemoryStream ms = new();
+            image.Save(ms, format);
+            byte[] imageBytes = ms.ToArray();
+            return Convert.ToBase64String(imageBytes);
+        }
+
+        private static Image Base64ToImage(string base64String)
+        {
+            byte[] imageBytes = Convert.FromBase64String(base64String);
+            using MemoryStream ms = new(imageBytes);
+            return Image.FromStream(ms);
         }
 
         public static string Sanitize(string text, bool allowWhitespace = false, bool convertLowercase = true)

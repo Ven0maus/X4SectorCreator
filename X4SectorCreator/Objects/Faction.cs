@@ -48,6 +48,9 @@ namespace X4SectorCreator.Objects
         [XmlIgnore]
         public Color Color { get; set; }
 
+        [XmlIgnore]
+        public string IconData { get; set; }
+
         public string Serialize()
         {
             XmlSerializer serializer = new(typeof(Faction));
