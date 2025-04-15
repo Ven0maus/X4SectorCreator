@@ -64,6 +64,15 @@ namespace X4SectorCreator.Forms
         public FactionForm()
         {
             InitializeComponent();
+
+            var factions = MainForm.Instance.FactionColorMapping.Keys
+                .Where(a => !a.Equals("None", StringComparison.OrdinalIgnoreCase))
+                .Concat(FactionsForm.AllCustomFactions.Keys)
+                .Select(a => a.ToLower())
+                .OrderBy(a => a)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            foreach (var faction in factions)
+                CmbPoliceFaction.Items.Add(faction);
         }
 
         private void BtnPickColor_Click(object sender, EventArgs e)
@@ -174,7 +183,7 @@ namespace X4SectorCreator.Forms
             faction.Name = name;
             faction.Shortname = shortName;
             faction.Prefixname = prefix;
-            faction.Primaryrace = CmbRace.SelectedItem as string;
+            faction.Primaryrace = (CmbRace.SelectedItem as string).ToLower();
             faction.Color = _factionColor.Value;
             faction.PoliceFaction = policeFaction;
             faction.Description = TxtDescription.Text;
