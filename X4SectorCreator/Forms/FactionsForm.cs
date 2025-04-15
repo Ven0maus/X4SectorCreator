@@ -13,6 +13,22 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
         }
 
+        public static HashSet<string> GetAllFactions(bool includeCustom, bool includeOwnerless = false)
+        {
+            var factions = MainForm.Instance.FactionColorMapping.Keys
+                .Where(a => !a.Equals("None", StringComparison.OrdinalIgnoreCase));
+
+            if (includeCustom)
+                factions = factions.Concat(AllCustomFactions.Keys);
+            if (includeOwnerless)
+                factions = factions.Append("Ownerless");
+
+            return factions
+                .Select(a => a.ToLower())
+                .OrderBy(a => a)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        }
+
         private void BtnCreate_Click(object sender, EventArgs e)
         {
             _factionForm.Value.Show();

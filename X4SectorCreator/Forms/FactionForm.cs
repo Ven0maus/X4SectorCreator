@@ -45,6 +45,26 @@ namespace X4SectorCreator.Forms
     </relations>
   </faction>";
 
+        private readonly Dictionary<string, string> _licenseNameMapping = new()
+        {
+            { "capitalequipment", "Capital Equipment License" },
+            { "capitalship", "Capital Ship License" },
+            { "ceremonyally", "Ally" },
+            { "ceremonyfriend", "Friend" },
+            { "generaluseequipment", "General Use Equipment Licence" },
+            { "generaluseship", "General Use Ship Licence" },
+            { "militaryequipment", "Military Equipment License" },
+            { "militaryship", "Military Ship License" },
+            { "police", "Police License" },
+            { "shipsalecontract", "Ship Sale Contract" },
+            { "station_equip_lxl", "Capital Ship Building Module Licence" },
+            { "station_equip_sm", "Ancillary Ship Building Module Licence" },
+            { "station_gen_advanced", "Advanced Module Licence" },
+            { "station_gen_basic", "Basic Module License" },
+            { "station_gen_intermediate", "Intermediate Module Licence" },
+            { "tradesubscription", "Trade Offer Subscription" }
+        };
+
         private Faction _faction;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Faction Faction
@@ -65,14 +85,14 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
 
-            var factions = MainForm.Instance.FactionColorMapping.Keys
-                .Where(a => !a.Equals("None", StringComparison.OrdinalIgnoreCase))
-                .Concat(FactionsForm.AllCustomFactions.Keys)
-                .Select(a => a.ToLower())
-                .OrderBy(a => a)
-                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            var factions = FactionsForm.GetAllFactions(true);
             foreach (var faction in factions)
                 CmbPoliceFaction.Items.Add(faction);
+        }
+
+        public void SetFactionXml(Faction faction)
+        {
+            _factionXml = faction.Serialize();
         }
 
         private void BtnPickColor_Click(object sender, EventArgs e)
@@ -98,6 +118,7 @@ namespace X4SectorCreator.Forms
                     FactionsForm.AllCustomFactions.Add(faction.Id, faction);
                     break;
                 case "Update":
+                    // Handle changing ID properly
                     break;
             }
         }
@@ -113,10 +134,52 @@ namespace X4SectorCreator.Forms
             if (!ApplyFieldsContentToFactionXml())
                 return;
 
+            // Adjust license names if they're still placeholder
+            var faction = Faction.Deserialize(_factionXml);
+            if (faction.Licences?.Licence != null)
+            {
+                bool updated = false;
+                if (faction.Licences.Licence.All(a => !a.Name.Equals("Placeholder", StringComparison.OrdinalIgnoreCase)) &&
+                    faction.Licences.Licence.Any(a => !a.Name.StartsWith(faction.Name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    if (MessageBox.Show("Update license names?", "Update license names?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        UpdateLicenseNames(faction, false);
+                        updated = true;
+                    }
+                }
+
+                if (!updated)
+                {
+                    UpdateLicenseNames(faction, true);
+                }
+            }
+
             // Show form with the XML
             _factionXmlForm.Value.FactionForm = this;
             _factionXmlForm.Value.TxtFactionXml.Text = _factionXml;
             _factionXmlForm.Value.Show();
+        }
+
+        private void UpdateLicenseNames(Faction faction, bool onlyPlaceholders)
+        {
+            foreach (var license in faction.Licences.Licence)
+            {
+                if (_licenseNameMapping.TryGetValue(license.Type, out var name))
+                {
+                    if (!onlyPlaceholders)
+                    {
+                        license.Name = $"{faction.Name} {name}";
+                        continue;
+                    }
+
+                    if (license.Name.Equals("Placeholder", StringComparison.OrdinalIgnoreCase))
+                    {
+                        license.Name = $"{faction.Name} {name}";
+                    }
+                }
+            }
+            _factionXml = faction.Serialize();
         }
 
         public void ApplyFactionXmlToFieldsContent()
@@ -145,7 +208,7 @@ namespace X4SectorCreator.Forms
         private bool ApplyFieldsContentToFactionXml()
         {
             // Validate if all fields have correct information to be converted
-            var name = Sanitize(TxtFactionName.Text, true);
+            var name = Sanitize(TxtFactionName.Text, true, false);
             if (string.IsNullOrWhiteSpace(name))
             {
                 _ = MessageBox.Show("Please first provide a valid faction name.");
@@ -158,8 +221,9 @@ namespace X4SectorCreator.Forms
                 _ = MessageBox.Show("Please first provide a valid faction shortname. (must be 3 characters long)");
                 return false;
             }
+            shortName = shortName.ToUpper();
 
-            var prefix = Sanitize(TxtPrefix.Text);
+            var prefix = Sanitize(TxtPrefix.Text, convertLowercase: false);
             if (string.IsNullOrWhiteSpace(prefix))
             {
                 _ = MessageBox.Show("Please first provide a valid faction prefix.");
@@ -197,10 +261,12 @@ namespace X4SectorCreator.Forms
 
         private void BtnFactionRelations_Click(object sender, EventArgs e)
         {
+            _factionRelationsForm.Value.FactionForm = this;
+            _factionRelationsForm.Value.Faction = Faction.Deserialize(_factionXml);
             _factionRelationsForm.Value.Show();
         }
 
-        public static string Sanitize(string text, bool allowWhitespace = false)
+        public static string Sanitize(string text, bool allowWhitespace = false, bool convertLowercase = true)
         {
             if (string.IsNullOrEmpty(text))
                 return string.Empty;
@@ -209,7 +275,7 @@ namespace X4SectorCreator.Forms
             string cleaned = (!allowWhitespace ? SanitizeRegex() : SanitizeRegexAllowWhitespace()).Replace(text, "").Trim();
 
             // Convert to lowercase
-            return cleaned.ToLower();
+            return convertLowercase ? cleaned.ToLower() : cleaned;
         }
 
         [GeneratedRegex(@"[^a-zA-Z0-9]")]

@@ -23,12 +23,7 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
 
-            var factions = MainForm.Instance.FactionColorMapping.Keys
-                .Where(a => !a.Equals("None", StringComparison.OrdinalIgnoreCase))
-                .Append("Ownerless")
-                .Select(a => a.ToLower())
-                .OrderBy(a => a);
-
+            var factions = FactionsForm.GetAllFactions(true, true);
             foreach (var faction in factions)
             {
                 CmbFactions.Items.Add(faction);
