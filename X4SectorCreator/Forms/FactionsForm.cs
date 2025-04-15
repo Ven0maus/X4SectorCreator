@@ -31,6 +31,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
+            _factionForm.Value.BtnCreate.Text = "Create";
             _factionForm.Value.Show();
         }
 
@@ -46,7 +47,7 @@ namespace X4SectorCreator.Forms
                 // Ensure index is within valid range
                 index--;
                 index = Math.Max(0, index);
-                CustomFactionsListBox.SelectedItem = index >= 0 && CustomFactionsListBox.Items.Count > 0 ? 
+                CustomFactionsListBox.SelectedItem = index >= 0 && CustomFactionsListBox.Items.Count > 0 ?
                     CustomFactionsListBox.Items[index] : null;
             }
         }
@@ -54,6 +55,16 @@ namespace X4SectorCreator.Forms
         private void BtnExit_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void CustomFactionsListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (CustomFactionsListBox.SelectedItem is Faction faction)
+            {
+                _factionForm.Value.Faction = faction;
+                _factionForm.Value.BtnCreate.Text = "Update";
+                _factionForm.Value.Show();
+            }
         }
     }
 }

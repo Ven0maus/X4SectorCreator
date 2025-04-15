@@ -330,7 +330,6 @@
         private Label label5;
         private ComboBox CmbPoliceFaction;
         private Button BtnFactionRelations;
-        private Button BtnCreate;
         private ListBox TagsListBox;
         private Label label6;
         private Button BtnAddTag;
@@ -342,5 +341,6 @@
         private Button BtnEditXml;
         private TextBox TxtPrefix;
         private Label label7;
+        internal Button BtnCreate;
     }
 }

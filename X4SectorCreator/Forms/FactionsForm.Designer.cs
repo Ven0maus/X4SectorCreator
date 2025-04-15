@@ -52,6 +52,7 @@
             CustomFactionsListBox.Name = "CustomFactionsListBox";
             CustomFactionsListBox.Size = new Size(228, 244);
             CustomFactionsListBox.TabIndex = 1;
+            CustomFactionsListBox.DoubleClick += CustomFactionsListBox_DoubleClick;
             // 
             // BtnCreate
             // 

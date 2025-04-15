@@ -111,16 +111,37 @@ namespace X4SectorCreator.Forms
             if (!ApplyFieldsContentToFactionXml())
                 return;
 
+            var faction = Faction.Deserialize(_factionXml);
+
             switch (BtnCreate.Text)
             {
                 case "Create":
-                    var faction = Faction.Deserialize(_factionXml);
+                    // Verify if faction id already exists
+                    if (FactionsForm.GetAllFactions(true, false).Contains(faction.Id))
+                    {
+                        _ = MessageBox.Show("A faction with this name already exists.");
+                        return;
+                    }
                     FactionsForm.AllCustomFactions.Add(faction.Id, faction);
                     break;
                 case "Update":
-                    // Handle changing ID properly
+                    if (faction.Id != Faction.Id)
+                    {
+                        // Verify if faction id already exists
+                        if (FactionsForm.GetAllFactions(true, false).Contains(faction.Id))
+                        {
+                            _ = MessageBox.Show("You modified the faction name, but a faction with this name already exists.");
+                            return;
+                        }
+                    }
+
+                    FactionsForm.AllCustomFactions.Remove(Faction.Id);
+                    FactionsForm.AllCustomFactions.Add(faction.Id, faction);
+                    Faction = faction;
                     break;
             }
+
+            Close();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)

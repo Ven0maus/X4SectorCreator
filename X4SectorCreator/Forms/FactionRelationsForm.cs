@@ -79,7 +79,13 @@ namespace X4SectorCreator.Forms
             {
                 var factionName = row.Cells[0].Value as string;
                 if (string.IsNullOrWhiteSpace(factionName)) continue;
-                _ = double.TryParse(row.Cells[1].Value as string, out var factionValue);
+                double factionValue;
+
+                var factionDataValue = row.Cells[1].Value;
+                if (factionDataValue is double strD)
+                    factionValue = strD;
+                else 
+                    _ = double.TryParse(row.Cells[1].Value as string, CultureInfo.InvariantCulture, out factionValue);
 
                 // Find match index
                 var faction = Faction.Relations.Relation
