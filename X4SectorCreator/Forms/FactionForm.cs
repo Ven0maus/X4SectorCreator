@@ -10,7 +10,6 @@ namespace X4SectorCreator.Forms
     {
         private readonly LazyEvaluated<FactionXmlForm> _factionXmlForm = new(() => new FactionXmlForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<FactionRelationsForm> _factionRelationsForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
-        private Color? _factionColor = null;
         private string _factionXml = @"<faction id=""placeholder"" name=""placeholder"" description=""placeholder"" shortname=""placeholder"" prefixname=""placeholder"" primaryrace=""argon"" behaviourset=""default"" tags="""">
     <color ref=""placeholder"" />
     <icon active=""placeholder"" inactive=""placeholder"" />
@@ -65,6 +64,9 @@ namespace X4SectorCreator.Forms
             { "tradesubscription", "Trade Offer Subscription" }
         };
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public Color? FactionColor { get; set; }
+
         private Faction _faction;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Faction Faction
@@ -76,10 +78,14 @@ namespace X4SectorCreator.Forms
                 if (_faction != null)
                 {
                     _factionXml = _faction.Serialize();
+                    FactionColor = _faction.Color;
                     ApplyFactionXmlToFieldsContent();
                 }
             }
         }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public FactionsForm FactionsForm { get; set; }
 
         public FactionForm()
         {
@@ -100,7 +106,7 @@ namespace X4SectorCreator.Forms
             using ColorDialog colorDialog = new();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                BtnPickColor.BackColor = _factionColor ??= colorDialog.Color;
+                BtnPickColor.BackColor = FactionColor ??= colorDialog.Color;
                 BtnPickColor.ForeColor = colorDialog.Color.GetBrightness() < 0.5 ? Color.White : Color.Black;
             }
         }
@@ -112,6 +118,7 @@ namespace X4SectorCreator.Forms
                 return;
 
             var faction = Faction.Deserialize(_factionXml);
+            faction.Color = FactionColor.Value;
 
             switch (BtnCreate.Text)
             {
@@ -141,6 +148,8 @@ namespace X4SectorCreator.Forms
                     break;
             }
 
+            // Update values
+            FactionsForm.InitFactionValues();
             Close();
         }
 
@@ -220,9 +229,8 @@ namespace X4SectorCreator.Forms
             foreach (var tag in (faction.Tags ?? "").Split(' '))
                 TagsListBox.Items.Add(tag);
 
-            // Set color
-            _factionColor = faction.Color;
-            BtnPickColor.BackColor = _factionColor.Value;
+            // Set color (not part of serialized data)
+            BtnPickColor.BackColor = FactionColor.Value;
             BtnPickColor.ForeColor = BtnPickColor.BackColor.GetBrightness() < 0.5 ? Color.White : Color.Black;
         }
 
@@ -251,7 +259,7 @@ namespace X4SectorCreator.Forms
                 return false;
             }
 
-            if (_factionColor == null)
+            if (FactionColor == null)
             {
                 _ = MessageBox.Show("Please first provide a valid faction color.");
                 return false;
@@ -269,7 +277,7 @@ namespace X4SectorCreator.Forms
             faction.Shortname = shortName;
             faction.Prefixname = prefix;
             faction.Primaryrace = (CmbRace.SelectedItem as string).ToLower();
-            faction.Color = _factionColor.Value;
+            faction.Color = FactionColor.Value;
             faction.PoliceFaction = policeFaction;
             faction.Description = TxtDescription.Text;
             faction.Tags = string.Join(" ", TagsListBox.Items.Cast<string>().Select(a => a.ToLower()));

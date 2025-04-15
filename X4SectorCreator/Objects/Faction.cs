@@ -75,6 +75,11 @@ namespace X4SectorCreator.Objects
             using StringReader stringReader = new(xml);
             return (Faction)serializer.Deserialize(stringReader);
         }
+
+        public override string ToString()
+        {
+            return Id;
+        }
     }
 
     [XmlRoot(ElementName = "color")]

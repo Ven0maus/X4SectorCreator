@@ -11,6 +11,16 @@ namespace X4SectorCreator.Forms
         public FactionsForm()
         {
             InitializeComponent();
+            InitFactionValues();
+        }
+
+        public void InitFactionValues()
+        {
+            CustomFactionsListBox.Items.Clear();
+            foreach (var faction in AllCustomFactions.Values.OrderBy(a => a))
+            {
+                CustomFactionsListBox.Items.Add(faction);
+            }
         }
 
         public static HashSet<string> GetAllFactions(bool includeCustom, bool includeOwnerless = false)
@@ -31,6 +41,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
+            _factionForm.Value.FactionsForm = this;
             _factionForm.Value.BtnCreate.Text = "Create";
             _factionForm.Value.Show();
         }
@@ -61,6 +72,7 @@ namespace X4SectorCreator.Forms
         {
             if (CustomFactionsListBox.SelectedItem is Faction faction)
             {
+                _factionForm.Value.FactionsForm = this;
                 _factionForm.Value.Faction = faction;
                 _factionForm.Value.BtnCreate.Text = "Update";
                 _factionForm.Value.Show();
