@@ -90,7 +90,7 @@ namespace X4SectorCreator.Forms
                     _factionXml = _faction.Serialize();
                     FactionColor = _faction.Color;
                     IconData = _faction.Icon;
-                    IconBox.Image = Base64ToImage(IconData);
+                    IconBox.Image = ImageHelper.Base64ToImage(IconData);
                     ApplyFactionXmlToFieldsContent();
                 }
             }
@@ -439,26 +439,11 @@ namespace X4SectorCreator.Forms
                 IconBox.Image = image;
 
                 // Convert to Base64
-                string base64String = ImageToBase64(image, ImageFormat.Png);
+                string base64String = ImageHelper.ImageToBase64(image, ImageFormat.Png);
 
                 // Store in your object
                 IconData = base64String;
             }
-        }
-
-        private static string ImageToBase64(Image image, ImageFormat format)
-        {
-            using MemoryStream ms = new();
-            image.Save(ms, format);
-            byte[] imageBytes = ms.ToArray();
-            return Convert.ToBase64String(imageBytes);
-        }
-
-        private static Image Base64ToImage(string base64String)
-        {
-            byte[] imageBytes = Convert.FromBase64String(base64String);
-            using MemoryStream ms = new(imageBytes);
-            return Image.FromStream(ms);
         }
 
         public static string Sanitize(string text, bool allowWhitespace = false, bool convertLowercase = true)

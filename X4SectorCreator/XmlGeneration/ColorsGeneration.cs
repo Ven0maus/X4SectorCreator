@@ -19,7 +19,7 @@ namespace X4SectorCreator.XmlGeneration
                     CollectMappings()
                 )
             );
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/baskets.xml")));
+            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/colors.xml")));
         }
 
         private static XElement CollectColors()
