@@ -152,6 +152,9 @@ namespace X4SectorCreator.Objects
         [XmlRoot(ElementName = "relations")]
         public class RelationsObj
         {
+            [XmlAttribute(AttributeName = "locked")]
+            public string Locked { get; set; }
+
             [XmlElement(ElementName = "relation")]
             public List<Relation> Relation { get; set; }
         }

@@ -45,6 +45,7 @@ namespace X4SectorCreator.Forms
             // Overwrite values for each faction that already has a mapping
             if (Faction.Relations?.Relation != null)
             {
+                ChkLockRelations.Checked = Faction.Relations.Locked != null;
                 foreach (var relation in Faction.Relations.Relation)
                 {
                     if (!_indexMapping.TryGetValue(relation.Faction, out index))
@@ -74,6 +75,9 @@ namespace X4SectorCreator.Forms
                 Faction.Relations = new Faction.RelationsObj();
             if (Faction.Relations.Relation == null)
                 Faction.Relations.Relation = [];
+
+            // Set locked state
+            Faction.Relations.Locked = ChkLockRelations.Checked ? "1" : null;
 
             foreach (DataGridViewRow row in FactionRelationsDataGrid.Rows)
             {

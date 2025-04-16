@@ -34,6 +34,7 @@
             FactionName = new DataGridViewTextBoxColumn();
             RelationValue = new DataGridViewTextBoxColumn();
             label1 = new Label();
+            ChkLockRelations = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)FactionRelationsDataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -97,11 +98,22 @@
             label1.TabIndex = 3;
             label1.Text = "Faction Relations";
             // 
+            // ChkLockRelations
+            // 
+            ChkLockRelations.AutoSize = true;
+            ChkLockRelations.Location = new Point(356, 8);
+            ChkLockRelations.Name = "ChkLockRelations";
+            ChkLockRelations.Size = new Size(102, 19);
+            ChkLockRelations.TabIndex = 4;
+            ChkLockRelations.Text = "Lock Relations";
+            ChkLockRelations.UseVisualStyleBackColor = true;
+            // 
             // FactionRelationsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(465, 405);
+            Controls.Add(ChkLockRelations);
             Controls.Add(label1);
             Controls.Add(FactionRelationsDataGrid);
             Controls.Add(BtnCancel);
@@ -124,5 +136,6 @@
         private Label label1;
         private DataGridViewTextBoxColumn FactionName;
         private DataGridViewTextBoxColumn RelationValue;
+        private CheckBox ChkLockRelations;
     }
 }
