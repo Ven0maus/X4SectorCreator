@@ -52,6 +52,7 @@
             BtnEditXml = new Button();
             TxtPrefix = new TextBox();
             label7 = new Label();
+            BtnEditFactionShips = new Button();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -74,11 +75,11 @@
             // 
             // BtnPickColor
             // 
-            BtnPickColor.Location = new Point(11, 257);
+            BtnPickColor.Location = new Point(430, 154);
             BtnPickColor.Name = "BtnPickColor";
-            BtnPickColor.Size = new Size(102, 41);
+            BtnPickColor.Size = new Size(197, 34);
             BtnPickColor.TabIndex = 4;
-            BtnPickColor.Text = "Pick Faction Color";
+            BtnPickColor.Text = "Set Faction Color";
             BtnPickColor.UseVisualStyleBackColor = true;
             BtnPickColor.Click += BtnPickColor_Click;
             // 
@@ -157,9 +158,9 @@
             // 
             // BtnFactionRelations
             // 
-            BtnFactionRelations.Location = new Point(119, 257);
+            BtnFactionRelations.Location = new Point(153, 259);
             BtnFactionRelations.Name = "BtnFactionRelations";
-            BtnFactionRelations.Size = new Size(199, 41);
+            BtnFactionRelations.Size = new Size(165, 33);
             BtnFactionRelations.TabIndex = 14;
             BtnFactionRelations.Text = "Edit Faction Relations";
             BtnFactionRelations.UseVisualStyleBackColor = true;
@@ -167,7 +168,7 @@
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(324, 304);
+            BtnCreate.Location = new Point(324, 302);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(303, 33);
             BtnCreate.TabIndex = 15;
@@ -180,7 +181,7 @@
             TagsListBox.FormattingEnabled = true;
             TagsListBox.Location = new Point(324, 39);
             TagsListBox.Name = "TagsListBox";
-            TagsListBox.Size = new Size(194, 154);
+            TagsListBox.Size = new Size(194, 109);
             TagsListBox.TabIndex = 16;
             // 
             // label6
@@ -225,9 +226,9 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(11, 304);
+            BtnCancel.Location = new Point(12, 302);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(307, 33);
+            BtnCancel.Size = new Size(306, 33);
             BtnCancel.TabIndex = 25;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
@@ -236,7 +237,7 @@
             // IconBox
             // 
             IconBox.BorderStyle = BorderStyle.FixedSingle;
-            IconBox.Location = new Point(324, 198);
+            IconBox.Location = new Point(324, 154);
             IconBox.Name = "IconBox";
             IconBox.Size = new Size(100, 100);
             IconBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -245,9 +246,9 @@
             // 
             // BtnSetIcon
             // 
-            BtnSetIcon.Location = new Point(430, 197);
+            BtnSetIcon.Location = new Point(324, 261);
             BtnSetIcon.Name = "BtnSetIcon";
-            BtnSetIcon.Size = new Size(88, 33);
+            BtnSetIcon.Size = new Size(100, 33);
             BtnSetIcon.TabIndex = 27;
             BtnSetIcon.Text = "Set Icon";
             BtnSetIcon.UseVisualStyleBackColor = true;
@@ -255,7 +256,7 @@
             // 
             // BtnEditXml
             // 
-            BtnEditXml.Location = new Point(430, 265);
+            BtnEditXml.Location = new Point(430, 193);
             BtnEditXml.Name = "BtnEditXml";
             BtnEditXml.Size = new Size(197, 33);
             BtnEditXml.TabIndex = 28;
@@ -280,11 +281,21 @@
             label7.TabIndex = 29;
             label7.Text = "Prefix:";
             // 
+            // BtnEditFactionShips
+            // 
+            BtnEditFactionShips.Location = new Point(12, 259);
+            BtnEditFactionShips.Name = "BtnEditFactionShips";
+            BtnEditFactionShips.Size = new Size(135, 33);
+            BtnEditFactionShips.TabIndex = 31;
+            BtnEditFactionShips.Text = "Edit Faction Ships";
+            BtnEditFactionShips.UseVisualStyleBackColor = true;
+            // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(632, 342);
+            Controls.Add(BtnEditFactionShips);
             Controls.Add(TxtPrefix);
             Controls.Add(label7);
             Controls.Add(BtnEditXml);
@@ -345,5 +356,6 @@
         private TextBox TxtPrefix;
         private Label label7;
         internal Button BtnCreate;
+        private Button BtnEditFactionShips;
     }
 }
