@@ -469,6 +469,9 @@ namespace X4SectorCreator.Forms
             // Remove all non-alphanumeric characters (including whitespace)
             string cleaned = (!allowWhitespace ? SanitizeRegex() : SanitizeRegexAllowWhitespace()).Replace(text, "").Trim();
 
+            // Replace dots
+            cleaned = cleaned.Replace(".", "");
+
             // Convert to lowercase
             return convertLowercase ? cleaned.ToLower() : cleaned;
         }
