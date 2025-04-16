@@ -241,6 +241,7 @@
             IconBox.Location = new Point(324, 198);
             IconBox.Name = "IconBox";
             IconBox.Size = new Size(100, 100);
+            IconBox.SizeMode = PictureBoxSizeMode.StretchImage;
             IconBox.TabIndex = 26;
             IconBox.TabStop = false;
             // 

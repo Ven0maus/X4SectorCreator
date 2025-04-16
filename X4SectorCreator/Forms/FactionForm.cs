@@ -383,9 +383,8 @@ namespace X4SectorCreator.Forms
                     return;
                 }
 
-                // Optional: Display the image
+                // Display the image
                 IconBox.Image = image;
-                IconBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
                 // Convert to Base64
                 string base64String = ImageToBase64(image, ImageFormat.Png);
