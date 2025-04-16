@@ -150,12 +150,10 @@
             // CmbPoliceFaction
             // 
             CmbPoliceFaction.FormattingEnabled = true;
-            CmbPoliceFaction.Items.AddRange(new object[] { "None" });
             CmbPoliceFaction.Location = new Point(119, 228);
             CmbPoliceFaction.Name = "CmbPoliceFaction";
             CmbPoliceFaction.Size = new Size(199, 23);
             CmbPoliceFaction.TabIndex = 12;
-            CmbPoliceFaction.Text = "None";
             // 
             // BtnFactionRelations
             // 

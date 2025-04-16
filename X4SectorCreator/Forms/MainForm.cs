@@ -410,6 +410,7 @@ namespace X4SectorCreator
                 GodGeneration.Generate(modFolder, modPrefix, clusters);
                 JobsGeneration.Generate(modFolder, modPrefix);
                 BasketsGeneration.Generate(modFolder, modPrefix);
+                FactionsGeneration.Generate(modFolder);
             }
             catch (Exception ex)
             {

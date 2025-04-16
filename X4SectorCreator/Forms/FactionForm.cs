@@ -23,14 +23,14 @@ namespace X4SectorCreator.Forms
       <licence type=""generaluseship"" name=""placeholder"" minrelation=""-0.01"" tags=""basic"" />
       <licence type=""militaryequipment"" name=""placeholder"" icon=""bse_star"" minrelation=""0.01"" precursor=""ceremonyfriend"" />
       <licence type=""militaryship"" name=""placeholder"" icon=""bse_star"" minrelation=""0.01"" precursor=""ceremonyfriend"" />
-      <licence type=""police"" name=""placeholder"" description=""placeholder"" minrelation=""0.01"" precursor=""ceremonyfriend"" price=""156000"" maxlegalscan=""2"" />
-      <licence type=""shipsalecontract"" name=""placeholder"" description=""placeholder"" minrelation=""0.1"" precursor=""ceremonyally"" price=""1"" tags=""hidden"" />
+      <licence type=""police"" name=""placeholder"" description="""" minrelation=""0.01"" precursor=""ceremonyfriend"" price=""156000"" maxlegalscan=""2"" />
+      <licence type=""shipsalecontract"" name=""placeholder"" description="""" minrelation=""0.1"" precursor=""ceremonyally"" price=""1"" tags=""hidden"" />
       <licence type=""station_equip_lxl"" name=""placeholder"" minrelation=""0.1"" precursor=""ceremonyally"" />
       <licence type=""station_equip_sm"" name=""placeholder"" minrelation=""0.1"" precursor=""ceremonyally"" />
       <licence type=""station_gen_advanced"" name=""placeholder"" minrelation=""0.1"" precursor=""ceremonyally"" />
       <licence type=""station_gen_basic"" name=""placeholder"" minrelation=""-0.01"" tags=""basic"" />
       <licence type=""station_gen_intermediate"" name=""placeholder"" minrelation=""0.01"" precursor=""ceremonyfriend"" />
-      <licence type=""tradesubscription"" name=""placeholder"" description=""placeholder"" minrelation=""0.1"" precursor=""ceremonyally"" price=""10000000"" />
+      <licence type=""tradesubscription"" name=""placeholder"" description="""" minrelation=""0.1"" precursor=""ceremonyally"" price=""10000000"" />
     </licences>
     <relations>
 	  <relation faction=""xenon"" relation=""-1"" />
@@ -103,9 +103,13 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
 
-            var factions = FactionsForm.GetAllFactions(true);
+            var factions = FactionsForm.GetAllFactions(true)
+                .Append("self")
+                .Append("none")
+                .OrderBy(a => a);
             foreach (var faction in factions)
                 CmbPoliceFaction.Items.Add(faction);
+            CmbPoliceFaction.SelectedItem = "self"; //Default value
         }
 
         public void SetFactionXml(Faction faction)
@@ -260,7 +264,10 @@ namespace X4SectorCreator.Forms
             TxtShortName.Text = faction.Shortname;
             TxtPrefix.Text = faction.Prefixname;
             CmbRace.SelectedItem = faction.Primaryrace;
-            CmbPoliceFaction.SelectedItem = faction.PoliceFaction ?? "None";
+            var policeFaction = string.IsNullOrWhiteSpace(faction.PoliceFaction) ? "none" : faction.PoliceFaction;
+            if (policeFaction.Equals(faction.Id, StringComparison.OrdinalIgnoreCase))
+                policeFaction = "self";
+            CmbPoliceFaction.SelectedItem = policeFaction;
             TxtDescription.Text = faction.Description;
 
             // Add tags
@@ -298,19 +305,49 @@ namespace X4SectorCreator.Forms
                 return false;
             }
 
-            var policeFaction = CmbPoliceFaction.SelectedItem as string;
-            if (policeFaction.Equals("None", StringComparison.OrdinalIgnoreCase))
+            var id = name.Trim().ToLower().Replace(" ", "_");
+
+            var policeFaction = CmbPoliceFaction.SelectedItem as string ?? "none";
+            if (policeFaction.Equals("none", StringComparison.OrdinalIgnoreCase))
                 policeFaction = null;
+            else if (policeFaction.Equals("self", StringComparison.OrdinalIgnoreCase))
+                policeFaction = id;
 
             var faction = Faction.Deserialize(_factionXml);
 
             // Update Fields
-            faction.Id = name.Trim().ToLower().Replace(" ", "_");
+            faction.Id = id;
             faction.Name = name;
             faction.Shortname = shortName;
             faction.Prefixname = prefix;
             faction.Primaryrace = (CmbRace.SelectedItem as string).ToLower();
+
             faction.PoliceFaction = policeFaction;
+            if (faction.Licences?.Licence != null)
+            {
+                if (policeFaction == null)
+                {
+                    // Remove police license
+                    faction.Licences.Licence.RemoveAll(a => a.Type.Equals("police", StringComparison.OrdinalIgnoreCase));
+                }
+                else
+                {
+                    if (!faction.Licences.Licence.Any(a => a.Type.Equals("police", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        var policeLicense = new Faction.Licence()
+                        {
+                            Type = "police",
+                            Name = $"{name} {_licenseNameMapping["police"]}",
+                            Minrelation = "0.01",
+                            Precursor = "ceremonyfriend",
+                            Price = "156000",
+                            Maxlegalscan = "2"
+                        };
+                        faction.Licences.Licence.Add(policeLicense);
+                    }
+                }
+            }
+
             faction.Description = TxtDescription.Text;
             faction.Tags = string.Join(" ", TagsListBox.Items.Cast<string>().Select(a => a.ToLower()));
             var dataEntryName = $"faction_{faction.Id}";
