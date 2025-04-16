@@ -143,6 +143,8 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            UpdateLicenseNames();
+
             var faction = Faction.Deserialize(_factionXml);
             faction.Color = FactionColor.Value;
             faction.IconData = IconData;
@@ -191,6 +193,16 @@ namespace X4SectorCreator.Forms
             if (!ApplyFieldsContentToFactionXml())
                 return;
 
+            UpdateLicenseNames();
+
+            // Show form with the XML
+            _factionXmlForm.Value.FactionForm = this;
+            _factionXmlForm.Value.TxtFactionXml.Text = _factionXml;
+            _factionXmlForm.Value.Show();
+        }
+
+        private void UpdateLicenseNames()
+        {
             // Adjust license names if they're still placeholder
             var faction = Faction.Deserialize(_factionXml);
             if (faction.Licences?.Licence != null)
@@ -211,11 +223,6 @@ namespace X4SectorCreator.Forms
                     UpdateLicenseNames(faction, true);
                 }
             }
-
-            // Show form with the XML
-            _factionXmlForm.Value.FactionForm = this;
-            _factionXmlForm.Value.TxtFactionXml.Text = _factionXml;
-            _factionXmlForm.Value.Show();
         }
 
         private void UpdateLicenseNames(Faction faction, bool onlyPlaceholders)
