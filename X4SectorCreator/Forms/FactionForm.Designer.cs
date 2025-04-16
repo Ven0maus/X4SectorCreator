@@ -158,9 +158,9 @@
             // 
             // BtnFactionRelations
             // 
-            BtnFactionRelations.Location = new Point(153, 259);
+            BtnFactionRelations.Location = new Point(163, 259);
             BtnFactionRelations.Name = "BtnFactionRelations";
-            BtnFactionRelations.Size = new Size(165, 33);
+            BtnFactionRelations.Size = new Size(155, 33);
             BtnFactionRelations.TabIndex = 14;
             BtnFactionRelations.Text = "Edit Faction Relations";
             BtnFactionRelations.UseVisualStyleBackColor = true;
@@ -286,7 +286,7 @@
             // 
             BtnEditFactionShips.Location = new Point(12, 259);
             BtnEditFactionShips.Name = "BtnEditFactionShips";
-            BtnEditFactionShips.Size = new Size(135, 33);
+            BtnEditFactionShips.Size = new Size(145, 33);
             BtnEditFactionShips.TabIndex = 31;
             BtnEditFactionShips.Text = "Edit Faction Ships";
             BtnEditFactionShips.UseVisualStyleBackColor = true;

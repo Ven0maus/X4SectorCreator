@@ -411,6 +411,7 @@ namespace X4SectorCreator
                 JobsGeneration.Generate(modFolder, modPrefix);
                 BasketsGeneration.Generate(modFolder, modPrefix);
                 FactionsGeneration.Generate(modFolder);
+                ColorsGeneration.Generate(modFolder);
             }
             catch (Exception ex)
             {
