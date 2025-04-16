@@ -24,6 +24,10 @@ namespace X4SectorCreator.Forms
             {
                 var faction = Faction.Deserialize(TxtFactionXml.Text);
                 faction.Color = FactionForm.FactionColor.Value;
+                faction.Icon = FactionForm.IconData;
+                var dataEntryName = $"faction_{faction.Id}";
+                faction.ColorData = new Faction.ColorDataObj { Ref = dataEntryName };
+                faction.IconData = new Faction.IconObj { Active = dataEntryName, Inactive = dataEntryName };
 
                 if (!ValidateFactionFields(faction)) return;
                 FactionForm.Faction = faction;

@@ -71,7 +71,7 @@ namespace X4SectorCreator.Forms
         {
             // Init
             if (Faction.Relations == null)
-                Faction.Relations = new Relations();
+                Faction.Relations = new Faction.RelationsObj();
             if (Faction.Relations.Relation == null)
                 Faction.Relations.Relation = [];
 
@@ -93,7 +93,7 @@ namespace X4SectorCreator.Forms
                 if (faction == null)
                 {
                     if (factionValue == 0) continue;
-                    Faction.Relations.Relation.Add(new Relation
+                    Faction.Relations.Relation.Add(new Faction.Relation
                     {
                         Faction = factionName.ToLower(),
                         RelationValue = factionValue.ToString()

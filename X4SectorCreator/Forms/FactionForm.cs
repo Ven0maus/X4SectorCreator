@@ -89,7 +89,7 @@ namespace X4SectorCreator.Forms
                 {
                     _factionXml = _faction.Serialize();
                     FactionColor = _faction.Color;
-                    IconData = _faction.IconData;
+                    IconData = _faction.Icon;
                     IconBox.Image = Base64ToImage(IconData);
                     ApplyFactionXmlToFieldsContent();
                 }
@@ -146,8 +146,13 @@ namespace X4SectorCreator.Forms
             UpdateLicenseNames();
 
             var faction = Faction.Deserialize(_factionXml);
+
+            // Set base data
             faction.Color = FactionColor.Value;
-            faction.IconData = IconData;
+            faction.Icon = IconData;
+            var dataEntryName = $"faction_{faction.Id}";
+            faction.ColorData = new Faction.ColorDataObj { Ref = dataEntryName };
+            faction.IconData = new Faction.IconObj { Active = dataEntryName, Inactive = dataEntryName }; 
 
             switch (BtnCreate.Text)
             {
@@ -308,6 +313,9 @@ namespace X4SectorCreator.Forms
             faction.PoliceFaction = policeFaction;
             faction.Description = TxtDescription.Text;
             faction.Tags = string.Join(" ", TagsListBox.Items.Cast<string>().Select(a => a.ToLower()));
+            var dataEntryName = $"faction_{faction.Id}";
+            faction.ColorData = new Faction.ColorDataObj { Ref = dataEntryName };
+            faction.IconData = new Faction.IconObj { Active = dataEntryName, Inactive = dataEntryName };
 
             // Re-serialize into xml string
             _factionXml = faction.Serialize();

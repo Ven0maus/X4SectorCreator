@@ -7,16 +7,16 @@ namespace X4SectorCreator.Objects
     public class Faction
     {
         [XmlElement(ElementName = "color")]
-        public ColorData ColorData { get; set; }
+        public ColorDataObj ColorData { get; set; }
 
         [XmlElement(ElementName = "icon")]
-        public Icon Icon { get; set; }
+        public IconObj IconData { get; set; }
 
         [XmlElement(ElementName = "licences")]
-        public Licences Licences { get; set; }
+        public LicencesObj Licences { get; set; }
 
         [XmlElement(ElementName = "relations")]
-        public Relations Relations { get; set; }
+        public RelationsObj Relations { get; set; }
 
         [XmlAttribute(AttributeName = "id")]
         public string Id { get; set; }
@@ -49,7 +49,7 @@ namespace X4SectorCreator.Objects
         public Color Color { get; set; }
 
         [XmlIgnore]
-        public string IconData { get; set; }
+        public string Icon { get; set; }
 
         public string Serialize()
         {
@@ -83,77 +83,77 @@ namespace X4SectorCreator.Objects
         {
             return Id;
         }
-    }
 
-    [XmlRoot(ElementName = "color")]
-    public class ColorData
-    {
-        [XmlAttribute(AttributeName = "ref")]
-        public string Ref { get; set; }
-    }
+        [XmlRoot(ElementName = "color")]
+        public class ColorDataObj
+        {
+            [XmlAttribute(AttributeName = "ref")]
+            public string Ref { get; set; }
+        }
 
-    [XmlRoot(ElementName = "icon")]
-    public class Icon
-    {
-        [XmlAttribute(AttributeName = "active")]
-        public string Active { get; set; }
+        [XmlRoot(ElementName = "icon")]
+        public class IconObj
+        {
+            [XmlAttribute(AttributeName = "active")]
+            public string Active { get; set; }
 
-        [XmlAttribute(AttributeName = "inactive")]
-        public string Inactive { get; set; }
-    }
+            [XmlAttribute(AttributeName = "inactive")]
+            public string Inactive { get; set; }
+        }
 
-    [XmlRoot(ElementName = "licence")]
-    public class Licence
-    {
-        [XmlAttribute(AttributeName = "type")]
-        public string Type { get; set; }
+        [XmlRoot(ElementName = "licence")]
+        public class Licence
+        {
+            [XmlAttribute(AttributeName = "type")]
+            public string Type { get; set; }
 
-        [XmlAttribute(AttributeName = "name")]
-        public string Name { get; set; }
+            [XmlAttribute(AttributeName = "name")]
+            public string Name { get; set; }
 
-        [XmlAttribute(AttributeName = "icon")]
-        public string Icon { get; set; }
+            [XmlAttribute(AttributeName = "icon")]
+            public string Icon { get; set; }
 
-        [XmlAttribute(AttributeName = "minrelation")]
-        public string Minrelation { get; set; }
+            [XmlAttribute(AttributeName = "minrelation")]
+            public string Minrelation { get; set; }
 
-        [XmlAttribute(AttributeName = "precursor")]
-        public string Precursor { get; set; }
+            [XmlAttribute(AttributeName = "precursor")]
+            public string Precursor { get; set; }
 
-        [XmlAttribute(AttributeName = "tags")]
-        public string Tags { get; set; }
+            [XmlAttribute(AttributeName = "tags")]
+            public string Tags { get; set; }
 
-        [XmlAttribute(AttributeName = "description")]
-        public string Description { get; set; }
+            [XmlAttribute(AttributeName = "description")]
+            public string Description { get; set; }
 
-        [XmlAttribute(AttributeName = "price")]
-        public string Price { get; set; }
+            [XmlAttribute(AttributeName = "price")]
+            public string Price { get; set; }
 
-        [XmlAttribute(AttributeName = "maxlegalscan")]
-        public string Maxlegalscan { get; set; }
-    }
+            [XmlAttribute(AttributeName = "maxlegalscan")]
+            public string Maxlegalscan { get; set; }
+        }
 
-    [XmlRoot(ElementName = "licences")]
-    public class Licences
-    {
-        [XmlElement(ElementName = "licence")]
-        public List<Licence> Licence { get; set; }
-    }
+        [XmlRoot(ElementName = "licences")]
+        public class LicencesObj
+        {
+            [XmlElement(ElementName = "licence")]
+            public List<Licence> Licence { get; set; }
+        }
 
-    [XmlRoot(ElementName = "relation")]
-    public class Relation
-    {
-        [XmlAttribute(AttributeName = "faction")]
-        public string Faction { get; set; }
+        [XmlRoot(ElementName = "relation")]
+        public class Relation
+        {
+            [XmlAttribute(AttributeName = "faction")]
+            public string Faction { get; set; }
 
-        [XmlAttribute(AttributeName = "relation")]
-        public string RelationValue { get; set; }
-    }
+            [XmlAttribute(AttributeName = "relation")]
+            public string RelationValue { get; set; }
+        }
 
-    [XmlRoot(ElementName = "relations")]
-    public class Relations
-    {
-        [XmlElement(ElementName = "relation")]
-        public List<Relation> Relation { get; set; }
+        [XmlRoot(ElementName = "relations")]
+        public class RelationsObj
+        {
+            [XmlElement(ElementName = "relation")]
+            public List<Relation> Relation { get; set; }
+        }
     }
 }
