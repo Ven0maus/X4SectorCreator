@@ -179,6 +179,7 @@
             // TagsListBox
             // 
             TagsListBox.FormattingEnabled = true;
+            TagsListBox.HorizontalScrollbar = true;
             TagsListBox.Location = new Point(324, 39);
             TagsListBox.Name = "TagsListBox";
             TagsListBox.Size = new Size(194, 109);
