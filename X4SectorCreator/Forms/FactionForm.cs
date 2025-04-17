@@ -9,8 +9,6 @@ namespace X4SectorCreator.Forms
 {
     public partial class FactionForm : Form
     {
-        private readonly LazyEvaluated<FactionXmlForm> _factionXmlForm = new(() => new FactionXmlForm(), a => !a.IsDisposed);
-        private readonly LazyEvaluated<FactionRelationsForm> _factionRelationsForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
         private string _factionXml = @"<faction id=""placeholder"" name=""placeholder"" description=""placeholder"" shortname=""placeholder"" prefixname=""placeholder"" primaryrace=""argon"" behaviourset=""default"" tags="""">
     <color ref=""placeholder"" />
     <icon active=""placeholder"" inactive=""placeholder"" />
@@ -71,6 +69,10 @@ namespace X4SectorCreator.Forms
             { "Pirate faction", new HashSet<string> { "economic", "pirate", "plunder", "privateloadout", "privateship", "protective", "watchdoguser" } },
         };
 
+        private readonly LazyEvaluated<FactionXmlForm> _factionXmlForm = new(() => new FactionXmlForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<FactionRelationsForm> _factionRelationsForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<FactionShipsForm> _factionShipsForm = new(() => new FactionShipsForm(), a => !a.IsDisposed);
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Color? FactionColor { get; set; }
 
@@ -91,6 +93,7 @@ namespace X4SectorCreator.Forms
                     FactionColor = _faction.Color;
                     IconData = _faction.Icon;
                     IconBox.Image = ImageHelper.Base64ToImage(IconData);
+                    LblIconSize.Visible = false;
                     ApplyFactionXmlToFieldsContent();
                 }
             }
@@ -156,7 +159,7 @@ namespace X4SectorCreator.Forms
             faction.Icon = IconData;
             var dataEntryName = $"faction_{faction.Id}";
             faction.ColorData = new Faction.ColorDataObj { Ref = dataEntryName };
-            faction.IconData = new Faction.IconObj { Active = dataEntryName, Inactive = dataEntryName }; 
+            faction.IconData = new Faction.IconObj { Active = dataEntryName, Inactive = dataEntryName };
 
             switch (BtnCreate.Text)
             {
@@ -208,6 +211,13 @@ namespace X4SectorCreator.Forms
             _factionXmlForm.Value.FactionForm = this;
             _factionXmlForm.Value.TxtFactionXml.Text = _factionXml;
             _factionXmlForm.Value.Show();
+        }
+
+        private void BtnEditFactionShips_Click(object sender, EventArgs e)
+        {
+            _factionShipsForm.Value.FactionForm = this;
+            _factionShipsForm.Value.Faction = Faction.Deserialize(_factionXml);
+            _factionShipsForm.Value.Show();
         }
 
         private void UpdateLicenseNames()
@@ -377,7 +387,7 @@ namespace X4SectorCreator.Forms
                 return;
 
             string tag = data[lblTag];
-            if (string.IsNullOrWhiteSpace(tag)) 
+            if (string.IsNullOrWhiteSpace(tag))
                 return;
 
             if (TagsListBox.Items.Cast<string>().Any(a => a.Equals(tag, StringComparison.InvariantCultureIgnoreCase)))
@@ -440,9 +450,10 @@ namespace X4SectorCreator.Forms
 
                 // Convert to Base64
                 string base64String = ImageHelper.ImageToBase64(image, ImageFormat.Png);
-
-                // Store in your object
                 IconData = base64String;
+
+                // Hide size label
+                LblIconSize.Visible = false;
             }
         }
 

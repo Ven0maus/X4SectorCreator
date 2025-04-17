@@ -53,6 +53,7 @@
             TxtPrefix = new TextBox();
             label7 = new Label();
             BtnEditFactionShips = new Button();
+            LblIconSize = new Label();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -251,7 +252,7 @@
             BtnSetIcon.Name = "BtnSetIcon";
             BtnSetIcon.Size = new Size(100, 33);
             BtnSetIcon.TabIndex = 27;
-            BtnSetIcon.Text = "Set Icon";
+            BtnSetIcon.Text = "Upload Icon";
             BtnSetIcon.UseVisualStyleBackColor = true;
             BtnSetIcon.Click += BtnSetIcon_Click;
             // 
@@ -290,12 +291,24 @@
             BtnEditFactionShips.TabIndex = 31;
             BtnEditFactionShips.Text = "Edit Faction Ships";
             BtnEditFactionShips.UseVisualStyleBackColor = true;
+            BtnEditFactionShips.Click += BtnEditFactionShips_Click;
+            // 
+            // LblIconSize
+            // 
+            LblIconSize.Font = new Font("Segoe UI", 11F);
+            LblIconSize.Location = new Point(325, 155);
+            LblIconSize.Name = "LblIconSize";
+            LblIconSize.Size = new Size(98, 98);
+            LblIconSize.TabIndex = 32;
+            LblIconSize.Text = "256x256";
+            LblIconSize.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(632, 342);
+            Controls.Add(LblIconSize);
             Controls.Add(BtnEditFactionShips);
             Controls.Add(TxtPrefix);
             Controls.Add(label7);
@@ -358,5 +371,6 @@
         private Label label7;
         internal Button BtnCreate;
         private Button BtnEditFactionShips;
+        private Label LblIconSize;
     }
 }
