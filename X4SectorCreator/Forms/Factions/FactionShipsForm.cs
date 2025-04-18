@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Forms.Factions;
 using X4SectorCreator.Forms.General;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -46,6 +47,7 @@ namespace X4SectorCreator.Forms
         private static Dictionary<string, Ships> _shipPresets;
 
         private readonly LazyEvaluated<ShipGroupsForm> _shipGroupsForm = new(() => new ShipGroupsForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<ShipForm> _shipForm = new(() => new ShipForm(), a => !a.IsDisposed);
 
         public FactionShipsForm()
         {
@@ -173,7 +175,18 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreateShip_Click(object sender, EventArgs e)
         {
+            _shipForm.Value.FactionShipsForm = this;
+            _shipForm.Value.Show();
+        }
 
+        private void ShipsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ShipsListBox.SelectedItem is Ship ship)
+            {
+                _shipForm.Value.FactionShipsForm = this;
+                _shipForm.Value.Ship = ship;
+                _shipForm.Value.Show();
+            }
         }
     }
 }
