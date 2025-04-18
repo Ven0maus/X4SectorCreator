@@ -79,7 +79,7 @@ namespace X4SectorCreator.Forms.Factions
 
         private static void AddValues(ComboBox cmb, IEnumerable<string> values)
         {
-            foreach (var value in values.OrderBy(a => a))
+            foreach (var value in values.Append("None").OrderBy(a => a))
                 cmb.Items.Add(value);
         }
 
