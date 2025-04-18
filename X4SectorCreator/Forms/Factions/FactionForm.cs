@@ -492,5 +492,15 @@ namespace X4SectorCreator.Forms
 
         [GeneratedRegex(@"[^a-zA-Z0-9\s]")]
         private static partial Regex SanitizeRegexAllowWhitespace();
+
+        private void BtnFactionStations_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnFactionCharacters_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

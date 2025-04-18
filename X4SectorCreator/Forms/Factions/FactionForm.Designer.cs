@@ -54,6 +54,8 @@
             label7 = new Label();
             BtnEditFactionShips = new Button();
             LblIconSize = new Label();
+            BtnFactionStations = new Button();
+            BtnFactionCharacters = new Button();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -163,13 +165,13 @@
             BtnFactionRelations.Name = "BtnFactionRelations";
             BtnFactionRelations.Size = new Size(155, 33);
             BtnFactionRelations.TabIndex = 14;
-            BtnFactionRelations.Text = "Edit Faction Relations";
+            BtnFactionRelations.Text = "Setup Faction Relations";
             BtnFactionRelations.UseVisualStyleBackColor = true;
             BtnFactionRelations.Click += BtnFactionRelations_Click;
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(324, 302);
+            BtnCreate.Location = new Point(324, 337);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(303, 33);
             BtnCreate.TabIndex = 15;
@@ -228,7 +230,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 302);
+            BtnCancel.Location = new Point(12, 337);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(306, 33);
             BtnCancel.TabIndex = 25;
@@ -303,11 +305,33 @@
             LblIconSize.Text = "256x256";
             LblIconSize.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // BtnFactionStations
+            // 
+            BtnFactionStations.Location = new Point(12, 298);
+            BtnFactionStations.Name = "BtnFactionStations";
+            BtnFactionStations.Size = new Size(145, 33);
+            BtnFactionStations.TabIndex = 34;
+            BtnFactionStations.Text = "Setup Faction Stations";
+            BtnFactionStations.UseVisualStyleBackColor = true;
+            BtnFactionStations.Click += BtnFactionStations_Click;
+            // 
+            // BtnFactionCharacters
+            // 
+            BtnFactionCharacters.Location = new Point(163, 298);
+            BtnFactionCharacters.Name = "BtnFactionCharacters";
+            BtnFactionCharacters.Size = new Size(155, 33);
+            BtnFactionCharacters.TabIndex = 33;
+            BtnFactionCharacters.Text = "Setup Faction Characters";
+            BtnFactionCharacters.UseVisualStyleBackColor = true;
+            BtnFactionCharacters.Click += BtnFactionCharacters_Click;
+            // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(632, 342);
+            ClientSize = new Size(632, 376);
+            Controls.Add(BtnFactionStations);
+            Controls.Add(BtnFactionCharacters);
             Controls.Add(LblIconSize);
             Controls.Add(BtnEditFactionShips);
             Controls.Add(TxtPrefix);
@@ -372,5 +396,7 @@
         internal Button BtnCreate;
         private Button BtnEditFactionShips;
         private Label LblIconSize;
+        private Button BtnFactionStations;
+        private Button BtnFactionCharacters;
     }
 }
