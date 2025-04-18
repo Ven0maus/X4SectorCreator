@@ -284,6 +284,7 @@ namespace X4SectorCreator.Forms.Factions
             MinimizeBox = false;
             Name = "ShipForm";
             Text = "Ship Editor Form";
+            Load += ShipForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

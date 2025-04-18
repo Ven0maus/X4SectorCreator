@@ -26,7 +26,6 @@ namespace X4SectorCreator.Forms.Factions
             {
                 _ship = value;
                 BtnCreate.Text = "Update";
-                InitShip(value);
             }
         }
 
@@ -104,13 +103,109 @@ namespace X4SectorCreator.Forms.Factions
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(TxtId.Text))
+            {
+                _ = MessageBox.Show("Please enter a valid ship id first.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(TxtGroup.Text))
+            {
+                _ = MessageBox.Show("Please enter a valid ship group first.");
+                return;
+            }
+
             switch (BtnCreate.Text)
             {
                 case "Create":
+                    // Validate if ship with this id doesn't already exist
+                    if (FactionShipsForm.ShipsListBox.Items
+                        .Cast<Ship>()
+                        .Select(a => a.Id)
+                        .Contains(TxtId.Text, StringComparer.OrdinalIgnoreCase))
+                    {
+                        _ = MessageBox.Show("A ship with this id already exists.");
+                        return;
+                    }
+
+                    var ship = new Ship
+                    {
+                        Id = TxtId.Text,
+                        Group = TxtGroup.Text
+                    };
+                    SetValues(ship);
+                    FactionShipsForm.ShipsListBox.Items.Add(ship);
                     break;
                 case "Update":
+                    if (Ship.Id != TxtId.Text)
+                    {
+                        // Id was changed, check if it already exists
+                        if (FactionShipsForm.ShipsListBox.Items
+                            .Cast<Ship>()
+                            .Select(a => a.Id)
+                            .Contains(TxtId.Text, StringComparer.OrdinalIgnoreCase))
+                        {
+                            _ = MessageBox.Show("You modified the ship id, but a ship with this id already exists.");
+                            return;
+                        }
+                    }
+
+                    Ship.Id = TxtId.Text;
+                    Ship.Group = TxtGroup.Text;
+                    SetValues(Ship);
                     break;
             }
+
+            Close();
+        }
+
+        private void SetValues(Ship ship)
+        {
+            // Set other properties
+            if (SetValue(CmbBasket, out var value))
+                ship.BasketObj = new Ship.Basket { BasketValue = value };
+            if (SetValue(CmbDrop, out value))
+                ship.DropObj = new Ship.Drop { Ref = value };
+            if (SetValue(CmbPeople, out value))
+                ship.PeopleObj = new Ship.People { Ref = value };
+            if (SetValue(CmbCatSize, out value))
+            {
+                ship.CategoryObj ??= new Ship.Category();
+                ship.CategoryObj.Size = value;
+            }
+            if (SetValue(CmbPilotFaction, out value))
+            {
+                ship.PilotObj ??= new Ship.Pilot();
+                ship.PilotObj.Select ??= new Ship.Select();
+                ship.PilotObj.Select.Faction = value;
+            }
+            if (_mscCatTags.SelectedItems.Count > 0)
+            {
+                var values = _mscCatTags.SelectedItems.Cast<string>().ToArray();
+                ship.CategoryObj ??= new Ship.Category();
+                ship.CategoryObj.Tags = values.Length > 1 ? $"[{string.Join(", ", values)}]" : values.First();
+            }
+            if (_mscCatFactions.SelectedItems.Count > 0)
+            {
+                var values = _mscCatFactions.SelectedItems.Cast<string>().ToArray();
+                ship.CategoryObj ??= new Ship.Category();
+                ship.CategoryObj.Faction = values.Length > 1 ? $"[{string.Join(", ", values)}]" : values.First();
+            }
+            if (_mscPilotTags.SelectedItems.Count > 0)
+            {
+                var values = _mscPilotTags.SelectedItems.Cast<string>().ToArray();
+                ship.PilotObj ??= new Ship.Pilot();
+                ship.PilotObj.Select ??= new Ship.Select();
+                ship.PilotObj.Select.Tags = values.Length > 1 ? $"[{string.Join(", ", values)}]" : values.First();
+            }
+        }
+
+        private static bool SetValue(ComboBox cmb, out string value)
+        {
+            value = cmb.SelectedItem as string ?? "None";
+            if (!string.IsNullOrWhiteSpace(value) && !value.Equals("None", StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -137,6 +232,12 @@ namespace X4SectorCreator.Forms.Factions
             }
 
             return result;
+        }
+
+        private void ShipForm_Load(object sender, EventArgs e)
+        {
+            if (Ship != null)
+                InitShip(Ship);
         }
     }
 }

@@ -190,5 +190,26 @@ namespace X4SectorCreator.Forms
                 _shipForm.Value.Show();
             }
         }
+
+        private void BtnConfirm_Click(object sender, EventArgs e)
+        {
+            FactionForm.ShipGroups = ShipGroupsListBox.Items.Cast<ShipGroup>().ToList();
+            FactionForm.Ships = ShipsListBox.Items.Cast<Ship>().ToList();
+            Close();
+        }
+
+        private void FactionShipsForm_Load(object sender, EventArgs e)
+        {
+            if (FactionForm.ShipGroups != null)
+            {
+                foreach (var shipGroup in FactionForm.ShipGroups)
+                    ShipGroupsListBox.Items.Add(shipGroup);
+            }
+            if (FactionForm.Ships != null)
+            {
+                foreach (var ship in FactionForm.Ships)
+                    ShipsListBox.Items.Add(ship);
+            }
+        }
     }
 }

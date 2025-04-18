@@ -45,11 +45,19 @@ namespace X4SectorCreator.Objects
         [XmlAttribute(AttributeName = "policefaction")]
         public string PoliceFaction { get; set; }
 
+        #region Faction Data
         [XmlIgnore]
         public Color Color { get; set; }
 
         [XmlIgnore]
         public string Icon { get; set; }
+
+        [XmlIgnore]
+        public List<ShipGroup> ShipGroups { get; set; }
+
+        [XmlIgnore]
+        public List<Ship> Ships { get; set; }
+        #endregion
 
         public string Serialize()
         {

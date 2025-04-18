@@ -38,13 +38,14 @@
             BtnDeleteShip = new Button();
             BtnCreateShip = new Button();
             BtnExit = new Button();
+            BtnConfirm = new Button();
             SuspendLayout();
             // 
             // BtnUseFactionPreset
             // 
             BtnUseFactionPreset.Location = new Point(12, 350);
             BtnUseFactionPreset.Name = "BtnUseFactionPreset";
-            BtnUseFactionPreset.Size = new Size(368, 36);
+            BtnUseFactionPreset.Size = new Size(230, 36);
             BtnUseFactionPreset.TabIndex = 0;
             BtnUseFactionPreset.Text = "Use Faction Preset";
             BtnUseFactionPreset.UseVisualStyleBackColor = true;
@@ -128,7 +129,7 @@
             // 
             // BtnExit
             // 
-            BtnExit.Location = new Point(386, 350);
+            BtnExit.Location = new Point(248, 350);
             BtnExit.Name = "BtnExit";
             BtnExit.Size = new Size(92, 36);
             BtnExit.TabIndex = 9;
@@ -136,11 +137,22 @@
             BtnExit.UseVisualStyleBackColor = true;
             BtnExit.Click += BtnExit_Click;
             // 
+            // BtnConfirm
+            // 
+            BtnConfirm.Location = new Point(346, 350);
+            BtnConfirm.Name = "BtnConfirm";
+            BtnConfirm.Size = new Size(132, 36);
+            BtnConfirm.TabIndex = 10;
+            BtnConfirm.Text = "Confirm";
+            BtnConfirm.UseVisualStyleBackColor = true;
+            BtnConfirm.Click += BtnConfirm_Click;
+            // 
             // FactionShipsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(483, 390);
+            Controls.Add(BtnConfirm);
             Controls.Add(BtnExit);
             Controls.Add(BtnDeleteShip);
             Controls.Add(BtnCreateShip);
@@ -156,6 +168,7 @@
             MinimizeBox = false;
             Name = "FactionShipsForm";
             Text = "Faction Ships Editor";
+            Load += FactionShipsForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -172,5 +185,6 @@
         private Button BtnExit;
         internal ListBox ShipGroupsListBox;
         internal ListBox ShipsListBox;
+        private Button BtnConfirm;
     }
 }
