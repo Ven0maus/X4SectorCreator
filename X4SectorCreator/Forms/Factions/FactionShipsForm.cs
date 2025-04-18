@@ -45,6 +45,25 @@ namespace X4SectorCreator.Forms
         }
 
         private static Dictionary<string, Ships> _shipPresets;
+        public static Dictionary<string, Ships> ShipPresets
+        {
+            get
+            {
+                if (_shipPresets == null)
+                {
+                    _shipPresets = new(StringComparer.OrdinalIgnoreCase);
+
+                    var presets = Directory.GetFiles(Path.Combine(Application.StartupPath, $"Data/Presets/Ships"), "*.xml");
+                    foreach (var preset in presets)
+                    {
+                        var ships = Ships.Deserialize(File.ReadAllText(preset));
+                        var fileName = Path.GetFileName(preset);
+                        _shipPresets.Add(fileName.Split('_')[0], ships);
+                    }
+                }
+                return _shipPresets;
+            }
+        }
 
         private readonly LazyEvaluated<ShipGroupsForm> _shipGroupsForm = new(() => new ShipGroupsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ShipForm> _shipForm = new(() => new ShipForm(), a => !a.IsDisposed);
@@ -52,23 +71,6 @@ namespace X4SectorCreator.Forms
         public FactionShipsForm()
         {
             InitializeComponent();
-            InitPresets();
-        }
-
-        private static void InitPresets()
-        {
-            if (_shipPresets == null)
-            {
-                _shipPresets = new(StringComparer.OrdinalIgnoreCase);
-
-                var presets = Directory.GetFiles(Path.Combine(Application.StartupPath, $"Data/Presets/Ships"), "*.xml");
-                foreach (var preset in presets)
-                {
-                    var ships = Ships.Deserialize(File.ReadAllText(preset));
-                    var fileName = Path.GetFileName(preset);
-                    _shipPresets.Add(fileName.Split('_')[0], ships);
-                }
-            }
         }
 
         private void BtnUseFactionPreset_Click(object sender, EventArgs e)
@@ -112,7 +114,7 @@ namespace X4SectorCreator.Forms
             }
 
             // 2. Load Ships preset
-            var ships = _shipPresets[faction];
+            var ships = ShipPresets[faction];
             foreach (var ship in ships.Ship)
             {
                 var newShip = ship.Clone();

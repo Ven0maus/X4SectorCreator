@@ -1,4 +1,6 @@
-﻿namespace X4SectorCreator.Forms.Factions
+﻿using X4SectorCreator.CustomComponents;
+
+namespace X4SectorCreator.Forms.Factions
 {
     partial class ShipForm
     {
@@ -33,14 +35,14 @@
             TxtGroup = new TextBox();
             label2 = new Label();
             label3 = new Label();
-            CmbCatTags = new ComboBox();
-            CmbCatFactions = new ComboBox();
+            CmbCatTags = new MultiSelectCombo.NoDropDownComboBox();
+            CmbCatFactions = new MultiSelectCombo.NoDropDownComboBox();
             label4 = new Label();
             CmbCatSize = new ComboBox();
             label5 = new Label();
             CmbPilotFaction = new ComboBox();
             label6 = new Label();
-            CmbPilotTags = new ComboBox();
+            CmbPilotTags = new MultiSelectCombo.NoDropDownComboBox();
             label7 = new Label();
             CmbBasket = new ComboBox();
             label8 = new Label();
@@ -238,6 +240,7 @@
             BtnCreate.TabIndex = 20;
             BtnCreate.Text = "Create";
             BtnCreate.UseVisualStyleBackColor = true;
+            BtnCreate.Click += BtnCreate_Click;
             // 
             // BtnCancel
             // 
@@ -247,6 +250,7 @@
             BtnCancel.TabIndex = 21;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
+            BtnCancel.Click += BtnCancel_Click;
             // 
             // ShipForm
             // 
@@ -291,14 +295,14 @@
         private TextBox TxtGroup;
         private Label label2;
         private Label label3;
-        private ComboBox CmbCatTags;
-        private ComboBox CmbCatFactions;
+        private MultiSelectCombo.NoDropDownComboBox CmbCatTags;
+        private MultiSelectCombo.NoDropDownComboBox CmbCatFactions;
         private Label label4;
         private ComboBox CmbCatSize;
         private Label label5;
         private ComboBox CmbPilotFaction;
         private Label label6;
-        private ComboBox CmbPilotTags;
+        private MultiSelectCombo.NoDropDownComboBox CmbPilotTags;
         private Label label7;
         private ComboBox CmbBasket;
         private Label label8;
