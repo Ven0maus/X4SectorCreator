@@ -47,17 +47,15 @@ namespace X4SectorCreator.XmlGeneration
             var path = EnsureDirectoryExists(Path.Combine(folder, $"assets/fx/gui/textures/factions/{faction.IconData.Active}.tga"));
 
             // Create tga file at location
-            using (var img = ImageHelper.Base64ToImage(faction.Icon))
-            {
-                // Create tga at location as regular file type
-                ImageHelper.SaveAsTga(img, path.Replace(".tga", ""));
+            using var img = ImageHelper.Base64ToImage(faction.Icon);
+            // Create tga at location as regular file type
+            ImageHelper.SaveAsTga(img, path.Replace(".tga", ""));
 
-                // Compress to a gzip
-                CompressTgaToGz(path.Replace(".tga", ""), path.Replace(".tga", ".gz"));
+            // Compress to a gzip
+            CompressTgaToGz(path.Replace(".tga", ""), path.Replace(".tga", ".gz"));
 
-                // Delete original tga
-                File.Delete(path.Replace(".tga", ""));
-            }
+            // Delete original tga
+            File.Delete(path.Replace(".tga", ""));
         }
 
         private static void CompressTgaToGz(string tgaPath, string gzPath)

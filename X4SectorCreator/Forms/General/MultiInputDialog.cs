@@ -26,7 +26,7 @@ namespace X4SectorCreator.Forms.General
             {
                 foreach ((string label, string[] values, string defaultValue) label in labels)
                 {
-                    int labelWidth = (int)g.MeasureString(label.label, Font).Width;
+                    int labelWidth = (int)g.MeasureString(label.label, Font).Width + 5;
                     maxLabelWidth = Math.Max(maxLabelWidth, labelWidth);
                 }
             }
@@ -101,11 +101,6 @@ namespace X4SectorCreator.Forms.General
         {
             using MultiInputDialog form = new(title, labels);
             return form.ShowDialog() == DialogResult.OK ? form.InputValues : null;
-        }
-
-        private void InitializeComponent()
-        {
-
         }
     }
 }

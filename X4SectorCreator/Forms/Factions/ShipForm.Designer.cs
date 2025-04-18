@@ -52,6 +52,7 @@ namespace X4SectorCreator.Forms.Factions
             label10 = new Label();
             BtnCreate = new Button();
             BtnCancel = new Button();
+            BtnSelectCustomGroup = new Button();
             SuspendLayout();
             // 
             // label1
@@ -252,11 +253,22 @@ namespace X4SectorCreator.Forms.Factions
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
+            // BtnSelectCustomGroup
+            // 
+            BtnSelectCustomGroup.Location = new Point(307, 6);
+            BtnSelectCustomGroup.Name = "BtnSelectCustomGroup";
+            BtnSelectCustomGroup.Size = new Size(105, 23);
+            BtnSelectCustomGroup.TabIndex = 22;
+            BtnSelectCustomGroup.Text = "Select Custom";
+            BtnSelectCustomGroup.UseVisualStyleBackColor = true;
+            BtnSelectCustomGroup.Click += BtnSelectCustomGroup_Click;
+            // 
             // ShipForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(631, 256);
+            Controls.Add(BtnSelectCustomGroup);
             Controls.Add(BtnCancel);
             Controls.Add(BtnCreate);
             Controls.Add(CmbPeople);
@@ -313,5 +325,6 @@ namespace X4SectorCreator.Forms.Factions
         private Label label10;
         private Button BtnCreate;
         private Button BtnCancel;
+        private Button BtnSelectCustomGroup;
     }
 }

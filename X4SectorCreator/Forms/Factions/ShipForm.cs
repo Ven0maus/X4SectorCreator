@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using X4SectorCreator.CustomComponents;
+using X4SectorCreator.Forms.General;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Factions
@@ -252,6 +253,32 @@ namespace X4SectorCreator.Forms.Factions
 
             if (Ship != null)
                 InitShip(Ship);
+        }
+
+        private void BtnSelectCustomGroup_Click(object sender, EventArgs e)
+        {
+            var customGroups = FactionShipsForm.ShipGroupsListBox.Items
+                .Cast<ShipGroup>()
+                .Select(a => a.Name)
+                .ToArray();
+            if (customGroups.Length == 0)
+            {
+                _ = MessageBox.Show("You have no custom groups created.");
+                return;
+            }
+
+            const string lblGroup = "Custom group:";
+            Dictionary<string, string> data = MultiInputDialog.Show("Select custom group",
+                (lblGroup, customGroups, null)
+            );
+            if (data == null || data.Count == 0)
+                return;
+
+            string group = data[lblGroup];
+            if (string.IsNullOrWhiteSpace(group))
+                return;
+
+            TxtGroup.Text = group;
         }
     }
 }

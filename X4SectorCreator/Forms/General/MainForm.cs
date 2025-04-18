@@ -414,6 +414,8 @@ namespace X4SectorCreator
                 FactionsGeneration.Generate(modFolder);
                 ColorsGeneration.Generate(modFolder);
                 IconsGeneration.Generate(modFolder);
+                ShipsGeneration.Generate(modFolder);
+                ShipGroupsGeneration.Generate(modFolder);
             }
             catch (Exception ex)
             {
