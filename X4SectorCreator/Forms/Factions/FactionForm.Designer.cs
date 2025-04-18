@@ -289,7 +289,7 @@
             BtnEditFactionShips.Name = "BtnEditFactionShips";
             BtnEditFactionShips.Size = new Size(145, 33);
             BtnEditFactionShips.TabIndex = 31;
-            BtnEditFactionShips.Text = "Edit Faction Ships";
+            BtnEditFactionShips.Text = "Setup Faction Ships";
             BtnEditFactionShips.UseVisualStyleBackColor = true;
             BtnEditFactionShips.Click += BtnEditFactionShips_Click;
             // 
