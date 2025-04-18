@@ -57,6 +57,7 @@
             ShipGroupsListBox.Name = "ShipGroupsListBox";
             ShipGroupsListBox.Size = new Size(230, 274);
             ShipGroupsListBox.TabIndex = 1;
+            ShipGroupsListBox.DoubleClick += ShipGroupsListBox_DoubleClick;
             // 
             // label1
             // 
@@ -92,6 +93,7 @@
             BtnCreateGroup.TabIndex = 5;
             BtnCreateGroup.Text = "Create New Group";
             BtnCreateGroup.UseVisualStyleBackColor = true;
+            BtnCreateGroup.Click += BtnCreateGroup_Click;
             // 
             // BtnDeleteGroup
             // 
@@ -101,6 +103,7 @@
             BtnDeleteGroup.TabIndex = 6;
             BtnDeleteGroup.Text = "Delete";
             BtnDeleteGroup.UseVisualStyleBackColor = true;
+            BtnDeleteGroup.Click += BtnDeleteGroup_Click;
             // 
             // BtnDeleteShip
             // 
@@ -110,6 +113,7 @@
             BtnDeleteShip.TabIndex = 8;
             BtnDeleteShip.Text = "Delete";
             BtnDeleteShip.UseVisualStyleBackColor = true;
+            BtnDeleteShip.Click += BtnDeleteShip_Click;
             // 
             // BtnCreateShip
             // 
@@ -119,6 +123,7 @@
             BtnCreateShip.TabIndex = 7;
             BtnCreateShip.Text = "Create New Ship";
             BtnCreateShip.UseVisualStyleBackColor = true;
+            BtnCreateShip.Click += BtnCreateShip_Click;
             // 
             // BtnExit
             // 
@@ -157,14 +162,14 @@
         #endregion
 
         private Button BtnUseFactionPreset;
-        private ListBox ShipGroupsListBox;
         private Label label1;
         private Label label2;
-        private ListBox ShipsListBox;
         private Button BtnCreateGroup;
         private Button BtnDeleteGroup;
         private Button BtnDeleteShip;
         private Button BtnCreateShip;
         private Button BtnExit;
+        internal ListBox ShipGroupsListBox;
+        internal ListBox ShipsListBox;
     }
 }

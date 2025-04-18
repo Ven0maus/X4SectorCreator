@@ -61,7 +61,12 @@ namespace X4SectorCreator.Objects
             public string Macro { get; set; }
 
             [XmlAttribute(AttributeName = "weight")]
-            public int Weight { get; set; }
+            public string Weight { get; set; }
+
+            public override string ToString()
+            {
+                return Macro + " | " + Weight;
+            }
         }
     }
 

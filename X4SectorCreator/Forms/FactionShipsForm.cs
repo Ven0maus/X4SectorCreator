@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -20,7 +21,30 @@ namespace X4SectorCreator.Forms
         public FactionForm FactionForm { get; set; }
 
         private static Dictionary<string, ShipGroups> _shipGroupPresets;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public static Dictionary<string, ShipGroups> ShipGroupPresets
+        {
+            get
+            {
+                if (_shipGroupPresets == null)
+                {
+                    _shipGroupPresets = new(StringComparer.OrdinalIgnoreCase);
+
+                    var presets = Directory.GetFiles(Path.Combine(Application.StartupPath, $"Data/Presets/ShipGroups"), "*.xml");
+                    foreach (var preset in presets)
+                    {
+                        var shipGroups = ShipGroups.Deserialize(File.ReadAllText(preset));
+                        var fileName = Path.GetFileName(preset);
+                        _shipGroupPresets.Add(fileName.Split('_')[0], shipGroups);
+                    }
+                }
+                return _shipGroupPresets;
+            }
+        }
+
         private static Dictionary<string, Ships> _shipPresets;
+
+        private readonly LazyEvaluated<ShipGroupsForm> _shipGroupsForm = new(() => new ShipGroupsForm(), a => !a.IsDisposed);
 
         public FactionShipsForm()
         {
@@ -30,19 +54,6 @@ namespace X4SectorCreator.Forms
 
         private static void InitPresets()
         {
-            if (_shipGroupPresets == null)
-            {
-                _shipGroupPresets = new(StringComparer.OrdinalIgnoreCase);
-
-                var presets = Directory.GetFiles(Path.Combine(Application.StartupPath, $"Data/Presets/ShipGroups"), "*.xml");
-                foreach (var preset in presets)
-                {
-                    var shipGroups = ShipGroups.Deserialize(File.ReadAllText(preset));
-                    var fileName = Path.GetFileName(preset);
-                    _shipGroupPresets.Add(fileName.Split('_')[0], shipGroups);
-                }
-            }
-
             if (_shipPresets == null)
             {
                 _shipPresets = new(StringComparer.OrdinalIgnoreCase);
@@ -72,7 +83,7 @@ namespace X4SectorCreator.Forms
             ShipGroupsListBox.Items.Clear();
             ShipsListBox.Items.Clear();
 
-            var factions = _shipGroupPresets.Select(a => a.Key).OrderBy(a => a).ToArray();
+            var factions = ShipGroupPresets.Select(a => a.Key).OrderBy(a => a).ToArray();
 
             const string lblFaction = "Faction:";
             Dictionary<string, string> data = MultiInputDialog.Show("Select faction preset",
@@ -83,10 +94,13 @@ namespace X4SectorCreator.Forms
 
             string faction = data[lblFaction];
             if (string.IsNullOrWhiteSpace(faction))
+            {
+                _ = MessageBox.Show("Select a valid faction first.");
                 return;
+            }
 
             // 1. Load ShipGroups preset
-            var shipGroups = _shipGroupPresets[faction];
+            var shipGroups = ShipGroupPresets[faction];
             foreach (var shipGroup in shipGroups.Group)
             {
                 var newGroup = shipGroup.Clone();
@@ -107,6 +121,57 @@ namespace X4SectorCreator.Forms
         private void BtnExit_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void ShipGroupsListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (ShipGroupsListBox.SelectedItem is ShipGroup shipGroup)
+            {
+                _shipGroupsForm.Value.FactionShipsForm = this;
+                _shipGroupsForm.Value.ShipGroup = shipGroup;
+                _shipGroupsForm.Value.Show();
+            }
+        }
+
+        private void BtnCreateGroup_Click(object sender, EventArgs e)
+        {
+            _shipGroupsForm.Value.FactionShipsForm = this;
+            _shipGroupsForm.Value.Show();
+        }
+
+        private void BtnDeleteGroup_Click(object sender, EventArgs e)
+        {
+            if (ShipGroupsListBox.SelectedItem is ShipGroup)
+            {
+                int index = ShipGroupsListBox.Items.IndexOf(ShipGroupsListBox.SelectedItem);
+                ShipGroupsListBox.Items.Remove(ShipGroupsListBox.SelectedItem);
+
+                // Ensure index is within valid range
+                index--;
+                index = Math.Max(0, index);
+                ShipGroupsListBox.SelectedItem = index >= 0 && ShipGroupsListBox.Items.Count > 0 ?
+                    ShipGroupsListBox.Items[index] : null;
+            }
+        }
+
+        private void BtnDeleteShip_Click(object sender, EventArgs e)
+        {
+            if (ShipsListBox.SelectedItem is Ship)
+            {
+                int index = ShipsListBox.Items.IndexOf(ShipsListBox.SelectedItem);
+                ShipsListBox.Items.Remove(ShipsListBox.SelectedItem);
+
+                // Ensure index is within valid range
+                index--;
+                index = Math.Max(0, index);
+                ShipsListBox.SelectedItem = index >= 0 && ShipsListBox.Items.Count > 0 ?
+                    ShipsListBox.Items[index] : null;
+            }
+        }
+
+        private void BtnCreateShip_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
