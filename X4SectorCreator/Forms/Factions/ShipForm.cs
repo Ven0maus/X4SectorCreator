@@ -35,9 +35,6 @@ namespace X4SectorCreator.Forms.Factions
         {
             InitializeComponent();
 
-            // Init combobox values based on preset values
-            SetupComboboxValues();
-
             _mscCatTags = new MultiSelectCombo(CmbCatTags);
             _mscCatFactions = new MultiSelectCombo(CmbCatFactions);
             _mscPilotTags = new MultiSelectCombo(CmbPilotTags);
@@ -66,14 +63,28 @@ namespace X4SectorCreator.Forms.Factions
             var pilotTags = shipPresets.SelectMany(a => ParseMultiField(a.PilotObj?.Select?.Tags))
                 .Where(a => a != null).ToHashSet(StringComparer.OrdinalIgnoreCase);
 
+            // Add custom factions and current faction to the faction comboboxes
+            var customFactions = FactionsForm.AllCustomFactions.Select(a => a.Key)
+                .Append(FactionShipsForm.Faction.Id)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            foreach (var faction in customFactions)
+            {
+                catFactions.Add(faction);
+                pilotFactions.Add(faction);
+            }
+
             AddValues(CmbCatSize, catSizes);
-            AddValues(CmbPilotFaction, pilotFactions);
             AddValues(CmbBasket, baskets);
             AddValues(CmbDrop, drops);
             AddValues(CmbPeople, peoples);
             AddValues(CmbCatTags, catTags);
-            AddValues(CmbCatFactions, catFactions);
             AddValues(CmbPilotTags, pilotTags);
+            AddValues(CmbCatFactions, catFactions);
+            AddValues(CmbPilotFaction, pilotFactions);
+
+            _mscCatFactions.ReInit();
+            _mscCatTags.ReInit();
+            _mscPilotTags.ReInit();
         }
 
         private static void AddValues(ComboBox cmb, IEnumerable<string> values)
@@ -236,6 +247,9 @@ namespace X4SectorCreator.Forms.Factions
 
         private void ShipForm_Load(object sender, EventArgs e)
         {
+            // Init combobox values based on preset values
+            SetupComboboxValues();
+
             if (Ship != null)
                 InitShip(Ship);
         }
