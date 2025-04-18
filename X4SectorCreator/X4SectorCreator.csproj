@@ -44,6 +44,12 @@
     <None Update="Data\Mappings\vanilla_connection_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Presets\ShipGroups\argon_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\argon_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\TemplateFactories\Vanilla\god.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

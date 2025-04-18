@@ -215,6 +215,10 @@ namespace X4SectorCreator.Forms
 
         private void BtnEditFactionShips_Click(object sender, EventArgs e)
         {
+            // Apply all field data to the XML
+            if (!ApplyFieldsContentToFactionXml())
+                return;
+
             _factionShipsForm.Value.FactionForm = this;
             _factionShipsForm.Value.Faction = Faction.Deserialize(_factionXml);
             _factionShipsForm.Value.Show();

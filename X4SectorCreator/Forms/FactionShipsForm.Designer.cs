@@ -48,6 +48,7 @@
             BtnUseFactionPreset.TabIndex = 0;
             BtnUseFactionPreset.Text = "Use Faction Preset";
             BtnUseFactionPreset.UseVisualStyleBackColor = true;
+            BtnUseFactionPreset.Click += BtnUseFactionPreset_Click;
             // 
             // ShipGroupsListBox
             // 
@@ -127,12 +128,13 @@
             BtnExit.TabIndex = 9;
             BtnExit.Text = "Exit";
             BtnExit.UseVisualStyleBackColor = true;
+            BtnExit.Click += BtnExit_Click;
             // 
             // FactionShipsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(490, 395);
+            ClientSize = new Size(483, 390);
             Controls.Add(BtnExit);
             Controls.Add(BtnDeleteShip);
             Controls.Add(BtnCreateShip);
@@ -143,6 +145,9 @@
             Controls.Add(label1);
             Controls.Add(ShipGroupsListBox);
             Controls.Add(BtnUseFactionPreset);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FactionShipsForm";
             Text = "Faction Ships Editor";
             ResumeLayout(false);
