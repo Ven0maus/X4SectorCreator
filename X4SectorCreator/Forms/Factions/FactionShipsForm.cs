@@ -120,6 +120,10 @@ namespace X4SectorCreator.Forms
                 var newShip = ship.Clone();
                 newShip.Id = $"{Faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(1))}";
                 newShip.Group = $"{Faction.Id}_{string.Join("_", ship.Group.Split('_').Skip(1))}";
+                if (newShip.CategoryObj != null)
+                    newShip.CategoryObj.Faction = Faction.Id;
+                if (newShip.PilotObj != null && newShip.PilotObj.Select != null)
+                    newShip.PilotObj.Select.Faction = Faction.Id;
                 ShipsListBox.Items.Add(newShip);
             }
         }
