@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
+using X4SectorCreator.Forms.General;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 using X4SectorCreator.XmlGeneration;

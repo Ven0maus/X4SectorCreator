@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace X4SectorCreator.Forms
+namespace X4SectorCreator.Forms.General
 {
     internal class MultiInputDialog : Form
     {

@@ -14,13 +14,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="Forms\FactoryForm.cs">
+    <Compile Update="Forms\Factories\FactoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\FactoriesForm.cs">
+    <Compile Update="Forms\Factories\FactoriesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\FactoryTemplatesForm.cs">
+    <Compile Update="Forms\Factories\FactoryTemplatesForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

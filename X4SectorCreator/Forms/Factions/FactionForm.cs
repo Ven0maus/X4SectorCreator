@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
+using X4SectorCreator.Forms.General;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 using Color = System.Drawing.Color;
