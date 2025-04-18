@@ -115,6 +115,7 @@ namespace X4SectorCreator.Forms
             {
                 var newShip = ship.Clone();
                 newShip.Id = $"{Faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(1))}";
+                newShip.Group = $"{Faction.Id}_{string.Join("_", ship.Group.Split('_').Skip(1))}";
                 ShipsListBox.Items.Add(newShip);
             }
         }
