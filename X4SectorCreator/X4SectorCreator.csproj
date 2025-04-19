@@ -44,6 +44,18 @@
     <None Update="Data\Mappings\vanilla_connection_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Presets\Constructionplans\argon_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\generic_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\paranid_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\teladi_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Presets\ShipGroups\argon_shipgroups.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
