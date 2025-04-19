@@ -21,6 +21,7 @@ namespace X4SectorCreator.Forms.Factions
             }
 
             FactionForm.StationTypes = SelectedStationTypesListBox.Items.Cast<string>().ToList();
+            Close();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)

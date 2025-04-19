@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
+using X4SectorCreator.Forms.Factions;
 using X4SectorCreator.Forms.General;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -73,6 +74,7 @@ namespace X4SectorCreator.Forms
         private readonly LazyEvaluated<FactionXmlForm> _factionXmlForm = new(() => new FactionXmlForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<FactionRelationsForm> _factionRelationsForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<FactionShipsForm> _factionShipsForm = new(() => new FactionShipsForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<FactionStationForm> _factionStationForm = new(() => new FactionStationForm(), a => !a.IsDisposed);
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Color? FactionColor { get; set; }
@@ -500,7 +502,8 @@ namespace X4SectorCreator.Forms
 
         private void BtnFactionStations_Click(object sender, EventArgs e)
         {
-
+            _factionStationForm.Value.FactionForm = this;
+            _factionStationForm.Value.Show();
         }
 
         private void BtnFactionCharacters_Click(object sender, EventArgs e)
