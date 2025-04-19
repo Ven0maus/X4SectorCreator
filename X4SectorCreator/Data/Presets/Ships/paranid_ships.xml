@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ships>
+	<ship id="paranid_builder_xl" group="par_builder_xl">
+		<category tags="[builder, mission]" faction="[paranid, alliance]" size="ship_xl"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<drop ref="ship_large_civilian"/>
+		<!--TODO @Owen #EntityTypes Implement a people defaults so we don't have to copy and paste the same stuff into every definition. Ship::Defaults?-->
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+
+	<ship id="paranid_resupplier_xl" group="par_resupplier_xl">
+		<category tags="[resupplier, mission]" faction="[paranid, alliance]" size="ship_xl"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<drop ref="ship_large_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+
+	<ship id="paranid_trader_container_l" group="par_trader_container_l">
+		<category tags="[trader, container, mission]" faction="[paranid, alliance]" size="ship_l"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_large_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+	<ship id="paranid_trader_container_m" group="par_trader_container_m">
+		<category tags="[trader, container, mission]" faction="[paranid, alliance]" size="ship_m"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+	<ship id="paranid_trader_container_s" group="par_trader_container_s">
+		<category tags="[trader, container, mission]" faction="[paranid, alliance]" size="ship_s"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_small_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+
+	<ship id="paranid_miner_solid_l" group="par_miner_solid_l">
+		<category tags="[miner, solid, mission]" faction="[paranid, alliance]" size="ship_l"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_large_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+	<ship id="paranid_miner_liquid_l" group="par_miner_liquid_l">
+		<category tags="[miner, liquid, mission]" faction="[paranid, alliance]" size="ship_l"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="gases"/>
+		<drop ref="ship_large_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+	<ship id="paranid_miner_solid_m" group="par_miner_solid_m">
+		<category tags="[miner, solid, mission]" faction="[paranid, alliance]" size="ship_m"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+	<ship id="paranid_miner_liquid_m" group="par_miner_liquid_m">
+		<category tags="[miner, liquid, mission]" faction="[paranid, alliance]" size="ship_m"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="gases"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+	<ship id="paranid_miner_solid_s" group="par_miner_solid_s">
+		<category tags="[miner, solid, mission]" faction="[paranid, alliance]" size="ship_s"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_small_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+	<ship id="paranid_miner_solid_mixed"  group="par_miner_solid_mixed">
+		<category tags="[miner, solid, mixed]" faction="[paranid, alliance]"/>
+		<owner exact="paranid" overridenpc="true"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+	<ship id="paranid_miner_liquid_mixed"  group="par_miner_liquid_mixed">
+		<category tags="[miner, liquid, mixed]" faction="[paranid, alliance]"/>
+		<owner exact="paranid" overridenpc="true"/>
+		<pilot>
+			<select faction="paranid" tags="traderpilot"/>
+		</pilot>
+		<basket basket="gases"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="paranid_freighter_crew"/>
+	</ship>
+
+	<ship id="paranid_carrier_xl" group="par_carrier_xl">
+		<category tags="[military, carrier, mission]" faction="[paranid, alliance]" size="ship_xl"/>
+		<pilot>
+			<select faction="paranid" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_large_military"/>
+		<people ref="paranid_military_crew"/>
+	</ship>
+	<ship id="paranid_destroyer_l" group="par_destroyer_l">
+		<category tags="[military, destroyer, mission]" faction="[paranid, alliance]" size="ship_l"/>
+		<pilot>
+			<select faction="paranid" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_large_military"/>
+		<people ref="paranid_military_crew"/>
+	</ship>
+	<ship id="paranid_frigate_m" group="par_frigate_m">
+		<category tags="[military, medium, frigate, mission]" faction="[paranid, alliance]" size="ship_m"/>
+		<pilot>
+			<select faction="paranid" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="paranid_military_crew"/>
+	</ship>
+	<ship id="paranid_corvette_m" group="par_corvette_m">
+		<category tags="[military, medium, corvette, mission]" faction="[paranid, alliance]" size="ship_m"/>
+		<pilot>
+			<select faction="paranid" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="paranid_military_crew"/>
+	</ship>
+	<ship id="paranid_fighter_s" group="par_fighter_s">
+		<category tags="[military, fighter, heavy, light, selection, mission]" faction="[paranid, alliance]" size="ship_s"/>
+		<pilot>
+			<select faction="paranid" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="paranid_military_crew"/>
+	</ship>
+	<ship id="paranid_scout_s" group="par_scout_s">
+		<category tags="[military, scout, light, mission]" faction="[paranid, alliance]" size="ship_s"/>
+		<pilot>
+			<select faction="paranid" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="paranid_military_crew"/>
+	</ship>
+	<ship id="masstraffic_paranid_dockarea" group="paranid_dockarea_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_paranid_pier" group="paranid_pier_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_paranid_storage" group="paranid_storage_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_paranid_production" group="paranid_production_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_paranid_buildmodule" group="paranid_buildmodule_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_paranid_defencemodule" group="paranid_defencemodule_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+
+	<ship id="masstraffic_paranid_civilian" group="paranid_civilian_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<!--<inventory>
+      <wares basket="inv_masstraffic_agricultural" multiple="true" chance="20">
+        <fillvalue min="3000" max="5000"/>
+      </wares>
+      <wares basket="inv_masstraffic_food" multiple="true" chance="30">
+        <fillvalue min="4000" max="8000"/>
+      </wares>
+      <wares basket="inv_masstraffic_minerals" multiple="true" chance="20">
+        <fillvalue min="3000" max="6000"/>
+      </wares>
+      <wares basket="inv_masstraffic_tech_advanced" multiple="true" chance="10">
+        <fillvalue min="6000" max="9000"/>
+      </wares>
+      <wares basket="inv_masstraffic_tech_basic" multiple="true" chance="20">
+        <fillvalue min="3000" max="9000"/>
+      </wares>
+    </inventory>-->
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_paranid_smuggler" group="paranid_civilian_mass_traffic">
+		<owner exact="smuggler" overridenpc="true"/>
+		<pilot>
+			<select faction="smuggler" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<!--<inventory>
+      <wares basket="inv_illegal_drugs" multiple="true" chance="20">
+        <fillvalue min="40000" max="80000"/>
+      </wares>
+      <wares basket="inv_illegal_intoxicants" multiple="true" chance="30">
+        <fillvalue min="30000" max="60000"/>
+      </wares>
+      <wares basket="inv_illegal_lifeforms" multiple="true" chance="10">
+        <fillvalue min="40000" max="80000"/>
+      </wares>
+      <wares basket="inv_illegal_papers" multiple="true" chance="10">
+        <fillvalue min="30000" max="60000"/>
+      </wares>
+      <wares basket="inv_illegal_tech" multiple="true" chance="10">
+        <fillvalue min="40000" max="80000"/>
+      </wares>
+      <wares basket="inv_illegal_waste" multiple="true" chance="20">
+        <fillvalue min="10000" max="20000"/>
+      </wares>
+    </inventory>-->
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_paranid_criminal" group="paranid_civilian_mass_traffic">
+		<owner exact="criminal" overridenpc="true"/>
+		<pilot>
+			<select faction="criminal" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<!--<inventory>
+      <wares basket="inv_illegal_drugs" multiple="true" chance="20">
+        <fillvalue min="40000" max="80000"/>
+      </wares>
+      <wares basket="inv_illegal_intoxicants" multiple="true" chance="10">
+        <fillvalue min="30000" max="60000"/>
+      </wares>
+      <wares basket="inv_illegal_lifeforms" multiple="true" chance="20">
+        <fillvalue min="40000" max="80000"/>
+      </wares>
+      <wares basket="inv_illegal_papers" multiple="true" chance="20">
+        <fillvalue min="30000" max="60000"/>
+      </wares>
+      <wares basket="inv_illegal_tech" multiple="true" chance="20">
+        <fillvalue min="40000" max="80000"/>
+      </wares>
+      <wares basket="inv_illegal_waste" multiple="true" chance="10">
+        <fillvalue min="10000" max="20000"/>
+      </wares>
+    </inventory>-->
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_paranid_police" group="paranid_police_mass_traffic">
+		<owner exact="paranid" overridenpc="true"/>
+		<pilot>
+			<select faction="paranid" tags="pilot"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_holyorder_police" group="paranid_police_mass_traffic">
+		<owner exact="holyorder" overridenpc="true"/>
+		<pilot>
+			<select faction="holyorder" tags="pilot"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+</ships>

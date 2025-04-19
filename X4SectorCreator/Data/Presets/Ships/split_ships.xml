@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ships>
+	<ship id="split_builder_xl" group="spl_builder_xl">
+		<category tags="[builder, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_xl"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<drop ref="ship_large_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+	<ship id="split_resupplier_xl" group="spl_resupplier_xl">
+		<category tags="[resupplier, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_xl"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<drop ref="ship_large_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+
+	<ship id="split_trader_container_l" group="spl_trader_container_l">
+		<category tags="[trader, container, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_l"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_large_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+	<ship id="split_trader_container_m" group="spl_trader_container_m">
+		<category tags="[trader, container, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_m"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+	<ship id="split_trader_container_s" group="spl_trader_container_s">
+		<category tags="[trader, container, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_s"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_small_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+
+	<ship id="split_miner_solid_l" group="spl_miner_solid_l">
+		<category tags="[miner, solid, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_l"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_large_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+	<ship id="split_miner_liquid_l" group="spl_miner_liquid_l">
+		<category tags="[miner, liquid, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_l"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="gases"/>
+		<drop ref="ship_large_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+	<ship id="split_miner_solid_m" group="spl_miner_solid_m">
+		<category tags="[miner, solid, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_m"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+	<ship id="split_miner_liquid_m" group="spl_miner_liquid_m">
+		<category tags="[miner, liquid, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_m"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="gases"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+	<ship id="split_miner_solid_s" group="spl_miner_solid_s">
+		<category tags="[miner, solid, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_s"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_small_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+	<ship id="split_miner_solid_mixed"  group="spl_miner_solid_mixed">
+		<category tags="[miner, solid, mixed]" faction="[split, freesplit, fallensplit, court]"/>
+		<owner exact="split" overridenpc="true"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+	<ship id="split_miner_liquid_mixed"  group="spl_miner_liquid_mixed">
+		<category tags="[miner, liquid, mixed]" faction="[split, freesplit, fallensplit, court]"/>
+		<owner exact="split" overridenpc="true"/>
+		<pilot>
+			<select faction="split" tags="traderpilot"/>
+		</pilot>
+		<basket basket="gases"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="split_freighter_crew"/>
+	</ship>
+
+	<ship id="split_carrier_xl" macro="ship_spl_xl_carrier_01_a_macro">
+		<category tags="[military, carrier, mission]" faction="[split, freesplit, fallensplit, court]" size="ship_xl"/>
+		<pilot>
+			<select faction="split" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_large_military"/>
+		<people ref="split_military_crew"/>
+		<loadout ref="build_split_raptor"/>
+	</ship>
+
+	<ship id="split_scout_s" group="spl_scout_s">
+		<category tags="[military, scout, light, mission]" faction="[split, freesplit, fallensplit]" size="ship_s"/>
+		<pilot>
+			<select faction="split" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="split_military_crew"/>
+	</ship>
+
+	<!-- exclusive to faction.split -->
+	<ship id="split_destroyer_l" group="spl_destroyer_l">
+		<category tags="[military, destroyer, mission]" faction="split" size="ship_l"/>
+		<pilot>
+			<select faction="split" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_large_military"/>
+		<people ref="split_military_crew"/>
+	</ship>
+	<ship id="split_military_m" group="spl_military_m">
+		<category tags="[military, medium, selection, mission]" faction="split" size="ship_m"/>
+		<pilot>
+			<select faction="split" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="split_military_crew"/>
+	</ship>
+	<ship id="split_frigate_m" group="spl_frigate_m">
+		<category tags="[military, medium, frigate, mission]" faction="split" size="ship_m"/>
+		<pilot>
+			<select faction="split" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="split_military_crew"/>
+	</ship>
+	<ship id="split_corvette_m" group="spl_corvette_m">
+		<category tags="[military, medium, corvette, mission]" faction="split" size="ship_m"/>
+		<pilot>
+			<select faction="split" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="split_veteran_military_crew"/>
+	</ship>
+	<ship id="split_fighter_s" group="spl_fighter_s">
+		<category tags="[military, fighter, selection, mission, police]" faction="split" size="ship_s"/>
+		<pilot>
+			<select faction="split" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="split_military_crew"/>
+	</ship>
+	<ship id="split_fighter_heavy_s" group="spl_fighter_heavy_s">
+		<category tags="[military, fighter, heavy, mission]" faction="split" size="ship_s"/>
+		<pilot>
+			<select faction="split" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="split_veteran_military_crew"/>
+	</ship>
+	<ship id="split_fighter_light_s" group="spl_fighter_light_s">
+		<category tags="[military, fighter, light, mission]" faction="split" size="ship_s"/>
+		<pilot>
+			<select faction="split" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="split_veteran_military_crew"/>
+	</ship>
+	<ship id="masstraffic_split_dockarea" group="split_dockarea_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_split_civilian"/>
+	</ship>
+	<ship id="masstraffic_split_pier" group="split_pier_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_split_civilian"/>
+	</ship>
+	<ship id="masstraffic_split_storage" group="split_storage_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_split_civilian"/>
+	</ship>
+	<ship id="masstraffic_split_production" group="split_production_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_split_civilian"/>
+	</ship>
+	<ship id="masstraffic_split_buildmodule" group="split_buildmodule_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_split_civilian"/>
+	</ship>
+	<ship id="masstraffic_split_defencemodule" group="split_defencemodule_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_split_civilian"/>
+	</ship>
+
+	<ship id="masstraffic_split_civilian" group="split_civilian_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_split_civilian"/>
+	</ship>
+	<ship id="masstraffic_split_civilian_station" group="split_civilian_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_split_civilian"/>
+	</ship>
+	<ship id="masstraffic_split_police" group="split_police_mass_traffic">
+		<owner exact="split" overridenpc="true"/>
+		<pilot>
+			<select faction="split" tags="pilot"/>
+		</pilot>
+		<drop ref="masstraffic_split_civilian"/>
+	</ship>
+</ships>

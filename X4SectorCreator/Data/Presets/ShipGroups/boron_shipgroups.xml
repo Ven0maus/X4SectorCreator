@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<groups>
+	<group name="bor_builder_xl">
+		<select macro="ship_bor_xl_builder_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_resupplier_xl">
+		<select macro="ship_bor_xl_resupplier_01_a_macro" weight="100"/>
+	</group>
+
+	<!-- Transporters -->
+	<group name="bor_trader_container_l">
+		<select macro="ship_bor_l_trans_container_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_trader_container_m">
+		<select macro="ship_bor_m_trans_container_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_trader_container_s">
+		<select macro="ship_bor_s_trans_container_01_a_macro" weight="100"/>
+	</group>
+
+	<!-- Miners -->
+	<group name="bor_miner_solid_l">
+		<select macro="ship_bor_l_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_miner_liquid_l">
+		<select macro="ship_bor_l_miner_liquid_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_miner_solid_m">
+		<select macro="ship_bor_m_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_miner_liquid_m">
+		<select macro="ship_bor_m_miner_liquid_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_miner_solid_s">
+		<select macro="ship_bor_s_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_miner_solid_mixed">
+		<select macro="ship_bor_l_miner_solid_01_a_macro" weight="100"/>
+		<select macro="ship_bor_m_miner_solid_01_a_macro" weight="100"/>
+		<select macro="ship_bor_s_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_miner_liquid_mixed">
+		<select macro="ship_bor_l_miner_liquid_01_a_macro" weight="100"/>
+		<select macro="ship_bor_m_miner_liquid_01_a_macro" weight="100"/>
+	</group>
+
+	<!-- ############################# -->
+	<!-- Military / Combat -->
+	<!-- ############################# -->
+	<group name="bor_carrier_xl">
+		<select macro="ship_bor_xl_carrier_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_destroyer_l">
+		<select macro="ship_bor_l_destroyer_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_carrier_l">
+		<select macro="ship_bor_l_carrier_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_corvette_m">
+		<select macro="ship_bor_m_corvette_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_gunboat_m">
+		<select macro="ship_bor_m_gunboat_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_mixed_m">
+		<select macro="ship_bor_m_corvette_01_a_macro" weight="100"/>
+		<select macro="ship_bor_m_gunboat_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_fighter_s">
+		<select macro="ship_bor_s_heavyfighter_01_a_macro" weight="100"/>
+		<select macro="ship_bor_s_fighter_01_a_macro" weight="100"/>
+		<select macro="ship_bor_s_scout_01_a_macro" weight="100"/>
+		<select macro="ship_bor_s_scout_02_a_macro" weight="100"/>
+	</group>
+	<group name="bor_fighter_heavy_s">
+		<select macro="ship_bor_s_heavyfighter_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_fighter_light_s">
+		<select macro="ship_bor_s_fighter_01_a_macro" weight="100"/>
+	</group>
+	<group name="bor_scout_s">
+		<select macro="ship_bor_s_scout_01_a_macro" weight="90"/>
+		<select macro="ship_bor_s_scout_02_a_macro" weight="10"/>
+	</group>
+	<group name="boron_dockarea_mass_traffic">
+		<select macro="ship_bor_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_05_a_macro" weight="100"/>
+	</group>
+	<group name="boron_pier_mass_traffic">
+		<select macro="ship_bor_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_05_a_macro" weight="100"/>
+	</group>
+	<group name="boron_storage_mass_traffic">
+		<select macro="ship_bor_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_05_a_macro" weight="100"/>
+	</group>
+	<group name="boron_production_mass_traffic">
+		<select macro="ship_bor_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_05_a_macro" weight="100"/>
+	</group>
+	<group name="boron_buildmodule_mass_traffic">
+		<select macro="ship_bor_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_05_a_macro" weight="100"/>
+	</group>
+	<group name="boron_defencemodule_mass_traffic">
+		<select macro="ship_bor_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_05_a_macro" weight="100"/>
+	</group>
+	<group name="boron_civilian_mass_traffic">
+		<select macro="ship_bor_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_bor_xs_pv_05_a_macro" weight="100"/>
+	</group>
+</groups>
