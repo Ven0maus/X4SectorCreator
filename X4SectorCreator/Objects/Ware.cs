@@ -136,7 +136,7 @@ namespace X4SectorCreator.Objects
         public class Production
         {
             [XmlElement(ElementName = "method")]
-            public string Method { get; set; }
+            public List<Method> Method { get; set; }
 
             [XmlElement(ElementName = "effects")]
             public Effects Effects { get; set; }
