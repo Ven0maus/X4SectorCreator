@@ -423,6 +423,7 @@ namespace X4SectorCreator
                 LoadoutrulesGeneration.Generate(modFolder);
                 PaintmodsGeneration.Generate(modFolder);
                 ThemesGeneration.Generate(modFolder);
+                CharactersGeneration.Generate(modFolder);
             }
             catch (Exception ex)
             {

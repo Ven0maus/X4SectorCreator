@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<characters>
+	<!-- Generic Characters -->
+	<character id="trader_argon_random" group="argon.trader">
+		<category tags="[crew, pilot, aipilot, traderpilot, masstraffic]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="piloting" min="7" max="14"/>
+			<skill type="morale" max="12"/>
+
+			<skill type="engineering" max="2"/>
+			<skill type="management" max="1"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<character id="fighter_argon_random" group="argon.pilot">
+		<category tags="[crew, officer, pilot, aipilot, fighterpilot, commander, masstraffic, watchdog, regular]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="piloting" min="7" max="14"/>
+			<skill type="morale" max="12"/>
+
+			<skill type="engineering" max="2"/>
+			<skill type="management" exact="0"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<character id="manager_argon_random" group="argon.manager">
+		<category tags="[crew, officer, manager]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="management" min="4" max="11"/>
+			<skill type="morale" max="12"/>
+
+			<skill type="piloting" min="2" max="4"/>
+			<skill type="engineering" exact="0"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<!-- regular -->
+	<character id="service_argon_random" group="argon.service">
+		<category tags="[crew, service, regular, recruitable]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="engineering" min="2" max="4"/>
+			<skill type="morale" min="2" max="4"/>
+			<skill type="piloting" min="1" max="3"/>
+			<skill type="management" max="1"/>
+			<skill type="boarding" max="1"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<character id="marine_argon_random" group="argon.marine">
+		<category tags="[crew, marine, regular, recruitable]" faction="[argon, faction.player]" race="argon"/>
+		<owner list="[argon]"/>
+		<skills>
+			<skill type="boarding" min="2" max="4"/>
+			<skill type="morale" min="2" max="4"/>
+			<skill type="engineering" max="1"/>
+			<skill type="piloting" min="1" max="3"/>
+			<skill type="management" max="1"/>
+		</skills>
+	</character>
+	<character id="fighter_argon_regular_random" group="argon.pilot">
+		<category tags="[crew, officer, pilot, aipilot, fighterpilot, commander, masstraffic, watchdog, regular, recruitable]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="piloting" min="7" max="8"/>
+			<skill type="morale" min="2" max="8"/>
+
+			<skill type="engineering" exact="0"/>
+			<skill type="management" exact="0"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<character id="manager_argon_regular_random" group="argon.manager">
+		<category tags="[crew, officer, manager, regular, recruitable]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="management" min="5" max="7"/>
+			<skill type="morale" min="2" max="7"/>
+
+			<skill type="piloting" min="1" max="6"/>
+			<skill type="engineering" exact="0"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<!-- passengers -->
+	<character id="passenger_argon_random" group="argon.passenger">
+		<category tags="[crew, passenger]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="boarding" exact="0"/>
+			<skill type="engineering" exact="0"/>
+			<skill type="management" exact="0"/>
+			<skill type="morale" max="12"/>
+			<skill type="piloting" min="2" max="4"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<character id="prisoner_argon_random" group="argon.prisoner">
+		<category tags="[crew, prisoner]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="boarding" max="3"/>
+			<skill type="engineering" min="1" max="3"/>
+			<skill type="management" max="2"/>
+			<skill type="morale" min="1" max="2"/>
+			<skill type="piloting" min="2" max="4"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+
+	<!-- Rookies -->
+	<character id="service_argon_random_rookie" group="argon.service">
+		<category tags="[crew, service, rookie, recruitable]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="engineering" min="1" max="2"/>
+			<skill type="morale" min="1" max="4"/>
+			<skill type="piloting" max="2"/>
+			<skill type="management" exact="0"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<character id="marine_argon_random_rookie" group="argon.marine">
+		<category tags="[crew, marine, rookie, recruitable]" faction="[argon, faction.player]" race="argon"/>
+		<owner list="[argon]"/>
+		<skills>
+			<skill type="boarding" min="1" max="2"/>
+			<skill type="morale" min="1" max="3"/>
+			<skill type="engineering" exact="0"/>
+			<skill type="piloting" max="2"/>
+			<skill type="management" exact="0"/>
+		</skills>
+	</character>
+	<character id="fighter_argon_random_rookie" group="argon.pilot">
+		<category tags="[crew, officer, pilot, aipilot, fighterpilot, commander, masstraffic, watchdog, rookie, recruitable]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="piloting" min="4" max="6"/>
+			<skill type="morale" min="3" max="6"/>
+
+			<skill type="engineering" exact="0"/>
+			<skill type="management" exact="0"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<!-- Veteran -->
+	<character id="service_argon_random_veteran" group="argon.service">
+		<category tags="[crew, service, veteran, recruitable]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="engineering" min="6" max="9"/>
+			<skill type="morale" min="6" max="9"/>
+			<skill type="piloting" min="2" max="5"/>
+			<skill type="management" exact="1"/>
+			<skill type="boarding" min="1" max="2"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<character id="marine_argon_random_veteran" group="argon.marine">
+		<category tags="[crew, marine, veteran, recruitable]" faction="[argon, faction.player]" race="argon"/>
+		<owner list="[argon]"/>
+		<skills>
+			<skill type="boarding" min="6" max="9"/>
+			<skill type="morale" min="6" max="9"/>
+			<skill type="engineering" min="1" max="2"/>
+			<skill type="piloting" min="3" max="6"/>
+			<skill type="management" max="1"/>
+		</skills>
+	</character>
+	<!-- Elite -->
+	<character id="service_argon_random_elite" group="argon.service">
+		<category tags="[crew, service, elite]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="engineering" min="10" max="12"/>
+			<skill type="morale" min="10" max="12"/>
+			<skill type="piloting" min="3" max="6"/>
+			<skill type="management" min="1" max="2"/>
+			<skill type="boarding" min="1" max="3"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+	<character id="marine_argon_random_elite" group="argon.marine">
+		<category tags="[crew, marine, elite]" faction="[argon, faction.player]" race="argon"/>
+		<owner list="[argon]"/>
+		<skills>
+			<skill type="boarding" min="10" max="12"/>
+			<skill type="morale" min="10" max="12"/>
+			<skill type="engineering" min="2" max="3"/>
+			<skill type="piloting" min="4" max="6"/>
+			<skill type="management" min="1" max="3"/>
+		</skills>
+	</character>
+	<character id="fighter_argon_random_elite" group="argon.pilot">
+		<category tags="[elitepilot]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="piloting" exact="12"/>
+			<skill type="morale" exact="12"/>
+			<skill type="engineering" min="3" max="6"/>
+			<skill type="management" exact="0"/>
+			<skill type="boarding" min="3" max="9"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+
+	<character id="platform_trader_argon_random" group="argon.trader">
+		<category tags="[trader, licencetrader]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="management" min="4" max="11"/>
+			<skill type="morale" max="12"/>
+
+			<skill type="piloting" min="2" max="4"/>
+			<skill type="engineering" max="1"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]"/>
+		<stock ref="'default_trader'" />
+	</character>
+	<character id="ship_trader_argon_random" group="argon.shiptrader">
+		<category tags="[trader, shiptrader]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="management" min="4" max="11"/>
+			<skill type="morale" max="12"/>
+
+			<skill type="piloting" min="2" max="4"/>
+			<skill type="engineering" max="1"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]"/>
+		<stock ref="'default_trader'" />
+	</character>
+	<character id="shadyguy_argon_random" group="argon.shadyguy">
+		<category tags="[shadyguy]" faction="[argon, faction.player]" race="argon" />
+		<skills>
+			<skill type="piloting" min="8" max="11"/>
+			<skill type="morale" max="12"/>
+
+			<skill type="engineering" max="2"/>
+			<skill type="management" exact="0"/>
+			<skill type="boarding" exact="0"/>
+		</skills>
+		<owner list="[argon]" />
+		<stock ref="'default_shadyguy'" />
+	</character>
+	<character id="factionrepresentative_argon" group="argon.factionrepresentative.female">
+		<category tags="[factionrepresentative]" faction="argon" race="argon"/>
+		<skills>
+			<skill type="management" min="10" max="15"/>
+			<skill type="morale" max="15"/>
+
+			<skill type="boarding" min="6" max="15"/>
+			<skill type="engineering" min="5" max="15"/>
+			<skill type="piloting" min="11" max="15"/>
+		</skills>
+		<page exact="10106"/>
+		<owner exact="argon"/>
+	</character>
+	<character id="factiondiplomat_argon" group="argon.factiondiplomat.male">
+		<category tags="[factiondiplomat]" faction="argon" race="argon"/>
+		<skills>
+			<skill type="management" min="10" max="15"/>
+			<skill type="morale" max="15"/>
+
+			<skill type="boarding" min="6" max="15"/>
+			<skill type="engineering" min="5" max="15"/>
+			<skill type="piloting" min="11" max="15"/>
+		</skills>
+		<page exact="10197"/>
+		<owner exact="argon"/>
+	</character>
+	<!-- Casual -->
+	<character id="argon_casual" group="argon.civilian">
+		<category tags="[casual]" faction="[argon, faction.player]" race="argon"/>
+		<skills>
+			<skill type="morale" max="1"/>
+
+			<skill type="piloting" max="2"/>
+			<skill type="engineering" max="1"/>
+			<skill type="management" max="1"/>
+			<skill type="boarding" max="1"/>
+		</skills>
+		<owner list="[argon]"/>
+	</character>
+</characters>
