@@ -56,7 +56,13 @@
     <None Update="Data\Presets\Constructionplans\paranid_constructionplans.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Presets\Constructionplans\split_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Presets\Constructionplans\teladi_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\terran_constructionplans.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\Presets\Constructionplans\xenon_constructionplans.xml">
