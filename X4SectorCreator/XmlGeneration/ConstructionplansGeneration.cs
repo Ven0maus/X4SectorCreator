@@ -54,6 +54,7 @@ namespace X4SectorCreator.XmlGeneration
                     if (plan == null) continue; // Plan not found, skip
 
                     var clone = plan.Clone();
+                    clone.Id = $"{clone.Id.Split('_')[1]}_{faction.Id}";
                     clone.Name = $"{faction.Name} {GetConstructionplanName(stationType)}";
                     var xElement = XElement.Parse(clone.Serialize());
                     mainElement.Add(xElement);

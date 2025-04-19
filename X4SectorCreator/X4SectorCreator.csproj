@@ -47,6 +47,9 @@
     <None Update="Data\Presets\Constructionplans\argon_constructionplans.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Presets\Constructionplans\boron_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Presets\Constructionplans\generic_constructionplans.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
