@@ -26,6 +26,7 @@ namespace X4SectorCreator.XmlGeneration
         private static XElement CollectStationGroups()
         {
             var mainElement = new XElement("add", new XAttribute("sel", "/groups"));
+            int count = 0;
             foreach (var faction in FactionsForm.AllCustomFactions.Values)
             {
                 foreach (var stationType in faction.StationTypes ?? [])
@@ -37,9 +38,10 @@ namespace X4SectorCreator.XmlGeneration
                         )
                     );
                     mainElement.Add(xElement);
+                    count++;
                 }
             }
-            return mainElement.IsEmpty ? null : mainElement;
+            return count == 0 ? null : mainElement;
         }
 
         private static string EnsureDirectoryExists(string filePath)

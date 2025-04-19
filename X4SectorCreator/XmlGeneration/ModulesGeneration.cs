@@ -13,8 +13,8 @@ namespace X4SectorCreator.XmlGeneration
                 return;
             }
 
-            var moduleEditsElements = CollectModuleEdits();
-            if (moduleEditsElements == null) return;
+            var moduleEditsElements = CollectModuleEdits().ToArray();
+            if (moduleEditsElements == null || moduleEditsElements.Length == 0) return;
 
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),

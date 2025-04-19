@@ -26,15 +26,17 @@ namespace X4SectorCreator.XmlGeneration
         private static XElement CollectShipGroups()
         {
             var mainElement = new XElement("add", new XAttribute("sel", "/groups"));
+            int count = 0;
             foreach (var faction in FactionsForm.AllCustomFactions.Values)
             {
                 foreach (var shipGroup in faction.ShipGroups ?? [])
                 {
                     var shipGroupElement = XElement.Parse(shipGroup.Serialize());
                     mainElement.Add(shipGroupElement);
+                    count++;
                 }
             }
-            return mainElement.IsEmpty ? null : mainElement;
+            return count == 0 ? null : mainElement;
         }
 
         private static string EnsureDirectoryExists(string filePath)

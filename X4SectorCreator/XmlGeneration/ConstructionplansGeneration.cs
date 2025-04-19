@@ -28,6 +28,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             var constructionplanCache = new Dictionary<string, List<Constructionplan>>(StringComparer.OrdinalIgnoreCase);
             var mainElement = new XElement("add", new XAttribute("sel", "/plans"));
+            int count = 0;
             foreach (var faction in FactionsForm.AllCustomFactions.Values)
             {
                 var stationTypes = faction.StationTypes ?? [];
@@ -58,9 +59,10 @@ namespace X4SectorCreator.XmlGeneration
                     clone.Name = $"{faction.Name} {GetConstructionplanName(stationType)}";
                     var xElement = XElement.Parse(clone.Serialize());
                     mainElement.Add(xElement);
+                    count++;
                 }
             }
-            return mainElement.IsEmpty ? null : mainElement;
+            return count == 0 ? null : mainElement;
         }
 
         private static string GetConstructionplanName(string stationType)
