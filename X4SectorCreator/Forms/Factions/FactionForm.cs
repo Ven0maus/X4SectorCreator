@@ -86,6 +86,9 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<Ship> Ships { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public List<string> StationTypes { get; set; }
+
         private Faction _faction;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Faction Faction
@@ -102,6 +105,7 @@ namespace X4SectorCreator.Forms
                     IconBox.Image = ImageHelper.Base64ToImage(IconData);
                     Ships = _faction.Ships;
                     ShipGroups = _faction.ShipGroups;
+                    StationTypes = _faction.StationTypes;
                     LblIconSize.Visible = false;
                     ApplyFactionXmlToFieldsContent();
                 }
@@ -171,6 +175,7 @@ namespace X4SectorCreator.Forms
             faction.IconData = new Faction.IconObj { Active = dataEntryName, Inactive = dataEntryName };
             faction.ShipGroups = ShipGroups;
             faction.Ships = Ships;
+            faction.StationTypes = StationTypes;
 
             switch (BtnCreate.Text)
             {
