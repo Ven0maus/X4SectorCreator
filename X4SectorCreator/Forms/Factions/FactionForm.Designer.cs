@@ -55,7 +55,6 @@
             BtnEditFactionShips = new Button();
             LblIconSize = new Label();
             BtnFactionStations = new Button();
-            BtnFactionCharacters = new Button();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -161,9 +160,9 @@
             // 
             // BtnFactionRelations
             // 
-            BtnFactionRelations.Location = new Point(163, 259);
+            BtnFactionRelations.Location = new Point(12, 259);
             BtnFactionRelations.Name = "BtnFactionRelations";
-            BtnFactionRelations.Size = new Size(155, 33);
+            BtnFactionRelations.Size = new Size(306, 33);
             BtnFactionRelations.TabIndex = 14;
             BtnFactionRelations.Text = "Setup Faction Relations";
             BtnFactionRelations.UseVisualStyleBackColor = true;
@@ -287,9 +286,9 @@
             // 
             // BtnEditFactionShips
             // 
-            BtnEditFactionShips.Location = new Point(12, 259);
+            BtnEditFactionShips.Location = new Point(163, 298);
             BtnEditFactionShips.Name = "BtnEditFactionShips";
-            BtnEditFactionShips.Size = new Size(145, 33);
+            BtnEditFactionShips.Size = new Size(155, 33);
             BtnEditFactionShips.TabIndex = 31;
             BtnEditFactionShips.Text = "Setup Faction Ships";
             BtnEditFactionShips.UseVisualStyleBackColor = true;
@@ -315,23 +314,12 @@
             BtnFactionStations.UseVisualStyleBackColor = true;
             BtnFactionStations.Click += BtnFactionStations_Click;
             // 
-            // BtnFactionCharacters
-            // 
-            BtnFactionCharacters.Location = new Point(163, 298);
-            BtnFactionCharacters.Name = "BtnFactionCharacters";
-            BtnFactionCharacters.Size = new Size(155, 33);
-            BtnFactionCharacters.TabIndex = 33;
-            BtnFactionCharacters.Text = "Setup Faction Characters";
-            BtnFactionCharacters.UseVisualStyleBackColor = true;
-            BtnFactionCharacters.Click += BtnFactionCharacters_Click;
-            // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(632, 376);
             Controls.Add(BtnFactionStations);
-            Controls.Add(BtnFactionCharacters);
             Controls.Add(LblIconSize);
             Controls.Add(BtnEditFactionShips);
             Controls.Add(TxtPrefix);
@@ -397,6 +385,5 @@
         private Button BtnEditFactionShips;
         private Label LblIconSize;
         private Button BtnFactionStations;
-        private Button BtnFactionCharacters;
     }
 }
