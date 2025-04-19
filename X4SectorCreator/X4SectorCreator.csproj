@@ -56,6 +56,9 @@
     <None Update="Data\Presets\Constructionplans\teladi_constructionplans.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Presets\Constructionplans\xenon_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Presets\ShipGroups\argon_shipgroups.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
