@@ -32,6 +32,9 @@
     <None Update="Data\Mappings\dlc_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Mappings\modules_mappings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Mappings\predefinedfield_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -419,6 +419,7 @@ namespace X4SectorCreator
                 StationsGeneration.Generate(modFolder);
                 StationGroupsGeneration.Generate(modFolder);
                 ConstructionplansGeneration.Generate(modFolder);
+                ModulesGeneration.Generate(modFolder);
             }
             catch (Exception ex)
             {

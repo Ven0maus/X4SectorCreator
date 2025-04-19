@@ -1,0 +1,1021 @@
+<?xml version='1.0' encoding='utf-8'?>
+<modules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="libraries.xsd">
+  <!-- Universal Production Modules -->
+  <module id="prod_gen_advancedelectronics" group="prod_gen_advancedelectronics">
+    <category ware="advancedelectronics" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="advancedelectronics" chance="15"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_antimattercells" group="prod_gen_antimattercells">
+    <category ware="antimattercells" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="antimattercells" chance="50"/>
+      <production ware="energycells" chance="25"/>
+      <production ware="graphene" chance="25"/>
+      <production ware="superfluidcoolant" chance="25"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_antimatterconverters" group="prod_gen_antimatterconverters">
+    <category ware="antimatterconverters" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="antimatterconverters" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_advancedcomposites" group="prod_gen_advancedcomposites">
+    <category ware="advancedcomposites" tags="[production, module]" race="[argon, paranid, split]" faction="[argon, paranid, antigone, holyorder, trinity, buccaneers, hatikvah, alliance]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="advancedcomposites" chance="65"/>
+      <production ware="graphene" chance="25"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_claytronics" group="prod_gen_claytronics">
+    <category ware="claytronics" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <production ware="claytronics" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_dronecomponents" group="prod_gen_dronecomponents">
+    <category ware="dronecomponents" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="dronecomponents" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_energycells" group="prod_gen_energycells">
+    <category ware="energycells" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <production ware="energycells" chance="65"/>
+      <production ware="antimattercells" chance="25"/>
+      <production ware="graphene" chance="25"/>
+      <production ware="superfluidcoolant" chance="25"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_engineparts" group="prod_gen_engineparts">
+    <category ware="engineparts" tags="[production, module]" race="[argon, paranid, split]" faction="[argon, paranid, antigone, holyorder, trinity, buccaneers, hatikvah, alliance]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <production ware="engineparts" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_fieldcoils" group="prod_gen_fieldcoils">
+    <category ware="fieldcoils" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="fieldcoils" chance="0"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_hullparts" group="prod_gen_hullparts">
+    <category ware="hullparts" tags="[production, module]" race="[argon, paranid, split]" faction="[argon, paranid, antigone, holyorder, trinity, buccaneers, hatikvah, alliance]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <production ware="hullparts" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_graphene" group="prod_gen_graphene">
+    <category ware="graphene" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="graphene" chance="50"/>
+      <production ware="antimattercells" chance="25"/>
+      <production ware="energycells" chance="25"/>
+      <production ware="superfluidcoolant" chance="25"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_microchips" group="prod_gen_microchips">
+    <category ware="microchips" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <production ware="microchips" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_missilecomponents" group="prod_gen_missilecomponents">
+    <category ware="missilecomponents" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="missilecomponents" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_superfluidcoolant" group="prod_gen_superfluidcoolant">
+    <category ware="superfluidcoolant" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="superfluidcoolant" chance="50"/>
+      <production ware="antimattercells" chance="25"/>
+      <production ware="energycells" chance="25"/>
+      <production ware="graphene" chance="25"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_plasmaconductors" group="prod_gen_plasmaconductors">
+    <category ware="plasmaconductors" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <production ware="plasmaconductors" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_quantumtubes" group="prod_gen_quantumtubes">
+    <category ware="quantumtubes" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <production ware="quantumtubes" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_refinedmetals" group="prod_gen_refinedmetals">
+    <category ware="refinedmetals" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+    </category>
+    <compatibilities>
+      <limits production="4"/>
+      <maxlimits production="12"/>
+      <production ware="refinedmetals" chance="50"/>
+      <production ref="prod_gen_siliconwafers" chance="25"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_scanningarrays" group="prod_gen_scanningarrays">
+    <category ware="scanningarrays" tags="[production, module]" race="[argon, paranid, split]" faction="[argon, paranid, antigone, holyorder, trinity, buccaneers, hatikvah, alliance]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="scanningarrays" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_shieldcomponents" group="prod_gen_shieldcomponents">
+    <category ware="shieldcomponents" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="shieldcomponents" chance="0"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_siliconwafers" group="prod_gen_siliconwafers">
+    <category ware="siliconwafers" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+    </category>
+    <compatibilities>
+      <limits production="4"/>
+      <maxlimits production="12"/>
+      <production ware="siliconwafers" chance="50"/>
+      <production ref="prod_gen_refinedmetals" chance="20"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_smartchips" group="prod_gen_smartchips">
+    <category ware="smartchips" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <production ware="smartchips" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_spices" group="prod_gen_spices">
+    <category ware="spices" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+    </category>
+    <compatibilities>
+      <production ware="spices" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_turretcomponents" group="prod_gen_turretcomponents">
+    <category ware="turretcomponents" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="turretcomponents" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_water" group="prod_gen_water">
+    <category ware="water" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="water" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_gen_weaponcomponents" group="prod_gen_weaponcomponents">
+    <category ware="weaponcomponents" tags="[production, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="weaponcomponents" chance="65"/>
+    </compatibilities>
+  </module>
+  <!-- Argon Production Modules -->
+  <module id="prod_arg_meat" group="prod_arg_meat">
+    <category ware="meat" tags="[production, module]" race="argon" faction="[argon, antigone, hatikvah]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="meat" chance="65"/>
+      <production ware="foodrations" chance="20"/>
+      <production ware="wheat" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_arg_medicalsupplies" group="prod_arg_medicalsupplies">
+    <!-- need Argon version due to different build method using Wheat -->
+    <category ware="medicalsupplies" tags="[production, module]" race="argon" faction="[argon, antigone, hatikvah]"/>
+    <compatibilities>
+      <production ware="medicalsupplies" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_arg_foodrations" group="prod_arg_foodrations">
+    <category ware="foodrations" tags="[production, module]" race="argon" faction="[argon, antigone, hatikvah]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="foodrations" chance="65"/>
+      <production ware="meat" chance="20"/>
+      <production ware="wheat" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_arg_spacefuel" group="prod_arg_spacefuel">
+    <category ware="spacefuel" tags="[production, module]" race="argon" faction="[argon, antigone, hatikvah]">
+      <extension race="boron" faction="boron"/>
+    </category>
+    <compatibilities>
+      <production ware="spacefuel" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_arg_wheat" group="prod_arg_wheat">
+    <category ware="wheat" tags="[production, module]" race="argon" faction="[argon, antigone, hatikvah]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="wheat" chance="65"/>
+      <production ware="meat" chance="20"/>
+      <production ware="foodrations" chance="10"/>
+    </compatibilities>
+  </module>
+  <!-- Paranid Production Modules -->
+  <module id="prod_par_majadust" group="prod_par_majadust">
+    <category ware="majadust" tags="[production, module]" race="paranid" faction="[scaleplate, buccaneers]"/>
+    <compatibilities>
+      <production ware="majadust" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_par_majasnails" group="prod_par_majasnails">
+    <category ware="majasnails" tags="[production, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="majasnails" chance="65"/>
+      <production ware="sojabeans" chance="20"/>
+      <production ware="sojahusk" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_par_medicalsupplies" group="prod_par_medicalsupplies">
+    <!-- need Paranid version due to different build method using Soja Beans -->
+    <category ware="medicalsupplies" tags="[production, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+    <compatibilities>
+      <production ware="medicalsupplies" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_par_sojabeans" group="prod_par_sojabeans">
+    <category ware="sojabeans" tags="[production, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="sojabeans" chance="65"/>
+      <production ware="majasnails" chance="20"/>
+      <production ware="sojahusk" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_par_sojahusk" group="prod_par_sojahusk">
+    <category ware="sojahusk" tags="[production, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="sojahusk" chance="65"/>
+      <production ware="majasnails" chance="20"/>
+      <production ware="sojabeans" chance="10"/>
+    </compatibilities>
+  </module>
+  <!-- Teladi Production Modules -->
+  <module id="prod_tel_advancedcomposites" group="prod_tel_advancedcomposites">
+    <!-- need Teladi version due to different build method using Teladianium -->
+    <category ware="advancedcomposites" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="advancedcomposites" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_tel_engineparts" group="prod_tel_engineparts">
+    <!-- need Teladi version due to different build method using Teladianium -->
+    <category ware="engineparts" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <production ware="engineparts" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_tel_hullparts" group="prod_tel_hullparts">
+    <!-- need Teladi version due to different build method using Teladianium -->
+    <category ware="hullparts" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <production ware="hullparts" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_tel_scanningarrays" group="prod_tel_scanningarrays">
+    <!-- need Teladi version due to different build method using Teladianium -->
+    <category ware="scanningarrays" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="scanningarrays" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_tel_medicalsupplies" group="prod_tel_medicalsupplies">
+    <!-- need Teladi version due to different build method using Sunrise Flowers -->
+    <category ware="medicalsupplies" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <production ware="medicalsupplies" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_tel_nostropoil" group="prod_tel_nostropoil">
+    <category ware="nostropoil" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="nostropoil" chance="65"/>
+      <production ware="sunriseflowers" chance="25"/>
+      <production ware="swampplant" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_tel_spaceweed" group="prod_tel_spaceweed">
+    <category ware="spaceweed" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <production ware="spaceweed" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_tel_sunriseflowers" group="prod_tel_sunriseflowers">
+    <category ware="sunriseflowers" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="sunriseflowers" chance="65"/>
+      <production ware="swampplant" chance="20"/>
+      <production ware="nostropoil" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_tel_swampplant" group="prod_tel_swampplant">
+    <category ware="swampplant" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="swampplant" chance="65"/>
+      <production ware="nostropoil" chance="20"/>
+      <production ware="sunriseflowers" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_tel_teladianium" group="prod_tel_teladianium">
+    <category ware="teladianium" tags="[production, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+    <compatibilities>
+      <production ware="teladianium" chance="65"/>
+    </compatibilities>
+  </module>
+  <!-- Scaleplate Production Modules -->
+  <!-- special race="teladi" versions as on-demand modules are selected by primary race and primary race for scaleplate is teladi -->
+  <module id="prod_sca_majasnails" group="prod_par_majasnails">
+    <category ware="majasnails" tags="[production, module]" race="teladi" faction="scaleplate"/>
+    <compatibilities>
+      <production ware="majasnails" chance="20"/>
+    </compatibilities>
+  </module>
+  <!-- legacy games are using Argon habitation modules for pirate bases/docks and therefore are looking for foodrations and supporting resources -->
+  <module id="prod_sca_foodrations" group="prod_arg_foodrations">
+    <category ware="foodrations" tags="[production, module]" race="teladi" faction="scaleplate"/>
+    <compatibilities>
+      <production ware="foodrations" chance="20"/>
+    </compatibilities>
+  </module>
+  <module id="prod_sca_meat" group="prod_arg_meat">
+    <category ware="meat" tags="[production, module]" race="teladi" faction="scaleplate"/>
+    <compatibilities>
+      <production ware="meat" chance="20"/>
+    </compatibilities>
+  </module>
+  <module id="prod_sca_wheat" group="prod_arg_wheat">
+    <category ware="wheat" tags="[production, module]" race="teladi" faction="scaleplate"/>
+    <compatibilities>
+      <production ware="wheat" chance="20"/>
+    </compatibilities>
+  </module>
+  <!-- Xenon Production Modules -->
+  <module id="prod_xen_energycells" group="prod_xen_energycells">
+    <category ware="energycells" tags="[production, module]" race="xenon" faction="xenon"/>
+    <compatibilities>
+      <limits production="1"/>
+      <production ware="energycells" chance="75"/>
+    </compatibilities>
+  </module>
+  <!-- Argon Storage Modules -->
+  <module id="stor_arg" group="stor_arg">
+    <category tags="[storage, module]" race="argon" faction="[argon, antigone, hatikvah, buccaneers]"/>
+  </module>
+  <!-- Paranid Storage Modules -->
+  <module id="stor_par" group="stor_par">
+    <category tags="[storage, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <!-- Teladi Storage Modules -->
+  <module id="stor_tel" group="stor_tel">
+    <category tags="[storage, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <!-- Xenon Storage Modules -->
+  <module id="stor_xen" group="stor_xen">
+    <category tags="[storage, module]" race="xenon" faction="xenon"/>
+  </module>
+  <!-- Argon Dockarea Modules -->
+  <module id="dockarea_arg" group="dockarea_arg">
+    <category tags="[dockarea, module, standard]" race="argon" faction="[argon, antigone, hatikvah]"/>
+  </module>
+  <module id="dockarea_arg_hightech" group="dockarea_arg_hightech">
+    <category tags="[dockarea, module, hightech]" race="argon" faction="[argon, antigone, hatikvah]"/>
+  </module>
+  <module id="dockarea_arg_lowtech" group="dockarea_arg_lowtech">
+    <category tags="[dockarea, module, lowtech]" race="argon" faction="[argon, antigone, hatikvah]"/>
+  </module>
+  <!-- Paranid Dockarea Modules -->
+  <module id="dockarea_par" group="dockarea_par">
+    <category tags="[dockarea, module, standard]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <module id="dockarea_par_hightech" group="dockarea_par_hightech">
+    <category tags="[dockarea, module, hightech]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <module id="dockarea_par_lowtech" group="dockarea_par_lowtech">
+    <category tags="[dockarea, module, lowtech]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <!-- Teladi Dockarea Modules -->
+  <module id="dockarea_tel" group="dockarea_tel">
+    <category tags="[dockarea, module, standard]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <module id="dockarea_tel_hightech" group="dockarea_tel_hightech">
+    <category tags="[dockarea, module, hightech]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <module id="dockarea_tel_lowtech" group="dockarea_tel_lowtech">
+    <category tags="[dockarea, module, lowtech]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <!-- Xenon Dockarea Modules -->
+  <module id="dockarea_xen" group="dockarea_xen">
+    <category tags="[dockarea, module, standard]" race="xenon" faction="xenon"/>
+  </module>
+  <!-- Argon Pier Modules -->
+  <module id="pier_base_arg" group="pier_base_arg">
+    <category tags="[pier, base, module]" race="argon" faction="[argon, antigone, hatikvah, buccaneers, xenon]" comment="These modules must be shared by all factions until different races have modules of their own."/>
+  </module>
+  <module id="pier_add_arg" group="pier_add_arg">
+    <category tags="[pier, add, module]" race="argon" faction="[argon, antigone, hatikvah, buccaneers, xenon]" comment="These modules must be shared by all factions until races have modules of their own."/>
+  </module>
+  <!-- Paranid Pier Modules -->
+  <module id="pier_base_par" group="pier_base_par">
+    <category tags="[pier, base, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <module id="pier_add_par" group="pier_add_par">
+    <category tags="[pier, add, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <!-- Teladi Pier Modules -->
+  <module id="pier_base_tel" group="pier_base_tel">
+    <category tags="[pier, base, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <module id="pier_add_tel" group="pier_add_tel">
+    <category tags="[pier, add, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <!-- Argon Habitation Modules -->
+  <module id="hab_arg" group="hab_arg">
+    <category tags="[habitation, module]" race="argon" faction="[argon, antigone, hatikvah]" comment="These modules must be shared by all factions until different races have modules of their own."/>
+  </module>
+  <!-- Paranid Habitation Modules -->
+  <module id="hab_par" group="hab_par">
+    <category tags="[habitation, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <!-- Teladi Habitation Modules -->
+  <module id="hab_tel" group="hab_tel">
+    <category tags="[habitation, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <!-- Argon Defence Modules -->
+  <module id="def_arg" group="def_arg">
+    <category tags="[defence, module]" race="argon" faction="[argon, antigone, hatikvah, buccaneers, xenon]" comment="These modules must be shared by all factions until different races have modules of their own."/>
+  </module>
+  <!-- Paranid Defence Modules -->
+  <module id="def_par" group="def_par">
+    <category tags="[defence, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <!-- Teladi Defence Modules -->
+  <module id="def_tel" group="def_tel">
+    <category tags="[defence, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <!-- Argon Ownership Claiming Modules -->
+  <module id="claim_arg" group="claim_arg">
+    <category tags="[claim, module]" race="argon" faction="[argon, antigone, hatikvah]"/>
+  </module>
+  <!-- Paranid Ownership Claiming Modules -->
+  <module id="claim_par" group="claim_par">
+    <category tags="[claim, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <module id="claim_par_story" group="claim_par_story">
+    <category tags="[claim, module]" race="paranid" faction="[player]"/>
+  </module>
+  <!-- Teladi Ownership Claiming Modules -->
+  <module id="claim_tel" group="claim_tel">
+    <category tags="[claim, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <!-- Xenon Ownership Claiming Modules -->
+  <module id="claim_xen" group="claim_xen">
+    <category tags="[defence, claim, module]" race="xenon" faction="xenon"/>
+  </module>
+  <!-- Argon Build Modules -->
+  <module id="build_arg" group="build_gen">
+    <category tags="[build, module]" race="argon" faction="[argon, antigone, hatikvah]"/>
+  </module>
+  <!-- Paranid Build Modules -->
+  <module id="build_par" group="build_gen">
+    <category tags="[build, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <!-- Teladi Build Modules -->
+  <module id="build_tel" group="build_gen">
+    <category tags="[build, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <!-- Xenon Build Modules -->
+  <module id="build_xen" group="build_xen">
+    <category tags="[build, module]" race="xenon" faction="xenon"/>
+  </module>
+  <!-- Argon Equipment Dock Modules -->
+  <module id="equip_arg" group="equip_gen">
+    <category tags="[equip, module]" race="argon" faction="[argon, antigone, hatikvah]"/>
+  </module>
+  <!-- Paranid Equipment Dock Modules -->
+  <module id="equip_par" group="equip_gen">
+    <category tags="[equip, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <!-- Teladi Equipment Dock Modules -->
+  <module id="equip_tel" group="equip_gen">
+    <category tags="[equip, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <!-- Argon Connection Modules -->
+  <module id="conn_arg" group="conn_arg">
+    <category tags="[connection, module]" race="argon" faction="[argon, antigone, hatikvah, buccaneers, xenon]"/>
+  </module>
+  <!-- Paranid Connection Modules -->
+  <module id="conn_par" group="conn_par">
+    <category tags="[connection, module]" race="paranid" faction="[paranid, holyorder, trinity, alliance, buccaneers]"/>
+  </module>
+  <!-- Teladi Connection Modules -->
+  <module id="conn_tel" group="conn_tel">
+    <category tags="[connection, module]" race="teladi" faction="[teladi, ministry, scaleplate]"/>
+  </module>
+  <!-- Online Portal Modules -->
+  <module id="venturer_gen" group="venturer_gen">
+    <category tags="[venturer, module]" race="[argon, paranid, split, teladi]" faction="[player]"/>
+  </module>
+  <!-- Welfare Modules -->
+  <module id="welfare_gen" group="welfare_gen">
+    <category tags="[welfare, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, ministry, alliance]">
+      <extension faction="[split, freesplit, court]"/>
+      <extension faction="[pioneers, terran]"/>
+      <extension race="boron" faction="boron"/>
+    </category>
+  </module>
+  <!-- Processing Modules -->
+  <module id="processing_gen" group="processing_gen">
+    <category ware="scrapmetal" tags="[processing, module]" race="[argon, paranid, split, teladi]" faction="[teladi, ministry, hatikvah, alliance, scaleplate]"/>
+  </module>
+  <!-- Recycling Modules -->
+  <!--Very generic definition without faction data so faction selects it, but can be referenced directly-->
+  <module id="recycling_gen" group="recycling_gen">
+    <category tags="[recycling, module]"/>
+  </module>
+  <!-- Radar Modules -->
+  <module id="radar_gen" group="radar_gen">
+    <category tags="[radar, module]"/>
+  </module>
+  <!-- Split Production Modules -->
+  <module id="prod_spl_medicalsupplies" group="prod_spl_medicalsupplies">
+    <!-- need Split version due to different build method using Scruffin Fruits -->
+    <category ware="medicalsupplies" tags="[production, module]" race="split" faction="[split, freesplit, court]"/>
+    <compatibilities>
+      <production ware="medicalsupplies" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_spl_scruffinfruits" group="prod_spl_scruffinfruits">
+    <category ware="scruffinfruits" tags="[production, module]" race="split" faction="[split, freesplit, court]"/>
+    <compatibilities>
+      <production ware="scruffinfruits" chance="65"/>
+      <production ware="cheltmeat" chance="20"/>
+    </compatibilities>
+  </module>
+  <module id="prod_spl_cheltmeat" group="prod_spl_cheltmeat">
+    <category ware="cheltmeat" tags="[production, module]" race="split" faction="[split, freesplit, court]"/>
+    <compatibilities>
+      <production ware="cheltmeat" chance="65"/>
+      <production ware="scruffinfruits" chance="20"/>
+    </compatibilities>
+  </module>
+  <!-- Split Storage Modules -->
+  <module id="stor_spl" group="stor_spl">
+    <category tags="[storage, module]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <!-- Split Dockarea Modules -->
+  <module id="dockarea_spl" group="dockarea_spl">
+    <category tags="[dockarea, module, standard]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <module id="dockarea_spl_hightech" group="dockarea_spl_hightech">
+    <category tags="[dockarea, module, hightech]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <module id="dockarea_spl_lowtech" group="dockarea_spl_lowtech">
+    <category tags="[dockarea, module, lowtech]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <!-- Split Pier Modules -->
+  <module id="pier_base_spl" group="pier_base_spl">
+    <category tags="[pier, base, module]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <module id="pier_add_spl" group="pier_add_spl">
+    <category tags="[pier, add, module]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <!-- Split Habitation Modules -->
+  <module id="hab_spl" group="hab_spl">
+    <category tags="[habitation, module]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <!-- Split Defence Modules -->
+  <module id="def_spl" group="def_spl">
+    <category tags="[defence, module]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <!-- Split Ownership Claiming Modules -->
+  <module id="claim_spl" group="claim_spl">
+    <category tags="[claim, module]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <!-- Split Build Modules -->
+  <module id="build_spl" group="build_gen">
+    <category tags="[build, module]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <!-- Split Equipment Dock Modules -->
+  <module id="equip_spl" group="equip_gen">
+    <category tags="[equip, module]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <!-- Split Connection Modules -->
+  <module id="conn_spl" group="conn_spl">
+    <category tags="[connection, module]" race="split" faction="[split, freesplit, court]"/>
+  </module>
+  <!-- Terran Production Modules -->
+  <module id="prod_ter_computronicsubstrate" group="prod_ter_computronicsubstrate">
+    <category ware="computronicsubstrate" tags="[production, module]" race="terran" faction="[pioneers, terran]"/>
+    <compatibilities>
+      <limits production="1"/>
+      <maxlimits production="3"/>
+      <production ware="computronicsubstrate" chance="20"/>
+    </compatibilities>
+  </module>
+  <module id="prod_ter_energycells" group="prod_ter_energycells" base="ter_solarpowerplant_2">
+    <category ware="energycells" tags="[production, module]" race="terran" faction="[pioneers, terran]"/>
+    <compatibilities>
+      <limits production="24"/>
+      <production ware="energycells" chance="75"/>
+    </compatibilities>
+  </module>
+  <module id="prod_ter_medicalsupplies" group="prod_ter_medicalsupplies">
+    <category ware="medicalsupplies" tags="[production, module]" race="terran" faction="[pioneers, terran]"/>
+    <compatibilities>
+      <production ware="medicalsupplies" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_ter_metallicmicrolattice" group="prod_ter_metallicmicrolattice">
+    <category ware="metallicmicrolattice" tags="[production, module]" race="terran" faction="[pioneers, terran]"/>
+    <compatibilities>
+      <production ware="metallicmicrolattice" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_ter_proteinpaste" group="prod_ter_proteinpaste">
+    <category ware="proteinpaste" tags="[production, module]" race="terran" faction="[pioneers, terran]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="proteinpaste" chance="65"/>
+      <production ware="medicalsupplies" chance="25"/>
+      <production ware="terranmre" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_ter_terranmre" group="prod_ter_terranmre">
+    <category ware="terranmre" tags="[production, module]" race="terran" faction="[pioneers, terran]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="terranmre" chance="65"/>
+      <production ware="proteinpaste" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_ter_siliconcarbide" group="prod_ter_siliconcarbide">
+    <category ware="siliconcarbide" tags="[production, module]" race="terran" faction="[pioneers, terran]"/>
+    <compatibilities>
+      <limits production="3"/>
+      <maxlimits production="9"/>
+      <production ware="siliconcarbide" chance="50"/>
+    </compatibilities>
+  </module>
+  <module id="prod_ter_stimulants" group="prod_ter_stimulants">
+    <category ware="stimulants" tags="[production, module]" race="terran" faction="[pioneers, terran]"/>
+    <compatibilities>
+      <production ware="stimulants" chance="65"/>
+    </compatibilities>
+  </module>
+  <!-- Terran Storage Modules -->
+  <module id="stor_ter" group="stor_ter">
+    <category tags="[storage, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Terran Dockarea Modules -->
+  <module id="dockarea_ter" group="dockarea_ter">
+    <category tags="[dockarea, module, lowtech, standard, hightech]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Terran Pier Modules -->
+  <module id="pier_base_ter" group="pier_base_ter">
+    <category tags="[pier, base, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <module id="pier_add_ter" group="pier_add_ter">
+    <category tags="[pier, add, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <module id="pier_tradestation_ter" group="pier_tradestation_ter">
+    <category tags="[pier, tradestation, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Terran Habitation Modules -->
+  <module id="hab_ter" group="hab_ter">
+    <category tags="[habitation, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Terran Defence Modules -->
+  <module id="def_ter" group="def_ter">
+    <category tags="[defence, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Terran Ownership Claiming Modules -->
+  <module id="claim_ter" group="claim_ter">
+    <category tags="[claim, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Terran Build Modules -->
+  <module id="build_ter" group="build_ter">
+    <category tags="[build, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Terran Equipment Dock Modules -->
+  <module id="equip_ter" group="equip_ter">
+    <category tags="[equip, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Terran Connection Modules -->
+  <module id="conn_ter" group="conn_ter">
+    <category tags="[connection, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Terran Processing Modules -->
+  <module id="processing_ter" group="processing_ter">
+    <category tags="[processing, module]" race="terran" faction="[pioneers, terran]"/>
+  </module>
+  <!-- Pirate Welfare Modules -->
+  <module id="welfare_pir" group="welfare_pir">
+    <category tags="[welfare, module]" faction="[scavenger, loanshark]"/>
+  </module>
+  <!-- Pirate Habitation Modules -->
+  <module id="hab_pir" group="hab_pir">
+    <category tags="[habitation, module]" faction="[scavenger, loanshark]"/>
+  </module>
+  <module id="stor_condensate" group="stor_condensate">
+    <category tags="[storage, module, condensate]" faction="[scavenger]"/>
+  </module>
+  <module id="processing_pir_scrap_with_condensate" group="processing_gen" base="pir_factory_base_with_condensate">
+    <category ware="scrapmetal" tags="[processing, module, condensate]" faction="scavenger"/>
+    <compatibilities>
+      <production ref="recycling_gen" chance="100" respectquota="false"/>
+      <production ware="energycells" chance="100" respectquota="false"/>
+    </compatibilities>
+  </module>
+  <module id="processing_pir_scrap_without_condensate" group="processing_gen">
+    <category ware="scrapmetal" tags="[processing, module, nocondensate]" faction="scavenger"/>
+    <compatibilities>
+      <production ref="recycling_gen" chance="100" respectquota="false"/>
+      <production ware="energycells" chance="100"/>
+    </compatibilities>
+  </module>
+  <module id="prod_pir_energycells_with_condensate" group="prod_gen_energycells" base="pir_factory_base_with_condensate">
+    <category ware="energycells" tags="[production, module, condensate]" faction="scavenger"/>
+    <compatibilities>
+      <production ware="energycells" chance="45"/>
+    </compatibilities>
+  </module>
+  <module id="prod_pir_energycells_without_condensate" group="prod_gen_energycells">
+    <category ware="energycells" tags="[production, module, nocondensate]" faction="scavenger"/>
+    <compatibilities>
+      <production ware="energycells" chance="45"/>
+    </compatibilities>
+  </module>
+  <!--Add new production definitions for the pirates instead of patching their factions to the existing definitions so we have control over compatibilities-->
+  <module id="prod_pir_foodrations" group="prod_arg_foodrations">
+    <category ware="foodrations" tags="[production, module]" faction="loanshark"/>
+    <compatibilities>
+      <production ware="foodrations" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_pir_meat" group="prod_arg_meat">
+    <category ware="meat" tags="[production, module]" faction="loanshark"/>
+    <compatibilities>
+      <production ware="meat" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_pir_medicalsupplies" group="prod_arg_medicalsupplies">
+    <!-- need Argon version due to different build method using Wheat -->
+    <category ware="medicalsupplies" tags="[production, module]" faction="loanshark"/>
+    <compatibilities>
+      <production ware="medicalsupplies" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_pir_spices" group="prod_gen_spices">
+    <category ware="spices" tags="[production, module]" faction="loanshark"/>
+    <compatibilities>
+      <production ware="spices" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_pir_water" group="prod_gen_water">
+    <category ware="water" tags="[production, module]" faction="loanshark"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="water" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_pir_wheat" group="prod_arg_wheat">
+    <category ware="wheat" tags="[production, module]" faction="loanshark"/>
+    <compatibilities>
+      <production ware="wheat" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="def_pir" group="def_arg">
+    <category tags="[defence, module]" faction="[scavenger, loanshark]"/>
+  </module>
+  <module id="stor_pir" group="stor_arg">
+    <category tags="[storage, module]" faction="[scavenger, loanshark]"/>
+  </module>
+  <module id="dockarea_pir" group="dockarea_arg">
+    <category tags="[dockarea, module, standard]" faction="[scavenger, loanshark]"/>
+  </module>
+  <module id="pier_base_pir" group="pier_base_arg">
+    <category tags="[pier, base, module]" faction="[scavenger, loanshark]"/>
+  </module>
+  <module id="conn_pir" group="conn_arg">
+    <category tags="[connection, module]" faction="[scavenger, loanshark]"/>
+  </module>
+  <!-- Boron Production Modules -->
+  <module id="prod_bor_medicalsupplies" group="prod_bor_medicalsupplies">
+    <category ware="medicalsupplies" tags="[production, module]" race="boron" faction="[boron]"/>
+    <compatibilities>
+      <production ware="medicalsupplies" chance="65"/>
+    </compatibilities>
+  </module>
+  <module id="prod_bor_bofu" group="prod_bor_bofu">
+    <category ware="bofu" tags="[production, module]" race="boron" faction="[boron]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="bofu" chance="65"/>
+      <production ware="bogas" chance="20"/>
+      <production ware="plankton" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_bor_bogas" group="prod_bor_bogas">
+    <category ware="bogas" tags="[production, module]" race="boron" faction="[boron]"/>
+    <compatibilities>
+      <limits production="2"/>
+      <maxlimits production="6"/>
+      <production ware="bogas" chance="65"/>
+      <production ware="bofu" chance="25"/>
+      <production ware="plankton" chance="10"/>
+    </compatibilities>
+  </module>
+  <module id="prod_bor_plankton" group="prod_bor_plankton">
+    <category ware="plankton" tags="[production, module]" race="boron" faction="[boron]"/>
+    <compatibilities>
+      <production ware="plankton" chance="65"/>
+      <production ware="bofu" chance="20"/>
+    </compatibilities>
+  </module>
+  <!-- Boron Storage Modules -->
+  <module id="stor_bor" group="stor_bor">
+    <category tags="[storage, module]" race="boron" faction="[boron]"/>
+  </module>
+  <!-- Boron Dockarea Modules -->
+  <module id="dockarea_bor" group="dockarea_bor">
+    <category tags="[dockarea, module, standard]" race="boron" faction="[boron]"/>
+  </module>
+  <module id="dockarea_bor_hightech" group="dockarea_bor_hightech">
+    <category tags="[dockarea, module, hightech]" race="boron" faction="[boron]"/>
+  </module>
+  <module id="dockarea_bor_lowtech" group="dockarea_bor_lowtech">
+    <category tags="[dockarea, module, lowtech]" race="boron" faction="[boron]"/>
+  </module>
+  <!-- Boron Pier Modules -->
+  <module id="pier_base_bor" group="pier_base_bor">
+    <category tags="[pier, base, module]" race="boron" faction="[boron]"/>
+  </module>
+  <module id="pier_add_bor" group="pier_add_bor">
+    <category tags="[pier, add, module]" race="boron" faction="[boron]"/>
+  </module>
+  <module id="pier_tradestation_bor" group="pier_tradestation_bor">
+    <category tags="[pier, tradestation, module]" race="boron" faction="[boron]"/>
+  </module>
+  <!-- Boron Habitation Modules -->
+  <module id="hab_bor" group="hab_bor">
+    <category tags="[habitation, module]" race="boron" faction="[boron]"/>
+  </module>
+  <!-- Boron Defence Modules -->
+  <module id="def_bor" group="def_bor">
+    <category tags="[defence, module]" race="boron" faction="[boron]"/>
+  </module>
+  <!-- Boron Ownership Claiming Modules -->
+  <module id="claim_bor" group="claim_bor">
+    <category tags="[claim, module]" race="boron" faction="[boron]"/>
+  </module>
+  <!-- Boron Build Modules -->
+  <module id="build_bor" group="build_bor">
+    <category tags="[build, module]" race="boron" faction="[boron]"/>
+  </module>
+  <!-- Boron Equipment Dock Modules -->
+  <module id="equip_bor" group="equip_bor">
+    <category tags="[equip, module]" race="boron" faction="[boron]"/>
+  </module>
+  <!-- Boron Connection Modules -->
+  <module id="conn_bor" group="conn_bor">
+    <category tags="[connection, module]" race="boron" faction="[boron]"/>
+  </module>
+  <module id="prod_bor_refinedmetals" group="prod_gen_refinedmetals">
+    <category ware="refinedmetals" tags="[production, module]" race="boron" faction="[boron]"/>
+    <compatibilities>
+      <limits production="4"/>
+      <production ware="refinedmetals" chance="50"/>
+    </compatibilities>
+  </module>
+  <module id="prod_bor_siliconwafers" group="prod_gen_siliconwafers">
+    <category ware="siliconwafers" tags="[production, module]" race="boron" faction="[boron]"/>
+    <compatibilities>
+      <limits production="4"/>
+      <production ware="siliconwafers" chance="50"/>
+    </compatibilities>
+  </module>
+</modules>
