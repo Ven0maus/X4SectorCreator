@@ -15,6 +15,12 @@ namespace X4SectorCreator.Objects
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
 
+        [XmlAttribute(AttributeName = "description")]
+        public string Description { get; set; }
+
+        [XmlAttribute(AttributeName = "tags")]
+        public string Tags { get; set; }
+
         internal Constructionplan Clone()
         {
             var xml = Serialize();
@@ -55,11 +61,24 @@ namespace X4SectorCreator.Objects
             [XmlAttribute(AttributeName = "x")]
             public string X { get; set; }
 
-            [XmlAttribute(AttributeName = "z")]
-            public string Z { get; set; }
-
             [XmlAttribute(AttributeName = "y")]
             public string Y { get; set; }
+
+            [XmlAttribute(AttributeName = "z")]
+            public string Z { get; set; }
+        }
+
+        [XmlRoot(ElementName = "rotation")]
+        public class Rotation
+        {
+            [XmlAttribute(AttributeName = "yaw")]
+            public string Yaw { get; set; }
+
+            [XmlAttribute(AttributeName = "roll")]
+            public string Roll { get; set; }
+
+            [XmlAttribute(AttributeName = "pitch")]
+            public string Pitch { get; set; }
         }
 
         [XmlRoot(ElementName = "offset")]
@@ -70,6 +89,9 @@ namespace X4SectorCreator.Objects
 
             [XmlElement(ElementName = "rotation")]
             public Rotation Rotation { get; set; }
+
+            [XmlElement(ElementName = "quaternion")]
+            public Quaternion Quaternion { get; set; }
         }
 
         [XmlRoot(ElementName = "entry")]
@@ -89,6 +111,12 @@ namespace X4SectorCreator.Objects
 
             [XmlAttribute(AttributeName = "connection")]
             public string Connection { get; set; }
+
+            [XmlAttribute(AttributeName = "fixed")]
+            public string Fixed { get; set; }
+
+            [XmlElement(ElementName = "upgrades")]
+            public Upgrades Upgrades { get; set; }
         }
 
         [XmlRoot(ElementName = "predecessor")]
@@ -101,11 +129,69 @@ namespace X4SectorCreator.Objects
             public string Connection { get; set; }
         }
 
-        [XmlRoot(ElementName = "rotation")]
-        public class Rotation
+        [XmlRoot(ElementName = "shields")]
+        public class Shields
         {
-            [XmlAttribute(AttributeName = "yaw")]
-            public string Yaw { get; set; }
+            [XmlAttribute(AttributeName = "macro")]
+            public string Macro { get; set; }
+
+            [XmlAttribute(AttributeName = "path")]
+            public string Path { get; set; }
+
+            [XmlAttribute(AttributeName = "group")]
+            public string Group { get; set; }
+
+            [XmlAttribute(AttributeName = "exact")]
+            public string Exact { get; set; }
+        }
+
+        [XmlRoot(ElementName = "turrets")]
+        public class Turrets
+        {
+            [XmlAttribute(AttributeName = "macro")]
+            public string Macro { get; set; }
+
+            [XmlAttribute(AttributeName = "path")]
+            public string Path { get; set; }
+
+            [XmlAttribute(AttributeName = "group")]
+            public string Group { get; set; }
+
+            [XmlAttribute(AttributeName = "exact")]
+            public string Exact { get; set; }
+        }
+
+        [XmlRoot(ElementName = "groups")]
+        public class Groups
+        {
+            [XmlElement(ElementName = "shields")]
+            public List<Shields> Shields { get; set; }
+
+            [XmlElement(ElementName = "turrets")]
+            public List<Turrets> Turrets { get; set; }
+        }
+
+        [XmlRoot(ElementName = "upgrades")]
+        public class Upgrades
+        {
+            [XmlElement(ElementName = "groups")]
+            public Groups Groups { get; set; }
+        }
+
+        [XmlRoot(ElementName = "quaternion")]
+        public class Quaternion
+        {
+            [XmlAttribute(AttributeName = "qx")]
+            public string Qx { get; set; }
+
+            [XmlAttribute(AttributeName = "qw")]
+            public string Qw { get; set; }
+
+            [XmlAttribute(AttributeName = "qy")]
+            public string Qy { get; set; }
+
+            [XmlAttribute(AttributeName = "qz")]
+            public string Qz { get; set; }
         }
     }
 
