@@ -47,18 +47,11 @@
 	<group name="atf_battleship_xl">
 		<select macro="ship_atf_xl_battleship_01_a_macro" weight="100"/>
 	</group>
-	<group name="atf_destroyer_l">
-		<select macro="ship_atf_l_destroyer_01_a_macro" weight="100"/>
-	</group>
-	<group name="teratf_destroyer_l">
-		<select macro="ship_atf_l_destroyer_01_a_macro" weight="100"/>
-		<select macro="ship_ter_l_destroyer_01_a_macro" weight="100"/>
-	</group>
-
 	<group name="ter_carrier_xl">
 		<select macro="ship_ter_xl_carrier_01_a_macro" weight="100"/>
 	</group>
 	<group name="ter_destroyer_l">
+		<select macro="ship_atf_l_destroyer_01_a_macro" weight="100"/>
 		<select macro="ship_ter_l_destroyer_01_a_macro" weight="100"/>
 	</group>
 	<group name="ter_military_m">

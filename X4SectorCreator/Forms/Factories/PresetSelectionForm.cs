@@ -90,10 +90,10 @@ namespace X4SectorCreator.Forms.Factories
 
             if (FactoriesForm != null)
             {
-                // All factories where class is not zone
+                // All factories where class is galaxy
                 var templateFactories = FactoryTemplatesForm.CollectTemplateFactories()
                     .Where(a => a.Location != null && !string.IsNullOrWhiteSpace(a.Location.Class) &&
-                        !a.Location.Class.Equals("Zone", StringComparison.OrdinalIgnoreCase))
+                        a.Location.Class.Equals("Galaxy", StringComparison.OrdinalIgnoreCase))
                     .ToArray();
 
                 // Fix faction
@@ -116,10 +116,10 @@ namespace X4SectorCreator.Forms.Factories
             
             if (JobsForm != null)
             {
-                // All jobs where class is not zone
+                // All jobs where class is galaxy
                 var templateJobs = JobTemplatesForm.CollectTemplateJobs()
                     .Where(a => a.Location != null && !string.IsNullOrWhiteSpace(a.Location.Class) &&
-                        !a.Location.Class.Equals("Zone", StringComparison.OrdinalIgnoreCase))
+                        a.Location.Class.Equals("Galaxy", StringComparison.OrdinalIgnoreCase))
                     .ToArray();
 
                 foreach (var job in templateJobs)
@@ -258,6 +258,20 @@ namespace X4SectorCreator.Forms.Factories
             if (index >= 0)
             {
                 job.Id = string.Concat(job.Id.AsSpan(0, index), ownerId, job.Id.AsSpan(index + raceKey.Length));
+
+                // Do the same with subordinates
+                if (job.Subordinates?.Subordinate != null)
+                {
+                    foreach (var subordinate in job.Subordinates.Subordinate)
+                    {
+                        if (string.IsNullOrWhiteSpace(subordinate.Job)) continue;
+                        index = subordinate.Job.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
+                        if (index >= 0)
+                        {
+                            subordinate.Job = string.Concat(subordinate.Job.AsSpan(0, index), ownerId, subordinate.Job.AsSpan(index + raceKey.Length));
+                        }
+                    }
+                }
             }
         }
     }
