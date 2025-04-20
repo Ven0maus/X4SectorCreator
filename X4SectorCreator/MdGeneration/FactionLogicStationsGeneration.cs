@@ -79,7 +79,7 @@ namespace X4SectorCreator.MdGeneration
                    new XElement("do_elseif",
                        new XAttribute("value", $"$Faction == faction.{faction.Id}"),
                    new XElement("set_value",
-                       new XAttribute("name", "DesiredEquipmentDocks"),
+                       new XAttribute("name", "$DesiredEquipmentDocks"),
                        new XAttribute("exact", "1"))));
         }
 
@@ -91,7 +91,7 @@ namespace X4SectorCreator.MdGeneration
                    new XElement("do_elseif",
                        new XAttribute("value", $"$Faction == faction.{faction.Id}"),
                    new XElement("set_value",
-                       new XAttribute("name", "DesiredTradeStation"),
+                       new XAttribute("name", "$DesiredTradeStation"),
                        new XAttribute("exact", "1"))));
         }
 
