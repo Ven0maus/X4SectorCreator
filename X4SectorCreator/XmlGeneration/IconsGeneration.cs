@@ -8,7 +8,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class IconsGeneration
     {
-        public static void Generate(string folder)
+        public static void Generate(string folder, string modName)
         {
             if (FactionsForm.AllCustomFactions.Count == 0)
             {
@@ -18,13 +18,13 @@ namespace X4SectorCreator.XmlGeneration
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("diff",
-                    CollectIcons(folder)
+                    CollectIcons(folder, modName)
                 )
             );
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/icons.xml")));
         }
 
-        private static XElement CollectIcons(string folder)
+        private static XElement CollectIcons(string folder, string modName)
         {
             var mainElement = new XElement("add", new XAttribute("sel", "/icons"));
             foreach (var faction in FactionsForm.AllCustomFactions.Values)
@@ -35,7 +35,7 @@ namespace X4SectorCreator.XmlGeneration
                 // Create icon element
                 mainElement.Add(new XElement("icon",
                     new XAttribute("name", faction.IconData.Active),
-                    new XAttribute("texture", $"extensions\\{folder}\\assets\\fx\\gui\\textures\\factions\\{faction.IconData.Active}.tga"),
+                    new XAttribute("texture", $"extensions\\{modName}\\assets\\fx\\gui\\textures\\factions\\{faction.IconData.Active}.tga"),
                     new XAttribute("height", "256"),
                     new XAttribute("width", "256")));
             }

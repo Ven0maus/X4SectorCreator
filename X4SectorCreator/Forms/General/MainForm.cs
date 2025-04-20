@@ -414,7 +414,7 @@ namespace X4SectorCreator
                 BasketsGeneration.Generate(modFolder, modPrefix);
                 FactionsGeneration.Generate(modFolder);
                 ColorsGeneration.Generate(modFolder);
-                IconsGeneration.Generate(modFolder);
+                IconsGeneration.Generate(modFolder, modName);
                 ShipsGeneration.Generate(modFolder);
                 ShipGroupsGeneration.Generate(modFolder);
                 StationsGeneration.Generate(modFolder);
