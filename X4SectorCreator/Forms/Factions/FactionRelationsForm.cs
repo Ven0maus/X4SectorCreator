@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
+using X4SectorCreator.Forms.Factions;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -22,6 +24,7 @@ namespace X4SectorCreator.Forms
         public FactionForm FactionForm { get; set; }
 
         private readonly Dictionary<string, int> _indexMapping = new(StringComparer.OrdinalIgnoreCase);
+        private readonly LazyEvaluated<FactionRelationValueHelperForm> _factionRelationValueHelperForm = new(() => new FactionRelationValueHelperForm(), a => !a.IsDisposed);
 
         public FactionRelationsForm()
         {
@@ -88,7 +91,7 @@ namespace X4SectorCreator.Forms
                 var factionDataValue = row.Cells[1].Value;
                 if (factionDataValue is double strD)
                     factionValue = strD;
-                else 
+                else
                     _ = double.TryParse(row.Cells[1].Value as string, CultureInfo.InvariantCulture, out factionValue);
 
                 // Find match index
@@ -117,6 +120,11 @@ namespace X4SectorCreator.Forms
             // This will re-apply the setter of the property to properly serialize the value in the other form
             FactionForm.SetFactionXml(Faction);
             Close();
+        }
+
+        private void BtnRelationValueHelper_Click(object sender, EventArgs e)
+        {
+            _factionRelationValueHelperForm.Value.Show();
         }
     }
 }
