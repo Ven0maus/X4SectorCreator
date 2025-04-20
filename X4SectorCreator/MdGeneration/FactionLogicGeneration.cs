@@ -55,7 +55,7 @@ namespace X4SectorCreator.MdGeneration
                 new XElement("conditions",
                     new XElement("event_cue_signalled",
                     new XAttribute("cue", "md.Setup.Start")),
-                    new XElement("check_value", new XAttribute("value", $"player.galaxy.macro.ismacro.{{macro.{GalaxySettingsForm.GalaxyName}}}"))),
+                    new XElement("check_value", new XAttribute("value", $"player.galaxy.macro.ismacro.{{macro.{GalaxySettingsForm.GalaxyName}_macro}}"))),
                 new XElement("actions",
                     new XElement("set_value",
                     new XAttribute("name", "md.$DefaultShipStrengthTable"),
