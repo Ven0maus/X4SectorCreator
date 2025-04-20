@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Drawing.Drawing2D;
+using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -9,6 +11,12 @@ namespace X4SectorCreator
     {
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool GateSectorSelection { get; set; } = false;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool ClusterSectorSelection { get; set; } = false;
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public FactionForm FactionForm { get; set; }
 
         private readonly Dictionary<(int, int), Hexagon> _hexagons = [];
         private Dictionary<(int, int), Cluster> _baseGameClusters;
@@ -1078,46 +1086,76 @@ namespace X4SectorCreator
 
             if (GateSectorSelection)
             {
-                if (!MainForm.Instance.AllClusters.TryGetValue(position, out Cluster cluster))
-                {
-                    _ = MessageBox.Show("Invalid cluster selected.");
-                    return;
-                }
-
-                // Verify if cluster has atleast one sector and one zone
-                if (cluster.Sectors.Count == 0)
-                {
-                    _ = MessageBox.Show("The selected cluster must have atleast one sector.");
-                    return;
-                }
-
-                // Find selected sector in cluster
-                Sector selectedSector;
-                if (_selectedChildHexIndex != null)
-                {
-                    selectedSector = cluster.Sectors[_selectedChildHexIndex.Value];
-                }
-                else
-                {
-                    selectedSector = cluster.Sectors.FirstOrDefault();
-                    if (selectedSector == null)
-                    {
-                        _ = MessageBox.Show("Invalid cluster selected, must be an existing cluster with atleast one sector and one zone.");
-                        return;
-                    }
-                }
+                var selectedSector = GetSectorFromPosition(position, out _);
+                if (selectedSector == null) return;
 
                 MainForm.Instance.GateForm.Value.txtTargetSector.Text = selectedSector.Name;
                 MainForm.Instance.GateForm.Value.txtTargetSectorLocation.Text = position.ToString() + $" [{_selectedChildHexIndex?.ToString() ?? "0"}]";
                 MainForm.Instance.GateForm.Value.TargetSectorSelection = null; // Recalibrates automatically
             }
-            else
+            else if (ClusterSectorSelection)
             {
                 MainForm.Instance.ClusterForm.Value.TxtLocation.Text = position.ToString();
+            }
+            else
+            {
+                var selectedSector = GetSectorFromPosition(position, out var cluster);
+                if (selectedSector == null) return;
+
+                // Set the selected sector's macro
+                FactionForm.PreferredHqSpace = GetSectorMacro(cluster, selectedSector);
             }
 
             DeselectHex();
             Close();
+        }
+
+        private static string GetSectorMacro(Cluster cluster, Sector sector)
+        {
+            var sectorMacro = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
+            if (cluster.IsBaseGame && sector.IsBaseGame)
+            {
+                sectorMacro = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_macro";
+            }
+            else if (cluster.IsBaseGame)
+            {
+                sectorMacro = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}_macro";
+            }
+            return sectorMacro;
+        }
+
+        private Sector GetSectorFromPosition((int, int) position, out Cluster cluster)
+        {
+            if (!MainForm.Instance.AllClusters.TryGetValue(position, out cluster))
+            {
+                _ = MessageBox.Show("Invalid cluster selected.");
+                return null;
+            }
+
+            // Verify if cluster has atleast one sector and one zone
+            if (cluster.Sectors.Count == 0)
+            {
+                _ = MessageBox.Show("The selected cluster must have atleast one sector.");
+                return null;
+            }
+
+            // Find selected sector in cluster
+            Sector selectedSector;
+            if (_selectedChildHexIndex != null)
+            {
+                selectedSector = cluster.Sectors[_selectedChildHexIndex.Value];
+            }
+            else
+            {
+                selectedSector = cluster.Sectors.FirstOrDefault();
+                if (selectedSector == null)
+                {
+                    _ = MessageBox.Show("Invalid cluster selected, must be an existing cluster with atleast one sector and one zone.");
+                    return null;
+                }
+            }
+
+            return selectedSector;
         }
 
         private void ChkShowCoordinates_CheckedChanged(object sender, EventArgs e)

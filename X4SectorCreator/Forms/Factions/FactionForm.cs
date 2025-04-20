@@ -91,6 +91,21 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<string> StationTypes { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public List<string> PreferredHqTypes { get; set; }
+
+        private string _preferredHqSpace;
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string PreferredHqSpace
+        {
+            get => string.IsNullOrWhiteSpace(_preferredHqSpace) ? null : _preferredHqSpace;
+            set
+            {
+                _preferredHqSpace = value;
+                TxtPreferredHqSpace.Text = _preferredHqSpace ?? string.Empty;
+            }
+        }
+
         private Faction _faction;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Faction Faction
@@ -108,6 +123,8 @@ namespace X4SectorCreator.Forms
                     Ships = _faction.Ships;
                     ShipGroups = _faction.ShipGroups;
                     StationTypes = _faction.StationTypes;
+                    PreferredHqTypes = _faction.PrefferedHqStationTypes;
+                    PreferredHqSpace = _faction.PrefferedHqSpace;
                     LblIconSize.Visible = false;
                     ApplyFactionXmlToFieldsContent();
                 }
@@ -165,6 +182,18 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(PreferredHqSpace))
+            {
+                _ = MessageBox.Show("Preferred HQ space must be set.");
+                return;
+            }
+
+            if (StationTypes == null || StationTypes.Count == 0)
+            {
+                _ = MessageBox.Show("You must setup atleast some stations for the faction.");
+                return;
+            }
+
             UpdateLicenseNames();
 
             var faction = Faction.Deserialize(_factionXml);
@@ -178,6 +207,8 @@ namespace X4SectorCreator.Forms
             faction.ShipGroups = ShipGroups;
             faction.Ships = Ships;
             faction.StationTypes = StationTypes;
+            faction.PrefferedHqStationTypes = PreferredHqTypes;
+            faction.PrefferedHqSpace = PreferredHqSpace;
 
             switch (BtnCreate.Text)
             {
@@ -506,9 +537,18 @@ namespace X4SectorCreator.Forms
             _factionStationForm.Value.Show();
         }
 
-        private void BtnFactionCharacters_Click(object sender, EventArgs e)
+        private void TxtPreferredHqSpace_MouseClick(object sender, MouseEventArgs e)
         {
-
+            MainForm.Instance.SectorMapForm.Value.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            MainForm.Instance.SectorMapForm.Value.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            MainForm.Instance.SectorMapForm.Value.GateSectorSelection = false;
+            MainForm.Instance.SectorMapForm.Value.ClusterSectorSelection = false;
+            MainForm.Instance.SectorMapForm.Value.FactionForm = this;
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Enabled = false;
+            MainForm.Instance.SectorMapForm.Value.ControlPanel.Size = new Size(176, 277);
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
+            MainForm.Instance.SectorMapForm.Value.Reset();
+            MainForm.Instance.SectorMapForm.Value.Show();
         }
     }
 }

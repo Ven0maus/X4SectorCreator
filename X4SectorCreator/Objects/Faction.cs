@@ -53,6 +53,12 @@ namespace X4SectorCreator.Objects
         public string Icon { get; set; }
 
         [XmlIgnore]
+        public string PrefferedHqSpace { get; set; }
+
+        [XmlIgnore]
+        public List<string> PrefferedHqStationTypes { get; set; }
+
+        [XmlIgnore]
         public List<ShipGroup> ShipGroups { get; set; }
 
         [XmlIgnore]

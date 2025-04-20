@@ -1,4 +1,6 @@
-﻿namespace X4SectorCreator.Forms.Factions
+﻿using X4SectorCreator.CustomComponents;
+
+namespace X4SectorCreator.Forms.Factions
 {
     partial class FactionStationForm
     {
@@ -36,6 +38,8 @@
             BtnRemove = new Button();
             BtnConfirm = new Button();
             BtnCancel = new Button();
+            CmbHQTypes = new MultiSelectCombo.NoDropDownComboBox();
+            label3 = new Label();
             SuspendLayout();
             // 
             // AvailableStationTypesListBox
@@ -99,7 +103,7 @@
             // 
             // BtnConfirm
             // 
-            BtnConfirm.Location = new Point(186, 238);
+            BtnConfirm.Location = new Point(186, 266);
             BtnConfirm.Name = "BtnConfirm";
             BtnConfirm.Size = new Size(320, 34);
             BtnConfirm.TabIndex = 6;
@@ -109,7 +113,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 238);
+            BtnCancel.Location = new Point(12, 266);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(168, 34);
             BtnCancel.TabIndex = 7;
@@ -117,11 +121,31 @@
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
+            // CmbHQTypes
+            // 
+            CmbHQTypes.FormattingEnabled = true;
+            CmbHQTypes.Location = new Point(305, 238);
+            CmbHQTypes.Name = "CmbHQTypes";
+            CmbHQTypes.Size = new Size(201, 23);
+            CmbHQTypes.TabIndex = 8;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F);
+            label3.Location = new Point(101, 239);
+            label3.Name = "label3";
+            label3.Size = new Size(200, 21);
+            label3.TabIndex = 9;
+            label3.Text = "Preferred HQ Station Types:";
+            // 
             // FactionStationForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(512, 277);
+            ClientSize = new Size(512, 304);
+            Controls.Add(label3);
+            Controls.Add(CmbHQTypes);
             Controls.Add(BtnCancel);
             Controls.Add(BtnConfirm);
             Controls.Add(BtnRemove);
@@ -149,5 +173,7 @@
         private Button BtnRemove;
         private Button BtnConfirm;
         private Button BtnCancel;
+        private MultiSelectCombo.NoDropDownComboBox CmbHQTypes;
+        private Label label3;
     }
 }

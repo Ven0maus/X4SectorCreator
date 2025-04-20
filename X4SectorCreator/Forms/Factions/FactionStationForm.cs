@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.CustomComponents;
 
 namespace X4SectorCreator.Forms.Factions
 {
@@ -7,20 +8,35 @@ namespace X4SectorCreator.Forms.Factions
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public FactionForm FactionForm { get; set; }
 
+        private readonly MultiSelectCombo _mscHqTypes;
+
         public FactionStationForm()
         {
             InitializeComponent();
+
+            _mscHqTypes = new MultiSelectCombo(CmbHQTypes);
         }
 
         private void BtnConfirm_Click(object sender, EventArgs e)
         {
-            if (SelectedStationTypesListBox.Items.Count == 0)
+            FactionForm.StationTypes = SelectedStationTypesListBox.Items.Count == 0 ? null :
+                SelectedStationTypesListBox.Items.Cast<string>().ToList();
+
+            FactionForm.PreferredHqTypes = _mscHqTypes.SelectedItems.Count == 0 ? null :
+                _mscHqTypes.SelectedItems.Cast<string>().ToList();
+
+            if (FactionForm.StationTypes == null)
             {
-                FactionForm.StationTypes = null;
+                _ = MessageBox.Show("Please select atleast one station type.");
                 return;
             }
 
-            FactionForm.StationTypes = SelectedStationTypesListBox.Items.Cast<string>().ToList();
+            if (FactionForm.PreferredHqTypes == null)
+            {
+                _ = MessageBox.Show("Please select atleast one preferred HQ type.");
+                return;
+            }
+
             Close();
         }
 
@@ -36,6 +52,14 @@ namespace X4SectorCreator.Forms.Factions
                 !SelectedStationTypesListBox.Items.Contains(station))
             {
                 SelectedStationTypesListBox.Items.Add(station);
+
+                // Add selected option
+                CmbHQTypes.Items.Add(station);
+                var selectedValues = _mscHqTypes.SelectedItems.ToList();
+                _mscHqTypes.ResetSelection();
+                _mscHqTypes.ReInit();
+                foreach (var selectedValue in selectedValues)
+                    _mscHqTypes.Select(selectedValue);
             }
         }
 
@@ -45,6 +69,14 @@ namespace X4SectorCreator.Forms.Factions
                 !string.IsNullOrWhiteSpace(station))
             {
                 SelectedStationTypesListBox.Items.Remove(station);
+
+                // Remove selected option
+                CmbHQTypes.Items.Remove(station);
+                var selectedValues = _mscHqTypes.SelectedItems.ToList();
+                _mscHqTypes.ResetSelection();
+                _mscHqTypes.ReInit();
+                foreach (var selectedValue in selectedValues)
+                    _mscHqTypes.Select(selectedValue);
             }
         }
 

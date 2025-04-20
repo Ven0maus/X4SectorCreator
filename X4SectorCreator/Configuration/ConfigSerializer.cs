@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using X4SectorCreator.Configuration.Converters;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
 
@@ -12,7 +13,7 @@ namespace X4SectorCreator.Configuration
             WriteIndented = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             PropertyNameCaseInsensitive = true,
-            Converters = { new JsonStringEnumConverter() }
+            Converters = { new JsonStringEnumConverter(), new ColorJsonConverter() }
         };
 
         public static string Serialize(List<Cluster> clusters, VanillaChanges vanillaChanges)

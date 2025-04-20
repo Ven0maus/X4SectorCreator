@@ -55,6 +55,7 @@
             BtnEditFactionShips = new Button();
             LblIconSize = new Label();
             BtnFactionStations = new Button();
+            TxtPreferredHqSpace = new TextBox();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -249,7 +250,7 @@
             // 
             // BtnSetIcon
             // 
-            BtnSetIcon.Location = new Point(324, 261);
+            BtnSetIcon.Location = new Point(324, 259);
             BtnSetIcon.Name = "BtnSetIcon";
             BtnSetIcon.Size = new Size(100, 33);
             BtnSetIcon.TabIndex = 27;
@@ -259,9 +260,9 @@
             // 
             // BtnEditXml
             // 
-            BtnEditXml.Location = new Point(430, 193);
+            BtnEditXml.Location = new Point(325, 298);
             BtnEditXml.Name = "BtnEditXml";
-            BtnEditXml.Size = new Size(197, 33);
+            BtnEditXml.Size = new Size(302, 33);
             BtnEditXml.TabIndex = 28;
             BtnEditXml.Text = "Edit XML (Advanced)";
             BtnEditXml.UseVisualStyleBackColor = true;
@@ -314,11 +315,22 @@
             BtnFactionStations.UseVisualStyleBackColor = true;
             BtnFactionStations.Click += BtnFactionStations_Click;
             // 
+            // TxtPreferredHqSpace
+            // 
+            TxtPreferredHqSpace.Location = new Point(430, 194);
+            TxtPreferredHqSpace.Name = "TxtPreferredHqSpace";
+            TxtPreferredHqSpace.PlaceholderText = "Select Preferred HQ Space";
+            TxtPreferredHqSpace.ReadOnly = true;
+            TxtPreferredHqSpace.Size = new Size(197, 23);
+            TxtPreferredHqSpace.TabIndex = 36;
+            TxtPreferredHqSpace.MouseClick += TxtPreferredHqSpace_MouseClick;
+            // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(632, 376);
+            Controls.Add(TxtPreferredHqSpace);
             Controls.Add(BtnFactionStations);
             Controls.Add(LblIconSize);
             Controls.Add(BtnEditFactionShips);
@@ -385,5 +397,6 @@
         private Button BtnEditFactionShips;
         private Label LblIconSize;
         private Button BtnFactionStations;
+        private TextBox TxtPreferredHqSpace;
     }
 }

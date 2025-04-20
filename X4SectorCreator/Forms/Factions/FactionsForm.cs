@@ -5,7 +5,7 @@ namespace X4SectorCreator.Forms
 {
     public partial class FactionsForm : Form
     {
-        public static readonly Dictionary<string, Faction> AllCustomFactions = [];
+        public static readonly Dictionary<string, Faction> AllCustomFactions = new(StringComparer.OrdinalIgnoreCase);
         private readonly LazyEvaluated<FactionForm> _factionForm = new(() => new FactionForm(), a => !a.IsDisposed);
 
         public FactionsForm()
@@ -17,7 +17,7 @@ namespace X4SectorCreator.Forms
         public void InitFactionValues()
         {
             CustomFactionsListBox.Items.Clear();
-            foreach (var faction in AllCustomFactions.Values.OrderBy(a => a))
+            foreach (var faction in AllCustomFactions.Values.OrderBy(a => a.Name))
             {
                 CustomFactionsListBox.Items.Add(faction);
             }
