@@ -222,6 +222,8 @@ namespace X4SectorCreator.Forms.Factories
             
             // Set owner faction
             factory.Owner = GodGeneration.CorrectFactionName(CmbOwner.SelectedItem as string);
+            if (factory.Module?.Select?.Faction != null)
+                factory.Module.Select.Faction = factory.Owner;
             factory.Location ??= new Factory.LocationObj();
             factory.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
         }
