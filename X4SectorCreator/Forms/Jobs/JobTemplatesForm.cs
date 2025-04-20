@@ -8,7 +8,7 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public JobForm JobForm { get; set; }
 
-        private static readonly Lazy<Job[]> _templateJobs = new(() => InitTemplateJobs().ToArray());
+        private static readonly Lazy<Job[]> _templateJobs = new(() => CollectTemplateJobs().ToArray());
 
         public JobTemplatesForm()
         {
@@ -35,7 +35,7 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private static IEnumerable<Job> InitTemplateJobs()
+        public static IEnumerable<Job> CollectTemplateJobs()
         {
             string directoryPath = Constants.DataPaths.TemplateJobsDirectoryPath;
             if (!Directory.Exists(directoryPath))

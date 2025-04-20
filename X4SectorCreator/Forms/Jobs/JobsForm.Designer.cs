@@ -50,6 +50,8 @@
             BtnQuickQuotaEditor = new Button();
             label9 = new Label();
             TxtSearch = new TextBox();
+            BtnCreateJobsFromPreset = new Button();
+            BtnClearAllJobs = new Button();
             SuspendLayout();
             // 
             // ListJobs
@@ -57,7 +59,7 @@
             ListJobs.FormattingEnabled = true;
             ListJobs.Location = new Point(12, 70);
             ListJobs.Name = "ListJobs";
-            ListJobs.Size = new Size(259, 394);
+            ListJobs.Size = new Size(259, 424);
             ListJobs.TabIndex = 0;
             ListJobs.DoubleClick += ListJobs_DoubleClick;
             // 
@@ -73,19 +75,19 @@
             // 
             // BtnCreateFromTemplate
             // 
-            BtnCreateFromTemplate.Location = new Point(277, 40);
+            BtnCreateFromTemplate.Location = new Point(277, 70);
             BtnCreateFromTemplate.Name = "BtnCreateFromTemplate";
-            BtnCreateFromTemplate.Size = new Size(321, 78);
+            BtnCreateFromTemplate.Size = new Size(321, 36);
             BtnCreateFromTemplate.TabIndex = 2;
-            BtnCreateFromTemplate.Text = "Create New Job From Template";
+            BtnCreateFromTemplate.Text = "Create Custom Job From Template";
             BtnCreateFromTemplate.UseVisualStyleBackColor = true;
             BtnCreateFromTemplate.Click += BtnCreateFromTemplate_Click;
             // 
             // BtnRemoveJob
             // 
-            BtnRemoveJob.Location = new Point(277, 124);
+            BtnRemoveJob.Location = new Point(277, 148);
             BtnRemoveJob.Name = "BtnRemoveJob";
-            BtnRemoveJob.Size = new Size(321, 36);
+            BtnRemoveJob.Size = new Size(191, 36);
             BtnRemoveJob.TabIndex = 4;
             BtnRemoveJob.Text = "Remove Selected Job";
             BtnRemoveJob.UseVisualStyleBackColor = true;
@@ -93,7 +95,7 @@
             // 
             // BtnExitJobWindow
             // 
-            BtnExitJobWindow.Location = new Point(277, 435);
+            BtnExitJobWindow.Location = new Point(277, 460);
             BtnExitJobWindow.Name = "BtnExitJobWindow";
             BtnExitJobWindow.Size = new Size(321, 36);
             BtnExitJobWindow.TabIndex = 5;
@@ -104,7 +106,7 @@
             // cmbFaction
             // 
             cmbFaction.FormattingEnabled = true;
-            cmbFaction.Location = new Point(345, 279);
+            cmbFaction.Location = new Point(345, 298);
             cmbFaction.Name = "cmbFaction";
             cmbFaction.Size = new Size(247, 23);
             cmbFaction.TabIndex = 6;
@@ -114,7 +116,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14F, FontStyle.Underline);
-            label2.Location = new Point(277, 247);
+            label2.Location = new Point(277, 266);
             label2.Name = "label2";
             label2.Size = new Size(152, 25);
             label2.TabIndex = 7;
@@ -124,7 +126,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(277, 277);
+            label3.Location = new Point(277, 296);
             label3.Name = "label3";
             label3.Size = new Size(62, 21);
             label3.TabIndex = 8;
@@ -134,7 +136,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(285, 308);
+            label4.Location = new Point(285, 327);
             label4.Name = "label4";
             label4.Size = new Size(54, 21);
             label4.TabIndex = 9;
@@ -143,7 +145,7 @@
             // cmbOrder
             // 
             cmbOrder.FormattingEnabled = true;
-            cmbOrder.Location = new Point(345, 308);
+            cmbOrder.Location = new Point(345, 327);
             cmbOrder.Name = "cmbOrder";
             cmbOrder.Size = new Size(247, 23);
             cmbOrder.TabIndex = 10;
@@ -153,7 +155,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(281, 338);
+            label6.Location = new Point(281, 357);
             label6.Name = "label6";
             label6.Size = new Size(58, 21);
             label6.TabIndex = 13;
@@ -162,7 +164,7 @@
             // cmbBasket
             // 
             cmbBasket.FormattingEnabled = true;
-            cmbBasket.Location = new Point(345, 338);
+            cmbBasket.Location = new Point(345, 357);
             cmbBasket.Name = "cmbBasket";
             cmbBasket.Size = new Size(247, 23);
             cmbBasket.TabIndex = 14;
@@ -171,7 +173,7 @@
             // cmbCluster
             // 
             cmbCluster.FormattingEnabled = true;
-            cmbCluster.Location = new Point(345, 369);
+            cmbCluster.Location = new Point(345, 388);
             cmbCluster.Name = "cmbCluster";
             cmbCluster.Size = new Size(247, 23);
             cmbCluster.TabIndex = 16;
@@ -181,7 +183,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(277, 370);
+            label7.Location = new Point(277, 389);
             label7.Name = "label7";
             label7.Size = new Size(62, 21);
             label7.TabIndex = 15;
@@ -191,7 +193,7 @@
             // 
             cmbSector.Enabled = false;
             cmbSector.FormattingEnabled = true;
-            cmbSector.Location = new Point(345, 400);
+            cmbSector.Location = new Point(345, 419);
             cmbSector.Name = "cmbSector";
             cmbSector.Size = new Size(247, 23);
             cmbSector.TabIndex = 18;
@@ -201,7 +203,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(282, 398);
+            label8.Location = new Point(282, 417);
             label8.Name = "label8";
             label8.Size = new Size(57, 21);
             label8.TabIndex = 17;
@@ -209,7 +211,7 @@
             // 
             // BtnResetFilter
             // 
-            BtnResetFilter.Location = new Point(435, 247);
+            BtnResetFilter.Location = new Point(435, 266);
             BtnResetFilter.Name = "BtnResetFilter";
             BtnResetFilter.Size = new Size(157, 25);
             BtnResetFilter.TabIndex = 19;
@@ -219,7 +221,7 @@
             // 
             // BtnBaskets
             // 
-            BtnBaskets.Location = new Point(277, 166);
+            BtnBaskets.Location = new Point(277, 187);
             BtnBaskets.Name = "BtnBaskets";
             BtnBaskets.Size = new Size(321, 36);
             BtnBaskets.TabIndex = 20;
@@ -239,7 +241,7 @@
             // 
             // BtnQuickQuotaEditor
             // 
-            BtnQuickQuotaEditor.Location = new Point(277, 208);
+            BtnQuickQuotaEditor.Location = new Point(277, 226);
             BtnQuickQuotaEditor.Name = "BtnQuickQuotaEditor";
             BtnQuickQuotaEditor.Size = new Size(321, 36);
             BtnQuickQuotaEditor.TabIndex = 23;
@@ -264,11 +266,33 @@
             TxtSearch.Size = new Size(193, 23);
             TxtSearch.TabIndex = 25;
             // 
+            // BtnCreateJobsFromPreset
+            // 
+            BtnCreateJobsFromPreset.Location = new Point(277, 109);
+            BtnCreateJobsFromPreset.Name = "BtnCreateJobsFromPreset";
+            BtnCreateJobsFromPreset.Size = new Size(321, 36);
+            BtnCreateJobsFromPreset.TabIndex = 26;
+            BtnCreateJobsFromPreset.Text = "Create Jobs From Preset";
+            BtnCreateJobsFromPreset.UseVisualStyleBackColor = true;
+            BtnCreateJobsFromPreset.Click += BtnCreateJobsFromPreset_Click;
+            // 
+            // BtnClearAllJobs
+            // 
+            BtnClearAllJobs.Location = new Point(474, 148);
+            BtnClearAllJobs.Name = "BtnClearAllJobs";
+            BtnClearAllJobs.Size = new Size(124, 36);
+            BtnClearAllJobs.TabIndex = 27;
+            BtnClearAllJobs.Text = "Clear All Jobs";
+            BtnClearAllJobs.UseVisualStyleBackColor = true;
+            BtnClearAllJobs.Click += BtnClearAllJobs_Click;
+            // 
             // JobsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(604, 478);
+            ClientSize = new Size(604, 503);
+            Controls.Add(BtnClearAllJobs);
+            Controls.Add(BtnCreateJobsFromPreset);
             Controls.Add(TxtSearch);
             Controls.Add(label9);
             Controls.Add(BtnQuickQuotaEditor);
@@ -324,5 +348,7 @@
         private Button BtnQuickQuotaEditor;
         private Label label9;
         private TextBox TxtSearch;
+        private Button BtnCreateJobsFromPreset;
+        private Button BtnClearAllJobs;
     }
 }

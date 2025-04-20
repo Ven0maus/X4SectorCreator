@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Helpers;
+﻿using X4SectorCreator.Forms.Factories;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -10,6 +11,7 @@ namespace X4SectorCreator.Forms
         private readonly LazyEvaluated<FactoryForm> _factoryForm = new(() => new FactoryForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<FactoryTemplatesForm> _factoryTemplatesForm = new(() => new FactoryTemplatesForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<QuickQuotaEditorForm> _quickQuotaEditorForm = new(() => new QuickQuotaEditorForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<PresetSelectionForm> _presetSelectionForm = new(() => new PresetSelectionForm(), a => !a.IsDisposed);
 
         private bool _applyFilter = true;
 
@@ -373,6 +375,23 @@ namespace X4SectorCreator.Forms
             _quickQuotaEditorForm.Value.FactoriesForm = this;
             _quickQuotaEditorForm.Value.Initialize();
             _quickQuotaEditorForm.Value.Show();
+        }
+
+        private void BtnClearAllFactories_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete all custom factories? This is a destructive operation!",
+                "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                AllFactories.Clear();
+                ApplyCurrentFilter();
+            }
+        }
+
+        private void BtnCreateFactoriesFromPreset_Click(object sender, EventArgs e)
+        {
+            _presetSelectionForm.Value.FactoriesForm = this;
+            _presetSelectionForm.Value.JobsForm = null;
+            _presetSelectionForm.Value.Show();
         }
     }
 }

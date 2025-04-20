@@ -8,7 +8,7 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public FactoryForm FactoryForm { get; set; }
 
-        private static readonly Lazy<Factory[]> _templateFactories = new(() => InitTemplateFactories().ToArray());
+        private static readonly Lazy<Factory[]> _templateFactories = new(() => CollectTemplateFactories().ToArray());
 
         public FactoryTemplatesForm()
         {
@@ -35,7 +35,7 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private static IEnumerable<Factory> InitTemplateFactories()
+        public static IEnumerable<Factory> CollectTemplateFactories()
         {
             string directoryPath = Constants.DataPaths.TemplateFactoriesDirectoryPath;
             if (!Directory.Exists(directoryPath))
@@ -52,7 +52,7 @@ namespace X4SectorCreator.Forms
                 if (File.Exists(godFilePath))
                 {
                     string xml = File.ReadAllText(godFilePath);
-                    Factories factories = Factories.DeserializeFactories(xml);
+                    Objects.Factories factories = Objects.Factories.DeserializeFactories(xml);
                     foreach (Factory factory in factories.FactoryList)
                     {
                         factory.TemplateDirectory = templateName;
