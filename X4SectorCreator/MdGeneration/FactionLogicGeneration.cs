@@ -40,7 +40,7 @@ namespace X4SectorCreator.MdGeneration
 
             var setupCue = CreateSetupCue(modPrefix);
             cuesCue.Add(setupCue);
-            cuesCue.Add(CreateFactionCues());
+            cuesCue.Add(CreateFactionCues(modPrefix));
 
             return mainCue;
         }
@@ -97,7 +97,7 @@ namespace X4SectorCreator.MdGeneration
             return setupCue;
         }
 
-        private static IEnumerable<XElement> CreateFactionCues()
+        private static IEnumerable<XElement> CreateFactionCues(string modPrefix)
         {
             foreach (var faction in FactionsForm.AllCustomFactions.Values)
             {
@@ -125,7 +125,7 @@ namespace X4SectorCreator.MdGeneration
                             ),
                             new XElement("param",
                                 new XAttribute("name", "PreferredHQSpaceMacro"),
-                                new XAttribute("value", $"macro.{faction.PrefferedHqSpace}")
+                                new XAttribute("value", $"macro.{faction.PrefferedHqSpace.Replace("PREFIX", modPrefix)}")
                             ),
                             new XElement("param",
                                 new XAttribute("name", "PreferredHQTypes"),
