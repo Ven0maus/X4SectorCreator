@@ -427,6 +427,11 @@ namespace X4SectorCreator
                 CharactersGeneration.Generate(modFolder);
                 WaresGeneration.Generate(modFolder);
                 FactionLogicGeneration.Generate(modPrefix, modFolder);
+                FactionSetupGeneration.Generate(modFolder);
+                KillMassTrafficGeneration.Generate(modFolder);
+                SignalLeaksGeneration.Generate(modFolder);
+                FactionLogicEconomyGeneration.Generate(modFolder);
+                FactionLogicStationsGeneration.Generate(modFolder);
             }
             catch (Exception ex)
             {
