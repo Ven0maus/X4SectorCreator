@@ -62,7 +62,7 @@ namespace X4SectorCreator.MdGeneration
         private static XElement GetWharf(Faction faction)
         {
             return new XElement("add",
-               new XAttribute("sel", "\"/mdscript/cues/library[@name='Manage_Stations']/cues/cue[@name='Process']/cues/cue[@name='Analyse_Stations']/actions/do_elseif[@value='@$DesiredWharfPatchMarker']"),
+               new XAttribute("sel", "/mdscript/cues/library[@name='Manage_Stations']/cues/cue[@name='Process']/cues/cue[@name='Analyse_Stations']/actions/do_elseif[@value='@$DesiredWharfPatchMarker']"),
                new XAttribute("pos", "after"),
                    new XElement("do_elseif",
                        new XAttribute("value", $"$Faction == faction.{faction.Id}"),
