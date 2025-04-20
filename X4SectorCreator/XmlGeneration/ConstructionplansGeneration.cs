@@ -56,7 +56,7 @@ namespace X4SectorCreator.XmlGeneration
 
                     var clone = plan.Clone();
                     clone.Id = $"{clone.Id.Split('_')[1]}_{faction.Id}";
-                    clone.Name = $"{faction.Name} {GetConstructionplanName(stationType)}";
+                    clone.Name = GetConstructionplanName(stationType);
                     var xElement = XElement.Parse(clone.Serialize());
                     mainElement.Add(xElement);
                     count++;
