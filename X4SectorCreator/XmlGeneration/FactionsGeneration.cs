@@ -10,11 +10,21 @@ namespace X4SectorCreator.XmlGeneration
             var factionsContent = CollectFactionsContent();
             if (factionsContent.Length > 0)
             {
+                var createPlayerLicenseElement = CollectPlayerLicenses();
+                var relationChanges = CollectRelationChanges().ToArray();
+                if (relationChanges.Length == 0)
+                    relationChanges = null;
+
                 XElement factionsDiff = new("diff", 
+                    new XComment("Custom Factions"),
                     new XElement("add",
                         new XAttribute("sel", "/factions"),
                         factionsContent
-                    )
+                    ),
+                    relationChanges != null ? new XComment("Relation Changes") : null,
+                    relationChanges,
+                    new XComment("Player Licenses"),
+                    createPlayerLicenseElement
                 );
 
                 XDocument xmlDocument = new(
@@ -30,6 +40,85 @@ namespace X4SectorCreator.XmlGeneration
             return FactionsForm.AllCustomFactions
                 .Select(a => XElement.Parse(a.Value.Serialize()))
                 .ToArray();
+        }
+
+        private static IEnumerable<XElement> CollectRelationChanges()
+        {
+            var data = new Dictionary<string, List<Objects.Faction.Relation>>(StringComparer.OrdinalIgnoreCase);
+            foreach (var faction in FactionsForm.AllCustomFactions.Values)
+            {
+                if (faction.Relations?.Relation != null)
+                {
+                    foreach (var relation in faction.Relations.Relation)
+                    {
+                        if (!data.TryGetValue(relation.Faction, out var changes))
+                        {
+                            changes = [];
+                            data[relation.Faction] = changes;
+                        }
+
+                        changes.Add(new Objects.Faction.Relation 
+                        { 
+                            Faction = faction.Id, 
+                            RelationValue = relation.RelationValue 
+                        });
+                    }
+                }
+            }
+
+            foreach (var mapping in data)
+            {
+                var addElement = new XElement("add",
+                    new XAttribute("sel", $"//factions/faction[@id='{mapping.Key}']/relations"));
+                foreach (var obj in mapping.Value)
+                {
+                    addElement.Add(new XElement("relation",
+                        new XAttribute("faction", obj.Faction),
+                        new XAttribute("relation", obj.RelationValue)));
+                }
+                yield return addElement;
+            }
+        }
+
+        private static XElement CollectPlayerLicenses()
+        {
+            var element = new XElement("add", new XAttribute("sel", "/factions/faction[@id='player']/licences"));
+
+            var licenseTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "generaluseequipment",
+                "generaluseship",
+                "station_gen_basic"
+            };
+
+            var data = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var faction in FactionsForm.AllCustomFactions.Values)
+            {
+                if (faction.Licences?.Licence == null) continue;
+                foreach (var license in faction.Licences.Licence)
+                {
+                    if (licenseTypes.Contains(license.Type))
+                    {
+                        if (!data.TryGetValue(license.Type, out var factions))
+                        {
+                            factions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                            data[license.Type] = factions;
+                        }
+
+                        factions.Add(faction.Id);
+                    }
+                }
+            }
+
+            foreach (var mapping in data)
+            {
+                element.Add(new XElement("license",
+                    new XAttribute("type", mapping.Key),
+                    new XAttribute("factions", string.Join(" ", mapping.Value))));
+            }
+
+            return element;
         }
 
         private static string EnsureDirectoryExists(string filePath)
