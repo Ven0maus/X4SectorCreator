@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using X4SectorCreator.CustomComponents;
-using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Factions
 {
@@ -10,10 +9,19 @@ namespace X4SectorCreator.Forms.Factions
         public FactionForm FactionForm { get; set; }
 
         private readonly MultiSelectCombo _mscHqTypes;
+        private readonly Dictionary<string, TextBox> _desiredBoxes;
 
         public FactionStationForm()
         {
             InitializeComponent();
+
+            _desiredBoxes = new(StringComparer.OrdinalIgnoreCase)
+            {
+                { "shipyard", TxtDesiredShipyards },
+                { "wharf", TxtDesiredWharfs },
+                { "equipmentdock", TxtDesiredEquipmentDocks },
+                { "tradestation", TxtDesiredTradeStations },
+            };
 
             _mscHqTypes = new MultiSelectCombo(CmbHQTypes);
         }
@@ -38,7 +46,19 @@ namespace X4SectorCreator.Forms.Factions
                 return;
             }
 
+            FactionForm.DesiredShipyards = AsInteger(TxtDesiredShipyards.Text).ToString();
+            FactionForm.DesiredWharfs = AsInteger(TxtDesiredWharfs.Text).ToString();
+            FactionForm.DesiredEquipmentDocks = AsInteger(TxtDesiredEquipmentDocks.Text).ToString();
+            FactionForm.DesiredTradeStations = AsInteger(TxtDesiredTradeStations.Text).ToString();
+
             Close();
+        }
+
+        private static int AsInteger(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value) || !int.TryParse(value, out var nr))
+                return 0;
+            return nr;
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -61,6 +81,13 @@ namespace X4SectorCreator.Forms.Factions
                 _mscHqTypes.ReInit();
                 foreach (var selectedValue in selectedValues)
                     _mscHqTypes.Select(selectedValue);
+
+                // Set value to 1 atleast if its 0
+                if (_desiredBoxes.TryGetValue(station, out var box))
+                {
+                    if (string.IsNullOrWhiteSpace(box.Text) || box.Text == "0")
+                        box.Text = "1";
+                }
             }
         }
 
@@ -78,6 +105,13 @@ namespace X4SectorCreator.Forms.Factions
                 _mscHqTypes.ReInit();
                 foreach (var selectedValue in selectedValues)
                     _mscHqTypes.Select(selectedValue);
+
+                // Set value back to 0
+                if (_desiredBoxes.TryGetValue(station, out var box))
+                {
+                    if (!string.IsNullOrWhiteSpace(box.Text) && box.Text != "0")
+                        box.Text = "0";
+                }
             }
         }
 
@@ -111,6 +145,11 @@ namespace X4SectorCreator.Forms.Factions
                 foreach (var preferredHqType in FactionForm.PreferredHqTypes)
                     _mscHqTypes.Select(preferredHqType);
             }
+
+            TxtDesiredTradeStations.Text = FactionForm.DesiredTradeStations ?? "0";
+            TxtDesiredShipyards.Text = FactionForm.DesiredShipyards ?? "0";
+            TxtDesiredEquipmentDocks.Text = FactionForm.DesiredEquipmentDocks ?? "0";
+            TxtDesiredWharfs.Text = FactionForm.DesiredWharfs ?? "0";
         }
     }
 }

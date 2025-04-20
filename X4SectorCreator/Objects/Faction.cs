@@ -66,6 +66,18 @@ namespace X4SectorCreator.Objects
 
         [XmlIgnore]
         public List<string> StationTypes { get; set; }
+
+        [XmlIgnore]
+        public string DesiredWharfs { get; set; }
+
+        [XmlIgnore]
+        public string DesiredShipyards { get; set; }
+
+        [XmlIgnore]
+        public string DesiredEquipmentDocks { get; set; }
+
+        [XmlIgnore]
+        public string DesiredTradeStations { get; set; }
         #endregion
 
         public string Serialize()

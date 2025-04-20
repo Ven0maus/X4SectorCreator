@@ -94,6 +94,18 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<string> PreferredHqTypes { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string DesiredShipyards { get; set; }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string DesiredWharfs { get; set; }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string DesiredEquipmentDocks { get; set; }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string DesiredTradeStations { get; set; }
+
         private string _preferredHqSpace;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string PreferredHqSpace
@@ -125,6 +137,10 @@ namespace X4SectorCreator.Forms
                     StationTypes = _faction.StationTypes;
                     PreferredHqTypes = _faction.PrefferedHqStationTypes;
                     PreferredHqSpace = _faction.PrefferedHqSpace;
+                    DesiredWharfs = _faction.DesiredWharfs;
+                    DesiredShipyards = _faction.DesiredShipyards;
+                    DesiredEquipmentDocks = _faction.DesiredEquipmentDocks;
+                    DesiredTradeStations = _faction.DesiredTradeStations;
                     LblIconSize.Visible = false;
                     ApplyFactionXmlToFieldsContent();
                 }
@@ -214,6 +230,10 @@ namespace X4SectorCreator.Forms
             faction.StationTypes = StationTypes;
             faction.PrefferedHqStationTypes = PreferredHqTypes;
             faction.PrefferedHqSpace = PreferredHqSpace;
+            faction.DesiredWharfs = DesiredWharfs;
+            faction.DesiredShipyards = DesiredShipyards;
+            faction.DesiredEquipmentDocks = DesiredEquipmentDocks;
+            faction.DesiredTradeStations = DesiredTradeStations;
 
             switch (BtnCreate.Text)
             {

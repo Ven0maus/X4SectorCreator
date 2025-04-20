@@ -40,6 +40,14 @@ namespace X4SectorCreator.Forms.Factions
             BtnCancel = new Button();
             CmbHQTypes = new MultiSelectCombo.NoDropDownComboBox();
             label3 = new Label();
+            label4 = new Label();
+            TxtDesiredWharfs = new TextBox();
+            TxtDesiredEquipmentDocks = new TextBox();
+            label5 = new Label();
+            TxtDesiredTradeStations = new TextBox();
+            label6 = new Label();
+            TxtDesiredShipyards = new TextBox();
+            label7 = new Label();
             SuspendLayout();
             // 
             // AvailableStationTypesListBox
@@ -103,7 +111,7 @@ namespace X4SectorCreator.Forms.Factions
             // 
             // BtnConfirm
             // 
-            BtnConfirm.Location = new Point(186, 266);
+            BtnConfirm.Location = new Point(180, 374);
             BtnConfirm.Name = "BtnConfirm";
             BtnConfirm.Size = new Size(320, 34);
             BtnConfirm.TabIndex = 6;
@@ -113,7 +121,7 @@ namespace X4SectorCreator.Forms.Factions
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 266);
+            BtnCancel.Location = new Point(6, 374);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(168, 34);
             BtnCancel.TabIndex = 7;
@@ -124,7 +132,7 @@ namespace X4SectorCreator.Forms.Factions
             // CmbHQTypes
             // 
             CmbHQTypes.FormattingEnabled = true;
-            CmbHQTypes.Location = new Point(261, 239);
+            CmbHQTypes.Location = new Point(252, 239);
             CmbHQTypes.Name = "CmbHQTypes";
             CmbHQTypes.Size = new Size(201, 23);
             CmbHQTypes.TabIndex = 8;
@@ -133,17 +141,97 @@ namespace X4SectorCreator.Forms.Factions
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(50, 239);
+            label3.Location = new Point(41, 239);
             label3.Name = "label3";
             label3.Size = new Size(205, 21);
             label3.TabIndex = 9;
             label3.Text = "Possible faction rep stations:";
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 12F);
+            label4.Location = new Point(41, 271);
+            label4.Name = "label4";
+            label4.Size = new Size(120, 21);
+            label4.TabIndex = 10;
+            label4.Text = "Desired Wharfs:";
+            // 
+            // TxtDesiredWharfs
+            // 
+            TxtDesiredWharfs.Location = new Point(41, 295);
+            TxtDesiredWharfs.Name = "TxtDesiredWharfs";
+            TxtDesiredWharfs.Size = new Size(221, 23);
+            TxtDesiredWharfs.TabIndex = 11;
+            TxtDesiredWharfs.Text = "0";
+            // 
+            // TxtDesiredEquipmentDocks
+            // 
+            TxtDesiredEquipmentDocks.Location = new Point(41, 345);
+            TxtDesiredEquipmentDocks.Name = "TxtDesiredEquipmentDocks";
+            TxtDesiredEquipmentDocks.Size = new Size(221, 23);
+            TxtDesiredEquipmentDocks.TabIndex = 13;
+            TxtDesiredEquipmentDocks.Text = "0";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 12F);
+            label5.Location = new Point(41, 321);
+            label5.Name = "label5";
+            label5.Size = new Size(187, 21);
+            label5.TabIndex = 12;
+            label5.Text = "Desired EquipmentDocks:";
+            // 
+            // TxtDesiredTradeStations
+            // 
+            TxtDesiredTradeStations.Location = new Point(271, 345);
+            TxtDesiredTradeStations.Name = "TxtDesiredTradeStations";
+            TxtDesiredTradeStations.Size = new Size(221, 23);
+            TxtDesiredTradeStations.TabIndex = 17;
+            TxtDesiredTradeStations.Text = "0";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F);
+            label6.Location = new Point(271, 321);
+            label6.Name = "label6";
+            label6.Size = new Size(163, 21);
+            label6.TabIndex = 16;
+            label6.Text = "Desired TradeStations:";
+            // 
+            // TxtDesiredShipyards
+            // 
+            TxtDesiredShipyards.Location = new Point(271, 295);
+            TxtDesiredShipyards.Name = "TxtDesiredShipyards";
+            TxtDesiredShipyards.Size = new Size(221, 23);
+            TxtDesiredShipyards.TabIndex = 15;
+            TxtDesiredShipyards.Text = "0";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 12F);
+            label7.Location = new Point(271, 271);
+            label7.Name = "label7";
+            label7.Size = new Size(139, 21);
+            label7.TabIndex = 14;
+            label7.Text = "Desired Shipyards:";
+            // 
             // FactionStationForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(512, 304);
+            ClientSize = new Size(512, 414);
+            Controls.Add(TxtDesiredTradeStations);
+            Controls.Add(label6);
+            Controls.Add(TxtDesiredShipyards);
+            Controls.Add(label7);
+            Controls.Add(TxtDesiredEquipmentDocks);
+            Controls.Add(label5);
+            Controls.Add(TxtDesiredWharfs);
+            Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(CmbHQTypes);
             Controls.Add(BtnCancel);
@@ -176,5 +264,13 @@ namespace X4SectorCreator.Forms.Factions
         private Button BtnCancel;
         private MultiSelectCombo.NoDropDownComboBox CmbHQTypes;
         private Label label3;
+        private Label label4;
+        private TextBox TxtDesiredWharfs;
+        private TextBox TxtDesiredEquipmentDocks;
+        private Label label5;
+        private TextBox TxtDesiredTradeStations;
+        private Label label6;
+        private TextBox TxtDesiredShipyards;
+        private Label label7;
     }
 }

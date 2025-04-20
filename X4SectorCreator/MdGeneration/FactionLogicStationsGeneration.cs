@@ -56,7 +56,7 @@ namespace X4SectorCreator.MdGeneration
                         new XAttribute("value", $"$Faction == faction.{faction.Id}"),
                     new XElement("set_value",
                         new XAttribute("name", "$DesiredShipyards"),
-                        new XAttribute("exact", "1"))));
+                        new XAttribute("exact", faction.DesiredShipyards))));
         }
 
         private static XElement GetWharf(Faction faction)
@@ -68,7 +68,7 @@ namespace X4SectorCreator.MdGeneration
                        new XAttribute("value", $"$Faction == faction.{faction.Id}"),
                    new XElement("set_value",
                        new XAttribute("name", "$DesiredWharfs"),
-                       new XAttribute("exact", "1"))));
+                       new XAttribute("exact", faction.DesiredWharfs))));
         }
 
         private static XElement GetEquipmentDock(Faction faction)
@@ -80,7 +80,7 @@ namespace X4SectorCreator.MdGeneration
                        new XAttribute("value", $"$Faction == faction.{faction.Id}"),
                    new XElement("set_value",
                        new XAttribute("name", "$DesiredEquipmentDocks"),
-                       new XAttribute("exact", "1"))));
+                       new XAttribute("exact", faction.DesiredEquipmentDocks))));
         }
 
         private static XElement GetTradeStation(Faction faction)
@@ -92,7 +92,7 @@ namespace X4SectorCreator.MdGeneration
                        new XAttribute("value", $"$Faction == faction.{faction.Id}"),
                    new XElement("set_value",
                        new XAttribute("name", "$DesiredTradeStation"),
-                       new XAttribute("exact", "1"))));
+                       new XAttribute("exact", faction.DesiredTradeStations))));
         }
 
         private static string EnsureDirectoryExists(string filePath)
