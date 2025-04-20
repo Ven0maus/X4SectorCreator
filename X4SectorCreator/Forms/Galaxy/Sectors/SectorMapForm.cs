@@ -865,6 +865,42 @@ namespace X4SectorCreator
             }
         }
 
+        private static Color GetOwnershipColor(Cluster cluster)
+        {
+            var sector = cluster.Sectors.FirstOrDefault();
+            if (sector == null) return MainForm.Instance.FactionColorMapping["None"];
+
+            HashSet<string> factions = sector.Zones.SelectMany(a => a.Stations)
+                .Select(a => a.Faction)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            var color = MainForm.Instance.FactionColorMapping["None"];
+            if (sector.IsBaseGame)
+            {
+                if (sector.Owner.Equals("None", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (factions.Count == 1)
+                    {
+                        color = FactionsForm.GetColorForFaction(factions.First());
+                    }
+                }
+                else
+                {
+                    if (factions.Count == 0 || (factions.Count == 1 && factions.First().Equals(sector.Owner, StringComparison.OrdinalIgnoreCase)))
+                        color = FactionsForm.GetColorForFaction(sector.Owner);
+                }
+            }
+            else
+            {
+                if (factions.Count == 1)
+                {
+                    color = FactionsForm.GetColorForFaction(factions.First());
+                }
+            }
+
+            return color;
+        }
+
         private void RenderClusters(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex)
         {
             Cluster cluster = MainForm.Instance.AllClusters[hex.Key];
@@ -873,18 +909,7 @@ namespace X4SectorCreator
                 return;
             }
 
-            // If all sectors are the "same" owner, then the main hex becomes that color
-            // If not the main hex is considered "unclaimed" until all sectors within are owned by the same faction
-            Color color = MainForm.Instance.FactionColorMapping["None"];
-            Sector firstSector = cluster.Sectors.FirstOrDefault();
-            if (firstSector != null)
-            {
-                string owner = firstSector.Owner;
-                if (cluster.Sectors.All(a => a.Owner.Equals(owner, StringComparison.OrdinalIgnoreCase)))
-                {
-                    color = FactionsForm.GetColorForFaction(owner);
-                }
-            }
+            Color color = GetOwnershipColor(cluster);
 
             bool isMovingCluster = _movingCluster != null && _movingCluster == cluster;
             if (isMovingCluster)
