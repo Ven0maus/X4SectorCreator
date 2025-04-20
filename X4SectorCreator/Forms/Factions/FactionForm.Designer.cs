@@ -124,7 +124,7 @@
             // CmbRace
             // 
             CmbRace.FormattingEnabled = true;
-            CmbRace.Items.AddRange(new object[] { "Argon", "Paranid", "Teladi", "Terran", "Split", "Xenon" });
+            CmbRace.Items.AddRange(StationForm.Races.Cast<object>().ToArray());
             CmbRace.Location = new Point(119, 199);
             CmbRace.Name = "CmbRace";
             CmbRace.Size = new Size(199, 23);

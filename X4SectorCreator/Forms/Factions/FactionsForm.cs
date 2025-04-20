@@ -23,6 +23,22 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        public static Color GetColorForFaction(string faction)
+        {
+            // First check for custom faction
+            var customFaction = AllCustomFactions.Values.FirstOrDefault(a => a.Id
+                .Equals(faction, StringComparison.OrdinalIgnoreCase));
+            if (customFaction != null)
+                return customFaction.Color;
+
+            // Then for vanilla faction
+            if (MainForm.Instance.FactionColorMapping.TryGetValue(faction, out Color value))
+                return value;
+
+            // If not found, then "ownerless"
+            return MainForm.Instance.FactionColorMapping["None"];
+        }
+
         public static HashSet<string> GetAllFactions(bool includeCustom, bool includeOwnerless = false)
         {
             var factions = MainForm.Instance.FactionColorMapping.Keys

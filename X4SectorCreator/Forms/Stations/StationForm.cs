@@ -48,7 +48,7 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private readonly HashSet<string> _races = new(StringComparer.OrdinalIgnoreCase)
+        public static readonly IReadOnlySet<string> Races = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "argon",
             "split",
@@ -71,14 +71,13 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Init factions and races
-            foreach (KeyValuePair<string, Color> faction in MainForm.Instance.FactionColorMapping
-                .Where(a => !a.Key.Equals("None", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(a => a.Key))
+            foreach (var faction in FactionsForm.GetAllFactions(true, false)
+                .OrderBy(a => a))
             {
-                _ = cmbFaction.Items.Add(faction.Key);
-                _ = cmbOwner.Items.Add(faction.Key);
+                _ = cmbFaction.Items.Add(faction);
+                _ = cmbOwner.Items.Add(faction);
             }
-            foreach (string race in _races.OrderBy(a => a))
+            foreach (string race in Races.OrderBy(a => a))
             {
                 _ = cmbRace.Items.Add(race);
             }

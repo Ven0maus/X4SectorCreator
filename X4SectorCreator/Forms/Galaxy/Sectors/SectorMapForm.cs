@@ -524,8 +524,7 @@ namespace X4SectorCreator
                             stationScreenPosition.X += hexCenter.X;
                             stationScreenPosition.Y += hexCenter.Y;
 
-                            Color color = !MainForm.Instance.FactionColorMapping.TryGetValue(station.Owner, out Color value) ?
-                                MainForm.Instance.FactionColorMapping["None"] : value;
+                            Color color = FactionsForm.GetColorForFaction(station.Owner);
 
                             using SolidBrush brush = new(color);
                             string character = station.Type.ToLower() switch
@@ -883,7 +882,7 @@ namespace X4SectorCreator
                 string owner = firstSector.Owner;
                 if (cluster.Sectors.All(a => a.Owner.Equals(owner, StringComparison.OrdinalIgnoreCase)))
                 {
-                    color = !MainForm.Instance.FactionColorMapping.TryGetValue(owner, out Color value) ? MainForm.Instance.FactionColorMapping["None"] : value;
+                    color = FactionsForm.GetColorForFaction(owner);
                 }
             }
 
@@ -910,8 +909,7 @@ namespace X4SectorCreator
                 foreach (Hexagon child in hex.Value.Children)
                 {
                     Sector sector = cluster.Sectors[index];
-                    Color ownerColor = !MainForm.Instance.FactionColorMapping.TryGetValue(sector.Owner, out Color value) ?
-                        MainForm.Instance.FactionColorMapping["None"] : value;
+                    Color ownerColor = FactionsForm.GetColorForFaction(sector.Owner);
                     using Pen pen = new(ownerColor, 2);
                     using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
 
