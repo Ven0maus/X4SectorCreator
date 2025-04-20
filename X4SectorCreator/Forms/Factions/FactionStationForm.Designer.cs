@@ -159,6 +159,7 @@ namespace X4SectorCreator.Forms.Factions
             MinimizeBox = false;
             Name = "FactionStationForm";
             Text = "Faction Stations Editor";
+            Load += FactionStationForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

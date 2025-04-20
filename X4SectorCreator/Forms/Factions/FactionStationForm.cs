@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using X4SectorCreator.CustomComponents;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Factions
 {
@@ -88,6 +89,28 @@ namespace X4SectorCreator.Forms.Factions
         private void SelectedStationTypesListBox_DoubleClick(object sender, EventArgs e)
         {
             BtnRemove.PerformClick();
+        }
+
+        private void FactionStationForm_Load(object sender, EventArgs e)
+        {
+            if (FactionForm.StationTypes != null)
+            {
+                foreach (var stationType in FactionForm.StationTypes)
+                {
+                    SelectedStationTypesListBox.Items.Add(stationType);
+
+                    // Add selected option
+                    CmbHQTypes.Items.Add(stationType);
+                }
+                _mscHqTypes.ResetSelection();
+                _mscHqTypes.ReInit();
+            }
+
+            if (FactionForm.PreferredHqTypes != null)
+            {
+                foreach (var preferredHqType in FactionForm.PreferredHqTypes)
+                    _mscHqTypes.Select(preferredHqType);
+            }
         }
     }
 }
