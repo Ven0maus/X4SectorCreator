@@ -275,7 +275,7 @@ namespace X4SectorCreator
 
                 foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
                 {
-                    if (GateSectorSelection)
+                    if (GateSectorSelection || FactionForm != null)
                     {
                         // Allow selecting child hex too
                         if (hex.Value.Children != null)

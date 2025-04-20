@@ -56,6 +56,7 @@
             LblIconSize = new Label();
             BtnFactionStations = new Button();
             TxtPreferredHqSpace = new TextBox();
+            label8 = new Label();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -124,7 +125,6 @@
             // CmbRace
             // 
             CmbRace.FormattingEnabled = true;
-            CmbRace.Items.AddRange(StationForm.Races.Cast<object>().ToArray());
             CmbRace.Location = new Point(119, 199);
             CmbRace.Name = "CmbRace";
             CmbRace.Size = new Size(199, 23);
@@ -317,19 +317,30 @@
             // 
             // TxtPreferredHqSpace
             // 
-            TxtPreferredHqSpace.Location = new Point(430, 194);
+            TxtPreferredHqSpace.Location = new Point(430, 214);
             TxtPreferredHqSpace.Name = "TxtPreferredHqSpace";
-            TxtPreferredHqSpace.PlaceholderText = "Select Preferred HQ Space";
+            TxtPreferredHqSpace.PlaceholderText = "Select Preferred HeadQuaters";
             TxtPreferredHqSpace.ReadOnly = true;
             TxtPreferredHqSpace.Size = new Size(197, 23);
             TxtPreferredHqSpace.TabIndex = 36;
             TxtPreferredHqSpace.MouseClick += TxtPreferredHqSpace_MouseClick;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 11F);
+            label8.Location = new Point(429, 191);
+            label8.Name = "label8";
+            label8.Size = new Size(169, 20);
+            label8.TabIndex = 37;
+            label8.Text = "Preferred HeadQuarters:";
             // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(632, 376);
+            Controls.Add(label8);
             Controls.Add(TxtPreferredHqSpace);
             Controls.Add(BtnFactionStations);
             Controls.Add(LblIconSize);
@@ -398,5 +409,6 @@
         private Label LblIconSize;
         private Button BtnFactionStations;
         private TextBox TxtPreferredHqSpace;
+        private Label label8;
     }
 }

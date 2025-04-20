@@ -124,7 +124,7 @@ namespace X4SectorCreator.Forms.Factions
             // CmbHQTypes
             // 
             CmbHQTypes.FormattingEnabled = true;
-            CmbHQTypes.Location = new Point(305, 238);
+            CmbHQTypes.Location = new Point(261, 239);
             CmbHQTypes.Name = "CmbHQTypes";
             CmbHQTypes.Size = new Size(201, 23);
             CmbHQTypes.TabIndex = 8;
@@ -133,11 +133,11 @@ namespace X4SectorCreator.Forms.Factions
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(101, 239);
+            label3.Location = new Point(50, 239);
             label3.Name = "label3";
-            label3.Size = new Size(200, 21);
+            label3.Size = new Size(205, 21);
             label3.TabIndex = 9;
-            label3.Text = "Preferred HQ Station Types:";
+            label3.Text = "Possible faction rep stations:";
             // 
             // FactionStationForm
             // 
