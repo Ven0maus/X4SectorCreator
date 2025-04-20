@@ -188,7 +188,7 @@
             // 
             // BtnQuickQuotaEditor
             // 
-            BtnQuickQuotaEditor.Location = new Point(277, 190);
+            BtnQuickQuotaEditor.Location = new Point(277, 187);
             BtnQuickQuotaEditor.Name = "BtnQuickQuotaEditor";
             BtnQuickQuotaEditor.Size = new Size(321, 36);
             BtnQuickQuotaEditor.TabIndex = 22;

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            CmbRace = new ComboBox();
+            CmbFaction = new ComboBox();
             label2 = new Label();
             TxtSectorCoverage = new TextBox();
             label3 = new Label();
@@ -48,17 +48,17 @@
             label1.Font = new Font("Segoe UI", 12F);
             label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(137, 21);
+            label1.Size = new Size(155, 21);
             label1.TabIndex = 0;
-            label1.Text = "Use preset of race:";
+            label1.Text = "Use preset of faction:";
             // 
-            // CmbRace
+            // CmbFaction
             // 
-            CmbRace.FormattingEnabled = true;
-            CmbRace.Location = new Point(12, 33);
-            CmbRace.Name = "CmbRace";
-            CmbRace.Size = new Size(249, 23);
-            CmbRace.TabIndex = 1;
+            CmbFaction.FormattingEnabled = true;
+            CmbFaction.Location = new Point(12, 33);
+            CmbFaction.Name = "CmbFaction";
+            CmbFaction.Size = new Size(249, 23);
+            CmbFaction.TabIndex = 1;
             // 
             // label2
             // 
@@ -167,7 +167,7 @@
             Controls.Add(label3);
             Controls.Add(TxtSectorCoverage);
             Controls.Add(label2);
-            Controls.Add(CmbRace);
+            Controls.Add(CmbFaction);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -181,7 +181,7 @@
         #endregion
 
         private Label label1;
-        private ComboBox CmbRace;
+        private ComboBox CmbFaction;
         private Label label2;
         private TextBox TxtSectorCoverage;
         private Label label3;
