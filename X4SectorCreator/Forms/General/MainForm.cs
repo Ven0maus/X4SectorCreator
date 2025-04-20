@@ -7,6 +7,7 @@ using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Forms.General;
 using X4SectorCreator.Helpers;
+using X4SectorCreator.MdGeneration;
 using X4SectorCreator.Objects;
 using X4SectorCreator.XmlGeneration;
 using Region = X4SectorCreator.Objects.Region;
@@ -425,6 +426,7 @@ namespace X4SectorCreator
                 ThemesGeneration.Generate(modFolder);
                 CharactersGeneration.Generate(modFolder);
                 WaresGeneration.Generate(modFolder);
+                FactionLogicGeneration.Generate(modPrefix, modFolder);
             }
             catch (Exception ex)
             {
