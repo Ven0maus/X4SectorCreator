@@ -129,7 +129,6 @@
             CmbRace.Name = "CmbRace";
             CmbRace.Size = new Size(199, 23);
             CmbRace.TabIndex = 10;
-            CmbRace.Text = "Argon";
             // 
             // label4
             // 

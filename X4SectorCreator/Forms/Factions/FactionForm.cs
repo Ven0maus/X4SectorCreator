@@ -138,6 +138,11 @@ namespace X4SectorCreator.Forms
         {
             InitializeComponent();
 
+            CmbRace.Items.Clear();
+            foreach (var race in StationForm.Races.OrderBy(a => a))
+                CmbRace.Items.Add(race);
+            CmbRace.SelectedItem = CmbRace.Items.Cast<string>().First();
+
             var factions = FactionsForm.GetAllFactions(true)
                 .Append("self")
                 .Append("none")

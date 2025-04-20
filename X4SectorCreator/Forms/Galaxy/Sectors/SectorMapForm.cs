@@ -1125,12 +1125,21 @@ namespace X4SectorCreator
                 var selectedSector = GetSectorFromPosition(position, out var cluster);
                 if (selectedSector == null) return;
 
-                // Set the selected sector's macro
-                FactionForm.PreferredHqSpace = GetSectorMacro(cluster, selectedSector);
+                // Set the selected cluster/sector as hq space
+                FactionForm.PreferredHqSpace = _selectedChildHexIndex != null ? 
+                    GetSectorMacro(cluster, selectedSector) : GetClusterMacro(cluster);
             }
 
             DeselectHex();
             Close();
+        }
+
+        private static string GetClusterMacro(Cluster cluster)
+        {
+            var clusterMacro = $"PREFIX_CL_c{cluster.Id:D3}_macro";
+            if (cluster.IsBaseGame)
+                clusterMacro = $"{cluster.BaseGameMapping}_macro";
+            return clusterMacro;
         }
 
         private static string GetSectorMacro(Cluster cluster, Sector sector)
