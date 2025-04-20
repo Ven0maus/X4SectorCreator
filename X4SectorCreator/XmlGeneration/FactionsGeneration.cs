@@ -113,7 +113,7 @@ namespace X4SectorCreator.XmlGeneration
 
             foreach (var mapping in data)
             {
-                element.Add(new XElement("license",
+                element.Add(new XElement("licence",
                     new XAttribute("type", mapping.Key),
                     new XAttribute("factions", string.Join(" ", mapping.Value))));
             }
