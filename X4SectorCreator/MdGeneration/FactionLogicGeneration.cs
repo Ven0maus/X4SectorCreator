@@ -59,19 +59,11 @@ namespace X4SectorCreator.MdGeneration
                 new XElement("actions",
                     new XElement("set_value",
                     new XAttribute("name", "md.$DefaultShipStrengthTable"),
-                    new XAttribute("exact", @"table[
-                                {class.ship_xl} = 23,
-                                {class.ship_l} = 11,
-                                {class.ship_m} = 3,
-                                {class.ship_s} = 1]")
+                    new XAttribute("exact", @"table[{class.ship_xl} = 23,{class.ship_l} = 11,{class.ship_m} = 3,{class.ship_s} = 1]")
                 ),
                 new XElement("set_value",
                     new XAttribute("name", "md.$DefaultSubordinateStrengthTable"),
-                    new XAttribute("exact", @"table[
-                                {class.ship_xl} = 21,
-                                {class.ship_l} = 9,
-                                {class.ship_m} = 3,
-                                {class.ship_s} = 1]")
+                    new XAttribute("exact", @"table[{class.ship_xl} = 21,{class.ship_l} = 9,{class.ship_m} = 3,{class.ship_s} = 1]")
                 )),
                 cuesCue);
             return managerCue;
