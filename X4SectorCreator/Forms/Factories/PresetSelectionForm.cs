@@ -217,7 +217,7 @@ namespace X4SectorCreator.Forms.Factories
             int index = factory.Id.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
             if (index >= 0)
             {
-                factory.Id = string.Concat(factory.Id.AsSpan(0, index), ownerId, factory.Id.AsSpan(index + raceKey.Length));
+                factory.Id = string.Concat(factory.Id.AsSpan(0, index), ownerId, factory.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
             }
             
             // Set owner faction
@@ -257,7 +257,7 @@ namespace X4SectorCreator.Forms.Factories
             int index = job.Id.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
             if (index >= 0)
             {
-                job.Id = string.Concat(job.Id.AsSpan(0, index), ownerId, job.Id.AsSpan(index + raceKey.Length));
+                job.Id = string.Concat(job.Id.AsSpan(0, index), ownerId, job.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
 
                 // Do the same with subordinates
                 if (job.Subordinates?.Subordinate != null)
@@ -268,7 +268,7 @@ namespace X4SectorCreator.Forms.Factories
                         index = subordinate.Job.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
                         if (index >= 0)
                         {
-                            subordinate.Job = string.Concat(subordinate.Job.AsSpan(0, index), ownerId, subordinate.Job.AsSpan(index + raceKey.Length));
+                            subordinate.Job = string.Concat(subordinate.Job.AsSpan(0, index), ownerId, subordinate.Job.AsSpan(index + raceKey.Length)).Replace(" ", "_");
                         }
                     }
                 }

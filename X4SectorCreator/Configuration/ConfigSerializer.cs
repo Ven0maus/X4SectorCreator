@@ -136,7 +136,7 @@ namespace X4SectorCreator.Configuration
             {
                 foreach (Faction faction in configObj.CustomFactions)
                 {
-                    FactionsForm.AllCustomFactions.Add(faction.Name, faction);
+                    FactionsForm.AllCustomFactions.Add(faction.Id, faction);
                 }
             }
 
