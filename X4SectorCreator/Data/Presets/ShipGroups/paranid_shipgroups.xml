@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<groups>
+	<group name="par_builder_xl">
+		<select macro="ship_par_xl_builder_01_a_macro" weight="100"/>
+	</group>
+	<group name="par_resupplier_xl">
+		<select macro="ship_par_xl_resupplier_02_a_macro" weight="100"/>
+		<!--<select macro="ship_par_xl_resupplier_01_a_macro" weight="100"/>-->
+	</group>
+
+	<!-- Transporters -->
+	<group name="par_trader_container_l">
+		<select macro="ship_par_l_trans_container_03_a_macro" weight="100"/>
+		<!--<select macro="ship_par_l_trans_container_01_a_macro" weight="100"/>
+    <select macro="ship_par_l_trans_container_02_a_macro" weight="100"/>-->
+	</group>
+	<group name="par_trader_container_m">
+		<select macro="ship_par_m_trans_container_01_a_macro" weight="100"/>
+		<select macro="ship_par_m_trans_container_02_a_macro" weight="100"/>
+	</group>
+	<group name="par_trader_container_s">
+		<select macro="ship_par_s_trans_container_01_a_macro" weight="100"/>
+	</group>
+
+	<!-- Miners -->
+	<group name="par_miner_solid_l">
+		<select macro="ship_par_l_miner_solid_02_a_macro" weight="100"/>
+		<!--<select macro="ship_par_l_miner_solid_01_a_macro" weight="100"/>-->
+	</group>
+	<group name="par_miner_liquid_l">
+		<select macro="ship_par_l_miner_liquid_02_a_macro" weight="100"/>
+		<!--<select macro="ship_par_l_miner_liquid_01_a_macro" weight="100"/>-->
+	</group>
+	<group name="par_miner_solid_m">
+		<select macro="ship_par_m_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="par_miner_liquid_m">
+		<select macro="ship_par_m_miner_liquid_01_a_macro" weight="100"/>
+	</group>
+	<group name="par_miner_solid_s">
+		<select macro="ship_par_s_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="par_miner_solid_mixed">
+		<select macro="ship_par_l_miner_solid_02_a_macro" weight="25"/>
+		<!--<select macro="ship_par_l_miner_solid_01_a_macro" weight="25"/>-->
+		<select macro="ship_par_m_miner_solid_01_a_macro" weight="65"/>
+		<select macro="ship_par_s_miner_solid_01_a_macro" weight="10"/>
+	</group>
+	<group name="par_miner_liquid_mixed">
+		<select macro="ship_par_l_miner_liquid_02_a_macro" weight="30"/>
+		<!--<select macro="ship_par_l_miner_liquid_01_a_macro" weight="30"/>-->
+		<select macro="ship_par_m_miner_liquid_01_a_macro" weight="70"/>
+	</group>
+
+	<!-- Military / Combat -->
+	<group name="par_carrier_xl">
+		<select macro="ship_par_xl_carrier_02_a_macro" weight="100"/>
+		<!--<select macro="ship_par_xl_carrier_01_a_macro weight="100""/>-->
+	</group>
+	<group name="par_destroyer_l">
+		<select macro="ship_par_l_destroyer_02_a_macro" weight="100"/>
+		<!--<select macro="ship_par_l_destroyer_01_a_macro" weight="100"/>-->
+	</group>
+	<group name="par_frigate_m">
+		<select macro="ship_par_m_frigate_01_a_macro" weight="100"/>
+	</group>
+	<group name="par_corvette_m">
+		<select macro="ship_par_m_corvette_01_a_macro" weight="100"/>
+	</group>
+	<group name="par_fighter_s">
+		<select macro="ship_par_s_fighter_01_a_macro" weight="100"/>
+		<select macro="ship_par_s_fighter_02_a_macro" weight="100"/>
+	</group>
+	<group name="par_scout_s">
+		<select macro="ship_par_s_scout_01_a_macro" weight="100"/>
+	</group>
+	<group name="paranid_dockarea_mass_traffic">
+		<select macro="ship_par_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_04_a_macro" weight="100"/>
+	</group>
+	<group name="paranid_pier_mass_traffic">
+		<select macro="ship_par_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_04_a_macro" weight="100"/>
+	</group>
+	<group name="paranid_storage_mass_traffic">
+		<select macro="ship_par_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_04_a_macro" weight="100"/>
+	</group>
+	<group name="paranid_production_mass_traffic">
+		<select macro="ship_par_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_04_a_macro" weight="100"/>
+	</group>
+	<group name="paranid_buildmodule_mass_traffic">
+		<select macro="ship_par_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_04_a_macro" weight="100"/>
+	</group>
+	<group name="paranid_defencemodule_mass_traffic">
+		<select macro="ship_par_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_04_a_macro" weight="100"/>
+	</group>
+	<group name="paranid_civilian_mass_traffic">
+		<select macro="ship_par_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_par_xs_pv_04_a_macro" weight="100"/>
+	</group>
+	<group name="paranid_police_mass_traffic">
+		<select macro="ship_par_xs_police_01_a_macro" weight="100"/>
+	</group>
+</groups>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<groups>
+	<group name="xen_miner_m">
+		<select macro="ship_xen_m_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="xen_carrier_xl">
+		<select macro="ship_xen_xl_carrier_01_a_macro" weight="100"/>
+	</group>
+	<group name="xen_destroyer_xl">
+		<select macro="ship_xen_xl_destroyer_01_a_macro" weight="100"/>
+	</group>
+	<group name="xen_terraformer_l">
+		<select macro="ship_xen_l_terraformer_01_a_macro" weight="100"/>
+	</group>
+	<group name="xen_corvette_m">
+		<select macro="ship_xen_m_corvette_01_a_macro" weight="100"/>
+	</group>
+	<group name="xen_fighter_m">
+		<select macro="ship_xen_m_corvette_02_a_macro" weight="100"/>
+		<select macro="ship_xen_m_corvette_01_a_macro" weight="3"/>
+	</group>
+	<group name="xen_fighter_s">
+		<select macro="ship_xen_s_fighter_01_a_macro" weight="100"/>
+		<select macro="ship_xen_s_fighter_02_a_macro" weight="100"/>
+		<select macro="ship_xen_s_heavyfighter_01_a_macro" weight="3"/>
+	</group>
+	<group name="xen_fighter_heavy_s">
+		<select macro="ship_xen_s_fighter_01_a_macro" weight="20"/>
+		<select macro="ship_xen_s_fighter_02_a_macro" weight="80"/>
+		<select macro="ship_xen_s_heavyfighter_01_a_macro" weight="1"/>
+	</group>
+	<group name="xen_fighter_light_s">
+		<select macro="ship_xen_s_fighter_01_a_macro" weight="80"/>
+		<select macro="ship_xen_s_fighter_02_a_macro" weight="20"/>
+	</group>
+	<group name="xen_scout_s">
+		<select macro="ship_xen_s_scout_01_a_macro" weight="100"/>
+	</group>
+	<group name="xenon_civilian_mass_traffic">
+		<select macro="ship_xen_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_xen_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_xen_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_xen_xs_pv_04_a_macro" weight="100"/>
+	</group>
+</groups>

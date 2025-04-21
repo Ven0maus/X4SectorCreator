@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ships>
+	<ship id="boron_builder_xl" group="bor_builder_xl">
+		<category tags="[builder, mission]" faction="boron" size="ship_xl" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<drop ref="ship_large_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+	<ship id="boron_resupplier_xl" group="bor_resupplier_xl">
+		<category tags="[resupplier, mission]" faction="boron" size="ship_xl" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<drop ref="ship_large_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+
+	<ship id="boron_trader_container_l" group="bor_trader_container_l">
+		<category tags="[trader, container, mission]" faction="boron" size="ship_l" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="all_container" />
+		<drop ref="ship_large_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+	<ship id="boron_trader_container_m" group="bor_trader_container_m">
+		<category tags="[trader, container, mission]" faction="boron" size="ship_m" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="all_container" />
+		<drop ref="ship_medium_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+	<ship id="boron_trader_container_s" group="bor_trader_container_s">
+		<category tags="[trader, container, mission]" faction="boron" size="ship_s" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="all_container" />
+		<drop ref="ship_small_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+
+	<ship id="boron_miner_solid_l" group="bor_miner_solid_l">
+		<category tags="[miner, solid, mission]" faction="boron" size="ship_l" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="minerals" />
+		<drop ref="ship_large_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+	<ship id="boron_miner_liquid_l" group="bor_miner_liquid_l">
+		<category tags="[miner, liquid, mission]" faction="boron" size="ship_l" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="gases" />
+		<drop ref="ship_large_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+	<ship id="boron_miner_solid_m" group="bor_miner_solid_m">
+		<category tags="[miner, solid, mission]" faction="boron" size="ship_m" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="minerals" />
+		<drop ref="ship_medium_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+	<ship id="boron_miner_liquid_m" group="bor_miner_liquid_m">
+		<category tags="[miner, liquid, mission]" faction="boron" size="ship_m" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="gases" />
+		<drop ref="ship_medium_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+	<ship id="boron_miner_solid_s" group="bor_miner_solid_s">
+		<category tags="[miner, solid, mission]" faction="boron" size="ship_s" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="minerals" />
+		<drop ref="ship_small_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+	<ship id="boron_miner_solid_mixed" group="bor_miner_solid_mixed">
+		<category tags="[miner, solid, mixed]" faction="boron" />
+		<owner exact="argon" overridenpc="true" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="minerals" />
+		<drop ref="ship_medium_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+	<ship id="boron_miner_liquid_mixed" group="bor_miner_liquid_mixed">
+		<category tags="[miner, liquid, mixed]" faction="boron" />
+		<owner exact="argon" overridenpc="true" />
+		<pilot>
+			<select faction="boron" tags="traderpilot" />
+		</pilot>
+		<basket basket="gases" />
+		<drop ref="ship_medium_civilian" />
+		<people ref="boron_freighter_crew" />
+	</ship>
+
+	<!-- Boron military ships -->
+	<ship id="boron_carrier_xl" group="bor_carrier_xl">
+		<category tags="[military, carrier, mission]" faction="boron" size="ship_xl" />
+		<pilot>
+			<select faction="boron" tags="fighterpilot" />
+		</pilot>
+		<drop ref="ship_large_military" />
+		<people ref="boron_military_crew" />
+	</ship>
+	<ship id="boron_carrier_l" group="bor_carrier_l">
+		<category tags="[military, carrier, mission]" faction="boron" size="ship_l" />
+		<pilot>
+			<select faction="boron" tags="fighterpilot" />
+		</pilot>
+		<drop ref="ship_large_military" />
+		<people ref="boron_military_crew" />
+	</ship>
+	<ship id="boron_destroyer_l" group="bor_destroyer_l">
+		<category tags="[military, destroyer, mission]" faction="boron" size="ship_l" />
+		<pilot>
+			<select faction="boron" tags="fighterpilot" />
+		</pilot>
+		<drop ref="ship_large_military" />
+		<people ref="boron_military_crew" />
+	</ship>
+	<ship id="boron_corvette_m" group="bor_corvette_m">
+		<category tags="[military, medium, corvette, mission]" faction="boron" size="ship_m" />
+		<pilot>
+			<select faction="boron" tags="fighterpilot" />
+		</pilot>
+		<drop ref="ship_small_military" />
+		<people ref="boron_military_crew" />
+	</ship>
+	<ship id="boron_gunboat_m" group="bor_gunboat_m">
+		<category tags="[military, medium, gunboat, mission]" faction="boron" size="ship_m" />
+		<pilot>
+			<select faction="boron" tags="fighterpilot" />
+		</pilot>
+		<drop ref="ship_small_military" />
+		<people ref="boron_military_crew" />
+	</ship>
+	<ship id="boron_fighter_s" group="bor_fighter_s">
+		<category tags="[military, fighter, selection, mission]" faction="boron" size="ship_s" />
+		<pilot>
+			<select faction="boron" tags="fighterpilot" />
+		</pilot>
+		<drop ref="ship_small_military" />
+		<people ref="boron_military_crew" />
+	</ship>
+	<ship id="boron_fighter_heavy_s" group="bor_fighter_heavy_s">
+		<category tags="[military, fighter, heavy, mission]" faction="boron" size="ship_s" />
+		<pilot>
+			<select faction="boron" tags="fighterpilot" />
+		</pilot>
+		<drop ref="ship_small_military" />
+		<people ref="boron_military_crew" />
+	</ship>
+	<ship id="boron_fighter_light_s" group="bor_fighter_light_s">
+		<category tags="[military, fighter, light, mission]" faction="boron" size="ship_s" />
+		<pilot>
+			<select faction="boron" tags="fighterpilot" />
+		</pilot>
+		<drop ref="ship_small_military" />
+		<people ref="boron_military_crew" />
+	</ship>
+	<ship id="boron_scout_s" group="bor_scout_s">
+		<category tags="[military, scout, light, mission]" faction="boron" size="ship_s" />
+		<pilot>
+			<select faction="boron" tags="fighterpilot" />
+		</pilot>
+		<drop ref="ship_small_military" />
+		<people ref="boron_military_crew" />
+	</ship>
+	<ship id="masstraffic_boron_dockarea" group="boron_dockarea_mass_traffic">
+		<owner exact="civilian" overridenpc="true" />
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[boron]" />
+		</pilot>
+		<drop ref="masstraffic_civilian" />
+	</ship>
+	<ship id="masstraffic_boron_pier" group="boron_pier_mass_traffic">
+		<owner exact="civilian" overridenpc="true" />
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[boron]" />
+		</pilot>
+		<drop ref="masstraffic_civilian" />
+	</ship>
+	<ship id="masstraffic_boron_storage" group="boron_storage_mass_traffic">
+		<owner exact="civilian" overridenpc="true" />
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[boron]" />
+		</pilot>
+		<drop ref="masstraffic_civilian" />
+	</ship>
+	<ship id="masstraffic_boron_production" group="boron_production_mass_traffic">
+		<owner exact="civilian" overridenpc="true" />
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[boron]" />
+		</pilot>
+		<drop ref="masstraffic_civilian" />
+	</ship>
+	<ship id="masstraffic_boron_buildmodule" group="boron_buildmodule_mass_traffic">
+		<owner exact="civilian" overridenpc="true" />
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[boron]" />
+		</pilot>
+		<drop ref="masstraffic_civilian" />
+	</ship>
+	<ship id="masstraffic_boron_defencemodule" group="boron_defencemodule_mass_traffic">
+		<owner exact="civilian" overridenpc="true" />
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[boron]" />
+		</pilot>
+		<drop ref="masstraffic_civilian" />
+	</ship>
+
+	<ship id="masstraffic_boron_civilian" group="boron_civilian_mass_traffic">
+		<owner exact="civilian" overridenpc="true" />
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[boron]" />
+		</pilot>
+		<drop ref="masstraffic_civilian" />
+	</ship>
+	<ship id="masstraffic_boron_smuggler" group="boron_civilian_mass_traffic">
+		<owner exact="smuggler" overridenpc="true" />
+		<pilot>
+			<select faction="smuggler" tags="[masstraffic]" race="[boron]" />
+		</pilot>
+		<drop ref="masstraffic_civilian" />
+	</ship>
+	<ship id="masstraffic_boron_criminal" group="boron_civilian_mass_traffic">
+		<owner exact="criminal" overridenpc="true" />
+		<pilot>
+			<select faction="criminal" tags="[masstraffic]" race="[boron]" />
+		</pilot>
+		<drop ref="masstraffic_civilian" />
+	</ship>
+</ships>

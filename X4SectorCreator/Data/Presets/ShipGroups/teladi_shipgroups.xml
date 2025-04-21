@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<groups>
+	<!-- Construction / Supply -->
+	<group name="tel_builder_xl">
+		<select macro="ship_tel_xl_builder_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xl_builder_01_b_macro" weight="100"/>
+	</group>
+	<group name="tel_resupplier_xl">
+		<select macro="ship_tel_xl_resupplier_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xl_resupplier_01_b_macro" weight="100"/>
+	</group>
+
+	<!-- Transporters -->
+	<group name="tel_trader_container_l">
+		<select macro="ship_tel_l_trans_container_03_a_macro" weight="100"/>
+	</group>
+	<group name="tel_trader_container_m">
+		<select macro="ship_tel_m_trans_container_01_a_macro" weight="100"/>
+		<select macro="ship_tel_m_trans_container_01_b_macro" weight="100"/>
+		<select macro="ship_tel_m_trans_container_02_a_macro" weight="100"/>
+		<select macro="ship_tel_m_trans_container_02_b_macro" weight="100"/>
+	</group>
+	<group name="tel_trader_container_m_ministry">
+		<select macro="ship_tel_m_trans_container_03_a_macro" weight="100"/>
+	</group>
+	<group name="tel_trader_container_s">
+		<select macro="ship_tel_s_trans_container_01_a_macro" weight="100"/>
+		<select macro="ship_tel_s_trans_container_01_b_macro" weight="100"/>
+	</group>
+
+	<!-- Miners -->
+	<group name="tel_miner_solid_l">
+		<select macro="ship_tel_l_miner_solid_02_a_macro" weight="100"/>
+	</group>
+	<group name="tel_miner_liquid_l">
+		<select macro="ship_tel_l_miner_liquid_02_a_macro" weight="100"/>
+	</group>
+	<group name="tel_miner_solid_m">
+		<select macro="ship_tel_m_miner_solid_01_a_macro" weight="100"/>
+		<select macro="ship_tel_m_miner_solid_01_b_macro" weight="100"/>
+	</group>
+	<group name="tel_miner_liquid_m">
+		<select macro="ship_tel_m_miner_liquid_01_a_macro" weight="100"/>
+		<select macro="ship_tel_m_miner_liquid_01_b_macro" weight="100"/>
+	</group>
+	<group name="tel_miner_solid_s">
+		<select macro="ship_tel_s_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="tel_miner_solid_mixed">
+		<select macro="ship_tel_l_miner_solid_02_a_macro" weight="200"/>
+		<select macro="ship_tel_m_miner_solid_01_a_macro" weight="300"/>
+		<select macro="ship_tel_m_miner_solid_01_b_macro" weight="300"/>
+		<select macro="ship_tel_s_miner_solid_01_a_macro" weight="200"/>
+	</group>
+	<group name="tel_miner_liquid_mixed">
+		<select macro="ship_tel_l_miner_liquid_02_a_macro" weight="300"/>
+		<select macro="ship_tel_m_miner_liquid_01_a_macro" weight="350"/>
+		<select macro="ship_tel_m_miner_liquid_01_b_macro" weight="350"/>
+	</group>
+
+	<!-- Military / Combat -->
+	<group name="tel_carrier_xl">
+		<select macro="ship_tel_xl_carrier_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xl_carrier_01_b_macro" weight="100"/>
+	</group>
+	<group name="tel_destroyer_l">
+		<select macro="ship_tel_l_destroyer_02_a_macro" weight="100"/>
+	</group>
+	<group name="tel_frigate_m">
+		<select macro="ship_tel_m_frigate_01_a_macro" weight="100"/>
+		<select macro="ship_tel_m_frigate_01_b_macro" weight="100"/>
+	</group>
+	<group name="tel_gunboat_m">
+		<select macro="ship_tel_m_bomber_01_a_macro" weight="100"/>
+		<select macro="ship_tel_m_bomber_01_b_macro" weight="100"/>
+	</group>
+	<group name="tel_fighter_s">
+		<select macro="ship_tel_s_fighter_01_a_macro" weight="250"/>
+		<select macro="ship_tel_s_fighter_01_b_macro" weight="250"/>
+		<select macro="ship_tel_s_fighter_02_a_macro" weight="250"/>
+		<select macro="ship_tel_s_fighter_02_b_macro" weight="250"/>
+	</group>
+	<group name="tel_scout_s">
+		<select macro="ship_tel_s_scout_01_a_macro" weight="100"/>
+		<select macro="ship_tel_s_scout_01_b_macro" weight="100"/>
+		<select macro="ship_tel_s_scout_02_a_macro" weight="100"/>
+		<select macro="ship_tel_s_scout_02_b_macro" weight="100"/>
+	</group>
+	<group name="teladi_dockarea_mass_traffic">
+		<select macro="ship_tel_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_01_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_b_macro" weight="100"/>
+	</group>
+	<group name="teladi_pier_mass_traffic">
+		<select macro="ship_tel_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_01_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_b_macro" weight="100"/>
+	</group>
+	<group name="teladi_storage_mass_traffic">
+		<select macro="ship_tel_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_01_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_b_macro" weight="100"/>
+	</group>
+	<group name="teladi_production_mass_traffic">
+		<select macro="ship_tel_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_01_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_b_macro" weight="100"/>
+	</group>
+	<group name="teladi_buildmodule_mass_traffic">
+		<select macro="ship_tel_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_01_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_b_macro" weight="100"/>
+	</group>
+	<group name="teladi_defencemodule_mass_traffic">
+		<select macro="ship_tel_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_01_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_b_macro" weight="100"/>
+	</group>
+	<group name="teladi_civilian_mass_traffic">
+		<select macro="ship_tel_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_01_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_02_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_03_b_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_pv_04_b_macro" weight="100"/>
+	</group>
+	<group name="teladi_police_mass_traffic">
+		<select macro="ship_tel_xs_police_01_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_police_02_a_macro" weight="100"/>
+		<select macro="ship_tel_xs_police_03_a_macro" weight="100"/>
+	</group>
+</groups>

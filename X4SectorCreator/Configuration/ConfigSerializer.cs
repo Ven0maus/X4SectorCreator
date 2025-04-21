@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using X4SectorCreator.Configuration.Converters;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
 
@@ -12,7 +13,7 @@ namespace X4SectorCreator.Configuration
             WriteIndented = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             PropertyNameCaseInsensitive = true,
-            Converters = { new JsonStringEnumConverter() }
+            Converters = { new JsonStringEnumConverter(), new ColorJsonConverter() }
         };
 
         public static string Serialize(List<Cluster> clusters, VanillaChanges vanillaChanges)
@@ -70,6 +71,7 @@ namespace X4SectorCreator.Configuration
                 Factories = FactoriesForm.AllFactories.Select(a => a.Value).ToList(),
                 Jobs = JobsForm.AllJobs.Select(a => a.Value).ToList(),
                 Baskets = JobsForm.AllBaskets.Select(a => a.Value).ToList(),
+                CustomFactions = FactionsForm.AllCustomFactions.Select(a => a.Value).ToList(),
                 Version = new VersionChecker().CurrentVersion
             };
 
@@ -126,6 +128,15 @@ namespace X4SectorCreator.Configuration
                 foreach (Basket basket in configObj.Baskets)
                 {
                     JobsForm.AllBaskets.Add(basket.Id, basket);
+                }
+            }
+
+            FactionsForm.AllCustomFactions.Clear();
+            if (configObj.CustomFactions != null && configObj.CustomFactions.Count > 0)
+            {
+                foreach (Faction faction in configObj.CustomFactions)
+                {
+                    FactionsForm.AllCustomFactions.Add(faction.Id, faction);
                 }
             }
 
