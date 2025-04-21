@@ -7,7 +7,7 @@ namespace X4SectorCreator.Forms
     {
         public static readonly Dictionary<string, Faction> AllCustomFactions = new(StringComparer.OrdinalIgnoreCase);
         private readonly LazyEvaluated<FactionForm> _factionForm = new(() => new FactionForm(), a => !a.IsDisposed);
-
+        private readonly LazyEvaluated<Factions.FactionCreationHelpForm> _factionCreationHelpForm = new(() => new Factions.FactionCreationHelpForm(), a => !a.IsDisposed);
         public FactionsForm()
         {
             InitializeComponent();
@@ -93,6 +93,11 @@ namespace X4SectorCreator.Forms
                 _factionForm.Value.BtnCreate.Text = "Update";
                 _factionForm.Value.Show();
             }
+        }
+
+        private void BtnFactionCreationHelp_Click(object sender, EventArgs e)
+        {
+            _factionCreationHelpForm.Value.Show();
         }
     }
 }

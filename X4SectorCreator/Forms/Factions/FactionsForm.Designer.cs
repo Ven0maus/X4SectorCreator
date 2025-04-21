@@ -33,6 +33,7 @@
             BtnCreate = new Button();
             BtnDelete = new Button();
             BtnExit = new Button();
+            BtnFactionCreationHelp = new Button();
             SuspendLayout();
             // 
             // label1
@@ -76,7 +77,7 @@
             // 
             // BtnExit
             // 
-            BtnExit.Location = new Point(246, 111);
+            BtnExit.Location = new Point(246, 244);
             BtnExit.Name = "BtnExit";
             BtnExit.Size = new Size(169, 33);
             BtnExit.TabIndex = 4;
@@ -84,11 +85,22 @@
             BtnExit.UseVisualStyleBackColor = true;
             BtnExit.Click += BtnExit_Click;
             // 
+            // BtnFactionCreationHelp
+            // 
+            BtnFactionCreationHelp.Location = new Point(246, 111);
+            BtnFactionCreationHelp.Name = "BtnFactionCreationHelp";
+            BtnFactionCreationHelp.Size = new Size(169, 33);
+            BtnFactionCreationHelp.TabIndex = 5;
+            BtnFactionCreationHelp.Text = "How does it work?";
+            BtnFactionCreationHelp.UseVisualStyleBackColor = true;
+            BtnFactionCreationHelp.Click += BtnFactionCreationHelp_Click;
+            // 
             // FactionsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(420, 282);
+            Controls.Add(BtnFactionCreationHelp);
             Controls.Add(BtnExit);
             Controls.Add(BtnDelete);
             Controls.Add(BtnCreate);
@@ -110,5 +122,6 @@
         private Button BtnCreate;
         private Button BtnDelete;
         private Button BtnExit;
+        private Button BtnFactionCreationHelp;
     }
 }
