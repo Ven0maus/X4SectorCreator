@@ -66,6 +66,11 @@ namespace X4SectorCreator.Forms
                 }
             }
 
+            foreach (var faction in FactionsForm.AllCustomFactions.Values)
+            {
+                _dataObjects.Add(new DataObject(faction));
+            }
+
             // Add all possible types to combobox filter type
             var types = _dataObjects.Select(a => a.Type).ToHashSet(StringComparer.OrdinalIgnoreCase);
             foreach (var type in types.OrderBy(a => a))
@@ -193,6 +198,14 @@ namespace X4SectorCreator.Forms
                 else if (cluster.IsBaseGame)
                     Code = $"re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}";
                 Code = $"PREFIX_{Code.ToLower()}";
+                IsBaseGame = false;
+            }
+
+            public DataObject(Faction faction)
+            {
+                Type = "Faction";
+                Name = faction.Name;
+                Code = faction.Id;
                 IsBaseGame = false;
             }
         }
