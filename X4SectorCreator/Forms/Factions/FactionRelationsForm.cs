@@ -37,7 +37,11 @@ namespace X4SectorCreator.Forms
             _indexMapping.Clear();
             FactionRelationsDataGrid.Rows.Clear();
 
-            var factions = FactionsForm.GetAllFactions(true);
+            // All factions except itself
+            var factions = FactionsForm.GetAllFactions(true)
+                .Select(GodGeneration.CorrectFactionName)
+                .Where(a => !a.Equals(Faction.Id, StringComparison.OrdinalIgnoreCase));
+
             int index = 0;
             foreach (var faction in factions)
             {
