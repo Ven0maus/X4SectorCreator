@@ -63,6 +63,7 @@
             BtnObjectsOverview = new Button();
             TxtSearch = new TextBox();
             BtnCustomFactions = new Button();
+            GenerateModProgressBar = new ProgressBar();
             SuspendLayout();
             // 
             // BtnRemoveCluster
@@ -412,11 +413,19 @@
             BtnCustomFactions.UseVisualStyleBackColor = true;
             BtnCustomFactions.Click += BtnCustomFactions_Click;
             // 
+            // GenerateModProgressBar
+            // 
+            GenerateModProgressBar.Location = new Point(498, 522);
+            GenerateModProgressBar.Name = "GenerateModProgressBar";
+            GenerateModProgressBar.Size = new Size(151, 12);
+            GenerateModProgressBar.TabIndex = 53;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(661, 596);
+            Controls.Add(GenerateModProgressBar);
             Controls.Add(BtnCustomFactions);
             Controls.Add(TxtSearch);
             Controls.Add(BtnObjectsOverview);
@@ -498,5 +507,6 @@
         private Button BtnObjectsOverview;
         private TextBox TxtSearch;
         private Button BtnCustomFactions;
+        private ProgressBar GenerateModProgressBar;
     }
 }

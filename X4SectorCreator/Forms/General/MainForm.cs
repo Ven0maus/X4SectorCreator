@@ -381,15 +381,10 @@ namespace X4SectorCreator
                 return;
             }
 
-            List<Cluster> clusters = [.. AllClusters.Values];
-
-            // Collects all changes done to base game content
-            ClusterCollection nonModifiedBaseGameData = InitAllClusters(false);
-            VanillaChanges vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
-
             // Generate each xml
             string mainFolder = Constants.DataPaths.ModDirectoryPath;
             string modFolder = Path.Combine(mainFolder, modName);
+
             try
             {
                 // Clear up any previous xml
@@ -398,41 +393,61 @@ namespace X4SectorCreator
                     Directory.Delete(mainFolder, true);
                 }
 
+                List<Cluster> clusters = [.. AllClusters.Values];
+
+                // Collects all changes done to base game content
+                ClusterCollection nonModifiedBaseGameData = InitAllClusters(false);
+                VanillaChanges vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
+
                 // Generate all xml files
-                MacrosGeneration.Generate(modFolder, modName, modPrefix, clusters);
-                MapDefaultsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
-                GalaxyGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges, nonModifiedBaseGameData);
-                ClusterGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
-                SectorGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
-                ZoneGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges);
-                ContentGeneration.Generate(modFolder, modName, _currentModTargetVersion.Replace(".", string.Empty), clusters, vanillaChanges);
-                RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters);
-                GameStartsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges);
-                DlcDisableGeneration.Generate(modFolder);
-                GodGeneration.Generate(modFolder, modPrefix, clusters);
-                JobsGeneration.Generate(modFolder, modPrefix);
-                BasketsGeneration.Generate(modFolder, modPrefix);
-                FactionsGeneration.Generate(modFolder);
-                ColorsGeneration.Generate(modFolder);
-                IconsGeneration.Generate(modFolder, modName);
-                ShipsGeneration.Generate(modFolder);
-                ShipGroupsGeneration.Generate(modFolder);
-                StationsGeneration.Generate(modFolder);
-                StationGroupsGeneration.Generate(modFolder);
-                ConstructionplansGeneration.Generate(modFolder);
-                ModulesGeneration.Generate(modFolder);
-                LoadoutrulesGeneration.Generate(modFolder);
-                PaintmodsGeneration.Generate(modFolder);
-                ThemesGeneration.Generate(modFolder);
-                CharactersGeneration.Generate(modFolder);
-                WaresGeneration.Generate(modFolder);
-                FactionLogicGeneration.Generate(modPrefix, modFolder);
-                FactionSetupGeneration.Generate(modFolder);
-                KillMassTrafficGeneration.Generate(modFolder);
-                SignalLeaksGeneration.Generate(modFolder);
-                FactionLogicEconomyGeneration.Generate(modFolder);
-                FactionLogicStationsGeneration.Generate(modFolder);
-                WarSubscriptionsGeneration.Generate(modFolder);
+                var actions = new List<Action> 
+                {
+                    () => MacrosGeneration.Generate(modFolder, modName, modPrefix, clusters),
+                    () => MapDefaultsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges),
+                    () => GalaxyGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges, nonModifiedBaseGameData),
+                    () => ClusterGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges),
+                    () => SectorGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges),
+                    () => ZoneGeneration.Generate(modFolder, modPrefix, clusters, nonModifiedBaseGameData, vanillaChanges),
+                    () => ContentGeneration.Generate(modFolder, modName, _currentModTargetVersion.Replace(".", string.Empty), clusters, vanillaChanges),
+                    () => RegionDefinitionGeneration.Generate(modFolder, modPrefix, clusters),
+                    () => GameStartsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges),
+                    () => DlcDisableGeneration.Generate(modFolder),
+                    () => GodGeneration.Generate(modFolder, modPrefix, clusters),
+                    () => JobsGeneration.Generate(modFolder, modPrefix),
+                    () => BasketsGeneration.Generate(modFolder, modPrefix),
+                    () => FactionsGeneration.Generate(modFolder),
+                    () => ColorsGeneration.Generate(modFolder),
+                    () => IconsGeneration.Generate(modFolder, modName),
+                    () => ShipsGeneration.Generate(modFolder),
+                    () => ShipGroupsGeneration.Generate(modFolder),
+                    () => StationsGeneration.Generate(modFolder),
+                    () => StationGroupsGeneration.Generate(modFolder),
+                    () => ConstructionplansGeneration.Generate(modFolder),
+                    () => ModulesGeneration.Generate(modFolder),
+                    () => LoadoutrulesGeneration.Generate(modFolder),
+                    () => PaintmodsGeneration.Generate(modFolder),
+                    () => ThemesGeneration.Generate(modFolder),
+                    () => CharactersGeneration.Generate(modFolder),
+                    () => WaresGeneration.Generate(modFolder),
+                    () => FactionLogicGeneration.Generate(modPrefix, modFolder),
+                    () => FactionSetupGeneration.Generate(modFolder),
+                    () => KillMassTrafficGeneration.Generate(modFolder),
+                    () => SignalLeaksGeneration.Generate(modFolder),
+                    () => FactionLogicEconomyGeneration.Generate(modFolder),
+                    () => FactionLogicStationsGeneration.Generate(modFolder),
+                    () => WarSubscriptionsGeneration.Generate(modFolder),
+                };
+
+                GenerateModProgressBar.Minimum = 0;
+                GenerateModProgressBar.Maximum = actions.Count;
+                GenerateModProgressBar.Value = 0;
+                GenerateModProgressBar.Step = 1;
+
+                foreach (var action in actions)
+                {
+                    action.Invoke();
+                    GenerateModProgressBar.PerformStep();
+                }
             }
             catch (Exception ex)
             {
@@ -449,6 +464,7 @@ namespace X4SectorCreator
 
             // Show succes message
             _ = MessageBox.Show("XML Files were succesfully generated in the xml folder.");
+            GenerateModProgressBar.Value = 0;
         }
 
         public static string SanitizeText(string input)
