@@ -14,13 +14,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="Forms\FactoryForm.cs">
+    <Compile Update="Forms\Factories\FactoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\FactoriesForm.cs">
+    <Compile Update="Forms\Factories\FactoriesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\FactoryTemplatesForm.cs">
+    <Compile Update="Forms\Factories\FactoryTemplatesForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -30,6 +30,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\Mappings\dlc_mappings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\modules_mappings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\Mappings\predefinedfield_mappings.json">
@@ -42,6 +45,78 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\Mappings\vanilla_connection_mappings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\wares_mappings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Characters\characters_default.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\argon_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\boron_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\generic_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\paranid_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\split_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\teladi_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\terran_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\xenon_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\argon_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\boron_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\paranid_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\split_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\teladi_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\terran_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\xenon_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\argon_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\boron_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\paranid_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\split_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\teladi_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\terran_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\xenon_ships.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\TemplateFactories\Vanilla\god.xml">

@@ -126,8 +126,8 @@ namespace X4SectorCreator.XmlGeneration
                             string faction = station.Faction.ToLower();
                             string owner = station.Owner.ToLower();
                             var type = station.Type.ToLower();
-                            faction = CorrectFactionNames(faction);
-                            owner = CorrectFactionNames(owner);
+                            faction = CorrectFactionName(faction);
+                            owner = CorrectFactionName(owner);
 
                             string realType = "factory";
 
@@ -179,9 +179,9 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
-        private static string CorrectFactionNames(string faction)
+        public static string CorrectFactionName(string faction)
         {
-            switch (faction)
+            switch (faction.ToLower())
             {
                 case "vigor":
                     faction = "loanshark";

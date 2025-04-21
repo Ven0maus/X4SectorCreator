@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<groups>
+	<group name="ter_builder_xl">
+		<select macro="ship_ter_xl_builder_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_resupplier_xl">
+		<select macro="ship_ter_xl_resupplier_01_a_macro" weight="100"/>
+	</group>
+
+	<!-- Transporters -->
+	<group name="ter_trader_container_l">
+		<select macro="ship_ter_l_trans_container_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_trader_container_m">
+		<select macro="ship_ter_m_trans_container_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_trader_container_s">
+		<select macro="ship_ter_s_trans_container_01_a_macro" weight="100"/>
+	</group>
+
+	<!-- Miners -->
+	<group name="ter_miner_solid_l">
+		<select macro="ship_ter_l_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_miner_liquid_l">
+		<select macro="ship_ter_l_miner_liquid_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_miner_solid_m">
+		<select macro="ship_ter_m_miner_solid_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_miner_liquid_m">
+		<select macro="ship_ter_m_miner_liquid_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_miner_solid_mixed">
+		<select macro="ship_ter_l_miner_solid_01_a_macro" weight="30"/>
+		<select macro="ship_ter_m_miner_solid_01_a_macro" weight="70"/>
+	</group>
+	<group name="ter_miner_liquid_mixed">
+		<select macro="ship_ter_l_miner_liquid_01_a_macro" weight="30"/>
+		<select macro="ship_ter_m_miner_liquid_01_a_macro" weight="70"/>
+	</group>
+	<group name="ter_miner_solid_s">
+		<select macro="ship_ter_s_miner_solid_01_a_macro" weight="100"/>
+	</group>
+
+	<!-- Military / Combat -->
+	<group name="atf_battleship_xl">
+		<select macro="ship_atf_xl_battleship_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_carrier_xl">
+		<select macro="ship_ter_xl_carrier_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_destroyer_l">
+		<select macro="ship_atf_l_destroyer_01_a_macro" weight="100"/>
+		<select macro="ship_ter_l_destroyer_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_military_m">
+		<select macro="ship_ter_m_frigate_01_a_macro" weight="40"/>
+		<select macro="ship_ter_m_corvette_01_a_macro" weight="10"/>
+		<select macro="ship_ter_m_gunboat_01_a_macro" weight="50"/>
+	</group>
+	<group name="ter_frigate_m">
+		<select macro="ship_ter_m_frigate_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_corvette_m">
+		<select macro="ship_ter_m_corvette_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_gunboat_m">
+		<select macro="ship_ter_m_gunboat_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_fighter_s">
+		<select macro="ship_ter_s_heavyfighter_01_a_macro" weight="10"/>
+		<select macro="ship_ter_s_fighter_01_a_macro" weight="90"/>
+	</group>
+	<group name="ter_fighter_heavy_s">
+		<select macro="ship_ter_s_heavyfighter_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_fighter_light_s">
+		<select macro="ship_ter_s_fighter_01_a_macro" weight="100"/>
+	</group>
+	<group name="ter_scout_s">
+		<select macro="ship_ter_s_scout_01_a_macro" weight="35"/>
+		<select macro="ship_ter_s_scout_02_a_macro" weight="65"/>
+	</group>
+	<group name="terran_dockarea_mass_traffic">
+		<select macro="ship_ter_xs_cv_01_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_cv_02_a_macro" weight="100"/>
+	</group>
+	<group name="terran_pier_mass_traffic">
+		<select macro="ship_ter_xs_cv_01_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_cv_02_a_macro" weight="100"/>
+	</group>
+	<group name="terran_storage_mass_traffic">
+		<select macro="ship_ter_xs_cv_01_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_cv_02_a_macro" weight="100"/>
+	</group>
+	<group name="terran_production_mass_traffic">
+		<select macro="ship_ter_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_cv_01_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_cv_02_a_macro" weight="100"/>
+	</group>
+	<group name="terran_buildmodule_mass_traffic">
+		<select macro="ship_ter_xs_pv_01_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_pv_02_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_pv_03_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_cv_01_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_cv_02_a_macro" weight="100"/>
+	</group>
+	<group name="terran_defencemodule_mass_traffic">
+		<select macro="ship_ter_xs_cv_01_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_cv_02_a_macro" weight="100"/>
+	</group>
+	<group name="terran_civilian_mass_traffic">
+		<select macro="ship_ter_xs_cv_01_a_macro" weight="100"/>
+		<select macro="ship_ter_xs_cv_02_a_macro" weight="100"/>
+	</group>
+	<group name="terran_police_mass_traffic">
+		<select macro="ship_ter_xs_police_01_a_macro" weight="100"/>
+	</group>
+</groups>

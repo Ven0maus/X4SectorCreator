@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ships>
+	<ship id="teladi_builder_xl" group="tel_builder_xl">
+		<category tags="[builder, mission]" faction="[teladi, ministry, scaleplate]" size="ship_xl"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<drop ref="ship_large_civilian"/>
+		<!--TODO @Owen #EntityTypes Implement a people defaults so we don't have to copy and paste the same stuff into every definition. Ship::Defaults?-->
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+
+	<ship id="teladi_resupplier_xl" group="tel_resupplier_xl">
+		<category tags="[resupplier, mission]" faction="[teladi, ministry, scaleplate]" size="ship_xl"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<drop ref="ship_large_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+
+	<ship id="teladi_trader_container_l" group="tel_trader_container_l">
+		<category tags="[trader, container, mission]" faction="[teladi, ministry, scaleplate]" size="ship_l"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_large_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+	<ship id="teladi_trader_container_m" group="tel_trader_container_m">
+		<category tags="[trader, container, mission]" faction="[teladi, ministry, scaleplate]" size="ship_m"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+	<ship id="teladi_trader_container_s" group="tel_trader_container_s">
+		<category tags="[trader, container, mission]" faction="[teladi, ministry, scaleplate]" size="ship_s"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_small_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+
+	<ship id="teladi_miner_solid_l" group="tel_miner_solid_l">
+		<category tags="[miner, solid, mission]" faction="[teladi, ministry, scaleplate]" size="ship_l"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_large_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+	<ship id="teladi_miner_liquid_l" group="tel_miner_liquid_l">
+		<category tags="[miner, liquid, mission]" faction="[teladi, ministry, scaleplate]" size="ship_l"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="gases"/>
+		<drop ref="ship_large_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+	<ship id="teladi_miner_solid_m" group="tel_miner_solid_m">
+		<category tags="[miner, solid, mission]" faction="[teladi, ministry, scaleplate]" size="ship_m"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+	<ship id="teladi_miner_liquid_m" group="tel_miner_liquid_m">
+		<category tags="[miner, liquid, mission]" faction="[teladi, ministry, scaleplate]" size="ship_m"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="gases"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+	<ship id="teladi_miner_solid_s" group="tel_miner_solid_s">
+		<category tags="[miner, solid, mission]" faction="[teladi, ministry, scaleplate]" size="ship_s"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_small_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+	<ship id="teladi_miner_solid_mixed"  group="tel_miner_solid_mixed">
+		<category tags="[miner, solid, mixed]" faction="[teladi, ministry, scaleplate]"/>
+		<owner exact="teladi" overridenpc="true"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="minerals"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+	<ship id="teladi_miner_liquid_mixed"  group="tel_miner_liquid_mixed">
+		<category tags="[miner, liquid, mixed]" faction="[teladi, ministry, scaleplate]"/>
+		<owner exact="teladi" overridenpc="true"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="gases"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+
+	<ship id="teladi_carrier_xl" group="tel_carrier_xl">
+		<category tags="[military, carrier, mission]" faction="[teladi, ministry, scaleplate]" size="ship_xl"/>
+		<pilot>
+			<select faction="teladi" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_large_military"/>
+		<people ref="teladi_military_crew"/>
+	</ship>
+	<ship id="teladi_destroyer_l" group="tel_destroyer_l">
+		<category tags="[military, destroyer, mission]" faction="[teladi, ministry, scaleplate]" size="ship_l"/>
+		<pilot>
+			<select faction="teladi" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_large_military"/>
+		<people ref="teladi_military_crew"/>
+	</ship>
+	<ship id="teladi_frigate_m" group="tel_frigate_m">
+		<category tags="[military, medium, frigate, mission]" faction="[teladi, ministry, scaleplate]" size="ship_m"/>
+		<pilot>
+			<select faction="teladi" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="teladi_military_crew"/>
+	</ship>
+	<ship id="teladi_gunboat_m" group="tel_gunboat_m">
+		<category tags="[military, medium, gunboat, mission]" faction="[teladi, ministry, scaleplate]" size="ship_m"/>
+		<pilot>
+			<select faction="teladi" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="teladi_military_crew"/>
+	</ship>
+	<ship id="teladi_fighter_s" group="tel_fighter_s">
+		<category tags="[military, fighter, heavy, light, selection, mission]" faction="[teladi, ministry, scaleplate]" size="ship_s"/>
+		<pilot>
+			<select faction="teladi" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="teladi_military_crew"/>
+	</ship>
+	<ship id="teladi_scout_s" group="tel_scout_s">
+		<category tags="[military, scout, light, mission]" faction="[teladi, ministry, scaleplate]" size="ship_s"/>
+		<pilot>
+			<select faction="teladi" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_military"/>
+		<people ref="teladi_military_crew"/>
+	</ship>
+
+	<ship id="teladi_tug_m" group="common_tug_m">
+		<category tags="[tug, mission]" faction="teladi" size="ship_m"/>
+		<pilot>
+			<select faction="teladi" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_medium_civilian"/>
+		<people ref="teladi_freighter_crew"/>
+	</ship>
+	<ship id="masstraffic_teladi_dockarea" group="teladi_dockarea_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_teladi_pier" group="teladi_pier_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_teladi_storage" group="teladi_storage_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_teladi_production" group="teladi_production_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_teladi_buildmodule" group="teladi_buildmodule_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_teladi_defencemodule" group="teladi_defencemodule_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+
+	<ship id="masstraffic_teladi_civilian" group="teladi_civilian_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+	<ship id="masstraffic_teladi_civilian_station" group="teladi_civilian_mass_traffic">
+		<owner exact="civilian" overridenpc="true"/>
+		<pilot>
+			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
+		</pilot>
+		<drop ref="masstraffic_civilian"/>
+	</ship>
+</ships>

@@ -1,0 +1,847 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plans>
+	<plan id="bor_wharf" name="{20102,6541}">
+		<entry index="1" macro="hab_bor_m_01_macro">
+			<offset>
+				<position x="1365.539" y="-800.002" z="-771.292"/>
+				<rotation yaw="119.99995" pitch="-0.000517111" roll="0.000306441"/>
+			</offset>
+		</entry>
+		<entry index="2" macro="hab_bor_m_01_macro" connection="con_snap_01">
+			<predecessor index="1" connection="con_snap_03"/>
+			<offset>
+				<position x="1365.538" y="-799.995" z="28.708"/>
+				<rotation yaw="59.99998" pitch="0.000537317" roll="0.000294774"/>
+			</offset>
+		</entry>
+		<entry index="3" macro="hab_bor_m_01_macro">
+			<offset>
+				<position x="-20.102" y="-800.005" z="28.707"/>
+				<rotation yaw="-60.00003" pitch="0.000104453" roll="-0.000144958"/>
+			</offset>
+		</entry>
+		<entry index="4" macro="hab_bor_m_01_macro">
+			<offset>
+				<position x="-20.102" y="-800.003" z="-771.294"/>
+				<rotation yaw="-120.00008" roll="0.000101967"/>
+			</offset>
+		</entry>
+		<entry index="5" macro="hab_bor_m_01_macro" connection="con_snap_03">
+			<predecessor index="1" connection="con_snap_01"/>
+			<offset>
+				<position x="672.719" y="-800.002" z="-1171.293"/>
+				<rotation yaw="179.99992" pitch="-0.00044113" roll="-0.000246799"/>
+			</offset>
+		</entry>
+		<entry index="6" macro="hab_bor_m_01_macro" connection="con_snap_03">
+			<predecessor index="3" connection="con_snap_01"/>
+			<offset>
+				<position x="672.718" y="-800.003" z="428.708"/>
+				<rotation pitch="0.000190509"/>
+			</offset>
+		</entry>
+		<entry index="7" macro="defence_bor_disc_01_macro" connection="con_snap_03">
+			<predecessor index="6" connection="con_snap_02"/>
+			<offset>
+				<position x="672.717" y="-800.001" z="1428.708"/>
+				<rotation yaw="-60.00005" pitch="0.000195814"/>
+			</offset>
+		</entry>
+		<entry index="8" macro="struct_bor_cross_01_macro" connection="con_snap_04">
+			<predecessor index="7" connection="con_snap_05"/>
+			<offset>
+				<position x="672.716" y="-1200.001" z="1428.709"/>
+				<rotation roll="0.000133314"/>
+			</offset>
+		</entry>
+		<entry index="9" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="8" connection="con_snap_01"/>
+			<offset>
+				<position x="672.716" y="-1399.999" z="2628.71"/>
+				<rotation yaw="-179.99997" roll="-0.000129667"/>
+			</offset>
+		</entry>
+		<entry index="10" macro="buildmodule_bor_ships_m_dockarea_01_macro" connection="con_snap_03">
+			<predecessor index="9" connection="con_snap_01"/>
+			<offset>
+				<position x="672.716" y="-1599.997" z="4128.71"/>
+				<rotation yaw="-179.99995" roll="-0.000392857"/>
+			</offset>
+		</entry>
+		<entry index="11" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="5" connection="con_snap_02"/>
+			<offset>
+				<position x="672.72" y="-800.01" z="-2171.293"/>
+				<rotation pitch="0.0004343"/>
+			</offset>
+		</entry>
+		<entry index="12" macro="struct_bor_cross_01_macro" connection="con_snap_04">
+			<predecessor index="11" connection="con_snap_05"/>
+			<offset>
+				<position x="672.721" y="-1200.01" z="-2171.29"/>
+				<rotation yaw="-60.00003" pitch="0.000230906" roll="-0.000389412"/>
+			</offset>
+		</entry>
+		<entry index="13" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="12" connection="con_snap_03"/>
+			<offset>
+				<position x="672.722" y="-1400.02" z="-3371.288"/>
+				<rotation pitch="0.000526004"/>
+			</offset>
+		</entry>
+		<entry index="14" macro="buildmodule_bor_ships_m_dockarea_01_macro" connection="con_snap_03">
+			<predecessor index="13" connection="con_snap_01"/>
+			<offset>
+				<position x="672.723" y="-1600.034" z="-4871.287"/>
+				<rotation pitch="0.000526004"/>
+			</offset>
+		</entry>
+		<entry index="15" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="1" connection="con_snap_02"/>
+			<offset>
+				<position x="2231.565" y="-800.011" z="-1271.291"/>
+				<rotation yaw="-60.00005" pitch="0.000510282" roll="0.000522399"/>
+			</offset>
+		</entry>
+		<entry index="16" macro="defence_bor_disc_01_macro" connection="con_snap_03">
+			<predecessor index="2" connection="con_snap_02"/>
+			<offset>
+				<position x="2231.564" y="-799.986" z="528.708"/>
+				<rotation pitch="0.000557729" roll="-0.000213784"/>
+			</offset>
+		</entry>
+		<entry index="17" macro="pier_bor_harbor_02_macro" connection="con_snap_03">
+			<predecessor index="16" connection="con_snap_02"/>
+			<offset>
+				<position x="2751.179" y="-799.987" z="228.708"/>
+				<rotation yaw="-59.99998" pitch="0.000153366" roll="-0.000275576"/>
+			</offset>
+		</entry>
+		<entry index="18" macro="defence_bor_disc_01_macro" connection="con_snap_02">
+			<predecessor index="3" connection="con_snap_02"/>
+			<offset>
+				<position x="-886.128" y="-800.003" z="528.707"/>
+			</offset>
+		</entry>
+		<entry index="19" macro="defence_bor_disc_01_macro" connection="con_snap_02">
+			<predecessor index="4" connection="con_snap_02"/>
+			<offset>
+				<position x="-886.127" y="-800.002" z="-1271.295"/>
+				<rotation yaw="-60.00006" pitch="0.00124749" roll="-0.000754477"/>
+			</offset>
+		</entry>
+		<entry index="20" macro="pier_bor_harbor_02_macro" connection="con_snap_03">
+			<predecessor index="19" connection="con_snap_01"/>
+			<offset>
+				<position x="-1405.742" y="-799.989" z="-971.296"/>
+				<rotation yaw="119.99995" pitch="-0.00125432" roll="-0.0102385"/>
+			</offset>
+		</entry>
+		<entry index="21" macro="pier_bor_harbor_02_macro" connection="con_snap_02">
+			<predecessor index="18" connection="con_snap_03"/>
+			<offset>
+				<position x="-1405.743" y="-800.003" z="228.706"/>
+				<rotation yaw="-120.00002" roll="-0.000443604"/>
+			</offset>
+		</entry>
+		<entry index="22" macro="pier_bor_harbor_02_macro" connection="con_snap_02">
+			<predecessor index="15" connection="con_snap_02"/>
+			<offset>
+				<position x="2751.18" y="-800.019" z="-971.291"/>
+				<rotation yaw="59.99995" pitch="-0.000767195" roll="0.000276257"/>
+			</offset>
+		</entry>
+		<entry index="23" macro="storage_bor_l_container_01_macro" connection="con_snap_03">
+			<predecessor index="8" connection="con_snap_05"/>
+			<offset>
+				<position x="672.715" y="-1800.001" z="1428.71"/>
+				<rotation roll="0.000139765"/>
+			</offset>
+		</entry>
+		<entry index="24" macro="storage_bor_l_container_01_macro" connection="con_snap_03">
+			<predecessor index="12" connection="con_snap_05"/>
+			<offset>
+				<position x="672.721" y="-1800.01" z="-2171.285"/>
+				<rotation pitch="0.00040834"/>
+			</offset>
+		</entry>
+		<entry index="25" macro="struct_bor_base_01_macro" connection="con_snap_01">
+			<predecessor index="24" connection="con_snap_02"/>
+			<offset>
+				<position x="672.721" y="-1800.005" z="-1571.285"/>
+				<rotation pitch="0.00040834"/>
+			</offset>
+		</entry>
+		<entry index="26" macro="struct_bor_base_02_macro" connection="con_snap_01">
+			<predecessor index="25" connection="con_snap_02"/>
+			<offset>
+				<position x="672.721" y="-1800.001" z="-971.285"/>
+				<rotation pitch="0.00040834"/>
+			</offset>
+		</entry>
+		<entry index="27" macro="struct_bor_base_01_macro" connection="con_snap_02">
+			<predecessor index="23" connection="con_snap_01"/>
+			<offset>
+				<position x="672.715" y="-1800.001" z="828.71"/>
+			</offset>
+		</entry>
+		<entry index="28" macro="struct_bor_base_02_macro" connection="con_snap_02">
+			<predecessor index="27" connection="con_snap_01"/>
+			<offset>
+				<position x="672.715" y="-1800.002" z="228.71"/>
+			</offset>
+		</entry>
+		<entry index="29" macro="struct_bor_base_01_macro" connection="con_snap_02">
+			<predecessor index="28" connection="con_snap_01"/>
+			<offset>
+				<position x="672.715" y="-1800.003" z="-371.29"/>
+			</offset>
+		</entry>
+		<entry index="30" macro="storage_bor_l_container_01_macro" connection="con_snap_01">
+			<predecessor index="23" connection="con_snap_02"/>
+			<offset>
+				<position x="672.715" y="-1800.001" z="2228.71"/>
+				<rotation roll="0.00032531"/>
+			</offset>
+		</entry>
+		<entry index="31" macro="storage_bor_l_container_01_macro" connection="con_snap_02">
+			<predecessor index="24" connection="con_snap_01"/>
+			<offset>
+				<position x="672.721" y="-1800.016" z="-2971.285"/>
+				<rotation pitch="0.00040834"/>
+			</offset>
+		</entry>
+	</plan>
+	<plan id="bor_shipyard" name="{20102,6531}">
+		<entry index="1" macro="dockarea_bor_m_station_01_standard_macro">
+			<offset>
+				<position x="152.885" y="-0.0009766" z="-624.225"/>
+			</offset>
+		</entry>
+		<entry index="2" macro="storage_bor_s_container_01_macro" connection="con_snap_01">
+			<predecessor index="1" connection="con_snap_08"/>
+			<offset>
+				<position x="152.885" y="-600.001" z="-624.225"/>
+			</offset>
+		</entry>
+		<entry index="3" macro="storage_bor_l_container_01_macro" connection="con_snap_03">
+			<predecessor index="2" connection="con_snap_02"/>
+			<offset>
+				<position x="152.885" y="-1400.001" z="-624.225"/>
+			</offset>
+		</entry>
+		<entry index="4" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="3" connection="con_snap_01"/>
+			<offset>
+				<position x="152.885" y="-1600.001" z="-1824.225"/>
+			</offset>
+		</entry>
+		<entry index="5" macro="defence_bor_claim_01_macro" connection="con_snap_02">
+			<predecessor index="4" connection="con_snap_01"/>
+			<offset>
+				<position x="152.886" y="-1800" z="-3024.224"/>
+				<rotation yaw="-119.99998"/>
+			</offset>
+		</entry>
+		<entry index="6" macro="hab_bor_l_01_macro" connection="con_snap_04">
+			<predecessor index="5" connection="con_snap_01"/>
+			<offset>
+				<position x="-886.344" y="-1800.002" z="-3624.223"/>
+				<rotation yaw="-120"/>
+			</offset>
+		</entry>
+		<entry index="7" macro="hab_bor_l_01_macro" connection="con_snap_04">
+			<predecessor index="5" connection="con_snap_03"/>
+			<offset>
+				<position x="1192.115" y="-1800.003" z="-3624.223"/>
+				<rotation yaw="119.99998" roll="-0.000141539"/>
+			</offset>
+		</entry>
+		<entry index="8" macro="hab_bor_s_01_macro" connection="con_snap_02">
+			<predecessor index="6" connection="con_snap_01"/>
+			<offset>
+				<position x="-1603.063" y="-1800.004" z="-3189.647"/>
+				<rotation yaw="120.00016" roll="0.000161347"/>
+			</offset>
+		</entry>
+		<entry index="9" macro="hab_bor_s_01_macro" connection="con_snap_02">
+			<predecessor index="7" connection="con_snap_03"/>
+			<offset>
+				<position x="1908.835" y="-1800.005" z="-3189.647"/>
+				<rotation yaw="-119.99975" pitch="0.000170267" roll="-0.000318566"/>
+			</offset>
+		</entry>
+		<entry index="10" macro="defence_bor_disc_01_macro" connection="con_snap_03">
+			<predecessor index="6" connection="con_snap_03"/>
+			<offset>
+				<position x="-868.351" y="-1800.001" z="-4462.208"/>
+				<rotation yaw="120.00028"/>
+			</offset>
+		</entry>
+		<entry index="11" macro="defence_bor_disc_01_macro" connection="con_snap_02">
+			<predecessor index="7" connection="con_snap_01"/>
+			<offset>
+				<position x="1174.119" y="-1800.002" z="-4462.208"/>
+				<rotation yaw="-119.99985" pitch="0.000221963" roll="-0.00011055"/>
+			</offset>
+		</entry>
+		<entry index="12" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="3" connection="con_snap_05"/>
+			<offset>
+				<position x="1352.885" y="-1600" z="-624.225"/>
+				<rotation yaw="-89.99998"/>
+			</offset>
+		</entry>
+		<entry index="13" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="12" connection="con_snap_01"/>
+			<offset>
+				<position x="2552.885" y="-1800" z="-624.225"/>
+				<rotation yaw="-89.99998" roll="0.000439627"/>
+			</offset>
+		</entry>
+		<entry index="14" macro="struct_bor_vertical_02_macro" connection="con_snap_01">
+			<predecessor index="13" connection="con_snap_05"/>
+			<offset>
+				<position x="2552.885" y="-2400" z="-624.229"/>
+				<rotation pitch="-0.000482786"/>
+			</offset>
+		</entry>
+		<entry index="15" macro="struct_bor_vertical_02_macro" connection="con_snap_01">
+			<predecessor index="14" connection="con_snap_02"/>
+			<offset>
+				<position x="2552.885" y="-3200" z="-624.237"/>
+				<rotation pitch="-0.000496447"/>
+			</offset>
+		</entry>
+		<entry index="16" macro="storage_bor_l_container_01_macro" connection="con_snap_03">
+			<predecessor index="15" connection="con_snap_02"/>
+			<offset>
+				<position x="2552.885" y="-4000" z="-624.244"/>
+				<rotation pitch="-0.000510107"/>
+			</offset>
+		</entry>
+		<entry index="17" macro="buildmodule_bor_ships_xl_macro" connection="con_snap_02">
+			<predecessor index="16" connection="con_snap_02"/>
+			<offset>
+				<position x="2552.887" y="-4000.019" z="1575.756"/>
+				<rotation yaw="-89.99995" pitch="0.00022602" roll="0.000510107"/>
+			</offset>
+		</entry>
+		<entry index="18" macro="struct_bor_base_05_macro" connection="con_snap_01">
+			<predecessor index="16" connection="con_snap_06"/>
+			<offset>
+				<position x="1352.887" y="-3800.001" z="-624.243"/>
+				<rotation yaw="-89.99998"/>
+			</offset>
+		</entry>
+		<entry index="19" macro="buildmodule_bor_ships_l_macro" connection="con_snap_01">
+			<predecessor index="18" connection="con_snap_02"/>
+			<offset>
+				<position x="-247.113" y="-3600.003" z="-624.243"/>
+				<rotation pitch="-0.00268756"/>
+			</offset>
+		</entry>
+		<entry index="20" macro="storage_bor_l_container_01_macro" connection="con_snap_01">
+			<predecessor index="17" connection="con_snap_01"/>
+			<offset>
+				<position x="2552.888" y="-4000.039" z="3775.753"/>
+				<rotation pitch="-0.000510107"/>
+			</offset>
+		</entry>
+		<entry index="21" macro="defence_bor_disc_01_macro" connection="con_snap_02">
+			<predecessor index="20" connection="con_snap_02"/>
+			<offset>
+				<position x="2552.888" y="-4000.046" z="4575.753"/>
+				<rotation yaw="60.00001" pitch="-0.000319116" roll="-0.00047365"/>
+			</offset>
+		</entry>
+		<entry index="22" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="16" connection="con_snap_01"/>
+			<offset>
+				<position x="2552.886" y="-3999.992" z="-1424.243"/>
+				<rotation pitch="-0.000516937"/>
+			</offset>
+		</entry>
+		<entry index="23" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="3" connection="con_snap_06"/>
+			<offset>
+				<position x="-1047.115" y="-1600.002" z="-624.224"/>
+				<rotation yaw="90.00002"/>
+			</offset>
+		</entry>
+		<entry index="24" macro="defence_bor_disc_01_macro" connection="con_snap_03">
+			<predecessor index="23" connection="con_snap_01"/>
+			<offset>
+				<position x="-2247.114" y="-1800.003" z="-624.224"/>
+				<rotation yaw="-149.99994"/>
+			</offset>
+		</entry>
+		<entry index="25" macro="struct_bor_vertical_02_macro" connection="con_snap_01">
+			<predecessor index="24" connection="con_snap_05"/>
+			<offset>
+				<position x="-2247.114" y="-2400.002" z="-624.224"/>
+			</offset>
+		</entry>
+		<entry index="26" macro="struct_bor_vertical_02_macro" connection="con_snap_01">
+			<predecessor index="25" connection="con_snap_02"/>
+			<offset>
+				<position x="-2247.112" y="-3200.001" z="-624.223"/>
+			</offset>
+		</entry>
+		<entry index="27" macro="storage_bor_l_container_01_macro" connection="con_snap_03">
+			<predecessor index="26" connection="con_snap_02"/>
+			<offset>
+				<position x="-2247.11" y="-4000.001" z="-624.224"/>
+			</offset>
+		</entry>
+		<entry index="28" macro="buildmodule_bor_ships_xl_macro" connection="con_snap_01">
+			<predecessor index="27" connection="con_snap_02"/>
+			<offset>
+				<position x="-2247.107" y="-4000.005" z="1575.775"/>
+				<rotation yaw="90.00002"/>
+			</offset>
+		</entry>
+		<entry index="29" macro="storage_bor_l_container_01_macro" connection="con_snap_01">
+			<predecessor index="28" connection="con_snap_02"/>
+			<offset>
+				<position x="-2247.106" y="-4000.006" z="3775.773"/>
+			</offset>
+		</entry>
+		<entry index="30" macro="struct_bor_base_05_macro" connection="con_snap_01">
+			<predecessor index="29" connection="con_snap_05"/>
+			<offset>
+				<position x="-1047.109" y="-3800.003" z="3775.773"/>
+				<rotation yaw="89.99997"/>
+			</offset>
+		</entry>
+		<entry index="31" macro="buildmodule_bor_ships_l_macro" connection="con_snap_01">
+			<predecessor index="30" connection="con_snap_02"/>
+			<offset>
+				<position x="552.889" y="-3600" z="3775.774"/>
+				<rotation yaw="-179.99997" pitch="0.00257405"/>
+			</offset>
+		</entry>
+		<entry index="32" macro="defence_bor_disc_01_macro" connection="con_snap_03">
+			<predecessor index="29" connection="con_snap_02"/>
+			<offset>
+				<position x="-2247.107" y="-4000.007" z="4575.774"/>
+				<rotation yaw="-59.99997" pitch="-0.000318189"/>
+			</offset>
+		</entry>
+		<entry index="33" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="27" connection="con_snap_01"/>
+			<offset>
+				<position x="-2247.11" y="-4000.002" z="-1424.223"/>
+			</offset>
+		</entry>
+		<entry index="34" macro="struct_bor_base_05_macro" connection="con_snap_01">
+			<predecessor index="3" connection="con_snap_02"/>
+			<offset>
+				<position x="152.885" y="-1200.001" z="575.775"/>
+			</offset>
+		</entry>
+		<entry index="35" macro="pier_bor_harbor_03_macro" connection="con_snap_01">
+			<predecessor index="34" connection="con_snap_02"/>
+			<offset>
+				<position x="152.884" y="-1000.002" z="1575.775"/>
+				<rotation yaw="-90.00004"/>
+			</offset>
+		</entry>
+		<entry index="36" macro="defence_bor_disc_01_macro" connection="con_snap_05">
+			<predecessor index="35" connection="con_snap_08"/>
+			<offset>
+				<position x="3152.883" y="-600.001" z="1575.778"/>
+			</offset>
+		</entry>
+		<entry index="37" macro="defence_bor_disc_01_macro" connection="con_snap_05">
+			<predecessor index="35" connection="con_snap_06"/>
+			<offset>
+				<position x="-2847.116" y="-600.003" z="1575.772"/>
+			</offset>
+		</entry>
+		<entry index="38" macro="pier_bor_harbor_04_macro" connection="con_snap_01">
+			<predecessor index="1" connection="con_snap_05"/>
+			<offset>
+				<position x="152.885" y="199.999" z="-624.225"/>
+				<rotation yaw="-89.99999"/>
+			</offset>
+		</entry>
+		<entry index="39" macro="storage_bor_l_container_01_macro" connection="con_snap_03">
+			<predecessor index="35" connection="con_snap_05"/>
+			<offset>
+				<position x="152.884" y="-1600.002" z="1575.775"/>
+			</offset>
+		</entry>
+	</plan>
+	<plan id="bor_equipmentdock" name="{20102,6521}">
+		<entry index="1" macro="buildmodule_bor_equip_m_dockarea_01_macro">
+			<offset>
+				<position x="81.403" y="1100.98" z="510.459"/>
+				<rotation yaw="-60.00001"/>
+			</offset>
+		</entry>
+		<entry index="2" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="1" connection="con_snap_02"/>
+			<offset>
+				<position x="81.404" y="1100.98" z="-589.542"/>
+			</offset>
+		</entry>
+		<entry index="3" macro="struct_bor_vertical_01_macro" connection="con_snap_01">
+			<predecessor index="2" connection="con_snap_05"/>
+			<offset>
+				<position x="81.404" y="700.98" z="-589.542"/>
+			</offset>
+		</entry>
+		<entry index="4" macro="struct_bor_cross_01_macro" connection="con_snap_04">
+			<predecessor index="3" connection="con_snap_02"/>
+			<offset>
+				<position x="81.403" y="300.98" z="-589.542"/>
+				<rotation yaw="179.99994"/>
+			</offset>
+		</entry>
+		<entry index="5" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="4" connection="con_snap_01"/>
+			<offset>
+				<position x="81.404" y="100.981" z="-1789.544"/>
+			</offset>
+		</entry>
+		<entry index="6" macro="storage_bor_l_container_01_macro" connection="con_snap_02">
+			<predecessor index="5" connection="con_snap_01"/>
+			<offset>
+				<position x="81.405" y="-99.019" z="-2989.545"/>
+			</offset>
+		</entry>
+		<entry index="7" macro="buildmodule_bor_equip_xl_macro" connection="con_snap_01">
+			<predecessor index="6" connection="con_snap_06"/>
+			<offset>
+				<position x="-2118.596" y="-99.019" z="-2989.545"/>
+			</offset>
+		</entry>
+		<entry index="8" macro="storage_bor_s_container_01_macro" connection="con_snap_01">
+			<predecessor index="6" connection="con_snap_04"/>
+			<offset>
+				<position x="81.406" y="-1699.019" z="-2989.546"/>
+			</offset>
+		</entry>
+		<entry index="9" macro="struct_bor_cross_01_macro" connection="con_snap_04">
+			<predecessor index="8" connection="con_snap_02"/>
+			<offset>
+				<position x="81.407" y="-2299.019" z="-2989.546"/>
+				<rotation yaw="29.99999"/>
+			</offset>
+		</entry>
+		<entry index="10" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="9" connection="con_snap_03"/>
+			<offset>
+				<position x="-1118.594" y="-2499.021" z="-2989.547"/>
+				<rotation yaw="89.99998" pitch="0.000130205"/>
+			</offset>
+		</entry>
+		<entry index="11" macro="buildmodule_bor_equip_l_macro" connection="con_snap_01">
+			<predecessor index="10" connection="con_snap_01"/>
+			<offset>
+				<position x="-2718.594" y="-2699.026" z="-2989.548"/>
+				<rotation roll="-0.000130205"/>
+			</offset>
+		</entry>
+		<entry index="12" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="9" connection="con_snap_02"/>
+			<offset>
+				<position x="481.408" y="-2299.019" z="-3682.366"/>
+				<rotation yaw="-30.00001"/>
+			</offset>
+		</entry>
+		<entry index="13" macro="hab_bor_l_01_macro" connection="con_snap_04">
+			<predecessor index="6" connection="con_snap_05"/>
+			<offset>
+				<position x="1281.406" y="-99.019" z="-2989.544"/>
+				<rotation yaw="89.99994"/>
+			</offset>
+		</entry>
+		<entry index="14" macro="pier_bor_harbor_02_macro" connection="con_snap_01">
+			<predecessor index="13" connection="con_snap_01"/>
+			<offset>
+				<position x="1584.816" y="-99.019" z="-3551.055"/>
+				<rotation yaw="60.00007" pitch="-0.000124942"/>
+			</offset>
+		</entry>
+		<entry index="15" macro="pier_bor_harbor_02_macro" connection="con_snap_01">
+			<predecessor index="13" connection="con_snap_02"/>
+			<offset>
+				<position x="2281.407" y="-99.019" z="-2989.542"/>
+				<rotation pitch="-0.000195243"/>
+			</offset>
+		</entry>
+		<entry index="16" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="15" connection="con_snap_03"/>
+			<offset>
+				<position x="2281.406" y="-99.021" z="-2389.542"/>
+				<rotation yaw="179.99988" pitch="0.000188413"/>
+			</offset>
+		</entry>
+		<entry index="17" macro="struct_bor_cross_01_macro" connection="con_snap_04">
+			<predecessor index="4" connection="con_snap_05"/>
+			<offset>
+				<position x="81.403" y="-99.02" z="-589.542"/>
+			</offset>
+		</entry>
+		<entry index="18" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="17" connection="con_snap_01"/>
+			<offset>
+				<position x="81.401" y="-299.021" z="610.46"/>
+				<rotation yaw="179.99991"/>
+			</offset>
+		</entry>
+		<entry index="19" macro="storage_bor_l_container_01_macro" connection="con_snap_02">
+			<predecessor index="18" connection="con_snap_01"/>
+			<offset>
+				<position x="81.399" y="-499.021" z="1810.46"/>
+				<rotation yaw="179.99991"/>
+			</offset>
+		</entry>
+		<entry index="20" macro="buildmodule_bor_equip_xl_macro" connection="con_snap_01">
+			<predecessor index="19" connection="con_snap_06"/>
+			<offset>
+				<position x="2281.4" y="-499.021" z="1810.462"/>
+				<rotation yaw="179.99997"/>
+			</offset>
+		</entry>
+		<entry index="21" macro="storage_bor_s_container_01_macro" connection="con_snap_01">
+			<predecessor index="19" connection="con_snap_04"/>
+			<offset>
+				<position x="81.399" y="-2099.021" z="1810.46"/>
+				<rotation yaw="179.99995"/>
+			</offset>
+		</entry>
+		<entry index="22" macro="struct_bor_cross_01_macro" connection="con_snap_04">
+			<predecessor index="21" connection="con_snap_02"/>
+			<offset>
+				<position x="81.399" y="-2699.021" z="1810.46"/>
+				<rotation yaw="-150"/>
+			</offset>
+		</entry>
+		<entry index="23" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="22" connection="con_snap_03"/>
+			<offset>
+				<position x="1281.399" y="-2899.023" z="1810.461"/>
+				<rotation yaw="-90.00001" pitch="0.000135212"/>
+			</offset>
+		</entry>
+		<entry index="24" macro="buildmodule_bor_equip_l_macro" connection="con_snap_01">
+			<predecessor index="23" connection="con_snap_01"/>
+			<offset>
+				<position x="2881.401" y="-3099.028" z="1810.462"/>
+				<rotation yaw="179.99998" roll="-0.000135211"/>
+			</offset>
+		</entry>
+		<entry index="25" macro="defence_bor_disc_01_macro" connection="con_snap_02">
+			<predecessor index="22" connection="con_snap_02"/>
+			<offset>
+				<position x="-318.602" y="-2699.022" z="2503.281"/>
+				<rotation yaw="29.99998"/>
+			</offset>
+		</entry>
+		<entry index="26" macro="hab_bor_l_01_macro" connection="con_snap_04">
+			<predecessor index="19" connection="con_snap_05"/>
+			<offset>
+				<position x="-1118.602" y="-499.021" z="1810.46"/>
+				<rotation yaw="-90.00007"/>
+			</offset>
+		</entry>
+		<entry index="27" macro="pier_bor_harbor_02_macro" connection="con_snap_01">
+			<predecessor index="26" connection="con_snap_01"/>
+			<offset>
+				<position x="-1422.01" y="-499.022" z="2371.969"/>
+				<rotation yaw="-119.99994"/>
+			</offset>
+		</entry>
+		<entry index="28" macro="pier_bor_harbor_02_macro" connection="con_snap_01">
+			<predecessor index="26" connection="con_snap_02"/>
+			<offset>
+				<position x="-2118.602" y="-499.021" z="1810.458"/>
+				<rotation yaw="179.99988"/>
+			</offset>
+		</entry>
+		<entry index="29" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="28" connection="con_snap_03"/>
+			<offset>
+				<position x="-2118.601" y="-499.021" z="1210.457"/>
+			</offset>
+		</entry>
+	</plan>
+	<plan id="bor_tradestation" name="{20102,6511}">
+		<entry index="1" macro="pier_bor_tradestation_01_macro">
+			<offset>
+				<position x="-83.427" y="1780.344" z="446.845"/>
+				<rotation yaw="90"/>
+			</offset>
+		</entry>
+		<entry index="2" macro="storage_bor_m_solid_01_macro" connection="con_snap_03">
+			<predecessor index="1" connection="con_snap_01"/>
+			<offset>
+				<position x="-83.427" y="780.344" z="446.845"/>
+			</offset>
+		</entry>
+		<entry index="3" macro="storage_bor_m_liquid_01_macro" connection="con_snap_03">
+			<predecessor index="2" connection="con_snap_04"/>
+			<offset>
+				<position x="-83.427" y="-419.656" z="446.845"/>
+			</offset>
+		</entry>
+		<entry index="4" macro="storage_bor_l_container_01_macro" connection="con_snap_03">
+			<predecessor index="3" connection="con_snap_04"/>
+			<offset>
+				<position x="-83.426" y="-1619.656" z="446.844"/>
+			</offset>
+		</entry>
+		<entry index="5" macro="dockarea_bor_m_station_01_standard_macro" connection="con_snap_05">
+			<predecessor index="4" connection="con_snap_04"/>
+			<offset>
+				<position x="-83.424" y="-3019.656" z="446.843"/>
+				<rotation roll="-0.00010844"/>
+			</offset>
+		</entry>
+		<entry index="6" macro="defence_bor_claim_01_macro" connection="con_snap_03">
+			<predecessor index="4" connection="con_snap_05"/>
+			<offset>
+				<position x="716.574" y="-1619.656" z="446.844"/>
+				<rotation yaw="30.00003"/>
+			</offset>
+		</entry>
+		<entry index="7" macro="hab_bor_m_01_macro" connection="con_snap_01">
+			<predecessor index="3" connection="con_snap_02"/>
+			<offset>
+				<position x="-83.427" y="-419.657" z="1246.845"/>
+				<rotation yaw="59.99999"/>
+			</offset>
+		</entry>
+		<entry index="8" macro="hab_bor_m_01_macro" connection="con_snap_03">
+			<predecessor index="3" connection="con_snap_01"/>
+			<offset>
+				<position x="-83.427" y="-419.656" z="-353.155"/>
+				<rotation yaw="119.99997"/>
+			</offset>
+		</entry>
+		<entry index="9" macro="defence_bor_disc_01_macro" connection="con_snap_02">
+			<predecessor index="4" connection="con_snap_06"/>
+			<offset>
+				<position x="-883.426" y="-1619.658" z="446.844"/>
+				<rotation yaw="-29.99994" roll="-0.000138896"/>
+			</offset>
+		</entry>
+		<entry index="10" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="8" connection="con_snap_02"/>
+			<offset>
+				<position x="782.599" y="-419.657" z="-853.155"/>
+				<rotation yaw="-60.00003"/>
+			</offset>
+		</entry>
+		<entry index="11" macro="defence_bor_disc_01_macro" connection="con_snap_03">
+			<predecessor index="7" connection="con_snap_02"/>
+			<offset>
+				<position x="782.599" y="-419.658" z="1746.845"/>
+			</offset>
+		</entry>
+	</plan>
+	<plan id="bor_defence" name="{20102,6501}">
+		<entry index="1" macro="dockarea_bor_m_station_01_standard_macro">
+			<offset>
+				<position x="235.854" y="41.927" z="-15.625"/>
+			</offset>
+		</entry>
+		<entry index="2" macro="defence_bor_disc_01_macro" connection="con_snap_02">
+			<predecessor index="1" connection="con_snap_03"/>
+			<offset>
+				<position x="-630.171" y="41.927" z="-915.625"/>
+				<rotation yaw="-59.99998" pitch="0.00116725" roll="-0.000742786"/>
+			</offset>
+		</entry>
+		<entry index="3" macro="defence_bor_disc_01_macro" connection="con_snap_01">
+			<predecessor index="1" connection="con_snap_04"/>
+			<offset>
+				<position x="1101.88" y="41.927" z="-915.625"/>
+				<rotation yaw="-60.00003" roll="-0.00813148"/>
+			</offset>
+		</entry>
+		<entry index="4" macro="struct_bor_cross_01_macro" connection="con_snap_04">
+			<predecessor index="1" connection="con_snap_08"/>
+			<offset>
+				<position x="235.855" y="-358.073" z="-15.625"/>
+			</offset>
+		</entry>
+		<entry index="5" macro="storage_bor_m_container_01_macro" connection="con_snap_03">
+			<predecessor index="4" connection="con_snap_05"/>
+			<offset>
+				<position x="235.855" y="-958.073" z="-15.625"/>
+			</offset>
+		</entry>
+		<entry index="6" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="4" connection="con_snap_01"/>
+			<offset>
+				<position x="235.855" y="-558.073" z="1184.375"/>
+				<rotation yaw="-179.99995"/>
+			</offset>
+		</entry>
+		<entry index="7" macro="defence_bor_claim_01_macro" connection="con_snap_03">
+			<predecessor index="6" connection="con_snap_01"/>
+			<offset>
+				<position x="235.855" y="-758.074" z="2384.375"/>
+				<rotation yaw="-59.99997" pitch="-0.00021618"/>
+			</offset>
+		</entry>
+		<entry index="8" macro="defence_bor_disc_01_macro" connection="con_snap_03">
+			<predecessor index="7" connection="con_snap_02"/>
+			<offset>
+				<position x="928.675" y="-758.074" z="2784.375"/>
+			</offset>
+		</entry>
+		<entry index="9" macro="defence_bor_disc_01_macro" connection="con_snap_02">
+			<predecessor index="7" connection="con_snap_01"/>
+			<offset>
+				<position x="-456.966" y="-758.078" z="2784.375"/>
+				<rotation pitch="-0.000119307" roll="-0.000241727"/>
+			</offset>
+		</entry>
+		<entry index="10" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="4" connection="con_snap_02"/>
+			<offset>
+				<position x="1275.074" y="-558.073" z="-615.645"/>
+				<rotation yaw="-59.99998" roll="0.00653695"/>
+			</offset>
+		</entry>
+		<entry index="11" macro="pier_bor_harbor_02_macro" connection="con_snap_01">
+			<predecessor index="10" connection="con_snap_01"/>
+			<offset>
+				<position x="2141.088" y="-758.073" z="-1115.664"/>
+				<rotation yaw="29.99999" pitch="0.00162827"/>
+			</offset>
+		</entry>
+		<entry index="12" macro="struct_bor_base_05_macro" connection="con_snap_02">
+			<predecessor index="4" connection="con_snap_03"/>
+			<offset>
+				<position x="-803.362" y="-558.075" z="-615.649"/>
+				<rotation yaw="60" pitch="0.000100793" roll="-0.00772"/>
+			</offset>
+		</entry>
+		<entry index="13" macro="pier_bor_harbor_02_macro" connection="con_snap_01">
+			<predecessor index="12" connection="con_snap_01"/>
+			<offset>
+				<position x="-1669.374" y="-758.076" z="-1115.672"/>
+				<rotation yaw="149.99998" pitch="-0.00163736" roll="0.000100797"/>
+			</offset>
+		</entry>
+		<entry index="14" macro="defence_bor_disc_01_macro" connection="con_snap_04">
+			<predecessor index="5" connection="con_snap_04"/>
+			<offset>
+				<position x="235.856" y="-1958.073" z="-15.625"/>
+				<rotation yaw="60.00001"/>
+			</offset>
+		</entry>
+		<entry index="15" macro="radar_arg_dish_01_macro" connection="con_snap_02">
+			<predecessor index="14" connection="con_snap_02"/>
+			<offset>
+				<position x="235.856" y="-1958.073" z="-615.625"/>
+			</offset>
+		</entry>
+	</plan>
+</plans>

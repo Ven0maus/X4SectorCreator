@@ -35,6 +35,15 @@ namespace X4SectorCreator.CustomComponents
             _ = _dropDown.Items.Add(host);
         }
 
+        public void ReInit()
+        {
+            _container.Items.Clear();
+            foreach (object item in _comboBox.Items)
+            {
+                _ = _container.Items.Add(item);
+            }
+        }
+
         public void Select(params object[] objs)
         {
             foreach (object obj in objs)

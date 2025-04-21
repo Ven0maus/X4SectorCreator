@@ -12,7 +12,6 @@ namespace X4SectorCreator.XmlGeneration
                 return;
             }
 
-            // Replace entire job file
             XDocument xmlDocument = new(
                 new XDeclaration("1.0", "utf-8", null),
                 new XElement("diff",

@@ -89,7 +89,7 @@ namespace X4SectorCreator.Objects
         [XmlAttribute(AttributeName = "comment")]
         public string Comment { get; set; }
 
-        [XmlAttribute(AttributeName = "Startactive")]
+        [XmlAttribute(AttributeName = "startactive")]
         public string Startactive { get; set; }
 
         [XmlAttribute(AttributeName = "disabled")]

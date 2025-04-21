@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<plans>
+	<plan id="xen_defence" name="{20102,1401}">
+		<entry index="1" macro="dockarea_xen_m_station_01_macro"/>
+		<entry index="2" macro="xenon_small_station_01_base_macro" connection="connectionsnap001">
+			<predecessor index="1" connection="connectionsnap002"/>
+			<offset>
+				<position x="-335.085" y="-94.811" z="-1581.06"/>
+			</offset>
+		</entry>
+		<entry index="3" macro="xenon_small_station_01_base_macro" connection="connectionsnap001">
+			<predecessor index="2" connection="connectionsnap003"/>
+			<offset>
+				<position x="-1596.242" y="-277.647" z="-1040.873"/>
+				<rotation yaw="139.99998"/>
+			</offset>
+		</entry>
+		<entry index="4" macro="xenon_small_station_01_base_macro" connection="connectionsnap001">
+			<predecessor index="1" connection="connectionsnap001"/>
+			<offset>
+				<position x="335.085" y="-94.81" z="1581.06"/>
+				<rotation yaw="-179.99991"/>
+			</offset>
+		</entry>
+		<entry index="5" macro="xenon_small_station_01_base_macro" connection="connectionsnap001">
+			<predecessor index="4" connection="connectionsnap003"/>
+			<offset>
+				<position x="1596.242" y="-277.647" z="1040.873"/>
+				<rotation yaw="-40.00001"/>
+			</offset>
+		</entry>
+	</plan>
+	<plan id="xen_shipyard" name="{20102,1421}">
+		<entry index="1" macro="xenon_small_station_01_base_macro">
+			<offset>
+				<position x="725.838" y="2161.219" z="-74.009"/>
+				<rotation yaw="136.24825"/>
+			</offset>
+		</entry>
+		<entry index="2" macro="defence_arg_disc_01_macro" connection="connectionsnap004">
+			<predecessor index="1" connection="connectionsnap003"/>
+			<offset>
+				<position x="1270.433" y="2073.192" z="826.026"/>
+				<rotation yaw="6.24828"/>
+			</offset>
+		</entry>
+		<entry index="3" macro="buildmodule_xen_ships_xl_macro" connection="connectionsnap001">
+			<predecessor index="1" connection="connectionsnap002"/>
+			<offset>
+				<position x="-843.705" y="2085.599" z="-1959.922"/>
+				<rotation yaw="-43.75174"/>
+			</offset>
+		</entry>
+		<entry index="4" macro="xenon_small_station_01_storage_01_macro" connection="connectionsnap001">
+			<predecessor index="3" connection="connectionsnap002"/>
+			<offset>
+				<position x="-2432.86" y="2085.599" z="-3481.299"/>
+				<rotation yaw="46.24829"/>
+			</offset>
+		</entry>
+		<entry index="5" macro="defence_arg_disc_01_macro" connection="connectionsnap003">
+			<predecessor index="4" connection="connectionsnap002"/>
+			<offset>
+				<position x="-2866.266" y="2085.599" z="-3896.219"/>
+				<rotation yaw="-43.7517"/>
+			</offset>
+		</entry>
+		<entry index="6" macro="dockarea_xen_m_station_01_macro" connection="connectionsnap001">
+			<predecessor index="5" connection="connectionsnap004"/>
+			<offset>
+				<position x="-3444.14" y="2085.599" z="-4449.446"/>
+				<rotation yaw="46.24829"/>
+			</offset>
+		</entry>
+		<entry index="7" macro="defence_arg_disc_01_macro" connection="connectionsnap004">
+			<predecessor index="6" connection="connectionsnap002"/>
+			<offset>
+				<position x="-4022.014" y="2085.599" z="-5002.673"/>
+				<rotation yaw="136.24834"/>
+			</offset>
+		</entry>
+		<entry index="8" macro="defence_arg_tube_01_macro" connection="connectionsnap002">
+			<predecessor index="7" connection="connectionsnap003"/>
+			<offset>
+				<position x="-4310.951" y="2085.599" z="-5279.287"/>
+				<rotation yaw="46.24832"/>
+			</offset>
+		</entry>
+		<entry index="9" macro="defence_arg_tube_01_macro" connection="connectionsnap002">
+			<predecessor index="5" connection="connectionsnap001"/>
+			<offset>
+				<position x="-2589.651" y="2085.599" z="-4185.156"/>
+				<rotation yaw="-43.75168"/>
+			</offset>
+		</entry>
+		<entry index="10" macro="xenon_small_station_01_storage_01_macro" connection="connectionsnap002">
+			<predecessor index="9" connection="connectionsnap001"/>
+			<offset>
+				<position x="-2174.731" y="2085.599" z="-4618.562"/>
+				<rotation yaw="136.24831"/>
+			</offset>
+		</entry>
+		<entry index="11" macro="xenon_small_station_01_storage_01_macro" connection="connectionsnap002">
+			<predecessor index="10" connection="connectionsnap001"/>
+			<offset>
+				<position x="-1621.504" y="2085.599" z="-5196.437"/>
+				<rotation yaw="136.24829"/>
+			</offset>
+		</entry>
+		<entry index="12" macro="defence_arg_disc_01_macro" connection="connectionsnap002">
+			<predecessor index="11" connection="connectionsnap001"/>
+			<offset>
+				<position x="-1206.584" y="2085.599" z="-5629.843"/>
+				<rotation yaw="-43.7517"/>
+			</offset>
+		</entry>
+		<entry index="13" macro="xenon_small_station_01_base_macro" connection="connectionsnap003">
+			<predecessor index="1" connection="connectionsnap001"/>
+			<offset>
+				<position x="2019.638" y="2344.056" z="-530.516"/>
+				<rotation yaw="-3.75173"/>
+			</offset>
+		</entry>
+		<entry index="14" macro="dockarea_xen_m_station_01_macro" connection="connectionsnap001">
+			<predecessor index="13" connection="connectionsnap002"/>
+			<offset>
+				<position x="3236.792" y="2268.436" z="-173.226"/>
+				<rotation yaw="-93.75173" roll="179.99997"/>
+			</offset>
+		</entry>
+		<entry index="15" macro="xenon_small_station_01_storage_01_macro" connection="connectionsnap001">
+			<predecessor index="14" connection="connectionsnap002"/>
+			<offset>
+				<position x="4234.649" y="2268.436" z="-107.792"/>
+				<rotation yaw="-93.75174"/>
+			</offset>
+		</entry>
+		<entry index="16" macro="defence_arg_disc_01_macro" connection="connectionsnap002">
+			<predecessor index="15" connection="connectionsnap002"/>
+			<offset>
+				<position x="4833.363" y="2268.436" z="-68.532"/>
+				<rotation yaw="-93.75166"/>
+			</offset>
+		</entry>
+		<entry index="17" macro="defence_arg_tube_01_macro" connection="connectionsnap001">
+			<predecessor index="2" connection="connectionsnap002"/>
+			<offset>
+				<position x="1313.968" y="2073.192" z="1223.65"/>
+				<rotation yaw="6.24827"/>
+			</offset>
+		</entry>
+		<entry index="18" macro="buildmodule_xen_ships_xl_macro" connection="connectionsnap002">
+			<predecessor index="17" connection="connectionsnap002"/>
+			<offset>
+				<position x="1531.641" y="2073.192" z="3211.77"/>
+				<rotation yaw="-83.75175"/>
+			</offset>
+		</entry>
+		<entry index="19" macro="defence_arg_disc_01_macro" connection="connectionsnap004">
+			<predecessor index="18" connection="connectionsnap001"/>
+			<offset>
+				<position x="1749.314" y="2073.192" z="5199.889"/>
+				<rotation yaw="96.24822" pitch="0.000836926" roll="-179.99998"/>
+			</offset>
+		</entry>
+	</plan>
+	<plan id="xen_wharf" name="{20102,1441}">
+		<entry index="1" macro="xenon_small_station_01_base_macro">
+			<offset>
+				<position x="1362.172" y="75.621" z="817.946"/>
+				<rotation yaw="-179.99989"/>
+			</offset>
+		</entry>
+		<entry index="2" macro="defence_arg_disc_01_macro" connection="connectionsnap004">
+			<predecessor index="1" connection="connectionsnap003"/>
+			<offset>
+				<position x="2377.963" y="-12.406" z="1091.473"/>
+				<rotation yaw="50.00001"/>
+			</offset>
+		</entry>
+		<entry index="3" macro="xenon_small_station_01_base_macro" connection="connectionsnap003">
+			<predecessor index="1" connection="connectionsnap001"/>
+			<offset>
+				<position x="1981.048" y="258.457" z="-406.518"/>
+				<rotation yaw="40.00001"/>
+			</offset>
+		</entry>
+		<entry index="4" macro="dockarea_xen_m_station_01_macro" connection="connectionsnap002">
+			<predecessor index="3" connection="connectionsnap001"/>
+			<offset>
+				<position x="3254.025" y="353.268" z="589.255"/>
+				<rotation yaw="40.00001"/>
+			</offset>
+		</entry>
+		<entry index="5" macro="xenon_small_station_01_storage_01_macro" connection="connectionsnap001">
+			<predecessor index="3" connection="connectionsnap002"/>
+			<offset>
+				<position x="2954.119" y="182.837" z="-861.58"/>
+				<rotation yaw="-49.99998"/>
+			</offset>
+		</entry>
+		<entry index="6" macro="defence_arg_tube_01_macro" connection="connectionsnap001">
+			<predecessor index="4" connection="connectionsnap001"/>
+			<offset>
+				<position x="3768.256" y="353.268" z="1202.089"/>
+				<rotation yaw="40.00001"/>
+			</offset>
+		</entry>
+		<entry index="7" macro="xenon_small_station_01_storage_01_macro" connection="connectionsnap001">
+			<predecessor index="6" connection="connectionsnap002"/>
+			<offset>
+				<position x="4153.928" y="353.268" z="1661.716"/>
+				<rotation yaw="-139.99998"/>
+			</offset>
+		</entry>
+		<entry index="8" macro="xenon_small_station_01_storage_01_macro" connection="connectionsnap001">
+			<predecessor index="7" connection="connectionsnap002"/>
+			<offset>
+				<position x="4668.159" y="353.268" z="2274.552"/>
+				<rotation yaw="-139.99998"/>
+			</offset>
+		</entry>
+		<entry index="9" macro="defence_arg_disc_01_macro" connection="connectionsnap003">
+			<predecessor index="1" connection="connectionsnap002"/>
+			<offset>
+				<position x="524.248" y="0.0009537" z="541.064"/>
+			</offset>
+		</entry>
+		<entry index="10" macro="xenon_small_station_01_storage_01_macro" connection="connectionsnap001">
+			<predecessor index="9" connection="connectionsnap004"/>
+			<offset>
+				<position x="-75.752" y="0.0009537" z="541.064"/>
+				<rotation yaw="90.00002"/>
+			</offset>
+		</entry>
+		<entry index="11" macro="dockarea_xen_m_station_01_macro" connection="connectionsnap002">
+			<predecessor index="10" connection="connectionsnap002"/>
+			<offset>
+				<position x="-1075.753" y="0.0009012" z="541.065"/>
+				<rotation yaw="-89.99995"/>
+			</offset>
+		</entry>
+		<entry index="12" macro="defence_arg_disc_01_macro" connection="connectionsnap001">
+			<predecessor index="11" connection="connectionsnap001"/>
+			<offset>
+				<position x="-1875.753" y="0.0008313" z="541.065"/>
+				<rotation yaw="-89.99995"/>
+			</offset>
+		</entry>
+		<entry index="13" macro="buildmodule_gen_ships_m_dockarea_01_macro" connection="connectionsnap002">
+			<predecessor index="12" connection="connectionsnap002"/>
+			<offset>
+				<position x="-2675.753" y="200.001" z="541.065"/>
+			</offset>
+		</entry>
+		<entry index="14" macro="defence_arg_disc_01_macro" connection="connectionsnap004">
+			<predecessor index="13" connection="connectionsnap001"/>
+			<offset>
+				<position x="-3475.754" y="0.000679" z="541.065"/>
+				<rotation yaw="179.99989"/>
+			</offset>
+		</entry>
+		<entry index="15" macro="defence_arg_disc_01_macro" connection="connectionsnap002">
+			<predecessor index="5" connection="connectionsnap002"/>
+			<offset>
+				<position x="3413.745" y="182.837" z="-1247.253"/>
+				<rotation yaw="-49.99998"/>
+			</offset>
+		</entry>
+		<entry index="16" macro="defence_arg_tube_01_macro" connection="connectionsnap001">
+			<predecessor index="15" connection="connectionsnap004"/>
+			<offset>
+				<position x="3156.63" y="182.837" z="-1553.671"/>
+				<rotation yaw="-139.99998"/>
+			</offset>
+		</entry>
+	</plan>
+</plans>

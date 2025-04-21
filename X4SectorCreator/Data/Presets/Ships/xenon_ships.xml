@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ships>
+	<ship id="xenon_carrier_xl" group="xen_carrier_xl">
+		<category tags="[military, carrier, mission]" faction="[xenon]" size="ship_xl"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_large_xenon"/>
+	</ship>
+	<ship id="xenon_destroyer_xl" group="xen_destroyer_xl">
+		<category tags="[military, destroyer, mission]" faction="[xenon]" size="ship_xl"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_large_xenon"/>
+	</ship>
+	<ship id="xenon_terraformer_l" group="xen_terraformer_l">
+		<category tags="[military, terraformer, mission]" faction="[xenon]" size="ship_l"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_large_xenon_tf"/>
+	</ship>
+	<ship id="xenon_frigate_m" group="xen_fighter_m">
+		<category tags="[military, medium, frigate, mission]" faction="[xenon]" size="ship_m"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_medium_xenon"/>
+	</ship>
+	<ship id="xenon_miner_m" group="xen_miner_m">
+		<category tags="[miner, solid]" faction="[xenon]" size="ship_m"/>
+		<pilot>
+			<select faction="xenon" tags="traderpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_medium_xenon"/>
+	</ship>
+	<ship id="xenon_gunboat_m" group="xen_fighter_m">
+		<category tags="[military, medium, gunboat, mission]" faction="[xenon]" size="ship_m"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_medium_xenon"/>
+	</ship>
+	<ship id="xenon_corvette_m" group="xen_corvette_m">
+		<category tags="[military, medium, corvette, mission]" faction="[xenon]" size="ship_m"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_small_xenon"/>
+	</ship>
+	<ship id="xenon_fighter_s" group="xen_fighter_s">
+		<category tags="[military, fighter, selection, mission]" faction="[xenon]" size="ship_s"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_small_xenon"/>
+	</ship>
+	<ship id="xenon_fighter_heavy_s" group="xen_fighter_heavy_s">
+		<category tags="[military, fighter, heavy, mission]" faction="[xenon]" size="ship_s"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_small_xenon"/>
+	</ship>
+	<ship id="xenon_fighter_light_s" group="xen_fighter_light_s">
+		<category tags="[military, fighter, light, mission]" faction="[xenon]" size="ship_s"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_small_xenon"/>
+	</ship>
+	<ship id="xenon_scout_s" group="xen_scout_s">
+		<category tags="[military, scout, light, mission]" faction="[xenon]" size="ship_s"/>
+		<pilot>
+			<select faction="xenon" tags="fighterpilot"/>
+		</pilot>
+		<people>
+			<fillpercent exact="0"/>
+		</people>
+		<drop ref="ship_small_xenon"/>
+	</ship>
+	<ship id="masstraffic_xenon_civilian" group="xenon_civilian_mass_traffic">
+		<owner exact="xenon" overridenpc="true"/>
+		<pilot>
+			<select faction="xenon" tags="pilot"/>
+		</pilot>
+		<drop ref="masstraffic_xenon"/>
+	</ship>
+</ships>
