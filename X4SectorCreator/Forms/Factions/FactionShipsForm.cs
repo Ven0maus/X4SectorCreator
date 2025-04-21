@@ -106,25 +106,37 @@ namespace X4SectorCreator.Forms
 
             // 1. Load ShipGroups preset
             var shipGroups = ShipGroupPresets[faction];
+            var exists = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var shipGroup in shipGroups.Group)
             {
                 var newGroup = shipGroup.Clone();
                 newGroup.Name = $"{Faction.Id}_{string.Join("_", shipGroup.Name.Split('_').Skip(1))}";
+
+                if (exists.Contains(newGroup.Name))
+                    throw new Exception("Found shipgroup dupe: " + newGroup.Name);
+                exists.Add(newGroup.Name);
+
                 ShipGroupsListBox.Items.Add(newGroup);
             }
-
+            exists.Clear();
             // 2. Load Ships preset
             var ships = ShipPresets[faction];
             foreach (var ship in ships.Ship)
             {
                 var newShip = ship.Clone();
                 newShip.Id = $"{Faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(1))}";
-                newShip.Group = $"{Faction.Id}_{string.Join("_", ship.Group.Split('_').Skip(1))}";
+                if (ship.Group != null)
+                    newShip.Group = $"{Faction.Id}_{string.Join("_", ship.Group.Split('_').Skip(1))}";
+
                 if (newShip.CategoryObj != null)
                     newShip.CategoryObj.Faction = Faction.Id;
                 if (newShip.PilotObj != null && newShip.PilotObj.Select != null)
                     newShip.PilotObj.Select.Faction = Faction.Id;
                 ShipsListBox.Items.Add(newShip);
+
+                if (exists.Contains(newShip.Id))
+                    throw new Exception("Found ship dupe: " + newShip.Id);
+                exists.Add(newShip.Id);
             }
         }
 

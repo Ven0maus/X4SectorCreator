@@ -162,16 +162,6 @@
 		<people ref="teladi_military_crew"/>
 	</ship>
 
-	<ship id="ministry_trader_container_m" group="tel_trader_container_m_ministry">
-		<category tags="[trader, container, mission, exclusive]" faction="[ministry]" size="ship_m"/>
-		<pilot>
-			<select faction="ministry" tags="traderpilot"/>
-		</pilot>
-		<basket basket="all_container"/>
-		<drop ref="ship_medium_civilian"/>
-		<people ref="teladi_military_crew"/>
-	</ship>
-
 	<ship id="teladi_tug_m" group="common_tug_m">
 		<category tags="[tug, mission]" faction="teladi" size="ship_m"/>
 		<pilot>
@@ -235,13 +225,6 @@
 		<owner exact="civilian" overridenpc="true"/>
 		<pilot>
 			<select faction="civilian" tags="[masstraffic]" race="[argon, paranid, split, teladi]"/>
-		</pilot>
-		<drop ref="masstraffic_civilian"/>
-	</ship>
-	<ship id="masstraffic_ministry_police" group="teladi_police_mass_traffic">
-		<owner exact="ministry" overridenpc="true"/>
-		<pilot>
-			<select faction="ministry" tags="pilot"/>
 		</pilot>
 		<drop ref="masstraffic_civilian"/>
 	</ship>
