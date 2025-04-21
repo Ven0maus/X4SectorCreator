@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -8,31 +9,22 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public JobForm JobForm { get; set; }
 
-        private static readonly Lazy<Job[]> _templateJobs = new(() => CollectTemplateJobs().ToArray());
+        private static readonly Lazy<List<Job>> _templateJobs = new(() => CollectTemplateJobs().ToList());
 
         public JobTemplatesForm()
         {
             InitializeComponent();
 
-            // Collect all filter options
-            HashSet<string> filterOptions = _templateJobs.Value
-                .GroupBy(a => a.TemplateDirectory)
-                .Select(a => a.Key)
-                .OrderBy(a => a)
-                .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
             // Setup filter options
-            CmbFilterOption.Items.Clear();
-            foreach (string option in filterOptions)
-            {
-                _ = CmbFilterOption.Items.Add(option);
-            }
+            TxtSearch.EnableTextSearch(_templateJobs.Value.ToList(), a => a.ToString(), ApplyCurrentFilter);
+            Disposed += JobTemplatesForm_Disposed;
 
-            // Show by default vanilla option if present
-            if (filterOptions.Contains("Vanilla"))
-            {
-                CmbFilterOption.SelectedItem = "Vanilla";
-            }
+            ApplyCurrentFilter();
+        }
+
+        private void JobTemplatesForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
         }
 
         public static IEnumerable<Job> CollectTemplateJobs()
@@ -91,23 +83,14 @@ namespace X4SectorCreator.Forms
             TxtExampleJob.Text = selectedJob.SerializeJob();
         }
 
-        private void CmbFilterOption_SelectedIndexChanged(object sender, EventArgs e)
+        private void ApplyCurrentFilter(List<Job> jobs = null)
         {
-            string selectedFilterOption = CmbFilterOption.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(selectedFilterOption))
-            {
-                ListTemplateJobs.Items.Clear();
-                ListTemplateJobs.ClearSelected();
-                return;
-            }
-
-            Job[] jobs = _templateJobs.Value
-                .Where(a => a.TemplateDirectory.Equals(selectedFilterOption))
+            Job[] data = (jobs ?? _templateJobs.Value)
                 .OrderBy(a => a.ToString())
                 .ToArray();
 
             ListTemplateJobs.Items.Clear();
-            foreach (Job job in jobs)
+            foreach (Job job in data)
             {
                 _ = ListTemplateJobs.Items.Add(job);
             }
@@ -115,12 +98,6 @@ namespace X4SectorCreator.Forms
 
         private void ListTemplateJobs_DoubleClick(object sender, EventArgs e)
         {
-            string selectedFilterOption = CmbFilterOption.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(selectedFilterOption))
-            {
-                return;
-            }
-
             // Select
             BtnSelectExampleJob.PerformClick();
         }

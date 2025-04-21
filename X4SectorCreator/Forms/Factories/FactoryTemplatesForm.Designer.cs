@@ -34,7 +34,7 @@
             label2 = new Label();
             BtnSelectExampleFactory = new Button();
             BtnCancel = new Button();
-            CmbFilterOption = new ComboBox();
+            TxtSearch = new TextBox();
             SuspendLayout();
             // 
             // ListTemplateFactories
@@ -98,21 +98,20 @@
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
-            // CmbFilterOption
+            // TxtSearch
             // 
-            CmbFilterOption.FormattingEnabled = true;
-            CmbFilterOption.Location = new Point(159, 11);
-            CmbFilterOption.Name = "CmbFilterOption";
-            CmbFilterOption.Size = new Size(242, 23);
-            CmbFilterOption.TabIndex = 6;
-            CmbFilterOption.SelectedIndexChanged += CmbFilterOption_SelectedIndexChanged;
+            TxtSearch.Location = new Point(97, 10);
+            TxtSearch.Name = "TxtSearch";
+            TxtSearch.PlaceholderText = "Search..";
+            TxtSearch.Size = new Size(304, 23);
+            TxtSearch.TabIndex = 6;
             // 
             // FactoryTemplatesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1066, 586);
-            Controls.Add(CmbFilterOption);
+            Controls.Add(TxtSearch);
             Controls.Add(BtnCancel);
             Controls.Add(BtnSelectExampleFactory);
             Controls.Add(label2);
@@ -136,6 +135,6 @@
         private Label label2;
         private Button BtnSelectExampleFactory;
         private Button BtnCancel;
-        private ComboBox CmbFilterOption;
+        private TextBox TxtSearch;
     }
 }

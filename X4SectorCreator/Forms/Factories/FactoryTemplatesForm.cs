@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -8,31 +9,22 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public FactoryForm FactoryForm { get; set; }
 
-        private static readonly Lazy<Factory[]> _templateFactories = new(() => CollectTemplateFactories().ToArray());
+        private static readonly Lazy<List<Factory>> _templateFactories = new(() => CollectTemplateFactories().ToList());
 
         public FactoryTemplatesForm()
         {
             InitializeComponent();
 
-            // Collect all filter options
-            HashSet<string> filterOptions = _templateFactories.Value
-                .GroupBy(a => a.TemplateDirectory)
-                .Select(a => a.Key)
-                .OrderBy(a => a)
-                .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
             // Setup filter options
-            CmbFilterOption.Items.Clear();
-            foreach (string option in filterOptions)
-            {
-                _ = CmbFilterOption.Items.Add(option);
-            }
+            TxtSearch.EnableTextSearch(_templateFactories.Value.ToList(), a => a.ToString(), ApplyCurrentFilter);
+            Disposed += FactoryTemplatesForm_Disposed;
 
-            // Show by default vanilla option if present
-            if (filterOptions.Contains("Vanilla"))
-            {
-                CmbFilterOption.SelectedItem = "Vanilla";
-            }
+            ApplyCurrentFilter();
+        }
+
+        private void FactoryTemplatesForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
         }
 
         public static IEnumerable<Factory> CollectTemplateFactories()
@@ -91,23 +83,14 @@ namespace X4SectorCreator.Forms
             TxtExampleFactory.Text = selectedJob.SerializeFactory();
         }
 
-        private void CmbFilterOption_SelectedIndexChanged(object sender, EventArgs e)
+        private void ApplyCurrentFilter(List<Factory> factories = null)
         {
-            string selectedFilterOption = CmbFilterOption.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(selectedFilterOption))
-            {
-                ListTemplateFactories.Items.Clear();
-                ListTemplateFactories.ClearSelected();
-                return;
-            }
-
-            Factory[] factories = _templateFactories.Value
-                .Where(a => a.TemplateDirectory.Equals(selectedFilterOption))
+            Factory[] data = (factories ?? _templateFactories.Value)
                 .OrderBy(a => a.ToString())
                 .ToArray();
 
             ListTemplateFactories.Items.Clear();
-            foreach (Factory factory in factories)
+            foreach (Factory factory in data)
             {
                 _ = ListTemplateFactories.Items.Add(factory);
             }
@@ -115,12 +98,6 @@ namespace X4SectorCreator.Forms
 
         private void ListTemplateJobs_DoubleClick(object sender, EventArgs e)
         {
-            string selectedFilterOption = CmbFilterOption.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(selectedFilterOption))
-            {
-                return;
-            }
-
             // Select
             BtnSelectExampleFactory.PerformClick();
         }
