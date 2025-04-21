@@ -39,6 +39,8 @@
             BtnCreateShip = new Button();
             BtnExit = new Button();
             BtnConfirm = new Button();
+            BtnClearAllGroups = new Button();
+            BtnClearAllShips = new Button();
             SuspendLayout();
             // 
             // BtnUseFactionPreset
@@ -147,11 +149,33 @@
             BtnConfirm.UseVisualStyleBackColor = true;
             BtnConfirm.Click += BtnConfirm_Click;
             // 
+            // BtnClearAllGroups
+            // 
+            BtnClearAllGroups.Location = new Point(179, 3);
+            BtnClearAllGroups.Name = "BtnClearAllGroups";
+            BtnClearAllGroups.Size = new Size(63, 22);
+            BtnClearAllGroups.TabIndex = 11;
+            BtnClearAllGroups.Text = "Clear All";
+            BtnClearAllGroups.UseVisualStyleBackColor = true;
+            BtnClearAllGroups.Click += BtnClearAllGroups_Click;
+            // 
+            // BtnClearAllShips
+            // 
+            BtnClearAllShips.Location = new Point(415, 3);
+            BtnClearAllShips.Name = "BtnClearAllShips";
+            BtnClearAllShips.Size = new Size(63, 22);
+            BtnClearAllShips.TabIndex = 12;
+            BtnClearAllShips.Text = "Clear All";
+            BtnClearAllShips.UseVisualStyleBackColor = true;
+            BtnClearAllShips.Click += BtnClearAllShips_Click;
+            // 
             // FactionShipsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(483, 390);
+            Controls.Add(BtnClearAllShips);
+            Controls.Add(BtnClearAllGroups);
             Controls.Add(BtnConfirm);
             Controls.Add(BtnExit);
             Controls.Add(BtnDeleteShip);
@@ -186,5 +210,7 @@
         internal ListBox ShipGroupsListBox;
         internal ListBox ShipsListBox;
         private Button BtnConfirm;
+        private Button BtnClearAllGroups;
+        private Button BtnClearAllShips;
     }
 }

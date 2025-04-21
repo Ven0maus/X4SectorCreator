@@ -215,5 +215,15 @@ namespace X4SectorCreator.Forms
                     ShipsListBox.Items.Add(ship);
             }
         }
+
+        private void BtnClearAllGroups_Click(object sender, EventArgs e)
+        {
+            ShipGroupsListBox.Items.Clear();
+        }
+
+        private void BtnClearAllShips_Click(object sender, EventArgs e)
+        {
+            ShipsListBox.Items.Clear();
+        }
     }
 }
