@@ -57,6 +57,12 @@
             BtnFactionStations = new Button();
             TxtPreferredHqSpace = new TextBox();
             label8 = new Label();
+            label9 = new Label();
+            CmbAggression = new ComboBox();
+            CmbAvarice = new ComboBox();
+            label10 = new Label();
+            label11 = new Label();
+            TxtLawfulness = new TextBox();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -160,7 +166,7 @@
             // 
             // BtnFactionRelations
             // 
-            BtnFactionRelations.Location = new Point(12, 259);
+            BtnFactionRelations.Location = new Point(323, 310);
             BtnFactionRelations.Name = "BtnFactionRelations";
             BtnFactionRelations.Size = new Size(306, 33);
             BtnFactionRelations.TabIndex = 14;
@@ -170,7 +176,7 @@
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(324, 337);
+            BtnCreate.Location = new Point(323, 390);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(303, 33);
             BtnCreate.TabIndex = 15;
@@ -229,7 +235,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 337);
+            BtnCancel.Location = new Point(11, 390);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(306, 33);
             BtnCancel.TabIndex = 25;
@@ -259,7 +265,7 @@
             // 
             // BtnEditXml
             // 
-            BtnEditXml.Location = new Point(325, 298);
+            BtnEditXml.Location = new Point(324, 351);
             BtnEditXml.Name = "BtnEditXml";
             BtnEditXml.Size = new Size(302, 33);
             BtnEditXml.TabIndex = 28;
@@ -286,7 +292,7 @@
             // 
             // BtnEditFactionShips
             // 
-            BtnEditFactionShips.Location = new Point(163, 298);
+            BtnEditFactionShips.Location = new Point(162, 351);
             BtnEditFactionShips.Name = "BtnEditFactionShips";
             BtnEditFactionShips.Size = new Size(155, 33);
             BtnEditFactionShips.TabIndex = 31;
@@ -306,7 +312,7 @@
             // 
             // BtnFactionStations
             // 
-            BtnFactionStations.Location = new Point(12, 298);
+            BtnFactionStations.Location = new Point(11, 351);
             BtnFactionStations.Name = "BtnFactionStations";
             BtnFactionStations.Size = new Size(145, 33);
             BtnFactionStations.TabIndex = 34;
@@ -334,11 +340,71 @@
             label8.TabIndex = 37;
             label8.Text = "Preferred HeadQuarters:";
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 11F);
+            label9.Location = new Point(11, 262);
+            label9.Name = "label9";
+            label9.Size = new Size(124, 20);
+            label9.TabIndex = 39;
+            label9.Text = "Aggression Level:";
+            // 
+            // CmbAggression
+            // 
+            CmbAggression.FormattingEnabled = true;
+            CmbAggression.Location = new Point(141, 262);
+            CmbAggression.Name = "CmbAggression";
+            CmbAggression.Size = new Size(177, 23);
+            CmbAggression.TabIndex = 40;
+            // 
+            // CmbAvarice
+            // 
+            CmbAvarice.FormattingEnabled = true;
+            CmbAvarice.Location = new Point(141, 292);
+            CmbAvarice.Name = "CmbAvarice";
+            CmbAvarice.Size = new Size(177, 23);
+            CmbAvarice.TabIndex = 42;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 11F);
+            label10.Location = new Point(36, 292);
+            label10.Name = "label10";
+            label10.Size = new Size(99, 20);
+            label10.TabIndex = 41;
+            label10.Text = "Avarice Level:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 11F);
+            label11.Location = new Point(14, 322);
+            label11.Name = "label11";
+            label11.Size = new Size(121, 20);
+            label11.TabIndex = 43;
+            label11.Text = "Lawfulness Level:";
+            // 
+            // TxtLawfulness
+            // 
+            TxtLawfulness.Location = new Point(141, 320);
+            TxtLawfulness.Name = "TxtLawfulness";
+            TxtLawfulness.PlaceholderText = "(Between 0-1)";
+            TxtLawfulness.Size = new Size(177, 23);
+            TxtLawfulness.TabIndex = 44;
+            // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(632, 376);
+            ClientSize = new Size(632, 427);
+            Controls.Add(TxtLawfulness);
+            Controls.Add(label11);
+            Controls.Add(CmbAvarice);
+            Controls.Add(label10);
+            Controls.Add(CmbAggression);
+            Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(TxtPreferredHqSpace);
             Controls.Add(BtnFactionStations);
@@ -409,5 +475,11 @@
         private Button BtnFactionStations;
         private TextBox TxtPreferredHqSpace;
         private Label label8;
+        private Label label9;
+        private ComboBox CmbAggression;
+        private ComboBox CmbAvarice;
+        private Label label10;
+        private Label label11;
+        private TextBox TxtLawfulness;
     }
 }

@@ -105,15 +105,15 @@ namespace X4SectorCreator.MdGeneration
                             ),
                             new XElement("param",
                                 new XAttribute("name", "BaseAggressionLevel"),
-                                new XAttribute("value", "moodlevel.normal")
+                                new XAttribute("value", $"moodlevel.{faction.AggressionLevel}")
                             ),
                             new XElement("param",
                                 new XAttribute("name", "BaseAvariceLevel"),
-                                new XAttribute("value", "moodlevel.high")
+                                new XAttribute("value", $"moodlevel.{faction.AvariceLevel}")
                             ),
                             new XElement("param",
                                 new XAttribute("name", "BaseLawfulness"),
-                                new XAttribute("value", "0.8")
+                                new XAttribute("value", faction.Lawfulness)
                             ),
                             new XElement("param",
                                 new XAttribute("name", "PreferredHQSpaceMacro"),

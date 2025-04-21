@@ -78,6 +78,15 @@ namespace X4SectorCreator.Objects
 
         [XmlIgnore]
         public string DesiredTradeStations { get; set; }
+
+        [XmlIgnore]
+        public string AggressionLevel { get; set; }
+
+        [XmlIgnore]
+        public string AvariceLevel { get; set; }
+
+        [XmlIgnore]
+        public string Lawfulness { get; set; }
         #endregion
 
         public string Serialize()

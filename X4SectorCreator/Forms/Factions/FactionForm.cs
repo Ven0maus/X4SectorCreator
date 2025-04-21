@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using X4SectorCreator.Forms.Factions;
 using X4SectorCreator.Forms.General;
@@ -141,6 +142,9 @@ namespace X4SectorCreator.Forms
                     DesiredShipyards = _faction.DesiredShipyards;
                     DesiredEquipmentDocks = _faction.DesiredEquipmentDocks;
                     DesiredTradeStations = _faction.DesiredTradeStations;
+                    TxtLawfulness.Text = _faction.Lawfulness;
+                    CmbAvarice.SelectedItem = _faction.AvariceLevel;
+                    CmbAggression.SelectedItem = _faction.AggressionLevel;
                     LblIconSize.Visible = false;
                     ApplyFactionXmlToFieldsContent();
                 }
@@ -150,6 +154,15 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public FactionsForm FactionsForm { get; set; }
 
+        private readonly HashSet<string> _moodLevels = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "verylow",
+            "low",
+            "normal",
+            "high",
+            "veryhigh"
+        };
+
         public FactionForm()
         {
             InitializeComponent();
@@ -158,6 +171,15 @@ namespace X4SectorCreator.Forms
             foreach (var race in StationForm.Races.OrderBy(a => a))
                 CmbRace.Items.Add(race);
             CmbRace.SelectedItem = CmbRace.Items.Cast<string>().First();
+
+            foreach (var moodLevel in _moodLevels)
+            {
+                CmbAggression.Items.Add(moodLevel);
+                CmbAvarice.Items.Add(moodLevel);
+            }
+            CmbAggression.SelectedItem = "normal";
+            CmbAvarice.SelectedItem = "normal";
+            TxtLawfulness.Text = "0.5";
 
             var factions = FactionsForm.GetAllFactions(true)
                 .Append("self")
@@ -209,6 +231,12 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(TxtLawfulness.Text) || !double.TryParse(TxtLawfulness.Text, CultureInfo.InvariantCulture, out _))
+            {
+                _ = MessageBox.Show("Please select a valid lawfulness value between 0 and 1.");
+                return;
+            }
+
             if (StationTypes == null || StationTypes.Count == 0)
             {
                 _ = MessageBox.Show("You must setup atleast some stations for the faction.");
@@ -234,6 +262,9 @@ namespace X4SectorCreator.Forms
             faction.DesiredShipyards = DesiredShipyards;
             faction.DesiredEquipmentDocks = DesiredEquipmentDocks;
             faction.DesiredTradeStations = DesiredTradeStations;
+            faction.AggressionLevel = CmbAggression.SelectedItem as string;
+            faction.AvariceLevel = CmbAvarice.SelectedItem as string;
+            faction.Lawfulness = TxtLawfulness.Text;
 
             switch (BtnCreate.Text)
             {
