@@ -66,6 +66,17 @@ namespace X4SectorCreator.Forms.Factions
             Close();
         }
 
+        private static string GetHQTypeBasedOnStationType(string stationType)
+        {
+            return stationType.ToLower() switch
+            {
+                "wharf" or "shipyard" => "shipbuilding",
+                "defence" => "defencestation",
+                "piratedock" or "freeport" => "piratebase",
+                _ => stationType,
+            };
+        }
+
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             if (AvailableStationTypesListBox.SelectedItem is string station &&
@@ -75,7 +86,10 @@ namespace X4SectorCreator.Forms.Factions
                 SelectedStationTypesListBox.Items.Add(station);
 
                 // Add selected option
-                CmbHQTypes.Items.Add(station);
+                var hqType = GetHQTypeBasedOnStationType(station);
+                if (!CmbHQTypes.Items.Contains(hqType))
+                    CmbHQTypes.Items.Add(hqType);
+
                 var selectedValues = _mscHqTypes.SelectedItems.ToList();
                 _mscHqTypes.ResetSelection();
                 _mscHqTypes.ReInit();
@@ -99,8 +113,11 @@ namespace X4SectorCreator.Forms.Factions
                 SelectedStationTypesListBox.Items.Remove(station);
 
                 // Remove selected option
-                CmbHQTypes.Items.Remove(station);
-                var selectedValues = _mscHqTypes.SelectedItems.ToList();
+                var hqType = GetHQTypeBasedOnStationType(station);
+                CmbHQTypes.Items.Remove(hqType);
+                var selectedValues = _mscHqTypes.SelectedItems.Cast<string>()
+                    .Where(a => !a.Equals(hqType, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
                 _mscHqTypes.ResetSelection();
                 _mscHqTypes.ReInit();
                 foreach (var selectedValue in selectedValues)
@@ -127,6 +144,8 @@ namespace X4SectorCreator.Forms.Factions
 
         private void FactionStationForm_Load(object sender, EventArgs e)
         {
+            CmbHQTypes.Items.Add("any");
+
             if (FactionForm.StationTypes != null)
             {
                 foreach (var stationType in FactionForm.StationTypes)
@@ -134,7 +153,9 @@ namespace X4SectorCreator.Forms.Factions
                     SelectedStationTypesListBox.Items.Add(stationType);
 
                     // Add selected option
-                    CmbHQTypes.Items.Add(stationType);
+                    var hqType = GetHQTypeBasedOnStationType(stationType);
+                    if (!CmbHQTypes.Items.Contains(hqType))
+                        CmbHQTypes.Items.Add(hqType);
                 }
                 _mscHqTypes.ResetSelection();
                 _mscHqTypes.ReInit();
