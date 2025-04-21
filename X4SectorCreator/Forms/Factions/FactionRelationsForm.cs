@@ -3,6 +3,7 @@ using System.Globalization;
 using X4SectorCreator.Forms.Factions;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
+using X4SectorCreator.XmlGeneration;
 
 namespace X4SectorCreator.Forms
 {
@@ -86,6 +87,8 @@ namespace X4SectorCreator.Forms
             {
                 var factionName = row.Cells[0].Value as string;
                 if (string.IsNullOrWhiteSpace(factionName)) continue;
+
+                factionName = GodGeneration.CorrectFactionName(factionName);
                 double factionValue;
 
                 var factionDataValue = row.Cells[1].Value;
@@ -102,7 +105,7 @@ namespace X4SectorCreator.Forms
                     if (factionValue == 0) continue;
                     Faction.Relations.Relation.Add(new Faction.Relation
                     {
-                        Faction = factionName.ToLower(),
+                        Faction = factionName,
                         RelationValue = factionValue.ToString()
                     });
                 }

@@ -181,7 +181,7 @@ namespace X4SectorCreator.XmlGeneration
 
         public static string CorrectFactionName(string faction)
         {
-            switch (faction)
+            switch (faction.ToLower())
             {
                 case "vigor":
                     faction = "loanshark";
