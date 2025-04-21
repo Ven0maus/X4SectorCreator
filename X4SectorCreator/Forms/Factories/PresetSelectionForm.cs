@@ -19,11 +19,17 @@ namespace X4SectorCreator.Forms.Factories
 
         private readonly MultiSelectCombo _mscFactions;
 
+        private readonly HashSet<string> _invalidFactions = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "ministry", "buccaneers", "player", "quettanauts"
+        };
+
         public PresetSelectionForm()
         {
             InitializeComponent();
 
             var vanillaFactions = FactionsForm.GetAllFactions(false)
+                .Where(a => !_invalidFactions.Contains(a))
                 .OrderBy(a => a)
                 .ToArray();
 
@@ -145,13 +151,11 @@ namespace X4SectorCreator.Forms.Factories
             var key = faction[..3];
 
             // Its not consistent for all factions
-            switch (faction.ToLower())
+            return faction.ToLower() switch
             {
-                case "freesplit":
-                    return "frf";
-                default:
-                    return key;
-            }
+                "freesplit" => "frf",
+                _ => key,
+            };
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
