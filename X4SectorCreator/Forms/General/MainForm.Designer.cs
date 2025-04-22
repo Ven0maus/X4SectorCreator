@@ -79,6 +79,7 @@
             // ClustersListBox
             // 
             ClustersListBox.FormattingEnabled = true;
+            ClustersListBox.HorizontalScrollbar = true;
             ClustersListBox.Location = new Point(13, 104);
             ClustersListBox.Name = "ClustersListBox";
             ClustersListBox.Size = new Size(156, 169);
@@ -119,6 +120,7 @@
             // SectorsListBox
             // 
             SectorsListBox.FormattingEnabled = true;
+            SectorsListBox.HorizontalScrollbar = true;
             SectorsListBox.Location = new Point(174, 75);
             SectorsListBox.Name = "SectorsListBox";
             SectorsListBox.Size = new Size(156, 199);
@@ -169,6 +171,7 @@
             // GatesListBox
             // 
             GatesListBox.FormattingEnabled = true;
+            GatesListBox.HorizontalScrollbar = true;
             GatesListBox.Location = new Point(336, 75);
             GatesListBox.Name = "GatesListBox";
             GatesListBox.Size = new Size(156, 199);
@@ -288,6 +291,7 @@
             // RegionsListBox
             // 
             RegionsListBox.FormattingEnabled = true;
+            RegionsListBox.HorizontalScrollbar = true;
             RegionsListBox.Location = new Point(335, 336);
             RegionsListBox.Name = "RegionsListBox";
             RegionsListBox.Size = new Size(156, 169);
@@ -339,6 +343,7 @@
             // ListStations
             // 
             ListStations.FormattingEnabled = true;
+            ListStations.HorizontalScrollbar = true;
             ListStations.Location = new Point(498, 75);
             ListStations.Name = "ListStations";
             ListStations.Size = new Size(156, 199);

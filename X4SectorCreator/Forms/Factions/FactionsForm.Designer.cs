@@ -49,6 +49,7 @@
             // CustomFactionsListBox
             // 
             CustomFactionsListBox.FormattingEnabled = true;
+            CustomFactionsListBox.HorizontalScrollbar = true;
             CustomFactionsListBox.Location = new Point(12, 33);
             CustomFactionsListBox.Name = "CustomFactionsListBox";
             CustomFactionsListBox.Size = new Size(228, 244);

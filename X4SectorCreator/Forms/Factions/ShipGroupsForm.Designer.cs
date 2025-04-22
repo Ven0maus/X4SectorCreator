@@ -69,6 +69,7 @@
             // ShipMacroListBox
             // 
             ShipMacroListBox.FormattingEnabled = true;
+            ShipMacroListBox.HorizontalScrollbar = true;
             ShipMacroListBox.Location = new Point(12, 65);
             ShipMacroListBox.Name = "ShipMacroListBox";
             ShipMacroListBox.Size = new Size(331, 214);

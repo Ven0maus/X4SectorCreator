@@ -56,6 +56,7 @@
             // ShipGroupsListBox
             // 
             ShipGroupsListBox.FormattingEnabled = true;
+            ShipGroupsListBox.HorizontalScrollbar = true;
             ShipGroupsListBox.Location = new Point(8, 28);
             ShipGroupsListBox.Name = "ShipGroupsListBox";
             ShipGroupsListBox.Size = new Size(450, 454);
@@ -83,6 +84,7 @@
             // ShipsListBox
             // 
             ShipsListBox.FormattingEnabled = true;
+            ShipsListBox.HorizontalScrollbar = true;
             ShipsListBox.Location = new Point(465, 28);
             ShipsListBox.Name = "ShipsListBox";
             ShipsListBox.Size = new Size(450, 454);
