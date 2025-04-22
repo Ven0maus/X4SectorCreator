@@ -66,7 +66,7 @@ namespace X4SectorCreator.Forms
         {
             if (CustomFactionsListBox.SelectedItem is Faction selectedFaction)
             {
-                AllCustomFactions.Remove(selectedFaction.Name);
+                AllCustomFactions.Remove(selectedFaction.Id);
 
                 int index = CustomFactionsListBox.Items.IndexOf(CustomFactionsListBox.SelectedItem);
                 CustomFactionsListBox.Items.Remove(CustomFactionsListBox.SelectedItem);
