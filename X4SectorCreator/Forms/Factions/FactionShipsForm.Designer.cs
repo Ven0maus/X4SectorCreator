@@ -87,7 +87,7 @@
             ShipsListBox.Name = "ShipsListBox";
             ShipsListBox.Size = new Size(230, 274);
             ShipsListBox.TabIndex = 3;
-            ShipsListBox.SelectedIndexChanged += ShipsListBox_SelectedIndexChanged;
+            ShipsListBox.DoubleClick += ShipsListBox_DoubleClick;
             // 
             // BtnCreateGroup
             // 
