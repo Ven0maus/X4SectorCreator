@@ -200,7 +200,8 @@ namespace X4SectorCreator.Forms
             using ColorDialog colorDialog = new();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                BtnPickColor.BackColor = FactionColor ??= colorDialog.Color;
+                FactionColor = colorDialog.Color;
+                BtnPickColor.BackColor = FactionColor.Value;
                 BtnPickColor.ForeColor = colorDialog.Color.GetBrightness() < 0.5 ? Color.White : Color.Black;
             }
         }
