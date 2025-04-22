@@ -45,9 +45,9 @@
             // 
             // BtnUseFactionPreset
             // 
-            BtnUseFactionPreset.Location = new Point(12, 350);
+            BtnUseFactionPreset.Location = new Point(8, 530);
             BtnUseFactionPreset.Name = "BtnUseFactionPreset";
-            BtnUseFactionPreset.Size = new Size(230, 36);
+            BtnUseFactionPreset.Size = new Size(619, 36);
             BtnUseFactionPreset.TabIndex = 0;
             BtnUseFactionPreset.Text = "Use Faction Preset";
             BtnUseFactionPreset.UseVisualStyleBackColor = true;
@@ -56,16 +56,16 @@
             // ShipGroupsListBox
             // 
             ShipGroupsListBox.FormattingEnabled = true;
-            ShipGroupsListBox.Location = new Point(12, 28);
+            ShipGroupsListBox.Location = new Point(8, 28);
             ShipGroupsListBox.Name = "ShipGroupsListBox";
-            ShipGroupsListBox.Size = new Size(230, 274);
+            ShipGroupsListBox.Size = new Size(450, 454);
             ShipGroupsListBox.TabIndex = 1;
             ShipGroupsListBox.DoubleClick += ShipGroupsListBox_DoubleClick;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 10);
+            label1.Location = new Point(8, 10);
             label1.Name = "label1";
             label1.Size = new Size(71, 15);
             label1.TabIndex = 2;
@@ -74,7 +74,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(248, 10);
+            label2.Location = new Point(465, 10);
             label2.Name = "label2";
             label2.Size = new Size(35, 15);
             label2.TabIndex = 4;
@@ -83,17 +83,17 @@
             // ShipsListBox
             // 
             ShipsListBox.FormattingEnabled = true;
-            ShipsListBox.Location = new Point(248, 28);
+            ShipsListBox.Location = new Point(465, 28);
             ShipsListBox.Name = "ShipsListBox";
-            ShipsListBox.Size = new Size(230, 274);
+            ShipsListBox.Size = new Size(450, 454);
             ShipsListBox.TabIndex = 3;
             ShipsListBox.DoubleClick += ShipsListBox_DoubleClick;
             // 
             // BtnCreateGroup
             // 
-            BtnCreateGroup.Location = new Point(12, 308);
+            BtnCreateGroup.Location = new Point(8, 488);
             BtnCreateGroup.Name = "BtnCreateGroup";
-            BtnCreateGroup.Size = new Size(132, 36);
+            BtnCreateGroup.Size = new Size(352, 36);
             BtnCreateGroup.TabIndex = 5;
             BtnCreateGroup.Text = "Create New Group";
             BtnCreateGroup.UseVisualStyleBackColor = true;
@@ -101,7 +101,7 @@
             // 
             // BtnDeleteGroup
             // 
-            BtnDeleteGroup.Location = new Point(150, 308);
+            BtnDeleteGroup.Location = new Point(366, 488);
             BtnDeleteGroup.Name = "BtnDeleteGroup";
             BtnDeleteGroup.Size = new Size(92, 36);
             BtnDeleteGroup.TabIndex = 6;
@@ -111,7 +111,7 @@
             // 
             // BtnDeleteShip
             // 
-            BtnDeleteShip.Location = new Point(386, 308);
+            BtnDeleteShip.Location = new Point(823, 488);
             BtnDeleteShip.Name = "BtnDeleteShip";
             BtnDeleteShip.Size = new Size(92, 36);
             BtnDeleteShip.TabIndex = 8;
@@ -121,9 +121,9 @@
             // 
             // BtnCreateShip
             // 
-            BtnCreateShip.Location = new Point(248, 308);
+            BtnCreateShip.Location = new Point(466, 488);
             BtnCreateShip.Name = "BtnCreateShip";
-            BtnCreateShip.Size = new Size(132, 36);
+            BtnCreateShip.Size = new Size(351, 36);
             BtnCreateShip.TabIndex = 7;
             BtnCreateShip.Text = "Create New Ship";
             BtnCreateShip.UseVisualStyleBackColor = true;
@@ -131,7 +131,7 @@
             // 
             // BtnExit
             // 
-            BtnExit.Location = new Point(248, 350);
+            BtnExit.Location = new Point(823, 530);
             BtnExit.Name = "BtnExit";
             BtnExit.Size = new Size(92, 36);
             BtnExit.TabIndex = 9;
@@ -141,9 +141,9 @@
             // 
             // BtnConfirm
             // 
-            BtnConfirm.Location = new Point(346, 350);
+            BtnConfirm.Location = new Point(633, 530);
             BtnConfirm.Name = "BtnConfirm";
-            BtnConfirm.Size = new Size(132, 36);
+            BtnConfirm.Size = new Size(184, 36);
             BtnConfirm.TabIndex = 10;
             BtnConfirm.Text = "Confirm";
             BtnConfirm.UseVisualStyleBackColor = true;
@@ -151,7 +151,7 @@
             // 
             // BtnClearAllGroups
             // 
-            BtnClearAllGroups.Location = new Point(179, 3);
+            BtnClearAllGroups.Location = new Point(395, 3);
             BtnClearAllGroups.Name = "BtnClearAllGroups";
             BtnClearAllGroups.Size = new Size(63, 22);
             BtnClearAllGroups.TabIndex = 11;
@@ -161,7 +161,7 @@
             // 
             // BtnClearAllShips
             // 
-            BtnClearAllShips.Location = new Point(415, 3);
+            BtnClearAllShips.Location = new Point(852, 3);
             BtnClearAllShips.Name = "BtnClearAllShips";
             BtnClearAllShips.Size = new Size(63, 22);
             BtnClearAllShips.TabIndex = 12;
@@ -173,7 +173,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(483, 390);
+            ClientSize = new Size(920, 571);
             Controls.Add(BtnClearAllShips);
             Controls.Add(BtnClearAllGroups);
             Controls.Add(BtnConfirm);
