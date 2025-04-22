@@ -39,6 +39,8 @@ namespace X4SectorCreator.Forms
 
             // All factions except itself
             var factions = FactionsForm.GetAllFactions(true)
+                .Append("criminal")
+                .Append("smuggler")
                 .Select(GodGeneration.CorrectFactionName)
                 .Where(a => !a.Equals(Faction.Id, StringComparison.OrdinalIgnoreCase));
 
