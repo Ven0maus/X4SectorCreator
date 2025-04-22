@@ -57,6 +57,7 @@
             // ListJobs
             // 
             ListJobs.FormattingEnabled = true;
+            ListJobs.HorizontalScrollbar = true;
             ListJobs.Location = new Point(12, 70);
             ListJobs.Name = "ListJobs";
             ListJobs.Size = new Size(259, 424);

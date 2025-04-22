@@ -24,7 +24,6 @@ namespace X4SectorCreator.Forms
             // Enables text search component
             TxtSearch.EnableTextSearch(_dataGridObjects, a => a.Id, ApplyCurrentFilter);
 
-            QuotaView.CellBeginEdit += QuotaView_CellBeginEdit;
             QuotaView.CellValidating += QuotaView_CellValidating;
             QuotaView.CellValidated += QuotaView_CellValidated;
 
@@ -69,28 +68,19 @@ namespace X4SectorCreator.Forms
             if (dataGridObject == null) return;
 
             var row = QuotaView.Rows[e.RowIndex];
-            dataGridObject.GalaxyQuota = row.Cells[(int)Quota.Galaxy].Value as string;
-            dataGridObject.ClusterQuota = row.Cells[(int)Quota.Cluster].Value as string;
-            dataGridObject.SectorQuota = row.Cells[(int)Quota.Sector].Value as string;
+            dataGridObject.GalaxyQuota = (row.Cells[(int)Quota.Galaxy].Value as string)?.Trim();
+            dataGridObject.ClusterQuota = (row.Cells[(int)Quota.Cluster].Value as string)?.Trim();
+            dataGridObject.SectorQuota = (row.Cells[(int)Quota.Sector].Value as string)?.Trim();
         }
 
         private void QuotaView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (!ValidateIndex(e.RowIndex, e.ColumnIndex, e.FormattedValue as string))
-            {
-                MessageBox.Show("You must set a valid non-empty integer value for this quota.");
-                e.Cancel = true;
-            }
-        }
+            var value = e.FormattedValue as string;
+            if (string.IsNullOrWhiteSpace(value)) return;
 
-        private void QuotaView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-        {
-            // Don't allow editing empty cells
-            var column = QuotaView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            if (column.Value == null)
+            if (!ValidateIndex(e.RowIndex, e.ColumnIndex, value))
             {
-                var type = QuotaView.Columns[e.ColumnIndex].Name;
-                MessageBox.Show($"You cannot set a \"{type}\" quota on this entry as it is not of this type.");
+                MessageBox.Show("You must set a valid integer value or empty value for this quota.");
                 e.Cancel = true;
             }
         }

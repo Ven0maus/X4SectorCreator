@@ -118,6 +118,7 @@
             // 
             ListBoxLateral.Dock = DockStyle.Fill;
             ListBoxLateral.FormattingEnabled = true;
+            ListBoxLateral.HorizontalScrollbar = true;
             ListBoxLateral.Location = new Point(3, 3);
             ListBoxLateral.Name = "ListBoxLateral";
             ListBoxLateral.Size = new Size(236, 211);
@@ -139,6 +140,7 @@
             // 
             ListBoxRadial.Dock = DockStyle.Fill;
             ListBoxRadial.FormattingEnabled = true;
+            ListBoxRadial.HorizontalScrollbar = true;
             ListBoxRadial.Location = new Point(3, 3);
             ListBoxRadial.Name = "ListBoxRadial";
             ListBoxRadial.Size = new Size(236, 211);
@@ -211,6 +213,7 @@
             // ListBoxResources
             // 
             ListBoxResources.FormattingEnabled = true;
+            ListBoxResources.HorizontalScrollbar = true;
             ListBoxResources.Location = new Point(248, 92);
             ListBoxResources.Name = "ListBoxResources";
             ListBoxResources.Size = new Size(204, 214);
@@ -260,6 +263,7 @@
             // ListBoxFields
             // 
             ListBoxFields.FormattingEnabled = true;
+            ListBoxFields.HorizontalScrollbar = true;
             ListBoxFields.Location = new Point(12, 377);
             ListBoxFields.Name = "ListBoxFields";
             ListBoxFields.Size = new Size(436, 199);

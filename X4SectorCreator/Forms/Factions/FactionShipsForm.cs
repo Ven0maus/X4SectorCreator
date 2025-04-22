@@ -197,16 +197,6 @@ namespace X4SectorCreator.Forms
             _shipForm.Value.Show();
         }
 
-        private void ShipsListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ShipsListBox.SelectedItem is Ship ship)
-            {
-                _shipForm.Value.FactionShipsForm = this;
-                _shipForm.Value.Ship = ship;
-                _shipForm.Value.Show();
-            }
-        }
-
         private void BtnConfirm_Click(object sender, EventArgs e)
         {
             FactionForm.ShipGroups = ShipGroupsListBox.Items.Cast<ShipGroup>().ToList();
@@ -236,6 +226,16 @@ namespace X4SectorCreator.Forms
         private void BtnClearAllShips_Click(object sender, EventArgs e)
         {
             ShipsListBox.Items.Clear();
+        }
+
+        private void ShipsListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (ShipsListBox.SelectedItem is Ship ship)
+            {
+                _shipForm.Value.FactionShipsForm = this;
+                _shipForm.Value.Ship = ship;
+                _shipForm.Value.Show();
+            }
         }
     }
 }

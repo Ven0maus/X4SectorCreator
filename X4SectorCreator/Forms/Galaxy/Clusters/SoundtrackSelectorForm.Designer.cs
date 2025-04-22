@@ -38,6 +38,7 @@
             // SoundtracksListBox
             // 
             SoundtracksListBox.FormattingEnabled = true;
+            SoundtracksListBox.HorizontalScrollbar = true;
             SoundtracksListBox.Location = new Point(8, 38);
             SoundtracksListBox.Name = "SoundtracksListBox";
             SoundtracksListBox.Size = new Size(471, 394);
