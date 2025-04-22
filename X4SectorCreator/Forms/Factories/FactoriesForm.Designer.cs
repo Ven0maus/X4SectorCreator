@@ -52,6 +52,7 @@
             // ListFactories
             // 
             ListFactories.FormattingEnabled = true;
+            ListFactories.HorizontalScrollbar = true;
             ListFactories.Location = new Point(12, 70);
             ListFactories.Name = "ListFactories";
             ListFactories.Size = new Size(259, 334);

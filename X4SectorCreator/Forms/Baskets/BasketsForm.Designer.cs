@@ -50,6 +50,7 @@
             // ListBaskets
             // 
             ListBaskets.FormattingEnabled = true;
+            ListBaskets.HorizontalScrollbar = true;
             ListBaskets.Location = new Point(12, 33);
             ListBaskets.Name = "ListBaskets";
             ListBaskets.Size = new Size(220, 319);

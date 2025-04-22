@@ -53,6 +53,7 @@ namespace X4SectorCreator.Forms.Factions
             // AvailableStationTypesListBox
             // 
             AvailableStationTypesListBox.FormattingEnabled = true;
+            AvailableStationTypesListBox.HorizontalScrollbar = true;
             AvailableStationTypesListBox.Items.AddRange(new object[] { "shipyard", "wharf", "equipmentdock", "tradestation", "defence", "piratedock", "piratebase", "freeport" });
             AvailableStationTypesListBox.Location = new Point(12, 33);
             AvailableStationTypesListBox.Name = "AvailableStationTypesListBox";
@@ -83,6 +84,7 @@ namespace X4SectorCreator.Forms.Factions
             // SelectedStationTypesListBox
             // 
             SelectedStationTypesListBox.FormattingEnabled = true;
+            SelectedStationTypesListBox.HorizontalScrollbar = true;
             SelectedStationTypesListBox.Location = new Point(305, 33);
             SelectedStationTypesListBox.Name = "SelectedStationTypesListBox";
             SelectedStationTypesListBox.Size = new Size(201, 199);

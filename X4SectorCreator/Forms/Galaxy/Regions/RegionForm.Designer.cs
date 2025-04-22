@@ -142,6 +142,7 @@
             // ListBoxRegionDefinitions
             // 
             ListBoxRegionDefinitions.FormattingEnabled = true;
+            ListBoxRegionDefinitions.HorizontalScrollbar = true;
             ListBoxRegionDefinitions.Location = new Point(12, 265);
             ListBoxRegionDefinitions.Name = "ListBoxRegionDefinitions";
             ListBoxRegionDefinitions.Size = new Size(230, 139);

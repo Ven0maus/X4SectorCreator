@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
@@ -86,6 +87,21 @@ namespace X4SectorCreator.XmlGeneration
             {
                 _ = dlcDependencies.Add(changedContent);
             }
+
+            // Check if we have factions with dlc races
+            var factionRaces = FactionsForm.AllCustomFactions
+                .Select(a => a.Value.Primaryrace)
+                .Concat(FactoriesForm.AllFactories
+                    .Select(a => a.Value.Module?.Select?.Race)
+                    .Where(a => a != null))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            if (factionRaces.Contains("split"))
+                dlcDependencies.Add("ego_dlc_split");
+            if (factionRaces.Contains("terran"))
+                dlcDependencies.Add("ego_dlc_terran");
+            if (factionRaces.Contains("boron"))
+                dlcDependencies.Add("ego_dlc_boron");
 
             // Convert to a pair
             return dlcDependencies.Select(a =>
