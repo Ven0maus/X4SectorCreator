@@ -42,8 +42,7 @@ Happy modding!
 
 ## Screenshots
 
-![Image](https://github.com/user-attachments/assets/69380644-430c-4c82-b223-c48753190483)
-![Image](https://github.com/user-attachments/assets/be1090f2-3b0d-4305-ae49-93906add6f66)
-![Image](https://github.com/user-attachments/assets/9b48c899-a98d-4929-8308-09bfcefdaba9)
+![Image](https://github.com/user-attachments/assets/ad6fcacf-98b9-4056-8caf-2a3651eba632)
+![Image](https://github.com/user-attachments/assets/ee965797-d542-4aa2-9699-e1806d279de4)
 ![Image](https://github.com/user-attachments/assets/c7bcad70-7a85-4b74-9908-43b0ed7ff0d2)
 ![Image](https://github.com/user-attachments/assets/114ce7e2-1673-41ae-846e-a9d154667bd5)
