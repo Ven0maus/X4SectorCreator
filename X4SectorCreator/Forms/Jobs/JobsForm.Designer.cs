@@ -58,9 +58,9 @@
             // 
             ListJobs.FormattingEnabled = true;
             ListJobs.HorizontalScrollbar = true;
-            ListJobs.Location = new Point(12, 70);
+            ListJobs.Location = new Point(9, 70);
             ListJobs.Name = "ListJobs";
-            ListJobs.Size = new Size(259, 424);
+            ListJobs.Size = new Size(426, 424);
             ListJobs.TabIndex = 0;
             ListJobs.DoubleClick += ListJobs_DoubleClick;
             // 
@@ -68,7 +68,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(9, 9);
             label1.Name = "label1";
             label1.Size = new Size(51, 28);
             label1.TabIndex = 1;
@@ -76,7 +76,7 @@
             // 
             // BtnCreateFromTemplate
             // 
-            BtnCreateFromTemplate.Location = new Point(277, 70);
+            BtnCreateFromTemplate.Location = new Point(441, 68);
             BtnCreateFromTemplate.Name = "BtnCreateFromTemplate";
             BtnCreateFromTemplate.Size = new Size(321, 36);
             BtnCreateFromTemplate.TabIndex = 2;
@@ -86,7 +86,7 @@
             // 
             // BtnRemoveJob
             // 
-            BtnRemoveJob.Location = new Point(277, 148);
+            BtnRemoveJob.Location = new Point(441, 146);
             BtnRemoveJob.Name = "BtnRemoveJob";
             BtnRemoveJob.Size = new Size(191, 36);
             BtnRemoveJob.TabIndex = 4;
@@ -96,7 +96,7 @@
             // 
             // BtnExitJobWindow
             // 
-            BtnExitJobWindow.Location = new Point(277, 460);
+            BtnExitJobWindow.Location = new Point(441, 458);
             BtnExitJobWindow.Name = "BtnExitJobWindow";
             BtnExitJobWindow.Size = new Size(321, 36);
             BtnExitJobWindow.TabIndex = 5;
@@ -107,7 +107,7 @@
             // cmbFaction
             // 
             cmbFaction.FormattingEnabled = true;
-            cmbFaction.Location = new Point(345, 298);
+            cmbFaction.Location = new Point(509, 296);
             cmbFaction.Name = "cmbFaction";
             cmbFaction.Size = new Size(247, 23);
             cmbFaction.TabIndex = 6;
@@ -117,7 +117,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14F, FontStyle.Underline);
-            label2.Location = new Point(277, 266);
+            label2.Location = new Point(441, 264);
             label2.Name = "label2";
             label2.Size = new Size(152, 25);
             label2.TabIndex = 7;
@@ -127,7 +127,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(277, 296);
+            label3.Location = new Point(441, 294);
             label3.Name = "label3";
             label3.Size = new Size(62, 21);
             label3.TabIndex = 8;
@@ -137,7 +137,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(285, 327);
+            label4.Location = new Point(449, 325);
             label4.Name = "label4";
             label4.Size = new Size(54, 21);
             label4.TabIndex = 9;
@@ -146,7 +146,7 @@
             // cmbOrder
             // 
             cmbOrder.FormattingEnabled = true;
-            cmbOrder.Location = new Point(345, 327);
+            cmbOrder.Location = new Point(509, 325);
             cmbOrder.Name = "cmbOrder";
             cmbOrder.Size = new Size(247, 23);
             cmbOrder.TabIndex = 10;
@@ -156,7 +156,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(281, 357);
+            label6.Location = new Point(445, 355);
             label6.Name = "label6";
             label6.Size = new Size(58, 21);
             label6.TabIndex = 13;
@@ -165,7 +165,7 @@
             // cmbBasket
             // 
             cmbBasket.FormattingEnabled = true;
-            cmbBasket.Location = new Point(345, 357);
+            cmbBasket.Location = new Point(509, 355);
             cmbBasket.Name = "cmbBasket";
             cmbBasket.Size = new Size(247, 23);
             cmbBasket.TabIndex = 14;
@@ -174,7 +174,7 @@
             // cmbCluster
             // 
             cmbCluster.FormattingEnabled = true;
-            cmbCluster.Location = new Point(345, 388);
+            cmbCluster.Location = new Point(509, 386);
             cmbCluster.Name = "cmbCluster";
             cmbCluster.Size = new Size(247, 23);
             cmbCluster.TabIndex = 16;
@@ -184,7 +184,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(277, 389);
+            label7.Location = new Point(441, 387);
             label7.Name = "label7";
             label7.Size = new Size(62, 21);
             label7.TabIndex = 15;
@@ -194,7 +194,7 @@
             // 
             cmbSector.Enabled = false;
             cmbSector.FormattingEnabled = true;
-            cmbSector.Location = new Point(345, 419);
+            cmbSector.Location = new Point(509, 417);
             cmbSector.Name = "cmbSector";
             cmbSector.Size = new Size(247, 23);
             cmbSector.TabIndex = 18;
@@ -204,7 +204,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(282, 417);
+            label8.Location = new Point(446, 415);
             label8.Name = "label8";
             label8.Size = new Size(57, 21);
             label8.TabIndex = 17;
@@ -212,7 +212,7 @@
             // 
             // BtnResetFilter
             // 
-            BtnResetFilter.Location = new Point(435, 266);
+            BtnResetFilter.Location = new Point(599, 264);
             BtnResetFilter.Name = "BtnResetFilter";
             BtnResetFilter.Size = new Size(157, 25);
             BtnResetFilter.TabIndex = 19;
@@ -222,7 +222,7 @@
             // 
             // BtnBaskets
             // 
-            BtnBaskets.Location = new Point(277, 187);
+            BtnBaskets.Location = new Point(441, 185);
             BtnBaskets.Name = "BtnBaskets";
             BtnBaskets.Size = new Size(321, 36);
             BtnBaskets.TabIndex = 20;
@@ -234,7 +234,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 10F);
-            label5.Location = new Point(61, 15);
+            label5.Location = new Point(58, 15);
             label5.Name = "label5";
             label5.Size = new Size(377, 19);
             label5.TabIndex = 21;
@@ -242,7 +242,7 @@
             // 
             // BtnQuickQuotaEditor
             // 
-            BtnQuickQuotaEditor.Location = new Point(277, 226);
+            BtnQuickQuotaEditor.Location = new Point(441, 224);
             BtnQuickQuotaEditor.Name = "BtnQuickQuotaEditor";
             BtnQuickQuotaEditor.Size = new Size(321, 36);
             BtnQuickQuotaEditor.TabIndex = 23;
@@ -254,7 +254,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(12, 42);
+            label9.Location = new Point(9, 42);
             label9.Name = "label9";
             label9.Size = new Size(60, 21);
             label9.TabIndex = 24;
@@ -262,14 +262,14 @@
             // 
             // TxtSearch
             // 
-            TxtSearch.Location = new Point(78, 42);
+            TxtSearch.Location = new Point(75, 42);
             TxtSearch.Name = "TxtSearch";
-            TxtSearch.Size = new Size(193, 23);
+            TxtSearch.Size = new Size(360, 23);
             TxtSearch.TabIndex = 25;
             // 
             // BtnCreateJobsFromPreset
             // 
-            BtnCreateJobsFromPreset.Location = new Point(277, 109);
+            BtnCreateJobsFromPreset.Location = new Point(441, 107);
             BtnCreateJobsFromPreset.Name = "BtnCreateJobsFromPreset";
             BtnCreateJobsFromPreset.Size = new Size(321, 36);
             BtnCreateJobsFromPreset.TabIndex = 26;
@@ -279,7 +279,7 @@
             // 
             // BtnClearAllJobs
             // 
-            BtnClearAllJobs.Location = new Point(474, 148);
+            BtnClearAllJobs.Location = new Point(638, 146);
             BtnClearAllJobs.Name = "BtnClearAllJobs";
             BtnClearAllJobs.Size = new Size(124, 36);
             BtnClearAllJobs.TabIndex = 27;
@@ -291,7 +291,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(604, 503);
+            ClientSize = new Size(766, 499);
             Controls.Add(BtnClearAllJobs);
             Controls.Add(BtnCreateJobsFromPreset);
             Controls.Add(TxtSearch);
