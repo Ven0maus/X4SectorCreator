@@ -66,7 +66,7 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         if (JobsForm.AllJobs.ContainsKey(subordinate.Job))
                         {
-                            listOriginalSubordinate.Add($"{modPrefix}_{subordinate.Job}", subordinate.Job);
+                            listOriginalSubordinate[$"{modPrefix}_{subordinate.Job}"] = subordinate.Job;
                             subordinate.Job = $"{modPrefix}_{subordinate.Job}";
                         }
                     }
