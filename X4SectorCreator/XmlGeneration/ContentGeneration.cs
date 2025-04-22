@@ -91,7 +91,11 @@ namespace X4SectorCreator.XmlGeneration
             // Check if we have factions with dlc races
             var factionRaces = FactionsForm.AllCustomFactions
                 .Select(a => a.Value.Primaryrace)
+                .Concat(FactoriesForm.AllFactories
+                    .Select(a => a.Value.Module?.Select?.Race)
+                    .Where(a => a != null))
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
             if (factionRaces.Contains("split"))
                 dlcDependencies.Add("ego_dlc_split");
             if (factionRaces.Contains("terran"))
