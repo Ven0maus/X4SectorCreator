@@ -45,7 +45,7 @@ namespace X4SectorCreator.Forms
                 .Where(a => !a.Equals(Faction.Id, StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
-            // If (old) faction name was modified, then don't include the current
+            // If (old) faction name was modified, then don't include the old name
             if (Faction.Id != FactionForm.Faction.Id)
                 factions.Remove(FactionForm.Faction.Id);
 
