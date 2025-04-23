@@ -39,8 +39,6 @@
             txtSunlight = new TextBox();
             txtSecurity = new TextBox();
             txtEconomy = new TextBox();
-            txtCustomTags = new TextBox();
-            label5 = new Label();
             label6 = new Label();
             txtDescription = new TextBox();
             label7 = new Label();
@@ -73,7 +71,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(14, 431);
+            BtnCancel.Location = new Point(13, 400);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(97, 30);
             BtnCancel.TabIndex = 8;
@@ -83,7 +81,7 @@
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(117, 431);
+            BtnCreate.Location = new Point(116, 400);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(196, 30);
             BtnCreate.TabIndex = 7;
@@ -126,7 +124,7 @@
             chkAllowRandomAnomalies.AutoSize = true;
             chkAllowRandomAnomalies.Checked = true;
             chkAllowRandomAnomalies.CheckState = CheckState.Checked;
-            chkAllowRandomAnomalies.Location = new Point(14, 385);
+            chkAllowRandomAnomalies.Location = new Point(13, 354);
             chkAllowRandomAnomalies.Name = "chkAllowRandomAnomalies";
             chkAllowRandomAnomalies.Size = new Size(199, 19);
             chkAllowRandomAnomalies.TabIndex = 14;
@@ -156,23 +154,6 @@
             txtEconomy.Size = new Size(196, 23);
             txtEconomy.TabIndex = 16;
             txtEconomy.Text = "100";
-            // 
-            // txtCustomTags
-            // 
-            txtCustomTags.Location = new Point(117, 355);
-            txtCustomTags.Name = "txtCustomTags";
-            txtCustomTags.Size = new Size(196, 23);
-            txtCustomTags.TabIndex = 19;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(11, 355);
-            label5.Name = "label5";
-            label5.Size = new Size(100, 21);
-            label5.TabIndex = 18;
-            label5.Text = "Custom tags:";
             // 
             // label6
             // 
@@ -225,7 +206,7 @@
             // chkDisableFactionLogic
             // 
             chkDisableFactionLogic.AutoSize = true;
-            chkDisableFactionLogic.Location = new Point(14, 406);
+            chkDisableFactionLogic.Location = new Point(13, 375);
             chkDisableFactionLogic.Name = "chkDisableFactionLogic";
             chkDisableFactionLogic.Size = new Size(303, 19);
             chkDisableFactionLogic.TabIndex = 25;
@@ -284,7 +265,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(333, 467);
+            ClientSize = new Size(333, 434);
             Controls.Add(label11);
             Controls.Add(cmbPlacement);
             Controls.Add(lblRadiusUnderText);
@@ -296,8 +277,6 @@
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(txtDescription);
-            Controls.Add(txtCustomTags);
-            Controls.Add(label5);
             Controls.Add(txtSecurity);
             Controls.Add(txtEconomy);
             Controls.Add(txtSunlight);
@@ -330,8 +309,6 @@
         internal TextBox txtSunlight;
         internal TextBox txtSecurity;
         internal TextBox txtEconomy;
-        internal TextBox txtCustomTags;
-        private Label label5;
         private Label label6;
         internal TextBox txtDescription;
         private Label label7;

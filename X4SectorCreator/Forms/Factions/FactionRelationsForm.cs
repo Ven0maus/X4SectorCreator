@@ -42,7 +42,12 @@ namespace X4SectorCreator.Forms
                 .Append("criminal")
                 .Append("smuggler")
                 .Select(GodGeneration.CorrectFactionName)
-                .Where(a => !a.Equals(Faction.Id, StringComparison.OrdinalIgnoreCase));
+                .Where(a => !a.Equals(Faction.Id, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            // If (old) faction name was modified, then don't include the old name
+            if (Faction.Id != FactionForm.Faction.Id)
+                factions.Remove(FactionForm.Faction.Id);
 
             int index = 0;
             foreach (var faction in factions)
