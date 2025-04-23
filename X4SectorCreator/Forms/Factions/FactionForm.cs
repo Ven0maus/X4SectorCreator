@@ -292,6 +292,7 @@ namespace X4SectorCreator.Forms
                         UpdateJobFactions(Faction.Id, faction.Id);
                         UpdateFactoryFactions(Faction.Id, faction.Id);
                         UpdateStationFactions(Faction.Id, faction.Id);
+                        UpdateShipsAndGroups(Faction.Id, faction.Id);
 
                         // This will correct any mention of the previous faction in the details if selected
                         MainForm.Instance.UpdateDetailsText();
@@ -313,6 +314,47 @@ namespace X4SectorCreator.Forms
             Close();
         }
 
+        private void UpdateShipsAndGroups(string old, string @new)
+        {
+            foreach (var ship in Ships)
+            {
+                if (ship.Id.StartsWith($"{old}_", StringComparison.OrdinalIgnoreCase))
+                {
+                    ship.Id = ship.Id.Replace($"{old}_", $"{@new}_");
+
+                    // Update group also
+                    if (ship.Group != null && ship.Group.StartsWith($"{old}_", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ship.Group = ship.Group.Replace($"{old}_", $"{@new}_");
+                    }
+
+                    // Update factions
+                    if (ship.PilotObj?.Select?.Faction != null && 
+                        ship.PilotObj.Select.Faction.Equals(old, StringComparison.OrdinalIgnoreCase))
+                    {
+                        ship.PilotObj.Select.Faction = @new;
+                    }
+                    if (ship.CategoryObj?.Faction != null)
+                    {
+                        var factions = ParseMultiField(ship.CategoryObj.Faction);
+                        if (factions.Remove(old))
+                        {
+                            factions.Add(@new);
+                            ship.CategoryObj.Faction = factions.Count == 0 ? null : "[" + string.Join(",", factions) + "]";
+                        }
+                    }
+                }
+            }
+
+            foreach (var shipgroup in ShipGroups)
+            {
+                if (shipgroup.Name.StartsWith($"{old}_", StringComparison.OrdinalIgnoreCase))
+                {
+                    shipgroup.Name = shipgroup.Name.Replace($"{old}_", $"{@new}_");
+                }
+            }
+        }
+
         private static void UpdateJobFactions(string old, string @new)
         {
             foreach (var job in JobsForm.AllJobs.Values)
@@ -328,7 +370,7 @@ namespace X4SectorCreator.Forms
                     if (factions.Remove(old))
                     {
                         factions.Add(@new);
-                        job.Location.Faction = "[" + string.Join(",", factions) + "]";
+                        job.Location.Faction = factions.Count == 0 ? null : "[" + string.Join(",", factions) + "]";
                     }
                 }
                 if (job.Ship?.Select?.Faction != null &&
@@ -382,7 +424,7 @@ namespace X4SectorCreator.Forms
                     if (factions.Remove(old))
                     {
                         factions.Add(@new);
-                        factory.Location.Faction = "[" + string.Join(",", factions) + "]";
+                        factory.Location.Faction = factions.Count == 0 ? null : "[" + string.Join(",", factions) + "]";
                     }
                 }
 
