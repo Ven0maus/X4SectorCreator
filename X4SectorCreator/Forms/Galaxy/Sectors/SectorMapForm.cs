@@ -233,9 +233,9 @@ namespace X4SectorCreator
                         _offset = new PointF((ClientSize.Width / 2) - center.X, (ClientSize.Height / 2) - center.Y);
                     }
                     _sectorMapFirstTimeOpen = false;
-                    Invalidate(); // Force redraw
                 }
             }
+            Invalidate(); // Force redraw
         }
 
         private void HandleMouseDown(object sender, MouseEventArgs e)
@@ -477,6 +477,9 @@ namespace X4SectorCreator
 
                 // Hex names draw on top of everything
                 RenderAllHexNames(e);
+
+                // Draw tip label
+                RenderTipLabel(e);
             }
             catch(Exception ex)
             {
@@ -487,6 +490,29 @@ namespace X4SectorCreator
                 Close();
                 #endif
             }
+        }
+
+        private void RenderTipLabel(PaintEventArgs e)
+        {
+            GraphicsState state = e.Graphics.Save();
+            e.Graphics.ResetTransform();
+
+            string labelText = "Tip: You can right click on clusters to move them around.";
+            using (Font font = new("Segoe UI", 12f, FontStyle.Bold))
+            using (Brush brush = new SolidBrush(Color.Yellow))
+            {
+                // Measure text size
+                SizeF textSize = e.Graphics.MeasureString(labelText, font);
+
+                // Position label at screen top center
+                float x = (ClientSize.Width - textSize.Width) / 2f;
+                float y = 10;
+
+                // Draw text with fixed size
+                e.Graphics.DrawString(labelText, font, brush, x, y);
+            }
+
+            e.Graphics.Restore(state);
         }
 
         private void RenderStationIcons(PaintEventArgs e)
