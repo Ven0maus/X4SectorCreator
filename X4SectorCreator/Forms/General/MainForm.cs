@@ -1457,6 +1457,22 @@ namespace X4SectorCreator
             }
         }
 
+        public void UpdateDetailsText()
+        {
+            var selectedClusterName = ClustersListBox.SelectedItem as string;
+            var selectedSectorName = SectorsListBox.SelectedItem as string;
+
+            if (string.IsNullOrWhiteSpace(selectedClusterName))
+            {
+                LblDetails.Text = string.Empty;
+                return;
+            }
+
+            var cluster = AllClusters.Values.First(a => a.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
+            var sector = string.IsNullOrWhiteSpace(selectedSectorName) ? null : cluster.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
+            SetDetailsText(cluster, sector);
+        }
+
         public void SetDetailsText(Cluster cluster, Sector sector)
         {
             StringBuilder sb = new();

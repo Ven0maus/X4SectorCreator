@@ -287,6 +287,14 @@ namespace X4SectorCreator.Forms
                             _ = MessageBox.Show("You modified the faction name, but a faction with this name already exists.");
                             return;
                         }
+
+                        // Auto modify factions
+                        UpdateJobFactions(Faction.Id, faction.Id);
+                        UpdateFactoryFactions(Faction.Id, faction.Id);
+                        UpdateStationFactions(Faction.Id, faction.Id);
+
+                        // This will correct any mention of the previous faction in the details if selected
+                        MainForm.Instance.UpdateDetailsText();
                     }
 
                     FactionsForm.AllCustomFactions.Remove(Faction.Id);
@@ -303,6 +311,122 @@ namespace X4SectorCreator.Forms
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private static void UpdateJobFactions(string old, string @new)
+        {
+            foreach (var job in JobsForm.AllJobs.Values)
+            {
+                // Set faction on various objects
+                if (job.Category?.Faction != null && job.Category.Faction.Equals(old, StringComparison.OrdinalIgnoreCase))
+                {
+                    job.Category.Faction = @new;
+                }
+                if (job.Location?.Faction != null)
+                {
+                    var factions = ParseMultiField(job.Location.Faction);
+                    if (factions.Remove(old))
+                    {
+                        factions.Add(@new);
+                        job.Location.Faction = "[" + string.Join(",", factions) + "]";
+                    }
+                }
+                if (job.Ship?.Select?.Faction != null &&
+                    job.Ship.Select.Faction.Equals(old, StringComparison.OrdinalIgnoreCase))
+                {
+                    job.Ship.Select.Faction = @new;
+                }
+                if (job.Ship?.Owner?.Exact != null &&
+                    job.Ship.Owner.Exact.Equals(old, StringComparison.OrdinalIgnoreCase))
+                {
+                    job.Ship.Owner.Exact = @new;
+                }
+
+                // Fix ID
+                if (job.Id.StartsWith($"{old}_", StringComparison.OrdinalIgnoreCase))
+                {
+                    job.Id = job.Id.Replace($"{old}_", $"{@new}_");
+
+                    // Apply ID fix for subordinates
+                    if (job.Subordinates?.Subordinate != null)
+                    {
+                        foreach (var subordinate in job.Subordinates.Subordinate)
+                        {
+                            if (subordinate.Job.StartsWith($"{old}_", StringComparison.OrdinalIgnoreCase))
+                            {
+                                subordinate.Job = subordinate.Job.Replace($"{old}_", $"{@new}_");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void UpdateFactoryFactions(string old, string @new)
+        {
+            foreach (var factory in FactoriesForm.AllFactories.Values)
+            {
+                // Set faction on various objects
+                if (factory.Owner != null && factory.Owner.Equals(old, StringComparison.OrdinalIgnoreCase))
+                {
+                    factory.Owner = @new;
+                }
+                if (factory.Module?.Select?.Faction != null &&
+                    factory.Module.Select.Faction.Equals(old, StringComparison.OrdinalIgnoreCase))
+                {
+                    factory.Module.Select.Faction = @new;
+                }
+                if (factory.Location?.Faction != null)
+                {
+                    var factions = ParseMultiField(factory.Location.Faction);
+                    if (factions.Remove(old))
+                    {
+                        factions.Add(@new);
+                        factory.Location.Faction = "[" + string.Join(",", factions) + "]";
+                    }
+                }
+
+                // Fix ID
+                if (factory.Id.StartsWith($"{old}_", StringComparison.OrdinalIgnoreCase))
+                {
+                    factory.Id = factory.Id.Replace($"{old}_", $"{@new}_");
+                }
+            }
+        }
+
+        private static void UpdateStationFactions(string old, string @new)
+        {
+            foreach (Station station in MainForm.Instance.AllClusters.Values
+                .SelectMany(a => a.Sectors)
+                .SelectMany(a => a.Zones)
+                .SelectMany(a => a.Stations))
+            {
+                if (station.Faction.Equals(old, StringComparison.OrdinalIgnoreCase))
+                    station.Faction = @new;
+                if (station.Owner.Equals(old, StringComparison.OrdinalIgnoreCase))
+                    station.Owner = @new;
+            }
+        }
+
+        private static HashSet<string> ParseMultiField(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return [];
+
+            // Remove brackets if present
+            value = value.Trim();
+            if (value.StartsWith('[') && value.EndsWith(']'))
+            {
+                value = value[1..^1];
+            }
+
+            // Split and add to HashSet
+            var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var r in value.Split(',', StringSplitOptions.RemoveEmptyEntries))
+            {
+                result.Add(r.Trim());
+            }
+
+            return result;
         }
 
         private void BtnEditXml_Click(object sender, EventArgs e)
