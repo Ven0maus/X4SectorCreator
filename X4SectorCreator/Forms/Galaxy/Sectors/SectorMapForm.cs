@@ -233,9 +233,9 @@ namespace X4SectorCreator
                         _offset = new PointF((ClientSize.Width / 2) - center.X, (ClientSize.Height / 2) - center.Y);
                     }
                     _sectorMapFirstTimeOpen = false;
-                    Invalidate(); // Force redraw
                 }
             }
+            Invalidate(); // Force redraw
         }
 
         private void HandleMouseDown(object sender, MouseEventArgs e)
@@ -477,6 +477,9 @@ namespace X4SectorCreator
 
                 // Hex names draw on top of everything
                 RenderAllHexNames(e);
+
+                // Draw tip label
+                RenderTipLabel(e);
             }
             catch(Exception ex)
             {
@@ -487,6 +490,29 @@ namespace X4SectorCreator
                 Close();
                 #endif
             }
+        }
+
+        private void RenderTipLabel(PaintEventArgs e)
+        {
+            GraphicsState state = e.Graphics.Save();
+            e.Graphics.ResetTransform();
+
+            string labelText = "Tip: You can right click on clusters to move them around.";
+            using (Font font = new("Segoe UI", 12f, FontStyle.Bold))
+            using (Brush brush = new SolidBrush(Color.Yellow))
+            {
+                // Measure text size
+                SizeF textSize = e.Graphics.MeasureString(labelText, font);
+
+                // Position label at screen top center
+                float x = (ClientSize.Width - textSize.Width) / 2f;
+                float y = 10;
+
+                // Draw text with fixed size
+                e.Graphics.DrawString(labelText, font, brush, x, y);
+            }
+
+            e.Graphics.Restore(state);
         }
 
         private void RenderStationIcons(PaintEventArgs e)
@@ -865,9 +891,52 @@ namespace X4SectorCreator
             }
         }
 
-        private static Color GetOwnershipColor(Cluster cluster)
+        private static Color GetClusterOwnershipColor(Cluster cluster)
         {
-            var sector = cluster.Sectors.FirstOrDefault();
+            var ownerships = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var sector in cluster.Sectors)
+            {
+                if (sector == null) return MainForm.Instance.FactionColorMapping["None"];
+
+                HashSet<string> factions = sector.Zones.SelectMany(a => a.Stations)
+                    .Select(a => a.Faction)
+                    .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+                if (sector.IsBaseGame)
+                {
+                    if (sector.Owner.Equals("None", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (factions.Count == 1)
+                        {
+                            ownerships.Add(factions.First());
+                        }
+                        else
+                        {
+                            ownerships.Add(sector.Owner);
+                        }
+                    }
+                    else
+                    {
+                        if (factions.Count == 0 || (factions.Count == 1 && factions.First().Equals(sector.Owner, StringComparison.OrdinalIgnoreCase)))
+                            ownerships.Add(sector.Owner);
+                    }
+                }
+                else
+                {
+                    if (factions.Count == 1)
+                    {
+                        ownerships.Add(factions.First());
+                    }
+                }
+            }
+
+            if (ownerships.Count == 1)
+                return FactionsForm.GetColorForFaction(ownerships.First());
+            return MainForm.Instance.FactionColorMapping["None"];
+        }
+
+        private static Color GetSectorOwnershipColor(Sector sector)
+        {
             if (sector == null) return MainForm.Instance.FactionColorMapping["None"];
 
             HashSet<string> factions = sector.Zones.SelectMany(a => a.Stations)
@@ -909,7 +978,7 @@ namespace X4SectorCreator
                 return;
             }
 
-            Color color = GetOwnershipColor(cluster);
+            Color color = GetClusterOwnershipColor(cluster);
 
             bool isMovingCluster = _movingCluster != null && _movingCluster == cluster;
             if (isMovingCluster)
@@ -934,7 +1003,7 @@ namespace X4SectorCreator
                 foreach (Hexagon child in hex.Value.Children)
                 {
                     Sector sector = cluster.Sectors[index];
-                    Color ownerColor = FactionsForm.GetColorForFaction(sector.Owner);
+                    Color ownerColor = GetSectorOwnershipColor(sector);
                     using Pen pen = new(ownerColor, 2);
                     using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
 

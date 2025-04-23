@@ -206,16 +206,86 @@ namespace X4SectorCreator.Forms
 
         private void FactionShipsForm_Load(object sender, EventArgs e)
         {
+            bool isNameModified = FactionForm.Faction != null && Faction.Id != FactionForm.Faction.Id;
+
             if (FactionForm.ShipGroups != null)
             {
-                foreach (var shipGroup in FactionForm.ShipGroups)
+                foreach (var shipGroup in FactionForm.ShipGroups.Select(a => a.Clone()))
+                {
+                    if (isNameModified)
+                        UpdateShipsAndGroups(shipGroup, FactionForm.Faction.Id, Faction.Id);
                     ShipGroupsListBox.Items.Add(shipGroup);
+                }
             }
             if (FactionForm.Ships != null)
             {
-                foreach (var ship in FactionForm.Ships)
+                foreach (var ship in FactionForm.Ships.Select(a => a.Clone()))
+                {
+                    if (isNameModified)
+                        UpdateShipsAndGroups(ship, FactionForm.Faction.Id, Faction.Id);
                     ShipsListBox.Items.Add(ship);
+                }
             }
+        }
+
+        private static void UpdateShipsAndGroups(object obj, string old, string @new)
+        {
+            if (obj is Ship ship)
+            {
+                if (ship.Id.StartsWith($"{old}_", StringComparison.OrdinalIgnoreCase))
+                {
+                    ship.Id = ship.Id.Replace($"{old}_", $"{@new}_");
+
+                    if (ship.Group != null && ship.Group.StartsWith($"{old}_", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ship.Group = ship.Group.Replace($"{old}_", $"{@new}_");
+                    }
+
+                    // Update factions
+                    if (ship.PilotObj?.Select?.Faction != null &&
+                        ship.PilotObj.Select.Faction.Equals(old, StringComparison.OrdinalIgnoreCase))
+                    {
+                        ship.PilotObj.Select.Faction = @new;
+                    }
+                    if (ship.CategoryObj?.Faction != null)
+                    {
+                        var factions = ParseMultiField(ship.CategoryObj.Faction);
+                        if (factions.Remove(old))
+                        {
+                            factions.Add(@new);
+                            ship.CategoryObj.Faction = factions.Count == 0 ? null : "[" + string.Join(",", factions) + "]";
+                        }
+                    }
+                }
+            }
+            else if (obj is ShipGroup shipgroup)
+            {
+                if (shipgroup.Name.StartsWith($"{old}_", StringComparison.OrdinalIgnoreCase))
+                {
+                    shipgroup.Name = shipgroup.Name.Replace($"{old}_", $"{@new}_");
+                }
+            }
+        }
+
+        private static HashSet<string> ParseMultiField(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return [];
+
+            // Remove brackets if present
+            value = value.Trim();
+            if (value.StartsWith('[') && value.EndsWith(']'))
+            {
+                value = value[1..^1];
+            }
+
+            // Split and add to HashSet
+            var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var r in value.Split(',', StringSplitOptions.RemoveEmptyEntries))
+            {
+                result.Add(r.Trim());
+            }
+
+            return result;
         }
 
         private void BtnClearAllGroups_Click(object sender, EventArgs e)

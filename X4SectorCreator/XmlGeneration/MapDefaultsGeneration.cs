@@ -218,7 +218,7 @@ namespace X4SectorCreator.XmlGeneration
                     }
                 }
 
-                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Tags, New.Tags, macro, "area", "tags", New.Tags)));
+                elements.Add((VanillaCluster.Dlc, CreateRemoveOrReplaceElement(Old.Tags, New.Tags, macro, "area", "tags", New.Tags)));
 
                 // Faction logic element
                 if (Old.DisableFactionLogic != New.DisableFactionLogic)
@@ -300,6 +300,18 @@ namespace X4SectorCreator.XmlGeneration
                 ? new XElement("replace",
                     new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/{property}/@{field}"),
                     value)
+                : null;
+        }
+
+        private static XElement CreateRemoveOrReplaceElement(string checkOne, string checkTwo, string macro, string property, string field, string value)
+        {
+            return Extensions.HasStringChanged(checkOne, checkTwo)
+                ? !string.IsNullOrWhiteSpace(value) ? 
+                    new XElement("replace",
+                        new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/{property}/@{field}"), value) 
+                : 
+                    new XElement("remove",
+                        new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/{property}/@{field}"))
                 : null;
         }
 

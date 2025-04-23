@@ -20,7 +20,6 @@ namespace X4SectorCreator.Forms
                     txtSunlight.Text = ((int)(_sector.Sunlight * 100)).ToString();
                     txtEconomy.Text = ((int)(_sector.Economy * 100)).ToString();
                     txtSecurity.Text = ((int)(_sector.Security * 100)).ToString();
-                    txtCustomTags.Text = _sector.Tags;
                     txtSectorRadius.Text = ((int)(_sector.DiameterRadius / 1000f / 2f)).ToString();
                     chkAllowRandomAnomalies.Checked = _sector.AllowRandomAnomalies;
                     chkDisableFactionLogic.Checked = _sector.DisableFactionLogic;
@@ -35,7 +34,6 @@ namespace X4SectorCreator.Forms
                     txtEconomy.Text = "100";
                     txtSecurity.Text = "100";
                     txtSectorRadius.Text = "250";
-                    txtCustomTags.Text = string.Empty;
                     chkAllowRandomAnomalies.Checked = true;
                     chkDisableFactionLogic.Checked = false;
                 }
@@ -224,7 +222,6 @@ namespace X4SectorCreator.Forms
                         Sunlight = (float)Math.Round(sunlight / 100f, 2),
                         Economy = (float)Math.Round(economy / 100f, 2),
                         Security = (float)Math.Round(security / 100f, 2),
-                        Tags = txtCustomTags.Text,
                         AllowRandomAnomalies = chkAllowRandomAnomalies.Checked,
                         DisableFactionLogic = chkDisableFactionLogic.Checked,
                         Placement = sectorPlacement
@@ -265,7 +262,6 @@ namespace X4SectorCreator.Forms
                     sectorValue.Sunlight = (float)Math.Round(sunlight / 100f, 2);
                     sectorValue.Economy = (float)Math.Round(economy / 100f, 2);
                     sectorValue.Security = (float)Math.Round(security / 100f, 2);
-                    sectorValue.Tags = txtCustomTags.Text;
                     sectorValue.AllowRandomAnomalies = chkAllowRandomAnomalies.Checked;
                     sectorValue.DisableFactionLogic = chkDisableFactionLogic.Checked;
                     sectorValue.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km

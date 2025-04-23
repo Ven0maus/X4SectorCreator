@@ -47,6 +47,8 @@
             TxtSearch = new TextBox();
             BtnClearAllFactories = new Button();
             BtnCreateFactoriesFromPreset = new Button();
+            CmbWare = new ComboBox();
+            label6 = new Label();
             SuspendLayout();
             // 
             // ListFactories
@@ -55,7 +57,7 @@
             ListFactories.HorizontalScrollbar = true;
             ListFactories.Location = new Point(12, 70);
             ListFactories.Name = "ListFactories";
-            ListFactories.Size = new Size(259, 334);
+            ListFactories.Size = new Size(415, 349);
             ListFactories.TabIndex = 0;
             ListFactories.DoubleClick += ListFactories_DoubleClick;
             // 
@@ -71,7 +73,7 @@
             // 
             // BtnCreateFromTemplate
             // 
-            BtnCreateFromTemplate.Location = new Point(277, 70);
+            BtnCreateFromTemplate.Location = new Point(433, 70);
             BtnCreateFromTemplate.Name = "BtnCreateFromTemplate";
             BtnCreateFromTemplate.Size = new Size(321, 36);
             BtnCreateFromTemplate.TabIndex = 2;
@@ -81,7 +83,7 @@
             // 
             // BtnRemoveFactory
             // 
-            BtnRemoveFactory.Location = new Point(277, 148);
+            BtnRemoveFactory.Location = new Point(433, 148);
             BtnRemoveFactory.Name = "BtnRemoveFactory";
             BtnRemoveFactory.Size = new Size(185, 36);
             BtnRemoveFactory.TabIndex = 4;
@@ -91,7 +93,7 @@
             // 
             // BtnExitFactoriesWindow
             // 
-            BtnExitFactoriesWindow.Location = new Point(277, 362);
+            BtnExitFactoriesWindow.Location = new Point(433, 376);
             BtnExitFactoriesWindow.Name = "BtnExitFactoriesWindow";
             BtnExitFactoriesWindow.Size = new Size(321, 42);
             BtnExitFactoriesWindow.TabIndex = 5;
@@ -102,7 +104,7 @@
             // cmbFaction
             // 
             cmbFaction.FormattingEnabled = true;
-            cmbFaction.Location = new Point(345, 261);
+            cmbFaction.Location = new Point(501, 261);
             cmbFaction.Name = "cmbFaction";
             cmbFaction.Size = new Size(247, 23);
             cmbFaction.TabIndex = 6;
@@ -112,7 +114,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14F, FontStyle.Underline);
-            label2.Location = new Point(277, 229);
+            label2.Location = new Point(433, 229);
             label2.Name = "label2";
             label2.Size = new Size(152, 25);
             label2.TabIndex = 7;
@@ -122,7 +124,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(277, 259);
+            label3.Location = new Point(433, 259);
             label3.Name = "label3";
             label3.Size = new Size(62, 21);
             label3.TabIndex = 8;
@@ -131,7 +133,7 @@
             // cmbCluster
             // 
             cmbCluster.FormattingEnabled = true;
-            cmbCluster.Location = new Point(345, 289);
+            cmbCluster.Location = new Point(501, 319);
             cmbCluster.Name = "cmbCluster";
             cmbCluster.Size = new Size(247, 23);
             cmbCluster.TabIndex = 16;
@@ -141,7 +143,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(277, 289);
+            label7.Location = new Point(433, 319);
             label7.Name = "label7";
             label7.Size = new Size(62, 21);
             label7.TabIndex = 15;
@@ -151,7 +153,7 @@
             // 
             cmbSector.Enabled = false;
             cmbSector.FormattingEnabled = true;
-            cmbSector.Location = new Point(345, 321);
+            cmbSector.Location = new Point(500, 348);
             cmbSector.Name = "cmbSector";
             cmbSector.Size = new Size(247, 23);
             cmbSector.TabIndex = 18;
@@ -161,7 +163,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(282, 322);
+            label8.Location = new Point(437, 349);
             label8.Name = "label8";
             label8.Size = new Size(57, 21);
             label8.TabIndex = 17;
@@ -169,7 +171,7 @@
             // 
             // BtnResetFilter
             // 
-            BtnResetFilter.Location = new Point(435, 229);
+            BtnResetFilter.Location = new Point(591, 229);
             BtnResetFilter.Name = "BtnResetFilter";
             BtnResetFilter.Size = new Size(157, 25);
             BtnResetFilter.TabIndex = 19;
@@ -189,7 +191,7 @@
             // 
             // BtnQuickQuotaEditor
             // 
-            BtnQuickQuotaEditor.Location = new Point(277, 187);
+            BtnQuickQuotaEditor.Location = new Point(433, 187);
             BtnQuickQuotaEditor.Name = "BtnQuickQuotaEditor";
             BtnQuickQuotaEditor.Size = new Size(321, 36);
             BtnQuickQuotaEditor.TabIndex = 22;
@@ -211,12 +213,12 @@
             // 
             TxtSearch.Location = new Point(78, 42);
             TxtSearch.Name = "TxtSearch";
-            TxtSearch.Size = new Size(193, 23);
+            TxtSearch.Size = new Size(349, 23);
             TxtSearch.TabIndex = 24;
             // 
             // BtnClearAllFactories
             // 
-            BtnClearAllFactories.Location = new Point(468, 148);
+            BtnClearAllFactories.Location = new Point(624, 148);
             BtnClearAllFactories.Name = "BtnClearAllFactories";
             BtnClearAllFactories.Size = new Size(130, 36);
             BtnClearAllFactories.TabIndex = 25;
@@ -226,7 +228,7 @@
             // 
             // BtnCreateFactoriesFromPreset
             // 
-            BtnCreateFactoriesFromPreset.Location = new Point(277, 109);
+            BtnCreateFactoriesFromPreset.Location = new Point(433, 109);
             BtnCreateFactoriesFromPreset.Name = "BtnCreateFactoriesFromPreset";
             BtnCreateFactoriesFromPreset.Size = new Size(321, 36);
             BtnCreateFactoriesFromPreset.TabIndex = 26;
@@ -234,11 +236,32 @@
             BtnCreateFactoriesFromPreset.UseVisualStyleBackColor = true;
             BtnCreateFactoriesFromPreset.Click += BtnCreateFactoriesFromPreset_Click;
             // 
+            // CmbWare
+            // 
+            CmbWare.FormattingEnabled = true;
+            CmbWare.Location = new Point(501, 290);
+            CmbWare.Name = "CmbWare";
+            CmbWare.Size = new Size(247, 23);
+            CmbWare.TabIndex = 28;
+            CmbWare.SelectedIndexChanged += CmbWare_SelectedIndexChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F);
+            label6.Location = new Point(446, 290);
+            label6.Name = "label6";
+            label6.Size = new Size(49, 21);
+            label6.TabIndex = 27;
+            label6.Text = "Ware:";
+            // 
             // FactoriesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(604, 410);
+            ClientSize = new Size(759, 425);
+            Controls.Add(CmbWare);
+            Controls.Add(label6);
             Controls.Add(BtnCreateFactoriesFromPreset);
             Controls.Add(BtnClearAllFactories);
             Controls.Add(TxtSearch);
@@ -288,5 +311,7 @@
         private TextBox TxtSearch;
         private Button BtnClearAllFactories;
         private Button BtnCreateFactoriesFromPreset;
+        private ComboBox CmbWare;
+        private Label label6;
     }
 }

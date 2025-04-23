@@ -58,12 +58,17 @@ namespace X4SectorCreator.XmlGeneration
 
                 // Prepend prefix & replace subordinate job prefix
                 job.Value.Id = $"{modPrefix}_{job.Value.Id}";
+
+                var listOriginalSubordinate = new Dictionary<string, string>();
                 if (job.Value.Subordinates?.Subordinate != null)
                 {
                     foreach (var subordinate in job.Value.Subordinates.Subordinate)
                     {
                         if (JobsForm.AllJobs.ContainsKey(subordinate.Job))
+                        {
+                            listOriginalSubordinate[$"{modPrefix}_{subordinate.Job}"] = subordinate.Job;
                             subordinate.Job = $"{modPrefix}_{subordinate.Job}";
+                        }
                     }
                 }
 
@@ -91,6 +96,16 @@ namespace X4SectorCreator.XmlGeneration
                 if (job.Value.Location?.Macro != null)
                 {
                     job.Value.Location.Macro = originalMacro;
+                }
+                if (job.Value.Subordinates?.Subordinate != null)
+                {
+                    foreach (var subordinate in job.Value.Subordinates.Subordinate)
+                    {
+                        if (listOriginalSubordinate.TryGetValue(subordinate.Job, out var originalJob))
+                        {
+                            subordinate.Job = originalJob;
+                        }
+                    }
                 }
 
                 XElement jobElement = XElement.Parse(jobElementXml);
