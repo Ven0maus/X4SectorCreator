@@ -504,7 +504,7 @@ namespace X4SectorCreator.Forms
             {
                 bool updated = false;
                 if (faction.Licences.Licence.All(a => !a.Name.Equals("Placeholder", StringComparison.OrdinalIgnoreCase)) &&
-                    faction.Licences.Licence.Any(a => !a.Name.StartsWith(faction.Name, StringComparison.OrdinalIgnoreCase)))
+                    faction.Licences.Licence.Any(a => !a.Name.StartsWith(faction.Name)))
                 {
                     if (MessageBox.Show("Update license names?", "Update license names?", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
