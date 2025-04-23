@@ -47,6 +47,8 @@
             TxtSearch = new TextBox();
             BtnClearAllFactories = new Button();
             BtnCreateFactoriesFromPreset = new Button();
+            CmbWare = new ComboBox();
+            label6 = new Label();
             SuspendLayout();
             // 
             // ListFactories
@@ -55,7 +57,7 @@
             ListFactories.HorizontalScrollbar = true;
             ListFactories.Location = new Point(12, 70);
             ListFactories.Name = "ListFactories";
-            ListFactories.Size = new Size(415, 334);
+            ListFactories.Size = new Size(415, 349);
             ListFactories.TabIndex = 0;
             ListFactories.DoubleClick += ListFactories_DoubleClick;
             // 
@@ -91,7 +93,7 @@
             // 
             // BtnExitFactoriesWindow
             // 
-            BtnExitFactoriesWindow.Location = new Point(433, 362);
+            BtnExitFactoriesWindow.Location = new Point(433, 376);
             BtnExitFactoriesWindow.Name = "BtnExitFactoriesWindow";
             BtnExitFactoriesWindow.Size = new Size(321, 42);
             BtnExitFactoriesWindow.TabIndex = 5;
@@ -131,7 +133,7 @@
             // cmbCluster
             // 
             cmbCluster.FormattingEnabled = true;
-            cmbCluster.Location = new Point(501, 289);
+            cmbCluster.Location = new Point(501, 319);
             cmbCluster.Name = "cmbCluster";
             cmbCluster.Size = new Size(247, 23);
             cmbCluster.TabIndex = 16;
@@ -141,7 +143,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(433, 289);
+            label7.Location = new Point(433, 319);
             label7.Name = "label7";
             label7.Size = new Size(62, 21);
             label7.TabIndex = 15;
@@ -151,7 +153,7 @@
             // 
             cmbSector.Enabled = false;
             cmbSector.FormattingEnabled = true;
-            cmbSector.Location = new Point(501, 321);
+            cmbSector.Location = new Point(500, 348);
             cmbSector.Name = "cmbSector";
             cmbSector.Size = new Size(247, 23);
             cmbSector.TabIndex = 18;
@@ -161,7 +163,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(438, 322);
+            label8.Location = new Point(437, 349);
             label8.Name = "label8";
             label8.Size = new Size(57, 21);
             label8.TabIndex = 17;
@@ -234,11 +236,32 @@
             BtnCreateFactoriesFromPreset.UseVisualStyleBackColor = true;
             BtnCreateFactoriesFromPreset.Click += BtnCreateFactoriesFromPreset_Click;
             // 
+            // CmbWare
+            // 
+            CmbWare.FormattingEnabled = true;
+            CmbWare.Location = new Point(501, 290);
+            CmbWare.Name = "CmbWare";
+            CmbWare.Size = new Size(247, 23);
+            CmbWare.TabIndex = 28;
+            CmbWare.SelectedIndexChanged += CmbWare_SelectedIndexChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F);
+            label6.Location = new Point(446, 290);
+            label6.Name = "label6";
+            label6.Size = new Size(49, 21);
+            label6.TabIndex = 27;
+            label6.Text = "Ware:";
+            // 
             // FactoriesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(759, 410);
+            ClientSize = new Size(759, 425);
+            Controls.Add(CmbWare);
+            Controls.Add(label6);
             Controls.Add(BtnCreateFactoriesFromPreset);
             Controls.Add(BtnClearAllFactories);
             Controls.Add(TxtSearch);
@@ -288,5 +311,7 @@
         private TextBox TxtSearch;
         private Button BtnClearAllFactories;
         private Button BtnCreateFactoriesFromPreset;
+        private ComboBox CmbWare;
+        private Label label6;
     }
 }

@@ -34,13 +34,14 @@ namespace X4SectorCreator.Forms
             cmbFaction.Items.Clear();
             cmbCluster.Items.Clear();
             cmbSector.Items.Clear();
+            CmbWare.Items.Clear();
 
             // Set new default values for filter options
             UpdateAvailableFilterOptions();
 
             // By default set for each option "Any"
             _applyFilter = false;
-            ComboBox[] comboboxes = new[] { cmbFaction, cmbCluster, cmbSector };
+            ComboBox[] comboboxes = new[] { cmbFaction, cmbCluster, cmbSector, CmbWare };
             foreach (ComboBox cmb in comboboxes)
             {
                 cmb.SelectedItem = "Any";
@@ -58,6 +59,7 @@ namespace X4SectorCreator.Forms
             object originalFaction = cmbFaction.SelectedItem ?? "Any";
             object originalCluster = cmbCluster.SelectedItem ?? "Any";
             object originalSector = cmbSector.SelectedItem ?? "Any";
+            object originalWare = CmbWare.SelectedItem ?? "Any";
 
             // Factions
             var allFactions = new HashSet<string>(AllFactories
@@ -79,12 +81,25 @@ namespace X4SectorCreator.Forms
             {
                 _ = cmbCluster.Items.Add(cluster);
             }
-
             cmbCluster.Items.Insert(0, "Any");
+
+            // Wares
+            var allWares = AllFactories
+                .Select(obj => obj.Value.Ware)
+                .Where(a => a != null)
+                .Select(f => f.Trim()) // clean up whitespace
+                .Where(f => !string.IsNullOrWhiteSpace(f));
+            CmbWare.Items.Clear();
+            foreach (var ware in allWares)
+            {
+                _ = CmbWare.Items.Add(ware);
+            }
+            CmbWare.Items.Insert(0, "Any");
 
             // Reset original selected values if still available
             cmbFaction.SelectedItem = cmbFaction.Items.Contains(originalFaction) ? originalFaction : "Any";
             cmbCluster.SelectedItem = cmbCluster.Items.Contains(originalCluster) ? originalCluster : "Any";
+            CmbWare.SelectedItem = CmbWare.Items.Contains(originalWare) ? originalWare : "Any";
 
             // Sectors is exceptional, only populated when a cluster is selected
             cmbSector.Items.Clear();
@@ -199,6 +214,7 @@ namespace X4SectorCreator.Forms
             HandleFilterOption(cmbFaction, suitableFactories);
             HandleFilterOption(cmbCluster, suitableFactories);
             HandleFilterOption(cmbSector, suitableFactories);
+            HandleFilterOption(CmbWare, suitableFactories);
 
             // Add all suitable factories to the listbox
             ListFactories.Items.Clear();
@@ -220,7 +236,7 @@ namespace X4SectorCreator.Forms
             if (comboBox == cmbFaction)
             {
                 string owner = cmbFaction.SelectedItem as string;
-                if (owner != null)
+                if (!string.IsNullOrWhiteSpace(owner))
                 {
                     _ = factories.RemoveAll(a => string.IsNullOrWhiteSpace(a.Owner) || !a.Owner.Equals(owner, StringComparison.OrdinalIgnoreCase));
                 }
@@ -259,6 +275,14 @@ namespace X4SectorCreator.Forms
                     _ = factories.RemoveAll(a => a.Location?.Macro == null || !a.Location.Macro.Equals(sectorCode, StringComparison.OrdinalIgnoreCase));
                 }
             }
+            else if (comboBox == CmbWare)
+            {
+                string ware = CmbWare.SelectedItem as string;
+                if (!string.IsNullOrWhiteSpace(ware))
+                {
+                    _ = factories.RemoveAll(a => string.IsNullOrWhiteSpace(a.Ware) || !a.Ware.Equals(ware, StringComparison.OrdinalIgnoreCase));
+                }
+            }
             else
             {
                 throw new NotImplementedException($"Combobox \"{comboBox.Name}\" implementation not available.");
@@ -282,6 +306,11 @@ namespace X4SectorCreator.Forms
         }
 
         private void CmbSector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ApplyCurrentFilter();
+        }
+
+        private void CmbWare_SelectedIndexChanged(object sender, EventArgs e)
         {
             ApplyCurrentFilter();
         }
