@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Forms.General;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -10,6 +11,7 @@ namespace X4SectorCreator.Forms
         public JobForm JobForm { get; set; }
 
         private static readonly Lazy<List<Job>> _templateJobs = new(() => CollectTemplateJobs().ToList());
+        private readonly LazyEvaluated<TemplateGroupsForm> _templateGroupsView = new(() => new TemplateGroupsForm(), a => !a.IsDisposed);
 
         public JobTemplatesForm()
         {
@@ -100,6 +102,12 @@ namespace X4SectorCreator.Forms
         {
             // Select
             BtnSelectExampleJob.PerformClick();
+        }
+
+        private void BtnViewTemplateGroups_Click(object sender, EventArgs e)
+        {
+            _templateGroupsView.Value.TemplateGroupsFor = TemplateGroupsForm.GroupsFor.Jobs;
+            _templateGroupsView.Value.Show();
         }
     }
 }

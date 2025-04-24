@@ -35,15 +35,18 @@
             BtnSelectExampleFactory = new Button();
             BtnCancel = new Button();
             TxtSearch = new TextBox();
+            label3 = new Label();
+            CmbTemplatesGroup = new ComboBox();
+            BtnViewTemplateGroups = new Button();
             SuspendLayout();
             // 
             // ListTemplateFactories
             // 
             ListTemplateFactories.FormattingEnabled = true;
             ListTemplateFactories.HorizontalScrollbar = true;
-            ListTemplateFactories.Location = new Point(12, 36);
+            ListTemplateFactories.Location = new Point(12, 66);
             ListTemplateFactories.Name = "ListTemplateFactories";
-            ListTemplateFactories.Size = new Size(389, 544);
+            ListTemplateFactories.Size = new Size(389, 469);
             ListTemplateFactories.TabIndex = 0;
             ListTemplateFactories.SelectedIndexChanged += ListTemplateJobs_SelectedIndexChanged;
             ListTemplateFactories.DoubleClick += ListTemplateJobs_DoubleClick;
@@ -52,7 +55,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 12);
+            label1.Location = new Point(12, 14);
             label1.Name = "label1";
             label1.Size = new Size(79, 21);
             label1.TabIndex = 1;
@@ -100,17 +103,48 @@
             // 
             // TxtSearch
             // 
-            TxtSearch.Location = new Point(97, 10);
+            TxtSearch.Location = new Point(97, 12);
             TxtSearch.Name = "TxtSearch";
             TxtSearch.PlaceholderText = "Search..";
             TxtSearch.Size = new Size(304, 23);
             TxtSearch.TabIndex = 6;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F);
+            label3.Location = new Point(12, 39);
+            label3.Name = "label3";
+            label3.Size = new Size(130, 21);
+            label3.TabIndex = 11;
+            label3.Text = "Templates Group:";
+            // 
+            // CmbTemplatesGroup
+            // 
+            CmbTemplatesGroup.FormattingEnabled = true;
+            CmbTemplatesGroup.Location = new Point(148, 39);
+            CmbTemplatesGroup.Name = "CmbTemplatesGroup";
+            CmbTemplatesGroup.Size = new Size(253, 23);
+            CmbTemplatesGroup.TabIndex = 10;
+            // 
+            // BtnViewTemplateGroups
+            // 
+            BtnViewTemplateGroups.Location = new Point(12, 541);
+            BtnViewTemplateGroups.Name = "BtnViewTemplateGroups";
+            BtnViewTemplateGroups.Size = new Size(389, 38);
+            BtnViewTemplateGroups.TabIndex = 12;
+            BtnViewTemplateGroups.Text = "View Template Groups";
+            BtnViewTemplateGroups.UseVisualStyleBackColor = true;
+            BtnViewTemplateGroups.Click += BtnViewTemplateGroups_Click;
+            // 
             // FactoryTemplatesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1066, 586);
+            ClientSize = new Size(1066, 585);
+            Controls.Add(BtnViewTemplateGroups);
+            Controls.Add(label3);
+            Controls.Add(CmbTemplatesGroup);
             Controls.Add(TxtSearch);
             Controls.Add(BtnCancel);
             Controls.Add(BtnSelectExampleFactory);
@@ -136,5 +170,8 @@
         private Button BtnSelectExampleFactory;
         private Button BtnCancel;
         private TextBox TxtSearch;
+        private Label label3;
+        private ComboBox CmbTemplatesGroup;
+        private Button BtnViewTemplateGroups;
     }
 }

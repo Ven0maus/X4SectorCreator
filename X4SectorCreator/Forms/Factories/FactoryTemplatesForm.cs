@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Forms.General;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -10,6 +11,7 @@ namespace X4SectorCreator.Forms
         public FactoryForm FactoryForm { get; set; }
 
         private static readonly Lazy<List<Factory>> _templateFactories = new(() => CollectTemplateFactories().ToList());
+        private readonly LazyEvaluated<TemplateGroupsForm> _templateGroupsView = new(() => new TemplateGroupsForm(), a => !a.IsDisposed);
 
         public FactoryTemplatesForm()
         {
@@ -100,6 +102,12 @@ namespace X4SectorCreator.Forms
         {
             // Select
             BtnSelectExampleFactory.PerformClick();
+        }
+
+        private void BtnViewTemplateGroups_Click(object sender, EventArgs e)
+        {
+            _templateGroupsView.Value.TemplateGroupsFor = TemplateGroupsForm.GroupsFor.Factories;
+            _templateGroupsView.Value.Show();
         }
     }
 }
