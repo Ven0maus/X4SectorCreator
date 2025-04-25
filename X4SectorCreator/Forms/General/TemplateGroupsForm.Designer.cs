@@ -39,6 +39,7 @@
             BtnConfirm = new Button();
             BtnCancel = new Button();
             TxtSearch = new TextBox();
+            BtnImportGroup = new Button();
             SuspendLayout();
             // 
             // TemplateGroupsListBox
@@ -123,9 +124,9 @@
             // 
             // BtnConfirm
             // 
-            BtnConfirm.Location = new Point(248, 532);
+            BtnConfirm.Location = new Point(375, 532);
             BtnConfirm.Name = "BtnConfirm";
-            BtnConfirm.Size = new Size(457, 36);
+            BtnConfirm.Size = new Size(330, 36);
             BtnConfirm.TabIndex = 8;
             BtnConfirm.Text = "Confirm Changes";
             BtnConfirm.UseVisualStyleBackColor = true;
@@ -133,9 +134,9 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(6, 532);
+            BtnCancel.Location = new Point(248, 532);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(236, 36);
+            BtnCancel.Size = new Size(121, 36);
             BtnCancel.TabIndex = 9;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
@@ -149,11 +150,22 @@
             TxtSearch.Size = new Size(310, 23);
             TxtSearch.TabIndex = 10;
             // 
+            // BtnImportGroup
+            // 
+            BtnImportGroup.Location = new Point(6, 532);
+            BtnImportGroup.Name = "BtnImportGroup";
+            BtnImportGroup.Size = new Size(236, 36);
+            BtnImportGroup.TabIndex = 11;
+            BtnImportGroup.Text = "Import Group From File";
+            BtnImportGroup.UseVisualStyleBackColor = true;
+            BtnImportGroup.Click += BtnImportGroup_Click;
+            // 
             // TemplateGroupsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(710, 572);
+            Controls.Add(BtnImportGroup);
             Controls.Add(TxtSearch);
             Controls.Add(BtnCancel);
             Controls.Add(BtnConfirm);
@@ -188,5 +200,6 @@
         private Button BtnConfirm;
         private Button BtnCancel;
         private TextBox TxtSearch;
+        private Button BtnImportGroup;
     }
 }
