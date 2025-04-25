@@ -83,9 +83,6 @@ namespace X4SectorCreator.Objects
         [XmlAttribute(AttributeName = "startactive")]
         public string Startactive { get; set; }
 
-        [XmlIgnore]
-        public string TemplateDirectory { get; set; }
-
         public string SerializeFactory()
         {
             // Create an XmlSerializer for the Factory type

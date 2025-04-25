@@ -35,13 +35,14 @@ namespace X4SectorCreator.Forms
             label1 = new Label();
             label2 = new Label();
             CmbFactions = new MultiSelectCombo.NoDropDownComboBox();
+            label3 = new Label();
             SuspendLayout();
             // 
             // BtnSave
             // 
-            BtnSave.Location = new Point(12, 110);
+            BtnSave.Location = new Point(7, 125);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(249, 30);
+            BtnSave.Size = new Size(277, 30);
             BtnSave.TabIndex = 0;
             BtnSave.Text = "Save";
             BtnSave.UseVisualStyleBackColor = true;
@@ -50,16 +51,16 @@ namespace X4SectorCreator.Forms
             // CmbOwner
             // 
             CmbOwner.FormattingEnabled = true;
-            CmbOwner.Location = new Point(12, 32);
+            CmbOwner.Location = new Point(7, 32);
             CmbOwner.Name = "CmbOwner";
-            CmbOwner.Size = new Size(249, 23);
+            CmbOwner.Size = new Size(277, 23);
             CmbOwner.TabIndex = 1;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 11F);
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(7, 9);
             label1.Name = "label1";
             label1.Size = new Size(106, 20);
             label1.TabIndex = 2;
@@ -69,7 +70,7 @@ namespace X4SectorCreator.Forms
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 11F);
-            label2.Location = new Point(12, 58);
+            label2.Location = new Point(7, 58);
             label2.Name = "label2";
             label2.Size = new Size(249, 20);
             label2.TabIndex = 3;
@@ -78,16 +79,25 @@ namespace X4SectorCreator.Forms
             // CmbFactions
             // 
             CmbFactions.FormattingEnabled = true;
-            CmbFactions.Location = new Point(12, 81);
+            CmbFactions.Location = new Point(7, 81);
             CmbFactions.Name = "CmbFactions";
-            CmbFactions.Size = new Size(249, 23);
+            CmbFactions.Size = new Size(277, 23);
             CmbFactions.TabIndex = 4;
+            // 
+            // label3
+            // 
+            label3.Location = new Point(7, 107);
+            label3.Name = "label3";
+            label3.Size = new Size(277, 15);
+            label3.TabIndex = 5;
+            label3.Text = "(Faction selection also replaces {faction.Id} entries.)";
             // 
             // FactionSelectionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(271, 151);
+            ClientSize = new Size(290, 160);
+            Controls.Add(label3);
             Controls.Add(CmbFactions);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -109,5 +119,6 @@ namespace X4SectorCreator.Forms
         private Label label1;
         private Label label2;
         private MultiSelectCombo.NoDropDownComboBox CmbFactions;
+        private Label label3;
     }
 }

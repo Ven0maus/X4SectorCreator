@@ -52,6 +52,7 @@
             TxtSearch = new TextBox();
             BtnCreateJobsFromPreset = new Button();
             BtnClearAllJobs = new Button();
+            BtnAddSelection = new Button();
             SuspendLayout();
             // 
             // ListJobs
@@ -76,11 +77,11 @@
             // 
             // BtnCreateFromTemplate
             // 
-            BtnCreateFromTemplate.Location = new Point(441, 68);
+            BtnCreateFromTemplate.Location = new Point(441, 32);
             BtnCreateFromTemplate.Name = "BtnCreateFromTemplate";
             BtnCreateFromTemplate.Size = new Size(321, 36);
             BtnCreateFromTemplate.TabIndex = 2;
-            BtnCreateFromTemplate.Text = "Create Custom Job From Template";
+            BtnCreateFromTemplate.Text = "Create Custom Job";
             BtnCreateFromTemplate.UseVisualStyleBackColor = true;
             BtnCreateFromTemplate.Click += BtnCreateFromTemplate_Click;
             // 
@@ -269,11 +270,11 @@
             // 
             // BtnCreateJobsFromPreset
             // 
-            BtnCreateJobsFromPreset.Location = new Point(441, 107);
+            BtnCreateJobsFromPreset.Location = new Point(441, 108);
             BtnCreateJobsFromPreset.Name = "BtnCreateJobsFromPreset";
             BtnCreateJobsFromPreset.Size = new Size(321, 36);
             BtnCreateJobsFromPreset.TabIndex = 26;
-            BtnCreateJobsFromPreset.Text = "Create Jobs From Preset";
+            BtnCreateJobsFromPreset.Text = "Select Vanilla Preset";
             BtnCreateJobsFromPreset.UseVisualStyleBackColor = true;
             BtnCreateJobsFromPreset.Click += BtnCreateJobsFromPreset_Click;
             // 
@@ -287,11 +288,22 @@
             BtnClearAllJobs.UseVisualStyleBackColor = true;
             BtnClearAllJobs.Click += BtnClearAllJobs_Click;
             // 
+            // BtnAddSelection
+            // 
+            BtnAddSelection.Location = new Point(441, 70);
+            BtnAddSelection.Name = "BtnAddSelection";
+            BtnAddSelection.Size = new Size(321, 36);
+            BtnAddSelection.TabIndex = 28;
+            BtnAddSelection.Text = "Add Selection Of Jobs";
+            BtnAddSelection.UseVisualStyleBackColor = true;
+            BtnAddSelection.Click += BtnAddSelection_Click;
+            // 
             // JobsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(766, 499);
+            Controls.Add(BtnAddSelection);
             Controls.Add(BtnClearAllJobs);
             Controls.Add(BtnCreateJobsFromPreset);
             Controls.Add(TxtSearch);
@@ -351,5 +363,6 @@
         private TextBox TxtSearch;
         private Button BtnCreateJobsFromPreset;
         private Button BtnClearAllJobs;
+        private Button BtnAddSelection;
     }
 }

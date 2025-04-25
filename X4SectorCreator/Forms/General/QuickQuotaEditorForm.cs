@@ -40,6 +40,8 @@ namespace X4SectorCreator.Forms
             // Setup data grid values
             if (JobsForm != null)
             {
+                MaxGalaxy.ReadOnly = false;
+                Wing.ReadOnly = false;
                 foreach (var job in JobsForm.AllJobs)
                 {
                     _dataGridObjects.Add(new DataGridObject(job.Value));
@@ -47,6 +49,8 @@ namespace X4SectorCreator.Forms
             }
             else if (FactoriesForm != null)
             {
+                MaxGalaxy.ReadOnly = true;
+                Wing.ReadOnly = true;
                 foreach (var factory in FactoriesForm.AllFactories)
                 {
                     _dataGridObjects.Add(new DataGridObject(factory.Value));
@@ -71,6 +75,8 @@ namespace X4SectorCreator.Forms
             dataGridObject.GalaxyQuota = (row.Cells[(int)Quota.Galaxy].Value as string)?.Trim();
             dataGridObject.ClusterQuota = (row.Cells[(int)Quota.Cluster].Value as string)?.Trim();
             dataGridObject.SectorQuota = (row.Cells[(int)Quota.Sector].Value as string)?.Trim();
+            dataGridObject.MaxGalaxyQuota = (row.Cells[(int)Quota.MaxGalaxy].Value as string)?.Trim();
+            dataGridObject.WingQuota = (row.Cells[(int)Quota.Wing].Value as string)?.Trim();
         }
 
         private void QuotaView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -110,6 +116,14 @@ namespace X4SectorCreator.Forms
                         if (job.Quota?.Sector != null && !string.IsNullOrWhiteSpace(job.Quota?.Sector))
                             return IsValidValue(value);
                         break;
+                    case Quota.MaxGalaxy:
+                        if (job.Quota?.Maxgalaxy != null && !string.IsNullOrWhiteSpace(job.Quota?.Maxgalaxy))
+                            return IsValidValue(value);
+                        break;
+                    case Quota.Wing:
+                        if (job.Quota?.Wing != null && !string.IsNullOrWhiteSpace(job.Quota?.Wing))
+                            return IsValidValue(value);
+                        break;
                 }
                 return true;
             }
@@ -130,6 +144,9 @@ namespace X4SectorCreator.Forms
                         if (factory.Quotas?.Quota?.Sector != null && !string.IsNullOrWhiteSpace(factory.Quotas?.Quota?.Sector))
                             return IsValidValue(value);
                         break;
+                    case Quota.MaxGalaxy:
+                    case Quota.Wing:
+                        return false; // Not supported on factory
                 }
                 return true;
             }
@@ -153,6 +170,12 @@ namespace X4SectorCreator.Forms
 
                     if (!string.IsNullOrWhiteSpace(dataGridObject.SectorQuota))
                         job.Quota.Sector = dataGridObject.SectorQuota;
+
+                    if (!string.IsNullOrWhiteSpace(dataGridObject.MaxGalaxyQuota))
+                        job.Quota.Maxgalaxy = dataGridObject.MaxGalaxyQuota;
+
+                    if (!string.IsNullOrWhiteSpace(dataGridObject.WingQuota))
+                        job.Quota.Wing = dataGridObject.WingQuota;
                 }
                 else if (FactoriesForm != null)
                 {
@@ -221,7 +244,7 @@ namespace X4SectorCreator.Forms
             QuotaView.Rows.Clear();
             foreach (DataGridObject dataGridObject in suitableObjects)
             {
-                _ = QuotaView.Rows.Add(dataGridObject.Id, dataGridObject.GalaxyQuota, dataGridObject.ClusterQuota, dataGridObject.SectorQuota);
+                _ = QuotaView.Rows.Add(dataGridObject.Id, dataGridObject.GalaxyQuota, dataGridObject.ClusterQuota, dataGridObject.SectorQuota, dataGridObject.MaxGalaxyQuota, dataGridObject.WingQuota);
             }
         }
 
@@ -497,6 +520,8 @@ namespace X4SectorCreator.Forms
             public string GalaxyQuota { get; set; }
             public string ClusterQuota { get; set; }
             public string SectorQuota { get; set; }
+            public string MaxGalaxyQuota { get; set; }
+            public string WingQuota { get; set; }
 
             public DataGridObject(Factory factory)
             {
@@ -516,6 +541,8 @@ namespace X4SectorCreator.Forms
                 ClusterQuota = job.Quota?.Cluster;
                 SectorQuota = job.Quota?.Sector;
                 Faction = job.Ship?.Owner?.Exact;
+                MaxGalaxyQuota = job.Quota?.Maxgalaxy;
+                WingQuota = job.Quota?.Wing;
                 ClusterObj = GetClusterFromJob(job);
                 SectorObj = GetSectorFromJob(job, ClusterObj);
             }
@@ -525,7 +552,9 @@ namespace X4SectorCreator.Forms
         {
             Galaxy = 1,
             Cluster = 2,
-            Sector = 3
+            Sector = 3,
+            MaxGalaxy = 4,
+            Wing = 5
         }
 
         private void cmbFaction_SelectedIndexChanged(object sender, EventArgs e)

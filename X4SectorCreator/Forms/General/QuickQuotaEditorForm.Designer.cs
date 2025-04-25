@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             QuotaView = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Galaxy = new DataGridViewTextBoxColumn();
-            Cluster = new DataGridViewTextBoxColumn();
-            Sector = new DataGridViewTextBoxColumn();
             BtnSave = new Button();
             BtnCancel = new Button();
             BtnResetFilter = new Button();
@@ -45,6 +41,12 @@
             cmbFaction = new ComboBox();
             label1 = new Label();
             TxtSearch = new TextBox();
+            Column1 = new DataGridViewTextBoxColumn();
+            Galaxy = new DataGridViewTextBoxColumn();
+            Cluster = new DataGridViewTextBoxColumn();
+            Sector = new DataGridViewTextBoxColumn();
+            MaxGalaxy = new DataGridViewTextBoxColumn();
+            Wing = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)QuotaView).BeginInit();
             SuspendLayout();
             // 
@@ -57,34 +59,12 @@
             QuotaView.AllowUserToResizeRows = false;
             QuotaView.BorderStyle = BorderStyle.Fixed3D;
             QuotaView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            QuotaView.Columns.AddRange(new DataGridViewColumn[] { Column1, Galaxy, Cluster, Sector });
+            QuotaView.Columns.AddRange(new DataGridViewColumn[] { Column1, Galaxy, Cluster, Sector, MaxGalaxy, Wing });
             QuotaView.Location = new Point(12, 42);
             QuotaView.Name = "QuotaView";
             QuotaView.ScrollBars = ScrollBars.Vertical;
             QuotaView.Size = new Size(601, 535);
             QuotaView.TabIndex = 0;
-            // 
-            // Column1
-            // 
-            Column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Column1.HeaderText = "Name";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            // 
-            // Galaxy
-            // 
-            Galaxy.HeaderText = "Galaxy";
-            Galaxy.Name = "Galaxy";
-            // 
-            // Cluster
-            // 
-            Cluster.HeaderText = "Cluster";
-            Cluster.Name = "Cluster";
-            // 
-            // Sector
-            // 
-            Sector.HeaderText = "Sector";
-            Sector.Name = "Sector";
             // 
             // BtnSave
             // 
@@ -201,6 +181,50 @@
             TxtSearch.Size = new Size(526, 23);
             TxtSearch.TabIndex = 29;
             // 
+            // Column1
+            // 
+            Column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Column1.FillWeight = 200F;
+            Column1.HeaderText = "Name";
+            Column1.MinimumWidth = 175;
+            Column1.Name = "Column1";
+            Column1.ReadOnly = true;
+            // 
+            // Galaxy
+            // 
+            Galaxy.FillWeight = 75F;
+            Galaxy.HeaderText = "Galaxy";
+            Galaxy.Name = "Galaxy";
+            Galaxy.Width = 75;
+            // 
+            // Cluster
+            // 
+            Cluster.FillWeight = 75F;
+            Cluster.HeaderText = "Cluster";
+            Cluster.Name = "Cluster";
+            Cluster.Width = 75;
+            // 
+            // Sector
+            // 
+            Sector.FillWeight = 75F;
+            Sector.HeaderText = "Sector";
+            Sector.Name = "Sector";
+            Sector.Width = 75;
+            // 
+            // MaxGalaxy
+            // 
+            MaxGalaxy.FillWeight = 75F;
+            MaxGalaxy.HeaderText = "MaxGalaxy";
+            MaxGalaxy.Name = "MaxGalaxy";
+            MaxGalaxy.Width = 75;
+            // 
+            // Wing
+            // 
+            Wing.FillWeight = 75F;
+            Wing.HeaderText = "Wing";
+            Wing.Name = "Wing";
+            Wing.Width = 75;
+            // 
             // QuickQuotaEditorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -232,10 +256,6 @@
         #endregion
 
         private DataGridView QuotaView;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Galaxy;
-        private DataGridViewTextBoxColumn Cluster;
-        private DataGridViewTextBoxColumn Sector;
         private Button BtnSave;
         private Button BtnCancel;
         private Button BtnResetFilter;
@@ -248,5 +268,11 @@
         private ComboBox cmbFaction;
         private Label label1;
         private TextBox TxtSearch;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Galaxy;
+        private DataGridViewTextBoxColumn Cluster;
+        private DataGridViewTextBoxColumn Sector;
+        private DataGridViewTextBoxColumn MaxGalaxy;
+        private DataGridViewTextBoxColumn Wing;
     }
 }
