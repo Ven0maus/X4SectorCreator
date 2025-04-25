@@ -49,6 +49,7 @@
             BtnCreateFactoriesFromPreset = new Button();
             CmbWare = new ComboBox();
             label6 = new Label();
+            BtnAddSelection = new Button();
             SuspendLayout();
             // 
             // ListFactories
@@ -73,17 +74,17 @@
             // 
             // BtnCreateFromTemplate
             // 
-            BtnCreateFromTemplate.Location = new Point(433, 70);
+            BtnCreateFromTemplate.Location = new Point(433, 40);
             BtnCreateFromTemplate.Name = "BtnCreateFromTemplate";
             BtnCreateFromTemplate.Size = new Size(321, 36);
             BtnCreateFromTemplate.TabIndex = 2;
-            BtnCreateFromTemplate.Text = "Create Custom Factory From Template";
+            BtnCreateFromTemplate.Text = "Create Custom Factory";
             BtnCreateFromTemplate.UseVisualStyleBackColor = true;
             BtnCreateFromTemplate.Click += BtnCreateFromTemplate_Click;
             // 
             // BtnRemoveFactory
             // 
-            BtnRemoveFactory.Location = new Point(433, 148);
+            BtnRemoveFactory.Location = new Point(433, 153);
             BtnRemoveFactory.Name = "BtnRemoveFactory";
             BtnRemoveFactory.Size = new Size(185, 36);
             BtnRemoveFactory.TabIndex = 4;
@@ -191,7 +192,7 @@
             // 
             // BtnQuickQuotaEditor
             // 
-            BtnQuickQuotaEditor.Location = new Point(433, 187);
+            BtnQuickQuotaEditor.Location = new Point(433, 190);
             BtnQuickQuotaEditor.Name = "BtnQuickQuotaEditor";
             BtnQuickQuotaEditor.Size = new Size(321, 36);
             BtnQuickQuotaEditor.TabIndex = 22;
@@ -218,7 +219,7 @@
             // 
             // BtnClearAllFactories
             // 
-            BtnClearAllFactories.Location = new Point(624, 148);
+            BtnClearAllFactories.Location = new Point(624, 153);
             BtnClearAllFactories.Name = "BtnClearAllFactories";
             BtnClearAllFactories.Size = new Size(130, 36);
             BtnClearAllFactories.TabIndex = 25;
@@ -228,11 +229,11 @@
             // 
             // BtnCreateFactoriesFromPreset
             // 
-            BtnCreateFactoriesFromPreset.Location = new Point(433, 109);
+            BtnCreateFactoriesFromPreset.Location = new Point(433, 116);
             BtnCreateFactoriesFromPreset.Name = "BtnCreateFactoriesFromPreset";
             BtnCreateFactoriesFromPreset.Size = new Size(321, 36);
             BtnCreateFactoriesFromPreset.TabIndex = 26;
-            BtnCreateFactoriesFromPreset.Text = "Create Factories From Preset";
+            BtnCreateFactoriesFromPreset.Text = "Select Vanilla Preset";
             BtnCreateFactoriesFromPreset.UseVisualStyleBackColor = true;
             BtnCreateFactoriesFromPreset.Click += BtnCreateFactoriesFromPreset_Click;
             // 
@@ -255,11 +256,22 @@
             label6.TabIndex = 27;
             label6.Text = "Ware:";
             // 
+            // BtnAddSelection
+            // 
+            BtnAddSelection.Location = new Point(433, 78);
+            BtnAddSelection.Name = "BtnAddSelection";
+            BtnAddSelection.Size = new Size(321, 36);
+            BtnAddSelection.TabIndex = 29;
+            BtnAddSelection.Text = "Add Selection Of Factories";
+            BtnAddSelection.UseVisualStyleBackColor = true;
+            BtnAddSelection.Click += BtnAddSelection_Click;
+            // 
             // FactoriesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(759, 425);
+            Controls.Add(BtnAddSelection);
             Controls.Add(CmbWare);
             Controls.Add(label6);
             Controls.Add(BtnCreateFactoriesFromPreset);
@@ -313,5 +325,6 @@
         private Button BtnCreateFactoriesFromPreset;
         private ComboBox CmbWare;
         private Label label6;
+        private Button BtnAddSelection;
     }
 }

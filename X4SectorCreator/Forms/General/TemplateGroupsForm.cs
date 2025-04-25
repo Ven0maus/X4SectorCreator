@@ -104,6 +104,13 @@ namespace X4SectorCreator.Forms.General
             if (string.IsNullOrWhiteSpace(groupName))
                 return;
 
+            // Validate path characters
+            if (!IsValidFolderName(groupName))
+            {
+                _ = MessageBox.Show($"This is an invalid group name, special characters are not allowed.");
+                return;
+            }
+
             // Check if name already exists
             if (ValidateGroupName(TemplateGroupsFor == GroupsFor.Jobs ?
                 _jobTemplateGroups : _factoryTemplateGroups, groupName))
@@ -114,6 +121,12 @@ namespace X4SectorCreator.Forms.General
 
             CreateGroup(groupName);
             TemplateGroupsListBox.SelectedItem = groupName;
+        }
+
+        private static bool IsValidFolderName(string name)
+        {
+            char[] invalidChars = Path.GetInvalidFileNameChars(); // use FileName chars for folders
+            return !string.IsNullOrWhiteSpace(name) && !name.Any(c => invalidChars.Contains(c));
         }
 
         private void BtnDeleteGroup_Click(object sender, EventArgs e)

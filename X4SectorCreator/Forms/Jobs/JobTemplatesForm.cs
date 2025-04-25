@@ -36,23 +36,20 @@ namespace X4SectorCreator.Forms
             }
 
             const string lblJobName = "New Job Name:";
-            Dictionary<string, string> data = MultiInputDialog.Show("Job name",
+            Dictionary<string, string> data = MultiInputDialog.Show("New Job name (leave empty to copy original)",
                 (lblJobName, null, null)
             );
             if (data == null || data.Count == 0)
                 return;
 
             string jobName = data[lblJobName];
-            if (string.IsNullOrWhiteSpace(jobName))
+            if (!string.IsNullOrWhiteSpace(jobName))
             {
-                _ = MessageBox.Show("Job name cannot be empty.");
-                return;
+                selectedJob = Job.DeserializeJob(selectedJob.SerializeJob());
+                selectedJob.Id = jobName;
             }
 
-            var job = Job.DeserializeJob(selectedJob.SerializeJob());
-            job.Id = jobName;
-
-            JobForm.Job = job;
+            JobForm.Job = selectedJob;
             JobForm.Show();
             Close();
         }
