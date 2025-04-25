@@ -44,6 +44,8 @@
             CmbOwner = new ComboBox();
             BtnConfirm = new Button();
             BtnCancel = new Button();
+            SelectGroup = new Button();
+            BtnDeselectGroup = new Button();
             SuspendLayout();
             // 
             // label3
@@ -115,7 +117,7 @@
             // 
             // BtnSelect
             // 
-            BtnSelect.Location = new Point(249, 276);
+            BtnSelect.Location = new Point(248, 276);
             BtnSelect.Name = "BtnSelect";
             BtnSelect.Size = new Size(149, 35);
             BtnSelect.TabIndex = 17;
@@ -125,7 +127,7 @@
             // 
             // BtnDeselect
             // 
-            BtnDeselect.Location = new Point(159, 276);
+            BtnDeselect.Location = new Point(158, 276);
             BtnDeselect.Name = "BtnDeselect";
             BtnDeselect.Size = new Size(84, 35);
             BtnDeselect.TabIndex = 18;
@@ -181,7 +183,7 @@
             // 
             // BtnConfirm
             // 
-            BtnConfirm.Location = new Point(402, 130);
+            BtnConfirm.Location = new Point(403, 212);
             BtnConfirm.Name = "BtnConfirm";
             BtnConfirm.Size = new Size(249, 39);
             BtnConfirm.TabIndex = 28;
@@ -191,7 +193,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(402, 175);
+            BtnCancel.Location = new Point(403, 257);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(249, 39);
             BtnCancel.TabIndex = 29;
@@ -199,11 +201,33 @@
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
+            // SelectGroup
+            // 
+            SelectGroup.Location = new Point(403, 130);
+            SelectGroup.Name = "SelectGroup";
+            SelectGroup.Size = new Size(249, 35);
+            SelectGroup.TabIndex = 30;
+            SelectGroup.Text = "Select Entire Group";
+            SelectGroup.UseVisualStyleBackColor = true;
+            SelectGroup.Click += SelectGroup_Click;
+            // 
+            // BtnDeselectGroup
+            // 
+            BtnDeselectGroup.Location = new Point(403, 171);
+            BtnDeselectGroup.Name = "BtnDeselectGroup";
+            BtnDeselectGroup.Size = new Size(249, 35);
+            BtnDeselectGroup.TabIndex = 31;
+            BtnDeselectGroup.Text = "Deselect Entire Group";
+            BtnDeselectGroup.UseVisualStyleBackColor = true;
+            BtnDeselectGroup.Click += BtnDeselectGroup_Click;
+            // 
             // MultiTemplateSelectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(660, 519);
+            Controls.Add(BtnDeselectGroup);
+            Controls.Add(SelectGroup);
             Controls.Add(BtnCancel);
             Controls.Add(BtnConfirm);
             Controls.Add(label6);
@@ -245,5 +269,7 @@
         private ComboBox CmbOwner;
         private Button BtnConfirm;
         private Button BtnCancel;
+        private Button SelectGroup;
+        private Button BtnDeselectGroup;
     }
 }

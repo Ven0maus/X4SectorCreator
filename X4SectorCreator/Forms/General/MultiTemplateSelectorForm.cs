@@ -297,5 +297,24 @@ namespace X4SectorCreator.Forms.General
         {
             BtnDeselect.PerformClick();
         }
+
+        private void SelectGroup_Click(object sender, EventArgs e)
+        {
+            foreach (var option in ListTemplates.Items)
+            {
+                if (!SelectedTemplatesListBox.Items.Contains(option))
+                {
+                    SelectedTemplatesListBox.Items.Add(option);
+                }
+            }
+        }
+
+        private void BtnDeselectGroup_Click(object sender, EventArgs e)
+        {
+            foreach (var option in ListTemplates.Items)
+            {
+                SelectedTemplatesListBox.Items.Remove(option);
+            }
+        }
     }
 }
