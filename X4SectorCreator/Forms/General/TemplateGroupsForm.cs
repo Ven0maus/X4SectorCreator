@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.ComponentModel;
+using System.Linq;
 using System.Xml.Linq;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -25,6 +26,10 @@ namespace X4SectorCreator.Forms.General
         private readonly LazyEvaluated<TemplateContentForm> _templateContentForm = new(() => new TemplateContentForm(), a => !a.IsDisposed);
 
         private readonly List<object> _currentSelection = [];
+        private readonly static HashSet<string> _defaultGroups = new(StringComparer.OrdinalIgnoreCase) 
+        { 
+            "Vanilla", "Deadair_Scripts" 
+        };
 
         public TemplateGroupsForm()
         {
@@ -134,7 +139,7 @@ namespace X4SectorCreator.Forms.General
             if (TemplateGroupsListBox.SelectedItem is string group &&
                 !string.IsNullOrWhiteSpace(group))
             {
-                if (group.Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+                if (_defaultGroups.Contains(group))
                 {
                     return;
                 }
@@ -145,7 +150,7 @@ namespace X4SectorCreator.Forms.General
 
         public void AddOrUpdateTemplate(string groupName, object original, object @new)
         {
-            if (groupName.Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+            if (_defaultGroups.Contains(groupName))
             {
                 return;
             }
@@ -190,7 +195,7 @@ namespace X4SectorCreator.Forms.General
         {
             if (TemplateGroupsListBox.SelectedItem is string group && !string.IsNullOrWhiteSpace(group))
             {
-                if (group.Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+                if (_defaultGroups.Contains(group))
                 {
                     return;
                 }
@@ -212,7 +217,7 @@ namespace X4SectorCreator.Forms.General
         {
             if (TemplateGroupsListBox.SelectedItem is string group && !string.IsNullOrWhiteSpace(group))
             {
-                if (group.Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+                if (_defaultGroups.Contains(group))
                 {
                     return;
                 }
@@ -270,7 +275,7 @@ namespace X4SectorCreator.Forms.General
 
         private void RemoveGroup(string groupName)
         {
-            if (groupName.Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+            if (_defaultGroups.Contains(groupName))
             {
                 return;
             }
@@ -326,7 +331,7 @@ namespace X4SectorCreator.Forms.General
                 case GroupsFor.Factories:
                     foreach (var group in _factoryTemplateGroups)
                     {
-                        if (group.Key.Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+                        if (_defaultGroups.Contains(group.Key))
                         {
                             continue;
                         }
@@ -349,7 +354,7 @@ namespace X4SectorCreator.Forms.General
                 case GroupsFor.Jobs:
                     foreach (var group in _jobTemplateGroups)
                     {
-                        if (group.Key.Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+                        if (_defaultGroups.Contains(group.Key))
                         {
                             continue;
                         }
@@ -384,7 +389,7 @@ namespace X4SectorCreator.Forms.General
                 !string.IsNullOrWhiteSpace(group))
             {
                 // Disable functions for vanilla group
-                if (group.Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+                if (_defaultGroups.Contains(group))
                 {
                     BtnDeleteGroup.Enabled = false;
                     BtnAddTemplate.Enabled = false;
@@ -429,9 +434,9 @@ namespace X4SectorCreator.Forms.General
             if (TemplateGroupsListBox.SelectedItem is string group &&
                 !string.IsNullOrWhiteSpace(group))
             {
-                if (group.Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+                if (_defaultGroups.Contains(group))
                 {
-                    _ = MessageBox.Show("Vanilla templates cannot be modified.");
+                    _ = MessageBox.Show("Standard tool templates cannot be modified.");
                     return;
                 }
 
