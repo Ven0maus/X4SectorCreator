@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Linq;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -26,9 +27,9 @@ namespace X4SectorCreator.Forms.General
         private readonly LazyEvaluated<TemplateContentForm> _templateContentForm = new(() => new TemplateContentForm(), a => !a.IsDisposed);
 
         private readonly List<object> _currentSelection = [];
-        private readonly static HashSet<string> _defaultGroups = new(StringComparer.OrdinalIgnoreCase) 
-        { 
-            "Vanilla", "Deadair_Scripts" 
+        private readonly static HashSet<string> _defaultGroups = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "Vanilla", "Deadair_Scripts"
         };
 
         public TemplateGroupsForm()
@@ -107,7 +108,10 @@ namespace X4SectorCreator.Forms.General
 
             string groupName = data[lblGroupName];
             if (string.IsNullOrWhiteSpace(groupName))
+            {
+                _ = MessageBox.Show($"Group name cannot be empty.");
                 return;
+            }
 
             // Validate path characters
             if (!IsValidFolderName(groupName))
@@ -319,7 +323,7 @@ namespace X4SectorCreator.Forms.General
 
             foreach (var directory in Directory.GetDirectories(baseDirectory))
             {
-                if (!Path.GetFileName(directory).Equals("Vanilla", StringComparison.OrdinalIgnoreCase))
+                if (!_defaultGroups.Contains(Path.GetFileName(directory)))
                 {
                     Directory.Delete(directory, true);
                 }
@@ -466,6 +470,89 @@ namespace X4SectorCreator.Forms.General
         {
             InitializeTemplateJobs();
             TemplateGroupsListBox.SelectedItem = "Vanilla";
+        }
+
+        private void BtnImportGroup_Click(object sender, EventArgs e)
+        {
+            using OpenFileDialog openFileDialog = new();
+            openFileDialog.Filter = "XML files (*.xml)|*.xml";
+            var type = TemplateGroupsFor == GroupsFor.Jobs ? "jobs" : "god";
+            openFileDialog.Title = $"Select {type} file";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                var fileName = Path.GetFileName(filePath);
+                if (!fileName.Equals(type + ".xml"))
+                {
+                    _ = MessageBox.Show($"Invalid file, must be a \"{type + ".xml"}\" file.");
+                    return;
+                }
+
+                const string lblGroupName = "Group Name:";
+                Dictionary<string, string> data = MultiInputDialog.Show("Create New Group",
+                    (lblGroupName, null, null)
+                );
+                if (data == null || data.Count == 0)
+                    return;
+
+                string groupName = data[lblGroupName];
+                if (string.IsNullOrWhiteSpace(groupName))
+                {
+                    _ = MessageBox.Show($"Group name cannot be empty.");
+                    return;
+                }
+
+                // Validate path characters
+                if (!IsValidFolderName(groupName))
+                {
+                    _ = MessageBox.Show($"This is an invalid group name, special characters are not allowed.");
+                    return;
+                }
+
+                // Check if name already exists
+                if (ValidateGroupName(TemplateGroupsFor == GroupsFor.Jobs ?
+                    _jobTemplateGroups : _factoryTemplateGroups, groupName))
+                {
+                    _ = MessageBox.Show($"A group with the name \"{groupName}\" already exists.");
+                    return;
+                }
+
+                using var sourceStream = openFileDialog.OpenFile();
+                using var fs = new StreamReader(sourceStream);
+                var content = fs.ReadToEnd();
+
+                if (TemplateGroupsFor == GroupsFor.Jobs)
+                {
+                    try
+                    {
+                        var jobs = Jobs.DeserializeJobs(content);
+                        CreateGroup(groupName);
+                        foreach (var job in jobs.JobList)
+                            AddOrUpdateTemplate(groupName, null, job);
+                    }
+                    catch(Exception ex)
+                    {
+                        _ = MessageBox.Show("Invalid file, cannot read xml: " + ex.Message);
+                        return;
+                    }
+                }
+                else if (TemplateGroupsFor == GroupsFor.Factories)
+                {
+                    try
+                    {
+                        var factories = Objects.Factories.DeserializeFactories(content);
+                        CreateGroup(groupName);
+                        foreach (var factory in factories.FactoryList)
+                            AddOrUpdateTemplate(groupName, null, factory);
+                    }
+                    catch (Exception ex)
+                    {
+                        _ = MessageBox.Show("Invalid file, cannot read xml: " + ex.Message);
+                        return;
+                    }
+                }
+            }
         }
     }
 }
