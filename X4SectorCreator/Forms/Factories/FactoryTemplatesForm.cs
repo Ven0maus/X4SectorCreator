@@ -35,7 +35,24 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            FactoryForm.Factory = selectedFactory;
+            const string lblFactoryName = "New Factory Name:";
+            Dictionary<string, string> data = MultiInputDialog.Show("Factory name",
+                (lblFactoryName, null, null)
+            );
+            if (data == null || data.Count == 0)
+                return;
+
+            string factoryName = data[lblFactoryName];
+            if (string.IsNullOrWhiteSpace(factoryName))
+            {
+                _ = MessageBox.Show("Factory name cannot be empty.");
+                return;
+            }
+
+            var factory = Factory.DeserializeFactory(selectedFactory.SerializeFactory());
+            factory.Id = factoryName;
+
+            FactoryForm.Factory = factory;
             FactoryForm.Show();
             Close();
         }
