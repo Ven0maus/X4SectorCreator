@@ -17,6 +17,7 @@ namespace X4SectorCreator.Forms.General
 
         private readonly MultiSelectCombo _mscFactions;
         private readonly List<object> _currentSelection = [];
+        private readonly LazyEvaluated<TemplateGroupsForm> _templateGroupsView = new(() => new TemplateGroupsForm(), a => !a.IsDisposed);
 
         public MultiTemplateSelectorForm()
         {
@@ -40,7 +41,6 @@ namespace X4SectorCreator.Forms.General
         {
             TxtSearch.DisableTextSearch();
         }
-
 
         private void ApplyCurrentFilter(List<object> items = null)
         {
@@ -315,6 +315,19 @@ namespace X4SectorCreator.Forms.General
             {
                 SelectedTemplatesListBox.Items.Remove(option);
             }
+        }
+
+        private void BtnViewTemplateGroups_Click(object sender, EventArgs e)
+        {
+            _templateGroupsView.Value.UpdateMethod = UpdateTemplateGroups;
+            _templateGroupsView.Value.TemplateGroupsFor = FactoriesForm == null ? 
+                TemplateGroupsForm.GroupsFor.Jobs : TemplateGroupsForm.GroupsFor.Factories;
+            _templateGroupsView.Value.Show();
+        }
+
+        private void UpdateTemplateGroups()
+        {
+            MultiTemplateSelectorForm_Load(this, null);
         }
     }
 }

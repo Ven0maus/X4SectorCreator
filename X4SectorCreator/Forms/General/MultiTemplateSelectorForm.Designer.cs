@@ -46,6 +46,7 @@
             BtnCancel = new Button();
             SelectGroup = new Button();
             BtnDeselectGroup = new Button();
+            BtnViewTemplateGroups = new Button();
             SuspendLayout();
             // 
             // label3
@@ -183,7 +184,7 @@
             // 
             // BtnConfirm
             // 
-            BtnConfirm.Location = new Point(403, 212);
+            BtnConfirm.Location = new Point(402, 474);
             BtnConfirm.Name = "BtnConfirm";
             BtnConfirm.Size = new Size(249, 39);
             BtnConfirm.TabIndex = 28;
@@ -193,7 +194,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(403, 257);
+            BtnCancel.Location = new Point(402, 429);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(249, 39);
             BtnCancel.TabIndex = 29;
@@ -203,7 +204,7 @@
             // 
             // SelectGroup
             // 
-            SelectGroup.Location = new Point(403, 130);
+            SelectGroup.Location = new Point(402, 130);
             SelectGroup.Name = "SelectGroup";
             SelectGroup.Size = new Size(249, 35);
             SelectGroup.TabIndex = 30;
@@ -213,7 +214,7 @@
             // 
             // BtnDeselectGroup
             // 
-            BtnDeselectGroup.Location = new Point(403, 171);
+            BtnDeselectGroup.Location = new Point(402, 171);
             BtnDeselectGroup.Name = "BtnDeselectGroup";
             BtnDeselectGroup.Size = new Size(249, 35);
             BtnDeselectGroup.TabIndex = 31;
@@ -221,11 +222,22 @@
             BtnDeselectGroup.UseVisualStyleBackColor = true;
             BtnDeselectGroup.Click += BtnDeselectGroup_Click;
             // 
+            // BtnViewTemplateGroups
+            // 
+            BtnViewTemplateGroups.Location = new Point(402, 212);
+            BtnViewTemplateGroups.Name = "BtnViewTemplateGroups";
+            BtnViewTemplateGroups.Size = new Size(249, 35);
+            BtnViewTemplateGroups.TabIndex = 32;
+            BtnViewTemplateGroups.Text = "View Template Groups";
+            BtnViewTemplateGroups.UseVisualStyleBackColor = true;
+            BtnViewTemplateGroups.Click += BtnViewTemplateGroups_Click;
+            // 
             // MultiTemplateSelectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(660, 519);
+            Controls.Add(BtnViewTemplateGroups);
             Controls.Add(BtnDeselectGroup);
             Controls.Add(SelectGroup);
             Controls.Add(BtnCancel);
@@ -271,5 +283,6 @@
         private Button BtnCancel;
         private Button SelectGroup;
         private Button BtnDeselectGroup;
+        private Button BtnViewTemplateGroups;
     }
 }
