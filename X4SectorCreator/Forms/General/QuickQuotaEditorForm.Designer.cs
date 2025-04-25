@@ -55,14 +55,12 @@
             QuotaView.AllowUserToAddRows = false;
             QuotaView.AllowUserToDeleteRows = false;
             QuotaView.AllowUserToOrderColumns = true;
-            QuotaView.AllowUserToResizeColumns = false;
             QuotaView.AllowUserToResizeRows = false;
             QuotaView.BorderStyle = BorderStyle.Fixed3D;
             QuotaView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             QuotaView.Columns.AddRange(new DataGridViewColumn[] { Column1, Galaxy, Cluster, Sector, MaxGalaxy, Wing });
             QuotaView.Location = new Point(12, 42);
             QuotaView.Name = "QuotaView";
-            QuotaView.ScrollBars = ScrollBars.Vertical;
             QuotaView.Size = new Size(601, 535);
             QuotaView.TabIndex = 0;
             // 
@@ -183,12 +181,12 @@
             // 
             // Column1
             // 
-            Column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Column1.FillWeight = 200F;
             Column1.HeaderText = "Name";
             Column1.MinimumWidth = 175;
             Column1.Name = "Column1";
             Column1.ReadOnly = true;
+            Column1.Width = 175;
             // 
             // Galaxy
             // 
