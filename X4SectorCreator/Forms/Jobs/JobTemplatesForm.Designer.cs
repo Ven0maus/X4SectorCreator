@@ -38,6 +38,7 @@
             CmbTemplatesGroup = new ComboBox();
             label3 = new Label();
             BtnViewTemplateGroups = new Button();
+            BtnCopyXml = new Button();
             SuspendLayout();
             // 
             // ListTemplateJobs
@@ -68,6 +69,7 @@
             TxtExampleJob.Multiline = true;
             TxtExampleJob.Name = "TxtExampleJob";
             TxtExampleJob.ReadOnly = true;
+            TxtExampleJob.ScrollBars = ScrollBars.Vertical;
             TxtExampleJob.Size = new Size(654, 500);
             TxtExampleJob.TabIndex = 2;
             // 
@@ -116,6 +118,7 @@
             CmbTemplatesGroup.Name = "CmbTemplatesGroup";
             CmbTemplatesGroup.Size = new Size(253, 23);
             CmbTemplatesGroup.TabIndex = 8;
+            CmbTemplatesGroup.SelectedIndexChanged += CmbTemplatesGroup_SelectedIndexChanged;
             // 
             // label3
             // 
@@ -137,11 +140,22 @@
             BtnViewTemplateGroups.UseVisualStyleBackColor = true;
             BtnViewTemplateGroups.Click += BtnViewTemplateGroups_Click;
             // 
+            // BtnCopyXml
+            // 
+            BtnCopyXml.Location = new Point(908, 5);
+            BtnCopyXml.Name = "BtnCopyXml";
+            BtnCopyXml.Size = new Size(150, 30);
+            BtnCopyXml.TabIndex = 11;
+            BtnCopyXml.Text = "Copy XML To Clipboard";
+            BtnCopyXml.UseVisualStyleBackColor = true;
+            BtnCopyXml.Click += BtnCopyXml_Click;
+            // 
             // JobTemplatesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1066, 581);
+            Controls.Add(BtnCopyXml);
             Controls.Add(BtnViewTemplateGroups);
             Controls.Add(label3);
             Controls.Add(CmbTemplatesGroup);
@@ -157,6 +171,7 @@
             MinimizeBox = false;
             Name = "JobTemplatesForm";
             Text = "Job Template Selector";
+            Load += JobTemplatesForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -173,5 +188,6 @@
         private ComboBox CmbTemplatesGroup;
         private Label label3;
         private Button BtnViewTemplateGroups;
+        private Button BtnCopyXml;
     }
 }

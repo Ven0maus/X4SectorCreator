@@ -36,15 +36,20 @@
             BtnDeleteGroup = new Button();
             BtnAddTemplate = new Button();
             BtnDeleteTemplate = new Button();
+            BtnConfirm = new Button();
+            BtnCancel = new Button();
+            TxtSearch = new TextBox();
             SuspendLayout();
             // 
             // TemplateGroupsListBox
             // 
             TemplateGroupsListBox.FormattingEnabled = true;
+            TemplateGroupsListBox.HorizontalScrollbar = true;
             TemplateGroupsListBox.Location = new Point(6, 33);
             TemplateGroupsListBox.Name = "TemplateGroupsListBox";
             TemplateGroupsListBox.Size = new Size(236, 454);
             TemplateGroupsListBox.TabIndex = 0;
+            TemplateGroupsListBox.SelectedIndexChanged += TemplateGroupsListBox_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -69,10 +74,12 @@
             // TemplatesInGroupListBox
             // 
             TemplatesInGroupListBox.FormattingEnabled = true;
+            TemplatesInGroupListBox.HorizontalScrollbar = true;
             TemplatesInGroupListBox.Location = new Point(248, 33);
             TemplatesInGroupListBox.Name = "TemplatesInGroupListBox";
             TemplatesInGroupListBox.Size = new Size(457, 454);
             TemplatesInGroupListBox.TabIndex = 2;
+            TemplatesInGroupListBox.DoubleClick += TemplatesInGroupListBox_DoubleClick;
             // 
             // BtnCreateNewGroup
             // 
@@ -114,11 +121,42 @@
             BtnDeleteTemplate.UseVisualStyleBackColor = true;
             BtnDeleteTemplate.Click += BtnDeleteTemplate_Click;
             // 
+            // BtnConfirm
+            // 
+            BtnConfirm.Location = new Point(248, 532);
+            BtnConfirm.Name = "BtnConfirm";
+            BtnConfirm.Size = new Size(457, 36);
+            BtnConfirm.TabIndex = 8;
+            BtnConfirm.Text = "Confirm Changes";
+            BtnConfirm.UseVisualStyleBackColor = true;
+            BtnConfirm.Click += BtnConfirm_Click;
+            // 
+            // BtnCancel
+            // 
+            BtnCancel.Location = new Point(6, 532);
+            BtnCancel.Name = "BtnCancel";
+            BtnCancel.Size = new Size(236, 36);
+            BtnCancel.TabIndex = 9;
+            BtnCancel.Text = "Cancel";
+            BtnCancel.UseVisualStyleBackColor = true;
+            BtnCancel.Click += BtnCancel_Click;
+            // 
+            // TxtSearch
+            // 
+            TxtSearch.Location = new Point(395, 7);
+            TxtSearch.Name = "TxtSearch";
+            TxtSearch.PlaceholderText = "Search..";
+            TxtSearch.Size = new Size(310, 23);
+            TxtSearch.TabIndex = 10;
+            // 
             // TemplateGroupsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(710, 534);
+            ClientSize = new Size(710, 572);
+            Controls.Add(TxtSearch);
+            Controls.Add(BtnCancel);
+            Controls.Add(BtnConfirm);
             Controls.Add(BtnDeleteTemplate);
             Controls.Add(BtnAddTemplate);
             Controls.Add(BtnDeleteGroup);
@@ -127,8 +165,12 @@
             Controls.Add(TemplatesInGroupListBox);
             Controls.Add(label1);
             Controls.Add(TemplateGroupsListBox);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "TemplateGroupsForm";
             Text = "Template Groups Editor";
+            Load += TemplateGroupsForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -143,5 +185,8 @@
         private Button BtnDeleteGroup;
         private Button BtnAddTemplate;
         private Button BtnDeleteTemplate;
+        private Button BtnConfirm;
+        private Button BtnCancel;
+        private TextBox TxtSearch;
     }
 }

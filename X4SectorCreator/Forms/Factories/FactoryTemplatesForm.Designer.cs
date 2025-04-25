@@ -38,6 +38,7 @@
             label3 = new Label();
             CmbTemplatesGroup = new ComboBox();
             BtnViewTemplateGroups = new Button();
+            BtnCopyXml = new Button();
             SuspendLayout();
             // 
             // ListTemplateFactories
@@ -68,6 +69,7 @@
             TxtExampleFactory.Multiline = true;
             TxtExampleFactory.Name = "TxtExampleFactory";
             TxtExampleFactory.ReadOnly = true;
+            TxtExampleFactory.ScrollBars = ScrollBars.Vertical;
             TxtExampleFactory.Size = new Size(654, 500);
             TxtExampleFactory.TabIndex = 2;
             // 
@@ -126,6 +128,7 @@
             CmbTemplatesGroup.Name = "CmbTemplatesGroup";
             CmbTemplatesGroup.Size = new Size(253, 23);
             CmbTemplatesGroup.TabIndex = 10;
+            CmbTemplatesGroup.SelectedIndexChanged += CmbTemplatesGroup_SelectedIndexChanged;
             // 
             // BtnViewTemplateGroups
             // 
@@ -137,11 +140,22 @@
             BtnViewTemplateGroups.UseVisualStyleBackColor = true;
             BtnViewTemplateGroups.Click += BtnViewTemplateGroups_Click;
             // 
+            // BtnCopyXml
+            // 
+            BtnCopyXml.Location = new Point(911, 4);
+            BtnCopyXml.Name = "BtnCopyXml";
+            BtnCopyXml.Size = new Size(150, 30);
+            BtnCopyXml.TabIndex = 13;
+            BtnCopyXml.Text = "Copy XML To Clipboard";
+            BtnCopyXml.UseVisualStyleBackColor = true;
+            BtnCopyXml.Click += BtnCopyXml_Click;
+            // 
             // FactoryTemplatesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1066, 585);
+            Controls.Add(BtnCopyXml);
             Controls.Add(BtnViewTemplateGroups);
             Controls.Add(label3);
             Controls.Add(CmbTemplatesGroup);
@@ -157,6 +171,7 @@
             MinimizeBox = false;
             Name = "FactoryTemplatesForm";
             Text = "Factory Template Selector";
+            Load += FactoryTemplatesForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -173,5 +188,6 @@
         private Label label3;
         private ComboBox CmbTemplatesGroup;
         private Button BtnViewTemplateGroups;
+        private Button BtnCopyXml;
     }
 }
