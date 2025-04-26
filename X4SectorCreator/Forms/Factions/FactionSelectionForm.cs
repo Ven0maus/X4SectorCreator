@@ -89,6 +89,11 @@ namespace X4SectorCreator.Forms
                 Job.Ship.Owner.Exact = owner;
             }
 
+            if (Job.Location?.Policefaction != null)
+            {
+                Job.Location.Policefaction = owner;
+            }
+
             JobForm.TxtJobXml.Text = Job.SerializeJob().Replace("{faction.Id}", owner);
             JobForm.TxtJobXml.SelectionStart = JobForm.TxtJobXml.Text.Length;
         }
