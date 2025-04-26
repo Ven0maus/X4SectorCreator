@@ -266,6 +266,8 @@ namespace X4SectorCreator.Forms.Factories
 
             if (job.Location != null)
             {
+                if (job.Location?.Policefaction != null)
+                    job.Location.Policefaction = owner;
                 job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
             }
 

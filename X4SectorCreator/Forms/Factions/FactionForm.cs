@@ -373,6 +373,10 @@ namespace X4SectorCreator.Forms
                         job.Location.Faction = factions.Count == 0 ? null : "[" + string.Join(",", factions) + "]";
                     }
                 }
+                if (job.Location?.Policefaction != null)
+                {
+                    job.Location.Policefaction = @new;
+                }
                 if (job.Ship?.Select?.Faction != null &&
                     job.Ship.Select.Faction.Equals(old, StringComparison.OrdinalIgnoreCase))
                 {
