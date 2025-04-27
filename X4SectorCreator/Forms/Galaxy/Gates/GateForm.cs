@@ -93,11 +93,15 @@ namespace X4SectorCreator.Forms
         public void PrepareForUpdate()
         {
             // Source gate
+            cmbSourceType.SelectedItem = UpdateInfoObject.SourceGate.Type == Gate.GateType.props_gates_anc_gate_macro ?
+                "Gate" : "Accelerator";
             txtSourceGatePitch.Text = UpdateInfoObject.SourceGate.Pitch.ToString();
             txtSourceGateRoll.Text = UpdateInfoObject.SourceGate.Roll.ToString();
             txtSourceGateYaw.Text = UpdateInfoObject.SourceGate.Yaw.ToString();
 
             // Target gate
+            cmbTargetType.SelectedItem = UpdateInfoObject.TargetGate.Type == Gate.GateType.props_gates_anc_gate_macro ?
+                "Gate" : "Accelerator";
             txtTargetGatePitch.Text = UpdateInfoObject.TargetGate.Pitch.ToString();
             txtTargetGateRoll.Text = UpdateInfoObject.TargetGate.Roll.ToString();
             txtTargetGateYaw.Text = UpdateInfoObject.TargetGate.Yaw.ToString();
