@@ -1,5 +1,6 @@
 ﻿using System.Xml.Linq;
 using X4SectorCreator.Forms;
+using X4SectorCreator.Helpers;
 
 namespace X4SectorCreator.XmlGeneration
 {
@@ -84,8 +85,12 @@ namespace X4SectorCreator.XmlGeneration
                     job.Value.Location.Macro = job.Value.Location.Macro.Replace("PREFIX", modPrefix);
                 }
 
+                // Clone for localisations
+                var cloneJob = job.Value.Clone();
+                cloneJob.Name = Localisation.Localize(cloneJob.Name);
+
                 // Serialize
-                string jobElementXml = job.Value.SerializeJob();
+                string jobElementXml = cloneJob.SerializeJob();
 
                 // Reset
                 job.Value.Id = originalId;

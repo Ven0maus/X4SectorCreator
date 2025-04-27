@@ -69,14 +69,14 @@ namespace X4SectorCreator.XmlGeneration
         {
             return stationType.ToLower() switch
             {
-                "defence" => "Defence Platform",
-                "tradestation" => "Trading Station",
-                "equipmentdock" => "Equipment Dock",
-                "wharf" => "Wharf",
-                "shipyard" => "Shipyard",
-                "piratebase" => "Pirate Base",
-                "piratedock" => "Pirate Dock",
-                "freeport" => "Free Port",
+                "defence" => "{local:Defence Platform}",
+                "tradestation" => "{local:Trading Station}",
+                "equipmentdock" => "{local:Equipment Dock}",
+                "wharf" => "{local:Wharf}",
+                "shipyard" => "{local:Shipyard}",
+                "piratebase" => "{local:Pirate Base}",
+                "piratedock" => "{local:Pirate Dock}",
+                "freeport" => "{local:Free Port}",
                 _ => stationType,
             };
         }

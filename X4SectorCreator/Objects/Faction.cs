@@ -122,6 +122,11 @@ namespace X4SectorCreator.Objects
             return Id;
         }
 
+        internal Faction Clone()
+        {
+            return Deserialize(Serialize());
+        }
+
         [XmlRoot(ElementName = "color")]
         public class ColorDataObj
         {
