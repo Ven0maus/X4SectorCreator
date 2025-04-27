@@ -1,0 +1,702 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<jobs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="libraries.xsd">
+	<job id="{faction.Id}_DACriticalTag{faction.Id}_xl_job_DASmallFleet" name="{33232474,2240}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DACriticalTag{faction.Id},DASmallFleet,factionlogic,military]" size="ship_xl" />
+		<quota galaxy="0" maxgalaxy="20" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DACriticalTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military]" size="ship_xl" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DASmallFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DASmallFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DASmallFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_DACoreTag{faction.Id}_l_job_DASmallFleet" name="{33232474,2241}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DACoreTag{faction.Id},DASmallFleet,factionlogic,military]" size="ship_l" />
+		<quota galaxy="0" maxgalaxy="40" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DACoreTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, destroyer]" size="ship_l" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DASmallFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DASmallFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DASmallFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_DABorderTag{faction.Id}_l_job_DASmallFleet" name="{33232474,2242}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DABorderTag{faction.Id},DASmallFleet,factionlogic,military]" size="ship_l" />
+		<quota galaxy="0" maxgalaxy="40" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DABorderTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, destroyer]" size="ship_l" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DASmallFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DASmallFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DASmallFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_DAContestedTag{faction.Id}_xl_job_DASmallFleet" name="{33232474,2243}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DAContestedTag{faction.Id},DASmallFleet,factionlogic,military]" size="ship_xl" />
+		<quota galaxy="0" maxgalaxy="16" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DAContestedTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military]" size="ship_xl" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DASmallFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DASmallFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DASmallFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_escort_l_DASmallFleet" name="{33232474,2244}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.xshape" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military, escort]" size="ship_l" />
+		<quota wing="1" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, escort]" size="ship_l" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_escort_m_DASmallFleet" name="{33232474,2245}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.xshapeback" />
+				<param name="formationparam" value="2500m" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military]" size="ship_m" />
+		<quota wing="3" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, medium]" size="ship_m" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_escort_s_DASmallFleet" name="{33232474,2246}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.crossback" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military, fighter]" size="ship_s" />
+		<quota wing="6" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, fighter]" size="ship_s" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_DACriticalTag{faction.Id}_xl_job_DAMediumFleet" name="{33232474,2240}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DACriticalTag{faction.Id},DAMediumFleet,factionlogic,military]" size="ship_xl" />
+		<quota galaxy="0" maxgalaxy="20" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DACriticalTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military]" size="ship_xl" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DAMediumFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DAMediumFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DAMediumFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_DACoreTag{faction.Id}_l_job_DAMediumFleet" name="{33232474,2241}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DACoreTag{faction.Id},DAMediumFleet,factionlogic,military]" size="ship_l" />
+		<quota galaxy="0" maxgalaxy="40" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DACoreTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, destroyer]" size="ship_l" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DAMediumFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DAMediumFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DAMediumFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_DABorderTag{faction.Id}_l_job_DAMediumFleet" name="{33232474,2242}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DABorderTag{faction.Id},DAMediumFleet,factionlogic,military]" size="ship_l" />
+		<quota galaxy="0" maxgalaxy="40" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DABorderTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, destroyer]" size="ship_l" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DAMediumFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DAMediumFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DAMediumFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_DAContestedTag{faction.Id}_xl_job_DAMediumFleet" name="{33232474,2243}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DAContestedTag{faction.Id},DAMediumFleet,factionlogic,military]" size="ship_xl" />
+		<quota galaxy="0" maxgalaxy="16" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DAContestedTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military]" size="ship_xl" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DAMediumFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DAMediumFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DAMediumFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_escort_l_DAMediumFleet" name="{33232474,2244}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.xshape" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military, escort]" size="ship_l" />
+		<quota wing="3" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, escort]" size="ship_l" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_escort_m_DAMediumFleet" name="{33232474,2245}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.xshapeback" />
+				<param name="formationparam" value="2500m" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military]" size="ship_m" />
+		<quota wing="9" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, medium]" size="ship_m" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_escort_s_DAMediumFleet" name="{33232474,2246}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.crossback" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military, fighter]" size="ship_s" />
+		<quota wing="18" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, fighter]" size="ship_s" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_DACriticalTag{faction.Id}_xl_job_DALargeFleet" name="{33232474,2240}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DACriticalTag{faction.Id},DALargeFleet,factionlogic,military]" size="ship_xl" />
+		<quota galaxy="0" maxgalaxy="20" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DACriticalTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military]" size="ship_xl" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DALargeFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DALargeFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DALargeFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_DACoreTag{faction.Id}_l_job_DALargeFleet" name="{33232474,2241}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DACoreTag{faction.Id},DALargeFleet,factionlogic,military]" size="ship_l" />
+		<quota galaxy="0" maxgalaxy="40" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DACoreTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, destroyer]" size="ship_l" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DALargeFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DALargeFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DALargeFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_DABorderTag{faction.Id}_l_job_DALargeFleet" name="{33232474,2242}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DABorderTag{faction.Id},DALargeFleet,factionlogic,military]" size="ship_l" />
+		<quota galaxy="0" maxgalaxy="40" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DABorderTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, destroyer]" size="ship_l" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DALargeFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DALargeFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DALargeFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_DAContestedTag{faction.Id}_xl_job_DALargeFleet" name="{33232474,2243}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[DAContestedTag{faction.Id},DALargeFleet,factionlogic,military]" size="ship_xl" />
+		<quota galaxy="0" maxgalaxy="16" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DAContestedTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military]" size="ship_xl" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_escort_l_DALargeFleet" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_escort_m_DALargeFleet" assignment="defence" group="2" />
+			<subordinate job="{faction.Id}_escort_s_DALargeFleet" assignment="interception" group="3" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_escort_l_DALargeFleet" name="{33232474,2244}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.xshape" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military, escort]" size="ship_l" />
+		<quota wing="5" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, escort]" size="ship_l" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_escort_m_DALargeFleet" name="{33232474,2245}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.xshapeback" />
+				<param name="formationparam" value="2500m" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military]" size="ship_m" />
+		<quota wing="15" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, medium]" size="ship_m" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_escort_s_DALargeFleet" name="{33232474,2246}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.crossback" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military, fighter]" size="ship_s" />
+		<quota wing="30" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, fighter]" size="ship_s" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_DALTraderTag{faction.Id}_L_job" name="{33232474,2255}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="TradeRoutine" default="true">
+				<param name="minbuy" value="0" />
+				<param name="maxbuy" value="5" />
+				<param name="minsell" value="0" />
+				<param name="maxsell" value="5" />
+				<param name="buyfromfactions" value="['own']" />
+				<param name="selltofactions" value="['own']" />
+			</order>
+		</orders>
+		<basket basket="all_container" />
+		<category faction="{faction.Id}" tags="[DALTraderTag{faction.Id}, factionlogic, freighter, trader]" size="ship_l" />
+		<quota galaxy="0" maxgalaxy="100" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DALTraderTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[trader, container]" size="ship_l" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_DAMTraderTag{faction.Id}_M_job" name="{33232474,2256}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="TradeRoutine" default="true">
+				<param name="minbuy" value="0" />
+				<param name="maxbuy" value="5" />
+				<param name="minsell" value="0" />
+				<param name="maxsell" value="5" />
+				<param name="buyfromfactions" value="['own']" />
+				<param name="selltofactions" value="['own']" />
+			</order>
+		</orders>
+		<basket basket="all_container" />
+		<category faction="{faction.Id}" tags="[DAMTraderTag{faction.Id}, factionlogic, freighter, trader]" size="ship_m" />
+		<quota galaxy="0" maxgalaxy="100" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" tags="DAMTraderTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[trader, container]" size="ship_m" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_DALMinerTag{faction.Id}_L_job" name="{33232474,2257}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="MiningRoutine" default="true">
+				<param name="minbuy" value="0" />
+				<param name="maxbuy" value="5" />
+				<param name="minsell" value="0" />
+				<param name="maxsell" value="5" />
+			</order>
+		</orders>
+		<basket basket="minerals" />
+		<category faction="{faction.Id}" tags="[DALMinerTag{faction.Id}, factionlogic, freighter, miner]" size="ship_l" />
+		<quota galaxy="0" maxgalaxy="100" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" regionbasket="minerals" tags="DALMinerTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[miner, solid]" size="ship_l" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_DAMMinerTag{faction.Id}_M_job" name="{33232474,2258}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="MiningRoutine" default="true">
+				<param name="minbuy" value="0" />
+				<param name="maxbuy" value="5" />
+				<param name="minsell" value="0" />
+				<param name="maxsell" value="5" />
+			</order>
+		</orders>
+		<basket basket="minerals" />
+		<category faction="{faction.Id}" tags="[DAMMinerTag{faction.Id}, factionlogic, freighter, miner]" size="ship_m" />
+		<quota galaxy="0" maxgalaxy="100" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" regionbasket="minerals" tags="DAMMinerTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[miner, solid]" size="ship_m" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_DALGasMinerTag{faction.Id}_L_job" name="{33232474,2259}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="MiningRoutine" default="true">
+				<param name="minbuy" value="0" />
+				<param name="maxbuy" value="5" />
+				<param name="minsell" value="0" />
+				<param name="maxsell" value="5" />
+			</order>
+		</orders>
+		<basket basket="gases" />
+		<category faction="{faction.Id}" tags="[DALGasMinerTag{faction.Id}, factionlogic, freighter, miner]" size="ship_l" />
+		<quota galaxy="0" maxgalaxy="100" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" regionbasket="gases" tags="DALGasMinerTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[miner, liquid]" size="ship_l" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_DAMGasMinerTag{faction.Id}_M_job" name="{33232474,2260}" startactive="false">
+		<modifiers commandeerable="true" />
+		<orders>
+			<order order="MiningRoutine" default="true">
+				<param name="minbuy" value="0" />
+				<param name="maxbuy" value="5" />
+				<param name="minsell" value="0" />
+				<param name="maxsell" value="5" />
+			</order>
+		</orders>
+		<basket basket="gases" />
+		<category faction="{faction.Id}" tags="[DAMGasMinerTag{faction.Id}, factionlogic, freighter, miner]" size="ship_m" />
+		<quota galaxy="0" maxgalaxy="100" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" regionbasket="gases" tags="DAMGasMinerTag{faction.Id}" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[miner, liquid]" size="ship_m" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_fighter_escort_s_carrier_expedition" name="{20204,2901}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.pointguard" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military, fighter]" size="ship_s" />
+		<quota wing="14" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, fighter]" size="ship_s" />
+			<loadout>
+				<level min="0.25" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_expedition_da" name="{20204,6301}" startactive="false">
+		<modifiers rebuild="true" commandeerable="true" />
+		<orders>
+			<order order="Patrol" default="true">
+				<param name="range" value="class.sector" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[daexpedition]" size="ship_xl" />
+		<quota galaxy="1" maxgalaxy="1" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" faction="{faction.Id}" relation="self" comparison="exact" matchextension="false" />
+		<environment buildatshipyard="true" preferbuilding="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military]" size="ship_xl" />
+			<loadout>
+				<level min="0.7" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+		<subordinates>
+			<subordinate job="{faction.Id}_destroyer_escort_l_expedition" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_destroyer_escort_l_expedition" assignment="attack" group="1" />
+			<subordinate job="{faction.Id}_frigate_escort_m_expedition" assignment="attack" group="2" />
+			<subordinate job="{faction.Id}_frigate_escort_m_expedition" assignment="attack" group="2" />
+			<subordinate job="{faction.Id}_fighter_escort_s_carrier_expedition" assignment="interception" group="4" />
+		</subordinates>
+	</job>
+	<job id="{faction.Id}_frigate_escort_m_expedition" name="{20204,2901}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.dartvertical" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military]" size="ship_m" />
+		<quota wing="3" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, medium]" size="ship_m" />
+			<loadout>
+				<level min="0.5" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+	<job id="{faction.Id}_destroyer_escort_l_expedition" name="{20204,3301}" startactive="false">
+		<modifiers subordinate="true" />
+		<orders>
+			<order order="Escort" default="true">
+				<param name="formation" value="formationshape.invvshape" />
+				<param name="overrideformationskill" value="true" />
+			</order>
+		</orders>
+		<category faction="{faction.Id}" tags="[military, escort]" size="ship_l" />
+		<quota wing="2" />
+		<location class="galaxy" macro="xu_ep2_universe_macro" matchextension="false" />
+		<environment buildatshipyard="true" />
+		<ship>
+			<select faction="{faction.Id}" tags="[military, escort]" size="ship_l" />
+			<loadout>
+				<level min="0.8" max="1.0" />
+			</loadout>
+			<owner exact="{faction.Id}" overridenpc="true" />
+		</ship>
+	</job>
+</jobs>

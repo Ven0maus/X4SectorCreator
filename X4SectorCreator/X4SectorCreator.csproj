@@ -122,6 +122,9 @@
     <None Update="Data\TemplateFactories\Vanilla\god.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\TemplateJobs\Deadair_Scripts\jobs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\TemplateJobs\Vanilla\jobs.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

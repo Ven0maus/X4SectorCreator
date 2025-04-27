@@ -1,4 +1,5 @@
 ﻿using X4SectorCreator.Forms.Factories;
+using X4SectorCreator.Forms.General;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -14,6 +15,7 @@ namespace X4SectorCreator.Forms
         private readonly LazyEvaluated<BasketsForm> _basketsForm = new(() => new BasketsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<QuickQuotaEditorForm> _quickQuotaEditorForm = new(() => new QuickQuotaEditorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<PresetSelectionForm> _presetSelectionForm = new(() => new PresetSelectionForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<MultiTemplateSelectorForm> _multiTemplateSelector = new(() => new MultiTemplateSelectorForm(), a => !a.IsDisposed);
 
         private bool _applyFilter = true;
 
@@ -447,6 +449,13 @@ namespace X4SectorCreator.Forms
             _presetSelectionForm.Value.JobsForm = this;
             _presetSelectionForm.Value.FactoriesForm = null;
             _presetSelectionForm.Value.Show();
+        }
+
+        private void BtnAddSelection_Click(object sender, EventArgs e)
+        {
+            _multiTemplateSelector.Value.JobsForm = this;
+            _multiTemplateSelector.Value.FactoriesForm = null;
+            _multiTemplateSelector.Value.Show();
         }
     }
 }

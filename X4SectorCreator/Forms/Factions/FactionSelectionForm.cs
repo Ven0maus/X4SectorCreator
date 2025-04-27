@@ -60,7 +60,7 @@ namespace X4SectorCreator.Forms
             Factory.Location ??= new Factory.LocationObj();
             Factory.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
 
-            FactoryForm.TxtFactoryXml.Text = Factory.SerializeFactory();
+            FactoryForm.TxtFactoryXml.Text = Factory.SerializeFactory().Replace("{faction.Id}", Factory.Owner, StringComparison.OrdinalIgnoreCase);
             FactoryForm.TxtFactoryXml.SelectionStart = FactoryForm.TxtFactoryXml.Text.Length;
         }
 
@@ -89,7 +89,12 @@ namespace X4SectorCreator.Forms
                 Job.Ship.Owner.Exact = owner;
             }
 
-            JobForm.TxtJobXml.Text = Job.SerializeJob();
+            if (Job.Location?.Policefaction != null)
+            {
+                Job.Location.Policefaction = owner;
+            }
+
+            JobForm.TxtJobXml.Text = Job.SerializeJob().Replace("{faction.Id}", owner, StringComparison.OrdinalIgnoreCase);
             JobForm.TxtJobXml.SelectionStart = JobForm.TxtJobXml.Text.Length;
         }
     }

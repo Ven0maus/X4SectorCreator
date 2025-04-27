@@ -97,7 +97,7 @@ namespace X4SectorCreator.Forms.Factories
             if (FactoriesForm != null)
             {
                 // All factories where class is galaxy
-                var templateFactories = FactoryTemplatesForm.CollectTemplateFactories()
+                var templateFactories = GetTemplateFactories()
                     .Where(a => a.Location != null && !string.IsNullOrWhiteSpace(a.Location.Class) &&
                         a.Location.Class.Equals("Galaxy", StringComparison.OrdinalIgnoreCase))
                     .ToArray();
@@ -123,7 +123,7 @@ namespace X4SectorCreator.Forms.Factories
             if (JobsForm != null)
             {
                 // All jobs where class is galaxy
-                var templateJobs = JobTemplatesForm.CollectTemplateJobs()
+                var templateJobs = GetTemplateJobs()
                     .Where(a => a.Location != null && !string.IsNullOrWhiteSpace(a.Location.Class) &&
                         a.Location.Class.Equals("Galaxy", StringComparison.OrdinalIgnoreCase))
                     .ToArray();
@@ -144,6 +144,28 @@ namespace X4SectorCreator.Forms.Factories
             }
 
             Close();
+        }
+
+        private static List<Job> GetTemplateJobs()
+        {
+            var baseDirectory = Constants.DataPaths.TemplateJobsDirectoryPath;
+            var fileName = Path.Combine(baseDirectory, "Vanilla", "jobs.xml");
+            if (!File.Exists(fileName))
+                return [];
+
+            var jobs = Jobs.DeserializeJobs(File.ReadAllText(fileName));
+            return jobs.JobList;
+        }
+
+        private static List<Factory> GetTemplateFactories()
+        {
+            var baseDirectory = Constants.DataPaths.TemplateFactoriesDirectoryPath;
+            var fileName = Path.Combine(baseDirectory, "Vanilla", "god.xml");
+            if (!File.Exists(fileName))
+                return [];
+
+            var factories = Objects.Factories.DeserializeFactories(File.ReadAllText(fileName));
+            return factories.FactoryList;
         }
 
         private static string GetRaceKey(string faction)
@@ -244,6 +266,8 @@ namespace X4SectorCreator.Forms.Factories
 
             if (job.Location != null)
             {
+                if (job.Location?.Policefaction != null)
+                    job.Location.Policefaction = owner;
                 job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
             }
 

@@ -107,9 +107,6 @@ namespace X4SectorCreator.Objects
         [XmlElement(ElementName = "masstraffic")]
         public MasstrafficObject Masstraffic { get; set; }
 
-        [XmlIgnore]
-        public string TemplateDirectory { get; set; }
-
         public string SerializeJob()
         {
             // Create an XmlSerializer for the Job type
@@ -152,6 +149,11 @@ namespace X4SectorCreator.Objects
         public override string ToString()
         {
             return Id ?? Name ?? GetHashCode().ToString();
+        }
+
+        internal Job Clone()
+        {
+            return DeserializeJob(SerializeJob());
         }
 
         [XmlRoot(ElementName = "modifiers")]
