@@ -1,5 +1,7 @@
 ﻿using System.Xml.Linq;
 using X4SectorCreator.Forms;
+using X4SectorCreator.Helpers;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
 {
@@ -38,8 +40,30 @@ namespace X4SectorCreator.XmlGeneration
         private static XElement[] CollectFactionsContent()
         {
             return FactionsForm.AllCustomFactions
-                .Select(a => XElement.Parse(a.Value.Serialize()))
+                .Select(a => AddLocalisations(a.Value.Clone()))
+                .Select(a => XElement.Parse(a.Serialize()))
                 .ToArray();
+        }
+
+        /// <summary>
+        /// Add's {local:} to localisable properties if they don't already use localisation tags.
+        /// </summary>
+        /// <param name="faction"></param>
+        /// <returns></returns>
+        private static Faction AddLocalisations(Faction faction)
+        {
+            faction.Name = Localisation.Localize(faction.Name);
+            faction.Description = Localisation.Localize(faction.Description);
+            faction.Shortname = Localisation.Localize(faction.Shortname);
+            faction.Prefixname = Localisation.Localize(faction.Prefixname);
+
+            foreach (var license in faction.Licences?.Licence ?? [])
+            {
+                license.Name = Localisation.Localize(license.Name);
+                license.Description = Localisation.Localize(license.Description);
+            }
+
+            return faction;
         }
 
         private static IEnumerable<XElement> CollectRelationChanges()

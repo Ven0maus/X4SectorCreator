@@ -151,6 +151,11 @@ namespace X4SectorCreator.Objects
             return Id ?? Name ?? GetHashCode().ToString();
         }
 
+        internal Job Clone()
+        {
+            return DeserializeJob(SerializeJob());
+        }
+
         [XmlRoot(ElementName = "modifiers")]
         public class ModifierObjects
         {

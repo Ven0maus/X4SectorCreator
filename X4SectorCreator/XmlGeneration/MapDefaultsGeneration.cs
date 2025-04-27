@@ -60,8 +60,8 @@ namespace X4SectorCreator.XmlGeneration
                             new XAttribute("macro", $"{modPrefix}_CL_c{cluster.Id:D3}_macro"),
                             new XElement("properties",
                                 new XElement("identification",
-                                    new XAttribute("name", cluster.Name),
-                                    new XAttribute("description", cluster.Description ?? string.Empty),
+                                    new XAttribute("name", $"{{local:{cluster.Name}}}"),
+                                    new XAttribute("description", $"{{local:{cluster.Description ?? string.Empty}}}"),
                                     new XAttribute("image", "enc_cluster01") // By default point to img of cluster01
                                 ),
                                 !string.IsNullOrWhiteSpace(cluster.Soundtrack) ? 
@@ -109,8 +109,8 @@ namespace X4SectorCreator.XmlGeneration
                             new XAttribute("macro", macro),
                             new XElement("properties",
                                 new XElement("identification",
-                                    new XAttribute("name", sector.Name),
-                                    new XAttribute("description", sector.Description ?? string.Empty),
+                                    new XAttribute("name", $"{{local:{sector.Name}}}"),
+                                    new XAttribute("description", $"{{local:{cluster.Description ?? string.Empty}}}"),
                                     new XAttribute("image", "enc_cluster01") // By default point to img of cluster01
                                 ),
                                 areaElement,
@@ -164,8 +164,8 @@ namespace X4SectorCreator.XmlGeneration
                 string macro = Old.BaseGameMapping;
 
                 // Identification nodes
-                elements.Add((Old.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name)));
-                elements.Add((Old.Dlc, CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description)));
+                elements.Add((Old.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", $"{{local:{New.Name}}}")));
+                elements.Add((Old.Dlc, CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", $"{{local:{New.Description}}}")));
 
                 // Soundtrack
                 var soundtrackElement = HandleElementSoundtrack(Old.Soundtrack, New.Soundtrack, macro);
@@ -180,8 +180,8 @@ namespace X4SectorCreator.XmlGeneration
                 string macro = $"{VanillaCluster.BaseGameMapping}_{Old.BaseGameMapping.CapitalizeFirstLetter()}";
 
                 // Identification nodes
-                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", New.Name)));
-                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", New.Description)));
+                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Name, New.Name, macro, "identification", "name", $"{{local:{New.Name}}}")));
+                elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Description, New.Description, macro, "identification", "description", $"{{local:{New.Description}}}")));
 
                 // Area nodes
                 elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Sunlight.ToString("0.##"), New.Sunlight.ToString("0.##"), macro, "area", "sunlight", New.Sunlight.ToString("0.##"))));

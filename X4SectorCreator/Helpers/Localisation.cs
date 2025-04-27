@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using X4SectorCreator.Forms;
 
 namespace X4SectorCreator.Helpers
 {
@@ -9,7 +9,7 @@ namespace X4SectorCreator.Helpers
     {
         // Must be case-sensitive
         private static readonly Dictionary<string, int> _localisations = [];
-        private static int _pageId, _currentIndex;
+        private static int _pageId, _currentIndex = 1;
         private static bool _initialized;
 
         // FNV prime and offset basis for 32-bit hash
@@ -25,7 +25,7 @@ namespace X4SectorCreator.Helpers
         public static void Initialize(int pageId)
         {
             _pageId = pageId;
-            _currentIndex = 0;
+            _currentIndex = 1;
             _initialized = true;
         }
 
@@ -38,7 +38,7 @@ namespace X4SectorCreator.Helpers
         {
             // Generate a unique FNV hash to use as page id based on (prefix mod name)
             _pageId = GetFnvHash($"{modPrefix} {modName}");
-            _currentIndex = 0;
+            _currentIndex = 1;
             _initialized = true;
         }
 
@@ -55,36 +55,17 @@ namespace X4SectorCreator.Helpers
         }
 
         /// <summary>
-        /// Converts a {local:textvalue} to {pageId, index} localisation format. 
+        /// Formats a value with {local:} tag.
         /// </summary>
-        /// <param name="code"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static string Get(string code)
+        public static string Localize(string value)
         {
-            if (!_initialized)
-                throw new Exception("Localisation class is not yet initialized.");
-
-            // If not a valid local then just simply return the string itself
-            if (!code.StartsWith("{local:", StringComparison.OrdinalIgnoreCase))
-                return code;
-
-            // Split : and skip the first entry (local), and re join all the rest)
-            var value = string.Join(":", code.Split(':').Skip(1)).TrimEnd('}').Trim();
-            if (_localisations.TryGetValue(value, out var index))
+            if (value != null && !value.StartsWith("{local:", StringComparison.OrdinalIgnoreCase))
             {
-                return $"{{{_pageId},{index}}}"; ;
+                return $"{{local:{value}}}";
             }
-
-            // Generate a new local code
-            var local = $"{{{_pageId},{_currentIndex}}}";
-
-            // Store local for re-use
-            _localisations[value] = _currentIndex;
-
-            // Increase index for next use
-            _currentIndex++;
-
-            return local;
+            return value;
         }
 
         public static void LocaliseAllFiles(string modFolder)
@@ -110,6 +91,64 @@ namespace X4SectorCreator.Helpers
             BuildTFiles(modFolder);
         }
 
+        /// <summary>
+        /// Converts a {local:textvalue} to {pageId, index} localisation format. 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        private static string Get(string code)
+        {
+            if (!_initialized)
+                throw new Exception("Localisation class is not yet initialized.");
+
+            // If not a valid local then just simply return the string itself
+            if (!code.StartsWith("{local:", StringComparison.OrdinalIgnoreCase))
+                return code;
+
+            // Extracting the value from the local tag
+            var value = ExtractLocalValue(code);
+
+            if (_localisations.TryGetValue(value, out var index))
+            {
+                return $"{{{_pageId},{index}}}"; ;
+            }
+
+            // Generate a new local code
+            var local = $"{{{_pageId},{_currentIndex}}}";
+
+            // Store local for re-use
+            _localisations[value] = _currentIndex;
+
+            // Increase index for next use
+            _currentIndex++;
+
+            return local;
+        }
+
+        private static string ExtractLocalValue(string input)
+        {
+            int braceCount = 1;
+            var builder = new StringBuilder(input.Length - 7);
+            for (int i = input.IndexOf("{local:")+7; i < input.Length; i++)
+            {
+                var value = input[i];
+                if (value == '}')
+                    braceCount--;
+                else if (value == '{')
+                    braceCount++;
+
+                if (braceCount == 0)
+                {
+                    return builder.ToString();
+                }
+                else
+                {
+                    builder.Append(value);
+                }
+            }
+            return string.Empty;
+        }
+
         private static void BuildTFiles(string modFolder)
         {
             if (_localisations.Count <= 0) return;
@@ -120,8 +159,8 @@ namespace X4SectorCreator.Helpers
                 new XElement("language",
                     new XElement("page",
                         new XAttribute("id", _pageId),
-                        new XAttribute("title", modName),
-                        new XAttribute("descr", $"Names used in {modName}"),
+                        new XAttribute("title", $"{modName} T Files"),
+                        new XAttribute("descr", $""),
                         new XAttribute("voice", "yes"),
                         _localisations.Select(a => new XElement("t", new XAttribute("id", a.Value), a.Key))
                     )
@@ -166,7 +205,7 @@ namespace X4SectorCreator.Helpers
             return filePath;
         }
 
-        [GeneratedRegex(@"\{local:\s*(.+?)\s*\}", RegexOptions.Compiled)]
+        [GeneratedRegex(@"\{local:(?:[^{}]|\{[^{}]*\})*\}", RegexOptions.Compiled)]
         private static partial Regex LocaliseRegex();
     }
 }
