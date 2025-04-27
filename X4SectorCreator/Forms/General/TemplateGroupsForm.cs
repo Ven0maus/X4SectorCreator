@@ -386,10 +386,12 @@ namespace X4SectorCreator.Forms.General
 
         private void TemplateGroupsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_changing) return;
             TemplatesInGroupListBox.Items.Clear();
             _currentSelection.Clear();
 
-            if (TemplateGroupsListBox.SelectedItem is string group &&
+            if (TemplateGroupsListBox.SelectedIndex == -1) return;
+                if (TemplateGroupsListBox.SelectedItem is string group &&
                 !string.IsNullOrWhiteSpace(group))
             {
                 // Disable functions for vanilla group
@@ -531,7 +533,7 @@ namespace X4SectorCreator.Forms.General
                         foreach (var job in jobs.JobList)
                             AddOrUpdateTemplate(groupName, null, job);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         _ = MessageBox.Show("Invalid file, cannot read xml: " + ex.Message);
                         return;
@@ -553,6 +555,46 @@ namespace X4SectorCreator.Forms.General
                     }
                 }
             }
+        }
+
+        private bool _changing = false;
+        private void CmbGroupFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _changing = true;
+            var groups = TemplateGroupsFor == GroupsFor.Jobs ? [.. _jobTemplateGroups.Keys] :
+                _factoryTemplateGroups.Keys.ToArray();
+
+            var selected = TemplateGroupsListBox.SelectedItem as string;
+            TemplateGroupsListBox.Items.Clear();
+
+            switch (CmbGroupFilter.SelectedItem)
+            {
+                case "Show All":
+                    foreach (var group in groups)
+                        TemplateGroupsListBox.Items.Add(group);
+                    break;
+                case "Show Standard":
+                    foreach (var group in groups.Where(_defaultGroups.Contains))
+                        TemplateGroupsListBox.Items.Add(group);
+                    break;
+                case "Show Custom":
+                    foreach (var group in groups.Where(a => !_defaultGroups.Contains(a)))
+                        TemplateGroupsListBox.Items.Add(group);
+                    break;
+            }
+
+            if (!string.IsNullOrWhiteSpace(selected) && TemplateGroupsListBox.Items.Contains(selected))
+            {
+                TemplateGroupsListBox.SelectedItem = selected;
+            }
+            else
+            {
+                TemplateGroupsListBox.SelectedIndex = -1;
+                TemplatesInGroupListBox.Items.Clear();
+                _currentSelection.Clear();
+                TxtSearch.GetTextSearchComponent().ForceCalculate();
+            }
+            _changing = false;
         }
     }
 }

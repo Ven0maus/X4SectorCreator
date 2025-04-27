@@ -40,6 +40,7 @@
             BtnCancel = new Button();
             TxtSearch = new TextBox();
             BtnImportGroup = new Button();
+            CmbGroupFilter = new ComboBox();
             SuspendLayout();
             // 
             // TemplateGroupsListBox
@@ -160,11 +161,23 @@
             BtnImportGroup.UseVisualStyleBackColor = true;
             BtnImportGroup.Click += BtnImportGroup_Click;
             // 
+            // CmbGroupFilter
+            // 
+            CmbGroupFilter.FormattingEnabled = true;
+            CmbGroupFilter.Items.AddRange(new object[] { "Show Standard", "Show Custom", "Show All" });
+            CmbGroupFilter.Location = new Point(139, 7);
+            CmbGroupFilter.Name = "CmbGroupFilter";
+            CmbGroupFilter.Size = new Size(103, 23);
+            CmbGroupFilter.TabIndex = 12;
+            CmbGroupFilter.Text = "Show All";
+            CmbGroupFilter.SelectedIndexChanged += CmbGroupFilter_SelectedIndexChanged;
+            // 
             // TemplateGroupsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(710, 572);
+            Controls.Add(CmbGroupFilter);
             Controls.Add(BtnImportGroup);
             Controls.Add(TxtSearch);
             Controls.Add(BtnCancel);
@@ -201,5 +214,6 @@
         private Button BtnCancel;
         private TextBox TxtSearch;
         private Button BtnImportGroup;
+        private ComboBox CmbGroupFilter;
     }
 }
