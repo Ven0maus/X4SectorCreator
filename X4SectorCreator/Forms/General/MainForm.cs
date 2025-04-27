@@ -355,9 +355,11 @@ namespace X4SectorCreator
 
             const string lblModName = "Please enter the name you'd like to use for your mod folder:";
             const string lblModPrefix = "Please enter the prefix you'd like to use for your mod:";
+            const string lblPageId = "Page Id you'd like to use for t-files (leave empty to auto generate):";
             Dictionary<string, string> modInfo = MultiInputDialog.Show("Mod information",
                 (lblModName, null, null),
-                (lblModPrefix, null, null)
+                (lblModPrefix, null, null),
+                (lblPageId, null, null)
             );
             if (modInfo == null || modInfo.Count == 0)
             {
@@ -366,6 +368,7 @@ namespace X4SectorCreator
 
             string modName = modInfo[lblModName];
             string modPrefix = modInfo[lblModPrefix];
+            string pageIdStr = modInfo[lblPageId];
 
             // Sanitize prefix
             modPrefix = SanitizeText(modPrefix)?.ToLower();
@@ -379,6 +382,16 @@ namespace X4SectorCreator
             {
                 _ = MessageBox.Show($"Please enter a valid non empty non whitespace mod prefix.");
                 return;
+            }
+
+            // Initialize localisation
+            if (string.IsNullOrWhiteSpace(pageIdStr) || !int.TryParse(pageIdStr, out var pageId))
+            {
+                Localisation.Initialize(modName, modPrefix);
+            }
+            else
+            {
+                Localisation.Initialize(pageId);
             }
 
             // Generate each xml
@@ -400,7 +413,7 @@ namespace X4SectorCreator
                 VanillaChanges vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
 
                 // Generate all xml files
-                var actions = new List<Action> 
+                var actions = new List<Action>
                 {
                     () => MacrosGeneration.Generate(modFolder, modName, modPrefix, clusters),
                     () => MapDefaultsGeneration.Generate(modFolder, modPrefix, clusters, vanillaChanges),
@@ -436,6 +449,10 @@ namespace X4SectorCreator
                     () => FactionLogicEconomyGeneration.Generate(modFolder),
                     () => FactionLogicStationsGeneration.Generate(modFolder),
                     () => WarSubscriptionsGeneration.Generate(modFolder),
+
+
+                    // Localisation after all the generation
+                    () => Localisation.LocaliseAllFiles(modFolder)
                 };
 
                 GenerateModProgressBar.Minimum = 0;
@@ -460,6 +477,10 @@ namespace X4SectorCreator
                     "Error in XML Generation", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
 #endif
+            }
+            finally
+            {
+                Localisation.ClearCache(true);
             }
 
             // Show succes message
