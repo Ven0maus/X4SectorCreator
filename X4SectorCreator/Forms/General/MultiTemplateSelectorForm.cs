@@ -173,7 +173,7 @@ namespace X4SectorCreator.Forms.General
                     }
 
                     EditFactoryData(factory, owner, raceKey);
-                    var newFactory = Factory.DeserializeFactory(factory.SerializeFactory().Replace("{faction.Id}", owner));
+                    var newFactory = Factory.DeserializeFactory(factory.SerializeFactory().Replace("{faction.Id}", owner, StringComparison.OrdinalIgnoreCase));
                     FactoriesForm.AllFactories[newFactory.Id] = newFactory;
                 }
 
@@ -202,7 +202,7 @@ namespace X4SectorCreator.Forms.General
                     }
 
                     EditJobData(job, owner, raceKey);
-                    var newJob = Job.DeserializeJob(job.SerializeJob().Replace("{faction.Id}", owner));
+                    var newJob = Job.DeserializeJob(job.SerializeJob().Replace("{faction.Id}", owner, StringComparison.OrdinalIgnoreCase));
                     JobsForm.AllJobs[newJob.Id] = newJob;
                 }
 
