@@ -41,6 +41,7 @@
             label4 = new Label();
             BtnExit = new Button();
             BtnReImport = new Button();
+            label5 = new Label();
             SuspendLayout();
             // 
             // ConstructionPlansListBox
@@ -166,11 +167,22 @@
             BtnReImport.UseVisualStyleBackColor = true;
             BtnReImport.Click += BtnReImport_Click;
             // 
+            // label5
+            // 
+            label5.Font = new Font("Segoe UI", 12F);
+            label5.Location = new Point(6, 362);
+            label5.Name = "label5";
+            label5.Size = new Size(425, 48);
+            label5.TabIndex = 13;
+            label5.Text = "(You can use the in-game station creator to build your own station and export the construction plan to import it here.)";
+            label5.TextAlign = ContentAlignment.TopCenter;
+            // 
             // ConstructionPlanViewForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(435, 363);
+            ClientSize = new Size(435, 410);
+            Controls.Add(label5);
             Controls.Add(BtnReImport);
             Controls.Add(BtnExit);
             Controls.Add(TxtId);
@@ -209,5 +221,6 @@
         private Label label4;
         private Button BtnExit;
         private Button BtnReImport;
+        private Label label5;
     }
 }
