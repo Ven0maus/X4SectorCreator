@@ -47,12 +47,16 @@
             cmbOwner = new ComboBox();
             label8 = new Label();
             label9 = new Label();
+            label10 = new Label();
+            CmbConstructionPlan = new ComboBox();
+            BtnViewConstructionPlans = new Button();
+            label11 = new Label();
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).BeginInit();
             SuspendLayout();
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(112, 281);
+            BtnCreate.Location = new Point(112, 285);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(158, 33);
             BtnCreate.TabIndex = 0;
@@ -99,7 +103,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 281);
+            BtnCancel.Location = new Point(12, 285);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(97, 33);
             BtnCancel.TabIndex = 5;
@@ -220,11 +224,54 @@
             label9.TabIndex = 18;
             label9.Text = "(The actual owner of the station)";
             // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 12F);
+            label10.Location = new Point(276, 321);
+            label10.Name = "label10";
+            label10.Size = new Size(220, 21);
+            label10.TabIndex = 19;
+            label10.Text = "Use Custom Constructionplan:";
+            // 
+            // CmbConstructionPlan
+            // 
+            CmbConstructionPlan.FormattingEnabled = true;
+            CmbConstructionPlan.Location = new Point(276, 346);
+            CmbConstructionPlan.Name = "CmbConstructionPlan";
+            CmbConstructionPlan.Size = new Size(294, 23);
+            CmbConstructionPlan.TabIndex = 20;
+            CmbConstructionPlan.Text = "None";
+            CmbConstructionPlan.SelectedIndexChanged += CmbConstructionPlan_SelectedIndexChanged;
+            // 
+            // BtnViewConstructionPlans
+            // 
+            BtnViewConstructionPlans.Location = new Point(12, 328);
+            BtnViewConstructionPlans.Name = "BtnViewConstructionPlans";
+            BtnViewConstructionPlans.Size = new Size(258, 55);
+            BtnViewConstructionPlans.TabIndex = 21;
+            BtnViewConstructionPlans.Text = "View Custom Construction Plans";
+            BtnViewConstructionPlans.UseVisualStyleBackColor = true;
+            BtnViewConstructionPlans.Click += BtnViewConstructionPlans_Click;
+            // 
+            // label11
+            // 
+            label11.Location = new Point(276, 372);
+            label11.Name = "label11";
+            label11.Size = new Size(294, 19);
+            label11.TabIndex = 22;
+            label11.Text = "(leave as 'None' to use vanilla stations)";
+            label11.TextAlign = ContentAlignment.TopCenter;
+            // 
             // StationForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(582, 326);
+            ClientSize = new Size(582, 391);
+            Controls.Add(label11);
+            Controls.Add(BtnViewConstructionPlans);
+            Controls.Add(CmbConstructionPlan);
+            Controls.Add(label10);
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -249,6 +296,7 @@
             MinimizeBox = false;
             Name = "StationForm";
             Text = "Station Editor";
+            Load += StationForm_Load;
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -275,5 +323,9 @@
         private ComboBox cmbOwner;
         private Label label8;
         private Label label9;
+        private Label label10;
+        private Button BtnViewConstructionPlans;
+        private Label label11;
+        internal ComboBox CmbConstructionPlan;
     }
 }

@@ -35,6 +35,7 @@ namespace X4SectorCreator
         private const float _defaultZoom = 1f;
         private static PointF _offset;
         private static float _zoom = _defaultZoom; // 1.0 means 100% scale
+        private const float _minZoom = 0.15f, _maxZoom = 2.5f;
 
         private const float _stationIconSize = 24f;
 
@@ -203,7 +204,7 @@ namespace X4SectorCreator
                 _zoom /= zoomFactor; // Zoom out
             }
 
-            _zoom = Math.Clamp(_zoom, 0.25f, 2.0f); // Limit zoom between 50% and 200%
+            _zoom = Math.Clamp(_zoom, _minZoom, _maxZoom); // Limit zoom between 50% and 200%
 
             // Convert mouse position to world coordinates before zoom
             float worldXBefore = (e.X - _offset.X) / oldZoom;
@@ -899,7 +900,8 @@ namespace X4SectorCreator
                 if (sector == null) return MainForm.Instance.FactionColorMapping["None"];
 
                 HashSet<string> factions = sector.Zones.SelectMany(a => a.Stations)
-                    .Select(a => a.Faction)
+                    .Select(a => a.Owner)
+                    .Where(a => !string.IsNullOrWhiteSpace(a))
                     .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
                 if (sector.IsBaseGame)

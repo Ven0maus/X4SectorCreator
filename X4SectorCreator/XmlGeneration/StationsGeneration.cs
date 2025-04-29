@@ -5,13 +5,13 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class StationsGeneration
     {
-        public static void Generate(string folder)
+        public static void Generate(string folder, string modPrefix)
         {
             if (FactionsForm.AllCustomFactions.Count == 0)
             {
                 return;
             }
-            var xElement = CollectStations();
+            var xElement = CollectStations(modPrefix);
             if (xElement == null) return;
 
             XDocument xmlDocument = new(
@@ -23,7 +23,7 @@ namespace X4SectorCreator.XmlGeneration
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/stations.xml")));
         }
 
-        private static XElement CollectStations()
+        private static XElement CollectStations(string modPrefix)
         {
             var mainElement = new XElement("add", new XAttribute("sel", "/stations"));
             int count = 0;
@@ -32,8 +32,8 @@ namespace X4SectorCreator.XmlGeneration
                 foreach (var stationType in faction.StationTypes ?? [])
                 {
                     var xElement = new XElement("station",
-                        new XAttribute("id", $"{stationType}_{faction.Id}"),
-                        new XAttribute("group", $"{stationType}_{faction.Id}"),
+                        new XAttribute("id", $"{modPrefix}_{stationType}_{faction.Id}"),
+                        new XAttribute("group", $"{modPrefix}_{stationType}_{faction.Id}"),
                         new XElement("category",
                             new XAttribute("tags", stationType),
                             new XAttribute("faction", $"[{faction.Id}]")

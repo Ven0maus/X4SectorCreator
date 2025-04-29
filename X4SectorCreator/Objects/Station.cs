@@ -8,6 +8,7 @@
         public string Faction { get; set; }
         public string Owner { get; set; }
         public string Race { get; set; }
+        public string CustomConstructionPlan { get; set; }
         public Point Position { get; set; }
 
         public object Clone()
@@ -20,7 +21,8 @@
                 Faction = Faction,
                 Owner = Owner,
                 Race = Race,
-                Position = Position
+                Position = Position,
+                CustomConstructionPlan = CustomConstructionPlan
             };
         }
 
