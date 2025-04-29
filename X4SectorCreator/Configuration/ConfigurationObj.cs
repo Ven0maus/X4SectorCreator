@@ -11,6 +11,7 @@ namespace X4SectorCreator.Configuration
         public List<Factory> Factories { get; set; }
         public List<Basket> Baskets { get; set; }
         public List<Faction> CustomFactions { get; set; }
+        public List<Constructionplan> ConstructionPlans { get; set; }
         public VanillaChanges VanillaChanges { get; set; }
         public string GalaxyName { get; set; }
         public string StartingSector { get; set; }

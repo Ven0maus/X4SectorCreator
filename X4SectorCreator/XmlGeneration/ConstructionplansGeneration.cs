@@ -1,18 +1,15 @@
 ﻿using System.Xml.Linq;
 using X4SectorCreator.Forms;
+using X4SectorCreator.Forms.Stations;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.XmlGeneration
 {
     internal static class ConstructionplansGeneration
     {
-        public static void Generate(string folder)
+        public static void Generate(string folder, string modPrefix)
         {
-            if (FactionsForm.AllCustomFactions.Count == 0)
-            {
-                return;
-            }
-            var xElement = CollectConstructionplans();
+            var xElement = CollectConstructionplans(modPrefix);
             if (xElement == null) return;
 
             XDocument xmlDocument = new(
@@ -24,11 +21,13 @@ namespace X4SectorCreator.XmlGeneration
             xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/constructionplans.xml")));
         }
 
-        private static XElement CollectConstructionplans()
+        private static XElement CollectConstructionplans(string modPrefix)
         {
             var constructionplanCache = new Dictionary<string, List<Constructionplan>>(StringComparer.OrdinalIgnoreCase);
             var mainElement = new XElement("add", new XAttribute("sel", "/plans"));
             int count = 0;
+
+            // Handle faction plans
             foreach (var faction in FactionsForm.AllCustomFactions.Values)
             {
                 var stationTypes = faction.StationTypes ?? [];
@@ -55,13 +54,24 @@ namespace X4SectorCreator.XmlGeneration
                     if (plan == null) continue; // Plan not found, skip
 
                     var clone = plan.Clone();
-                    clone.Id = $"{clone.Id.Split('_')[1]}_{faction.Id}";
+                    clone.Id = $"{modPrefix}_{clone.Id.Split('_')[1]}_{faction.Id}";
                     clone.Name = GetConstructionplanName(stationType);
                     var xElement = XElement.Parse(clone.Serialize());
                     mainElement.Add(xElement);
                     count++;
                 }
             }
+
+            // Handle custom plans
+            foreach (var plan in ConstructionPlanViewForm.AllCustomConstructionPlans.Values)
+            {
+                var clone = plan.Clone();
+                clone.Id = $"{modPrefix}_{plan.Id}";
+                clone.Name = $"{{local:{plan.Name}}}";
+                mainElement.Add(XElement.Parse(clone.Serialize()));
+                count++;
+            }
+
             return count == 0 ? null : mainElement;
         }
 

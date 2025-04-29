@@ -900,7 +900,8 @@ namespace X4SectorCreator
                 if (sector == null) return MainForm.Instance.FactionColorMapping["None"];
 
                 HashSet<string> factions = sector.Zones.SelectMany(a => a.Stations)
-                    .Select(a => a.Faction)
+                    .Select(a => a.Owner)
+                    .Where(a => !string.IsNullOrWhiteSpace(a))
                     .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
                 if (sector.IsBaseGame)

@@ -21,6 +21,12 @@ namespace X4SectorCreator.Objects
         [XmlAttribute(AttributeName = "tags")]
         public string Tags { get; set; }
 
+        [XmlElement(ElementName = "patches")]
+        public Patches PatchesObj { get; set; }
+
+        [XmlAttribute(AttributeName = "prefab")]
+        public string Prefab { get; set; }
+
         internal Constructionplan Clone()
         {
             var xml = Serialize();
@@ -53,6 +59,11 @@ namespace X4SectorCreator.Objects
             XmlSerializer serializer = new(typeof(Constructionplan));
             using StringReader stringReader = new(xml);
             return (Constructionplan)serializer.Deserialize(stringReader);
+        }
+
+        public override string ToString()
+        {
+            return Id;
         }
 
         [XmlRoot(ElementName = "position")]
@@ -117,6 +128,9 @@ namespace X4SectorCreator.Objects
 
             [XmlElement(ElementName = "upgrades")]
             public Upgrades Upgrades { get; set; }
+
+            [XmlAttribute(AttributeName = "prefab")]
+            public string Prefab { get; set; }
         }
 
         [XmlRoot(ElementName = "predecessor")]
@@ -176,6 +190,12 @@ namespace X4SectorCreator.Objects
         {
             [XmlElement(ElementName = "groups")]
             public Groups Groups { get; set; }
+
+            [XmlElement(ElementName = "ammunition")]
+            public Ammunition Ammunition { get; set; }
+
+            [XmlAttribute(AttributeName = "generated")]
+            public string Generated { get; set; }
         }
 
         [XmlRoot(ElementName = "quaternion")]
@@ -192,6 +212,46 @@ namespace X4SectorCreator.Objects
 
             [XmlAttribute(AttributeName = "qz")]
             public string Qz { get; set; }
+        }
+
+        [XmlRoot(ElementName = "unit")]
+        public class Unit
+        {
+            [XmlAttribute(AttributeName = "macro")]
+            public string Macro { get; set; }
+
+            [XmlAttribute(AttributeName = "exact")]
+            public string Exact { get; set; }
+        }
+
+        [XmlRoot(ElementName = "ammunition")]
+        public class Ammunition
+        {
+            [XmlElement(ElementName = "unit")]
+            public List<Unit> Unit { get; set; }
+
+            [XmlElement(ElementName = "ammunition")]
+            public Ammunition AmmunitionObj { get; set; }
+        }
+
+        [XmlRoot(ElementName = "patch")]
+        public class Patch
+        {
+            [XmlAttribute(AttributeName = "extension")]
+            public string Extension { get; set; }
+
+            [XmlAttribute(AttributeName = "version")]
+            public string Version { get; set; }
+
+            [XmlAttribute(AttributeName = "name")]
+            public string Name { get; set; }
+        }
+
+        [XmlRoot(ElementName = "patches")]
+        public class Patches
+        {
+            [XmlElement(ElementName = "patch")]
+            public Patch Patch { get; set; }
         }
     }
 

@@ -434,8 +434,8 @@ namespace X4SectorCreator
                     () => ShipsGeneration.Generate(modFolder),
                     () => ShipGroupsGeneration.Generate(modFolder),
                     () => StationsGeneration.Generate(modFolder),
-                    () => StationGroupsGeneration.Generate(modFolder),
-                    () => ConstructionplansGeneration.Generate(modFolder),
+                    () => StationGroupsGeneration.Generate(modFolder, modPrefix),
+                    () => ConstructionplansGeneration.Generate(modFolder, modPrefix),
                     () => ModulesGeneration.Generate(modFolder),
                     () => LoadoutrulesGeneration.Generate(modFolder),
                     () => PaintmodsGeneration.Generate(modFolder),
@@ -1443,7 +1443,8 @@ namespace X4SectorCreator
         private static void SetOwnershipInDetails(Sector sector, StringBuilder sb)
         {
             HashSet<string> factions = sector.Zones.SelectMany(a => a.Stations)
-                .Select(a => a.Faction)
+                .Select(a => a.Owner)
+                .Where(a => !string.IsNullOrWhiteSpace(a))
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
             if (sector.IsBaseGame)
             {
