@@ -433,7 +433,7 @@ namespace X4SectorCreator
                     () => IconsGeneration.Generate(modFolder, modName),
                     () => ShipsGeneration.Generate(modFolder),
                     () => ShipGroupsGeneration.Generate(modFolder),
-                    () => StationsGeneration.Generate(modFolder),
+                    () => StationsGeneration.Generate(modFolder, modPrefix),
                     () => StationGroupsGeneration.Generate(modFolder, modPrefix),
                     () => ConstructionplansGeneration.Generate(modFolder, modPrefix),
                     () => ModulesGeneration.Generate(modFolder),

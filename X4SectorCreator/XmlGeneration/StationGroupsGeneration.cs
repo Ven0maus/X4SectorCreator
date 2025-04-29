@@ -32,7 +32,7 @@ namespace X4SectorCreator.XmlGeneration
                 foreach (var stationType in faction.StationTypes ?? [])
                 {
                     var xElement = new XElement("group", 
-                        new XAttribute("name", $"{stationType}_{faction.Id}"),
+                        new XAttribute("name", $"{modPrefix}_{stationType}_{faction.Id}"),
                         new XElement("select", 
                             new XAttribute("constructionplan", $"{modPrefix}_{stationType}_{faction.Id}")
                         )
