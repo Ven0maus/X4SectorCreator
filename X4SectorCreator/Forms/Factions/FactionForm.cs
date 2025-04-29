@@ -752,10 +752,10 @@ namespace X4SectorCreator.Forms
             return convertLowercase ? cleaned.ToLower() : cleaned;
         }
 
-        [GeneratedRegex(@"[^a-zA-Z0-9]")]
+        [GeneratedRegex(@"[^a-zA-Z0-9_]")]
         private static partial Regex SanitizeRegex();
 
-        [GeneratedRegex(@"[^a-zA-Z0-9\s]")]
+        [GeneratedRegex(@"[^a-zA-Z0-9\s_]")]
         private static partial Regex SanitizeRegexAllowWhitespace();
 
         private void BtnFactionStations_Click(object sender, EventArgs e)

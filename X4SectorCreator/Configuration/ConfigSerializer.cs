@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using X4SectorCreator.Configuration.Converters;
 using X4SectorCreator.Forms;
+using X4SectorCreator.Forms.Stations;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Configuration
@@ -71,6 +72,7 @@ namespace X4SectorCreator.Configuration
                 Factories = FactoriesForm.AllFactories.Select(a => a.Value).ToList(),
                 Jobs = JobsForm.AllJobs.Select(a => a.Value).ToList(),
                 Baskets = JobsForm.AllBaskets.Select(a => a.Value).ToList(),
+                ConstructionPlans = ConstructionPlanViewForm.AllCustomConstructionPlans.Select(a => a.Value).ToList(),
                 CustomFactions = FactionsForm.AllCustomFactions.Select(a => a.Value).ToList(),
                 Version = new VersionChecker().CurrentVersion
             };
@@ -140,11 +142,19 @@ namespace X4SectorCreator.Configuration
                 }
             }
 
-            // Set stored region definitions
             RegionDefinitionForm.RegionDefinitions.Clear();
             if (configObj.RegionDefinitions != null && configObj.RegionDefinitions.Count > 0)
             {
                 RegionDefinitionForm.RegionDefinitions.AddRange(configObj.RegionDefinitions);
+            }
+
+            ConstructionPlanViewForm.AllCustomConstructionPlans.Clear();
+            if (configObj.ConstructionPlans != null && configObj.ConstructionPlans.Count > 0)
+            {
+                foreach (var constructionPlan in configObj.ConstructionPlans)
+                {
+                    ConstructionPlanViewForm.AllCustomConstructionPlans.Add(constructionPlan.Id, constructionPlan);
+                }
             }
             #endregion
 

@@ -123,7 +123,7 @@ namespace X4SectorCreator.XmlGeneration
                             string id = $"{modPrefix}_ST_{clusterPrefix}_{sectorPrefix}_st{station.Id:D3}";
                             string zoneMacro = $"{modPrefix}_ZO_{clusterPrefix}_{sectorPrefix}_z{zone.Id:D3}_macro";
 
-                            string faction = station.Faction.ToLower();
+                            string faction = (station.Faction ?? string.Empty).ToLower();
                             string owner = station.Owner.ToLower();
                             var type = station.Type.ToLower();
                             faction = CorrectFactionName(faction);
@@ -132,8 +132,8 @@ namespace X4SectorCreator.XmlGeneration
                             string realType = "factory";
 
                             // Xenon work differently compared to others
-                            if (station.Faction.Equals("xenon", StringComparison.OrdinalIgnoreCase) ||
-                                station.Owner.Equals("xenon", StringComparison.OrdinalIgnoreCase))
+                            if (faction.Equals("xenon", StringComparison.OrdinalIgnoreCase) ||
+                                owner.Equals("xenon", StringComparison.OrdinalIgnoreCase))
                             {
                                 if (type == "defence")
                                     realType = "defence";
@@ -145,6 +145,18 @@ namespace X4SectorCreator.XmlGeneration
                                 realType = "tradingstation";
                             if (type == "piratebase")
                                 realType = "piratebase";
+
+                            var selectElement = new XElement("select",
+                                        new XAttribute("faction", faction),
+                                        new XAttribute("tags", $"[{type}]"));
+                            XAttribute attributeElement = null;
+
+                            // Handle custom construction plan if available
+                            if (!string.IsNullOrWhiteSpace(station.CustomConstructionPlan))
+                            {
+                                selectElement = null;
+                                attributeElement = new XAttribute("constructionplan", $"{modPrefix}_{station.CustomConstructionPlan}");
+                            }
 
                             yield return new XElement("station",
                                 new XAttribute("id", id.ToLower()),
@@ -164,9 +176,8 @@ namespace X4SectorCreator.XmlGeneration
                                     new XAttribute("matchextension", "false")
                                 ),
                                 new XElement("station",
-                                    new XElement("select",
-                                        new XAttribute("faction", faction),
-                                        new XAttribute("tags", $"[{type}]")),
+                                    attributeElement,
+                                    selectElement,
                                     new XElement("loadout",
                                         new XElement("level",
                                             new XAttribute("exact", "1.0"))

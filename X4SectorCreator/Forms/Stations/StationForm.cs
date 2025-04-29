@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using X4SectorCreator.Forms.Stations;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -39,6 +40,7 @@ namespace X4SectorCreator.Forms
                     cmbFaction.SelectedItem = null;
                     cmbOwner.SelectedItem = null;
                     cmbRace.SelectedItem = null;
+                    CmbConstructionPlan.SelectedItem = "None";
                     txtPosition.Text = "(0, 0)";
                     txtSector.Text = Sector.Name.ToString();
                     _dotPosition = SectorHexagon.ClientRectangle.Center();
@@ -58,6 +60,8 @@ namespace X4SectorCreator.Forms
             "paranid",
             "xenon"
         };
+
+        private readonly LazyEvaluated<ConstructionPlanViewForm> _constructionPlanViewForm = new(() => new ConstructionPlanViewForm(), a => !a.IsDisposed);
 
         #region Hexagon Data
         private readonly int _hexRadius;
@@ -116,7 +120,7 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            if (cmbFaction.SelectedItem == null)
+            if (CmbConstructionPlan.SelectedItem is not Constructionplan && cmbFaction.SelectedItem == null)
             {
                 _ = MessageBox.Show("Please select a valid faction for which to take the station blueprint.");
                 return;
@@ -155,6 +159,7 @@ namespace X4SectorCreator.Forms
                         Owner = cmbOwner.SelectedItem as string,
                         Type = cmbStationType.SelectedItem as string,
                         Race = cmbRace.SelectedItem as string,
+                        CustomConstructionPlan = (CmbConstructionPlan.SelectedItem as Constructionplan)?.Id,
                         Position = new Point(StationPosX, StationPosY)
                     };
                     Zone zone = new()
@@ -173,6 +178,7 @@ namespace X4SectorCreator.Forms
                     Station.Owner = cmbOwner.SelectedItem as string;
                     Station.Type = cmbStationType.SelectedItem as string;
                     Station.Race = cmbRace.SelectedItem as string;
+                    Station.CustomConstructionPlan = (CmbConstructionPlan.SelectedItem as Constructionplan)?.Id;
                     Station.Position = new Point(StationPosX, StationPosY);
 
                     Zone existingZone = Sector.Zones.First(a => a.Stations.Contains(Station));
@@ -187,6 +193,28 @@ namespace X4SectorCreator.Forms
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void BtnViewConstructionPlans_Click(object sender, EventArgs e)
+        {
+            _constructionPlanViewForm.Value.StationForm = this;
+            _constructionPlanViewForm.Value.Show();
+        }
+
+        public void UpdateAvailableConstructionPlans()
+        {
+            var selectedValue = CmbConstructionPlan.SelectedItem;
+            CmbConstructionPlan.Items.Clear();
+            CmbConstructionPlan.Items.Add("None");
+
+            foreach (var constructionplan in ConstructionPlanViewForm.AllCustomConstructionPlans)
+            {
+                CmbConstructionPlan.Items.Add(constructionplan.Value);
+            }
+
+            // Reset old selected value if still available
+            if (CmbConstructionPlan.Items.Contains(selectedValue))
+                CmbConstructionPlan.SelectedItem = selectedValue;
         }
 
         #region Hexagon Methods
@@ -302,5 +330,35 @@ namespace X4SectorCreator.Forms
             return path.IsVisible(point);
         }
         #endregion
+
+        private void StationForm_Load(object sender, EventArgs e)
+        {
+            UpdateAvailableConstructionPlans();
+
+            if (Station != null)
+            {
+                // Select construction plan
+                if (!string.IsNullOrWhiteSpace(Station.CustomConstructionPlan) &&
+                    ConstructionPlanViewForm.AllCustomConstructionPlans.TryGetValue(Station.CustomConstructionPlan, out var cp))
+                {
+                    CmbConstructionPlan.SelectedItem = cp;
+                }
+            }
+        }
+
+        private void CmbConstructionPlan_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CmbConstructionPlan.SelectedItem is Constructionplan)
+            {
+                // Clear out values and disable the options
+                cmbFaction.SelectedIndex = -1;
+                cmbFaction.Enabled = false;
+            }
+            else
+            {
+                // Enable options again
+                cmbFaction.Enabled = true;
+            }
+        }
     }
 }
