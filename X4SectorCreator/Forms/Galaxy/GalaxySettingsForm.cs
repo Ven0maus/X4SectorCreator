@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 using System.Text;
+using X4SectorCreator.Forms.Galaxy;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -20,6 +22,13 @@ namespace X4SectorCreator.Forms
         public static string StartingSector { get; set; } = null;
 
         private static Dictionary<(int, int), Cluster> _baseGameClusters;
+
+        private readonly LazyEvaluated<ProceduralGalaxyForm> _proceduralGalaxyForm = new(() => new ProceduralGalaxyForm(), a => !a.IsDisposed);
+
+        private bool _originalDisableStoryLins;
+        private bool _originalCustomGalaxy;
+        private string _originalGalaxyName;
+        private Sector _originalStartSector;
 
         public GalaxySettingsForm()
         {
@@ -43,20 +52,39 @@ namespace X4SectorCreator.Forms
                 _ = cmbStartSector.Items.Add(sector);
             }
 
+            BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
             cmbStartSector.Enabled = IsCustomGalaxy && cmbStartSector.Items.Count > 0;
             LblStartingSector.Visible = !cmbStartSector.Enabled;
             cmbStartSector.SelectedItem = StartingSector == null
                 ? null
                 : (object)(!IsCustomGalaxy ? null : MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors)
                     .FirstOrDefault(a => a.Name.Equals(StartingSector, StringComparison.OrdinalIgnoreCase)));
+
+            EnableSaveButtons(false);
+
+            _originalDisableStoryLins = chkDisableAllStorylines.Checked;
+            _originalCustomGalaxy = chkCustomGalaxy.Checked;
+            _originalGalaxyName = txtGalaxyName.Text;
+            _originalStartSector = cmbStartSector.SelectedItem as Sector;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            _ = Save();
+        }
+
+        private void BtnSaveAndClose_Click(object sender, EventArgs e)
+        {
+            if (Save())
+                Close();
+        }
+
+        private bool Save()
+        {
             if (chkCustomGalaxy.Checked && (string.IsNullOrWhiteSpace(txtGalaxyName.Text) || txtGalaxyName.Text.Equals("xu_ep2_universe", StringComparison.OrdinalIgnoreCase)))
             {
                 _ = MessageBox.Show("Please select a valid galaxy name, it cannot be empty or equal to \"xu_ep2_universe\".", "Invalid custom galaxy name");
-                return;
+                return false;
             }
 
             // Return if no change
@@ -64,8 +92,8 @@ namespace X4SectorCreator.Forms
             {
                 GalaxyName = txtGalaxyName.Text.ToLower();
                 StartingSector = (cmbStartSector.SelectedItem as Sector)?.Name;
-                Close();
-                return;
+                EnableSaveButtons(false);
+                return true;
             }
 
             Dictionary<(int, int), Cluster> mergedClusters = null;
@@ -95,7 +123,7 @@ namespace X4SectorCreator.Forms
                     _ = MessageBox.Show("Unable to revert to normal galaxy because some clusters are overlapping with the base game clusters.\n" +
                         "To revert back to a normal galaxy please adjust the position or naming of all the following clusters so there is no overlap:\n- " +
                         string.Join("\n- ", invalidClusters.Select(a => a.Name)));
-                    return;
+                    return false;
                 }
             }
 
@@ -106,7 +134,7 @@ namespace X4SectorCreator.Forms
                     "Are you sure you want to continue?", "Warning: loss of sector connections!", MessageBoxButtons.YesNo);
                 if (resultDialog == DialogResult.No)
                 {
-                    return;
+                    return false;
                 }
 
                 // Delete base game gate connections for these invalid clusters
@@ -135,7 +163,9 @@ namespace X4SectorCreator.Forms
             // Toggle galaxy mode
             MainForm.Instance.ToggleGalaxyMode(mergedClusters);
 
-            Close();
+            EnableSaveButtons(false);
+
+            return true;
         }
 
         private static bool ContainsGateConnectionsToBaseGameClusters(out List<(Cluster, Sector, Gate)> invalidClusters)
@@ -222,9 +252,11 @@ namespace X4SectorCreator.Forms
                 chkDisableAllStorylines.Enabled = true;
                 chkDisableAllStorylines.Checked = false;
                 cmbStartSector.Enabled = false;
+                BtnGenerateProceduralGalaxy.Enabled = false;
             }
             else
             {
+                BtnGenerateProceduralGalaxy.Enabled = true;
                 chkDisableAllStorylines.Enabled = false;
                 chkDisableAllStorylines.Checked = true;
                 txtGalaxyName.Enabled = true;
@@ -233,6 +265,8 @@ namespace X4SectorCreator.Forms
             }
 
             LblStartingSector.Visible = !cmbStartSector.Enabled;
+
+            EnableSaveButtons(_originalCustomGalaxy != chkCustomGalaxy.Checked);
         }
 
         private readonly char[] _invalidChars = Path.GetInvalidFileNameChars();
@@ -270,7 +304,34 @@ namespace X4SectorCreator.Forms
 
         private void BtnGenerateProceduralGalaxy_Click(object sender, EventArgs e)
         {
+            if (!IsCustomGalaxy)
+            {
+                _ = MessageBox.Show("Please change to \"Custom Galaxy\" mode first, by checking the checkbox and pressing Save.");
+                return;
+            }
 
+            _proceduralGalaxyForm.Value.Show();
+        }
+
+        private void chkDisableAllStorylines_CheckedChanged(object sender, EventArgs e)
+        {
+            EnableSaveButtons(_originalDisableStoryLins != chkDisableAllStorylines.Checked);
+        }
+
+        private void EnableSaveButtons(bool enable)
+        {
+            BtnSave.Enabled = enable;
+            BtnSaveAndClose.Enabled = enable;
+        }
+
+        private void cmbStartSector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            EnableSaveButtons(cmbStartSector.SelectedItem != _originalStartSector);
+        }
+
+        private void txtGalaxyName_TextChanged(object sender, EventArgs e)
+        {
+            EnableSaveButtons(txtGalaxyName.Text != _originalGalaxyName);
         }
     }
 }

@@ -38,6 +38,7 @@
             cmbStartSector = new ComboBox();
             LblStartingSector = new Label();
             BtnGenerateProceduralGalaxy = new Button();
+            BtnSaveAndClose = new Button();
             SuspendLayout();
             // 
             // label1
@@ -69,13 +70,14 @@
             txtGalaxyName.Size = new Size(241, 23);
             txtGalaxyName.TabIndex = 2;
             txtGalaxyName.Text = "xu_ep2_universe";
+            txtGalaxyName.TextChanged += txtGalaxyName_TextChanged;
             txtGalaxyName.KeyPress += TxtGalaxyName_KeyPress;
             // 
             // BtnSave
             // 
-            BtnSave.Location = new Point(119, 136);
+            BtnSave.Location = new Point(89, 135);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(241, 33);
+            BtnSave.Size = new Size(88, 33);
             BtnSave.TabIndex = 3;
             BtnSave.Text = "Save";
             BtnSave.UseVisualStyleBackColor = true;
@@ -85,7 +87,7 @@
             // 
             BtnCancel.Location = new Point(12, 136);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(98, 33);
+            BtnCancel.Size = new Size(71, 33);
             BtnCancel.TabIndex = 4;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
@@ -100,6 +102,7 @@
             chkDisableAllStorylines.TabIndex = 5;
             chkDisableAllStorylines.Text = "Disable all storylines";
             chkDisableAllStorylines.UseVisualStyleBackColor = true;
+            chkDisableAllStorylines.CheckedChanged += chkDisableAllStorylines_CheckedChanged;
             // 
             // label2
             // 
@@ -119,6 +122,7 @@
             cmbStartSector.Name = "cmbStartSector";
             cmbStartSector.Size = new Size(241, 23);
             cmbStartSector.TabIndex = 7;
+            cmbStartSector.SelectedIndexChanged += cmbStartSector_SelectedIndexChanged;
             // 
             // LblStartingSector
             // 
@@ -139,11 +143,22 @@
             BtnGenerateProceduralGalaxy.UseVisualStyleBackColor = true;
             BtnGenerateProceduralGalaxy.Click += BtnGenerateProceduralGalaxy_Click;
             // 
+            // BtnSaveAndClose
+            // 
+            BtnSaveAndClose.Location = new Point(183, 136);
+            BtnSaveAndClose.Name = "BtnSaveAndClose";
+            BtnSaveAndClose.Size = new Size(177, 33);
+            BtnSaveAndClose.TabIndex = 10;
+            BtnSaveAndClose.Text = "Save and Close";
+            BtnSaveAndClose.UseVisualStyleBackColor = true;
+            BtnSaveAndClose.Click += BtnSaveAndClose_Click;
+            // 
             // GalaxySettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(366, 209);
+            Controls.Add(BtnSaveAndClose);
             Controls.Add(BtnGenerateProceduralGalaxy);
             Controls.Add(LblStartingSector);
             Controls.Add(cmbStartSector);
@@ -175,5 +190,6 @@
         private ComboBox cmbStartSector;
         private Label LblStartingSector;
         private Button BtnGenerateProceduralGalaxy;
+        private Button BtnSaveAndClose;
     }
 }
