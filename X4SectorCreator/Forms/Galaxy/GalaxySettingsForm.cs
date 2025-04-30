@@ -62,6 +62,11 @@ namespace X4SectorCreator.Forms
 
             EnableSaveButtons(false);
 
+            UpdateOriginals();
+        }
+
+        private void UpdateOriginals()
+        {
             _originalDisableStoryLins = chkDisableAllStorylines.Checked;
             _originalCustomGalaxy = chkCustomGalaxy.Checked;
             _originalGalaxyName = txtGalaxyName.Text;
@@ -92,6 +97,7 @@ namespace X4SectorCreator.Forms
             {
                 GalaxyName = txtGalaxyName.Text.ToLower();
                 StartingSector = (cmbStartSector.SelectedItem as Sector)?.Name;
+                UpdateOriginals();
                 EnableSaveButtons(false);
                 return true;
             }
@@ -163,6 +169,7 @@ namespace X4SectorCreator.Forms
             // Toggle galaxy mode
             MainForm.Instance.ToggleGalaxyMode(mergedClusters);
 
+            UpdateOriginals();
             EnableSaveButtons(false);
 
             return true;
