@@ -6,12 +6,12 @@ namespace X4SectorCreator.Forms.Galaxy
     {
         private readonly Dictionary<string, string> _defaultResources = new()
             {
-                { "ore", "0.38" },
-                { "silicon", "0.43" },
-                { "ice", "0.28" },
-                { "methane", "0.42" },
-                { "hydrogen", "0.43" },
-                { "helium", "0.41" },
+                { "ore", "0.5" },
+                { "silicon", "0.5" },
+                { "ice", "0.3" },
+                { "methane", "0.5" },
+                { "hydrogen", "0.5" },
+                { "helium", "0.5" },
                 { "scrap", "0.1" },
             };
 
