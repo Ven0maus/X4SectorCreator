@@ -37,6 +37,7 @@
             label2 = new Label();
             cmbStartSector = new ComboBox();
             LblStartingSector = new Label();
+            BtnGenerateProceduralGalaxy = new Button();
             SuspendLayout();
             // 
             // label1
@@ -128,11 +129,22 @@
             LblStartingSector.TabIndex = 8;
             LblStartingSector.Text = "(Selection becomes active for Custom Galaxy once atleast one custom sector exists.)";
             // 
+            // BtnGenerateProceduralGalaxy
+            // 
+            BtnGenerateProceduralGalaxy.Location = new Point(12, 172);
+            BtnGenerateProceduralGalaxy.Name = "BtnGenerateProceduralGalaxy";
+            BtnGenerateProceduralGalaxy.Size = new Size(348, 33);
+            BtnGenerateProceduralGalaxy.TabIndex = 9;
+            BtnGenerateProceduralGalaxy.Text = "Generate Procedural Galaxy";
+            BtnGenerateProceduralGalaxy.UseVisualStyleBackColor = true;
+            BtnGenerateProceduralGalaxy.Click += BtnGenerateProceduralGalaxy_Click;
+            // 
             // GalaxySettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(372, 175);
+            ClientSize = new Size(366, 209);
+            Controls.Add(BtnGenerateProceduralGalaxy);
             Controls.Add(LblStartingSector);
             Controls.Add(cmbStartSector);
             Controls.Add(label2);
@@ -162,5 +174,6 @@
         private Label label2;
         private ComboBox cmbStartSector;
         private Label LblStartingSector;
+        private Button BtnGenerateProceduralGalaxy;
     }
 }

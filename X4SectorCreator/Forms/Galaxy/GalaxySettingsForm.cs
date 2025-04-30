@@ -267,5 +267,10 @@ namespace X4SectorCreator.Forms
                                     .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark))
                                     .Normalize(NormalizationForm.FormC);
         }
+
+        private void BtnGenerateProceduralGalaxy_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
