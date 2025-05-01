@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -103,9 +105,15 @@ namespace X4SectorCreator
             }
         }
 
+        private readonly List<Sector> _availableSearchSectors = [];
+        private readonly HashSet<Sector> _visibleSectorsFromSearch = [];
+
         public SectorMapForm()
         {
             InitializeComponent();
+
+            TxtSearch.EnableTextSearch(_availableSearchSectors, a => a.Name, SearchRender);
+            Disposed += SectorMapForm_Disposed;
 
             ControlPanel.Top = 12;
 
@@ -138,6 +146,20 @@ namespace X4SectorCreator
             MouseWheel += HandleMouseWheel;
             MouseClick += SectorMapForm_MouseClick;
             KeyDown += SectorMapForm_KeyDown;
+        }
+
+        private void SectorMapForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
+        }
+
+        private void SearchRender(List<Sector> data)
+        {
+            _visibleSectorsFromSearch.Clear();
+            foreach (var item in data)
+                _visibleSectorsFromSearch.Add(item);
+
+            Invalidate();
         }
 
         private void SetupLegendTree()
@@ -309,6 +331,9 @@ namespace X4SectorCreator
                 .ToDictionary(a => a.Key, a => a.Value);
 
             _customClusters = [.. MainForm.Instance.AllClusters.Values.Where(a => !a.IsBaseGame)];
+
+            // Setup all data
+            _availableSearchSectors.AddRange(_baseGameClusters.Values.Concat(_customClusters).SelectMany(a => a.Sectors));
 
             Dictionary<(int, int), Cluster>.ValueCollection allClusters = MainForm.Instance.AllClusters.Values;
 
@@ -676,7 +701,7 @@ namespace X4SectorCreator
             RenderSmallHexIcons(e, icons);
         }
 
-        private static void RenderSmallHexIcons(PaintEventArgs e, List<IconData> iconDatas)
+        private void RenderSmallHexIcons(PaintEventArgs e, List<IconData> iconDatas)
         {
             // Calculate hex size and radius based on zoom and sector size
             float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
@@ -685,6 +710,9 @@ namespace X4SectorCreator
             // Each icon is rendered in the cluster or sector bottom right corner
             foreach (var group in iconDatas.GroupBy(a => a.Sector))
             {
+                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(group.Key))
+                    continue;
+
                 var processed = 0;
                 var xLayerProcess = 0;
                 foreach (var icon in group.DistinctBy(a => a.Type, StringComparer.OrdinalIgnoreCase))
@@ -838,6 +866,9 @@ namespace X4SectorCreator
                 int sectorIndex = 0;
                 foreach (Sector sector in cluster.Sectors)
                 {
+                    if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
+                        continue;
+
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
@@ -986,7 +1017,8 @@ namespace X4SectorCreator
             if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) ||
                 !IsDlcClusterEnabled(cluster) ||
                 (!chkShowX4Sectors.Checked && cluster.IsBaseGame) ||
-                (!chkShowCustomSectors.Checked && !cluster.IsBaseGame))
+                (!chkShowCustomSectors.Checked && !cluster.IsBaseGame) ||
+                _visibleSectorsFromSearch.Count > 0 && cluster.Sectors.Any(a => !_visibleSectorsFromSearch.Contains(a)))
             {
                 using SolidBrush mainBrush = new(Color.Black);
                 using Pen mainPen = new(nonExistantHexColor, 4);
@@ -1124,7 +1156,7 @@ namespace X4SectorCreator
             e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);
         }
 
-        private static IEnumerable<GateConnection> CollectConnectionsFromGateData(List<GateData> gatesData)
+        private IEnumerable<GateConnection> CollectConnectionsFromGateData(List<GateData> gatesData)
         {
             Dictionary<string, GateData[]> sectorGrouping = gatesData
                 .GroupBy(a => a.Sector.Name)
@@ -1157,6 +1189,13 @@ namespace X4SectorCreator
                 _ = processedTargets.Add(targetGateData.Gate);
 
                 if (!IsDlcClusterEnabled(targetGateData.Cluster))
+                {
+                    continue;
+                }
+
+                if (_visibleSectorsFromSearch.Count > 0 &&
+                    (!_visibleSectorsFromSearch.Contains(targetGateData.Sector) ||
+                    !_visibleSectorsFromSearch.Contains(sourceGateData.Sector)))
                 {
                     continue;
                 }
@@ -1304,7 +1343,13 @@ namespace X4SectorCreator
                 return;
             }
 
+            bool render = true;
             Color color = GetClusterOwnershipColor(cluster);
+
+            if (_visibleSectorsFromSearch.Count > 0 && cluster.Sectors.Any(a => !_visibleSectorsFromSearch.Contains(a)))
+            {
+                render = false;
+            }
 
             bool isMovingCluster = _movingCluster != null && _movingCluster == cluster;
             if (isMovingCluster)
@@ -1322,24 +1367,40 @@ namespace X4SectorCreator
                 }
 
                 // Fill with darker color
-                using SolidBrush mainBrush = new(LerpColor(color, Color.Black, 0.85f));
-                e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
+                if (render)
+                {
+                    using SolidBrush mainBrush = new(LerpColor(color, Color.Black, 0.85f));
+                    e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
+                }
 
                 // Draw child hex outlines
                 foreach (Hexagon child in hex.Value.Children)
                 {
                     Sector sector = cluster.Sectors[index];
                     Color ownerColor = GetSectorOwnershipColor(sector);
-                    using Pen pen = new(ownerColor, 2);
-                    using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
 
-                    e.Graphics.FillPolygon(brush, child.Points);
-                    e.Graphics.DrawPolygon(pen, child.Points);
+                    bool renderChild = true;
+                    if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
+                    {
+                        renderChild = false;
+                    }
+
+                    if (renderChild)
+                    {
+                        using Pen pen = new(ownerColor, 2);
+                        using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
+
+                        e.Graphics.FillPolygon(brush, child.Points);
+                        e.Graphics.DrawPolygon(pen, child.Points);
+                    }
                     index++;
                 }
 
-                // Draw edges
-                e.Graphics.DrawPolygon(mainPen, hex.Value.Points);
+                if (render)
+                {
+                    // Draw edges
+                    e.Graphics.DrawPolygon(mainPen, hex.Value.Points);
+                }
             }
 
             // Render the coordinates
@@ -1401,6 +1462,12 @@ namespace X4SectorCreator
             {
                 // Render child sector name
                 Sector sector = cluster.Sectors[index];
+                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
+                {
+                    index++;
+                    continue;
+                }
+
                 PointF childHexCenter = GetHexCenter(child.Points);
                 SizeF childHexSize = GetHexSize(child.Points);
                 SizeF childTextSize = e.Graphics.MeasureString(sector.Name, fBoldAndUnderlined);
@@ -1413,6 +1480,11 @@ namespace X4SectorCreator
             // Render main hex sector name if no children
             if (hex.Value.Children.Count == 0 && cluster != null)
             {
+                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(cluster.Sectors.First()))
+                {
+                    return;
+                }
+
                 SizeF textSize = e.Graphics.MeasureString(cluster.Sectors[index].Name, fBoldAndUnderlined);
                 e.Graphics.DrawString(cluster.Sectors[index].Name, fBoldAndUnderlined, Brushes.White,
                     hexCenter.X - (textSize.Width / 2),  // Center horizontally
