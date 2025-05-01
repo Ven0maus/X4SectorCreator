@@ -88,6 +88,24 @@ namespace X4SectorCreator
             }
         };
 
+        private static readonly Dictionary<string, double> _yieldDensities = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["lowest"] = 0.026,
+            ["verylow"] = 0.06,
+            ["lowminus"] = 0.2,
+            ["low"] = 0.6,
+            ["lowplus"] = 1.8,
+            ["medlow"] = 4,
+            ["medium"] = 6,
+            ["medplus"] = 16,
+            ["medhigh"] = 32,
+            ["highlow"] = 48,
+            ["high"] = 60,
+            ["highplus"] = 120,
+            ["veryhigh"] = 3600,
+            ["highest"] = 60000
+        };
+
         private static readonly Dictionary<string, Image> _imageMap = new(StringComparer.OrdinalIgnoreCase);
 
         private static bool _optionWasMinimzed = false, _legendWasMinimized = false;
@@ -312,13 +330,16 @@ namespace X4SectorCreator
         private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
         {
             pos = null;
-            foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
+            foreach (var hex in _baseGameClusters.Values
+                .Concat(_customClusters)
+                .Select(a => a.Hexagon)
+                .Where(a => a != null))
             {
                 // Determine if there is a cluster at the position we clicked
-                if (IsPointInPolygon(hex.Value.Points, mousePos))
+                if (IsPointInPolygon(hex.Points, mousePos))
                 {
-                    pos = hex.Key;
-                    if (MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster))
+                    pos = hex.Position;
+                    if (MainForm.Instance.AllClusters.TryGetValue(hex.Position, out Cluster cluster))
                     {
                         return cluster;
                     }
@@ -541,7 +562,7 @@ namespace X4SectorCreator
                     _ = MainForm.Instance.AllClusters.TryGetValue(translatedCoordinate, out Cluster cluster);
 
                     // Determine hex information
-                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, cluster?.Sectors, _defaultZoom);
+                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, cluster?.Sectors, translatedCoordinate, _defaultZoom);
                     _hexagons[translatedCoordinate] = hex;
                 }
             }
@@ -560,7 +581,7 @@ namespace X4SectorCreator
             {SectorPlacement.MiddleLeft, (float width, float childHeight) => (width * 0, 0) }
         };
 
-        private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, List<Sector> sectors, float zoom = 1.0f)
+        private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, List<Sector> sectors, (int x, int y) translatedCoordinate, float zoom = 1.0f)
         {
             // Scale parent hex
             height *= zoom;
@@ -620,7 +641,7 @@ namespace X4SectorCreator
                 ]);
             }
 
-            return new Hexagon(parentHex, childHexes.Select(a => new Hexagon(a, null)).ToList());
+            return new Hexagon(translatedCoordinate, parentHex, childHexes.Select(a => new Hexagon(translatedCoordinate, a, null)).ToList());
         }
 
         private void DrawHexGrid(object sender, PaintEventArgs e)
@@ -757,6 +778,14 @@ namespace X4SectorCreator
                     e.Graphics.DrawImage(iconToUse, pos.X, pos.Y);
                     processed++;
 
+                    if (!string.IsNullOrWhiteSpace(icon.Yield))
+                    {
+                        using Font fBold = new(Font.FontFamily, (cluster.Sectors.Count == 1 ? 12 : 6), FontStyle.Bold);
+                        var text = icon.Yield;
+                        e.Graphics.DrawString(text, fBold, Brushes.Black,
+                            pos.X - 1f, pos.Y -1f);
+                    }
+
                     // Reset
                     xLayerProcess++;
                     if (xLayerProcess == 4)
@@ -811,11 +840,31 @@ namespace X4SectorCreator
                             Sector = sector,
                             ImageLarge = imageTintLarge,
                             ImageSmall = imageTintSmall,
-                            Type = resource.Ware
+                            Type = resource.Ware,
+                            Yield = GetYieldValue(resource.Yield)
                         };
                     }
                 }
             }
+        }
+
+        private static string GetYieldValue(string yield)
+        {
+            if (!_yieldDensities.TryGetValue(yield.ToLower(), out double density))
+                return "0";
+
+            double min = _yieldDensities.Values.Min();
+            double max = _yieldDensities.Values.Max();
+
+            // Log scale
+            double logMin = Math.Log10(min);
+            double logMax = Math.Log10(max);
+            double logValue = Math.Log10(density);
+
+            double normalized = (logValue - logMin) / (logMax - logMin);
+            int scaled = (int)Math.Round(1 + normalized * (99 - 1));
+
+            return scaled.ToString();
         }
 
         private IEnumerable<IconData> CollectOtherIconData(Point sizeSmall, Point sizeLarge)
@@ -1778,6 +1827,7 @@ namespace X4SectorCreator
             public Image ImageLarge { get; set; }
             public Image ImageSmall { get; set; }
             public string Type { get; set; }
+            public string Yield { get; set; }
         }
 
         private void LegendTree_BeforeSelect(object sender, TreeViewCancelEventArgs e)
