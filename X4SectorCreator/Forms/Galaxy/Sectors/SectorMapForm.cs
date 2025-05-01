@@ -56,7 +56,7 @@ namespace X4SectorCreator
         private static readonly Dictionary<int, bool> _dlcsSelected = [];
 
         private static bool _sectorMapFirstTimeOpen = true;
-        private readonly int _originalLegendPanelHeight;
+        private int _originalLegendPanelHeight, _originalControlPanelHeight;
 
         // TODO: Rework to use ImageList in treeview with image nodes and colors
         private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
@@ -82,7 +82,7 @@ namespace X4SectorCreator
         {
             InitializeComponent();
 
-            _originalLegendPanelHeight = LegendPanel.Height;
+            ControlPanel.Top = 12;
 
             // Setup events
             DoubleBuffered = true;
@@ -1395,7 +1395,7 @@ namespace X4SectorCreator
             if (isHidden)
             {
                 BtnHideLegend.Text = "V";
-                BtnHideLegend.Font = new Font(BtnHideLegend.Font.FontFamily, 13);
+                BtnHideLegend.Font = new Font(BtnHideLegend.Font.FontFamily, 13, BtnHideLegend.Font.Style, GraphicsUnit.Pixel);
                 LegendTree.Visible = true;
                 LegendPanel.Height = _originalLegendPanelHeight;
                 LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
@@ -1403,10 +1403,31 @@ namespace X4SectorCreator
             else
             {
                 BtnHideLegend.Text = "^";
-                BtnHideLegend.Font = new Font(BtnHideLegend.Font.FontFamily, 15);
+                BtnHideLegend.Font = new Font(BtnHideLegend.Font.FontFamily, 15, BtnHideLegend.Font.Style, GraphicsUnit.Pixel);
                 LegendTree.Visible = false;
+                _originalLegendPanelHeight = LegendPanel.Height;
                 LegendPanel.Height = 35;
                 LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+            }
+        }
+
+        private void BtnHideOptions_Click(object sender, EventArgs e)
+        {
+            var isHidden = BtnHideOptions.Text == "V";
+            if (isHidden)
+            {
+                BtnHideOptions.Text = "^";
+                BtnHideOptions.Font = new Font(BtnHideOptions.Font.FontFamily, 14, BtnHideOptions.Font.Style, GraphicsUnit.Pixel);
+                ControlPanel.Height = _originalControlPanelHeight;
+                ControlPanel.Top = 12;
+            }
+            else
+            {
+                BtnHideOptions.Text = "V";
+                BtnHideOptions.Font = new Font(BtnHideOptions.Font.FontFamily, 11, BtnHideOptions.Font.Style, GraphicsUnit.Pixel);
+                _originalControlPanelHeight = ControlPanel.Height;
+                ControlPanel.Height = 24;
+                ControlPanel.Top = 12;
             }
         }
 
