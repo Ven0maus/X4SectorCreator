@@ -14,10 +14,11 @@ namespace DevConsole
         {
             Console.WriteLine("Enter clusters.xml directory path: ");
             var path = Console.ReadLine();
-            var filePath = Path.Combine(path, "clusters.xml");
-            if (File.Exists(filePath))
+            var clustersPath = Path.Combine(path, "clusters.xml");
+            var regionDefinitionsPath = Path.Combine(path, "region_definitions.xml");
+            if (File.Exists(clustersPath))
             {
-                RegionExtractor.ExtractRegions(filePath);
+                RegionExtractor.ExtractRegions(clustersPath, regionDefinitionsPath);
             }
 
             /*
