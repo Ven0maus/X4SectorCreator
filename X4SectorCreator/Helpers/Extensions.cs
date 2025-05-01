@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Drawing.Imaging;
+using System.Numerics;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.CustomComponents;
 
@@ -31,6 +32,62 @@ namespace X4SectorCreator.Helpers
             if (_textSearchComponents.TryGetValue(textBox, out var component))
                 return component;
             return null;
+        }
+
+        public static ColorMatrix ToColorMatrix(this Color color)
+        {
+            // Normalize the RGB components of the color (values between 0 and 1)
+            float r = color.R / 255f;
+            float g = color.G / 255f;
+            float b = color.B / 255f;
+            float a = color.A / 255f;
+
+            // Create a ColorMatrix and apply the color's tint
+            ColorMatrix matrix = new(
+            [
+                [r, 0, 0, 0, 0],  // Red component
+                [0, g, 0, 0, 0],  // Green component
+                [0, 0, b, 0, 0],  // Blue component
+                [0, 0, 0, a, 0],  // Alpha component
+                [0, 0, 0, 0, 1]   // No change to the final pixel intensity
+            ]);
+
+            return matrix;
+        }
+
+        public static Image CopyAsTint(this Image image, Color tintColor)
+        {
+            Bitmap tintedImage = new(image.Width, image.Height);
+
+            using (Graphics g = Graphics.FromImage(tintedImage))
+            {
+                // Define the color matrix
+                float r = tintColor.R / 255f;
+                float gCol = tintColor.G / 255f;
+                float b = tintColor.B / 255f;
+
+                ColorMatrix colorMatrix = new(
+                [
+                    [r, 0, 0, 0, 0],
+                    [0, gCol, 0, 0, 0],
+                    [0, 0, b, 0, 0],
+                    [0, 0, 0, 1, 0],
+                    [0, 0, 0, 0, 1]
+                ]);
+
+                using ImageAttributes attributes = new ImageAttributes();
+                attributes.SetColorMatrix(colorMatrix);
+
+                g.DrawImage(
+                    image,
+                    new Rectangle(0, 0, image.Width, image.Height),
+                    0, 0, image.Width, image.Height,
+                    GraphicsUnit.Pixel,
+                    attributes
+                );
+            }
+
+            return tintedImage;
         }
 
         public static Color HexToColor(this string hexstring)

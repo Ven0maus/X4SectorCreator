@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics.Metrics;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
+using static X4SectorCreator.Objects.Constructionplan;
 
 namespace X4SectorCreator
 {
@@ -36,7 +37,6 @@ namespace X4SectorCreator
         private static PointF _offset;
         private static float _zoom = _defaultZoom; // 1.0 means 100% scale
         private const float _minZoom = 0.15f, _maxZoom = 2.5f;
-
         private const float _stationIconSize = 24f;
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
@@ -56,22 +56,37 @@ namespace X4SectorCreator
         private static readonly Dictionary<int, bool> _dlcsSelected = [];
 
         private static bool _sectorMapFirstTimeOpen = true;
+        private readonly int _originalLegendPanelHeight;
+
+        // TODO: Rework to use ImageList in treeview with image nodes and colors
+        private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
+        {
+            {
+                "Resources", new List<object>
+                {
+                    ("Ore", Color.Orange),
+                    ("Silicon", Color.SlateGray),
+                    ("Ice", Color.White),
+                    ("Methane", Color.DeepSkyBlue),
+                    ("Helium", Color.LightCoral),
+                    ("Hydrogen", Color.DarkCyan),
+                    ("Nividium", Color.Fuchsia),
+                    ("Scrap", Color.Red)
+                }
+            }
+        };
+
+        private static readonly Dictionary<string, Image> _imageMap = new(StringComparer.OrdinalIgnoreCase);
 
         public SectorMapForm()
         {
             InitializeComponent();
 
+            _originalLegendPanelHeight = LegendPanel.Height;
+
             // Setup events
             DoubleBuffered = true;
             KeyPreview = true;
-            MouseDown += HandleMouseDown;
-            MouseUp += HandleMouseUp;
-            MouseMove += HandleMouseMove;
-            Paint += DrawHexGrid;
-            Resize += HandleResize;
-            MouseWheel += HandleMouseWheel;
-            MouseClick += SectorMapForm_MouseClick;
-            KeyDown += SectorMapForm_KeyDown;
 
             // Init dlcs
             foreach (KeyValuePair<string, int> mapping in _selectedDlcMapping)
@@ -86,6 +101,93 @@ namespace X4SectorCreator
                 _ = DlcListBox.Items.Add(_dlcMapping.First(a => a.Value.Equals(mapping.Key)).Key);
                 DlcListBox.SetItemChecked(mapping.Value, value);
             }
+
+            // Setup legend
+            SetupLegendTree();
+
+            MouseDown += HandleMouseDown;
+            MouseUp += HandleMouseUp;
+            MouseMove += HandleMouseMove;
+            Paint += DrawHexGrid;
+            Resize += HandleResize;
+            MouseWheel += HandleMouseWheel;
+            MouseClick += SectorMapForm_MouseClick;
+            KeyDown += SectorMapForm_KeyDown;
+        }
+
+        private void SetupLegendTree()
+        {
+            LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+            LegendTree.DrawNode += LegendTree_DrawNode;
+            LegendTree.ImageList = new ImageList
+            {
+                ImageSize = new Size(16, 16)
+            };
+
+            // Init region images
+            var regionImage = GetIconFromStore("region_resource");
+            foreach (var resource in _legend["resources"])
+            {
+                var (name, color) = ((string name, Color color))resource;
+                LegendTree.ImageList.Images.Add(name, regionImage.CopyAsTint(color));
+            }
+
+            foreach (var legendEntry in _legend)
+            {
+                var node = new TreeNode(legendEntry.Key)
+                {
+                    ImageIndex = LegendTree.ImageList.Images.Count,
+                    SelectedImageIndex = LegendTree.ImageList.Images.Count
+                };
+
+                foreach (var entry in legendEntry.Value)
+                {
+                    var (name, _) = ((string name, Color color))entry;
+                    var childNode = new TreeNode(name);
+                    if (legendEntry.Key.Equals("resources", StringComparison.OrdinalIgnoreCase))
+                        childNode.ImageKey = name;
+                    node.Nodes.Add(childNode);
+                }
+                LegendTree.Nodes.Add(node);
+            }
+            LegendTree.ExpandAll();
+        }
+
+        private void LegendTree_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            TreeView tree = e.Node.TreeView;
+
+            int textX = (e.Node.ImageKey == string.Empty && e.Node.SelectedImageKey == string.Empty) ?
+                e.Bounds.Left - e.Node.TreeView.ImageList.ImageSize.Width : e.Bounds.Left - 2;
+            int textY = (e.Bounds.Top + e.Bounds.Bottom) / 2 + 1;
+
+            TextRenderer.DrawText(
+                e.Graphics,
+                e.Node.Text,
+                e.Node.NodeFont ?? tree.Font,
+                new Point(textX, textY),
+                tree.ForeColor,
+                TextFormatFlags.VerticalCenter | TextFormatFlags.Left
+            );
+
+            e.DrawDefault = false;
+        }
+
+        public static Image GetIconFromStore(string iconName)
+        {
+            if (!_imageMap.TryGetValue(iconName, out var image))
+            {
+                var path = Path.Combine(Application.StartupPath, $"Data/Icons/{iconName}.png");
+                if (File.Exists(path))
+                {
+                    _imageMap[iconName] = image = Image.FromFile(path);
+                }
+                else
+                {
+                    _imageMap[iconName] = image = null;
+                }
+            }
+            return image;
         }
 
         private void SectorMapForm_KeyDown(object sender, KeyEventArgs e)
@@ -457,7 +559,7 @@ namespace X4SectorCreator
 
         private void DrawHexGrid(object sender, PaintEventArgs e)
         {
-            try 
+            try
             {
                 // Init graphics properly with offset and scaling
                 e.Graphics.Clear(Color.Black);
@@ -482,14 +584,14 @@ namespace X4SectorCreator
                 // Draw tip label
                 RenderTipLabel(e);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                #if DEBUG
+#if DEBUG
                 throw;
-                #else
+#else
                 _ = MessageBox.Show("An error occured when trying to render the map view: \"" + ex.Message + "\".\nPlease create a bug report. (Be sure to provide the export xml or exact reproduction steps).");
                 Close();
-                #endif
+#endif
             }
         }
 
@@ -545,6 +647,9 @@ namespace X4SectorCreator
                     {
                         foreach (Station station in zone.Stations)
                         {
+                            var stationIcon = GetIconFromStore(station.Type.ToLower());
+                            if (stationIcon == null) continue;
+
                             // Convert the zone position from world to screen space
                             PointF stationScreenPosition = ConvertFromWorldCoordinate(station.Position, sector.DiameterRadius, correctHexRadius);
 
@@ -553,24 +658,21 @@ namespace X4SectorCreator
 
                             Color color = FactionsForm.GetColorForFaction(station.Owner);
 
-                            using SolidBrush brush = new(color);
-                            string character = station.Type.ToLower() switch
-                            {
-                                "defence" => "■",
-                                "wharf" => "Δ",
-                                "shipyard" => "▲",
-                                "equipmentdock" => "⎕",
-                                "tradestation" => "⨁",
-                                "piratebase" => "±",
-                                _ => throw new NotSupportedException($"Station type not supported: {station.Type}"),
-                            };
+                            // Define the size for the resized icon (width and height)
+                            int width = 15;
+                            int height = 15;
 
-                            using Font bigFont = new("Arial", cluster.Sectors.Count > 1 ? _stationIconSize / 2f : _stationIconSize, FontStyle.Bold);
-                            SizeF textSize = e.Graphics.MeasureString(character, bigFont);
-                            float textHeightOffset = textSize.Height / 2;
-                            float textWidthOffset = textSize.Width / 2;
+                            // Create an ImageAttributes object to apply the color matrix
+                            ImageAttributes imgAttributes = new();
+                            imgAttributes.SetColorMatrix(color.ToColorMatrix());
 
-                            e.Graphics.DrawString(character, bigFont, brush, stationScreenPosition.X - textWidthOffset, stationScreenPosition.Y - textHeightOffset);
+                            // Optionally, set the resizing mode (you can adjust it for quality)
+                            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+                            // Draw the resized icon at a specific position on the form (x, y)
+                            e.Graphics.DrawImage(stationIcon,
+                                new Rectangle((int)stationScreenPosition.X - (width / 2), (int)stationScreenPosition.Y - (height / 2), width, height),
+                                0, 0, stationIcon.Width, stationIcon.Height, GraphicsUnit.Pixel, imgAttributes);
                         }
                     }
                     sectorIndex++;
@@ -1197,7 +1299,7 @@ namespace X4SectorCreator
                 if (selectedSector == null) return;
 
                 // Set the selected cluster/sector as hq space
-                FactionForm.PreferredHqSpace = _selectedChildHexIndex != null ? 
+                FactionForm.PreferredHqSpace = _selectedChildHexIndex != null ?
                     GetSectorMacro(cluster, selectedSector) : GetClusterMacro(cluster);
             }
 
@@ -1285,6 +1387,27 @@ namespace X4SectorCreator
         {
             _dlcsSelected[e.Index] = e.NewValue == CheckState.Checked;
             Invalidate();
+        }
+
+        private void BtnHideLegend_Click(object sender, EventArgs e)
+        {
+            var isHidden = BtnHideLegend.Text == "^";
+            if (isHidden)
+            {
+                BtnHideLegend.Text = "V";
+                BtnHideLegend.Font = new Font(BtnHideLegend.Font.FontFamily, 13);
+                LegendTree.Visible = true;
+                LegendPanel.Height = _originalLegendPanelHeight;
+                LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+            }
+            else
+            {
+                BtnHideLegend.Text = "^";
+                BtnHideLegend.Font = new Font(BtnHideLegend.Font.FontFamily, 15);
+                LegendTree.Visible = false;
+                LegendPanel.Height = 35;
+                LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+            }
         }
 
         internal struct GateConnection
