@@ -41,6 +41,8 @@
             NrMaxRegionPerSector = new NumericUpDown();
             label5 = new Label();
             RegionResourceRarity = new DataGridView();
+            Resource = new DataGridViewTextBoxColumn();
+            Rarity = new DataGridViewTextBoxColumn();
             label6 = new Label();
             label7 = new Label();
             NrFactionMin = new NumericUpDown();
@@ -55,8 +57,6 @@
             label13 = new Label();
             NrChanceMultiSectors = new NumericUpDown();
             label14 = new Label();
-            Resource = new DataGridViewTextBoxColumn();
-            Rarity = new DataGridViewTextBoxColumn();
             label15 = new Label();
             CmbClusterDistribution = new ComboBox();
             label16 = new Label();
@@ -69,6 +69,7 @@
             RegionPanel = new Panel();
             panel1 = new Panel();
             ChkAutoSeed = new CheckBox();
+            panel2 = new Panel();
             ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
@@ -81,6 +82,7 @@
             ((System.ComponentModel.ISupportInitialize)NrFacControlMin).BeginInit();
             RegionPanel.SuspendLayout();
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // button1
@@ -107,7 +109,7 @@
             label1.Name = "label1";
             label1.Size = new Size(251, 63);
             label1.TabIndex = 2;
-            label1.Text = "Steps:\r\n1. Setup procedural settings\r\n2. Open sector map to view live updates.\r\n3. Click generate as many times as you want.";
+            label1.Text = "Steps:\r\n1. Set Generation Options\r\n2. Open sector map to view live updates.\r\n3. Click generate as many times as you want.";
             // 
             // ChkRegions
             // 
@@ -206,6 +208,21 @@
             RegionResourceRarity.Size = new Size(249, 137);
             RegionResourceRarity.TabIndex = 13;
             // 
+            // Resource
+            // 
+            Resource.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Resource.HeaderText = "Resource";
+            Resource.Name = "Resource";
+            Resource.ReadOnly = true;
+            Resource.ToolTipText = "The name of the resource.";
+            // 
+            // Rarity
+            // 
+            Rarity.HeaderText = "Rarity";
+            Rarity.Name = "Rarity";
+            Rarity.ToolTipText = "Distribution is based on the rarity of the resource.";
+            Rarity.Width = 75;
+            // 
             // label6
             // 
             label6.AutoSize = true;
@@ -261,7 +278,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(7, 71);
+            label10.Location = new Point(4, 10);
             label10.Name = "label10";
             label10.Size = new Size(81, 15);
             label10.TabIndex = 20;
@@ -270,7 +287,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(187, 71);
+            label11.Location = new Point(184, 10);
             label11.Name = "label11";
             label11.Size = new Size(27, 15);
             label11.TabIndex = 24;
@@ -279,7 +296,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(88, 71);
+            label12.Location = new Point(85, 10);
             label12.Name = "label12";
             label12.Size = new Size(52, 15);
             label12.TabIndex = 23;
@@ -287,7 +304,7 @@
             // 
             // NrClustersMax
             // 
-            NrClustersMax.Location = new Point(219, 67);
+            NrClustersMax.Location = new Point(216, 6);
             NrClustersMax.Name = "NrClustersMax";
             NrClustersMax.Size = new Size(41, 23);
             NrClustersMax.TabIndex = 22;
@@ -295,7 +312,7 @@
             // 
             // NrClustersMin
             // 
-            NrClustersMin.Location = new Point(142, 67);
+            NrClustersMin.Location = new Point(139, 6);
             NrClustersMin.Name = "NrClustersMin";
             NrClustersMin.Size = new Size(41, 23);
             NrClustersMin.TabIndex = 21;
@@ -304,7 +321,7 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(7, 100);
+            label13.Location = new Point(4, 39);
             label13.Name = "label13";
             label13.Size = new Size(179, 15);
             label13.TabIndex = 25;
@@ -312,7 +329,7 @@
             // 
             // NrChanceMultiSectors
             // 
-            NrChanceMultiSectors.Location = new Point(187, 98);
+            NrChanceMultiSectors.Location = new Point(184, 37);
             NrChanceMultiSectors.Name = "NrChanceMultiSectors";
             NrChanceMultiSectors.Size = new Size(41, 23);
             NrChanceMultiSectors.TabIndex = 26;
@@ -327,25 +344,10 @@
             label14.TabIndex = 27;
             label14.Text = "0 non-existant 1 abundant";
             // 
-            // Resource
-            // 
-            Resource.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Resource.HeaderText = "Resource";
-            Resource.Name = "Resource";
-            Resource.ReadOnly = true;
-            Resource.ToolTipText = "The name of the resource.";
-            // 
-            // Rarity
-            // 
-            Rarity.HeaderText = "Rarity";
-            Rarity.Name = "Rarity";
-            Rarity.ToolTipText = "Distribution is based on the rarity of the resource.";
-            Rarity.Width = 75;
-            // 
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(7, 130);
+            label15.Location = new Point(4, 69);
             label15.Name = "label15";
             label15.Size = new Size(72, 15);
             label15.TabIndex = 28;
@@ -354,7 +356,7 @@
             // CmbClusterDistribution
             // 
             CmbClusterDistribution.FormattingEnabled = true;
-            CmbClusterDistribution.Location = new Point(85, 127);
+            CmbClusterDistribution.Location = new Point(82, 66);
             CmbClusterDistribution.Name = "CmbClusterDistribution";
             CmbClusterDistribution.Size = new Size(143, 23);
             CmbClusterDistribution.TabIndex = 29;
@@ -421,6 +423,7 @@
             // 
             // RegionPanel
             // 
+            RegionPanel.BackColor = SystemColors.ButtonHighlight;
             RegionPanel.Controls.Add(RegionResourceRarity);
             RegionPanel.Controls.Add(label4);
             RegionPanel.Controls.Add(NrRegionSpawnChance);
@@ -435,6 +438,7 @@
             // 
             // panel1
             // 
+            panel1.BackColor = SystemColors.ButtonHighlight;
             panel1.Controls.Add(label19);
             panel1.Controls.Add(label7);
             panel1.Controls.Add(CmbFactionDistribution);
@@ -464,23 +468,32 @@
             ChkAutoSeed.Text = "Auto-Seed";
             ChkAutoSeed.UseVisualStyleBackColor = true;
             // 
+            // panel2
+            // 
+            panel2.BackColor = SystemColors.ButtonHighlight;
+            panel2.Controls.Add(label10);
+            panel2.Controls.Add(NrClustersMin);
+            panel2.Controls.Add(NrClustersMax);
+            panel2.Controls.Add(label12);
+            panel2.Controls.Add(CmbClusterDistribution);
+            panel2.Controls.Add(label11);
+            panel2.Controls.Add(label15);
+            panel2.Controls.Add(label13);
+            panel2.Controls.Add(NrChanceMultiSectors);
+            panel2.Location = new Point(12, 64);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(262, 163);
+            panel2.TabIndex = 40;
+            // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(572, 382);
+            ClientSize = new Size(573, 382);
+            Controls.Add(panel2);
             Controls.Add(ChkAutoSeed);
             Controls.Add(panel1);
             Controls.Add(RegionPanel);
-            Controls.Add(CmbClusterDistribution);
-            Controls.Add(label15);
-            Controls.Add(NrChanceMultiSectors);
-            Controls.Add(label13);
-            Controls.Add(label11);
-            Controls.Add(label12);
-            Controls.Add(NrClustersMax);
-            Controls.Add(NrClustersMin);
-            Controls.Add(label10);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(TxtSeed);
@@ -508,6 +521,8 @@
             RegionPanel.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -555,5 +570,6 @@
         private Panel RegionPanel;
         private Panel panel1;
         private CheckBox ChkAutoSeed;
+        private Panel panel2;
     }
 }
