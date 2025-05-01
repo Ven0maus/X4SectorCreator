@@ -299,6 +299,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "X4 Sector Map";
             WindowState = FormWindowState.Maximized;
+            Load += SectorMapForm_Load;
             ControlPanel.ResumeLayout(false);
             ControlPanel.PerformLayout();
             LegendPanel.ResumeLayout(false);
