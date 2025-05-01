@@ -1,9 +1,15 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
+using static X4SectorCreator.Objects.Ware;
 
 namespace X4SectorCreator
 {
@@ -70,7 +76,13 @@ namespace X4SectorCreator
                     ("Helium", Color.LightCoral),
                     ("Hydrogen", Color.DarkCyan),
                     ("Nividium", Color.Fuchsia),
-                    ("Scrap", Color.Red)
+                    ("RawScrap", Color.Red)
+                }
+            },
+            {
+                "Others", new List<object>
+                {
+                    "Faction Logic Disabled"
                 }
             }
         };
@@ -132,6 +144,7 @@ namespace X4SectorCreator
                 var (name, color) = ((string name, Color color))resource;
                 LegendTree.ImageList.Images.Add(name, regionImage.CopyAsTint(color));
             }
+            LegendTree.ImageList.Images.Add("Faction Logic Disabled", GetIconFromStore("faction_logic_disabled"));
 
             foreach (var legendEntry in _legend)
             {
@@ -143,10 +156,20 @@ namespace X4SectorCreator
 
                 foreach (var entry in legendEntry.Value)
                 {
-                    var (name, _) = ((string name, Color color))entry;
-                    var childNode = new TreeNode(name);
-                    if (legendEntry.Key.Equals("resources", StringComparison.OrdinalIgnoreCase))
-                        childNode.ImageKey = name;
+                    TreeNode childNode;
+                    if (entry is string entryStr)
+                    {
+                        childNode = new TreeNode(entryStr);
+                        if (entryStr.Equals("Faction Logic Disabled", StringComparison.OrdinalIgnoreCase))
+                            childNode.ImageKey = entryStr;
+                    }
+                    else
+                    {
+                        var (name, _) = ((string name, Color color))entry;
+                        childNode = new TreeNode(name);
+                        if (legendEntry.Key.Equals("resources", StringComparison.OrdinalIgnoreCase))
+                            childNode.ImageKey = name;
+                    }
                     node.Nodes.Add(childNode);
                 }
                 LegendTree.Nodes.Add(node);
@@ -566,6 +589,7 @@ namespace X4SectorCreator
                 e.Graphics.Clear(Color.Black);
                 e.Graphics.TranslateTransform(_offset.X, _offset.Y);
                 e.Graphics.ScaleTransform(_zoom, _zoom);
+                e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
                 // Renders all the hexagons in the screen
                 RenderAllHexes(e);
@@ -577,7 +601,7 @@ namespace X4SectorCreator
                 RenderGateConnections(e);
 
                 // Render station icons
-                RenderStationIcons(e);
+                RenderHexIcons(e);
 
                 // Hex names draw on top of everything
                 RenderAllHexNames(e);
@@ -618,6 +642,178 @@ namespace X4SectorCreator
 
             e.Graphics.Restore(state);
         }
+
+        private void RenderHexIcons(PaintEventArgs e)
+        {
+            // These are exceptional as they are rendered directly in the position of the station
+            RenderStationIcons(e);
+
+            var sizeSmall = new Point(32, 32);
+            var sizeLarge = new Point(64, 64);
+
+            // Collection of icon data
+            var icons = new List<IconData>();
+            icons.AddRange(CollectRegionIconData(sizeSmall, sizeLarge));
+            icons.AddRange(CollectOtherIconData(sizeSmall, sizeLarge));
+
+            // Render other icons at the bottom of the hex
+            RenderSmallHexIcons(e, icons);
+        }
+
+        private static void RenderSmallHexIcons(PaintEventArgs e, List<IconData> iconDatas)
+        {
+            // Calculate hex size and radius based on zoom and sector size
+            float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
+            float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+
+            // Each icon is rendered in the cluster or sector bottom right corner
+            foreach (var group in iconDatas.GroupBy(a => a.Sector))
+            {
+                var processed = 0;
+                var xLayerProcess = 0;
+                foreach (var icon in group)
+                {
+                    var cluster = icon.Cluster;
+                    var sector = icon.Sector;
+                    var sectorIndex = cluster.Sectors.IndexOf(sector);
+
+                    // Define the size for the resized icon (width and height)
+                    int width = cluster.Sectors.Count == 1 ? icon.ImageLarge.Width : icon.ImageSmall.Width;
+                    int height = cluster.Sectors.Count == 1 ? icon.ImageLarge.Height : icon.ImageSmall.Height;
+
+                    // Collect the child hexagon points
+                    Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                    PointF hexCenter = GetHexCenter(childHexagon.Points);
+                    float correctHexHeight = cluster.Sectors.Count == 1 ? hexHeight : hexHeight / 2;
+
+                    // Bottom left corner
+                    float startX = hexCenter.X - correctHexHeight / 4;
+                    float startY = hexCenter.Y + correctHexHeight / 2 - (height / 2);
+
+                    // Increment by icon size + 1
+                    for (int i =0; i < xLayerProcess; i++)
+                    {
+                        startX += width + 1;
+                    }
+
+                    // Icons are shown per 4, on each Y layer
+                    var yLayer = (int)(processed / 4f);
+                    startY -= height * yLayer;
+
+                    // Define position
+                    var pos = new PointF(startX, startY);
+
+                    // Draw the resized icon at a specific position on the form (x, y)
+                    var iconToUse = cluster.Sectors.Count == 1 ? icon.ImageLarge : icon.ImageSmall;
+                    e.Graphics.DrawImage(iconToUse, pos.X, pos.Y);
+                    processed++;
+
+                    // Reset
+                    xLayerProcess++;
+                    if (xLayerProcess == 4)
+                        xLayerProcess = 0;
+                }
+            }
+        }
+
+        private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
+        private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
+
+        private IEnumerable<IconData> CollectRegionIconData(Point small, Point large)
+        {
+            if (!ChkShowRegions.Checked) yield break;
+
+            List<Cluster> relevantClusters = _baseGameClusters.Values
+                .Concat(_customClusters)
+                .Where(cluster => cluster.Sectors.Any(sector => sector.Regions.Count > 0))
+                .ToList();
+            if (relevantClusters.Count == 0) yield break;
+
+            var regionIcon = GetIconFromStore("region_resource");
+            if (regionIcon == null) yield break;
+
+            var resourceColors = _legend["resources"]
+                .Select(a => ((string name, Color color))a)
+                .ToDictionary(a => a.name, a => a.color, StringComparer.OrdinalIgnoreCase);
+            if (resourceColors.Count == 0) yield break;
+
+            foreach (Cluster cluster in relevantClusters)
+            {
+                foreach (Sector sector in cluster.Sectors.Where(a => a.Regions.Count > 0))
+                {
+                    var resources = sector.Regions
+                        .SelectMany(a => a.Definition.Resources);
+                    foreach (var resource in resources)
+                    {
+                        if (!resourceColors.TryGetValue(resource.Ware, out var resourceColor))
+                        {
+                            throw new Exception("No legend color defined for resource: " + resource.Ware);
+                        }
+
+                        if (!cachedRegionImagesLarge.TryGetValue(resourceColor, out var imageTintLarge))
+                        {
+                            cachedRegionImagesLarge[resourceColor] = imageTintLarge = regionIcon.Resize(large.X, large.Y, InterpolationMode.HighQualityBicubic, resourceColor);
+                        }
+                        if (!cachedRegionImagesSmall.TryGetValue(resourceColor, out var imageTintSmall))
+                        {
+                            cachedRegionImagesSmall[resourceColor] = imageTintSmall = regionIcon.Resize(small.X, small.Y, InterpolationMode.HighQualityBicubic, resourceColor);
+                        }
+
+                        yield return new IconData
+                        {
+                            Cluster = cluster,
+                            Sector = sector,
+                            ImageLarge = imageTintLarge,
+                            ImageSmall = imageTintSmall,
+                            Text = resource.Yield
+                        };
+                    }
+                }
+            }
+        }
+
+        private Image _factionLogicImageLarge;
+        private Image _factionLogicImageSmall;
+
+        private IEnumerable<IconData> CollectOtherIconData(Point sizeSmall, Point sizeLarge)
+        {
+            var factionLogicDisabledIcon = GetIconFromStore("faction_logic_disabled");
+            if (factionLogicDisabledIcon == null) yield break;
+
+            var iconLarge = _factionLogicImageLarge ??= factionLogicDisabledIcon.Resize(sizeLarge.X, sizeLarge.Y, InterpolationMode.HighQualityBicubic);
+            var iconSmall = _factionLogicImageSmall ??= factionLogicDisabledIcon.Resize(sizeSmall.X, sizeSmall.Y, InterpolationMode.HighQualityBicubic);
+
+            foreach (Cluster cluster in _baseGameClusters.Values.Concat(_customClusters))
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    // Icon for disabled faction logic
+                    if (sector.DisableFactionLogic)
+                    {
+                        yield return new IconData
+                        {
+                            Cluster = cluster,
+                            Sector = sector,
+                            ImageLarge = iconLarge,
+                            ImageSmall = iconSmall,
+                            Text = null
+                        };
+                    }
+                }
+            }
+        }
+
+        class IconData
+        {
+            public Cluster Cluster { get; set; }
+            public Sector Sector { get; set; }
+            public Image ImageLarge { get; set; }
+            public Image ImageSmall { get; set; }
+            public string Text { get; set; }
+        }
+
+        private readonly Dictionary<Color, Dictionary<string, Image>> _cachedStationIconsLarge = [];
+        private readonly Dictionary<Color, Dictionary<string, Image>> _cachedStationIconsSmall = [];
 
         private void RenderStationIcons(PaintEventArgs e)
         {
@@ -662,20 +858,41 @@ namespace X4SectorCreator
                             Color color = FactionsForm.GetColorForFaction(station.Owner);
 
                             // Define the size for the resized icon (width and height)
-                            int width = cluster.Sectors.Count == 1 ? 28 : 16;
-                            int height = cluster.Sectors.Count == 1 ? 28 : 16;
+                            int width = cluster.Sectors.Count == 1 ? 32 : 16;
+                            int height = cluster.Sectors.Count == 1 ? 32 : 16;
 
-                            // Create an ImageAttributes object to apply the color matrix
-                            ImageAttributes imgAttributes = new();
-                            imgAttributes.SetColorMatrix(color.ToColorMatrix());
+                            Image resizedIcon;
+                            if (cluster.Sectors.Count == 1)
+                            {
+                                if (!_cachedStationIconsLarge.TryGetValue(color, out var iconsLarge))
+                                {
+                                    _cachedStationIconsLarge[color] = iconsLarge = new(StringComparer.OrdinalIgnoreCase);
+                                }
 
-                            // Optionally, set the resizing mode (you can adjust it for quality)
-                            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                if (!iconsLarge.TryGetValue(station.Type, out var icon))
+                                {
+                                    icon = stationIcon.Resize(width, height, InterpolationMode.HighQualityBicubic, color);
+                                    iconsLarge[station.Type] = icon;
+                                }
+                                resizedIcon = icon;
+                            }
+                            else
+                            {
+                                if (!_cachedStationIconsSmall.TryGetValue(color, out var iconsSmall))
+                                {
+                                    _cachedStationIconsSmall[color] = iconsSmall = new(StringComparer.OrdinalIgnoreCase);
+                                }
+
+                                if (!iconsSmall.TryGetValue(station.Type, out var icon))
+                                {
+                                    icon = stationIcon.Resize(width, height, InterpolationMode.HighQualityBicubic, color);
+                                    iconsSmall[station.Type] = icon;
+                                }
+                                resizedIcon = icon;
+                            }
 
                             // Draw the resized icon at a specific position on the form (x, y)
-                            e.Graphics.DrawImage(stationIcon,
-                                new Rectangle((int)stationScreenPosition.X - (width / 2), (int)stationScreenPosition.Y - (height / 2), width, height),
-                                0, 0, stationIcon.Width, stationIcon.Height, GraphicsUnit.Pixel, imgAttributes);
+                            e.Graphics.DrawImage(resizedIcon, (int)stationScreenPosition.X - (width / 2), (int)stationScreenPosition.Y - (height / 2));
                         }
                     }
                     sectorIndex++;
@@ -1447,6 +1664,11 @@ namespace X4SectorCreator
         }
 
         private void ChkShowStations_CheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void ChkShowRegions_CheckedChanged(object sender, EventArgs e)
         {
             Invalidate();
         }

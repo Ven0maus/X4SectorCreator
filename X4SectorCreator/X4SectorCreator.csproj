@@ -32,6 +32,9 @@
     <None Update="Data\Icons\equipmentdock.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Icons\faction_logic_disabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Icons\region_resource.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
