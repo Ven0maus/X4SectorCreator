@@ -4,7 +4,6 @@ using System.Drawing.Imaging;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
-using static X4SectorCreator.Objects.Constructionplan;
 
 namespace X4SectorCreator
 {
@@ -37,7 +36,6 @@ namespace X4SectorCreator
         private static PointF _offset;
         private static float _zoom = _defaultZoom; // 1.0 means 100% scale
         private const float _minZoom = 0.15f, _maxZoom = 2.5f;
-        private const float _stationIconSize = 24f;
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
         private static readonly Dictionary<string, string> _dlcMapping = new(StringComparer.OrdinalIgnoreCase)
@@ -77,6 +75,8 @@ namespace X4SectorCreator
         };
 
         private static readonly Dictionary<string, Image> _imageMap = new(StringComparer.OrdinalIgnoreCase);
+
+        private static bool _optionWasMinimzed = false, _legendWasMinimized = false;
 
         public SectorMapForm()
         {
@@ -910,10 +910,10 @@ namespace X4SectorCreator
 
             // Make sure we don't double process target gates we already processed
             // We still have an issue with highway type gates showing as a double because they have different paths
-            HashSet<Gate> processedTargets = new();
+            HashSet<Gate> processedTargets = [];
 
             // Any invalid connections will be recorded
-            List<GateData> invalidConnections = new();
+            List<GateData> invalidConnections = [];
 
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
@@ -1399,6 +1399,7 @@ namespace X4SectorCreator
                 LegendTree.Visible = true;
                 LegendPanel.Height = _originalLegendPanelHeight;
                 LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+                _legendWasMinimized = false;
             }
             else
             {
@@ -1408,6 +1409,7 @@ namespace X4SectorCreator
                 _originalLegendPanelHeight = LegendPanel.Height;
                 LegendPanel.Height = 35;
                 LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+                _legendWasMinimized = true;
             }
         }
 
@@ -1420,6 +1422,7 @@ namespace X4SectorCreator
                 BtnHideOptions.Font = new Font(BtnHideOptions.Font.FontFamily, 14, BtnHideOptions.Font.Style, GraphicsUnit.Pixel);
                 ControlPanel.Height = _originalControlPanelHeight;
                 ControlPanel.Top = 12;
+                _optionWasMinimzed = false;
             }
             else
             {
@@ -1428,7 +1431,17 @@ namespace X4SectorCreator
                 _originalControlPanelHeight = ControlPanel.Height;
                 ControlPanel.Height = 24;
                 ControlPanel.Top = 12;
+                _optionWasMinimzed = true;
             }
+        }
+
+        private void SectorMapForm_Load(object sender, EventArgs e)
+        {
+            // Pre-hide boxes if stored in mem
+            if (_optionWasMinimzed)
+                BtnHideOptions.PerformClick();
+            if (_legendWasMinimized)
+                BtnHideLegend.PerformClick();
         }
 
         internal struct GateConnection
