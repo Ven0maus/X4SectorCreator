@@ -1,4 +1,6 @@
-﻿namespace X4SectorCreator.Objects
+﻿using System.Text.Json.Serialization;
+
+namespace X4SectorCreator.Objects
 {
     public class Region : ICloneable
     {
@@ -8,6 +10,9 @@
         public string BoundaryRadius { get; set; }
         public string BoundaryLinear { get; set; }
         public Point Position { get; set; }
+
+        [JsonIgnore]
+        public bool IsBaseGame => string.IsNullOrWhiteSpace(BoundaryRadius);
 
         public object Clone()
         {

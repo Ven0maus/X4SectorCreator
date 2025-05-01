@@ -71,6 +71,9 @@
     <None Update="Data\Mappings\vanilla_connection_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Mappings\vanilla_regions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Mappings\wares_mappings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

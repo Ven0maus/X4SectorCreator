@@ -118,6 +118,7 @@ namespace X4SectorCreator
             Dictionary<(int X, int Y), Cluster> clusterLookup = clusterCollection.Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
             // Create lookups
             AllClusters = replaceAllClusters ? clusterLookup : AllClusters;
+
             // Init all collections
             foreach (KeyValuePair<(int, int), Cluster> cluster in clusterLookup)
             {
@@ -158,10 +159,42 @@ namespace X4SectorCreator
                 }
             }
 
+            InitializeVanillaRegions(clusterLookup);
+
             // Create also the required connections for vanilla
             VanillaGateConnectionParser.CreateVanillaGateConnections(clusterLookup);
 
             return clusterCollection;
+        }
+
+        private static void InitializeVanillaRegions(Dictionary<(int x, int y), Cluster> allClusters)
+        {
+            string json = File.ReadAllText(Constants.DataPaths.VanillaRegionsMappingFilePath);
+            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.JsonSerializerOptions);
+
+            foreach (var refCluster in clusterCollection.Clusters)
+            {
+                // Find matching cluster
+                var cluster = allClusters.Values
+                    .FirstOrDefault(a => a.IsBaseGame && 
+                        a.BaseGameMapping.Equals(refCluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
+                if (cluster != null)
+                {
+                    foreach (var refSector in refCluster.Sectors)
+                    {
+                        // Find matching sector
+                        var sector = cluster.Sectors.FirstOrDefault(a => a.IsBaseGame && 
+                            a.BaseGameMapping.Equals(refSector.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
+                        if (sector != null)
+                        {
+                            foreach (var region in refSector.Regions)
+                            {
+                                sector.Regions.Add(region);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void CmbClusterOption_SelectedIndexChanged(object sender, EventArgs e)
@@ -568,7 +601,10 @@ namespace X4SectorCreator
                         .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
                     // Also add clusters that are basegame but have new connections compared to vanilla
-                    Cluster[] baseGameClusters = AllClusters.Values.Where(a => a.IsBaseGame).ToArray();
+                    Cluster[] baseGameClusters = AllClusters.Values
+                        .Where(a => a.IsBaseGame)
+                        .Select(a => (Cluster)a.Clone())
+                        .ToArray();
                     foreach (Cluster cluster in baseGameClusters)
                     {
                         foreach (Sector sector in cluster.Sectors)
@@ -580,8 +616,11 @@ namespace X4SectorCreator
                                 break;
                             }
 
-                            if (sector.Regions.Count > 0)
+                            // Don't export base-game regions
+                            sector.Regions.RemoveAll(a => a.IsBaseGame);
+                            if (sector.Regions.Count != 0)
                             {
+                                // Remove base-game clusters from export
                                 allModifiedClusters.Add(cluster);
                                 break;
                             }
@@ -596,6 +635,8 @@ namespace X4SectorCreator
                                     break;
                                 }
 
+                                // Don't export base-game gates
+                                zone.Gates.RemoveAll(a => a.IsBaseGame);
                                 foreach (Gate gate in zone.Gates)
                                 {
                                     // Check if gate exists in vanilla
@@ -1412,8 +1453,8 @@ namespace X4SectorCreator
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
-            // Show all regions
-            foreach (Region region in sector.Regions.OrderBy(a => a.Name))
+            // Show all non base-game regions
+            foreach (Region region in sector.Regions.Where(a => !a.IsBaseGame).OrderBy(a => a.Name))
             {
                 _ = RegionsListBox.Items.Add(region);
             }
