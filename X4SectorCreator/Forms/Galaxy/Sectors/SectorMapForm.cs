@@ -36,6 +36,7 @@ namespace X4SectorCreator
         private static PointF _offset;
         private static float _zoom = _defaultZoom; // 1.0 means 100% scale
         private const float _minZoom = 0.15f, _maxZoom = 2.5f;
+        private const float _gateSizeRadius = 4.5f;
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
         private static readonly Dictionary<string, string> _dlcMapping = new(StringComparer.OrdinalIgnoreCase)
@@ -620,6 +621,8 @@ namespace X4SectorCreator
 
         private void RenderStationIcons(PaintEventArgs e)
         {
+            if (!ChkShowStations.Checked) return;
+
             List<Cluster> relevantClusters = _baseGameClusters.Values
                 .Concat(_customClusters)
                 .Where(cluster => cluster.Sectors.Any(sector => sector.Zones.Any(zone => zone.Stations.Count != 0)))
@@ -659,8 +662,8 @@ namespace X4SectorCreator
                             Color color = FactionsForm.GetColorForFaction(station.Owner);
 
                             // Define the size for the resized icon (width and height)
-                            int width = 15;
-                            int height = 15;
+                            int width = cluster.Sectors.Count == 1 ? 28 : 16;
+                            int height = cluster.Sectors.Count == 1 ? 28 : 16;
 
                             // Create an ImageAttributes object to apply the color matrix
                             ImageAttributes imgAttributes = new();
@@ -867,16 +870,15 @@ namespace X4SectorCreator
 
         private static void PaintConnection(GateConnection connection, PaintEventArgs e)
         {
-            int gateSizeRadius = 6;
-            float diameter = gateSizeRadius * 2;
+            float diameter = _gateSizeRadius * 2;
 
             // Define source
-            float sourceX = connection.Source.ScreenX - gateSizeRadius;
-            float sourceY = connection.Source.ScreenY - gateSizeRadius;
+            float sourceX = connection.Source.ScreenX - _gateSizeRadius;
+            float sourceY = connection.Source.ScreenY - _gateSizeRadius;
 
             // Define target
-            float targetX = connection.Target.ScreenX - gateSizeRadius;
-            float targetY = connection.Target.ScreenY - gateSizeRadius;
+            float targetX = connection.Target.ScreenX - _gateSizeRadius;
+            float targetY = connection.Target.ScreenY - _gateSizeRadius;
 
             Color color = Color.LightGray;
             if (connection.Source.Gate.IsHighwayGate)
@@ -884,7 +886,7 @@ namespace X4SectorCreator
                 color = Color.SlateGray;
             }
 
-            using Pen circlePen = new(color, 2);
+            using Pen circlePen = new(color, 1.5f);
             using SolidBrush circleBrush = new("#575757".HexToColor());
 
             // Draw source and target gates
@@ -894,7 +896,7 @@ namespace X4SectorCreator
             e.Graphics.FillEllipse(circleBrush, targetX, targetY, diameter, diameter);
             e.Graphics.DrawEllipse(circlePen, targetX, targetY, diameter, diameter);
 
-            using Pen linePen = new(color, 3);
+            using Pen linePen = new(color, 1.5f);
 
             linePen.DashStyle = connection.Source.Gate.IsHighwayGate ? DashStyle.Dash : DashStyle.Dot;
 
@@ -1442,6 +1444,11 @@ namespace X4SectorCreator
                 BtnHideOptions.PerformClick();
             if (_legendWasMinimized)
                 BtnHideLegend.PerformClick();
+        }
+
+        private void ChkShowStations_CheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
         }
 
         internal struct GateConnection
