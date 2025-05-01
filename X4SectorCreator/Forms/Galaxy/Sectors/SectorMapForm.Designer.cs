@@ -44,6 +44,8 @@
             BtnHideLegend = new Button();
             LegendTree = new TreeView();
             label2 = new Label();
+            TxtSearch = new TextBox();
+            label4 = new Label();
             ControlPanel.SuspendLayout();
             LegendPanel.SuspendLayout();
             SuspendLayout();
@@ -293,9 +295,31 @@
             label2.Text = "Map Legend";
             label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // TxtSearch
+            // 
+            TxtSearch.Location = new Point(147, 9);
+            TxtSearch.Name = "TxtSearch";
+            TxtSearch.PlaceholderText = "Search by name..";
+            TxtSearch.Size = new Size(281, 23);
+            TxtSearch.TabIndex = 6;
+            // 
+            // label4
+            // 
+            label4.BackColor = Color.Transparent;
+            label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label4.ForeColor = Color.White;
+            label4.Location = new Point(12, 9);
+            label4.Name = "label4";
+            label4.Size = new Size(138, 23);
+            label4.TabIndex = 9;
+            label4.Text = "Search by name:";
+            label4.TextAlign = ContentAlignment.TopCenter;
+            // 
             // SectorMapForm
             // 
             ClientSize = new Size(983, 782);
+            Controls.Add(label4);
+            Controls.Add(TxtSearch);
             Controls.Add(LegendPanel);
             Controls.Add(ControlPanel);
             MinimizeBox = false;
@@ -308,6 +332,7 @@
             ControlPanel.PerformLayout();
             LegendPanel.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -327,5 +352,7 @@
         private Label label1;
         private Label label3;
         internal Button BtnHideOptions;
+        private TextBox TxtSearch;
+        private Label label4;
     }
 }
