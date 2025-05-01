@@ -102,6 +102,8 @@ namespace X4SectorCreator.XmlGeneration
                 // Return regions after sector connection
                 foreach (Objects.Region region in sector.Regions)
                 {
+                    if (region.IsBaseGame) continue;
+
                     string name = $"c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
                     if (cluster.IsBaseGame && sector.IsBaseGame)
                         name = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
@@ -216,6 +218,8 @@ namespace X4SectorCreator.XmlGeneration
                         // Check if regions exist, then generate these too
                         foreach (Objects.Region region in sector.Regions)
                         {
+                            if (region.IsBaseGame) continue;
+
                             string name = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
                             string identifier = region.GetIdentifier(modPrefix);
 
@@ -273,6 +277,8 @@ namespace X4SectorCreator.XmlGeneration
                         // Add regions after sector connection
                         foreach (Objects.Region region in sector.Regions)
                         {
+                            if (region.IsBaseGame) continue;
+
                             string name = cluster.IsBaseGame ? $"{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
                                 $"c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
                             string identifier = region.GetIdentifier(modPrefix);
