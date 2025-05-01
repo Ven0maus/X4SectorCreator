@@ -687,7 +687,7 @@ namespace X4SectorCreator
             {
                 var processed = 0;
                 var xLayerProcess = 0;
-                foreach (var icon in group)
+                foreach (var icon in group.DistinctBy(a => a.Type, StringComparer.OrdinalIgnoreCase))
                 {
                     var cluster = icon.Cluster;
                     var sector = icon.Sector;
@@ -778,7 +778,7 @@ namespace X4SectorCreator
                             Sector = sector,
                             ImageLarge = imageTintLarge,
                             ImageSmall = imageTintSmall,
-                            Text = resource.Yield
+                            Type = resource.Ware
                         };
                     }
                 }
@@ -809,7 +809,7 @@ namespace X4SectorCreator
                             Sector = sector,
                             ImageLarge = iconLarge,
                             ImageSmall = iconSmall,
-                            Text = null
+                            Type = "faction_logic_disabled"
                         };
                     }
                 }
@@ -1700,7 +1700,7 @@ namespace X4SectorCreator
             public Sector Sector { get; set; }
             public Image ImageLarge { get; set; }
             public Image ImageSmall { get; set; }
-            public string Text { get; set; }
+            public string Type { get; set; }
         }
 
         private void LegendTree_BeforeSelect(object sender, TreeViewCancelEventArgs e)

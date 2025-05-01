@@ -30,7 +30,7 @@ namespace X4SectorCreator.Configuration
                 foreach (Sector sector in cluster.Sectors)
                 {
                     sector.Regions ??= []; // Support older config saves
-                    sector.Regions = [.. sector.Regions];
+                    sector.Regions = [.. sector.Regions.Where(a => !a.IsBaseGame)];
 
                     if (cluster.IsBaseGame)
                     {
