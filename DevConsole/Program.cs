@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Configuration;
+﻿using DevConsole.PatchHelpers;
+using X4SectorCreator.Configuration;
 
 namespace DevConsole
 {
@@ -12,6 +13,9 @@ namespace DevConsole
 
         private static void Main()
         {
+            MapPatcher.Patch();
+            return;
+
             EnsureDirectoriesExist();
 
             // Vanilla gate connection mappings
