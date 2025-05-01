@@ -787,6 +787,9 @@ namespace X4SectorCreator
 
         private IEnumerable<IconData> CollectOtherIconData(Point sizeSmall, Point sizeLarge)
         {
+            // Also hide it behind regions
+            if (!ChkShowRegions.Checked) yield break;
+
             var factionLogicDisabledIcon = GetIconFromStore("faction_logic_disabled");
             if (factionLogicDisabledIcon == null) yield break;
 

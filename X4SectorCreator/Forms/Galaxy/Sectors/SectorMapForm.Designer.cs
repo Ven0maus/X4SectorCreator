@@ -181,7 +181,7 @@
             ChkShowStations.CheckState = CheckState.Checked;
             ChkShowStations.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             ChkShowStations.ForeColor = SystemColors.ButtonFace;
-            ChkShowStations.Location = new Point(4, 159);
+            ChkShowStations.Location = new Point(4, 156);
             ChkShowStations.Name = "ChkShowStations";
             ChkShowStations.Size = new Size(121, 23);
             ChkShowStations.TabIndex = 8;
@@ -198,7 +198,7 @@
             ChkShowRegions.CheckState = CheckState.Checked;
             ChkShowRegions.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             ChkShowRegions.ForeColor = SystemColors.ButtonFace;
-            ChkShowRegions.Location = new Point(4, 134);
+            ChkShowRegions.Location = new Point(4, 132);
             ChkShowRegions.Name = "ChkShowRegions";
             ChkShowRegions.Size = new Size(121, 23);
             ChkShowRegions.TabIndex = 7;
