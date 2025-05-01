@@ -33,16 +33,18 @@
             chkShowCoordinates = new CheckBox();
             chkShowCustomSectors = new CheckBox();
             ControlPanel = new Panel();
-            chkShowConnections = new CheckBox();
-            panel1 = new Panel();
+            BtnHideOptions = new Button();
             label1 = new Label();
+            label3 = new Label();
+            ChkShowStations = new CheckBox();
+            ChkShowRegions = new CheckBox();
+            chkShowConnections = new CheckBox();
             DlcListBox = new CheckedListBox();
             LegendPanel = new Panel();
             BtnHideLegend = new Button();
             LegendTree = new TreeView();
             label2 = new Label();
             ControlPanel.SuspendLayout();
-            panel1.SuspendLayout();
             LegendPanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -55,7 +57,7 @@
             chkShowX4Sectors.CheckState = CheckState.Checked;
             chkShowX4Sectors.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             chkShowX4Sectors.ForeColor = SystemColors.ButtonFace;
-            chkShowX4Sectors.Location = new Point(4, 3);
+            chkShowX4Sectors.Location = new Point(4, 25);
             chkShowX4Sectors.Name = "chkShowX4Sectors";
             chkShowX4Sectors.Size = new Size(138, 23);
             chkShowX4Sectors.TabIndex = 0;
@@ -68,7 +70,7 @@
             BtnSelectLocation.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnSelectLocation.Enabled = false;
             BtnSelectLocation.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            BtnSelectLocation.Location = new Point(4, 239);
+            BtnSelectLocation.Location = new Point(4, 311);
             BtnSelectLocation.Name = "BtnSelectLocation";
             BtnSelectLocation.Size = new Size(167, 30);
             BtnSelectLocation.TabIndex = 1;
@@ -83,7 +85,7 @@
             chkShowCoordinates.BackColor = Color.Transparent;
             chkShowCoordinates.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             chkShowCoordinates.ForeColor = SystemColors.ButtonFace;
-            chkShowCoordinates.Location = new Point(4, 86);
+            chkShowCoordinates.Location = new Point(4, 108);
             chkShowCoordinates.Name = "chkShowCoordinates";
             chkShowCoordinates.Size = new Size(149, 23);
             chkShowCoordinates.TabIndex = 2;
@@ -100,7 +102,7 @@
             chkShowCustomSectors.CheckState = CheckState.Checked;
             chkShowCustomSectors.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             chkShowCustomSectors.ForeColor = SystemColors.ButtonFace;
-            chkShowCustomSectors.Location = new Point(4, 32);
+            chkShowCustomSectors.Location = new Point(4, 54);
             chkShowCustomSectors.Name = "chkShowCustomSectors";
             chkShowCustomSectors.Size = new Size(171, 23);
             chkShowCustomSectors.TabIndex = 3;
@@ -113,17 +115,94 @@
             ControlPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ControlPanel.BackColor = Color.Black;
             ControlPanel.BorderStyle = BorderStyle.FixedSingle;
+            ControlPanel.Controls.Add(BtnHideOptions);
+            ControlPanel.Controls.Add(label1);
+            ControlPanel.Controls.Add(label3);
+            ControlPanel.Controls.Add(ChkShowStations);
+            ControlPanel.Controls.Add(ChkShowRegions);
             ControlPanel.Controls.Add(chkShowConnections);
             ControlPanel.Controls.Add(chkShowCoordinates);
-            ControlPanel.Controls.Add(panel1);
             ControlPanel.Controls.Add(DlcListBox);
             ControlPanel.Controls.Add(BtnSelectLocation);
             ControlPanel.Controls.Add(chkShowCustomSectors);
             ControlPanel.Controls.Add(chkShowX4Sectors);
             ControlPanel.Location = new Point(795, 12);
             ControlPanel.Name = "ControlPanel";
-            ControlPanel.Size = new Size(176, 277);
+            ControlPanel.Size = new Size(176, 347);
             ControlPanel.TabIndex = 4;
+            // 
+            // BtnHideOptions
+            // 
+            BtnHideOptions.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnHideOptions.BackColor = Color.DimGray;
+            BtnHideOptions.FlatStyle = FlatStyle.Flat;
+            BtnHideOptions.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            BtnHideOptions.ForeColor = Color.White;
+            BtnHideOptions.Location = new Point(152, 0);
+            BtnHideOptions.Name = "BtnHideOptions";
+            BtnHideOptions.Size = new Size(21, 21);
+            BtnHideOptions.TabIndex = 8;
+            BtnHideOptions.Text = "^";
+            BtnHideOptions.UseVisualStyleBackColor = false;
+            BtnHideOptions.Click += BtnHideOptions_Click;
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label1.BackColor = Color.DimGray;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(-1, 183);
+            label1.Name = "label1";
+            label1.Size = new Size(176, 23);
+            label1.TabIndex = 0;
+            label1.Text = "Game DLCs";
+            label1.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label3.BackColor = Color.DimGray;
+            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(-2, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(176, 23);
+            label3.TabIndex = 1;
+            label3.Text = "Options";
+            label3.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // ChkShowStations
+            // 
+            ChkShowStations.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ChkShowStations.AutoSize = true;
+            ChkShowStations.BackColor = Color.Transparent;
+            ChkShowStations.Checked = true;
+            ChkShowStations.CheckState = CheckState.Checked;
+            ChkShowStations.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            ChkShowStations.ForeColor = SystemColors.ButtonFace;
+            ChkShowStations.Location = new Point(4, 159);
+            ChkShowStations.Name = "ChkShowStations";
+            ChkShowStations.Size = new Size(121, 23);
+            ChkShowStations.TabIndex = 8;
+            ChkShowStations.Text = "Show Stations";
+            ChkShowStations.UseVisualStyleBackColor = false;
+            // 
+            // ChkShowRegions
+            // 
+            ChkShowRegions.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ChkShowRegions.AutoSize = true;
+            ChkShowRegions.BackColor = Color.Transparent;
+            ChkShowRegions.Checked = true;
+            ChkShowRegions.CheckState = CheckState.Checked;
+            ChkShowRegions.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            ChkShowRegions.ForeColor = SystemColors.ButtonFace;
+            ChkShowRegions.Location = new Point(4, 134);
+            ChkShowRegions.Name = "ChkShowRegions";
+            ChkShowRegions.Size = new Size(121, 23);
+            ChkShowRegions.TabIndex = 7;
+            ChkShowRegions.Text = "Show Regions";
+            ChkShowRegions.UseVisualStyleBackColor = false;
             // 
             // chkShowConnections
             // 
@@ -134,36 +213,13 @@
             chkShowConnections.CheckState = CheckState.Checked;
             chkShowConnections.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             chkShowConnections.ForeColor = SystemColors.ButtonFace;
-            chkShowConnections.Location = new Point(4, 59);
+            chkShowConnections.Location = new Point(4, 81);
             chkShowConnections.Name = "chkShowConnections";
             chkShowConnections.Size = new Size(149, 23);
             chkShowConnections.TabIndex = 6;
             chkShowConnections.Text = "Show Connections";
             chkShowConnections.UseVisualStyleBackColor = false;
             chkShowConnections.CheckedChanged += ChkShowConnections_CheckedChanged;
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            panel1.BackColor = Color.DimGray;
-            panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(label1);
-            panel1.Location = new Point(-1, 113);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(176, 20);
-            panel1.TabIndex = 5;
-            // 
-            // label1
-            // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(-1, -2);
-            label1.Name = "label1";
-            label1.Size = new Size(176, 23);
-            label1.TabIndex = 0;
-            label1.Text = "Game DLCs";
-            label1.TextAlign = ContentAlignment.TopCenter;
             // 
             // DlcListBox
             // 
@@ -172,7 +228,7 @@
             DlcListBox.CheckOnClick = true;
             DlcListBox.ForeColor = Color.White;
             DlcListBox.FormattingEnabled = true;
-            DlcListBox.Location = new Point(4, 139);
+            DlcListBox.Location = new Point(4, 211);
             DlcListBox.Name = "DlcListBox";
             DlcListBox.ScrollAlwaysVisible = true;
             DlcListBox.Size = new Size(167, 94);
@@ -187,7 +243,7 @@
             LegendPanel.Controls.Add(BtnHideLegend);
             LegendPanel.Controls.Add(LegendTree);
             LegendPanel.Controls.Add(label2);
-            LegendPanel.Location = new Point(711, 339);
+            LegendPanel.Location = new Point(711, 478);
             LegendPanel.Name = "LegendPanel";
             LegendPanel.Size = new Size(265, 298);
             LegendPanel.TabIndex = 5;
@@ -235,7 +291,7 @@
             // 
             // SectorMapForm
             // 
-            ClientSize = new Size(983, 643);
+            ClientSize = new Size(983, 782);
             Controls.Add(LegendPanel);
             Controls.Add(ControlPanel);
             MinimizeBox = false;
@@ -245,7 +301,6 @@
             WindowState = FormWindowState.Maximized;
             ControlPanel.ResumeLayout(false);
             ControlPanel.PerformLayout();
-            panel1.ResumeLayout(false);
             LegendPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -255,8 +310,6 @@
         private CheckBox chkShowCustomSectors;
         internal Button BtnSelectLocation;
         internal Panel ControlPanel;
-        internal Panel panel1;
-        private Label label1;
         internal CheckBox chkShowX4Sectors;
         internal CheckedListBox DlcListBox;
         private CheckBox chkShowConnections;
@@ -264,5 +317,10 @@
         private Label label2;
         private TreeView LegendTree;
         internal Button BtnHideLegend;
+        private CheckBox ChkShowStations;
+        private CheckBox ChkShowRegions;
+        private Label label1;
+        private Label label3;
+        internal Button BtnHideOptions;
     }
 }
