@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics.Metrics;
 using System.Drawing.Drawing2D;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
@@ -22,7 +21,8 @@ namespace X4SectorCreator
         private Dictionary<(int, int), Cluster> _baseGameClusters;
         private Cluster[] _customClusters;
 
-        private const int _hexSize = 100;
+        private const int _hexSize = 200;
+        private const int _iconSize = 128;
 
         // How many extra rows and cols will be "open" around the base game sectors + custom sectors for the user to select
         private const int _minExpansionRoom = 20;
@@ -32,12 +32,11 @@ namespace X4SectorCreator
         private int? _selectedChildHexIndex, _previousSelectedChildHexIndex;
         private (int, int)? _selectedHex, _previousSelectedHex;
 
-        private const float _defaultZoom = 1f;
+        private const float _defaultZoom = 1f; // 1.0 means 100% scale
         private static PointF _offset;
-        private static float _zoom = _defaultZoom; // 1.0 means 100% scale
-        private const float _minZoom = 0.15f, _maxZoom = 2.5f;
-
-        private const float _stationIconSize = 24f;
+        private static float _zoom = 0.8f;
+        private const float _minZoom = 0.075f, _maxZoom = 2.5f;
+        private const float _gateSizeRadius = 8f;
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
         private static readonly Dictionary<string, string> _dlcMapping = new(StringComparer.OrdinalIgnoreCase)
@@ -56,22 +55,87 @@ namespace X4SectorCreator
         private static readonly Dictionary<int, bool> _dlcsSelected = [];
 
         private static bool _sectorMapFirstTimeOpen = true;
+        private int _originalLegendPanelHeight, _originalControlPanelHeight;
+
+        private Image _factionLogicImageLarge;
+        private Image _factionLogicImageSmall;
+        private readonly Dictionary<Color, Dictionary<string, Image>> _cachedStationIconsLarge = [];
+        private readonly Dictionary<Color, Dictionary<string, Image>> _cachedStationIconsSmall = [];
+        private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
+        private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
+
+        // TODO: Rework to use ImageList in treeview with image nodes and colors
+        private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
+        {
+            {
+                "Resources", new List<object>
+                {
+                    ("Ore", Color.Orange),
+                    ("Silicon", Color.SlateGray),
+                    ("Ice", Color.White),
+                    ("Methane", Color.DeepSkyBlue),
+                    ("Helium", Color.LightCoral),
+                    ("Hydrogen", Color.DarkCyan),
+                    ("Nividium", Color.Fuchsia),
+                    ("RawScrap", Color.Red)
+                }
+            },
+            {
+                "Others", new List<object>
+                {
+                    "Faction Logic Disabled"
+                }
+            }
+        };
+
+        private static readonly Dictionary<string, double> _yieldDensities = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["lowest"] = 0.026,
+            ["verylow"] = 0.06,
+            ["lowminus"] = 0.2,
+            ["low"] = 0.6,
+            ["lowplus"] = 1.8,
+            ["medlow"] = 4,
+            ["medium"] = 6,
+            ["medplus"] = 16,
+            ["medhigh"] = 32,
+            ["highlow"] = 48,
+            ["high"] = 60,
+            ["highplus"] = 120,
+            ["veryhigh"] = 3600,
+            ["highest"] = 60000
+        };
+
+        private static readonly Dictionary<string, Image> _imageMap = new(StringComparer.OrdinalIgnoreCase);
+
+        private static bool _optionWasMinimzed = false, _legendWasMinimized = false;
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                // Used to start draw process on init of class
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
+
+        private readonly List<Sector> _availableSearchSectors = [];
+        private readonly HashSet<Sector> _visibleSectorsFromSearch = [];
 
         public SectorMapForm()
         {
             InitializeComponent();
 
+            TxtSearch.EnableTextSearch(_availableSearchSectors, a => a.Name, SearchRender);
+            Disposed += SectorMapForm_Disposed;
+
+            ControlPanel.Top = 12;
+
             // Setup events
             DoubleBuffered = true;
             KeyPreview = true;
-            MouseDown += HandleMouseDown;
-            MouseUp += HandleMouseUp;
-            MouseMove += HandleMouseMove;
-            Paint += DrawHexGrid;
-            Resize += HandleResize;
-            MouseWheel += HandleMouseWheel;
-            MouseClick += SectorMapForm_MouseClick;
-            KeyDown += SectorMapForm_KeyDown;
 
             // Init dlcs
             foreach (KeyValuePair<string, int> mapping in _selectedDlcMapping)
@@ -86,6 +150,118 @@ namespace X4SectorCreator
                 _ = DlcListBox.Items.Add(_dlcMapping.First(a => a.Value.Equals(mapping.Key)).Key);
                 DlcListBox.SetItemChecked(mapping.Value, value);
             }
+
+            // Setup legend
+            SetupLegendTree();
+
+            MouseDown += HandleMouseDown;
+            MouseUp += HandleMouseUp;
+            MouseMove += HandleMouseMove;
+            Paint += DrawHexGrid;
+            Resize += HandleResize;
+            MouseWheel += HandleMouseWheel;
+            MouseClick += SectorMapForm_MouseClick;
+            KeyDown += SectorMapForm_KeyDown;
+        }
+
+        private void SectorMapForm_Disposed(object sender, EventArgs e)
+        {
+            TxtSearch.DisableTextSearch();
+        }
+
+        private void SearchRender(List<Sector> data)
+        {
+            _visibleSectorsFromSearch.Clear();
+            foreach (var item in data)
+                _visibleSectorsFromSearch.Add(item);
+
+            Invalidate();
+        }
+
+        private void SetupLegendTree()
+        {
+            LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+            LegendTree.DrawNode += LegendTree_DrawNode;
+            LegendTree.ImageList = new ImageList
+            {
+                ImageSize = new Size(16, 16)
+            };
+
+            // Init region images
+            var regionImage = GetIconFromStore("region_resource");
+            foreach (var resource in _legend["resources"])
+            {
+                var (name, color) = ((string name, Color color))resource;
+                LegendTree.ImageList.Images.Add(name, regionImage.CopyAsTint(color));
+            }
+            LegendTree.ImageList.Images.Add("Faction Logic Disabled", GetIconFromStore("faction_logic_disabled"));
+
+            foreach (var legendEntry in _legend)
+            {
+                var node = new TreeNode(legendEntry.Key)
+                {
+                    ImageIndex = LegendTree.ImageList.Images.Count,
+                    SelectedImageIndex = LegendTree.ImageList.Images.Count
+                };
+
+                foreach (var entry in legendEntry.Value)
+                {
+                    TreeNode childNode;
+                    if (entry is string entryStr)
+                    {
+                        childNode = new TreeNode(entryStr);
+                        if (entryStr.Equals("Faction Logic Disabled", StringComparison.OrdinalIgnoreCase))
+                            childNode.ImageKey = entryStr;
+                    }
+                    else
+                    {
+                        var (name, _) = ((string name, Color color))entry;
+                        childNode = new TreeNode(name);
+                        if (legendEntry.Key.Equals("resources", StringComparison.OrdinalIgnoreCase))
+                            childNode.ImageKey = name;
+                    }
+                    node.Nodes.Add(childNode);
+                }
+                LegendTree.Nodes.Add(node);
+            }
+            LegendTree.ExpandAll();
+        }
+
+        private void LegendTree_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            TreeView tree = e.Node.TreeView;
+
+            int textX = (e.Node.ImageKey == string.Empty && e.Node.SelectedImageKey == string.Empty) ?
+                e.Bounds.Left - e.Node.TreeView.ImageList.ImageSize.Width : e.Bounds.Left - 2;
+            int textY = (e.Bounds.Top + e.Bounds.Bottom) / 2 + 1;
+
+            TextRenderer.DrawText(
+                e.Graphics,
+                e.Node.Text,
+                e.Node.NodeFont ?? tree.Font,
+                new Point(textX, textY),
+                tree.ForeColor,
+                TextFormatFlags.VerticalCenter | TextFormatFlags.Left
+            );
+
+            e.DrawDefault = false;
+        }
+
+        public static Image GetIconFromStore(string iconName)
+        {
+            if (!_imageMap.TryGetValue(iconName, out var image))
+            {
+                var path = Path.Combine(Application.StartupPath, $"Data/Icons/{iconName}.png");
+                if (File.Exists(path))
+                {
+                    _imageMap[iconName] = image = Image.FromFile(path);
+                }
+                else
+                {
+                    _imageMap[iconName] = image = null;
+                }
+            }
+            return image;
         }
 
         private void SectorMapForm_KeyDown(object sender, KeyEventArgs e)
@@ -106,6 +282,13 @@ namespace X4SectorCreator
                     (e.Location.X - _offset.X) / _zoom,
                     (e.Location.Y - _offset.Y) / _zoom
                 );
+
+                // Don't allow cluster movement when searching
+                if (_visibleSectorsFromSearch.Count > 0)
+                {
+                    _ = MessageBox.Show("Cannot move clusters while a search filter is set.");
+                    return;
+                }
 
                 if (_movingCluster == null)
                 {
@@ -147,13 +330,16 @@ namespace X4SectorCreator
         private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
         {
             pos = null;
-            foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
+            foreach (var hex in _baseGameClusters.Values
+                .Concat(_customClusters)
+                .Select(a => a.Hexagon)
+                .Where(a => a != null))
             {
                 // Determine if there is a cluster at the position we clicked
-                if (IsPointInPolygon(hex.Value.Points, mousePos))
+                if (IsPointInPolygon(hex.Points, mousePos))
                 {
-                    pos = hex.Key;
-                    if (MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster))
+                    pos = hex.Position;
+                    if (MainForm.Instance.AllClusters.TryGetValue(hex.Position, out Cluster cluster))
                     {
                         return cluster;
                     }
@@ -171,6 +357,9 @@ namespace X4SectorCreator
                 .ToDictionary(a => a.Key, a => a.Value);
 
             _customClusters = [.. MainForm.Instance.AllClusters.Values.Where(a => !a.IsBaseGame)];
+
+            // Setup all data
+            _availableSearchSectors.AddRange(_baseGameClusters.Values.Concat(_customClusters).SelectMany(a => a.Sectors));
 
             Dictionary<(int, int), Cluster>.ValueCollection allClusters = MainForm.Instance.AllClusters.Values;
 
@@ -373,7 +562,7 @@ namespace X4SectorCreator
                     _ = MainForm.Instance.AllClusters.TryGetValue(translatedCoordinate, out Cluster cluster);
 
                     // Determine hex information
-                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, cluster?.Sectors, _defaultZoom);
+                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, cluster?.Sectors, translatedCoordinate, _defaultZoom);
                     _hexagons[translatedCoordinate] = hex;
                 }
             }
@@ -392,7 +581,7 @@ namespace X4SectorCreator
             {SectorPlacement.MiddleLeft, (float width, float childHeight) => (width * 0, 0) }
         };
 
-        private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, List<Sector> sectors, float zoom = 1.0f)
+        private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, List<Sector> sectors, (int x, int y) translatedCoordinate, float zoom = 1.0f)
         {
             // Scale parent hex
             height *= zoom;
@@ -452,17 +641,18 @@ namespace X4SectorCreator
                 ]);
             }
 
-            return new Hexagon(parentHex, childHexes.Select(a => new Hexagon(a, null)).ToList());
+            return new Hexagon(translatedCoordinate, parentHex, childHexes.Select(a => new Hexagon(translatedCoordinate, a, null)).ToList());
         }
 
         private void DrawHexGrid(object sender, PaintEventArgs e)
         {
-            try 
+            try
             {
                 // Init graphics properly with offset and scaling
                 e.Graphics.Clear(Color.Black);
                 e.Graphics.TranslateTransform(_offset.X, _offset.Y);
                 e.Graphics.ScaleTransform(_zoom, _zoom);
+                e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
                 // Renders all the hexagons in the screen
                 RenderAllHexes(e);
@@ -474,7 +664,7 @@ namespace X4SectorCreator
                 RenderGateConnections(e);
 
                 // Render station icons
-                RenderStationIcons(e);
+                RenderHexIcons(e);
 
                 // Hex names draw on top of everything
                 RenderAllHexNames(e);
@@ -482,14 +672,14 @@ namespace X4SectorCreator
                 // Draw tip label
                 RenderTipLabel(e);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                #if DEBUG
+#if DEBUG
                 throw;
-                #else
+#else
                 _ = MessageBox.Show("An error occured when trying to render the map view: \"" + ex.Message + "\".\nPlease create a bug report. (Be sure to provide the export xml or exact reproduction steps).");
                 Close();
-                #endif
+#endif
             }
         }
 
@@ -516,8 +706,202 @@ namespace X4SectorCreator
             e.Graphics.Restore(state);
         }
 
-        private void RenderStationIcons(PaintEventArgs e)
+        private void RenderHexIcons(PaintEventArgs e)
         {
+            var sizeSmall = new Point(_iconSize / 2, _iconSize / 2);
+            var sizeLarge = new Point(_iconSize, _iconSize);
+
+            // These are exceptional as they are rendered directly in the position of the station
+            RenderStationIcons(e, sizeSmall, sizeLarge);
+
+            // Other icons should be rendered much smaller
+            sizeSmall = new Point((int)(_iconSize / 2.5f), (int)(_iconSize / 2.5f));
+            sizeLarge = new Point(_iconSize / 2, _iconSize / 2);
+
+            // Collection of icon data
+            var icons = new List<IconData>();
+            icons.AddRange(CollectRegionIconData(sizeSmall, sizeLarge));
+            icons.AddRange(CollectOtherIconData(sizeSmall, sizeLarge));
+
+            // Render other icons at the bottom of the hex
+            RenderSmallHexIcons(e, icons);
+        }
+
+        private void RenderSmallHexIcons(PaintEventArgs e, List<IconData> iconDatas)
+        {
+            // Calculate hex size and radius based on zoom and sector size
+            float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
+            float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+
+            // Each icon is rendered in the cluster or sector bottom right corner
+            foreach (var group in iconDatas.GroupBy(a => a.Sector))
+            {
+                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(group.Key))
+                    continue;
+
+                var processed = 0;
+                var xLayerProcess = 0;
+                foreach (var icon in group.DistinctBy(a => a.Type, StringComparer.OrdinalIgnoreCase))
+                {
+                    var cluster = icon.Cluster;
+                    var sector = icon.Sector;
+                    var sectorIndex = cluster.Sectors.IndexOf(sector);
+
+                    // Define the size for the resized icon (width and height)
+                    int width = cluster.Sectors.Count == 1 ? icon.ImageLarge.Width : icon.ImageSmall.Width;
+                    int height = cluster.Sectors.Count == 1 ? icon.ImageLarge.Height : icon.ImageSmall.Height;
+
+                    // Collect the child hexagon points
+                    Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                    PointF hexCenter = GetHexCenter(childHexagon.Points);
+                    float correctHexHeight = cluster.Sectors.Count == 1 ? hexHeight : hexHeight / 2;
+
+                    // Bottom left corner
+                    float startX = hexCenter.X - correctHexHeight / 4 - (cluster.Sectors.Count == 1 ? 10 : 5);
+                    float startY = hexCenter.Y + correctHexHeight / 2 - (height / 2);
+
+                    // Increment by icon size + 1
+                    for (int i = 0; i < xLayerProcess; i++)
+                    {
+                        startX += (int)((width / 2f)) - (cluster.Sectors.Count == 1 ? 10 : 5);
+                    }
+
+                    // Icons are shown per 4, on each Y layer
+                    var yLayer = (int)(processed / 4f);
+                    startY -= ((height / 2) - (cluster.Sectors.Count == 1 ? 10 : 5)) * yLayer;
+
+                    // Define position
+                    var pos = new PointF(startX, startY);
+
+                    // Draw the resized icon at a specific position on the form (x, y)
+                    var iconToUse = cluster.Sectors.Count == 1 ? icon.ImageLarge : icon.ImageSmall;
+                    e.Graphics.DrawImage(iconToUse, pos.X, pos.Y);
+                    processed++;
+
+                    if (!string.IsNullOrWhiteSpace(icon.Yield))
+                    {
+                        using Font fBold = new(Font.FontFamily, (cluster.Sectors.Count == 1 ? 12 : 10), FontStyle.Bold);
+                        var text = icon.Yield;
+                        e.Graphics.DrawString(text, fBold, Brushes.Black,
+                            pos.X - 1f, pos.Y -1f);
+                    }
+
+                    // Reset
+                    xLayerProcess++;
+                    if (xLayerProcess == 4)
+                        xLayerProcess = 0;
+                }
+            }
+        }
+
+        private IEnumerable<IconData> CollectRegionIconData(Point small, Point large)
+        {
+            if (!ChkShowRegions.Checked) yield break;
+
+            List<Cluster> relevantClusters = _baseGameClusters.Values
+                .Concat(_customClusters)
+                .Where(cluster => cluster.Sectors.Any(sector => sector.Regions.Count > 0))
+                .ToList();
+            if (relevantClusters.Count == 0) yield break;
+
+            var regionIcon = GetIconFromStore("region_resource");
+            if (regionIcon == null) yield break;
+
+            var resourceColors = _legend["resources"]
+                .Select(a => ((string name, Color color))a)
+                .ToDictionary(a => a.name, a => a.color, StringComparer.OrdinalIgnoreCase);
+            if (resourceColors.Count == 0) yield break;
+
+            foreach (Cluster cluster in relevantClusters)
+            {
+                foreach (Sector sector in cluster.Sectors.Where(a => a.Regions.Count > 0))
+                {
+                    var resources = sector.Regions
+                        .SelectMany(a => a.Definition.Resources);
+                    foreach (var resource in resources)
+                    {
+                        if (!resourceColors.TryGetValue(resource.Ware, out var resourceColor))
+                        {
+                            throw new Exception("No legend color defined for resource: " + resource.Ware);
+                        }
+
+                        if (!cachedRegionImagesLarge.TryGetValue(resourceColor, out var imageTintLarge))
+                        {
+                            cachedRegionImagesLarge[resourceColor] = imageTintLarge = regionIcon.Resize(large.X, large.Y, InterpolationMode.HighQualityBicubic, resourceColor);
+                        }
+                        if (!cachedRegionImagesSmall.TryGetValue(resourceColor, out var imageTintSmall))
+                        {
+                            cachedRegionImagesSmall[resourceColor] = imageTintSmall = regionIcon.Resize(small.X, small.Y, InterpolationMode.HighQualityBicubic, resourceColor);
+                        }
+
+                        yield return new IconData
+                        {
+                            Cluster = cluster,
+                            Sector = sector,
+                            ImageLarge = imageTintLarge,
+                            ImageSmall = imageTintSmall,
+                            Type = resource.Ware,
+                            Yield = GetYieldValue(resource.Yield)
+                        };
+                    }
+                }
+            }
+        }
+
+        private static string GetYieldValue(string yield)
+        {
+            if (!_yieldDensities.TryGetValue(yield.ToLower(), out double density))
+                return "0";
+
+            double min = _yieldDensities.Values.Min();
+            double max = _yieldDensities.Values.Max();
+
+            // Log scale
+            double logMin = Math.Log10(min);
+            double logMax = Math.Log10(max);
+            double logValue = Math.Log10(density);
+
+            double normalized = (logValue - logMin) / (logMax - logMin);
+            int scaled = (int)Math.Round(1 + normalized * (99 - 1));
+
+            return scaled.ToString();
+        }
+
+        private IEnumerable<IconData> CollectOtherIconData(Point sizeSmall, Point sizeLarge)
+        {
+            // Also hide it behind regions
+            if (!ChkShowRegions.Checked) yield break;
+
+            var factionLogicDisabledIcon = GetIconFromStore("faction_logic_disabled");
+            if (factionLogicDisabledIcon == null) yield break;
+
+            var iconLarge = _factionLogicImageLarge ??= factionLogicDisabledIcon.Resize(sizeLarge.X, sizeLarge.Y, InterpolationMode.HighQualityBicubic);
+            var iconSmall = _factionLogicImageSmall ??= factionLogicDisabledIcon.Resize(sizeSmall.X, sizeSmall.Y, InterpolationMode.HighQualityBicubic);
+
+            foreach (Cluster cluster in _baseGameClusters.Values.Concat(_customClusters))
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    // Icon for disabled faction logic
+                    if (sector.DisableFactionLogic)
+                    {
+                        yield return new IconData
+                        {
+                            Cluster = cluster,
+                            Sector = sector,
+                            ImageLarge = iconLarge,
+                            ImageSmall = iconSmall,
+                            Type = "faction_logic_disabled"
+                        };
+                    }
+                }
+            }
+        }
+
+        private void RenderStationIcons(PaintEventArgs e, Point sizeSmall, Point sizeLarge)
+        {
+            if (!ChkShowStations.Checked) return;
+
             List<Cluster> relevantClusters = _baseGameClusters.Values
                 .Concat(_customClusters)
                 .Where(cluster => cluster.Sectors.Any(sector => sector.Zones.Any(zone => zone.Stations.Count != 0)))
@@ -536,6 +920,9 @@ namespace X4SectorCreator
                 int sectorIndex = 0;
                 foreach (Sector sector in cluster.Sectors)
                 {
+                    if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
+                        continue;
+
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
@@ -545,6 +932,9 @@ namespace X4SectorCreator
                     {
                         foreach (Station station in zone.Stations)
                         {
+                            var stationIcon = GetIconFromStore(station.Type.ToLower());
+                            if (stationIcon == null) continue;
+
                             // Convert the zone position from world to screen space
                             PointF stationScreenPosition = ConvertFromWorldCoordinate(station.Position, sector.DiameterRadius, correctHexRadius);
 
@@ -553,24 +943,44 @@ namespace X4SectorCreator
 
                             Color color = FactionsForm.GetColorForFaction(station.Owner);
 
-                            using SolidBrush brush = new(color);
-                            string character = station.Type.ToLower() switch
+                            // Define the size for the resized icon (width and height)
+                            int width = cluster.Sectors.Count == 1 ? sizeLarge.X : sizeSmall.X;
+                            int height = cluster.Sectors.Count == 1 ? sizeLarge.Y : sizeSmall.Y;
+                            width /= 2;
+                            height /= 2;
+
+                            Image resizedIcon;
+                            if (cluster.Sectors.Count == 1)
                             {
-                                "defence" => "■",
-                                "wharf" => "Δ",
-                                "shipyard" => "▲",
-                                "equipmentdock" => "⎕",
-                                "tradestation" => "⨁",
-                                "piratebase" => "±",
-                                _ => throw new NotSupportedException($"Station type not supported: {station.Type}"),
-                            };
+                                if (!_cachedStationIconsLarge.TryGetValue(color, out var iconsLarge))
+                                {
+                                    _cachedStationIconsLarge[color] = iconsLarge = new(StringComparer.OrdinalIgnoreCase);
+                                }
 
-                            using Font bigFont = new("Arial", cluster.Sectors.Count > 1 ? _stationIconSize / 2f : _stationIconSize, FontStyle.Bold);
-                            SizeF textSize = e.Graphics.MeasureString(character, bigFont);
-                            float textHeightOffset = textSize.Height / 2;
-                            float textWidthOffset = textSize.Width / 2;
+                                if (!iconsLarge.TryGetValue(station.Type, out var icon))
+                                {
+                                    icon = stationIcon.Resize(width, height, InterpolationMode.HighQualityBicubic, color);
+                                    iconsLarge[station.Type] = icon;
+                                }
+                                resizedIcon = icon;
+                            }
+                            else
+                            {
+                                if (!_cachedStationIconsSmall.TryGetValue(color, out var iconsSmall))
+                                {
+                                    _cachedStationIconsSmall[color] = iconsSmall = new(StringComparer.OrdinalIgnoreCase);
+                                }
 
-                            e.Graphics.DrawString(character, bigFont, brush, stationScreenPosition.X - textWidthOffset, stationScreenPosition.Y - textHeightOffset);
+                                if (!iconsSmall.TryGetValue(station.Type, out var icon))
+                                {
+                                    icon = stationIcon.Resize(width, height, InterpolationMode.HighQualityBicubic, color);
+                                    iconsSmall[station.Type] = icon;
+                                }
+                                resizedIcon = icon;
+                            }
+
+                            // Draw the resized icon at a specific position on the form (x, y)
+                            e.Graphics.DrawImage(resizedIcon, (int)stationScreenPosition.X - (width / 2), (int)stationScreenPosition.Y - (height / 2));
                         }
                     }
                     sectorIndex++;
@@ -661,10 +1071,11 @@ namespace X4SectorCreator
             if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) ||
                 !IsDlcClusterEnabled(cluster) ||
                 (!chkShowX4Sectors.Checked && cluster.IsBaseGame) ||
-                (!chkShowCustomSectors.Checked && !cluster.IsBaseGame))
+                (!chkShowCustomSectors.Checked && !cluster.IsBaseGame) ||
+                _visibleSectorsFromSearch.Count > 0 && cluster.Sectors.Any(a => !_visibleSectorsFromSearch.Contains(a)))
             {
                 using SolidBrush mainBrush = new(Color.Black);
-                using Pen mainPen = new(nonExistantHexColor, 2);
+                using Pen mainPen = new(nonExistantHexColor, 4);
                 // Fill hex
                 e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
                 // Draw edges
@@ -765,16 +1176,15 @@ namespace X4SectorCreator
 
         private static void PaintConnection(GateConnection connection, PaintEventArgs e)
         {
-            int gateSizeRadius = 6;
-            float diameter = gateSizeRadius * 2;
+            float diameter = _gateSizeRadius * 2;
 
             // Define source
-            float sourceX = connection.Source.ScreenX - gateSizeRadius;
-            float sourceY = connection.Source.ScreenY - gateSizeRadius;
+            float sourceX = connection.Source.ScreenX - _gateSizeRadius;
+            float sourceY = connection.Source.ScreenY - _gateSizeRadius;
 
             // Define target
-            float targetX = connection.Target.ScreenX - gateSizeRadius;
-            float targetY = connection.Target.ScreenY - gateSizeRadius;
+            float targetX = connection.Target.ScreenX - _gateSizeRadius;
+            float targetY = connection.Target.ScreenY - _gateSizeRadius;
 
             Color color = Color.LightGray;
             if (connection.Source.Gate.IsHighwayGate)
@@ -782,7 +1192,7 @@ namespace X4SectorCreator
                 color = Color.SlateGray;
             }
 
-            using Pen circlePen = new(color, 2);
+            using Pen circlePen = new(color, _gateSizeRadius / 2f);
             using SolidBrush circleBrush = new("#575757".HexToColor());
 
             // Draw source and target gates
@@ -792,7 +1202,7 @@ namespace X4SectorCreator
             e.Graphics.FillEllipse(circleBrush, targetX, targetY, diameter, diameter);
             e.Graphics.DrawEllipse(circlePen, targetX, targetY, diameter, diameter);
 
-            using Pen linePen = new(color, 3);
+            using Pen linePen = new(color, _gateSizeRadius / 2f);
 
             linePen.DashStyle = connection.Source.Gate.IsHighwayGate ? DashStyle.Dash : DashStyle.Dot;
 
@@ -800,7 +1210,7 @@ namespace X4SectorCreator
             e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);
         }
 
-        private static IEnumerable<GateConnection> CollectConnectionsFromGateData(List<GateData> gatesData)
+        private IEnumerable<GateConnection> CollectConnectionsFromGateData(List<GateData> gatesData)
         {
             Dictionary<string, GateData[]> sectorGrouping = gatesData
                 .GroupBy(a => a.Sector.Name)
@@ -808,10 +1218,10 @@ namespace X4SectorCreator
 
             // Make sure we don't double process target gates we already processed
             // We still have an issue with highway type gates showing as a double because they have different paths
-            HashSet<Gate> processedTargets = new();
+            HashSet<Gate> processedTargets = [];
 
             // Any invalid connections will be recorded
-            List<GateData> invalidConnections = new();
+            List<GateData> invalidConnections = [];
 
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
@@ -833,6 +1243,13 @@ namespace X4SectorCreator
                 _ = processedTargets.Add(targetGateData.Gate);
 
                 if (!IsDlcClusterEnabled(targetGateData.Cluster))
+                {
+                    continue;
+                }
+
+                if (_visibleSectorsFromSearch.Count > 0 &&
+                    (!_visibleSectorsFromSearch.Contains(targetGateData.Sector) ||
+                    !_visibleSectorsFromSearch.Contains(sourceGateData.Sector)))
                 {
                     continue;
                 }
@@ -980,7 +1397,13 @@ namespace X4SectorCreator
                 return;
             }
 
+            bool render = true;
             Color color = GetClusterOwnershipColor(cluster);
+
+            if (_visibleSectorsFromSearch.Count > 0 && cluster.Sectors.Any(a => !_visibleSectorsFromSearch.Contains(a)))
+            {
+                render = false;
+            }
 
             bool isMovingCluster = _movingCluster != null && _movingCluster == cluster;
             if (isMovingCluster)
@@ -990,7 +1413,7 @@ namespace X4SectorCreator
 
             // Main hex outline
             int index = 0;
-            using (Pen mainPen = new(color, 2))
+            using (Pen mainPen = new(color, 4))
             {
                 if (cluster.Sectors.Count > 1 && !isMovingCluster)
                 {
@@ -998,24 +1421,40 @@ namespace X4SectorCreator
                 }
 
                 // Fill with darker color
-                using SolidBrush mainBrush = new(LerpColor(color, Color.Black, 0.85f));
-                e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
+                if (render)
+                {
+                    using SolidBrush mainBrush = new(LerpColor(color, Color.Black, 0.85f));
+                    e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
+                }
 
                 // Draw child hex outlines
                 foreach (Hexagon child in hex.Value.Children)
                 {
                     Sector sector = cluster.Sectors[index];
                     Color ownerColor = GetSectorOwnershipColor(sector);
-                    using Pen pen = new(ownerColor, 2);
-                    using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
 
-                    e.Graphics.FillPolygon(brush, child.Points);
-                    e.Graphics.DrawPolygon(pen, child.Points);
+                    bool renderChild = true;
+                    if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
+                    {
+                        renderChild = false;
+                    }
+
+                    if (renderChild)
+                    {
+                        using Pen pen = new(ownerColor, 2);
+                        using SolidBrush brush = new(LerpColor(ownerColor, Color.Black, 0.85f));
+
+                        e.Graphics.FillPolygon(brush, child.Points);
+                        e.Graphics.DrawPolygon(pen, child.Points);
+                    }
                     index++;
                 }
 
-                // Draw edges
-                e.Graphics.DrawPolygon(mainPen, hex.Value.Points);
+                if (render)
+                {
+                    // Draw edges
+                    e.Graphics.DrawPolygon(mainPen, hex.Value.Points);
+                }
             }
 
             // Render the coordinates
@@ -1050,7 +1489,8 @@ namespace X4SectorCreator
             if (_movingCluster != null && _movingCluster == cluster)
             {
                 SizeF textSize;
-                using Font fBold = new(Font, FontStyle.Bold);
+                // Scaled text font
+                using Font fBold = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold);
                 string text = $"(Right-click again to move)";
                 textSize = e.Graphics.MeasureString(text, fBold);
                 e.Graphics.DrawString(text, fBold, Brushes.White,
@@ -1067,7 +1507,8 @@ namespace X4SectorCreator
                 return;
             }
 
-            using Font fBoldAndUnderlined = new(Font, FontStyle.Bold | FontStyle.Underline);
+            // Scaled text font
+            using Font fBoldAndUnderlined = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold | FontStyle.Underline);
 
             // Draw child names
             int index = 0; // reset for name rendering
@@ -1075,6 +1516,12 @@ namespace X4SectorCreator
             {
                 // Render child sector name
                 Sector sector = cluster.Sectors[index];
+                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
+                {
+                    index++;
+                    continue;
+                }
+
                 PointF childHexCenter = GetHexCenter(child.Points);
                 SizeF childHexSize = GetHexSize(child.Points);
                 SizeF childTextSize = e.Graphics.MeasureString(sector.Name, fBoldAndUnderlined);
@@ -1087,6 +1534,11 @@ namespace X4SectorCreator
             // Render main hex sector name if no children
             if (hex.Value.Children.Count == 0 && cluster != null)
             {
+                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(cluster.Sectors.First()))
+                {
+                    return;
+                }
+
                 SizeF textSize = e.Graphics.MeasureString(cluster.Sectors[index].Name, fBoldAndUnderlined);
                 e.Graphics.DrawString(cluster.Sectors[index].Name, fBoldAndUnderlined, Brushes.White,
                     hexCenter.X - (textSize.Width / 2),  // Center horizontally
@@ -1197,7 +1649,7 @@ namespace X4SectorCreator
                 if (selectedSector == null) return;
 
                 // Set the selected cluster/sector as hq space
-                FactionForm.PreferredHqSpace = _selectedChildHexIndex != null ? 
+                FactionForm.PreferredHqSpace = _selectedChildHexIndex != null ?
                     GetSectorMacro(cluster, selectedSector) : GetClusterMacro(cluster);
             }
 
@@ -1287,6 +1739,71 @@ namespace X4SectorCreator
             Invalidate();
         }
 
+        private void BtnHideLegend_Click(object sender, EventArgs e)
+        {
+            var isHidden = BtnHideLegend.Text == "^";
+            if (isHidden)
+            {
+                BtnHideLegend.Text = "V";
+                BtnHideLegend.Font = new Font(BtnHideLegend.Font.FontFamily, 13, BtnHideLegend.Font.Style, GraphicsUnit.Pixel);
+                LegendTree.Visible = true;
+                LegendPanel.Height = _originalLegendPanelHeight;
+                LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+                _legendWasMinimized = false;
+            }
+            else
+            {
+                BtnHideLegend.Text = "^";
+                BtnHideLegend.Font = new Font(BtnHideLegend.Font.FontFamily, 15, BtnHideLegend.Font.Style, GraphicsUnit.Pixel);
+                LegendTree.Visible = false;
+                _originalLegendPanelHeight = LegendPanel.Height;
+                LegendPanel.Height = 35;
+                LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+                _legendWasMinimized = true;
+            }
+        }
+
+        private void BtnHideOptions_Click(object sender, EventArgs e)
+        {
+            var isHidden = BtnHideOptions.Text == "V";
+            if (isHidden)
+            {
+                BtnHideOptions.Text = "^";
+                BtnHideOptions.Font = new Font(BtnHideOptions.Font.FontFamily, 14, BtnHideOptions.Font.Style, GraphicsUnit.Pixel);
+                ControlPanel.Height = _originalControlPanelHeight;
+                ControlPanel.Top = 12;
+                _optionWasMinimzed = false;
+            }
+            else
+            {
+                BtnHideOptions.Text = "V";
+                BtnHideOptions.Font = new Font(BtnHideOptions.Font.FontFamily, 11, BtnHideOptions.Font.Style, GraphicsUnit.Pixel);
+                _originalControlPanelHeight = ControlPanel.Height;
+                ControlPanel.Height = 24;
+                ControlPanel.Top = 12;
+                _optionWasMinimzed = true;
+            }
+        }
+
+        private void SectorMapForm_Load(object sender, EventArgs e)
+        {
+            // Pre-hide boxes if stored in mem
+            if (_optionWasMinimzed)
+                BtnHideOptions.PerformClick();
+            if (_legendWasMinimized)
+                BtnHideLegend.PerformClick();
+        }
+
+        private void ChkShowStations_CheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void ChkShowRegions_CheckedChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
         internal struct GateConnection
         {
             public GateData Source { get; set; }
@@ -1301,6 +1818,21 @@ namespace X4SectorCreator
             public Zone Zone { get; set; }
             public Sector Sector { get; set; }
             public Cluster Cluster { get; set; }
+        }
+
+        class IconData
+        {
+            public Cluster Cluster { get; set; }
+            public Sector Sector { get; set; }
+            public Image ImageLarge { get; set; }
+            public Image ImageSmall { get; set; }
+            public string Type { get; set; }
+            public string Yield { get; set; }
+        }
+
+        private void LegendTree_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            e.Cancel = true;
         }
     }
 }

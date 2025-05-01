@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Numerics;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.CustomComponents;
 
@@ -31,6 +33,85 @@ namespace X4SectorCreator.Helpers
             if (_textSearchComponents.TryGetValue(textBox, out var component))
                 return component;
             return null;
+        }
+
+        public static Image Resize(this Image source, int width, int height, InterpolationMode mode, Color? tintColor = null)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+            destImage.SetResolution(source.HorizontalResolution, source.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = mode;
+                graphics.SmoothingMode = SmoothingMode.None; // For sharper result at small sizes
+                graphics.PixelOffsetMode = PixelOffsetMode.Half; // Sharper placement of pixels
+
+                using var attributes = new ImageAttributes();
+
+                if (tintColor.HasValue)
+                {
+                    attributes.SetColorMatrix(tintColor.Value.ToColorMatrix());
+                }
+
+                graphics.DrawImage(
+                    source,
+                    destRect,
+                    0,
+                    0,
+                    source.Width,
+                    source.Height,
+                    GraphicsUnit.Pixel,
+                    attributes);
+            }
+
+            return destImage;
+        }
+
+        public static ColorMatrix ToColorMatrix(this Color color)
+        {
+            // Normalize the RGB components of the color (values between 0 and 1)
+            float r = color.R / 255f;
+            float g = color.G / 255f;
+            float b = color.B / 255f;
+            float a = color.A / 255f;
+
+            // Create a ColorMatrix and apply the color's tint
+            ColorMatrix matrix = new(
+            [
+                [r, 0, 0, 0, 0],  // Red component
+                [0, g, 0, 0, 0],  // Green component
+                [0, 0, b, 0, 0],  // Blue component
+                [0, 0, 0, a, 0],  // Alpha component
+                [0, 0, 0, 0, 1]   // No change to the final pixel intensity
+            ]);
+
+            return matrix;
+        }
+
+        public static Image CopyAsTint(this Image image, Color tintColor)
+        {
+            Bitmap tintedImage = new(image.Width, image.Height);
+
+            using (Graphics g = Graphics.FromImage(tintedImage))
+            {
+                ColorMatrix colorMatrix = tintColor.ToColorMatrix();
+
+                using ImageAttributes attributes = new();
+                attributes.SetColorMatrix(colorMatrix);
+
+                g.DrawImage(
+                    image,
+                    new Rectangle(0, 0, image.Width, image.Height),
+                    0, 0, image.Width, image.Height,
+                    GraphicsUnit.Pixel,
+                    attributes
+                );
+            }
+
+            return tintedImage;
         }
 
         public static Color HexToColor(this string hexstring)
@@ -76,7 +157,7 @@ namespace X4SectorCreator.Helpers
                 .Where(a => a.Source.Gate.IsHighwayGate || a.Target.Gate.IsHighwayGate)
                 .ToList();
 
-            HashSet<(string, string)> processedHighways = new();
+            HashSet<(string, string)> processedHighways = [];
             foreach (SectorMapForm.GateConnection highway in highways)
             {
                 if (processedHighways.Contains((highway.Source.Gate.ParentSectorName, highway.Target.Gate.ParentSectorName)) ||

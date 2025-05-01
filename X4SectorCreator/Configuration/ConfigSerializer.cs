@@ -7,7 +7,7 @@ using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Configuration
 {
-    internal static class ConfigSerializer
+    public static class ConfigSerializer
     {
         public static readonly JsonSerializerOptions JsonSerializerOptions = new()
         {
@@ -30,7 +30,7 @@ namespace X4SectorCreator.Configuration
                 foreach (Sector sector in cluster.Sectors)
                 {
                     sector.Regions ??= []; // Support older config saves
-                    sector.Regions = [.. sector.Regions];
+                    sector.Regions = [.. sector.Regions.Where(a => !a.IsBaseGame)];
 
                     if (cluster.IsBaseGame)
                     {
