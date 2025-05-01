@@ -204,6 +204,7 @@
             ChkShowRegions.TabIndex = 7;
             ChkShowRegions.Text = "Show Regions";
             ChkShowRegions.UseVisualStyleBackColor = false;
+            ChkShowRegions.CheckedChanged += ChkShowRegions_CheckedChanged;
             // 
             // chkShowConnections
             // 
