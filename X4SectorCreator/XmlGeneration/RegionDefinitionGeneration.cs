@@ -28,12 +28,15 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GetRegions(string modPrefix, List<Cluster> clusters)
         {
+            // TODO: Don't create a region definition for each region, re-use definitions that are shared
             foreach (Cluster cluster in clusters)
             {
                 foreach (Sector sector in cluster.Sectors)
                 {
                     foreach (Region region in sector.Regions)
                     {
+                        if (region.IsBaseGame) continue;
+
                         string name = $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
                         if (cluster.IsBaseGame && sector.IsBaseGame)
                             name = $"{modPrefix}_re_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
