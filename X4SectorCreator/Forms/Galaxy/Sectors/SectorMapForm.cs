@@ -715,7 +715,7 @@ namespace X4SectorCreator
             RenderStationIcons(e, sizeSmall, sizeLarge);
 
             // Other icons should be rendered much smaller
-            sizeSmall = new Point(_iconSize / 4, _iconSize / 4);
+            sizeSmall = new Point((int)(_iconSize / 2.5f), (int)(_iconSize / 2.5f));
             sizeLarge = new Point(_iconSize / 2, _iconSize / 2);
 
             // Collection of icon data
@@ -780,7 +780,7 @@ namespace X4SectorCreator
 
                     if (!string.IsNullOrWhiteSpace(icon.Yield))
                     {
-                        using Font fBold = new(Font.FontFamily, (cluster.Sectors.Count == 1 ? 12 : 6), FontStyle.Bold);
+                        using Font fBold = new(Font.FontFamily, (cluster.Sectors.Count == 1 ? 12 : 10), FontStyle.Bold);
                         var text = icon.Yield;
                         e.Graphics.DrawString(text, fBold, Brushes.Black,
                             pos.X - 1f, pos.Y -1f);
