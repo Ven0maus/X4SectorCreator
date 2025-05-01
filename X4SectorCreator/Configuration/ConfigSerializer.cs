@@ -7,7 +7,7 @@ using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Configuration
 {
-    internal static class ConfigSerializer
+    public static class ConfigSerializer
     {
         public static readonly JsonSerializerOptions JsonSerializerOptions = new()
         {
