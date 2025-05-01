@@ -102,14 +102,16 @@ namespace X4SectorCreator.XmlGeneration
                 // Return regions after sector connection
                 foreach (Objects.Region region in sector.Regions)
                 {
-                    string name = $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
+                    string name = $"c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
                     if (cluster.IsBaseGame && sector.IsBaseGame)
-                        name = $"{modPrefix}_re_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
+                        name = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
                     else if (cluster.IsBaseGame)
-                        name = $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}";
+                        name = $"{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}";
+
+                    string identifier = region.GetIdentifier(modPrefix);
 
                     yield return new XElement("connection",
-                        new XAttribute("name", $"{name}_connection"),
+                        new XAttribute("name", $"{name}_{identifier}_connection"),
                         new XAttribute("ref", "regions"),
                         new XElement("offset",
                             new XElement("position",
@@ -119,7 +121,7 @@ namespace X4SectorCreator.XmlGeneration
                             )
                         ),
                         new XElement("macro",
-                            new XAttribute("name", $"{name}_macro"),
+                            new XAttribute("name", $"{name}_{identifier}_macro"),
                             new XElement("component",
                                 new XAttribute("connection", "cluster"),
                                 new XAttribute("ref", "standardregion")
@@ -127,7 +129,7 @@ namespace X4SectorCreator.XmlGeneration
                             // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
                             new XElement("properties",
                                 new XElement("region",
-                                    new XAttribute("ref", name.ToLower())
+                                    new XAttribute("ref", identifier.ToLower())
                                 )
                             )
                         )
@@ -214,10 +216,11 @@ namespace X4SectorCreator.XmlGeneration
                         // Check if regions exist, then generate these too
                         foreach (Objects.Region region in sector.Regions)
                         {
-                            string name = $"{modPrefix}_re_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
+                            string name = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
+                            string identifier = region.GetIdentifier(modPrefix);
 
                             addElement.Add(new XElement("connection",
-                                new XAttribute("name", $"{name}_connection"),
+                                new XAttribute("name", $"{name}_{identifier}_connection"),
                                 new XAttribute("ref", "regions"),
                                 new XElement("offset",
                                     new XElement("position",
@@ -227,7 +230,7 @@ namespace X4SectorCreator.XmlGeneration
                                     )
                                 ),
                                 new XElement("macro",
-                                    new XAttribute("name", $"{name}_macro"),
+                                    new XAttribute("name", $"{name}_{identifier}_macro"),
                                     new XElement("component",
                                         new XAttribute("connection", "cluster"),
                                         new XAttribute("ref", "standardregion")
@@ -235,7 +238,7 @@ namespace X4SectorCreator.XmlGeneration
                                     // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
                                     new XElement("properties",
                                         new XElement("region",
-                                            new XAttribute("ref", name.ToLower())
+                                            new XAttribute("ref", identifier.ToLower())
                                         )
                                     )
                                 )
@@ -270,11 +273,12 @@ namespace X4SectorCreator.XmlGeneration
                         // Add regions after sector connection
                         foreach (Objects.Region region in sector.Regions)
                         {
-                            string name = cluster.IsBaseGame ? $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
-                                $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
+                            string name = cluster.IsBaseGame ? $"{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}" :
+                                $"c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
+                            string identifier = region.GetIdentifier(modPrefix);
 
                             addElement.Add(new XElement("connection",
-                                new XAttribute("name", $"{name}_connection"),
+                                new XAttribute("name", $"{name}_{identifier}_connection"),
                                 new XAttribute("ref", "regions"),
                                 new XElement("offset",
                                     new XElement("position",
@@ -284,7 +288,7 @@ namespace X4SectorCreator.XmlGeneration
                                     )
                                 ),
                                 new XElement("macro",
-                                    new XAttribute("name", $"{name}_macro"),
+                                    new XAttribute("name", $"{name}_{identifier}_macro"),
                                     new XElement("component",
                                         new XAttribute("connection", "cluster"),
                                         new XAttribute("ref", "standardregion")
@@ -292,7 +296,7 @@ namespace X4SectorCreator.XmlGeneration
                                     // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
                                     new XElement("properties",
                                         new XElement("region",
-                                            new XAttribute("ref", name.ToLower())
+                                            new XAttribute("ref", identifier.ToLower())
                                         )
                                     )
                                 )

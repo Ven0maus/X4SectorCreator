@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 using Region = X4SectorCreator.Objects.Region;
 
@@ -28,7 +29,9 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> GetRegions(string modPrefix, List<Cluster> clusters)
         {
-            // TODO: Don't create a region definition for each region, re-use definitions that are shared
+            // Keep a cache to prevent duplication of definitions
+            var cache = new Dictionary<string, XElement>(StringComparer.OrdinalIgnoreCase);
+
             foreach (Cluster cluster in clusters)
             {
                 foreach (Sector sector in cluster.Sectors)
@@ -37,38 +40,39 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         if (region.IsBaseGame) continue;
 
-                        string name = $"{modPrefix}_re_c{cluster.Id:D3}_s{sector.Id:D3}_r{region.Id:D3}";
-                        if (cluster.IsBaseGame && sector.IsBaseGame)
-                            name = $"{modPrefix}_re_{cluster.BaseGameMapping}_{sector.BaseGameMapping}_r{region.Id:D3}";
-                        else if (cluster.IsBaseGame)
-                            name = $"{modPrefix}_re_{cluster.BaseGameMapping}_s{sector.Id:D3}_r{region.Id:D3}";
+                        string identifier = region.GetIdentifier(modPrefix);
+
+                        if (!cache.TryGetValue(identifier, out var regionDefinitionElement))
+                        {
+                            cache[identifier] = regionDefinitionElement = new XElement("region",
+                                new XAttribute("name", identifier.ToLower()),
+                                new XAttribute("density", region.Definition.Density),
+                                new XAttribute("rotation", region.Definition.Rotation),
+                                new XAttribute("noisescale", region.Definition.NoiseScale),
+                                new XAttribute("seed", region.Definition.Seed),
+                                new XAttribute("minnoisevalue", region.Definition.MinNoiseValue),
+                                new XAttribute("maxnoisevalue", region.Definition.MaxNoiseValue),
+                                new XElement("boundary",
+                                    new XAttribute("class", $"{region.Definition.BoundaryType}"),
+                                    new XElement("size",
+                                        new XAttribute("r", region.BoundaryRadius),
+                                        new XAttribute("linear", region.BoundaryLinear)
+                                    )
+                                ),
+                                new XElement("falloff",
+                                    GenerateLateralRadialSteps(region)
+                                ),
+                                new XElement("fields",
+                                    GenerateFields(region)
+                                ),
+                                new XElement("resources",
+                                    GenerateResources(region)
+                                )
+                            );
+                        }
 
                         // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
-                        yield return new XElement("region",
-                            new XAttribute("name", name.ToLower()),
-                            new XAttribute("density", region.Definition.Density),
-                            new XAttribute("rotation", region.Definition.Rotation),
-                            new XAttribute("noisescale", region.Definition.NoiseScale),
-                            new XAttribute("seed", region.Definition.Seed),
-                            new XAttribute("minnoisevalue", region.Definition.MinNoiseValue),
-                            new XAttribute("maxnoisevalue", region.Definition.MaxNoiseValue),
-                            new XElement("boundary",
-                                new XAttribute("class", $"{region.Definition.BoundaryType}"),
-                                new XElement("size",
-                                    new XAttribute("r", region.BoundaryRadius),
-                                    new XAttribute("linear", region.BoundaryLinear)
-                                )
-                            ),
-                            new XElement("falloff",
-                                GenerateLateralRadialSteps(region)
-                            ),
-                            new XElement("fields",
-                                GenerateFields(region)
-                            ),
-                            new XElement("resources",
-                                GenerateResources(region)
-                            )
-                        );
+                        yield return regionDefinitionElement;
                     }
                 }
             }

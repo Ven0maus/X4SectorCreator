@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using X4SectorCreator.Helpers;
 
 namespace X4SectorCreator.Objects
 {
@@ -25,6 +26,11 @@ namespace X4SectorCreator.Objects
                 Name = Name,
                 Position = Position
             };
+        }
+
+        public string GetIdentifier(string modPrefix)
+        {
+            return $"{modPrefix}_re_{Definition.Name}_hash_{Localisation.GetFnvHash(Definition.Guid)}".ToLower();
         }
 
         public override string ToString()
