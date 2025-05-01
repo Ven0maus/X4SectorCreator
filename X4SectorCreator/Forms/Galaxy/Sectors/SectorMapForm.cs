@@ -1,15 +1,8 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics.Metrics;
-using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using System.Xml.Serialization;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
-using static X4SectorCreator.Objects.Ware;
 
 namespace X4SectorCreator
 {
@@ -28,7 +21,8 @@ namespace X4SectorCreator
         private Dictionary<(int, int), Cluster> _baseGameClusters;
         private Cluster[] _customClusters;
 
-        private const int _hexSize = 100;
+        private const int _hexSize = 200;
+        private const int _iconSize = 128;
 
         // How many extra rows and cols will be "open" around the base game sectors + custom sectors for the user to select
         private const int _minExpansionRoom = 20;
@@ -38,11 +32,11 @@ namespace X4SectorCreator
         private int? _selectedChildHexIndex, _previousSelectedChildHexIndex;
         private (int, int)? _selectedHex, _previousSelectedHex;
 
-        private const float _defaultZoom = 1f;
+        private const float _defaultZoom = 1f; // 1.0 means 100% scale
         private static PointF _offset;
-        private static float _zoom = _defaultZoom; // 1.0 means 100% scale
-        private const float _minZoom = 0.15f, _maxZoom = 2.5f;
-        private const float _gateSizeRadius = 4.5f;
+        private static float _zoom = 0.8f;
+        private const float _minZoom = 0.075f, _maxZoom = 2.5f;
+        private const float _gateSizeRadius = 8f;
 
         public static IReadOnlyDictionary<string, string> DlcMapping => _dlcMapping;
         private static readonly Dictionary<string, string> _dlcMapping = new(StringComparer.OrdinalIgnoreCase)
@@ -62,6 +56,13 @@ namespace X4SectorCreator
 
         private static bool _sectorMapFirstTimeOpen = true;
         private int _originalLegendPanelHeight, _originalControlPanelHeight;
+
+        private Image _factionLogicImageLarge;
+        private Image _factionLogicImageSmall;
+        private readonly Dictionary<Color, Dictionary<string, Image>> _cachedStationIconsLarge = [];
+        private readonly Dictionary<Color, Dictionary<string, Image>> _cachedStationIconsSmall = [];
+        private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
+        private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
 
         // TODO: Rework to use ImageList in treeview with image nodes and colors
         private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
@@ -90,6 +91,17 @@ namespace X4SectorCreator
         private static readonly Dictionary<string, Image> _imageMap = new(StringComparer.OrdinalIgnoreCase);
 
         private static bool _optionWasMinimzed = false, _legendWasMinimized = false;
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                // Used to start draw process on init of class
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
 
         public SectorMapForm()
         {
@@ -645,11 +657,15 @@ namespace X4SectorCreator
 
         private void RenderHexIcons(PaintEventArgs e)
         {
-            // These are exceptional as they are rendered directly in the position of the station
-            RenderStationIcons(e);
+            var sizeSmall = new Point(_iconSize / 2, _iconSize / 2);
+            var sizeLarge = new Point(_iconSize, _iconSize);
 
-            var sizeSmall = new Point(32, 32);
-            var sizeLarge = new Point(64, 64);
+            // These are exceptional as they are rendered directly in the position of the station
+            RenderStationIcons(e, sizeSmall, sizeLarge);
+
+            // Other icons should be rendered much smaller
+            sizeSmall = new Point(_iconSize / 4, _iconSize / 4);
+            sizeLarge = new Point(_iconSize / 2, _iconSize / 2);
 
             // Collection of icon data
             var icons = new List<IconData>();
@@ -687,18 +703,18 @@ namespace X4SectorCreator
                     float correctHexHeight = cluster.Sectors.Count == 1 ? hexHeight : hexHeight / 2;
 
                     // Bottom left corner
-                    float startX = hexCenter.X - correctHexHeight / 4;
+                    float startX = hexCenter.X - correctHexHeight / 4 - (cluster.Sectors.Count == 1 ? 10 : 5);
                     float startY = hexCenter.Y + correctHexHeight / 2 - (height / 2);
 
                     // Increment by icon size + 1
-                    for (int i =0; i < xLayerProcess; i++)
+                    for (int i = 0; i < xLayerProcess; i++)
                     {
-                        startX += width + 1;
+                        startX += (int)((width / 2f)) - (cluster.Sectors.Count == 1 ? 10 : 5);
                     }
 
                     // Icons are shown per 4, on each Y layer
                     var yLayer = (int)(processed / 4f);
-                    startY -= height * yLayer;
+                    startY -= ((height / 2) - (cluster.Sectors.Count == 1 ? 10 : 5)) * yLayer;
 
                     // Define position
                     var pos = new PointF(startX, startY);
@@ -715,9 +731,6 @@ namespace X4SectorCreator
                 }
             }
         }
-
-        private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
-        private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
 
         private IEnumerable<IconData> CollectRegionIconData(Point small, Point large)
         {
@@ -772,9 +785,6 @@ namespace X4SectorCreator
             }
         }
 
-        private Image _factionLogicImageLarge;
-        private Image _factionLogicImageSmall;
-
         private IEnumerable<IconData> CollectOtherIconData(Point sizeSmall, Point sizeLarge)
         {
             var factionLogicDisabledIcon = GetIconFromStore("faction_logic_disabled");
@@ -803,19 +813,7 @@ namespace X4SectorCreator
             }
         }
 
-        class IconData
-        {
-            public Cluster Cluster { get; set; }
-            public Sector Sector { get; set; }
-            public Image ImageLarge { get; set; }
-            public Image ImageSmall { get; set; }
-            public string Text { get; set; }
-        }
-
-        private readonly Dictionary<Color, Dictionary<string, Image>> _cachedStationIconsLarge = [];
-        private readonly Dictionary<Color, Dictionary<string, Image>> _cachedStationIconsSmall = [];
-
-        private void RenderStationIcons(PaintEventArgs e)
+        private void RenderStationIcons(PaintEventArgs e, Point sizeSmall, Point sizeLarge)
         {
             if (!ChkShowStations.Checked) return;
 
@@ -858,8 +856,10 @@ namespace X4SectorCreator
                             Color color = FactionsForm.GetColorForFaction(station.Owner);
 
                             // Define the size for the resized icon (width and height)
-                            int width = cluster.Sectors.Count == 1 ? 32 : 16;
-                            int height = cluster.Sectors.Count == 1 ? 32 : 16;
+                            int width = cluster.Sectors.Count == 1 ? sizeLarge.X : sizeSmall.X;
+                            int height = cluster.Sectors.Count == 1 ? sizeLarge.Y : sizeSmall.Y;
+                            width /= 2;
+                            height /= 2;
 
                             Image resizedIcon;
                             if (cluster.Sectors.Count == 1)
@@ -986,7 +986,7 @@ namespace X4SectorCreator
                 (!chkShowCustomSectors.Checked && !cluster.IsBaseGame))
             {
                 using SolidBrush mainBrush = new(Color.Black);
-                using Pen mainPen = new(nonExistantHexColor, 2);
+                using Pen mainPen = new(nonExistantHexColor, 4);
                 // Fill hex
                 e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
                 // Draw edges
@@ -1103,7 +1103,7 @@ namespace X4SectorCreator
                 color = Color.SlateGray;
             }
 
-            using Pen circlePen = new(color, 1.5f);
+            using Pen circlePen = new(color, _gateSizeRadius / 2f);
             using SolidBrush circleBrush = new("#575757".HexToColor());
 
             // Draw source and target gates
@@ -1113,7 +1113,7 @@ namespace X4SectorCreator
             e.Graphics.FillEllipse(circleBrush, targetX, targetY, diameter, diameter);
             e.Graphics.DrawEllipse(circlePen, targetX, targetY, diameter, diameter);
 
-            using Pen linePen = new(color, 1.5f);
+            using Pen linePen = new(color, _gateSizeRadius / 2f);
 
             linePen.DashStyle = connection.Source.Gate.IsHighwayGate ? DashStyle.Dash : DashStyle.Dot;
 
@@ -1311,7 +1311,7 @@ namespace X4SectorCreator
 
             // Main hex outline
             int index = 0;
-            using (Pen mainPen = new(color, 2))
+            using (Pen mainPen = new(color, 4))
             {
                 if (cluster.Sectors.Count > 1 && !isMovingCluster)
                 {
@@ -1371,7 +1371,8 @@ namespace X4SectorCreator
             if (_movingCluster != null && _movingCluster == cluster)
             {
                 SizeF textSize;
-                using Font fBold = new(Font, FontStyle.Bold);
+                // Scaled text font
+                using Font fBold = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold);
                 string text = $"(Right-click again to move)";
                 textSize = e.Graphics.MeasureString(text, fBold);
                 e.Graphics.DrawString(text, fBold, Brushes.White,
@@ -1388,7 +1389,8 @@ namespace X4SectorCreator
                 return;
             }
 
-            using Font fBoldAndUnderlined = new(Font, FontStyle.Bold | FontStyle.Underline);
+            // Scaled text font
+            using Font fBoldAndUnderlined = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold | FontStyle.Underline);
 
             // Draw child names
             int index = 0; // reset for name rendering
@@ -1687,6 +1689,20 @@ namespace X4SectorCreator
             public Zone Zone { get; set; }
             public Sector Sector { get; set; }
             public Cluster Cluster { get; set; }
+        }
+
+        class IconData
+        {
+            public Cluster Cluster { get; set; }
+            public Sector Sector { get; set; }
+            public Image ImageLarge { get; set; }
+            public Image ImageSmall { get; set; }
+            public string Text { get; set; }
+        }
+
+        private void LegendTree_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            e.Cancel = true;
         }
     }
 }

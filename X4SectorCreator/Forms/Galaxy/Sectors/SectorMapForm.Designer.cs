@@ -273,10 +273,12 @@
             LegendTree.DrawMode = TreeViewDrawMode.OwnerDrawText;
             LegendTree.Font = new Font("Segoe UI", 11F);
             LegendTree.ForeColor = Color.White;
+            LegendTree.LineColor = Color.White;
             LegendTree.Location = new Point(3, 33);
             LegendTree.Name = "LegendTree";
             LegendTree.Size = new Size(257, 258);
             LegendTree.TabIndex = 1;
+            LegendTree.BeforeSelect += LegendTree_BeforeSelect;
             // 
             // label2
             // 
