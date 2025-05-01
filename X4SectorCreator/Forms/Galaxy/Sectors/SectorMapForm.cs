@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
-using System.Linq;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -266,6 +264,13 @@ namespace X4SectorCreator
                     (e.Location.X - _offset.X) / _zoom,
                     (e.Location.Y - _offset.Y) / _zoom
                 );
+
+                // Don't allow cluster movement when searching
+                if (_visibleSectorsFromSearch.Count > 0)
+                {
+                    _ = MessageBox.Show("Cannot move clusters while a search filter is set.");
+                    return;
+                }
 
                 if (_movingCluster == null)
                 {
