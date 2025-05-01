@@ -11,10 +11,10 @@ namespace DevConsole.Extractors
     {
         private static readonly Dictionary<string, RegionDefinition> _regionDefintions = new(StringComparer.OrdinalIgnoreCase);
 
-        internal static IEnumerable<Region> ExtractRegions(string xmlPath)
+        internal static IEnumerable<Region> ExtractRegions(string clustersPath, string definitionsPath)
         {
             // Collect all clusters
-            var xdoc = XDocument.Load(xmlPath);
+            var xdoc = XDocument.Load(clustersPath);
 
             var clusters = new Dictionary<string, Cluster>(StringComparer.OrdinalIgnoreCase);
             var clusterMacros = ReadClusterMacros(xdoc)
@@ -88,18 +88,17 @@ namespace DevConsole.Extractors
 
                             if (closestSector != null)
                             {
+                                // Create new region for sector
                                 var region = new Region
                                 {
                                     Name = connection.Name,
                                     Position = new System.Drawing.Point((int)X, (int)Z)
                                 };
 
+                                // Collect cached region definition
                                 if (!_regionDefintions.TryGetValue(connection.RegionRef, out var regionDefinition))
                                 {
-                                    _regionDefintions[connection.RegionRef] = regionDefinition = new RegionDefinition()
-                                    {
-                                        Name = connection.RegionRef
-                                    };
+                                    _regionDefintions[connection.RegionRef] = regionDefinition = CreateRegionDefinition(connection.RegionRef);
                                 }
    
                                 region.Definition = regionDefinition;
@@ -110,6 +109,46 @@ namespace DevConsole.Extractors
                 }
             }
 
+            xdoc = XDocument.Load(definitionsPath);
+            var definitions = ReadRegionDefintions(xdoc)
+                .Where(a => !string.IsNullOrWhiteSpace(a.Name))
+                .ToDictionary(a => a.Name, StringComparer.OrdinalIgnoreCase);
+
+            var invalid = new HashSet<RegionDefinition>();
+            foreach (var definition in _regionDefintions.Values)
+            {
+                if (!definitions.TryGetValue(definition.Name, out var regionObj))
+                {
+                    invalid.Add(definition);
+                    continue;
+                }
+
+                if (regionObj.Resources.Count == 0)
+                {
+                    invalid.Add(definition);
+                    continue;
+                }
+
+                definition.Resources = regionObj.Resources;
+            }
+
+            // Remove all regions that are invalid
+            foreach (var invalidDefinition in invalid)
+            {
+                foreach (var cluster in clusters.Values)
+                {
+                    foreach (var sector in cluster.Sectors)
+                    {
+                        var matchingRegion = sector.Regions.FirstOrDefault(a => a.Definition == invalidDefinition);
+                        if (matchingRegion != null)
+                        {
+                            sector.Regions.Remove(matchingRegion);
+                        }
+                    }
+                }
+                _regionDefintions.Remove(invalidDefinition.Name);
+            }
+
             // Store region extraction file
             var clusterCollection = new ClusterCollection { Clusters = clusters.Values.ToList() };
             var xml = JsonSerializer.Serialize(clusterCollection, ConfigSerializer.JsonSerializerOptions);
@@ -117,15 +156,17 @@ namespace DevConsole.Extractors
                 Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine("Extractions", "ExtractedRegions.xml")));
             File.WriteAllText(Path.Combine("Extractions", "ExtractedRegions.xml"), xml);
 
-            // Get all regions in sector
-
-            // Create a definition if not exists
-
-            // Create region object and assign to correct sector based on position
-
-            // Export all 
-
             return [];
+        }
+
+        private static RegionDefinition CreateRegionDefinition(string regionRef)
+        {
+            var regionDefinition = new RegionDefinition()
+            {
+                Name = regionRef,
+                Guid = Guid.NewGuid().ToString()
+            };
+            return regionDefinition;
         }
 
         private static IEnumerable<Macro> ReadClusterMacros(XDocument doc)
@@ -137,9 +178,9 @@ namespace DevConsole.Extractors
                 {
                     Name = macroElement.Attribute("name")?.Value,
                     Class = macroElement.Attribute("class")?.Value,
-                    Connections = macroElement
+                    Connections = (macroElement
                         .Element("connections")?
-                        .Elements("connection")
+                        .Elements("connection") ?? [])
                         .Select(conn => new Connection
                         {
                             Name = conn.Attribute("name")?.Value,
@@ -157,6 +198,31 @@ namespace DevConsole.Extractors
                         .ToList()
                 };
             }
+        }
+
+        private static IEnumerable<RegionObj> ReadRegionDefintions(XDocument doc)
+        {
+            var regions = doc.Element("regions").Elements("region");
+            foreach (var region in regions)
+            {
+                yield return new RegionObj
+                {
+                    Name = region.Attribute("name")?.Value,
+                    Resources = (region.Element("resources")?.Elements("resource") ?? [])
+                        .Select(a => new Resource
+                        {
+                            Ware = a.Attribute("ware")?.Value,
+                            Yield = a.Attribute("yield")?.Value
+                        })
+                        .ToList()
+                };
+            }
+        }
+
+        public class RegionObj
+        {
+            public string Name { get; set; }
+            public List<Resource> Resources { get; set; }
         }
 
         public class Position
