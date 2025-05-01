@@ -37,8 +37,13 @@
             panel1 = new Panel();
             label1 = new Label();
             DlcListBox = new CheckedListBox();
+            LegendPanel = new Panel();
+            BtnHideLegend = new Button();
+            LegendTree = new TreeView();
+            label2 = new Label();
             ControlPanel.SuspendLayout();
             panel1.SuspendLayout();
+            LegendPanel.SuspendLayout();
             SuspendLayout();
             // 
             // chkShowX4Sectors
@@ -115,7 +120,7 @@
             ControlPanel.Controls.Add(BtnSelectLocation);
             ControlPanel.Controls.Add(chkShowCustomSectors);
             ControlPanel.Controls.Add(chkShowX4Sectors);
-            ControlPanel.Location = new Point(512, 12);
+            ControlPanel.Location = new Point(795, 12);
             ControlPanel.Name = "ControlPanel";
             ControlPanel.Size = new Size(176, 277);
             ControlPanel.TabIndex = 4;
@@ -174,9 +179,64 @@
             DlcListBox.TabIndex = 4;
             DlcListBox.ItemCheck += DlcListBox_ItemCheck;
             // 
+            // LegendPanel
+            // 
+            LegendPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            LegendPanel.BackColor = Color.Black;
+            LegendPanel.BorderStyle = BorderStyle.FixedSingle;
+            LegendPanel.Controls.Add(BtnHideLegend);
+            LegendPanel.Controls.Add(LegendTree);
+            LegendPanel.Controls.Add(label2);
+            LegendPanel.Location = new Point(711, 339);
+            LegendPanel.Name = "LegendPanel";
+            LegendPanel.Size = new Size(265, 298);
+            LegendPanel.TabIndex = 5;
+            // 
+            // BtnHideLegend
+            // 
+            BtnHideLegend.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnHideLegend.BackColor = Color.Black;
+            BtnHideLegend.FlatStyle = FlatStyle.Flat;
+            BtnHideLegend.Font = new Font("Segoe UI", 13F, FontStyle.Bold, GraphicsUnit.Pixel);
+            BtnHideLegend.ForeColor = Color.White;
+            BtnHideLegend.Location = new Point(232, 3);
+            BtnHideLegend.Name = "BtnHideLegend";
+            BtnHideLegend.Size = new Size(26, 26);
+            BtnHideLegend.TabIndex = 7;
+            BtnHideLegend.Text = "V";
+            BtnHideLegend.UseVisualStyleBackColor = false;
+            BtnHideLegend.Click += BtnHideLegend_Click;
+            // 
+            // LegendTree
+            // 
+            LegendTree.Anchor = AnchorStyles.None;
+            LegendTree.BackColor = Color.Black;
+            LegendTree.BorderStyle = BorderStyle.FixedSingle;
+            LegendTree.DrawMode = TreeViewDrawMode.OwnerDrawText;
+            LegendTree.Font = new Font("Segoe UI", 11F);
+            LegendTree.ForeColor = Color.White;
+            LegendTree.Location = new Point(3, 33);
+            LegendTree.Name = "LegendTree";
+            LegendTree.Size = new Size(257, 258);
+            LegendTree.TabIndex = 1;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Top;
+            label2.CausesValidation = false;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Underline);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(45, 3);
+            label2.Name = "label2";
+            label2.Size = new Size(181, 27);
+            label2.TabIndex = 0;
+            label2.Text = "Map Legend";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // SectorMapForm
             // 
-            ClientSize = new Size(700, 569);
+            ClientSize = new Size(983, 643);
+            Controls.Add(LegendPanel);
             Controls.Add(ControlPanel);
             MinimizeBox = false;
             Name = "SectorMapForm";
@@ -186,6 +246,7 @@
             ControlPanel.ResumeLayout(false);
             ControlPanel.PerformLayout();
             panel1.ResumeLayout(false);
+            LegendPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -199,5 +260,9 @@
         internal CheckBox chkShowX4Sectors;
         internal CheckedListBox DlcListBox;
         private CheckBox chkShowConnections;
+        private Panel LegendPanel;
+        private Label label2;
+        private TreeView LegendTree;
+        internal Button BtnHideLegend;
     }
 }
