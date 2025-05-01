@@ -187,6 +187,7 @@
             ChkShowStations.TabIndex = 8;
             ChkShowStations.Text = "Show Stations";
             ChkShowStations.UseVisualStyleBackColor = false;
+            ChkShowStations.CheckedChanged += ChkShowStations_CheckedChanged;
             // 
             // ChkShowRegions
             // 
