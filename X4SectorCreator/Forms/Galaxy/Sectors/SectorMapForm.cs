@@ -22,6 +22,7 @@ namespace X4SectorCreator
         private Cluster[] _customClusters;
 
         private const int _hexSize = 200;
+        private const float _hexPadding = 10f;
         private const int _iconSize = 128;
 
         // How many extra rows and cols will be "open" around the base game sectors + custom sectors for the user to select
@@ -381,7 +382,7 @@ namespace X4SectorCreator
 
         private void HandleMouseWheel(object sender, MouseEventArgs e)
         {
-            const float zoomFactor = 1.1f; // 10% zoom per wheel step
+            const float zoomFactor = 1.2f; // 20% zoom per wheel step
             float oldZoom = _zoom;
 
             if (e.Delta > 0)
@@ -583,35 +584,39 @@ namespace X4SectorCreator
 
         private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, List<Sector> sectors, (int x, int y) translatedCoordinate, float zoom = 1.0f)
         {
-            // Scale parent hex
-            height *= zoom;
-            float width = (float)(4 * (height / 2 / Math.Sqrt(3))); // Compute width based on height
+            // Step 1: Scale base height with zoom
+            float zoomedHeight = height * zoom;
+            float zoomedWidth = (float)(4 * (zoomedHeight / 2 / Math.Sqrt(3)));
 
-            // Positioning parent hex
-            float xOffset = col * (width * 0.75f);
-            float yOffset = row * height;
+            // Step 2: Apply padding by shrinking the actual drawn hex size
+            float hexDrawHeight = zoomedHeight - _hexPadding;
+            float hexDrawWidth = zoomedWidth - _hexPadding;
+
+            // Step 3: Positioning the hex center using spacing based on full zoomed size
+            float xOffset = col * (zoomedWidth * 0.75f);
+            float yOffset = row * zoomedHeight;
             if (col % 2 != 0)
             {
-                yOffset += height / 2;
+                yOffset += zoomedHeight / 2;
             }
 
             xOffset += centerX;
             yOffset += centerY;
 
-            // Generate the parent hexagon
+            // Step 4: Build the actual hex points using the *shrunk* draw width/height
             PointF[] parentHex =
             [
                 new PointF(xOffset, yOffset),
-                new PointF(xOffset + (width * 0.25f), yOffset - (height / 2)),
-                new PointF(xOffset + (width * 0.75f), yOffset - (height / 2)),
-                new PointF(xOffset + width, yOffset),
-                new PointF(xOffset + (width * 0.75f), yOffset + (height / 2)),
-                new PointF(xOffset + (width * 0.25f), yOffset + (height / 2)),
+                new PointF(xOffset + (hexDrawWidth * 0.25f), yOffset - (hexDrawHeight / 2)),
+                new PointF(xOffset + (hexDrawWidth * 0.75f), yOffset - (hexDrawHeight / 2)),
+                new PointF(xOffset + hexDrawWidth, yOffset),
+                new PointF(xOffset + (hexDrawWidth * 0.75f), yOffset + (hexDrawHeight / 2)),
+                new PointF(xOffset + (hexDrawWidth * 0.25f), yOffset + (hexDrawHeight / 2)),
             ];
 
             // Child hexes are 50% of parent size
-            float childHeight = height / 2;
-            float childWidth = width / 2;
+            float childHeight = hexDrawHeight / 2;
+            float childWidth = hexDrawWidth / 2;
             List<PointF[]> childHexes = [];
 
             // Child hex positions (equally spaced inside parent)
@@ -623,7 +628,7 @@ namespace X4SectorCreator
                 // Child hex centers for top-left, bottom-right
                 for (int i = 0; i < children; i++)
                 {
-                    (float x, float y) = _childPlacementMappings[sectors[i].Placement](width, childHeight);
+                    (float x, float y) = _childPlacementMappings[sectors[i].Placement](hexDrawWidth, childHeight);
                     childHexPositions.Add(new PointF(xOffset + x, yOffset + y));
                 }
             }
@@ -1087,13 +1092,13 @@ namespace X4SectorCreator
                     PointF hexCenter = GetHexCenter(hex.Value.Points);
                     SizeF hexSize = GetHexSize(hex.Value.Points);
 
-                    using Font fBold = new(Font, FontStyle.Bold);
+                    using Font fBold = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold);
                     (int x, int y) = hex.Key;
                     string coordText = $"({x}, {y})";
                     textSize = e.Graphics.MeasureString(coordText, fBold);
                     e.Graphics.DrawString(coordText, fBold, Brushes.White,
                         hexCenter.X - (hexSize.Width * 0.25f),            // Align to the left
-                        hexCenter.Y + (hexSize.Height / 2) - textSize.Height); // Align to the bottom
+                        hexCenter.Y + (hexSize.Height / 2) - textSize.Height - (_hexPadding / 2f)); // Align to the bottom
                 }
             }
             else
@@ -1464,13 +1469,13 @@ namespace X4SectorCreator
             SizeF textSize;
             if (chkShowCoordinates.Checked)
             {
-                using Font fBold = new(Font, FontStyle.Bold);
+                using Font fBold = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold);
                 (int x, int y) = hex.Key;
                 string coordText = $"({x}, {y})";
                 textSize = e.Graphics.MeasureString(coordText, fBold);
                 e.Graphics.DrawString(coordText, fBold, Brushes.White,
                     hexCenter.X - (hexSize.Width * 0.25f),                 // Align to the left
-                    hexCenter.Y + (hexSize.Height / 2) - textSize.Height); // Align to the bottom
+                    hexCenter.Y + (hexSize.Height / 2) - textSize.Height - (_hexPadding / 2f)); // Align to the bottom
             }
         }
 
