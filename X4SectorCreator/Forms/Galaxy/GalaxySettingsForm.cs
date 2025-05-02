@@ -165,6 +165,7 @@ namespace X4SectorCreator.Forms
             IsCustomGalaxy = chkCustomGalaxy.Checked;
             DisableAllStorylines = chkDisableAllStorylines.Checked;
             StartingSector = (cmbStartSector.SelectedItem as Sector)?.Name;
+            BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
 
             // Toggle galaxy mode
             MainForm.Instance.ToggleGalaxyMode(mergedClusters);
@@ -259,11 +260,9 @@ namespace X4SectorCreator.Forms
                 chkDisableAllStorylines.Enabled = true;
                 chkDisableAllStorylines.Checked = false;
                 cmbStartSector.Enabled = false;
-                BtnGenerateProceduralGalaxy.Enabled = false;
             }
             else
             {
-                BtnGenerateProceduralGalaxy.Enabled = true;
                 chkDisableAllStorylines.Enabled = false;
                 chkDisableAllStorylines.Checked = true;
                 txtGalaxyName.Enabled = true;
