@@ -42,6 +42,8 @@ namespace X4SectorCreator.Forms
 
                     foreach (var region in sector.Regions)
                     {
+                        if (region.IsBaseGame) continue;
+
                         // Add region
                         _dataObjects.Add(new DataObject(cluster, sector, region));
                     }

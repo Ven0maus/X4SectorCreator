@@ -174,7 +174,7 @@ namespace X4SectorCreator.Helpers
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private static int GetFnvHash(string value)
+        public static int GetFnvHash(string value)
         {
             ArgumentNullException.ThrowIfNull(value);
 
