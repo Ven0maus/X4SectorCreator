@@ -76,8 +76,17 @@ namespace X4SectorCreator.Forms.Galaxy
                     seed = Localisation.GetFnvHash(TxtSeed.Text);
             }
 
-            var generator = new GalaxyGenerator(seed);
-            MainForm.Instance.SetProceduralGalaxy(generator.GenerateGalaxy((int)NrGridWidth.Value, (int)NrGridHeight.Value));
+            var settings = new ProceduralSettings
+            {
+                Seed = seed,
+                Width = (int)NrGridWidth.Value,
+                Height = (int)NrGridHeight.Value,
+                ClusterChance = (int)NrClusterChance.Value,
+                MultiSectorChance = (int)NrChanceMultiSectors.Value
+            };
+
+            var generator = new GalaxyGenerator(settings);
+            MainForm.Instance.SetProceduralGalaxy(generator.GenerateGalaxy());
             MainForm.Instance.SectorMapForm.Value.Reset();
             MainForm.Instance.UpdateClusterOptions();
         }
@@ -93,6 +102,15 @@ namespace X4SectorCreator.Forms.Galaxy
             sectorMapForm.Value.BtnSelectLocation.Hide();
             sectorMapForm.Value.Reset();
             sectorMapForm.Value.Show();
+        }
+
+        public class ProceduralSettings
+        {
+            public int Seed { get; set; }
+            public int Width { get; set; }
+            public int Height { get; set; }
+            public int ClusterChance { get; set; }
+            public int MultiSectorChance { get; set; }
         }
     }
 }

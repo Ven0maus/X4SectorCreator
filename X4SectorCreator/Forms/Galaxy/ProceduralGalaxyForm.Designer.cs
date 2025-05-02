@@ -65,6 +65,8 @@
             panel1 = new Panel();
             ChkAutoSeed = new CheckBox();
             panel2 = new Panel();
+            NrClusterChance = new NumericUpDown();
+            label23 = new Label();
             NrGridHeight = new NumericUpDown();
             NrGridWidth = new NumericUpDown();
             label11 = new Label();
@@ -87,8 +89,6 @@
             label29 = new Label();
             NrVanillaClusterMin = new NumericUpDown();
             ChkGenerateVanillaFactions = new CheckBox();
-            NrClusterChance = new NumericUpDown();
-            label23 = new Label();
             ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
@@ -100,6 +100,7 @@
             RegionPanel.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NrClusterChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrGridHeight).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrGridWidth).BeginInit();
             panel3.SuspendLayout();
@@ -108,7 +109,6 @@
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NrVanillaClusterMax).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrVanillaClusterMin).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)NrClusterChance).BeginInit();
             SuspendLayout();
             // 
             // BtnOpenSectorMap
@@ -318,7 +318,7 @@
             NrChanceMultiSectors.Name = "NrChanceMultiSectors";
             NrChanceMultiSectors.Size = new Size(41, 23);
             NrChanceMultiSectors.TabIndex = 26;
-            NrChanceMultiSectors.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            NrChanceMultiSectors.Value = new decimal(new int[] { 15, 0, 0, 0 });
             // 
             // label14
             // 
@@ -471,6 +471,23 @@
             panel2.Size = new Size(279, 123);
             panel2.TabIndex = 40;
             // 
+            // NrClusterChance
+            // 
+            NrClusterChance.Location = new Point(138, 61);
+            NrClusterChance.Name = "NrClusterChance";
+            NrClusterChance.Size = new Size(41, 23);
+            NrClusterChance.TabIndex = 35;
+            NrClusterChance.Value = new decimal(new int[] { 30, 0, 0, 0 });
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(4, 65);
+            label23.Name = "label23";
+            label23.Size = new Size(133, 15);
+            label23.TabIndex = 34;
+            label23.Text = "Cluster Chance Per Hex:";
+            // 
             // NrGridHeight
             // 
             NrGridHeight.Location = new Point(197, 5);
@@ -485,7 +502,7 @@
             NrGridWidth.Name = "NrGridWidth";
             NrGridWidth.Size = new Size(41, 23);
             NrGridWidth.TabIndex = 32;
-            NrGridWidth.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            NrGridWidth.Value = new decimal(new int[] { 20, 0, 0, 0 });
             // 
             // label11
             // 
@@ -677,23 +694,6 @@
             ChkGenerateVanillaFactions.Text = "Generate Vanilla Factions";
             ChkGenerateVanillaFactions.UseVisualStyleBackColor = true;
             // 
-            // NrClusterChance
-            // 
-            NrClusterChance.Location = new Point(138, 61);
-            NrClusterChance.Name = "NrClusterChance";
-            NrClusterChance.Size = new Size(41, 23);
-            NrClusterChance.TabIndex = 35;
-            NrClusterChance.Value = new decimal(new int[] { 25, 0, 0, 0 });
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.Location = new Point(4, 65);
-            label23.Name = "label23";
-            label23.Size = new Size(133, 15);
-            label23.TabIndex = 34;
-            label23.Text = "Cluster Chance Per Hex:";
-            // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -734,6 +734,7 @@
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NrClusterChance).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrGridHeight).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrGridWidth).EndInit();
             panel3.ResumeLayout(false);
@@ -744,7 +745,6 @@
             panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)NrVanillaClusterMax).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrVanillaClusterMin).EndInit();
-            ((System.ComponentModel.ISupportInitialize)NrClusterChance).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
