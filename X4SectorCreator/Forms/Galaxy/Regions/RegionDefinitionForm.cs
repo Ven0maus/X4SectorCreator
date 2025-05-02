@@ -106,6 +106,21 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            var newName = FactionForm.Sanitize(txtRegionDefinitionName.Text.Trim());
+            txtRegionDefinitionName.Text = newName;
+
+            bool nameExists = RegionDefinitions.Any(a =>
+                a.Name.Equals(newName, StringComparison.OrdinalIgnoreCase));
+
+            bool isUpdating = BtnCreateRegionDefinition.Text == "Update Region Definition";
+            bool isNameChanged = isUpdating && !RegionDefinition.Name.Equals(newName, StringComparison.OrdinalIgnoreCase);
+
+            if (nameExists && (!isUpdating || isNameChanged))
+            {
+                MessageBox.Show("A region definition with this name already exists.");
+                return;
+            }
+
             List<string> messages = [];
             IsValidInteger(messages, txtRotation, out int rotation);
             IsValidInteger(messages, txtSeed, out int seed);
@@ -131,7 +146,7 @@ namespace X4SectorCreator.Forms
                         Rotation = rotation.ToString(),
                         NoiseScale = noiseScale.ToString(),
                         Seed = seed.ToString(),
-                        Name = txtRegionDefinitionName.Text,
+                        Name = newName,
                         BoundaryType = selectedBoundaryType.ToLower(),
                     };
 
@@ -157,7 +172,7 @@ namespace X4SectorCreator.Forms
                     RegionDefinition.BoundaryType = selectedBoundaryType.ToLower();
                     RegionDefinition.NoiseScale = noiseScale.ToString();
                     RegionDefinition.Seed = seed.ToString();
-                    RegionDefinition.Name = txtRegionDefinitionName.Text;
+                    RegionDefinition.Name = newName;
 
                     // Collections
                     RegionDefinition.Fields = ListBoxFields.Items.Cast<FieldObj>().ToList();

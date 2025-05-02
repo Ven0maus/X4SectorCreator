@@ -21,7 +21,7 @@ namespace X4SectorCreator.Objects
         public SectorPlacement Placement { get; set; }
 
         [JsonIgnore]
-        public Point Offset { get; set; }
+        public (long X, long Y) Offset { get; set; }
 
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);
