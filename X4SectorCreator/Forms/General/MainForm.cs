@@ -1098,11 +1098,29 @@ namespace X4SectorCreator
 
             Dictionary<string, Cluster> vanillaClusters = AllClusters.Values
                 .Where(a => a.IsBaseGame)
+                .Select(a => (Cluster)a.Clone())
                 .ToDictionary(a => a.BaseGameMapping);
 
             Dictionary<string, Cluster> nonModifiedVanillaClusters = nonModifiedBaseGameData
                 .Clusters
+                .Select(a => (Cluster)a.Clone())
                 .ToDictionary(a => a.BaseGameMapping);
+
+            // Clear up regions because they are not exported or modifyable in anyway
+            foreach (var cluster in vanillaClusters.Values)
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    sector.Regions.RemoveAll(a => a.IsBaseGame);
+                }
+            }
+            foreach (var cluster in nonModifiedVanillaClusters.Values)
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    sector.Regions.RemoveAll(a => a.IsBaseGame);
+                }
+            }
 
             VanillaChanges vanillaChanges = new();
 
