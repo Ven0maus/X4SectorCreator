@@ -49,11 +49,6 @@
             NrFactionMax = new NumericUpDown();
             label8 = new Label();
             label9 = new Label();
-            label10 = new Label();
-            label11 = new Label();
-            label12 = new Label();
-            NrClustersMax = new NumericUpDown();
-            NrClustersMin = new NumericUpDown();
             label13 = new Label();
             NrChanceMultiSectors = new NumericUpDown();
             label14 = new Label();
@@ -70,24 +65,28 @@
             panel1 = new Panel();
             ChkAutoSeed = new CheckBox();
             panel2 = new Panel();
+            label10 = new Label();
+            label11 = new Label();
+            NrGridWidth = new NumericUpDown();
+            NrGridHeight = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrFactionMin).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrFactionMax).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)NrClustersMax).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)NrClustersMin).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrChanceMultiSectors).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrFacControlMax).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrFacControlMin).BeginInit();
             RegionPanel.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NrGridWidth).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NrGridHeight).BeginInit();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(12, 274);
+            button1.Location = new Point(530, 474);
             button1.Name = "button1";
             button1.Size = new Size(251, 35);
             button1.TabIndex = 0;
@@ -96,7 +95,7 @@
             // 
             // BtnGenerate
             // 
-            BtnGenerate.Location = new Point(12, 233);
+            BtnGenerate.Location = new Point(530, 515);
             BtnGenerate.Name = "BtnGenerate";
             BtnGenerate.Size = new Size(251, 35);
             BtnGenerate.TabIndex = 1;
@@ -106,7 +105,7 @@
             // 
             // label1
             // 
-            label1.Location = new Point(12, 314);
+            label1.Location = new Point(532, 553);
             label1.Name = "label1";
             label1.Size = new Size(251, 63);
             label1.TabIndex = 2;
@@ -117,7 +116,7 @@
             ChkRegions.AutoSize = true;
             ChkRegions.Checked = true;
             ChkRegions.CheckState = CheckState.Checked;
-            ChkRegions.Location = new Point(289, 10);
+            ChkRegions.Location = new Point(509, 14);
             ChkRegions.Name = "ChkRegions";
             ChkRegions.Size = new Size(118, 19);
             ChkRegions.TabIndex = 3;
@@ -129,7 +128,7 @@
             ChkFactions.AutoSize = true;
             ChkFactions.Checked = true;
             ChkFactions.CheckState = CheckState.Checked;
-            ChkFactions.Location = new Point(294, 260);
+            ChkFactions.Location = new Point(514, 264);
             ChkFactions.Name = "ChkFactions";
             ChkFactions.Size = new Size(120, 19);
             ChkFactions.TabIndex = 4;
@@ -276,61 +275,18 @@
             label9.TabIndex = 19;
             label9.Text = "and";
             // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(4, 10);
-            label10.Name = "label10";
-            label10.Size = new Size(81, 15);
-            label10.TabIndex = 20;
-            label10.Text = "Total Clusters:";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(184, 10);
-            label11.Name = "label11";
-            label11.Size = new Size(27, 15);
-            label11.TabIndex = 24;
-            label11.Text = "and";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(85, 10);
-            label12.Name = "label12";
-            label12.Size = new Size(52, 15);
-            label12.TabIndex = 23;
-            label12.Text = "between";
-            // 
-            // NrClustersMax
-            // 
-            NrClustersMax.Location = new Point(216, 6);
-            NrClustersMax.Name = "NrClustersMax";
-            NrClustersMax.Size = new Size(41, 23);
-            NrClustersMax.TabIndex = 22;
-            NrClustersMax.Value = new decimal(new int[] { 100, 0, 0, 0 });
-            // 
-            // NrClustersMin
-            // 
-            NrClustersMin.Location = new Point(139, 6);
-            NrClustersMin.Name = "NrClustersMin";
-            NrClustersMin.Size = new Size(41, 23);
-            NrClustersMin.TabIndex = 21;
-            NrClustersMin.Value = new decimal(new int[] { 25, 0, 0, 0 });
-            // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(4, 39);
+            label13.Location = new Point(4, 57);
             label13.Name = "label13";
-            label13.Size = new Size(179, 15);
+            label13.Size = new Size(119, 15);
             label13.TabIndex = 25;
-            label13.Text = "Chance for multi-sector clusters:";
+            label13.Text = "Multi-Sector Chance:";
             // 
             // NrChanceMultiSectors
             // 
-            NrChanceMultiSectors.Location = new Point(184, 37);
+            NrChanceMultiSectors.Location = new Point(125, 55);
             NrChanceMultiSectors.Name = "NrChanceMultiSectors";
             NrChanceMultiSectors.Size = new Size(41, 23);
             NrChanceMultiSectors.TabIndex = 26;
@@ -348,7 +304,7 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(4, 69);
+            label15.Location = new Point(4, 85);
             label15.Name = "label15";
             label15.Size = new Size(72, 15);
             label15.TabIndex = 28;
@@ -357,9 +313,9 @@
             // CmbClusterDistribution
             // 
             CmbClusterDistribution.FormattingEnabled = true;
-            CmbClusterDistribution.Location = new Point(82, 66);
+            CmbClusterDistribution.Location = new Point(77, 81);
             CmbClusterDistribution.Name = "CmbClusterDistribution";
-            CmbClusterDistribution.Size = new Size(143, 23);
+            CmbClusterDistribution.Size = new Size(118, 23);
             CmbClusterDistribution.TabIndex = 29;
             // 
             // label16
@@ -432,7 +388,7 @@
             RegionPanel.Controls.Add(NrMaxRegionPerSector);
             RegionPanel.Controls.Add(label6);
             RegionPanel.Controls.Add(label14);
-            RegionPanel.Location = new Point(289, 34);
+            RegionPanel.Location = new Point(509, 38);
             RegionPanel.Name = "RegionPanel";
             RegionPanel.Size = new Size(259, 220);
             RegionPanel.TabIndex = 37;
@@ -452,7 +408,7 @@
             panel1.Controls.Add(NrFacControlMax);
             panel1.Controls.Add(label16);
             panel1.Controls.Add(NrFacControlMin);
-            panel1.Location = new Point(289, 285);
+            panel1.Location = new Point(509, 289);
             panel1.Name = "panel1";
             panel1.Size = new Size(279, 92);
             panel1.TabIndex = 38;
@@ -472,25 +428,58 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.ButtonHighlight;
-            panel2.Controls.Add(label10);
-            panel2.Controls.Add(NrClustersMin);
-            panel2.Controls.Add(NrClustersMax);
-            panel2.Controls.Add(label12);
-            panel2.Controls.Add(CmbClusterDistribution);
+            panel2.Controls.Add(NrGridHeight);
+            panel2.Controls.Add(NrGridWidth);
             panel2.Controls.Add(label11);
+            panel2.Controls.Add(label10);
+            panel2.Controls.Add(CmbClusterDistribution);
             panel2.Controls.Add(label15);
             panel2.Controls.Add(label13);
             panel2.Controls.Add(NrChanceMultiSectors);
             panel2.Location = new Point(12, 64);
             panel2.Name = "panel2";
-            panel2.Size = new Size(262, 163);
+            panel2.Size = new Size(347, 317);
             panel2.TabIndex = 40;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(4, 8);
+            label10.Name = "label10";
+            label10.Size = new Size(67, 15);
+            label10.TabIndex = 30;
+            label10.Text = "Grid Width:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(4, 32);
+            label11.Name = "label11";
+            label11.Size = new Size(71, 15);
+            label11.TabIndex = 31;
+            label11.Text = "Grid Height:";
+            // 
+            // NrGridWidth
+            // 
+            NrGridWidth.Location = new Point(77, 5);
+            NrGridWidth.Name = "NrGridWidth";
+            NrGridWidth.Size = new Size(41, 23);
+            NrGridWidth.TabIndex = 32;
+            NrGridWidth.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            // 
+            // NrGridHeight
+            // 
+            NrGridHeight.Location = new Point(77, 29);
+            NrGridHeight.Name = "NrGridHeight";
+            NrGridHeight.Size = new Size(41, 23);
+            NrGridHeight.TabIndex = 33;
+            NrGridHeight.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(573, 382);
+            ClientSize = new Size(793, 625);
             Controls.Add(panel2);
             Controls.Add(ChkAutoSeed);
             Controls.Add(panel1);
@@ -513,8 +502,6 @@
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrFactionMin).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrFactionMax).EndInit();
-            ((System.ComponentModel.ISupportInitialize)NrClustersMax).EndInit();
-            ((System.ComponentModel.ISupportInitialize)NrClustersMin).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrChanceMultiSectors).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrFacControlMax).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrFacControlMin).EndInit();
@@ -524,6 +511,8 @@
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NrGridWidth).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NrGridHeight).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -549,11 +538,6 @@
         private NumericUpDown NrFactionMax;
         private Label label8;
         private Label label9;
-        private Label label10;
-        private Label label11;
-        private Label label12;
-        private NumericUpDown NrClustersMax;
-        private NumericUpDown NrClustersMin;
         private Label label13;
         private NumericUpDown NrChanceMultiSectors;
         private Label label14;
@@ -572,5 +556,9 @@
         private Panel panel1;
         private CheckBox ChkAutoSeed;
         private Panel panel2;
+        private NumericUpDown NrGridHeight;
+        private NumericUpDown NrGridWidth;
+        private Label label11;
+        private Label label10;
     }
 }
