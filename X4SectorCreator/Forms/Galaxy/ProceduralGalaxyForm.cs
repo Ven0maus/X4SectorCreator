@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using X4SectorCreator.Forms.Galaxy.ProceduralGenerators;
 
 namespace X4SectorCreator.Forms.Galaxy
 {
@@ -55,6 +56,12 @@ namespace X4SectorCreator.Forms.Galaxy
                 e.Cancel = true;
                 return;
             }
+        }
+
+        private void BtnGenerate_Click(object sender, EventArgs e)
+        {
+            var generator = new GalaxyGenerator(new Random().Next());
+            MainForm.Instance.SetProceduralGalaxy(generator.GenerateGalaxy(16, 8));
         }
     }
 }

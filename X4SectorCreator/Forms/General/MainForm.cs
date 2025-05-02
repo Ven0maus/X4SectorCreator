@@ -78,6 +78,12 @@ namespace X4SectorCreator
             UpdateClusterOptions();
         }
 
+        public void SetProceduralGalaxy(List<Cluster> allClusters)
+        {
+            Reset(false, resetGalaxyType: false);
+            AllClusters = allClusters.ToDictionary(a => (a.Position.X, a.Position.Y), a => a);
+        }
+
         private void MainForm_Disposed(object sender, EventArgs e)
         {
             TxtSearch.DisableTextSearch();
@@ -546,14 +552,17 @@ namespace X4SectorCreator
         #endregion
 
         #region Configuration
-        public void Reset(bool fromImport)
+        public void Reset(bool fromImport, bool resetGalaxyType = true)
         {
             // Reset
             if (!fromImport)
             {
-                Forms.GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
-                Forms.GalaxySettingsForm.StartingSector = null;
-                Forms.GalaxySettingsForm.IsCustomGalaxy = false;
+                if (resetGalaxyType)
+                {
+                    Forms.GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
+                    Forms.GalaxySettingsForm.StartingSector = null;
+                    Forms.GalaxySettingsForm.IsCustomGalaxy = false;
+                }
 
                 RegionDefinitionForm.RegionDefinitions.Clear();
                 Forms.FactoriesForm.AllFactories.Clear();

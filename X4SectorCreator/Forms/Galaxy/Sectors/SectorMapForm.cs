@@ -530,11 +530,6 @@ namespace X4SectorCreator
             }
         }
 
-        private static (int x, int y) TranslateCoordinate(int q, int r)
-        {
-            return (q, -((r * 2) + (q & 1)));
-        }
-
         private void GenerateHexagons()
         {
             _hexagons.Clear();
@@ -547,13 +542,13 @@ namespace X4SectorCreator
             {
                 for (int q = -halfCol; q <= halfCol; q++)
                 {
-                    (int x, int y) translatedCoordinate = TranslateCoordinate(q, r);
+                    var translatedCoordinate = new Point(q, r).SquareGridToHexCoordinate();
 
-                    _ = MainForm.Instance.AllClusters.TryGetValue(translatedCoordinate, out Cluster cluster);
+                    _ = MainForm.Instance.AllClusters.TryGetValue((translatedCoordinate.X, translatedCoordinate.Y), out Cluster cluster);
 
                     // Determine hex information
-                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, cluster?.Sectors, translatedCoordinate, _defaultZoom);
-                    _hexagons[translatedCoordinate] = hex;
+                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, cluster?.Sectors, (translatedCoordinate.X, translatedCoordinate.Y), _defaultZoom);
+                    _hexagons[(translatedCoordinate.X, translatedCoordinate.Y)] = hex;
                 }
             }
         }

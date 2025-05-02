@@ -102,6 +102,7 @@
             BtnGenerate.TabIndex = 1;
             BtnGenerate.Text = "Generate";
             BtnGenerate.UseVisualStyleBackColor = true;
+            BtnGenerate.Click += BtnGenerate_Click;
             // 
             // label1
             // 

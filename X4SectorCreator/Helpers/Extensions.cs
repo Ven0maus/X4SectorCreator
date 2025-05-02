@@ -176,6 +176,16 @@ namespace X4SectorCreator.Helpers
             return new Point(rect.Left + (rect.Width / 2), rect.Top + (rect.Height / 2));
         }
 
+        /// <summary>
+        /// Convert's a square grid coordinate to a flat-topped hex grid coordinate.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public static Point SquareGridToHexCoordinate(this Point point)
+        {
+            return new Point(point.X, -((point.Y * 2) + (point.X & 1)));
+        }
+
         public static string CapitalizeFirstLetter(this string input)
         {
             return string.IsNullOrEmpty(input) ? input : char.ToUpper(input[0]) + input[1..];
