@@ -341,10 +341,12 @@
             // CmbClusterDistribution
             // 
             CmbClusterDistribution.FormattingEnabled = true;
+            CmbClusterDistribution.Items.AddRange(new object[] { "Pure Random", "Noise", "Voronoi", "L-System", "Cellular Automata", "Poisson Disc" });
             CmbClusterDistribution.Location = new Point(70, 91);
             CmbClusterDistribution.Name = "CmbClusterDistribution";
-            CmbClusterDistribution.Size = new Size(165, 23);
+            CmbClusterDistribution.Size = new Size(202, 23);
             CmbClusterDistribution.TabIndex = 29;
+            CmbClusterDistribution.Text = "Pure Random";
             // 
             // label16
             // 
