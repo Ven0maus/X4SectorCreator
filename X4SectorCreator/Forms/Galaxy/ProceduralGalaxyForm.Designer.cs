@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
+            BtnOpenSectorMap = new Button();
             BtnGenerate = new Button();
             label1 = new Label();
             ChkRegions = new CheckBox();
@@ -111,20 +111,21 @@
             ((System.ComponentModel.ISupportInitialize)NrClusterChance).BeginInit();
             SuspendLayout();
             // 
-            // button1
+            // BtnOpenSectorMap
             // 
-            button1.Location = new Point(12, 417);
-            button1.Name = "button1";
-            button1.Size = new Size(182, 35);
-            button1.TabIndex = 0;
-            button1.Text = "Open Sector Map";
-            button1.UseVisualStyleBackColor = true;
+            BtnOpenSectorMap.Location = new Point(12, 417);
+            BtnOpenSectorMap.Name = "BtnOpenSectorMap";
+            BtnOpenSectorMap.Size = new Size(182, 35);
+            BtnOpenSectorMap.TabIndex = 0;
+            BtnOpenSectorMap.Text = "Open Sector Map";
+            BtnOpenSectorMap.UseVisualStyleBackColor = true;
+            BtnOpenSectorMap.Click += BtnOpenSectorMap_Click;
             // 
             // BtnGenerate
             // 
             BtnGenerate.Location = new Point(200, 417);
             BtnGenerate.Name = "BtnGenerate";
-            BtnGenerate.Size = new Size(376, 35);
+            BtnGenerate.Size = new Size(380, 35);
             BtnGenerate.TabIndex = 1;
             BtnGenerate.Text = "Generate";
             BtnGenerate.UseVisualStyleBackColor = true;
@@ -601,7 +602,7 @@
             panel4.Controls.Add(NrVanillaClusterMax);
             panel4.Controls.Add(label29);
             panel4.Controls.Add(NrVanillaClusterMin);
-            panel4.Location = new Point(297, 286);
+            panel4.Location = new Point(301, 286);
             panel4.Name = "panel4";
             panel4.Size = new Size(279, 62);
             panel4.TabIndex = 40;
@@ -697,7 +698,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(582, 457);
+            ClientSize = new Size(588, 457);
             Controls.Add(panel4);
             Controls.Add(ChkGenerateVanillaFactions);
             Controls.Add(panel3);
@@ -713,7 +714,7 @@
             Controls.Add(ChkRegions);
             Controls.Add(label1);
             Controls.Add(BtnGenerate);
-            Controls.Add(button1);
+            Controls.Add(BtnOpenSectorMap);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -750,7 +751,7 @@
 
         #endregion
 
-        private Button button1;
+        private Button BtnOpenSectorMap;
         private Button BtnGenerate;
         private Label label1;
         private CheckBox ChkRegions;

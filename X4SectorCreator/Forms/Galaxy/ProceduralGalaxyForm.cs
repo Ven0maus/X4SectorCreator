@@ -62,6 +62,20 @@ namespace X4SectorCreator.Forms.Galaxy
         {
             var generator = new GalaxyGenerator(new Random().Next());
             MainForm.Instance.SetProceduralGalaxy(generator.GenerateGalaxy(16, 8));
+            MainForm.Instance.SectorMapForm.Value.Reset();
+        }
+
+        private void BtnOpenSectorMap_Click(object sender, EventArgs e)
+        {
+            var sectorMapForm = MainForm.Instance.SectorMapForm;
+            sectorMapForm.Value.DlcListBox.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
+            sectorMapForm.Value.chkShowX4Sectors.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
+            sectorMapForm.Value.GateSectorSelection = false;
+            sectorMapForm.Value.BtnSelectLocation.Enabled = false;
+            sectorMapForm.Value.ControlPanel.Size = new Size(176, 311);
+            sectorMapForm.Value.BtnSelectLocation.Hide();
+            sectorMapForm.Value.Reset();
+            sectorMapForm.Value.Show();
         }
     }
 }
