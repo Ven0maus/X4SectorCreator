@@ -63,6 +63,9 @@ namespace X4SectorCreator.Forms.Galaxy
             var generator = new GalaxyGenerator(new Random().Next());
             MainForm.Instance.SetProceduralGalaxy(generator.GenerateGalaxy(16, 8));
             MainForm.Instance.SectorMapForm.Value.Reset();
+
+            // Update also the main form's clusters listbox
+            MainForm.Instance.UpdateClusterOptions();
         }
 
         private void BtnOpenSectorMap_Click(object sender, EventArgs e)

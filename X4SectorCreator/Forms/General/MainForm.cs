@@ -250,7 +250,7 @@ namespace X4SectorCreator
             ClustersListBox.SelectedIndex = ClustersListBox.Items.Count == 0 ? -1 : 0;
         }
 
-        private void UpdateClusterOptions()
+        public void UpdateClusterOptions()
         {
             if (Forms.GalaxySettingsForm.IsCustomGalaxy)
             {
