@@ -111,17 +111,6 @@ namespace X4SectorCreator
 
         private static bool _optionWasMinimzed = false, _legendWasMinimized = false;
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                // Used to start draw process on init of class
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
-                return cp;
-            }
-        }
-
         private readonly List<Sector> _availableSearchSectors = [];
         private readonly HashSet<Sector> _visibleSectorsFromSearch = [];
 
@@ -744,6 +733,10 @@ namespace X4SectorCreator
                 if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(group.Key))
                     continue;
 
+                if ((!chkShowX4Sectors.Checked && group.Key.IsBaseGame) ||
+                    (!chkShowCustomSectors.Checked && !group.Key.IsBaseGame))
+                    continue;
+
                 var processed = 0;
                 var xLayerProcess = 0;
                 foreach (var icon in group.DistinctBy(a => a.Type, StringComparer.OrdinalIgnoreCase))
@@ -928,6 +921,10 @@ namespace X4SectorCreator
                     if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
                         continue;
 
+                    if ((!chkShowX4Sectors.Checked && sector.IsBaseGame) || 
+                        (!chkShowCustomSectors.Checked && !sector.IsBaseGame))
+                        continue;
+
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
@@ -1016,19 +1013,21 @@ namespace X4SectorCreator
                 RenderNonSectorGrid(e, nonExistantHexColor, hex);
             }
 
-            if (chkShowX4Sectors.Checked)
+            // Next step render the game clusters on top
+            foreach (Cluster cluster in _baseGameClusters.Values)
             {
-                // Next step render the game clusters on top
-                foreach (Cluster cluster in _baseGameClusters.Values)
+                if (cluster.Sectors.All(a => a.IsBaseGame) && !chkShowX4Sectors.Checked)
                 {
-                    // Check if the dlc is selected
-                    if (!IsDlcClusterEnabled(cluster))
-                    {
-                        continue;
-                    }
-
-                    RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                    continue;
                 }
+
+                // Check if the dlc is selected
+                if (!IsDlcClusterEnabled(cluster))
+                {
+                    continue;
+                }
+
+                RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
             }
 
             if (chkShowCustomSectors.Checked)
@@ -1054,19 +1053,19 @@ namespace X4SectorCreator
                 }
             }
 
-            if (chkShowX4Sectors.Checked)
+            // Next step render names
+            foreach (Cluster cluster in _baseGameClusters.Values)
             {
-                // Next step render names
-                foreach (Cluster cluster in _baseGameClusters.Values)
-                {
-                    // Check if the dlc is selected
-                    if (!IsDlcClusterEnabled(cluster))
-                    {
-                        continue;
-                    }
+                if (cluster.Sectors.All(a => a.IsBaseGame) && !chkShowX4Sectors.Checked)
+                    continue;
 
-                    RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                // Check if the dlc is selected
+                if (!IsDlcClusterEnabled(cluster))
+                {
+                    continue;
                 }
+
+                RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
             }
         }
 
@@ -1151,19 +1150,18 @@ namespace X4SectorCreator
                 }
             }
 
-            // Render base game cluster gates
-            if (chkShowX4Sectors.Checked)
+            foreach (KeyValuePair<(int, int), Cluster> cluster in _baseGameClusters)
             {
-                foreach (KeyValuePair<(int, int), Cluster> cluster in _baseGameClusters)
-                {
-                    // Check if the dlc is selected
-                    if (!IsDlcClusterEnabled(cluster.Value))
-                    {
-                        continue;
-                    }
+                if (cluster.Value.Sectors.All(a => a.IsBaseGame) && !chkShowX4Sectors.Checked)
+                    continue;
 
-                    gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
+                // Check if the dlc is selected
+                if (!IsDlcClusterEnabled(cluster.Value))
+                {
+                    continue;
                 }
+
+                gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
             }
 
             // Collect the source / target for each gate data in one connection
@@ -1231,6 +1229,9 @@ namespace X4SectorCreator
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
             {
+                if (!chkShowCustomSectors.Checked && !sourceGateData.Sector.IsBaseGame)
+                    continue;
+
                 // Find the connection with the matching path
                 if (processedTargets.Contains(sourceGateData.Gate) || !sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out GateData[] availableGateData))
                 {
@@ -1251,6 +1252,9 @@ namespace X4SectorCreator
                 {
                     continue;
                 }
+
+                if (!chkShowCustomSectors.Checked && !targetGateData.Sector.IsBaseGame)
+                    continue;
 
                 if (_visibleSectorsFromSearch.Count > 0 &&
                     (!_visibleSectorsFromSearch.Contains(targetGateData.Sector) ||
@@ -1409,6 +1413,10 @@ namespace X4SectorCreator
             {
                 render = false;
             }
+            if (!chkShowCustomSectors.Checked && !chkShowX4Sectors.Checked)
+            {
+                render = false;
+            }
 
             bool isMovingCluster = _movingCluster != null && _movingCluster == cluster;
             if (isMovingCluster)
@@ -1436,9 +1444,13 @@ namespace X4SectorCreator
                 foreach (Hexagon child in hex.Value.Children)
                 {
                     Sector sector = cluster.Sectors[index];
-                    Color ownerColor = GetSectorOwnershipColor(sector);
-
                     bool renderChild = true;
+                    if ((!chkShowCustomSectors.Checked && !sector.IsBaseGame) || (!chkShowX4Sectors.Checked && sector.IsBaseGame))
+                    {
+                        renderChild = false;
+                    }
+
+                    Color ownerColor = GetSectorOwnershipColor(sector);
                     if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
                     {
                         renderChild = false;
@@ -1521,6 +1533,11 @@ namespace X4SectorCreator
             {
                 // Render child sector name
                 Sector sector = cluster.Sectors[index];
+                if ((!chkShowCustomSectors.Checked && !sector.IsBaseGame) || (!chkShowX4Sectors.Checked && sector.IsBaseGame))
+                {
+                    index++;
+                    continue;
+                }
                 if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
                 {
                     index++;
@@ -1539,7 +1556,8 @@ namespace X4SectorCreator
             // Render main hex sector name if no children
             if (hex.Value.Children.Count == 0 && cluster != null)
             {
-                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(cluster.Sectors.First()))
+                var sector = cluster.Sectors.First();
+                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
                 {
                     return;
                 }
