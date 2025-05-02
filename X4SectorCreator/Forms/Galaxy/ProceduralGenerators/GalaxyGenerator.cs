@@ -16,7 +16,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGenerators
             // Generate all possible hex positions within the width and height
             var hexPositions = GenerateGrid(width, height);
 
-            double scale = 0.3;
+            double scale = 0.4;
             double threshold = 0.1;
 
             foreach (var hexPosition in hexPositions)

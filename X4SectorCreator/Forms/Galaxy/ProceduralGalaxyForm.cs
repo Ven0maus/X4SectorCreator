@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using X4SectorCreator.Forms.Galaxy.ProceduralGenerators;
+using X4SectorCreator.Helpers;
 
 namespace X4SectorCreator.Forms.Galaxy
 {
@@ -58,13 +59,26 @@ namespace X4SectorCreator.Forms.Galaxy
             }
         }
 
+        private readonly Random _random = new();
         private void BtnGenerate_Click(object sender, EventArgs e)
         {
-            var generator = new GalaxyGenerator(new Random().Next());
-            MainForm.Instance.SetProceduralGalaxy(generator.GenerateGalaxy(16, 8));
-            MainForm.Instance.SectorMapForm.Value.Reset();
+            int seed;
+            if (ChkAutoSeed.Checked)
+            {
+                seed = _random.Next();
+                TxtSeed.Text = seed.ToString();
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(TxtSeed.Text))
+                    TxtSeed.Text = _random.Next().ToString();
+                if (!int.TryParse(TxtSeed.Text, out seed))
+                    seed = Localisation.GetFnvHash(TxtSeed.Text);
+            }
 
-            // Update also the main form's clusters listbox
+            var generator = new GalaxyGenerator(seed);
+            MainForm.Instance.SetProceduralGalaxy(generator.GenerateGalaxy((int)NrGridWidth.Value, (int)NrGridHeight.Value));
+            MainForm.Instance.SectorMapForm.Value.Reset();
             MainForm.Instance.UpdateClusterOptions();
         }
 
