@@ -38,7 +38,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
 
         private static Bitmap GenerateNoiseBitmap(float[] noiseMap, int width, int height)
         {
-            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format24bppRgb);
+            Bitmap bmp = new(width, height, PixelFormat.Format24bppRgb);
             BitmapData data = bmp.LockBits(
                 new Rectangle(0, 0, width, height),
                 ImageLockMode.WriteOnly,

@@ -34,8 +34,8 @@ namespace X4SectorCreator.Forms.Galaxy
         private void InitializePageAlgorithmOptions()
         {
             // Init algorithms
-            _mapAlgorithms.Add(TabRandom.Text, typeof(PureRandom));
-            _mapAlgorithms.Add(TabNoise.Text, typeof(Noise));
+            RegisterMapAlgorithm<PureRandom>(TabRandom);
+            RegisterMapAlgorithm<Noise>(TabNoise);
 
             var tabPages = MapAlgorithmOptions.TabPages.Cast<TabPage>();
 
@@ -52,6 +52,11 @@ namespace X4SectorCreator.Forms.Galaxy
                     MapAlgorithmOptions.TabPages.Remove(tabPage);
                 count++;
             }
+        }
+
+        private void RegisterMapAlgorithm<T>(TabPage tabPage) where T : Procedural
+        {
+            _mapAlgorithms.Add(tabPage.Text, typeof(PureRandom));
         }
 
         private void InitResourceRarities()
