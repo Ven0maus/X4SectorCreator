@@ -10,15 +10,18 @@ namespace X4SectorCreator.Forms.Galaxy
     {
         private readonly Random _random = new();
         private readonly Dictionary<string, string> _defaultResources = new()
-            {
-                { "ore", "0.5" },
-                { "silicon", "0.5" },
-                { "ice", "0.3" },
-                { "methane", "0.5" },
-                { "hydrogen", "0.5" },
-                { "helium", "0.5" },
-                { "scrap", "0.1" },
-            };
+        {
+            { "ore", "0.5" },
+            { "silicon", "0.5" },
+            { "ice", "0.3" },
+            { "methane", "0.5" },
+            { "hydrogen", "0.5" },
+            { "helium", "0.5" },
+            { "scrap", "0.1" },
+        };
+
+        private readonly Dictionary<string, Type> _mapAlgorithms = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, TabPage> _originalTabPageNames = new(StringComparer.OrdinalIgnoreCase);
 
         public ProceduralGalaxyForm()
         {
@@ -30,11 +33,17 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void InitializePageAlgorithmOptions()
         {
+            // Init algorithms
+            _mapAlgorithms.Add(TabRandom.Text, typeof(PureRandom));
+            _mapAlgorithms.Add(TabNoise.Text, typeof(Noise));
+
             var tabPages = MapAlgorithmOptions.TabPages.Cast<TabPage>();
 
             int count = 0;
             foreach (var tabPage in tabPages)
             {
+                _originalTabPageNames[tabPage.Text] = tabPage;
+
                 // Rename
                 tabPage.Text = "Settings";
 
@@ -190,7 +199,9 @@ namespace X4SectorCreator.Forms.Galaxy
                 NoiseThreshold = (float)NrNoiseThreshold.Value,
             };
 
-            return GalaxyGenerator.CreateClusters(settings);
+            var selectedAlgorithm = CmbClusterDistribution.SelectedItem as string;
+            var procedural = (Procedural)Activator.CreateInstance(_mapAlgorithms[selectedAlgorithm], settings);
+            return procedural.Generate().ToList();
         }
 
         private void BtnOpenSectorMap_Click(object sender, EventArgs e)
@@ -213,20 +224,7 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void CmbClusterDistribution_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedItem = (CmbClusterDistribution.SelectedItem as string).ToLower();
-
-            TabPage _currentMapAlgorithmOptionsPage;
-            switch (selectedItem)
-            {
-                case "pure random":
-                    _currentMapAlgorithmOptionsPage = TabPureRandom;
-                    break;
-                case "noise":
-                    _currentMapAlgorithmOptionsPage = TabNoise;
-                    break;
-                default:
-                    throw new NotImplementedException($"\"{selectedItem}\" not implemented.");
-            }
+            TabPage _currentMapAlgorithmOptionsPage = _originalTabPageNames[CmbClusterDistribution.SelectedItem as string];
 
             MapAlgorithmOptions.TabPages.Clear();
             MapAlgorithmOptions.TabPages.Add(_currentMapAlgorithmOptionsPage);

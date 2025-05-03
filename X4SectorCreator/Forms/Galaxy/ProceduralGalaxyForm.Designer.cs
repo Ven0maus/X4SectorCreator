@@ -87,7 +87,7 @@
             label25 = new Label();
             label21 = new Label();
             NoiseVisual = new PictureBox();
-            TabPureRandom = new TabPage();
+            TabRandom = new TabPage();
             label23 = new Label();
             NrClusterChance = new NumericUpDown();
             NrGridHeight = new NumericUpDown();
@@ -127,7 +127,7 @@
             ((System.ComponentModel.ISupportInitialize)NrNoisePersistance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrNoiseOctaves).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NoiseVisual).BeginInit();
-            TabPureRandom.SuspendLayout();
+            TabRandom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NrClusterChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrGridHeight).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrGridWidth).BeginInit();
@@ -366,7 +366,7 @@
             // CmbClusterDistribution
             // 
             CmbClusterDistribution.FormattingEnabled = true;
-            CmbClusterDistribution.Items.AddRange(new object[] { "Noise", "Pure Random" });
+            CmbClusterDistribution.Items.AddRange(new object[] { "Noise", "Random" });
             CmbClusterDistribution.Location = new Point(71, 60);
             CmbClusterDistribution.Name = "CmbClusterDistribution";
             CmbClusterDistribution.Size = new Size(202, 23);
@@ -546,7 +546,7 @@
             // MapAlgorithmOptions
             // 
             MapAlgorithmOptions.Controls.Add(TabNoise);
-            MapAlgorithmOptions.Controls.Add(TabPureRandom);
+            MapAlgorithmOptions.Controls.Add(TabRandom);
             MapAlgorithmOptions.Location = new Point(8, 88);
             MapAlgorithmOptions.Name = "MapAlgorithmOptions";
             MapAlgorithmOptions.SelectedIndex = 0;
@@ -726,17 +726,17 @@
             NoiseVisual.TabIndex = 0;
             NoiseVisual.TabStop = false;
             // 
-            // TabPureRandom
+            // TabRandom
             // 
-            TabPureRandom.Controls.Add(label23);
-            TabPureRandom.Controls.Add(NrClusterChance);
-            TabPureRandom.Location = new Point(4, 24);
-            TabPureRandom.Name = "TabPureRandom";
-            TabPureRandom.Padding = new Padding(3);
-            TabPureRandom.Size = new Size(256, 196);
-            TabPureRandom.TabIndex = 0;
-            TabPureRandom.Text = "Pure Random";
-            TabPureRandom.UseVisualStyleBackColor = true;
+            TabRandom.Controls.Add(label23);
+            TabRandom.Controls.Add(NrClusterChance);
+            TabRandom.Location = new Point(4, 24);
+            TabRandom.Name = "TabRandom";
+            TabRandom.Padding = new Padding(3);
+            TabRandom.Size = new Size(256, 196);
+            TabRandom.TabIndex = 0;
+            TabRandom.Text = "Random";
+            TabRandom.UseVisualStyleBackColor = true;
             // 
             // label23
             // 
@@ -957,8 +957,8 @@
             ((System.ComponentModel.ISupportInitialize)NrNoisePersistance).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrNoiseOctaves).EndInit();
             ((System.ComponentModel.ISupportInitialize)NoiseVisual).EndInit();
-            TabPureRandom.ResumeLayout(false);
-            TabPureRandom.PerformLayout();
+            TabRandom.ResumeLayout(false);
+            TabRandom.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)NrClusterChance).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrGridHeight).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrGridWidth).EndInit();
@@ -1031,7 +1031,7 @@
         private Button BtnGenerateAll;
         private Button BtnExit;
         private TabControl MapAlgorithmOptions;
-        private TabPage TabPureRandom;
+        private TabPage TabRandom;
         private CheckBox ChkCustomFactions;
         private TabPage TabNoise;
         private Label label21;
