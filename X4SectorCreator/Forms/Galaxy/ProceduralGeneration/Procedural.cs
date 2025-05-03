@@ -11,9 +11,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
         public abstract IEnumerable<Cluster> Generate();
 
+        private static int _count = 0;
         protected Cluster CreateClusterAndSectors(Point coordinate)
         {
-            Cluster cluster = new() { Name = "test", Position = coordinate, Sectors = [] };
+            Cluster cluster = new() { Position = coordinate, Sectors = [] };
+            cluster.Name = _count++.ToString();
 
             // 2. Generate sectors in this cluster (0–3)
             int numSectors = Random.Next(100) < Settings.MultiSectorChance ? Random.Next(1, 4) : 1;
@@ -22,8 +24,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
                 var sector = new Sector
                 {
                     Id = cluster.Sectors.Count,
-                    Name = "test"
+                    Name = cluster.Name
                 };
+                if (i > 0) // testing for connections
+                    sector.Name = $"Extra {i}";
                 cluster.Sectors.Add(sector);
             }
 

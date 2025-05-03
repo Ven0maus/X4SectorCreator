@@ -98,7 +98,7 @@
             BtnGenerateConnections = new Button();
             label12 = new Label();
             label20 = new Label();
-            comboBox1 = new ComboBox();
+            CmbGateConnectionDistribution = new ComboBox();
             NrMinGates = new NumericUpDown();
             NrMaxGates = new NumericUpDown();
             label22 = new Label();
@@ -359,17 +359,17 @@
             label15.AutoSize = true;
             label15.Location = new Point(5, 64);
             label15.Name = "label15";
-            label15.Size = new Size(64, 15);
+            label15.Size = new Size(72, 15);
             label15.TabIndex = 28;
-            label15.Text = "Algorithm:";
+            label15.Text = "Distribution:";
             // 
             // CmbClusterDistribution
             // 
             CmbClusterDistribution.FormattingEnabled = true;
             CmbClusterDistribution.Items.AddRange(new object[] { "Noise", "Random" });
-            CmbClusterDistribution.Location = new Point(71, 60);
+            CmbClusterDistribution.Location = new Point(81, 60);
             CmbClusterDistribution.Name = "CmbClusterDistribution";
-            CmbClusterDistribution.Size = new Size(202, 23);
+            CmbClusterDistribution.Size = new Size(192, 23);
             CmbClusterDistribution.TabIndex = 29;
             CmbClusterDistribution.Text = "Noise";
             CmbClusterDistribution.SelectedIndexChanged += CmbClusterDistribution_SelectedIndexChanged;
@@ -798,7 +798,7 @@
             panel3.Controls.Add(BtnGenerateConnections);
             panel3.Controls.Add(label12);
             panel3.Controls.Add(label20);
-            panel3.Controls.Add(comboBox1);
+            panel3.Controls.Add(CmbGateConnectionDistribution);
             panel3.Controls.Add(NrMinGates);
             panel3.Controls.Add(NrMaxGates);
             panel3.Controls.Add(label22);
@@ -836,13 +836,13 @@
             label20.TabIndex = 15;
             label20.Text = "Max Per Sector:";
             // 
-            // comboBox1
+            // CmbGateConnectionDistribution
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(100, 35);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(172, 23);
-            comboBox1.TabIndex = 36;
+            CmbGateConnectionDistribution.FormattingEnabled = true;
+            CmbGateConnectionDistribution.Location = new Point(100, 35);
+            CmbGateConnectionDistribution.Name = "CmbGateConnectionDistribution";
+            CmbGateConnectionDistribution.Size = new Size(172, 23);
+            CmbGateConnectionDistribution.TabIndex = 36;
             // 
             // NrMinGates
             // 
@@ -1019,7 +1019,7 @@
         private Panel panel3;
         private Label label12;
         private Label label20;
-        private ComboBox comboBox1;
+        private ComboBox CmbGateConnectionDistribution;
         private NumericUpDown NrMinGates;
         private NumericUpDown NrMaxGates;
         private Label label22;
