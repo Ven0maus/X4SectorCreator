@@ -2,7 +2,7 @@
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
 {
-    internal class PureRandom(ProceduralGalaxyForm.ProceduralSettings settings) : Procedural(settings)
+    internal class PureRandom(ProceduralSettings settings) : Procedural(settings)
     {
         public override IEnumerable<Cluster> Generate()
         {

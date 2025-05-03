@@ -5,7 +5,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 {
     internal static class GalaxyGenerator
     {
-        public static List<Cluster> CreateClusters(ProceduralGalaxyForm.ProceduralSettings settings)
+        public static List<Cluster> CreateClusters(ProceduralSettings settings)
         {
             return GetMapAlgorithm(settings).Generate().ToList();
         }
@@ -30,7 +30,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
         }
 
-        private static Procedural GetMapAlgorithm(ProceduralGalaxyForm.ProceduralSettings settings)
+        private static Procedural GetMapAlgorithm(ProceduralSettings settings)
         {
             var mapAlgorithmCode = settings.MapAlgorithm.ToLower();
             return mapAlgorithmCode switch

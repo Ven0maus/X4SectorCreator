@@ -106,6 +106,7 @@
             ChkGenerateConnections = new CheckBox();
             BtnGenerateAll = new Button();
             BtnExit = new Button();
+            TabVoronoi = new TabPage();
             ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
@@ -547,6 +548,7 @@
             // 
             MapAlgorithmOptions.Controls.Add(TabPureRandom);
             MapAlgorithmOptions.Controls.Add(TabNoise);
+            MapAlgorithmOptions.Controls.Add(TabVoronoi);
             MapAlgorithmOptions.Location = new Point(8, 88);
             MapAlgorithmOptions.Name = "MapAlgorithmOptions";
             MapAlgorithmOptions.SelectedIndex = 0;
@@ -906,6 +908,16 @@
             BtnExit.UseVisualStyleBackColor = true;
             BtnExit.Click += BtnExit_Click;
             // 
+            // TabVoronoi
+            // 
+            TabVoronoi.Location = new Point(4, 24);
+            TabVoronoi.Name = "TabVoronoi";
+            TabVoronoi.Padding = new Padding(3);
+            TabVoronoi.Size = new Size(256, 196);
+            TabVoronoi.TabIndex = 2;
+            TabVoronoi.Text = "Voronoi";
+            TabVoronoi.UseVisualStyleBackColor = true;
+            // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1049,5 +1061,6 @@
         private Label label29;
         private NumericUpDown NrNoiseThreshold;
         private Label label31;
+        private TabPage TabVoronoi;
     }
 }

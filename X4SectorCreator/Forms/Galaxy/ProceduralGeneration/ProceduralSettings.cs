@@ -1,0 +1,28 @@
+﻿namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
+{
+    public class ProceduralSettings
+    {
+        private Random _random;
+        public Random Random => _random ??= new Random(Seed);
+
+        public int Seed { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int MultiSectorChance { get; set; }
+        public string MapAlgorithm { get; set; }
+
+        /* Algorithm Options */
+        // Pure Random
+
+        public int ClusterChance { get; set; }
+
+        // Noise
+
+        public int NoiseOctaves { get; set; }
+        public float NoisePersistance { get; set; }
+        public float NoiseLacunarity { get; set; }
+        public float NoiseScale { get; set; }
+        public float NoiseThreshold { get; set; }
+        public Point NoiseOffset { get; set; }
+    }
+}

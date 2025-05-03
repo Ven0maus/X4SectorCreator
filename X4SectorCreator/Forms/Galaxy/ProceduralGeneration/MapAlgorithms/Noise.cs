@@ -4,7 +4,7 @@ using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
 {
-    internal class Noise(ProceduralGalaxyForm.ProceduralSettings settings) : Procedural(settings)
+    internal class Noise(ProceduralSettings settings) : Procedural(settings)
     {
         public override IEnumerable<Cluster> Generate()
         {
@@ -26,7 +26,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
             }
         }
 
-        public static void GenerateVisual(PictureBox noiseVisual, ProceduralGalaxyForm.ProceduralSettings settings)
+        public static void GenerateVisual(PictureBox noiseVisual, ProceduralSettings settings)
         {
             var noiseMap = OpenSimplex2.GenerateNoiseMap(noiseVisual.Width, noiseVisual.Height, settings.Seed,
                 settings.NoiseScale, settings.NoiseOctaves, settings.NoisePersistance, settings.NoiseLacunarity, settings.NoiseOffset);

@@ -3,9 +3,9 @@ using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 {
-    internal abstract class Procedural(ProceduralGalaxyForm.ProceduralSettings settings)
+    internal abstract class Procedural(ProceduralSettings settings)
     {
-        protected ProceduralGalaxyForm.ProceduralSettings Settings { get; private set; } = settings;
+        protected ProceduralSettings Settings { get; private set; } = settings;
         protected Random Random { get; private set; } = new Random(settings.Seed);
         protected Point[] Coordinates { get; private set; } = GenerateHexCoordinates(settings.Width, settings.Height);
 
