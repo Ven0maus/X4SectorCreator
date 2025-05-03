@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using X4SectorCreator.Forms.Galaxy.ProceduralGeneration;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -22,7 +23,25 @@ namespace X4SectorCreator.Forms.Galaxy
         public ProceduralGalaxyForm()
         {
             InitializeComponent();
+            InitializePageAlgorithmOptions();
             InitResourceRarities();
+        }
+
+        private void InitializePageAlgorithmOptions()
+        {
+            var tabPages = MapAlgorithmOptions.TabPages.Cast<TabPage>();
+
+            int count = 0;
+            foreach (var tabPage in tabPages)
+            {
+                // Rename
+                tabPage.Text = "Settings";
+
+                // Remove all except first page
+                if (count != 0)
+                    MapAlgorithmOptions.TabPages.Remove(tabPage);
+                count++;
+            }
         }
 
         private void InitResourceRarities()
@@ -78,6 +97,7 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void BtnGenerateConnections_Click(object sender, EventArgs e)
         {
+            if (!ChkGenerateConnections.Checked) return;
             var clusters = MainForm.Instance.AllClusters.Values.ToList();
             GalaxyGenerator.CreateConnections(clusters);
             SetProceduralGalaxy(clusters);
@@ -85,6 +105,7 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void BtnGenerateRegions_Click(object sender, EventArgs e)
         {
+            if (!ChkRegions.Checked) return;
             var clusters = MainForm.Instance.AllClusters.Values.ToList();
             GalaxyGenerator.CreateRegions(clusters);
             SetProceduralGalaxy(clusters);
@@ -92,6 +113,7 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void BtnGenerateCustomFactions_Click(object sender, EventArgs e)
         {
+            if (!ChkFactions.Checked || !ChkCustomFactions.Checked) return;
             var clusters = MainForm.Instance.AllClusters.Values.ToList();
             GalaxyGenerator.CreateCustomFactions(clusters);
             SetProceduralGalaxy(clusters);
@@ -99,6 +121,7 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void BtnGenerateVanillaFactions_Click(object sender, EventArgs e)
         {
+            if (!ChkFactions.Checked || !ChkVanillaFactions.Checked) return;
             var clusters = MainForm.Instance.AllClusters.Values.ToList();
             GalaxyGenerator.CreateVanillaFactions(clusters);
             SetProceduralGalaxy(clusters);
@@ -122,10 +145,13 @@ namespace X4SectorCreator.Forms.Galaxy
                 GalaxyGenerator.CreateRegions(clusters);
 
             // Factions
-            if (ChkCustomFactions.Checked)
-                GalaxyGenerator.CreateCustomFactions(clusters);
-            if (ChkGenerateVanillaFactions.Checked)
-                GalaxyGenerator.CreateVanillaFactions(clusters);
+            if (ChkFactions.Checked)
+            {
+                if (ChkCustomFactions.Checked)
+                    GalaxyGenerator.CreateCustomFactions(clusters);
+                if (ChkVanillaFactions.Checked)
+                    GalaxyGenerator.CreateVanillaFactions(clusters);
+            }
 
             SetProceduralGalaxy(clusters);
         }
@@ -144,9 +170,20 @@ namespace X4SectorCreator.Forms.Galaxy
                 Seed = GetSeed(),
                 Width = (int)NrGridWidth.Value,
                 Height = (int)NrGridHeight.Value,
-                ClusterChance = (int)NrClusterChance.Value,
                 MultiSectorChance = (int)NrChanceMultiSectors.Value,
-                MapAlgorithm = CmbClusterDistribution.SelectedItem as string
+                MapAlgorithm = CmbClusterDistribution.SelectedItem as string,
+
+                /* Algorithm data */
+                // Pure Random
+                ClusterChance = (int)NrClusterChance.Value,
+
+                // Noise
+                NoiseOctaves = (int)NrNoiseOctaves.Value,
+                NoisePersistance = (float)NrNoisePersistance.Value,
+                NoiseLacunarity = (float)NrNoiseLacunarity.Value,
+                NoiseScale = (float)NrNoiseScale.Value,
+                NoiseOffset = new Point((int)NrNoiseOffsetX.Value, (int)NrNoiseOffsetY.Value),
+                NoiseThreshold = (float)NrNoiseThreshold.Value,
             };
 
             return GalaxyGenerator.CreateClusters(settings);
@@ -173,9 +210,67 @@ namespace X4SectorCreator.Forms.Galaxy
             public int Seed { get; set; }
             public int Width { get; set; }
             public int Height { get; set; }
-            public int ClusterChance { get; set; }
             public int MultiSectorChance { get; set; }
             public string MapAlgorithm { get; set; }
+
+            /* Algorithm Options */
+            // Pure Random
+
+            public int ClusterChance { get; set; }
+
+            // Noise
+
+            public int NoiseOctaves { get; set; }
+            public float NoisePersistance { get; set; }
+            public float NoiseLacunarity { get; set; }
+            public float NoiseScale { get; set; }
+            public float NoiseThreshold { get; set; }
+            public Point NoiseOffset { get; set; }
+        }
+
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void CmbClusterDistribution_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedItem = (CmbClusterDistribution.SelectedItem as string).ToLower();
+
+            TabPage _currentMapAlgorithmOptionsPage;
+            switch (selectedItem)
+            {
+                case "pure random":
+                    _currentMapAlgorithmOptionsPage = TabPureRandom;
+                    break;
+                case "noise":
+                    _currentMapAlgorithmOptionsPage = TabNoise;
+                    break;
+                default:
+                    throw new NotImplementedException($"\"{selectedItem}\" not implemented.");
+            }
+
+            MapAlgorithmOptions.TabPages.Clear();
+            MapAlgorithmOptions.TabPages.Add(_currentMapAlgorithmOptionsPage);
+        }
+
+        private void NoiseProperty_ValueChanged(object sender, EventArgs e)
+        {
+            var settings = new ProceduralSettings
+            {
+                Seed = GetSeed(),
+
+                // Noise
+                NoiseOctaves = (int)NrNoiseOctaves.Value,
+                NoisePersistance = (float)NrNoisePersistance.Value,
+                NoiseLacunarity = (float)NrNoiseLacunarity.Value,
+                NoiseScale = (float)NrNoiseScale.Value,
+                NoiseOffset = new Point((int)NrNoiseOffsetX.Value, (int)NrNoiseOffsetY.Value),
+                NoiseThreshold = (float)NrNoiseThreshold.Value,
+            };
+
+            Noise.GenerateVisual(NoiseVisual, settings);
+            NoiseVisual.Invalidate();
         }
     }
 }

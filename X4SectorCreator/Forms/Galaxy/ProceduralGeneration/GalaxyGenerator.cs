@@ -1,4 +1,4 @@
-﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms;
+﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
@@ -33,13 +33,12 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
         private static Procedural GetMapAlgorithm(ProceduralGalaxyForm.ProceduralSettings settings)
         {
             var mapAlgorithmCode = settings.MapAlgorithm.ToLower();
-            switch (mapAlgorithmCode)
+            return mapAlgorithmCode switch
             {
-                case "pure random":
-                    return new PureRandom(settings);
-                default:
-                    throw new NotImplementedException($"\"{mapAlgorithmCode}\" is not implemented.");
-            }
+                "pure random" => new PureRandom(settings),
+                "noise" => new Noise(settings),
+                _ => throw new NotImplementedException($"\"{mapAlgorithmCode}\" is not implemented."),
+            };
         }
     }
 }

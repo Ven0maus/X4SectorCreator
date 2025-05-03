@@ -1,6 +1,6 @@
 ﻿using X4SectorCreator.Objects;
 
-namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms
+namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
 {
     internal class PureRandom(ProceduralGalaxyForm.ProceduralSettings settings) : Procedural(settings)
     {
