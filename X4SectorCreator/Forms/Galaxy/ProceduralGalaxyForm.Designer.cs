@@ -582,6 +582,7 @@
             // NrNoiseThreshold
             // 
             NrNoiseThreshold.DecimalPlaces = 2;
+            NrNoiseThreshold.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
             NrNoiseThreshold.Location = new Point(74, 159);
             NrNoiseThreshold.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
             NrNoiseThreshold.Name = "NrNoiseThreshold";
@@ -655,6 +656,7 @@
             // NrNoiseLacunarity
             // 
             NrNoiseLacunarity.DecimalPlaces = 2;
+            NrNoiseLacunarity.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
             NrNoiseLacunarity.Location = new Point(74, 58);
             NrNoiseLacunarity.Name = "NrNoiseLacunarity";
             NrNoiseLacunarity.Size = new Size(74, 23);
@@ -674,6 +676,7 @@
             // NrNoisePersistance
             // 
             NrNoisePersistance.DecimalPlaces = 2;
+            NrNoisePersistance.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
             NrNoisePersistance.Location = new Point(74, 32);
             NrNoisePersistance.Name = "NrNoisePersistance";
             NrNoisePersistance.Size = new Size(74, 23);
