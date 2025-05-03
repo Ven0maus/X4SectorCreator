@@ -839,10 +839,12 @@
             // CmbGateConnectionDistribution
             // 
             CmbGateConnectionDistribution.FormattingEnabled = true;
+            CmbGateConnectionDistribution.Items.AddRange(new object[] { "MST" });
             CmbGateConnectionDistribution.Location = new Point(100, 35);
             CmbGateConnectionDistribution.Name = "CmbGateConnectionDistribution";
             CmbGateConnectionDistribution.Size = new Size(172, 23);
             CmbGateConnectionDistribution.TabIndex = 36;
+            CmbGateConnectionDistribution.Text = "MST";
             // 
             // NrMinGates
             // 
