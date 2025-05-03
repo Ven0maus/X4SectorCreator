@@ -43,12 +43,12 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
 
             // Step 3: Connect any missing sectors that didn't cut the initial generation
             foreach (var cluster in clusters)
-                ConnectMissingSectors(cluster, edges);
+                ConnectMissingSectors(cluster);
 
             // Step 3: Add extra gates up to maxGatesPerCluster by chance
         }
 
-        private void ConnectMissingSectors(Cluster cluster, List<(Cluster A, Cluster B, float Distance)> edges)
+        private void ConnectMissingSectors(Cluster cluster)
         {
             var freeSectors = cluster.Sectors
                 .Where(s => s.Zones.All(z => z.Gates.Count == 0))
