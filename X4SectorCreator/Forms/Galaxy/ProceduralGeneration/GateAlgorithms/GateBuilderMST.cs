@@ -113,6 +113,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
 
         private Point CalculateValidGatePosition(Sector sector)
         {
+            // TODO: Adjust gate placement to border more between source/target sector for improved realism
+
             const int maxAttempts = 500;
 
             // We don't want diameter but radius so half the diameter
