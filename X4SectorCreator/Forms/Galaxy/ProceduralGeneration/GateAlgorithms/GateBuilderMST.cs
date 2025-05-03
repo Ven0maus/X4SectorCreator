@@ -90,6 +90,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
                 ParentSectorName = targetSector.Name
             };
 
+            sourceGate.Source = ConvertToPath(from, sourceSector, sourceZone);
+            sourceGate.Destination = ConvertToPath(to, targetSector, targetZone);
+            targetGate.Source = sourceGate.Destination;
+            targetGate.Destination = sourceGate.Source;
+
             targetGate.SetSourcePath("PREFIX", to, targetSector, targetZone);
             targetGate.SetDestinationPath("PREFIX", from, sourceSector, sourceZone, sourceGate);
             sourceGate.SetSourcePath("PREFIX", from, sourceSector, sourceZone);
@@ -99,6 +104,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             targetZone.Gates.Add(targetGate);
             sourceSector.Zones.Add(sourceZone);
             sourceZone.Gates.Add(sourceGate);
+        }
+
+        private static string ConvertToPath(Cluster cluster, Sector sector, Zone zone)
+        {
+            return $"c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}";
         }
 
         private Point CalculateValidGatePosition(Sector sector)
