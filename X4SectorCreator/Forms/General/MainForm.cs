@@ -78,7 +78,7 @@ namespace X4SectorCreator
             UpdateClusterOptions();
         }
 
-        public void SetProceduralGalaxy(List<Cluster> allClusters)
+        public void SetProceduralGalaxy(IEnumerable<Cluster> allClusters)
         {
             Reset(false, resetGalaxyType: false);
             AllClusters = allClusters.ToDictionary(a => (a.Position.X, a.Position.Y), a => a);

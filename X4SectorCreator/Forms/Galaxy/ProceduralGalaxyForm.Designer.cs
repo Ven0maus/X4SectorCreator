@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             BtnOpenSectorMap = new Button();
-            BtnGenerate = new Button();
+            BtnGenerateClusters = new Button();
             label1 = new Label();
             ChkRegions = new CheckBox();
             ChkCustomFactions = new CheckBox();
@@ -62,7 +62,9 @@
             label19 = new Label();
             CmbCustomFactionDistribution = new ComboBox();
             RegionPanel = new Panel();
+            BtnGenerateRegions = new Button();
             panel1 = new Panel();
+            BtnGenerateCustomFactions = new Button();
             ChkAutoSeed = new CheckBox();
             panel2 = new Panel();
             NrClusterChance = new NumericUpDown();
@@ -72,6 +74,7 @@
             label11 = new Label();
             label10 = new Label();
             panel3 = new Panel();
+            BtnGenerateConnections = new Button();
             label12 = new Label();
             label20 = new Label();
             comboBox1 = new ComboBox();
@@ -81,6 +84,7 @@
             label24 = new Label();
             ChkGenerateConnections = new CheckBox();
             panel4 = new Panel();
+            BtnGenerateVanillaFactions = new Button();
             label21 = new Label();
             CmbVanillaFactionDistribution = new ComboBox();
             label25 = new Label();
@@ -89,6 +93,8 @@
             label29 = new Label();
             NrVanillaClusterMin = new NumericUpDown();
             ChkGenerateVanillaFactions = new CheckBox();
+            BtnGenerateAll = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
@@ -113,27 +119,27 @@
             // 
             // BtnOpenSectorMap
             // 
-            BtnOpenSectorMap.Location = new Point(12, 417);
+            BtnOpenSectorMap.Location = new Point(11, 532);
             BtnOpenSectorMap.Name = "BtnOpenSectorMap";
-            BtnOpenSectorMap.Size = new Size(182, 35);
+            BtnOpenSectorMap.Size = new Size(279, 35);
             BtnOpenSectorMap.TabIndex = 0;
             BtnOpenSectorMap.Text = "Open Sector Map";
             BtnOpenSectorMap.UseVisualStyleBackColor = true;
             BtnOpenSectorMap.Click += BtnOpenSectorMap_Click;
             // 
-            // BtnGenerate
+            // BtnGenerateClusters
             // 
-            BtnGenerate.Location = new Point(200, 417);
-            BtnGenerate.Name = "BtnGenerate";
-            BtnGenerate.Size = new Size(380, 35);
-            BtnGenerate.TabIndex = 1;
-            BtnGenerate.Text = "Generate";
-            BtnGenerate.UseVisualStyleBackColor = true;
-            BtnGenerate.Click += BtnGenerate_Click;
+            BtnGenerateClusters.Location = new Point(4, 121);
+            BtnGenerateClusters.Name = "BtnGenerateClusters";
+            BtnGenerateClusters.Size = new Size(268, 33);
+            BtnGenerateClusters.TabIndex = 1;
+            BtnGenerateClusters.Text = "Generate";
+            BtnGenerateClusters.UseVisualStyleBackColor = true;
+            BtnGenerateClusters.Click += BtnGenerateClusters_Click;
             // 
             // label1
             // 
-            label1.Location = new Point(297, 352);
+            label1.Location = new Point(300, 504);
             label1.Name = "label1";
             label1.Size = new Size(273, 63);
             label1.TabIndex = 2;
@@ -156,7 +162,7 @@
             ChkCustomFactions.AutoSize = true;
             ChkCustomFactions.Checked = true;
             ChkCustomFactions.CheckState = CheckState.Checked;
-            ChkCustomFactions.Location = new Point(17, 293);
+            ChkCustomFactions.Location = new Point(16, 371);
             ChkCustomFactions.Name = "ChkCustomFactions";
             ChkCustomFactions.Size = new Size(165, 19);
             ChkCustomFactions.TabIndex = 4;
@@ -411,6 +417,7 @@
             // RegionPanel
             // 
             RegionPanel.BackColor = SystemColors.ButtonHighlight;
+            RegionPanel.Controls.Add(BtnGenerateRegions);
             RegionPanel.Controls.Add(RegionResourceRarity);
             RegionPanel.Controls.Add(label4);
             RegionPanel.Controls.Add(NrRegionSpawnChance);
@@ -420,12 +427,23 @@
             RegionPanel.Controls.Add(label14);
             RegionPanel.Location = new Point(302, 32);
             RegionPanel.Name = "RegionPanel";
-            RegionPanel.Size = new Size(259, 220);
+            RegionPanel.Size = new Size(259, 258);
             RegionPanel.TabIndex = 37;
+            // 
+            // BtnGenerateRegions
+            // 
+            BtnGenerateRegions.Location = new Point(6, 219);
+            BtnGenerateRegions.Name = "BtnGenerateRegions";
+            BtnGenerateRegions.Size = new Size(249, 33);
+            BtnGenerateRegions.TabIndex = 37;
+            BtnGenerateRegions.Text = "Generate";
+            BtnGenerateRegions.UseVisualStyleBackColor = true;
+            BtnGenerateRegions.Click += BtnGenerateRegions_Click;
             // 
             // panel1
             // 
             panel1.BackColor = SystemColors.ButtonHighlight;
+            panel1.Controls.Add(BtnGenerateCustomFactions);
             panel1.Controls.Add(label19);
             panel1.Controls.Add(label7);
             panel1.Controls.Add(CmbCustomFactionDistribution);
@@ -438,10 +456,20 @@
             panel1.Controls.Add(NrFacControlMax);
             panel1.Controls.Add(label16);
             panel1.Controls.Add(NrFacControlMin);
-            panel1.Location = new Point(12, 318);
+            panel1.Location = new Point(11, 396);
             panel1.Name = "panel1";
-            panel1.Size = new Size(279, 92);
+            panel1.Size = new Size(279, 130);
             panel1.TabIndex = 38;
+            // 
+            // BtnGenerateCustomFactions
+            // 
+            BtnGenerateCustomFactions.Location = new Point(5, 90);
+            BtnGenerateCustomFactions.Name = "BtnGenerateCustomFactions";
+            BtnGenerateCustomFactions.Size = new Size(268, 33);
+            BtnGenerateCustomFactions.TabIndex = 37;
+            BtnGenerateCustomFactions.Text = "Generate";
+            BtnGenerateCustomFactions.UseVisualStyleBackColor = true;
+            BtnGenerateCustomFactions.Click += BtnGenerateCustomFactions_Click;
             // 
             // ChkAutoSeed
             // 
@@ -468,9 +496,10 @@
             panel2.Controls.Add(label15);
             panel2.Controls.Add(label13);
             panel2.Controls.Add(NrChanceMultiSectors);
+            panel2.Controls.Add(BtnGenerateClusters);
             panel2.Location = new Point(12, 64);
             panel2.Name = "panel2";
-            panel2.Size = new Size(279, 123);
+            panel2.Size = new Size(279, 161);
             panel2.TabIndex = 40;
             // 
             // NrClusterChance
@@ -527,6 +556,7 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.ButtonHighlight;
+            panel3.Controls.Add(BtnGenerateConnections);
             panel3.Controls.Add(label12);
             panel3.Controls.Add(label20);
             panel3.Controls.Add(comboBox1);
@@ -534,10 +564,20 @@
             panel3.Controls.Add(NrMaxGates);
             panel3.Controls.Add(label22);
             panel3.Controls.Add(label24);
-            panel3.Location = new Point(12, 218);
+            panel3.Location = new Point(11, 261);
             panel3.Name = "panel3";
-            panel3.Size = new Size(279, 66);
+            panel3.Size = new Size(279, 104);
             panel3.TabIndex = 40;
+            // 
+            // BtnGenerateConnections
+            // 
+            BtnGenerateConnections.Location = new Point(5, 64);
+            BtnGenerateConnections.Name = "BtnGenerateConnections";
+            BtnGenerateConnections.Size = new Size(268, 33);
+            BtnGenerateConnections.TabIndex = 36;
+            BtnGenerateConnections.Text = "Generate";
+            BtnGenerateConnections.UseVisualStyleBackColor = true;
+            BtnGenerateConnections.Click += BtnGenerateConnections_Click;
             // 
             // label12
             // 
@@ -604,7 +644,7 @@
             ChkGenerateConnections.AutoSize = true;
             ChkGenerateConnections.Checked = true;
             ChkGenerateConnections.CheckState = CheckState.Checked;
-            ChkGenerateConnections.Location = new Point(17, 193);
+            ChkGenerateConnections.Location = new Point(16, 236);
             ChkGenerateConnections.Name = "ChkGenerateConnections";
             ChkGenerateConnections.Size = new Size(143, 19);
             ChkGenerateConnections.TabIndex = 39;
@@ -614,6 +654,7 @@
             // panel4
             // 
             panel4.BackColor = SystemColors.ButtonHighlight;
+            panel4.Controls.Add(BtnGenerateVanillaFactions);
             panel4.Controls.Add(label21);
             panel4.Controls.Add(CmbVanillaFactionDistribution);
             panel4.Controls.Add(label25);
@@ -621,10 +662,20 @@
             panel4.Controls.Add(NrVanillaClusterMax);
             panel4.Controls.Add(label29);
             panel4.Controls.Add(NrVanillaClusterMin);
-            panel4.Location = new Point(301, 286);
+            panel4.Location = new Point(301, 323);
             panel4.Name = "panel4";
-            panel4.Size = new Size(279, 62);
+            panel4.Size = new Size(279, 98);
             panel4.TabIndex = 40;
+            // 
+            // BtnGenerateVanillaFactions
+            // 
+            BtnGenerateVanillaFactions.Location = new Point(6, 59);
+            BtnGenerateVanillaFactions.Name = "BtnGenerateVanillaFactions";
+            BtnGenerateVanillaFactions.Size = new Size(268, 33);
+            BtnGenerateVanillaFactions.TabIndex = 38;
+            BtnGenerateVanillaFactions.Text = "Generate";
+            BtnGenerateVanillaFactions.UseVisualStyleBackColor = true;
+            BtnGenerateVanillaFactions.Click += BtnGenerateVanillaFactions_Click;
             // 
             // label21
             // 
@@ -689,18 +740,39 @@
             // ChkGenerateVanillaFactions
             // 
             ChkGenerateVanillaFactions.AutoSize = true;
-            ChkGenerateVanillaFactions.Location = new Point(302, 261);
+            ChkGenerateVanillaFactions.Location = new Point(302, 298);
             ChkGenerateVanillaFactions.Name = "ChkGenerateVanillaFactions";
             ChkGenerateVanillaFactions.Size = new Size(157, 19);
             ChkGenerateVanillaFactions.TabIndex = 39;
             ChkGenerateVanillaFactions.Text = "Generate Vanilla Factions";
             ChkGenerateVanillaFactions.UseVisualStyleBackColor = true;
             // 
+            // BtnGenerateAll
+            // 
+            BtnGenerateAll.Location = new Point(301, 465);
+            BtnGenerateAll.Name = "BtnGenerateAll";
+            BtnGenerateAll.Size = new Size(279, 33);
+            BtnGenerateAll.TabIndex = 39;
+            BtnGenerateAll.Text = "Generate All";
+            BtnGenerateAll.UseVisualStyleBackColor = true;
+            BtnGenerateAll.Click += BtnGenerateAll_Click;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(301, 427);
+            button1.Name = "button1";
+            button1.Size = new Size(279, 35);
+            button1.TabIndex = 41;
+            button1.Text = "Exit";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(588, 457);
+            ClientSize = new Size(587, 573);
+            Controls.Add(button1);
+            Controls.Add(BtnGenerateAll);
             Controls.Add(panel4);
             Controls.Add(ChkGenerateVanillaFactions);
             Controls.Add(panel3);
@@ -715,7 +787,6 @@
             Controls.Add(ChkCustomFactions);
             Controls.Add(ChkRegions);
             Controls.Add(label1);
-            Controls.Add(BtnGenerate);
             Controls.Add(BtnOpenSectorMap);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -754,7 +825,7 @@
         #endregion
 
         private Button BtnOpenSectorMap;
-        private Button BtnGenerate;
+        private Button BtnGenerateClusters;
         private Label label1;
         private CheckBox ChkRegions;
         private CheckBox ChkCustomFactions;
@@ -814,5 +885,11 @@
         private CheckBox ChkGenerateVanillaFactions;
         private NumericUpDown NrClusterChance;
         private Label label23;
+        private Button BtnGenerateCustomFactions;
+        private Button BtnGenerateConnections;
+        private Button BtnGenerateRegions;
+        private Button BtnGenerateVanillaFactions;
+        private Button BtnGenerateAll;
+        private Button button1;
     }
 }

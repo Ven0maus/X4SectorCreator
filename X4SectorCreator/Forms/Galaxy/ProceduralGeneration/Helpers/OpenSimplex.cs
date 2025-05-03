@@ -4,7 +4,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace X4SectorCreator.Forms.Galaxy.ProceduralGenerators.Helpers
+namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers
 {
     public static class OpenSimplex2
     {

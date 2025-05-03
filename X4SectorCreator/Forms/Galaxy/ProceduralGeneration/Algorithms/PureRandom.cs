@@ -1,21 +1,16 @@
 ﻿using X4SectorCreator.Objects;
 
-namespace X4SectorCreator.Forms.Galaxy.ProceduralGenerators
+namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms
 {
-    internal class GalaxyGenerator(ProceduralGalaxyForm.ProceduralSettings settings) : Procedural(settings)
+    internal class PureRandom(ProceduralGalaxyForm.ProceduralSettings settings) : Procedural(settings)
     {
-        public List<Cluster> GenerateGalaxy()
+        public override IEnumerable<Cluster> Generate()
         {
-            var clusters = new List<Cluster>();
-
-            // Generate all possible hex positions within the width and height
-            var hexPositions = GenerateGrid(Settings.Width, Settings.Height);
-
-            foreach (var position in hexPositions)
+            foreach (var coordinate in Coordinates)
             {
                 if (Random.Next(100) < Settings.ClusterChance)
                 {
-                    Cluster cluster = new() { Name = "test", Position = position, Sectors = [] };
+                    Cluster cluster = new() { Name = "test", Position = coordinate, Sectors = [] };
 
                     // 2. Generate sectors in this cluster (0–3)
                     int numSectors = Random.Next(100) < Settings.MultiSectorChance ? Random.Next(1, 4) : 1;
@@ -30,11 +25,9 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGenerators
                     }
 
                     cluster.AutoPositionSectors();
-                    clusters.Add(cluster);
+                    yield return cluster;
                 }
             }
-
-            return clusters;
         }
     }
 }

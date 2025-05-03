@@ -1,11 +1,13 @@
 ﻿using System.Globalization;
-using X4SectorCreator.Forms.Galaxy.ProceduralGenerators;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration;
 using X4SectorCreator.Helpers;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy
 {
     public partial class ProceduralGalaxyForm : Form
     {
+        private readonly Random _random = new();
         private readonly Dictionary<string, string> _defaultResources = new()
             {
                 { "ore", "0.5" },
@@ -59,36 +61,95 @@ namespace X4SectorCreator.Forms.Galaxy
             }
         }
 
-        private readonly Random _random = new();
-        private void BtnGenerate_Click(object sender, EventArgs e)
+        private int GetSeed()
         {
-            int seed;
-            if (ChkAutoSeed.Checked)
-            {
-                seed = _random.Next();
-                TxtSeed.Text = seed.ToString();
-            }
-            else
-            {
-                if (string.IsNullOrWhiteSpace(TxtSeed.Text))
-                    TxtSeed.Text = _random.Next().ToString();
-                if (!int.TryParse(TxtSeed.Text, out seed))
-                    seed = Localisation.GetFnvHash(TxtSeed.Text);
-            }
+            if (string.IsNullOrWhiteSpace(TxtSeed.Text))
+                TxtSeed.Text = _random.Next().ToString();
+            if (!int.TryParse(TxtSeed.Text, out int seed))
+                seed = Localisation.GetFnvHash(TxtSeed.Text);
+            return seed;
+        }
 
+        private void BtnGenerateClusters_Click(object sender, EventArgs e)
+        {
+            IEnumerable<Cluster> clusters = GenerateClusters();
+            SetProceduralGalaxy(clusters);
+        }
+
+        private void BtnGenerateConnections_Click(object sender, EventArgs e)
+        {
+            var clusters = MainForm.Instance.AllClusters.Values.ToList();
+            GalaxyGenerator.CreateConnections(clusters);
+            SetProceduralGalaxy(clusters);
+        }
+
+        private void BtnGenerateRegions_Click(object sender, EventArgs e)
+        {
+            var clusters = MainForm.Instance.AllClusters.Values.ToList();
+            GalaxyGenerator.CreateRegions(clusters);
+            SetProceduralGalaxy(clusters);
+        }
+
+        private void BtnGenerateCustomFactions_Click(object sender, EventArgs e)
+        {
+            var clusters = MainForm.Instance.AllClusters.Values.ToList();
+            GalaxyGenerator.CreateCustomFactions(clusters);
+            SetProceduralGalaxy(clusters);
+        }
+
+        private void BtnGenerateVanillaFactions_Click(object sender, EventArgs e)
+        {
+            var clusters = MainForm.Instance.AllClusters.Values.ToList();
+            GalaxyGenerator.CreateVanillaFactions(clusters);
+            SetProceduralGalaxy(clusters);
+        }
+
+        private void BtnGenerateAll_Click(object sender, EventArgs e)
+        {
+            // Re-generate seed automatically
+            if (ChkAutoSeed.Checked)
+                TxtSeed.Text = _random.Next().ToString();
+
+            // Map
+            var clusters = GenerateClusters();
+
+            // Connections
+            if (ChkGenerateConnections.Checked)
+                GalaxyGenerator.CreateConnections(clusters);
+
+            // Regions
+            if (ChkRegions.Checked)
+                GalaxyGenerator.CreateRegions(clusters);
+
+            // Factions
+            if (ChkCustomFactions.Checked)
+                GalaxyGenerator.CreateCustomFactions(clusters);
+            if (ChkGenerateVanillaFactions.Checked)
+                GalaxyGenerator.CreateVanillaFactions(clusters);
+
+            SetProceduralGalaxy(clusters);
+        }
+
+        private static void SetProceduralGalaxy(IEnumerable<Cluster> clusters)
+        {
+            MainForm.Instance.SetProceduralGalaxy(clusters);
+            MainForm.Instance.SectorMapForm.Value.Reset();
+            MainForm.Instance.UpdateClusterOptions();
+        }
+
+        private List<Cluster> GenerateClusters()
+        {
             var settings = new ProceduralSettings
             {
-                Seed = seed,
+                Seed = GetSeed(),
                 Width = (int)NrGridWidth.Value,
                 Height = (int)NrGridHeight.Value,
                 ClusterChance = (int)NrClusterChance.Value,
-                MultiSectorChance = (int)NrChanceMultiSectors.Value
+                MultiSectorChance = (int)NrChanceMultiSectors.Value,
+                MapAlgorithm = CmbClusterDistribution.SelectedItem as string
             };
 
-            var generator = new GalaxyGenerator(settings);
-            MainForm.Instance.SetProceduralGalaxy(generator.GenerateGalaxy());
-            MainForm.Instance.SectorMapForm.Value.Reset();
-            MainForm.Instance.UpdateClusterOptions();
+            return GalaxyGenerator.CreateClusters(settings);
         }
 
         private void BtnOpenSectorMap_Click(object sender, EventArgs e)
@@ -106,11 +167,15 @@ namespace X4SectorCreator.Forms.Galaxy
 
         public class ProceduralSettings
         {
+            private Random _random;
+            public Random Random => _random ??= new Random(Seed);
+
             public int Seed { get; set; }
             public int Width { get; set; }
             public int Height { get; set; }
             public int ClusterChance { get; set; }
             public int MultiSectorChance { get; set; }
+            public string MapAlgorithm { get; set; }
         }
     }
 }
