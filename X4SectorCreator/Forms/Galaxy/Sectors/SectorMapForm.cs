@@ -578,14 +578,14 @@ namespace X4SectorCreator
 
             // Step 3: Positioning the hex center using spacing based on full zoomed size
             float xOffset = col * (zoomedWidth * 0.75f);
-            float yOffset = row * zoomedHeight;
+            float yOffset = -row * zoomedHeight;
             if (col % 2 != 0)
             {
-                yOffset += zoomedHeight / 2;
+                yOffset -= zoomedHeight / 2;
             }
 
             xOffset += centerX;
-            yOffset += centerY;
+            yOffset -= centerY;
 
             // Step 4: Build the actual hex points using the *shrunk* draw width/height
             PointF[] parentHex =

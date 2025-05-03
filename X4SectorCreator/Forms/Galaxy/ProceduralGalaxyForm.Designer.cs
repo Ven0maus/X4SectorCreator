@@ -70,9 +70,6 @@
             ChkAutoSeed = new CheckBox();
             panel2 = new Panel();
             MapAlgorithmOptions = new TabControl();
-            TabPureRandom = new TabPage();
-            label23 = new Label();
-            NrClusterChance = new NumericUpDown();
             TabNoise = new TabPage();
             NrNoiseThreshold = new NumericUpDown();
             label31 = new Label();
@@ -90,6 +87,9 @@
             label25 = new Label();
             label21 = new Label();
             NoiseVisual = new PictureBox();
+            TabPureRandom = new TabPage();
+            label23 = new Label();
+            NrClusterChance = new NumericUpDown();
             NrGridHeight = new NumericUpDown();
             NrGridWidth = new NumericUpDown();
             label11 = new Label();
@@ -106,7 +106,6 @@
             ChkGenerateConnections = new CheckBox();
             BtnGenerateAll = new Button();
             BtnExit = new Button();
-            TabVoronoi = new TabPage();
             ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
@@ -119,8 +118,6 @@
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             MapAlgorithmOptions.SuspendLayout();
-            TabPureRandom.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)NrClusterChance).BeginInit();
             TabNoise.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NrNoiseThreshold).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrNoiseOffsetY).BeginInit();
@@ -130,6 +127,8 @@
             ((System.ComponentModel.ISupportInitialize)NrNoisePersistance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrNoiseOctaves).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NoiseVisual).BeginInit();
+            TabPureRandom.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NrClusterChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrGridHeight).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrGridWidth).BeginInit();
             panel3.SuspendLayout();
@@ -367,12 +366,12 @@
             // CmbClusterDistribution
             // 
             CmbClusterDistribution.FormattingEnabled = true;
-            CmbClusterDistribution.Items.AddRange(new object[] { "Pure Random", "Noise", "Voronoi", "L-System", "Cellular Automata", "Poisson Disc" });
+            CmbClusterDistribution.Items.AddRange(new object[] { "Noise", "Pure Random" });
             CmbClusterDistribution.Location = new Point(71, 60);
             CmbClusterDistribution.Name = "CmbClusterDistribution";
             CmbClusterDistribution.Size = new Size(202, 23);
             CmbClusterDistribution.TabIndex = 29;
-            CmbClusterDistribution.Text = "Pure Random";
+            CmbClusterDistribution.Text = "Noise";
             CmbClusterDistribution.SelectedIndexChanged += CmbClusterDistribution_SelectedIndexChanged;
             // 
             // label16
@@ -546,43 +545,13 @@
             // 
             // MapAlgorithmOptions
             // 
-            MapAlgorithmOptions.Controls.Add(TabPureRandom);
             MapAlgorithmOptions.Controls.Add(TabNoise);
-            MapAlgorithmOptions.Controls.Add(TabVoronoi);
+            MapAlgorithmOptions.Controls.Add(TabPureRandom);
             MapAlgorithmOptions.Location = new Point(8, 88);
             MapAlgorithmOptions.Name = "MapAlgorithmOptions";
             MapAlgorithmOptions.SelectedIndex = 0;
             MapAlgorithmOptions.Size = new Size(264, 224);
             MapAlgorithmOptions.TabIndex = 36;
-            // 
-            // TabPureRandom
-            // 
-            TabPureRandom.Controls.Add(label23);
-            TabPureRandom.Controls.Add(NrClusterChance);
-            TabPureRandom.Location = new Point(4, 24);
-            TabPureRandom.Name = "TabPureRandom";
-            TabPureRandom.Padding = new Padding(3);
-            TabPureRandom.Size = new Size(256, 196);
-            TabPureRandom.TabIndex = 0;
-            TabPureRandom.Text = "Pure Random";
-            TabPureRandom.UseVisualStyleBackColor = true;
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.Location = new Point(6, 10);
-            label23.Name = "label23";
-            label23.Size = new Size(133, 15);
-            label23.TabIndex = 34;
-            label23.Text = "Cluster Chance Per Hex:";
-            // 
-            // NrClusterChance
-            // 
-            NrClusterChance.Location = new Point(140, 6);
-            NrClusterChance.Name = "NrClusterChance";
-            NrClusterChance.Size = new Size(41, 23);
-            NrClusterChance.TabIndex = 35;
-            NrClusterChance.Value = new decimal(new int[] { 30, 0, 0, 0 });
             // 
             // TabNoise
             // 
@@ -618,7 +587,7 @@
             NrNoiseThreshold.Name = "NrNoiseThreshold";
             NrNoiseThreshold.Size = new Size(55, 23);
             NrNoiseThreshold.TabIndex = 49;
-            NrNoiseThreshold.Value = new decimal(new int[] { 5, 0, 0, 65536 });
+            NrNoiseThreshold.Value = new decimal(new int[] { 3, 0, 0, 65536 });
             NrNoiseThreshold.ValueChanged += NoiseProperty_ValueChanged;
             // 
             // label31
@@ -671,7 +640,7 @@
             NrNoiseScale.Name = "NrNoiseScale";
             NrNoiseScale.Size = new Size(74, 23);
             NrNoiseScale.TabIndex = 43;
-            NrNoiseScale.Value = new decimal(new int[] { 25, 0, 0, 0 });
+            NrNoiseScale.Value = new decimal(new int[] { 8, 0, 0, 0 });
             NrNoiseScale.ValueChanged += NoiseProperty_ValueChanged;
             // 
             // label28
@@ -690,7 +659,7 @@
             NrNoiseLacunarity.Name = "NrNoiseLacunarity";
             NrNoiseLacunarity.Size = new Size(74, 23);
             NrNoiseLacunarity.TabIndex = 41;
-            NrNoiseLacunarity.Value = new decimal(new int[] { 29, 0, 0, 65536 });
+            NrNoiseLacunarity.Value = new decimal(new int[] { 7, 0, 0, 65536 });
             NrNoiseLacunarity.ValueChanged += NoiseProperty_ValueChanged;
             // 
             // label27
@@ -709,7 +678,7 @@
             NrNoisePersistance.Name = "NrNoisePersistance";
             NrNoisePersistance.Size = new Size(74, 23);
             NrNoisePersistance.TabIndex = 38;
-            NrNoisePersistance.Value = new decimal(new int[] { 286, 0, 0, 196608 });
+            NrNoisePersistance.Value = new decimal(new int[] { 115, 0, 0, 131072 });
             NrNoisePersistance.ValueChanged += NoiseProperty_ValueChanged;
             // 
             // label26
@@ -727,7 +696,7 @@
             NrNoiseOctaves.Name = "NrNoiseOctaves";
             NrNoiseOctaves.Size = new Size(55, 23);
             NrNoiseOctaves.TabIndex = 37;
-            NrNoiseOctaves.Value = new decimal(new int[] { 5, 0, 0, 0 });
+            NrNoiseOctaves.Value = new decimal(new int[] { 3, 0, 0, 0 });
             NrNoiseOctaves.ValueChanged += NoiseProperty_ValueChanged;
             // 
             // label25
@@ -741,7 +710,7 @@
             // 
             // label21
             // 
-            label21.Location = new Point(154, 76);
+            label21.Location = new Point(154, 69);
             label21.Name = "label21";
             label21.Size = new Size(98, 20);
             label21.TabIndex = 1;
@@ -750,11 +719,41 @@
             // 
             // NoiseVisual
             // 
-            NoiseVisual.Location = new Point(154, 98);
+            NoiseVisual.Location = new Point(153, 92);
             NoiseVisual.Name = "NoiseVisual";
-            NoiseVisual.Size = new Size(98, 93);
+            NoiseVisual.Size = new Size(100, 100);
+            NoiseVisual.SizeMode = PictureBoxSizeMode.StretchImage;
             NoiseVisual.TabIndex = 0;
             NoiseVisual.TabStop = false;
+            // 
+            // TabPureRandom
+            // 
+            TabPureRandom.Controls.Add(label23);
+            TabPureRandom.Controls.Add(NrClusterChance);
+            TabPureRandom.Location = new Point(4, 24);
+            TabPureRandom.Name = "TabPureRandom";
+            TabPureRandom.Padding = new Padding(3);
+            TabPureRandom.Size = new Size(256, 196);
+            TabPureRandom.TabIndex = 0;
+            TabPureRandom.Text = "Pure Random";
+            TabPureRandom.UseVisualStyleBackColor = true;
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(6, 10);
+            label23.Name = "label23";
+            label23.Size = new Size(133, 15);
+            label23.TabIndex = 34;
+            label23.Text = "Cluster Chance Per Hex:";
+            // 
+            // NrClusterChance
+            // 
+            NrClusterChance.Location = new Point(140, 6);
+            NrClusterChance.Name = "NrClusterChance";
+            NrClusterChance.Size = new Size(41, 23);
+            NrClusterChance.TabIndex = 35;
+            NrClusterChance.Value = new decimal(new int[] { 30, 0, 0, 0 });
             // 
             // NrGridHeight
             // 
@@ -908,16 +907,6 @@
             BtnExit.UseVisualStyleBackColor = true;
             BtnExit.Click += BtnExit_Click;
             // 
-            // TabVoronoi
-            // 
-            TabVoronoi.Location = new Point(4, 24);
-            TabVoronoi.Name = "TabVoronoi";
-            TabVoronoi.Padding = new Padding(3);
-            TabVoronoi.Size = new Size(256, 196);
-            TabVoronoi.TabIndex = 2;
-            TabVoronoi.Text = "Voronoi";
-            TabVoronoi.UseVisualStyleBackColor = true;
-            // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -958,9 +947,6 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             MapAlgorithmOptions.ResumeLayout(false);
-            TabPureRandom.ResumeLayout(false);
-            TabPureRandom.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)NrClusterChance).EndInit();
             TabNoise.ResumeLayout(false);
             TabNoise.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)NrNoiseThreshold).EndInit();
@@ -971,6 +957,9 @@
             ((System.ComponentModel.ISupportInitialize)NrNoisePersistance).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrNoiseOctaves).EndInit();
             ((System.ComponentModel.ISupportInitialize)NoiseVisual).EndInit();
+            TabPureRandom.ResumeLayout(false);
+            TabPureRandom.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NrClusterChance).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrGridHeight).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrGridWidth).EndInit();
             panel3.ResumeLayout(false);
@@ -1061,6 +1050,5 @@
         private Label label29;
         private NumericUpDown NrNoiseThreshold;
         private Label label31;
-        private TabPage TabVoronoi;
     }
 }

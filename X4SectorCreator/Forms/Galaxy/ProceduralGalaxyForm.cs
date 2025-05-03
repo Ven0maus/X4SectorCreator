@@ -25,6 +25,7 @@ namespace X4SectorCreator.Forms.Galaxy
             InitializeComponent();
             InitializePageAlgorithmOptions();
             InitResourceRarities();
+            NoiseProperty_ValueChanged(this, null);
         }
 
         private void InitializePageAlgorithmOptions()
@@ -131,7 +132,10 @@ namespace X4SectorCreator.Forms.Galaxy
         {
             // Re-generate seed automatically
             if (ChkAutoSeed.Checked)
+            {
                 TxtSeed.Text = _random.Next().ToString();
+                NoiseProperty_ValueChanged(this, null);
+            }
 
             // Map
             var clusters = GenerateClusters();
@@ -220,9 +224,6 @@ namespace X4SectorCreator.Forms.Galaxy
                 case "noise":
                     _currentMapAlgorithmOptionsPage = TabNoise;
                     break;
-                case "voronoi":
-                    _currentMapAlgorithmOptionsPage = TabVoronoi;
-                    break;
                 default:
                     throw new NotImplementedException($"\"{selectedItem}\" not implemented.");
             }
@@ -236,6 +237,8 @@ namespace X4SectorCreator.Forms.Galaxy
             var settings = new ProceduralSettings
             {
                 Seed = GetSeed(),
+                Width = (int)NrGridWidth.Value,
+                Height = (int)NrGridHeight.Value,
 
                 // Noise
                 NoiseOctaves = (int)NrNoiseOctaves.Value,

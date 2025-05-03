@@ -183,7 +183,7 @@ namespace X4SectorCreator.Helpers
         /// <returns></returns>
         public static Point SquareGridToHexCoordinate(this Point point)
         {
-            return new Point(point.X, -((point.Y * 2) + (point.X & 1)));
+            return new Point(point.X, (point.Y * 2) + (point.X & 1));
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace X4SectorCreator.Helpers
         public static Point HexToSquareGridCoordinate(this Point point)
         {
             int x = point.X;
-            int y = -(point.Y + (x & 1)) / 2;
+            int y = (point.Y - (x & 1)) / 2;
             return new Point(x, y);
         }
 

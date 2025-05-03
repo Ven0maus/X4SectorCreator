@@ -1,4 +1,6 @@
-﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
+﻿using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -18,8 +20,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
                 // Off-set negative coordinates to fit within the grid
                 gridCoordinate = new Point(Settings.Width /2 + gridCoordinate.X, Settings.Height /2 + gridCoordinate.Y);
 
-                var noise = noiseMap[gridCoordinate.Y * Settings.Width + gridCoordinate.X];
-                if (noise > Settings.NoiseThreshold)
+                var noise = Math.Clamp(noiseMap[gridCoordinate.Y * Settings.Width + gridCoordinate.X], 0f, 1f);
+                if (noise < Settings.NoiseThreshold)
                 {
                     yield return CreateClusterAndSectors(coordinate);
                 }
@@ -28,25 +30,48 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
 
         public static void GenerateVisual(PictureBox noiseVisual, ProceduralSettings settings)
         {
-            var noiseMap = OpenSimplex2.GenerateNoiseMap(noiseVisual.Width, noiseVisual.Height, settings.Seed,
+            var noiseMap = OpenSimplex2.GenerateNoiseMap(settings.Width, settings.Height, settings.Seed,
                 settings.NoiseScale, settings.NoiseOctaves, settings.NoisePersistance, settings.NoiseLacunarity, settings.NoiseOffset);
 
-            Bitmap bmp = new Bitmap(noiseVisual.Width, noiseVisual.Height);
+            noiseVisual.Image = GenerateNoiseBitmap(noiseMap, settings.Width, settings.Height);
+        }
 
-            for (int x = 0; x < noiseVisual.Width; x++)
+        private static Bitmap GenerateNoiseBitmap(float[] noiseMap, int width, int height)
+        {
+            Bitmap bmp = new Bitmap(width, height, PixelFormat.Format24bppRgb);
+            BitmapData data = bmp.LockBits(
+                new Rectangle(0, 0, width, height),
+                ImageLockMode.WriteOnly,
+                PixelFormat.Format24bppRgb
+            );
+
+            int stride = data.Stride;
+            IntPtr ptr = data.Scan0;
+            int bytes = Math.Abs(stride) * height;
+            byte[] rgbValues = new byte[bytes];
+
+            for (int y = 0; y < height; y++)
             {
-                for (int y = 0; y < noiseVisual.Height; y++)
-                {
-                    // Clamp and scale float value to 0–255
-                    float value = Math.Clamp(noiseMap[y * noiseVisual.Width + x], 0f, 1f);
-                    int gray = (int)(value * 255);
-                    Color color = Color.FromArgb(gray, gray, gray);
+                // Invert the Y-coordinate to simulate bottom-left origin
+                int invertedY = height - 1 - y;
 
-                    bmp.SetPixel(x, y, color);
+                for (int x = 0; x < width; x++)
+                {
+                    float value = Math.Clamp(noiseMap[y * width + x], 0f, 1f);
+                    byte gray = (byte)(value * 255);
+
+                    // Calculate the index based on the inverted Y-coordinate
+                    int index = invertedY * stride + x * 3;
+                    rgbValues[index] = gray;        // Blue
+                    rgbValues[index + 1] = gray;    // Green
+                    rgbValues[index + 2] = gray;    // Red
                 }
             }
 
-            noiseVisual.Image = bmp;
+            Marshal.Copy(rgbValues, 0, ptr, bytes);
+            bmp.UnlockBits(data);
+
+            return bmp;
         }
     }
 }
