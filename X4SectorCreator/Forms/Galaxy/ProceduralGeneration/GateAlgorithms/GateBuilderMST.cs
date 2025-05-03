@@ -111,10 +111,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
 
             // Zone position determines gate's position (1 gate per zone)
             var existingPositions = sector.Zones
+                .Where(a => a.Gates.Count > 0)
                 .Select(g => g.Position)
                 .ToList();
 
-            int numGates = sector.Zones.Count + 1;
+            int numGates = sector.Zones.Count(a => a.Gates.Count > 0) + 1;
 
             for (int i = 0; i < maxAttempts; i++)
             {
