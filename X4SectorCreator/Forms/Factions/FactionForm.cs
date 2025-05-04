@@ -196,7 +196,7 @@ namespace X4SectorCreator.Forms
             return factions.Licences.Licence;
         }
 
-        public void SetFactionXml(Faction faction)
+        public static void SetFactionXml(Faction faction)
         {
             _factionXml = faction.Serialize();
         }
@@ -506,7 +506,7 @@ namespace X4SectorCreator.Forms
             _factionShipsForm.Value.Show();
         }
 
-        private void UpdateLicenseNames()
+        private static void UpdateLicenseNames()
         {
             // Adjust license names if they're still placeholder
             var faction = Faction.Deserialize(_factionXml);

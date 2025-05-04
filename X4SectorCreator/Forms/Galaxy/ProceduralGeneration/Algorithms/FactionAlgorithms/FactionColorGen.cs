@@ -1,14 +1,9 @@
 ﻿namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAlgorithms
 {
-    public class FactionColorGen
+    public class FactionColorGen(int seed)
     {
-        private readonly Random _random;
+        private readonly Random _random = new(seed);
         private readonly List<Color> _usedColors = [];
-
-        public FactionColorGen(int seed)
-        {
-            _random = new Random(seed);
-        }
 
         public Color GenerateDistinctColor()
         {
@@ -78,3 +73,4 @@
             return p;
         }
     }
+}

@@ -1,6 +1,8 @@
-﻿using System.Text;
+﻿using System.Drawing.Imaging;
+using System.Text;
 using System.Text.RegularExpressions;
 using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.NameAlgorithms;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAlgorithms
@@ -49,38 +51,59 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 faction.DesiredTradeStations = "1";
                 faction.Tags = "claimspace economic police privateloadout privateship protective publicloadout publicship standard watchdoguser";
                 faction.PrefferedHqStationTypes = ["shipbuilding"];
+                faction.StationTypes = ["wharf", "shipyard", "tradestation", "defence", "equipmentdock"];
             }
             else
             {
                 faction.Tags = "economic pirate plunder privateloadout privateship protective watchdoguser";
                 faction.PrefferedHqStationTypes = ["any"];
+                faction.StationTypes = ["piratedock", "piratebase", "freeport"];
             }
 
             // TODO: HQ needs to be set after ownership definition
 
             DefineLicenses(faction);
-            DefineColor(faction);
+            DefineIcon(faction, factionType);
             DefineFactionShips(faction);
-            DefineFactionStations(faction);
 
             return faction;
         }
 
-        private void DefineFactionShips(Faction faction)
+        private static void DefineFactionShips(Faction faction)
         {
-            // Ship groups
-            // Ships
+            faction.ShipGroups = [];
+            faction.Ships = [];
+
+            var shipGroups = FactionShipsForm.ShipGroupPresets[faction.Primaryrace];
+            foreach (var shipGroup in shipGroups.Group)
+            {
+                var newGroup = shipGroup.Clone();
+                newGroup.Name = $"{faction.Id}_{string.Join("_", shipGroup.Name.Split('_').Skip(1))}";
+
+                faction.ShipGroups.Add(newGroup);
+            }
+
+            var ships = FactionShipsForm.ShipPresets[faction.Primaryrace];
+            foreach (var ship in ships.Ship)
+            {
+                var newShip = ship.Clone();
+                newShip.Id = $"{faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(1))}";
+                if (ship.Group != null)
+                    newShip.Group = $"{faction.Id}_{string.Join("_", ship.Group.Split('_').Skip(1))}";
+
+                if (newShip.CategoryObj != null)
+                    newShip.CategoryObj.Faction = faction.Id;
+                if (newShip.PilotObj != null && newShip.PilotObj.Select != null)
+                    newShip.PilotObj.Select.Faction = faction.Id;
+
+                faction.Ships.Add(newShip);
+            }
         }
 
-        private void DefineFactionStations(Faction faction)
+        private void DefineIcon(Faction faction, FactionNameGen.FactionNameStyle style)
         {
-            // Station types
-        }
-
-        private void DefineColor(Faction faction)
-        {
-            // Random color
-            faction.Color = _factionColorGen.GenerateDistinctColor();
+            var factionIcon = FactionIconGen.GenerateFactionIcon(seed + 1, style);
+            faction.Icon = ImageHelper.ImageToBase64(factionIcon, ImageFormat.Png);
         }
 
         private static void DefineLicenses(Faction faction)
