@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgorithms;
+﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAlgorithms;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgorithms;
 using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlgorithms;
 using X4SectorCreator.Objects;
 
@@ -17,7 +18,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
         }
 
         public static void CreateRegions(List<Cluster> clusters, ProceduralSettings settings)
-        {
+        {           
             // Clear all existing regions and region definitions
             RegionDefinitionForm.RegionDefinitions.Clear();
             foreach (var zone in clusters.SelectMany(c => c.Sectors))
@@ -40,16 +41,17 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
             RegionDefinitionForm.RegionDefinitions.RemoveAll(a => !definitions.Contains(a));
         }
 
-        public static void CreateCustomFactions(List<Cluster> clusters)
+        public static void CreateFactions(List<Cluster> clusters, ProceduralSettings settings)
         {
             Forms.FactoriesForm.AllFactories.Clear();
             Forms.JobsForm.AllJobs.Clear();
             Forms.FactionsForm.AllCustomFactions.Clear();
-        }
 
-        public static void CreateVanillaFactions(List<Cluster> clusters)
-        {
-
+            var balancedGen = new BalancedFactionDistribution(settings);
+            balancedGen.GenerateFactions(clusters);
+            balancedGen.GenerateJobs(clusters);
+            balancedGen.GenerateFactories(clusters);
+            balancedGen.GenerateStations(clusters);
         }
     }
 }

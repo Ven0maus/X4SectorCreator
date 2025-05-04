@@ -96,77 +96,33 @@ namespace X4SectorCreator.Forms.Galaxy
             }
         }
 
-        private int GetSeed()
+        private int GetSeed(TextBox textbox)
         {
-            if (string.IsNullOrWhiteSpace(TxtSeed.Text))
-                TxtSeed.Text = _random.Next().ToString();
-            if (!int.TryParse(TxtSeed.Text, out int seed))
-                seed = Localisation.GetFnvHash(TxtSeed.Text);
+            if (string.IsNullOrWhiteSpace(textbox.Text))
+                textbox.Text = _random.Next().ToString();
+            if (!int.TryParse(textbox.Text, out int seed))
+                seed = Localisation.GetFnvHash(textbox.Text);
             return seed;
         }
 
-        private void BtnGenerateClusters_Click(object sender, EventArgs e)
+        private void RandomizeSeeds()
         {
-            IEnumerable<Cluster> clusters = GenerateClusters();
-            SetProceduralGalaxy(clusters);
-        }
-
-        private void BtnGenerateConnections_Click(object sender, EventArgs e)
-        {
-            if (!ChkGenerateConnections.Checked) return;
-            var clusters = MainForm.Instance.AllClusters.Values.ToList();
-
-            var settings = new ProceduralSettings
+            if (ChkMapRandomizeSeed.Checked)
             {
-                Seed = GetSeed(),
-                MinGatesPerSector = (int)NrMinGates.Value,
-                MaxGatesPerSector = (int)NrMaxGates.Value,
-                GateMultiChancePerSector = (int)NrMultiConnectionChance.Value
-            };
-
-            GalaxyGenerator.CreateConnections(clusters, settings);
-            SetProceduralGalaxy(clusters);
-        }
-
-        private void BtnGenerateRegions_Click(object sender, EventArgs e)
-        {
-            if (!ChkRegions.Checked) return;
-            var clusters = MainForm.Instance.AllClusters.Values.ToList();
-
-            var settings = new ProceduralSettings
-            {
-                Seed = GetSeed(),
-                Resources = _defaultResources
-            };
-
-            GalaxyGenerator.CreateRegions(clusters, settings);
-            SetProceduralGalaxy(clusters);
-        }
-
-        private void BtnGenerateCustomFactions_Click(object sender, EventArgs e)
-        {
-            if (!ChkFactions.Checked || !ChkCustomFactions.Checked) return;
-            var clusters = MainForm.Instance.AllClusters.Values.ToList();
-            GalaxyGenerator.CreateCustomFactions(clusters);
-            SetProceduralGalaxy(clusters);
-        }
-
-        private void BtnGenerateVanillaFactions_Click(object sender, EventArgs e)
-        {
-            if (!ChkFactions.Checked || !ChkVanillaFactions.Checked) return;
-            var clusters = MainForm.Instance.AllClusters.Values.ToList();
-            GalaxyGenerator.CreateVanillaFactions(clusters);
-            SetProceduralGalaxy(clusters);
-        }
-
-        private void BtnGenerateAll_Click(object sender, EventArgs e)
-        {
-            // Re-generate seed automatically
-            if (ChkAutoSeed.Checked)
-            {
-                TxtSeed.Text = _random.Next().ToString();
+                TxtMapSeed.Text = _random.Next().ToString();
                 NoiseProperty_ValueChanged(this, null);
             }
+            if (ChkFactionsRandomizeSeed.Checked)
+                TxtFactionSeed.Text = _random.Next().ToString();
+            if (ChkRegionRandomizeSeed.Checked)
+                TxtRegionSeed.Text = _random.Next().ToString();
+            if (ChkConnectionsRandomizeSeed.Checked)
+                TxtConnectionSeed.Text = _random.Next().ToString();
+        }
+
+        private void BtnGenerate_Click(object sender, EventArgs e)
+        {
+            RandomizeSeeds();
 
             // Map
             var clusters = GenerateClusters();
@@ -176,7 +132,7 @@ namespace X4SectorCreator.Forms.Galaxy
             {
                 var settings = new ProceduralSettings
                 {
-                    Seed = GetSeed(),
+                    Seed = GetSeed(TxtConnectionSeed),
                     MinGatesPerSector = (int)NrMinGates.Value,
                     MaxGatesPerSector = (int)NrMaxGates.Value,
                     GateMultiChancePerSector = (int)NrMultiConnectionChance.Value
@@ -190,7 +146,7 @@ namespace X4SectorCreator.Forms.Galaxy
             {
                 var settings = new ProceduralSettings
                 {
-                    Seed = GetSeed(),
+                    Seed = GetSeed(TxtRegionSeed),
                     Resources = _defaultResources
                 };
 
@@ -199,10 +155,18 @@ namespace X4SectorCreator.Forms.Galaxy
             // Factions
             if (ChkFactions.Checked)
             {
-                if (ChkCustomFactions.Checked)
-                    GalaxyGenerator.CreateCustomFactions(clusters);
-                if (ChkVanillaFactions.Checked)
-                    GalaxyGenerator.CreateVanillaFactions(clusters);
+                var settings = new ProceduralSettings
+                {
+                    Seed = GetSeed(TxtFactionSeed),
+                    GenerateCustomFactions = ChkCustomFactions.Checked,
+                    GenerateVanillaFactions = ChkVanillaFactions.Checked,
+                    MinTotalFactions = (int)NrFactionMin.Value,
+                    MaxTotalFactions = (int)NrFactionMax.Value,
+                    MinSectorOwnership = (int)NrFacControlMin.Value,
+                    MaxSectorOwnership = (int)NrFacControlMax.Value,
+                };
+
+                GalaxyGenerator.CreateFactions(clusters, settings);
             }
 
             SetProceduralGalaxy(clusters);
@@ -219,7 +183,7 @@ namespace X4SectorCreator.Forms.Galaxy
         {
             var settings = new ProceduralSettings
             {
-                Seed = GetSeed(),
+                Seed = GetSeed(TxtMapSeed),
                 Width = (int)NrGridWidth.Value,
                 Height = (int)NrGridHeight.Value,
                 MultiSectorChance = (int)NrChanceMultiSectors.Value,
@@ -273,7 +237,7 @@ namespace X4SectorCreator.Forms.Galaxy
         {
             var settings = new ProceduralSettings
             {
-                Seed = GetSeed(),
+                Seed = GetSeed(TxtMapSeed),
                 Width = (int)NrGridWidth.Value,
                 Height = (int)NrGridHeight.Value,
 
