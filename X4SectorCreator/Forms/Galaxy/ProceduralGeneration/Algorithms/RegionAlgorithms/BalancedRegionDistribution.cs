@@ -7,11 +7,13 @@ using Region = X4SectorCreator.Objects.Region;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlgorithms
 {
-    internal class BalancedRegionDistribution
+    internal class BalancedRegionDistribution(ProceduralSettings settings, Dictionary<string, string> resources)
     {
-        private readonly List<(string Resource, float Weight)> _weightedResources = [];
-        private readonly Random _random;
-        private readonly ProceduralSettings _settings;
+        private readonly List<(string Resource, float Weight)> _weightedResources = resources
+                .Select(kvp => (kvp.Key, float.Parse(kvp.Value, CultureInfo.InvariantCulture)))
+                .ToList();
+        private readonly Random _random = new(settings.Seed);
+        private readonly ProceduralSettings _settings = settings;
 
         private static readonly Dictionary<string, double> _yieldDensities = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -31,14 +33,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             ["highest"] = 60000
         };
 
-        public BalancedRegionDistribution(ProceduralSettings settings, Dictionary<string, string> resources)
-        {
-            _settings = settings;
-            _random = new(settings.Seed);
-            _weightedResources = resources
-                .Select(kvp => (kvp.Key, float.Parse(kvp.Value, CultureInfo.InvariantCulture)))
-                .ToList();
-        }
+        private readonly Dictionary<string, RegionDefinition> _regionDefinitions = new(StringComparer.OrdinalIgnoreCase);
 
         public void GenerateMinerals(List<Cluster> clusters, Cluster cluster, Sector sector)
         {
@@ -83,21 +78,30 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                     attempts++;
                 }
 
+                var yield = PickYield(richness);
+                var regionName = $"{resource}_{yield}";
+                if (!_regionDefinitions.TryGetValue(regionName, out var definition))
+                {
+                    _regionDefinitions[regionName] = definition = new RegionDefinition
+                    {
+                        Guid = new Guid().ToString(),
+                        Name = regionName,
+                        Resources =
+                       [
+                           new()
+                            {
+                                Ware = resource,
+                                Yield = yield
+                            }
+                       ]
+                    };
+                }
+
                 var region = new Region
                 {
                     Name = $"{resource}_{i + 1}",
                     Position = position,
-                    Definition = new RegionDefinition
-                    {
-                        Resources =
-                        [
-                            new()
-                            {
-                                Ware = resource,
-                                Yield = PickYield(richness)
-                            }
-                        ]
-                    },
+                    Definition = definition,
                     BoundaryLinear = "5000",
                     BoundaryRadius = "10000"
                 };
@@ -221,21 +225,30 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                                     attempts++;
                                 }
 
-                                var region = new Region
+                                var yield = PickYield(_random.NextDouble());
+                                var regionName = $"{resource}_{yield}";
+                                if (!_regionDefinitions.TryGetValue(regionName, out var definition))
                                 {
-                                    Name = $"{resource}_{sector.Regions.Count + 1}",
-                                    Position = position,
-                                    Definition = new RegionDefinition
+                                    _regionDefinitions[regionName] = definition = new RegionDefinition
                                     {
+                                        Guid = new Guid().ToString(),
+                                        Name = regionName,
                                         Resources =
                                         [
                                             new()
-                                        {
-                                            Ware = resource,
-                                            Yield = PickYield(_random.NextDouble())
-                                        }
+                                            {
+                                                Ware = resource,
+                                                Yield = yield
+                                            }
                                         ]
-                                    },
+                                    };
+                                }
+
+                                var region = new Region
+                                {
+                                    Name = $"{resource}_{yield}_{sector.Regions.Count + 1}",
+                                    Position = position,
+                                    Definition = definition,
                                     BoundaryLinear = "5000",
                                     BoundaryRadius = "10000"
                                 };
