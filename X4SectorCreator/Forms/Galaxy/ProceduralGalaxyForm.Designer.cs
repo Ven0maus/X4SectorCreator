@@ -468,6 +468,8 @@
             // ChkCustomFactions
             // 
             ChkCustomFactions.AutoSize = true;
+            ChkCustomFactions.Checked = true;
+            ChkCustomFactions.CheckState = CheckState.Checked;
             ChkCustomFactions.Location = new Point(5, 28);
             ChkCustomFactions.Name = "ChkCustomFactions";
             ChkCustomFactions.Size = new Size(165, 19);
