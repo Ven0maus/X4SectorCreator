@@ -13,7 +13,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             var factionCreator = new FactionCreator(_settings.Seed);
 
             // 20% of custom factions are pirates
-            var pirates = (int)(total / 100f * 20f);
+            var pirates = (int)Math.Ceiling(total / 100f * 20f);
             var mainFactions = total - pirates;
 
             // Create main factions

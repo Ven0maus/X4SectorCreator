@@ -258,7 +258,7 @@
             NrFactionMin.Name = "NrFactionMin";
             NrFactionMin.Size = new Size(41, 23);
             NrFactionMin.TabIndex = 16;
-            NrFactionMin.Value = new decimal(new int[] { 4, 0, 0, 0 });
+            NrFactionMin.Value = new decimal(new int[] { 5, 0, 0, 0 });
             // 
             // NrFactionMax
             // 
@@ -266,7 +266,7 @@
             NrFactionMax.Name = "NrFactionMax";
             NrFactionMax.Size = new Size(41, 23);
             NrFactionMax.TabIndex = 17;
-            NrFactionMax.Value = new decimal(new int[] { 6, 0, 0, 0 });
+            NrFactionMax.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // label8
             // 
@@ -373,7 +373,7 @@
             NrFacControlMin.Name = "NrFacControlMin";
             NrFacControlMin.Size = new Size(41, 23);
             NrFacControlMin.TabIndex = 31;
-            NrFacControlMin.Value = new decimal(new int[] { 3, 0, 0, 0 });
+            NrFacControlMin.Value = new decimal(new int[] { 4, 0, 0, 0 });
             // 
             // label19
             // 
