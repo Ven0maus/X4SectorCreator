@@ -136,6 +136,20 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             return new Point(source.X -  target.X, source.Y - target.Y);
         }
 
+        private static double GetDirectionAngle(Point source, Point target)
+        {
+            int dx = target.X - source.X;
+            int dy = target.Y - source.Y;
+
+            double angleRad = Math.Atan2(dy, dx); // -π to π
+            double angleDeg = angleRad * (180.0 / Math.PI); // convert to degrees
+
+            if (angleDeg < 0)
+                angleDeg += 360; // normalize to [0, 360)
+
+            return angleDeg;
+        }
+
         private void AddGate(Cluster from, Sector fromSector, Cluster to, Sector toSector)
         {
             var sourceSector = fromSector;
@@ -150,7 +164,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             {
                 Id = sourceSector.Zones.SelectMany(a => a.Gates).Count() + 1,
                 DestinationSectorName = targetSector.Name,
-                ParentSectorName = sourceSector.Name
+                ParentSectorName = sourceSector.Name,
+                Yaw = (int)GetDirectionAngle(directionSource, directionTarget)
             };
 
             // Target
@@ -159,7 +174,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             {
                 Id = targetSector.Zones.SelectMany(a => a.Gates).Count() + 1,
                 DestinationSectorName = sourceSector.Name,
-                ParentSectorName = targetSector.Name
+                ParentSectorName = targetSector.Name,
+                Yaw = (int)GetDirectionAngle(directionTarget, directionSource)
             };
 
             sourceGate.Source = ConvertToPath(from, sourceSector, sourceZone);
