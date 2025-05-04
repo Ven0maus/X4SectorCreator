@@ -1,5 +1,5 @@
 ﻿using System.Xml.Linq;
-using X4SectorCreator.Helpers;
+using X4SectorCreator.Forms;
 using X4SectorCreator.Objects;
 using Region = X4SectorCreator.Objects.Region;
 
@@ -13,14 +13,34 @@ namespace X4SectorCreator.XmlGeneration
             XElement[] regions = GetRegions(modPrefix, clusters).ToArray();
             if (regions.Length > 0)
             {
-                XDocument xmlDocument = new(
-                    new XDeclaration("1.0", "utf-8", null),
-                    new XElement("regions",
-                        new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                        new XAttribute(XName.Get("noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance"), "region_definitions.xsd"),
-                        regions
-                    )
-                );
+                XDocument xmlDocument;
+                if (GalaxySettingsForm.IsCustomGalaxy)
+                {
+                    // Replace all regions in a custom galaxy, no point in have base game ones there also
+                    xmlDocument = new(
+                        new XDeclaration("1.0", "utf-8", null),
+                        new XElement("diff",
+                            new XElement("replace", new XAttribute("sel", "//regions"),
+                                new XElement("regions",
+                                    new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                                    new XAttribute(XName.Get("noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance"), "region_definitions.xsd"),
+                                    regions
+                                )
+                            )
+                        )
+                    );
+                }
+                else
+                {
+                    xmlDocument = new(
+                        new XDeclaration("1.0", "utf-8", null),
+                        new XElement("regions",
+                            new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                            new XAttribute(XName.Get("noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance"), "region_definitions.xsd"),
+                            regions
+                        )
+                    );
+                }
 
                 // Save to an XML file
                 xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/region_definitions.xml")));
