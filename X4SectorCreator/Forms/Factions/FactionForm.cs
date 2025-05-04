@@ -12,7 +12,7 @@ namespace X4SectorCreator.Forms
 {
     public partial class FactionForm : Form
     {
-        private string _factionXml = @"<faction id=""placeholder"" name=""placeholder"" description=""placeholder"" shortname=""placeholder"" prefixname=""placeholder"" primaryrace=""argon"" behaviourset=""default"" tags="""">
+        private static string _factionXml = @"<faction id=""placeholder"" name=""placeholder"" description=""placeholder"" shortname=""placeholder"" prefixname=""placeholder"" primaryrace=""argon"" behaviourset=""default"" tags="""">
     <color ref=""placeholder"" />
     <icon active=""placeholder"" inactive=""placeholder"" />
     <licences>
@@ -46,7 +46,7 @@ namespace X4SectorCreator.Forms
     </relations>
   </faction>";
 
-        private readonly Dictionary<string, string> _licenseNameMapping = new()
+        private static readonly Dictionary<string, string> _licenseNameMapping = new()
         {
             { "capitalequipment", "Capital Equipment License" },
             { "capitalship", "Capital Ship License" },
@@ -188,6 +188,12 @@ namespace X4SectorCreator.Forms
             foreach (var faction in factions)
                 CmbPoliceFaction.Items.Add(faction);
             CmbPoliceFaction.SelectedItem = "self"; //Default value
+        }
+
+        public static List<Faction.Licence> GetPlaceholderLicenses()
+        {
+            var factions = Faction.Deserialize(_factionXml);
+            return factions.Licences.Licence;
         }
 
         public void SetFactionXml(Faction faction)
@@ -524,7 +530,7 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private void UpdateLicenseNames(Faction faction, bool onlyPlaceholders)
+        public static void UpdateLicenseNames(Faction faction, bool onlyPlaceholders)
         {
             foreach (var license in faction.Licences.Licence)
             {

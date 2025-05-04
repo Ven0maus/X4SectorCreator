@@ -10,31 +10,56 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private readonly Random _random = new(seed);
         private readonly FactionNameGen _nameGen = new(seed);
         private readonly FactionDescriptionGen _descGen = new(seed);
+        private readonly FactionColorGen _factionColorGen = new(seed);
         private readonly FactionNameGen.FactionNameStyle[] _factionTypes = Enum.GetValues<FactionNameGen.FactionNameStyle>();
+
+        private readonly string[] _races = ["argon", "terran", "teladi", "paranid", "boron", "split"];
+        private readonly string[] _levels = ["verylow", "low", "normal", "high", "veryhigh"];
 
         public Faction Generate(bool isPirateFaction)
         {
             var factionType = _factionTypes[_random.Next(_factionTypes.Length)];
-
             var faction = new Faction
             {
                 Name = _nameGen.Generate(factionType),
                 Description = _descGen.Generate(factionType)
             };
+
             faction.Id = SanitizeNameForId(faction.Name);
             faction.Shortname = GetShortName(faction.Name);
             faction.Prefixname = faction.Shortname;
             faction.PoliceFaction = isPirateFaction ? null : "self";
+            faction.Primaryrace = _races[_random.Next(_races.Length)];
+            faction.AggressionLevel = _levels[_random.Next(_levels.Length)];
+            faction.AvariceLevel = _levels[_random.Next(_levels.Length)];
+            faction.Lawfulness = _random.NextDouble().ToString("0.##");
+            faction.Behaviourset = "default";
+            faction.Color = _factionColorGen.GenerateDistinctColor();
 
-            // Set licenses
-            // Set race
-            // Set policefaction = self
-            // Set aggression, avarice, lawfulness
-            // Set tags
-            // Set color
-            // Set HQ
-            // Set some kind of auto generated icon?
+            // Set color and icon data refs
+            var dataEntryName = $"faction_{faction.Id}";
+            faction.ColorData = new Faction.ColorDataObj { Ref = dataEntryName };
+            faction.IconData = new Faction.IconObj { Active = dataEntryName, Inactive = dataEntryName };
 
+            if (!isPirateFaction)
+            {
+                faction.DesiredEquipmentDocks = "1";
+                faction.DesiredWharfs = "1";
+                faction.DesiredShipyards = "1";
+                faction.DesiredTradeStations = "1";
+                faction.Tags = "claimspace economic police privateloadout privateship protective publicloadout publicship standard watchdoguser";
+                faction.PrefferedHqStationTypes = ["shipbuilding"];
+            }
+            else
+            {
+                faction.Tags = "economic pirate plunder privateloadout privateship protective watchdoguser";
+                faction.PrefferedHqStationTypes = ["any"];
+            }
+
+            // TODO: HQ needs to be set after ownership definition
+
+            DefineLicenses(faction);
+            DefineColor(faction);
             DefineFactionShips(faction);
             DefineFactionStations(faction);
 
@@ -50,8 +75,21 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private void DefineFactionStations(Faction faction)
         {
             // Station types
-            // Desired wharfs, shipyards, equipment docks, tradestations
-            // faction rep station types
+        }
+
+        private void DefineColor(Faction faction)
+        {
+            // Random color
+            faction.Color = _factionColorGen.GenerateDistinctColor();
+        }
+
+        private static void DefineLicenses(Faction faction)
+        {
+            faction.Licences = new Faction.LicencesObj { Licence = [] };
+            var defaultLicenses = FactionForm.GetPlaceholderLicenses();
+            foreach (var license in defaultLicenses)
+                faction.Licences.Licence.Add(license);
+            FactionForm.UpdateLicenseNames(faction, true);
         }
 
         private static string GetShortName(string fullName)
