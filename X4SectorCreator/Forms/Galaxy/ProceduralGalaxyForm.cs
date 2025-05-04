@@ -114,7 +114,16 @@ namespace X4SectorCreator.Forms.Galaxy
         {
             if (!ChkGenerateConnections.Checked) return;
             var clusters = MainForm.Instance.AllClusters.Values.ToList();
-            GalaxyGenerator.CreateConnections(clusters, GetSeed(), (int)NrMinGates.Value, (int)NrMaxGates.Value);
+
+            var settings = new ProceduralSettings
+            {
+                Seed = GetSeed(),
+                MinGatesPerSector = (int)NrMinGates.Value,
+                MaxGatesPerSector = (int)NrMaxGates.Value,
+                GateMultiChancePerSector = (int)NrMultiConnectionChance.Value
+            };
+
+            GalaxyGenerator.CreateConnections(clusters, settings);
             SetProceduralGalaxy(clusters);
         }
 
@@ -156,7 +165,17 @@ namespace X4SectorCreator.Forms.Galaxy
 
             // Connections
             if (ChkGenerateConnections.Checked)
-                GalaxyGenerator.CreateConnections(clusters, GetSeed(), (int)NrMinGates.Value, (int)NrMaxGates.Value);
+            {
+                var settings = new ProceduralSettings
+                {
+                    Seed = GetSeed(),
+                    MinGatesPerSector = (int)NrMinGates.Value,
+                    MaxGatesPerSector = (int)NrMaxGates.Value,
+                    GateMultiChancePerSector = (int)NrMultiConnectionChance.Value
+                };
+
+                GalaxyGenerator.CreateConnections(clusters, settings);
+            }
 
             // Regions
             if (ChkRegions.Checked)

@@ -13,16 +13,19 @@
 
         /* Algorithm Options */
         // Pure Random
-
         public int ClusterChance { get; set; }
 
         // Noise
-
         public int NoiseOctaves { get; set; }
         public float NoisePersistance { get; set; }
         public float NoiseLacunarity { get; set; }
         public float NoiseScale { get; set; }
         public float NoiseThreshold { get; set; }
         public Point NoiseOffset { get; set; }
+
+        /* Gate Options */
+        public int MinGatesPerSector { get; set; }
+        public int MaxGatesPerSector { get; set; }
+        public int GateMultiChancePerSector { get; set; }
     }
 }

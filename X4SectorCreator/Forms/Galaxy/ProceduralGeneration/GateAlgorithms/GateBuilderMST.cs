@@ -1,11 +1,13 @@
-﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
+﻿using System.Diagnostics;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
 {
-    internal class GateBuilderMST(int seed)
+    internal class GateBuilderMST(ProceduralSettings settings)
     {
-        private readonly Random _random = new(seed);
+        private readonly Random _random = new(settings.Seed);
+        private readonly ProceduralSettings _settings = settings;
 
         public void Generate(List<Cluster> clusters)
         {
@@ -45,7 +47,62 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             foreach (var cluster in clusters)
                 ConnectMissingSectors(cluster);
 
-            // Step 3: Add extra gates up to maxGatesPerCluster by chance
+            // Step 4: Add extra gates up to maxGatesPerCluster by chance
+            AddExtraGates(clusters, edges, mstEdges);
+        }
+
+        private void AddExtraGates(List<Cluster> clusters, List<(Cluster A, Cluster B, float Distance)> edges, List<(Cluster A, Cluster B, float Distance)> mstEdges)
+        {
+            // Precompute distance-based neighbor map
+            var clusterIndex = clusters.ToDictionary(c => c, clusters.IndexOf);
+            var neighborMap = clusters.ToDictionary(
+                c => c,
+                c => edges
+                        .Where(e => e.A == c || e.B == c)
+                        .Select(e => e.A == c ? e.B : e.A)
+                        .OrderBy(n => Distance(c.Position, n.Position))
+                        .ToList()
+            );
+
+            // Track connections to avoid duplicates
+            var connectedPairs = new HashSet<(Cluster, Cluster)>(
+                mstEdges.Select(e => (e.A, e.B)).Concat(mstEdges.Select(e => (e.B, e.A)))
+            );
+
+            int count = 0;
+            foreach (var cluster in clusters)
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    if (_random.Next(100) > _settings.GateMultiChancePerSector)
+                        continue;
+
+                    int currentGates = sector.Zones.Sum(z => z.Gates.Count);
+                    int maxExtra = _settings.MaxGatesPerSector - currentGates;
+
+                    for (int i = 0; i < maxExtra; i++)
+                    {
+                        // Try to find a nearby unconnected cluster
+                        foreach (var neighbor in neighborMap[cluster])
+                        {
+                            var key = (cluster, neighbor);
+                            if (connectedPairs.Contains(key))
+                                continue;
+
+                            var neighborSector = neighbor.Sectors.FirstOrDefault(s => s.Zones.All(z => z.Gates.Count < _settings.MaxGatesPerSector));
+                            if (neighborSector == null)
+                                continue;
+
+                            // Connect them
+                            AddGate(cluster, sector, neighbor, neighborSector);
+                            connectedPairs.Add((cluster, neighbor));
+                            connectedPairs.Add((neighbor, cluster));
+                            count++;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private void ConnectMissingSectors(Cluster cluster)
