@@ -58,7 +58,7 @@ namespace X4SectorCreator
 
             TxtSearch.EnableTextSearch(() => AllClusters.Values.ToList(), a => a.Name, ApplyFilter);
             Disposed += MainForm_Disposed;
-            ClusterCollection clusterCollection = InitAllClusters();
+            ClusterCollection clusterCollection = InitAllVanillaClusters();
 
             // Set background visual mapping
             BackgroundVisualMapping = AllClusters
@@ -116,7 +116,7 @@ namespace X4SectorCreator
         }
 
         #region Initialization
-        public ClusterCollection InitAllClusters(bool replaceAllClusters = true)
+        public ClusterCollection InitAllVanillaClusters(bool replaceAllClusters = true)
         {
             string json = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
             ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.JsonSerializerOptions);
@@ -448,7 +448,7 @@ namespace X4SectorCreator
                 List<Cluster> clusters = [.. AllClusters.Values];
 
                 // Collects all changes done to base game content
-                ClusterCollection nonModifiedBaseGameData = InitAllClusters(false);
+                ClusterCollection nonModifiedBaseGameData = InitAllVanillaClusters(false);
                 VanillaChanges vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
 
                 // Generate all xml files
@@ -575,7 +575,7 @@ namespace X4SectorCreator
             }
 
             // Re-initialize all clusters properly
-            _ = InitAllClusters();
+            _ = InitAllVanillaClusters();
 
             // Set the default value to be custom
             UpdateClusterOptions();
@@ -603,7 +603,7 @@ namespace X4SectorCreator
                         .Where(a => !a.IsBaseGame)
                         .ToList();
 
-                    ClusterCollection nonModifiedBaseGameData = InitAllClusters(false);
+                    ClusterCollection nonModifiedBaseGameData = InitAllVanillaClusters(false);
                     HashSet<string> gateConnections = nonModifiedBaseGameData
                         .Clusters
                         .SelectMany(a => a.Sectors)
@@ -721,7 +721,7 @@ namespace X4SectorCreator
                         SupportVanillaChangesInConfigImport(configuration);
                     }
 
-                    Lazy<Cluster[]> vanillaClustersLazy = new(() => InitAllClusters(false).Clusters.Where(a => a.IsBaseGame).ToArray());
+                    Lazy<Cluster[]> vanillaClustersLazy = new(() => InitAllVanillaClusters(false).Clusters.Where(a => a.IsBaseGame).ToArray());
 
                     // Import new configuration
                     foreach (Cluster cluster in clusters)

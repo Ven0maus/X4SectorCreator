@@ -105,7 +105,7 @@ namespace X4SectorCreator.Forms
             Dictionary<(int, int), Cluster> mergedClusters = null;
             if (!chkCustomGalaxy.Checked)
             {
-                _baseGameClusters ??= MainForm.Instance.InitAllClusters(false)
+                _baseGameClusters ??= MainForm.Instance.InitAllVanillaClusters(false)
                         .Clusters.ToDictionary(a => (a.Position.X, a.Position.Y));
 
                 // Perform validation to avoid key collisions

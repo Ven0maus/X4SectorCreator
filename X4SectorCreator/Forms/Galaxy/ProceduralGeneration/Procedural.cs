@@ -16,13 +16,22 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
         private readonly ScifiNameGen.NameStyle[] _nameStyles = Enum.GetValues<ScifiNameGen.NameStyle>();
         private static int _count = 0;
 
+        private static HashSet<string> _vanillaBackgroundMappings;
+
         protected Cluster CreateClusterAndSectors(Point coordinate)
         {
+            _vanillaBackgroundMappings ??= MainForm.Instance.InitAllVanillaClusters(false).Clusters
+                .Where(a => string.IsNullOrWhiteSpace(a.Dlc))
+                .Select(a => a.BackgroundVisualMapping)
+                .Where(a => !string.IsNullOrWhiteSpace(a))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
             Cluster cluster = new()
             {
                 Id = ++_count,
                 Position = coordinate,
-                BackgroundVisualMapping = MainForm.Instance.BackgroundVisualMapping.Values.RandomOrDefault(Random),
+                BackgroundVisualMapping = _vanillaBackgroundMappings.RandomOrDefault(Random),
+                Soundtrack = SoundtrackCollection.Instance.Soundtracks["vanilla"].RandomOrDefault(Random),
                 Sectors = [],
                 Name = _nameGenerator.Generate(_nameStyles[Random.Next(_nameStyles.Length)], Random.Next(100) < 25)
             };
