@@ -1,4 +1,5 @@
 ﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgorithms;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlgorithms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
@@ -15,13 +16,19 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
             mst.Generate(clusters);
         }
 
-        public static void CreateRegions(List<Cluster> clusters)
+        public static void CreateRegions(List<Cluster> clusters, ProceduralSettings settings)
         {
             // Clear all existing regions
             foreach (var zone in clusters.SelectMany(c => c.Sectors))
                 zone.Regions.Clear();
 
+            var randomGen = new BalancedRegionDistribution(settings, settings.Resources);
+            foreach (var cluster in clusters)
+                foreach (var sector in cluster.Sectors)
+                    randomGen.GenerateMinerals(clusters, cluster, sector);
 
+            // Prevent sectors that have no regions and nearby neighbors have too little resources
+            randomGen.PreventRegionStarvedSectors(clusters);
         }
 
         public static void CreateCustomFactions(List<Cluster> clusters)

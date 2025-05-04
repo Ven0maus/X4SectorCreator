@@ -36,10 +36,6 @@
             TxtSeed = new TextBox();
             label2 = new Label();
             label3 = new Label();
-            label4 = new Label();
-            NrRegionSpawnChance = new NumericUpDown();
-            NrMaxRegionPerSector = new NumericUpDown();
-            label5 = new Label();
             RegionResourceRarity = new DataGridView();
             Resource = new DataGridViewTextBoxColumn();
             Rarity = new DataGridViewTextBoxColumn();
@@ -62,6 +58,8 @@
             label19 = new Label();
             CmbCustomFactionDistribution = new ComboBox();
             RegionPanel = new Panel();
+            CmbRegionDistribution = new ComboBox();
+            label33 = new Label();
             BtnGenerateRegions = new Button();
             panel1 = new Panel();
             ChkCustomFactions = new CheckBox();
@@ -108,10 +106,6 @@
             ChkGenerateConnections = new CheckBox();
             BtnGenerateAll = new Button();
             BtnExit = new Button();
-            label33 = new Label();
-            CmbRegionDistribution = new ComboBox();
-            ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrFactionMin).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrFactionMax).BeginInit();
@@ -218,41 +212,6 @@
             label3.Size = new Size(146, 21);
             label3.TabIndex = 7;
             label3.Text = "Generation Options";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(6, 7);
-            label4.Name = "label4";
-            label4.Size = new Size(105, 15);
-            label4.TabIndex = 9;
-            label4.Text = "Chance per sector:";
-            // 
-            // NrRegionSpawnChance
-            // 
-            NrRegionSpawnChance.Location = new Point(113, 4);
-            NrRegionSpawnChance.Name = "NrRegionSpawnChance";
-            NrRegionSpawnChance.Size = new Size(41, 23);
-            NrRegionSpawnChance.TabIndex = 10;
-            NrRegionSpawnChance.Value = new decimal(new int[] { 15, 0, 0, 0 });
-            // 
-            // NrMaxRegionPerSector
-            // 
-            NrMaxRegionPerSector.Location = new Point(113, 30);
-            NrMaxRegionPerSector.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            NrMaxRegionPerSector.Name = "NrMaxRegionPerSector";
-            NrMaxRegionPerSector.Size = new Size(41, 23);
-            NrMaxRegionPerSector.TabIndex = 12;
-            NrMaxRegionPerSector.Value = new decimal(new int[] { 2, 0, 0, 0 });
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(23, 32);
-            label5.Name = "label5";
-            label5.Size = new Size(88, 15);
-            label5.TabIndex = 11;
-            label5.Text = "Max Per Sector:";
             // 
             // RegionResourceRarity
             // 
@@ -447,16 +406,31 @@
             RegionPanel.Controls.Add(label33);
             RegionPanel.Controls.Add(BtnGenerateRegions);
             RegionPanel.Controls.Add(RegionResourceRarity);
-            RegionPanel.Controls.Add(label4);
-            RegionPanel.Controls.Add(NrRegionSpawnChance);
-            RegionPanel.Controls.Add(label5);
-            RegionPanel.Controls.Add(NrMaxRegionPerSector);
             RegionPanel.Controls.Add(label6);
             RegionPanel.Controls.Add(label14);
             RegionPanel.Location = new Point(302, 32);
             RegionPanel.Name = "RegionPanel";
             RegionPanel.Size = new Size(279, 258);
             RegionPanel.TabIndex = 37;
+            // 
+            // CmbRegionDistribution
+            // 
+            CmbRegionDistribution.FormattingEnabled = true;
+            CmbRegionDistribution.Items.AddRange(new object[] { "Balanced" });
+            CmbRegionDistribution.Location = new Point(79, 3);
+            CmbRegionDistribution.Name = "CmbRegionDistribution";
+            CmbRegionDistribution.Size = new Size(113, 23);
+            CmbRegionDistribution.TabIndex = 41;
+            CmbRegionDistribution.Text = "Balanced";
+            // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.Location = new Point(6, 7);
+            label33.Name = "label33";
+            label33.Size = new Size(72, 15);
+            label33.TabIndex = 41;
+            label33.Text = "Distribution:";
             // 
             // BtnGenerateRegions
             // 
@@ -943,25 +917,6 @@
             BtnExit.UseVisualStyleBackColor = true;
             BtnExit.Click += BtnExit_Click;
             // 
-            // label33
-            // 
-            label33.AutoSize = true;
-            label33.Location = new Point(178, 11);
-            label33.Name = "label33";
-            label33.Size = new Size(72, 15);
-            label33.TabIndex = 41;
-            label33.Text = "Distribution:";
-            // 
-            // CmbRegionDistribution
-            // 
-            CmbRegionDistribution.FormattingEnabled = true;
-            CmbRegionDistribution.Items.AddRange(new object[] { "Random" });
-            CmbRegionDistribution.Location = new Point(160, 29);
-            CmbRegionDistribution.Name = "CmbRegionDistribution";
-            CmbRegionDistribution.Size = new Size(113, 23);
-            CmbRegionDistribution.TabIndex = 41;
-            CmbRegionDistribution.Text = "Random";
-            // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -987,8 +942,6 @@
             MinimizeBox = false;
             Name = "ProceduralGalaxyForm";
             Text = "Procedural Galaxy Generator";
-            ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).EndInit();
-            ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).EndInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrFactionMin).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrFactionMax).EndInit();
@@ -1036,10 +989,6 @@
         private TextBox TxtSeed;
         private Label label2;
         private Label label3;
-        private Label label4;
-        private NumericUpDown NrRegionSpawnChance;
-        private NumericUpDown NrMaxRegionPerSector;
-        private Label label5;
         private DataGridView RegionResourceRarity;
         private Label label6;
         private Label label7;

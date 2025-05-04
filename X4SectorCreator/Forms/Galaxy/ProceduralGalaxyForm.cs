@@ -11,13 +11,14 @@ namespace X4SectorCreator.Forms.Galaxy
         private readonly Random _random = new();
         private readonly Dictionary<string, string> _defaultResources = new()
         {
-            { "ore", "0.5" },
-            { "silicon", "0.5" },
+            { "ore", "0.6" },
+            { "silicon", "0.65" },
             { "ice", "0.3" },
-            { "methane", "0.5" },
+            { "nividium", "0.01" },
+            { "methane", "0.52" },
             { "hydrogen", "0.5" },
-            { "helium", "0.5" },
-            { "scrap", "0.1" },
+            { "helium", "0.47" },
+            { "rawscrap", "0.05" },
         };
 
         private readonly Dictionary<string, Type> _mapAlgorithms = new(StringComparer.OrdinalIgnoreCase);
@@ -131,7 +132,14 @@ namespace X4SectorCreator.Forms.Galaxy
         {
             if (!ChkRegions.Checked) return;
             var clusters = MainForm.Instance.AllClusters.Values.ToList();
-            GalaxyGenerator.CreateRegions(clusters);
+
+            var settings = new ProceduralSettings
+            {
+                Seed = GetSeed(),
+                Resources = _defaultResources
+            };
+
+            GalaxyGenerator.CreateRegions(clusters, settings);
             SetProceduralGalaxy(clusters);
         }
 
@@ -179,8 +187,15 @@ namespace X4SectorCreator.Forms.Galaxy
 
             // Regions
             if (ChkRegions.Checked)
-                GalaxyGenerator.CreateRegions(clusters);
+            {
+                var settings = new ProceduralSettings
+                {
+                    Seed = GetSeed(),
+                    Resources = _defaultResources
+                };
 
+                GalaxyGenerator.CreateRegions(clusters, settings);
+            }
             // Factions
             if (ChkFactions.Checked)
             {

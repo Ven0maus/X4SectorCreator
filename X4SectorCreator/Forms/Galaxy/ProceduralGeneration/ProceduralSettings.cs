@@ -27,5 +27,8 @@
         public int MinGatesPerSector { get; set; }
         public int MaxGatesPerSector { get; set; }
         public int GateMultiChancePerSector { get; set; }
+
+        /* Region Options */
+        public Dictionary<string, string> Resources { get; set; }
     }
 }

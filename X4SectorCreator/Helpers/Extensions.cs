@@ -1,4 +1,5 @@
-﻿using System.Drawing.Drawing2D;
+﻿using System;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Numerics;
 using System.Text;
@@ -328,6 +329,52 @@ namespace X4SectorCreator.Helpers
             long dx = p1.X - p2.X;
             long dy = p1.Y - p2.Y;
             return dx * dx + dy * dy;
+        }
+
+        public static IEnumerable<T> TakeRandom<T>(this IEnumerable<T> source, int amount, Random random = null)
+        {
+            if (source == null || amount <= 0)
+                return Enumerable.Empty<T>();
+
+            var list = source.ToList();
+            int count = list.Count;
+            if (count == 0)
+                return Enumerable.Empty<T>();
+
+            amount = Math.Min(amount, count);
+            random ??= new Random();
+
+            // Partial Fisher-Yates shuffle
+            for (int i = 0; i < amount; i++)
+            {
+                int j = random.Next(i, count); // pick from [i, count)
+                (list[i], list[j]) = (list[j], list[i]);
+            }
+
+            return list.Take(amount);
+        }
+
+        public static T RandomOrDefault<T>(this IEnumerable<T> source, int amount, Random random = null)
+        {
+            if (source == null || amount <= 0)
+                return default;
+
+            var list = source.ToList();
+            int count = list.Count;
+            if (count == 0)
+                return default;
+
+            amount = Math.Min(amount, count);
+            random ??= new Random();
+
+            // Partial Fisher-Yates shuffle
+            for (int i = 0; i < amount; i++)
+            {
+                int j = random.Next(i, count); // pick from [i, count)
+                (list[i], list[j]) = (list[j], list[i]);
+            }
+
+            return list.Take(amount).FirstOrDefault();
         }
     }
 }
