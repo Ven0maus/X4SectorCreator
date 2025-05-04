@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Text.Json;
+using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -6,13 +8,21 @@ using Region = X4SectorCreator.Objects.Region;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlgorithms
 {
-    internal class BalancedRegionDistribution(ProceduralSettings settings, Dictionary<string, string> resources)
+    internal class BalancedRegionDistribution
     {
-        private readonly List<(string Resource, float Weight)> _weightedResources = resources
+        public BalancedRegionDistribution(ProceduralSettings settings, Dictionary<string, string> resources)
+        {
+            _settings = settings;
+            _random = new(settings.Seed);
+            _weightedResources = resources
                 .Select(kvp => (kvp.Key, float.Parse(kvp.Value, CultureInfo.InvariantCulture)))
                 .ToList();
-        private readonly Random _random = new(settings.Seed);
-        private readonly ProceduralSettings _settings = settings;
+            _regionDefinitionFieldsCache = InitializeFieldsCache();
+        }
+
+        private readonly List<(string Resource, float Weight)> _weightedResources;
+        private readonly Random _random;
+        private readonly ProceduralSettings _settings;
 
         private static readonly Dictionary<string, double> _yieldDensities = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -32,7 +42,35 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             ["highest"] = 60000
         };
 
-        private readonly Dictionary<string, RegionDefinition> _regionDefinitions = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, List<RegionDefinition>> _regionDefinitions = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, List<FieldObj>> _regionDefinitionFieldsCache;
+
+        private Dictionary<string, List<FieldObj>> InitializeFieldsCache()
+        {
+            var cache = new Dictionary<string, List<FieldObj>>(StringComparer.OrdinalIgnoreCase);
+            var json = File.ReadAllText(Constants.DataPaths.PredefinedFieldMappingFilePath);
+            var fields = JsonSerializer.Deserialize<List<FieldObj>>(json, ConfigSerializer.JsonSerializerOptions)
+                .ToArray();
+
+            foreach (var resource in _weightedResources.Select(a => a.Resource))
+            {
+                var fieldList = new List<FieldObj>();
+                cache[resource] = fieldList;
+
+                foreach (var field in fields)
+                {
+                    if (resource.Equals("rawscrap", StringComparison.OrdinalIgnoreCase) && field.Type != null && 
+                        field.Type.Equals("debris", StringComparison.OrdinalIgnoreCase) && !field.GroupRef.Contains("station"))
+                        fieldList.Add(field);
+                    else if (field.GroupRef != null && field.GroupRef.Contains(resource, StringComparison.OrdinalIgnoreCase) && !field.GroupRef.Contains("nores"))
+                        fieldList.Add(field);
+                    else if (field.Resources != null && field.Resources.Contains(resource, StringComparison.OrdinalIgnoreCase))
+                        fieldList.Add(field);
+                }
+            }
+
+            return cache;
+        }
 
         public void GenerateMinerals(List<Cluster> clusters, Cluster cluster, Sector sector)
         {
@@ -98,26 +136,56 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
         private RegionDefinition GetOrCreateRegionDefinition(string resource, string yield)
         {
             string definitionName = $"{resource}_{yield}";
-            if (!_regionDefinitions.TryGetValue(definitionName, out var definition))
+            if (!_regionDefinitions.TryGetValue(definitionName, out var definitions))
             {
-                _regionDefinitions[definitionName] = definition = new RegionDefinition
+                _regionDefinitions[definitionName] = definitions = [];
+
+                var uniqueFieldSets = new HashSet<string>(); // To store unique field key signatures
+
+                int maxAttempts = 20; // Prevent infinite loop in case of limited combinations
+                int attempts = 0;
+
+                while (definitions.Count < 4 && attempts < maxAttempts)
                 {
-                    Guid = new Guid().ToString(),
-                    Name = definitionName,
-                    BoundaryType = "cylinder",
-                    Seed = _settings.Seed.ToString(),
-                    Resources =
-                    [
-                        new()
-                        {
-                            Ware = resource,
-                            Yield = yield
-                        }
-                    ]
-                };
-                RegionDefinitionForm.RegionDefinitions.Add(definition);
+                    var definition = new RegionDefinition
+                    {
+                        Guid = Guid.NewGuid().ToString(),
+                        Name = definitionName + $"_{definitions.Count + 1}",
+                        BoundaryType = "cylinder",
+                        Density = "1.5",
+                        Rotation = "0",
+                        NoiseScale = _random.Next(2500, 10001).ToString(),
+                        MinNoiseValue = "0.15",
+                        MaxNoiseValue = "1",
+                        Seed = _settings.Seed.ToString(),
+                        Resources =
+                        [
+                            new()
+                            {
+                                Ware = resource,
+                                Yield = yield
+                            }
+                        ]
+                    };
+
+                    SetupRegionDefinitionFields(definition);
+
+                    // Create a unique signature for the set of fields (e.g., sorted field names/IDs)
+                    string fieldKey = string.Join(",", definition.Fields
+                        .Select(f => f.GroupRef ?? f.Ref)
+                        .OrderBy(x => x));
+
+                    if (uniqueFieldSets.Add(fieldKey)) // Only add if this field combination is new
+                    {
+                        definitions.Add(definition);
+                        RegionDefinitionForm.RegionDefinitions.Add(definition);
+                    }
+
+                    attempts++;
+                }
             }
-            return definition;
+
+            return definitions.RandomOrDefault(); // Assumes caller just wants any definition
         }
 
         private string PickYield(double richness)
@@ -197,6 +265,50 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
 
             // Fallback (should never hit)
             return adjustedResources.Last().Resource;
+        }
+
+        private void SetupRegionDefinitionFields(RegionDefinition regionDefinition)
+        {
+            var resources = regionDefinition.Resources
+                .Select(a => a.Ware)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            var gases = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "methane", "helium", "hydrogen" };
+            var fields = new List<FieldObj>();
+            foreach (var resource in resources)
+            {
+                var fieldObjects = _regionDefinitionFieldsCache[resource];
+                if (gases.Contains(resource))
+                {
+                    // Gases can take only one
+                    var takenField = fieldObjects.RandomOrDefault() ?? throw new Exception($"Missing field obj for resource \"{resource}\".");
+                    fields.Add(takenField);
+                }
+                else
+                {
+                    // Others can take multiple
+                    var values = fieldObjects.ToList();
+                    var amount = _random.Next(1, fieldObjects.Count);
+                    if (resource == "rawscrap")
+                        amount = _random.Next(1, fieldObjects.Count / 2);
+
+                    for (int i=0; i < amount; i++)
+                    {
+                        var selected = values.RandomOrDefault();
+                        if (selected != null)
+                        {
+                            values.Remove(selected);
+                            fields.Add(selected);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            regionDefinition.Fields.AddRange(fields);
         }
 
         public void PreventRegionStarvedSectors(List<Cluster> clusters)

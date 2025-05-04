@@ -30,6 +30,14 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
             // Prevent sectors that have no regions and nearby neighbors have too little resources
             randomGen.PreventRegionStarvedSectors(clusters);
+
+            // Cleanup any unused region definitions from generation
+            var definitions = clusters
+                .SelectMany(a => a.Sectors)
+                .SelectMany(a => a.Regions)
+                .Select(a => a.Definition)
+                .ToHashSet();
+            RegionDefinitionForm.RegionDefinitions.RemoveAll(a => !definitions.Contains(a));
         }
 
         public static void CreateCustomFactions(List<Cluster> clusters)
