@@ -88,7 +88,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                     Position = position,
                     Definition = definition,
                     BoundaryLinear = _random.Next(2500, 15001).ToString(),
-                    BoundaryRadius = ((int)(radius * (0.3 * _random.NextDouble()))).ToString()
+                    BoundaryRadius = ((int)(radius * (0.4 * (0.6 + _random.NextDouble())))).ToString()
                 };
                 sector.Regions.Add(region);
                 nearbyResources.Add(resource);
@@ -246,7 +246,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                                     Position = position,
                                     Definition = definition,
                                     BoundaryLinear = _random.Next(2500, 15001).ToString(),
-                                    BoundaryRadius = ((int)(radius * (0.3 * _random.NextDouble()))).ToString()
+                                    BoundaryRadius = ((int)(radius * (0.4 * (0.6 + _random.NextDouble())))).ToString()
                                 };
                                 nearbyResources.Add(resource);
                                 sector.Regions.Add(region);
