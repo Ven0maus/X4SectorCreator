@@ -123,11 +123,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
         private string PickYield(double richness)
         {
             if (richness < 0.4f)
-                return _yieldDensities.Where(a => a.Value >= 0.2 && a.Value <= 16).Select(a => a.Key).RandomOrDefault(1, _random);
+                return _yieldDensities.Where(a => a.Value >= 0.2 && a.Value <= 16).Select(a => a.Key).RandomOrDefault(_random);
             else if (richness < 0.75f)
-                return _yieldDensities.Where(a => a.Value >= 16 && a.Value <= 32).Select(a => a.Key).RandomOrDefault(1, _random);
+                return _yieldDensities.Where(a => a.Value >= 16 && a.Value <= 32).Select(a => a.Key).RandomOrDefault(_random);
             else 
-                return _yieldDensities.Where(a => a.Value >= 32 && a.Value <= 60000).Select(a => a.Key).RandomOrDefault(1, _random);
+                return _yieldDensities.Where(a => a.Value >= 32 && a.Value <= 60000).Select(a => a.Key).RandomOrDefault(_random);
         }
 
         private static List<Cluster> GetNearbyClusters(List<Cluster> clusters, Cluster targetCluster, float range)

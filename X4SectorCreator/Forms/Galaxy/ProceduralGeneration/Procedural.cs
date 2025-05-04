@@ -22,6 +22,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
             {
                 Id = ++_count,
                 Position = coordinate,
+                BackgroundVisualMapping = MainForm.Instance.BackgroundVisualMapping.Values.RandomOrDefault(Random),
                 Sectors = [],
                 Name = _nameGenerator.Generate(_nameStyles[Random.Next(_nameStyles.Length)], Random.Next(100) < 25)
             };
@@ -35,7 +36,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
                     Id = cluster.Sectors.Count + 1,
                     DiameterRadius = Random.Next(200, 500) * 2 * 1000, // in km
                     Name = numSectors == 1 ? cluster.Name :
-                        cluster.Name + " " + (cluster.Sectors.Count + 1).ToRomanString()
+                        cluster.Name + " " + (cluster.Sectors.Count + 1).ToRomanString(),
+                    Sunlight = DetermineSunlightSample()
                 };
                 cluster.Sectors.Add(sector);
             }
@@ -57,6 +59,22 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
                 }
             }
             return [.. uniquePoints];
+        }
+
+        private static readonly double TwoPi = 2.0 * Math.PI;
+        private float DetermineSunlightSample()
+        {
+            const int min = 0;
+            const int max = 300;
+            const int mean = 100;
+            const int stdDev = 20;
+
+            double u1 = Random.NextDouble();
+            double u2 = Random.NextDouble();
+            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(TwoPi * u2);
+            int result = (int)(mean + stdDev * randStdNormal + 0.5);
+            result = result < min ? min : result > max ? max : result;
+            return (float)result / 100;
         }
     }
 }
