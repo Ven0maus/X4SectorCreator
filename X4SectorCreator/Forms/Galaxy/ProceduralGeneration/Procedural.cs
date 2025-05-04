@@ -48,6 +48,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
                         cluster.Name + " " + (cluster.Sectors.Count + 1).ToRomanString(),
                     Sunlight = DetermineSunlightSample()
                 };
+                sector.InitializeOrUpdateZones();
                 cluster.Sectors.Add(sector);
             }
 

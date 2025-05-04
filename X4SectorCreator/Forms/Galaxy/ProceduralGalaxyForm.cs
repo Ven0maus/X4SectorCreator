@@ -24,6 +24,8 @@ namespace X4SectorCreator.Forms.Galaxy
         private readonly Dictionary<string, Type> _mapAlgorithms = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, TabPage> _originalTabPageNames = new(StringComparer.OrdinalIgnoreCase);
 
+        private bool _mapGenerated = false;
+
         public ProceduralGalaxyForm()
         {
             InitializeComponent();
@@ -122,10 +124,14 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void BtnGenerate_Click(object sender, EventArgs e)
         {
+            var currentMapSeed = GetSeed(TxtMapSeed);
+
             RandomizeSeeds();
 
-            // Map
-            var clusters = GenerateClusters();
+            var regeneratedMap = (!_mapGenerated || currentMapSeed != GetSeed(TxtMapSeed));
+            // Generate map if not generated before or seed changed
+            List<Cluster> clusters = regeneratedMap ? 
+                GenerateClusters() : [.. MainForm.Instance.AllClusters.Values];
 
             // Connections
             if (ChkGenerateConnections.Checked)
@@ -152,6 +158,12 @@ namespace X4SectorCreator.Forms.Galaxy
 
                 GalaxyGenerator.CreateRegions(clusters, settings);
             }
+            else
+            {
+                if (regeneratedMap)
+                    RegionDefinitionForm.RegionDefinitions.Clear();
+            }
+
             // Factions
             if (ChkFactions.Checked)
             {
@@ -204,7 +216,9 @@ namespace X4SectorCreator.Forms.Galaxy
 
             var selectedAlgorithm = CmbClusterDistribution.SelectedItem as string;
             var procedural = (Procedural)Activator.CreateInstance(_mapAlgorithms[selectedAlgorithm], settings);
-            return procedural.Generate().ToList();
+            var clusters = procedural.Generate().ToList();
+            _mapGenerated = true;
+            return clusters;
         }
 
         private void BtnOpenSectorMap_Click(object sender, EventArgs e)
