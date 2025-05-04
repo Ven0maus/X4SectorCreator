@@ -53,6 +53,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
 
         private void AddExtraGates(List<Cluster> clusters, List<(Cluster A, Cluster B, float Distance)> edges, List<(Cluster A, Cluster B, float Distance)> mstEdges)
         {
+            if (_settings.MaxGatesPerSector == 1) return;
+
             // Precompute distance-based neighbor map
             var clusterIndex = clusters.ToDictionary(c => c, clusters.IndexOf);
             var neighborMap = clusters.ToDictionary(
@@ -124,13 +126,26 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             }
         }
 
+        private static Point CombineWithDirection(Point position, Point direction)
+        {
+            return new Point(position.X + direction.X, position.Y + direction.Y);
+        }
+
+        private static Point GetDirection(Point source, Point target)
+        {
+            return new Point(source.X -  target.X, source.Y - target.Y);
+        }
+
         private void AddGate(Cluster from, Sector fromSector, Cluster to, Sector toSector)
         {
             var sourceSector = fromSector;
             var targetSector = toSector;
 
+            var directionSource = CombineWithDirection(from.Position, sourceSector.PlacementDirection);
+            var directionTarget = CombineWithDirection(to.Position, targetSector.PlacementDirection);
+
             // Source
-            var sourceZone = new Zone { Position = CalculateValidGatePosition(fromSector) };
+            var sourceZone = new Zone { Position = CalculateValidGatePosition(fromSector, GetDirection(directionTarget, directionSource)) };
             var sourceGate = new Gate
             {
                 Id = sourceSector.Zones.SelectMany(a => a.Gates).Count() + 1,
@@ -139,7 +154,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             };
 
             // Target
-            var targetZone = new Zone { Position = CalculateValidGatePosition(toSector) };
+            var targetZone = new Zone { Position = CalculateValidGatePosition(toSector, GetDirection(directionSource, directionTarget)) };
             var targetGate = new Gate
             {
                 Id = targetSector.Zones.SelectMany(a => a.Gates).Count() + 1,
@@ -168,10 +183,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             return $"c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}";
         }
 
-        private Point CalculateValidGatePosition(Sector sector)
+        private Point CalculateValidGatePosition(Sector sector, Point direction)
         {
-            // TODO: Adjust gate placement to border more between source/target sector for improved realism
-
             const int maxAttempts = 500;
 
             // We don't want diameter but radius so half the diameter
@@ -184,19 +197,23 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
                 .Select(g => g.Position)
                 .ToList();
 
-            int numGates = sector.Zones.Count(a => a.Gates.Count > 0) + 1;
+            // Get angle from center (0,0) toward direction
+            double targetAngle = Math.Atan2(direction.Y, direction.X);
 
             for (int i = 0; i < maxAttempts; i++)
             {
-                // Random polar coordinates
-                double angle = (2 * Math.PI / numGates) * i + _random.NextDouble() * (2 * Math.PI / numGates);
-                double distance = Math.Sqrt(_random.NextDouble()) * radius;
+                // Bias angle toward target direction ±30 degrees
+                double angleOffset = (_random.NextDouble() - 0.5) * (Math.PI / 3); // ±30 degrees
+                double angle = targetAngle + angleOffset;
+
+                // Bias distance toward outer 35-80% of radius
+                double distance = radius * (0.35 + 0.4 * _random.NextDouble());
 
                 int x = (int)Math.Round(Math.Cos(angle) * distance);
                 int y = (int)Math.Round(Math.Sin(angle) * distance);
                 var candidate = new Point(x, y);
 
-                if (!IsPointInsideFlatToppedHex(candidate, radius, 0.5f))
+                if (!IsPointInsideFlatToppedHex(candidate, radius, 0.3f))
                     continue;
 
                 bool tooClose = existingPositions.Any(pos => Distance(pos, candidate) < minDistance);

@@ -21,10 +21,27 @@ namespace X4SectorCreator.Objects
         public SectorPlacement Placement { get; set; }
 
         [JsonIgnore]
+        public Point PlacementDirection => DeterminePlacementDirection();
+
+        [JsonIgnore]
         public (long X, long Y) Offset { get; set; }
 
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);
+
+        private Point DeterminePlacementDirection()
+        {
+            return Placement switch
+            {
+                SectorPlacement.TopLeft => new Point(-1, 1),
+                SectorPlacement.TopRight => new Point(1, 1),
+                SectorPlacement.BottomLeft => new Point(-1, -1),
+                SectorPlacement.BottomRight => new Point(1, -1),
+                SectorPlacement.MiddleLeft => new Point(-1, 0),
+                SectorPlacement.MiddleRight => new Point(1, 0),
+                _ => throw new NotImplementedException($"\"{Placement}\" not implemented."),
+            };
+        }
 
         /// <summary>
         /// Called when a sector is creator or the diameter radius is updated
