@@ -33,6 +33,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
 
         public void GenerateStations(List<Cluster> clusters)
         {
+            var allFactions = FactionsForm.AllCustomFactions;
+            var pirates = allFactions.Where(a => a.Value.Tags.Contains("plunder")).ToArray();
+            var main = allFactions.Except(pirates).ToArray();
+
             // For each main faction, define a starting cluster
 
             // Place wharf and shipyard in starting cluster (both in 1 sector, or divide over multiple sectors, if cluster is a multi sector)

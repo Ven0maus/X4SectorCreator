@@ -49,9 +49,9 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
             var balancedGen = new BalancedFactionDistribution(settings);
             balancedGen.GenerateFactions(clusters);
-            balancedGen.GenerateJobs(clusters);
-            balancedGen.GenerateFactories(clusters);
             balancedGen.GenerateStations(clusters);
+            balancedGen.GenerateFactories(clusters);
+            balancedGen.GenerateJobs(clusters);
         }
     }
 }
