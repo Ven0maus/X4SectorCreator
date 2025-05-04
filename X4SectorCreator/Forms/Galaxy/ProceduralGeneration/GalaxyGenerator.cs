@@ -43,9 +43,9 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
         public static void CreateFactions(List<Cluster> clusters, ProceduralSettings settings)
         {
-            Forms.FactoriesForm.AllFactories.Clear();
-            Forms.JobsForm.AllJobs.Clear();
-            Forms.FactionsForm.AllCustomFactions.Clear();
+            FactoriesForm.AllFactories.Clear();
+            JobsForm.AllJobs.Clear();
+            FactionsForm.AllCustomFactions.Clear();
 
             var balancedGen = new BalancedFactionDistribution(settings);
             balancedGen.GenerateFactions(clusters);

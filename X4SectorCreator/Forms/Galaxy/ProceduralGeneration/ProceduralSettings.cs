@@ -2,9 +2,6 @@
 {
     public class ProceduralSettings
     {
-        private Random _random;
-        public Random Random => _random ??= new Random(Seed);
-
         public int Seed { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }

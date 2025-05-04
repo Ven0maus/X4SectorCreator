@@ -375,5 +375,7 @@ namespace X4SectorCreator.Helpers
 
             return list.Take(1).FirstOrDefault();
         }
+
+        public static T Pick<T>(this T[] array, Random random) => array[random.Next(array.Length)];
     }
 }
