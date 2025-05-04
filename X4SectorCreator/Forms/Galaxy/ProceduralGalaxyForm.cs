@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using X4SectorCreator.Forms.Galaxy.ProceduralGeneration;
-using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.MapAlgorithms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 

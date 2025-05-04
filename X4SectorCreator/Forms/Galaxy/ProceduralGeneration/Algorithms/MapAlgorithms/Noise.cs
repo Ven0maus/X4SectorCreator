@@ -4,7 +4,7 @@ using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
-namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
+namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.MapAlgorithms
 {
     internal class Noise(ProceduralSettings settings) : Procedural(settings)
     {
@@ -18,7 +18,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
                 var gridCoordinate = coordinate.HexToSquareGridCoordinate();
 
                 // Off-set negative coordinates to fit within the grid
-                gridCoordinate = new Point(Settings.Width /2 + gridCoordinate.X, Settings.Height /2 + gridCoordinate.Y);
+                gridCoordinate = new Point(Settings.Width / 2 + gridCoordinate.X, Settings.Height / 2 + gridCoordinate.Y);
 
                 var noise = Math.Clamp(noiseMap[gridCoordinate.Y * Settings.Width + gridCoordinate.X], 0f, 1f);
                 if (noise < Settings.NoiseThreshold)
@@ -46,7 +46,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.MapAlgorithms
             );
 
             int stride = data.Stride;
-            IntPtr ptr = data.Scan0;
+            nint ptr = data.Scan0;
             int bytes = Math.Abs(stride) * height;
             byte[] rgbValues = new byte[bytes];
 

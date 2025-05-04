@@ -108,6 +108,8 @@
             ChkGenerateConnections = new CheckBox();
             BtnGenerateAll = new Button();
             BtnExit = new Button();
+            label33 = new Label();
+            CmbRegionDistribution = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
@@ -441,6 +443,8 @@
             // RegionPanel
             // 
             RegionPanel.BackColor = SystemColors.ButtonHighlight;
+            RegionPanel.Controls.Add(CmbRegionDistribution);
+            RegionPanel.Controls.Add(label33);
             RegionPanel.Controls.Add(BtnGenerateRegions);
             RegionPanel.Controls.Add(RegionResourceRarity);
             RegionPanel.Controls.Add(label4);
@@ -939,6 +943,25 @@
             BtnExit.UseVisualStyleBackColor = true;
             BtnExit.Click += BtnExit_Click;
             // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.Location = new Point(178, 11);
+            label33.Name = "label33";
+            label33.Size = new Size(72, 15);
+            label33.TabIndex = 41;
+            label33.Text = "Distribution:";
+            // 
+            // CmbRegionDistribution
+            // 
+            CmbRegionDistribution.FormattingEnabled = true;
+            CmbRegionDistribution.Items.AddRange(new object[] { "Random" });
+            CmbRegionDistribution.Location = new Point(160, 29);
+            CmbRegionDistribution.Name = "CmbRegionDistribution";
+            CmbRegionDistribution.Size = new Size(113, 23);
+            CmbRegionDistribution.TabIndex = 41;
+            CmbRegionDistribution.Text = "Random";
+            // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1085,5 +1108,7 @@
         private Label label31;
         private Label label32;
         private NumericUpDown NrMultiConnectionChance;
+        private ComboBox CmbRegionDistribution;
+        private Label label33;
     }
 }

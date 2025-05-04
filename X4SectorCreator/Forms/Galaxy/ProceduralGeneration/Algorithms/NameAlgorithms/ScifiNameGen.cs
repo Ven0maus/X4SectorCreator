@@ -1,4 +1,4 @@
-﻿namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.NameAlgorithms
+﻿namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.NameAlgorithms
 {
     internal class ScifiNameGen(ProceduralSettings settings)
     {
@@ -70,13 +70,13 @@
         private string GenerateMilitaryName()
         {
             string prefix = $"X-{_random.Next(10, 100)}";
-            string suffix = $"{(char)(_random.Next(65, 91))}{_random.Next(1000, 10000)}";
+            string suffix = $"{(char)_random.Next(65, 91)}{_random.Next(1000, 10000)}";
             return $"{prefix} {suffix}";
         }
 
         private string GenerateDesignator()
         {
-            return $"{(char)(_random.Next(65, 91))}{_random.Next(1000, 10000)}";
+            return $"{(char)_random.Next(65, 91)}{_random.Next(1000, 10000)}";
         }
 
         private static string Capitalize(string input)

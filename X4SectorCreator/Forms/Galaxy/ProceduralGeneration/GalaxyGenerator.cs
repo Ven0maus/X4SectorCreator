@@ -1,4 +1,4 @@
-﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms;
+﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgorithms;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
@@ -17,6 +17,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
         public static void CreateRegions(List<Cluster> clusters)
         {
+            // Clear all existing regions
+            foreach (var zone in clusters.SelectMany(c => c.Sectors))
+                zone.Regions.Clear();
+
 
         }
 

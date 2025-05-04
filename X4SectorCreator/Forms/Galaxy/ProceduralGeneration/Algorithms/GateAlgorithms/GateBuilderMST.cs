@@ -1,7 +1,9 @@
-﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
+﻿using System.Diagnostics;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
-namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
+namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgorithms
 {
     internal class GateBuilderMST(ProceduralSettings settings)
     {
@@ -19,7 +21,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             {
                 for (int j = i + 1; j < count; j++)
                 {
-                    float dist = Distance(clusters[i].Position, clusters[j].Position);
+                    float dist = clusters[i].Position.DistanceSquared(clusters[j].Position);
                     edges.Add((clusters[i], clusters[j], dist));
                 }
             }
@@ -61,7 +63,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
                 c => edges
                         .Where(e => e.A == c || e.B == c)
                         .Select(e => e.A == c ? e.B : e.A)
-                        .OrderBy(n => Distance(c.Position, n.Position))
+                        .OrderBy(n => c.Position.DistanceSquared(n.Position))
                         .ToList()
             );
 
@@ -125,48 +127,44 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             }
         }
 
-        private void AddGate(Cluster from, Sector fromSector, Cluster to, Sector toSector)
+        private void AddGate(Cluster sourceCluster, Sector sourceSector, Cluster targetCluster, Sector targetSector)
         {
-            var sourceSector = fromSector;
-            var targetSector = toSector;
-
-            var directionSource = CombineWithDirection(from.Position, sourceSector.PlacementDirection);
-            var directionTarget = CombineWithDirection(to.Position, targetSector.PlacementDirection);
+            var directionSource = sourceCluster.Position.Add(sourceSector.PlacementDirection);
+            var directionTarget = targetCluster.Position.Add(targetSector.PlacementDirection);
 
             // Source
-            var sourceZone = new Zone { Position = CalculateValidGatePosition(fromSector, GetDirection(directionTarget, directionSource)) };
+            var sourceZone = new Zone { Position = CalculateValidGatePosition(sourceSector, directionTarget.GetDirection(directionSource)) };
             var sourceGate = new Gate
             {
                 Id = sourceSector.Zones.SelectMany(a => a.Gates).Count() + 1,
                 DestinationSectorName = targetSector.Name,
                 ParentSectorName = sourceSector.Name,
-                Yaw = (int)GetDirectionAngle(directionSource, directionTarget)
+                Yaw = (int)directionSource.GetDirectionAngle(directionTarget)
             };
+            sourceZone.Gates.Add(sourceGate);
+            sourceSector.Zones.Add(sourceZone);
 
             // Target
-            var targetZone = new Zone { Position = CalculateValidGatePosition(toSector, GetDirection(directionSource, directionTarget)) };
+            var targetZone = new Zone { Position = CalculateValidGatePosition(targetSector, directionSource.GetDirection(directionTarget)) };
             var targetGate = new Gate
             {
                 Id = targetSector.Zones.SelectMany(a => a.Gates).Count() + 1,
                 DestinationSectorName = sourceSector.Name,
                 ParentSectorName = targetSector.Name,
-                Yaw = (int)GetDirectionAngle(directionTarget, directionSource)
+                Yaw = (int)directionTarget.GetDirectionAngle(directionSource)
             };
+            targetZone.Gates.Add(targetGate);
+            targetSector.Zones.Add(targetZone);
 
-            sourceGate.Source = ConvertToPath(from, sourceSector, sourceZone);
-            sourceGate.Destination = ConvertToPath(to, targetSector, targetZone);
+            sourceGate.Source = ConvertToPath(sourceCluster, sourceSector, sourceZone);
+            sourceGate.Destination = ConvertToPath(targetCluster, targetSector, targetZone);
             targetGate.Source = sourceGate.Destination;
             targetGate.Destination = sourceGate.Source;
 
-            targetGate.SetSourcePath("PREFIX", to, targetSector, targetZone);
-            targetGate.SetDestinationPath("PREFIX", from, sourceSector, sourceZone, sourceGate);
-            sourceGate.SetSourcePath("PREFIX", from, sourceSector, sourceZone);
-            sourceGate.SetDestinationPath("PREFIX", to, targetSector, targetZone, targetGate);
-
-            targetSector.Zones.Add(targetZone);
-            targetZone.Gates.Add(targetGate);
-            sourceSector.Zones.Add(sourceZone);
-            sourceZone.Gates.Add(sourceGate);
+            targetGate.SetSourcePath("PREFIX", targetCluster, targetSector, targetZone);
+            targetGate.SetDestinationPath("PREFIX", sourceCluster, sourceSector, sourceZone, sourceGate);
+            sourceGate.SetSourcePath("PREFIX", sourceCluster, sourceSector, sourceZone);
+            sourceGate.SetDestinationPath("PREFIX", targetCluster, targetSector, targetZone, targetGate);
         }
 
         private static string ConvertToPath(Cluster cluster, Sector sector, Zone zone)
@@ -180,7 +178,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
 
             // We don't want diameter but radius so half the diameter
             var radius = (int)(sector.DiameterRadius / 2f);
-            int minDistance = Math.Min(50_000, (int)(radius / 2f));
+            int minDistance = Math.Min(75000, (int)(radius / 2f));
 
             // Zone position determines gate's position (1 gate per zone)
             var existingPositions = sector.Zones
@@ -207,7 +205,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
                 if (!IsPointInsideFlatToppedHex(candidate, radius, 0.3f))
                     continue;
 
-                bool tooClose = existingPositions.Any(pos => Distance(pos, candidate) < minDistance);
+                bool tooClose = existingPositions.Any(pos => candidate.Distance(pos) < minDistance);
 
                 if (!tooClose)
                     return candidate;
@@ -229,37 +227,6 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             return Math.Abs(px) <= r &&
                    Math.Abs(py) <= r * 0.866f &&   // sin(60°)
                    Math.Abs(py) <= -q2 + r * 0.866f;
-        }
-
-        private static Point CombineWithDirection(Point position, Point direction)
-        {
-            return new Point(position.X + direction.X, position.Y + direction.Y);
-        }
-
-        private static Point GetDirection(Point source, Point target)
-        {
-            return new Point(source.X - target.X, source.Y - target.Y);
-        }
-
-        private static double GetDirectionAngle(Point source, Point target)
-        {
-            int dx = target.X - source.X;
-            int dy = target.Y - source.Y;
-
-            double angleRad = Math.Atan2(dy, dx); // -π to π
-            double angleDeg = angleRad * (180.0 / Math.PI); // convert to degrees
-
-            if (angleDeg < 0)
-                angleDeg += 360; // normalize to [0, 360)
-
-            return angleDeg;
-        }
-
-        private static float Distance(Point a, Point b)
-        {
-            float dx = a.X - b.X;
-            float dy = a.Y - b.Y;
-            return MathF.Sqrt(dx * dx + dy * dy);
         }
     }
 }

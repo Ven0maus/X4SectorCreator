@@ -1,4 +1,4 @@
-﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.NameAlgorithms;
+﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.NameAlgorithms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -23,17 +23,18 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
                 Id = ++_count,
                 Position = coordinate,
                 Sectors = [],
-                Name = _nameGenerator.Generate(_nameStyles[Random.Next(_nameStyles.Length)], Random.Next(2) == 0)
+                Name = _nameGenerator.Generate(_nameStyles[Random.Next(_nameStyles.Length)], Random.Next(100) < 25)
             };
 
-            // 2. Generate sectors in this cluster (0–3)
+            // 2. Generate sectors in this cluster (1–3)
             int numSectors = Random.Next(100) < Settings.MultiSectorChance ? Random.Next(1, 4) : 1;
             for (int i = 0; i < numSectors; i++)
             {
                 var sector = new Sector
                 {
                     Id = cluster.Sectors.Count + 1,
-                    Name = numSectors == 1 ? cluster.Name : 
+                    DiameterRadius = Random.Next(200, 500) * 2 * 1000, // in km
+                    Name = numSectors == 1 ? cluster.Name :
                         cluster.Name + " " + (cluster.Sectors.Count + 1).ToRomanString()
                 };
                 cluster.Sectors.Add(sector);

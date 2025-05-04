@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Text;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.CustomComponents;
+using static X4SectorCreator.Objects.Ware;
 
 namespace X4SectorCreator.Helpers
 {
@@ -258,6 +259,75 @@ namespace X4SectorCreator.Helpers
             angles.Z = (float)Math.Atan2(siny_cosp, cosy_cosp);
 
             return new CustomVector((int)angles.X, (int)angles.Y, (int)angles.Z);
+        }
+
+        // Add two Points together
+        public static Point Add(this Point p1, Point p2)
+        {
+            return new Point(p1.X + p2.X, p1.Y + p2.Y);
+        }
+
+        // Subtract one Point from another
+        public static Point Subtract(this Point p1, Point p2)
+        {
+            return new Point(p1.X - p2.X, p1.Y - p2.Y);
+        }
+
+        // Multiply a Point by a scalar (int or float)
+        public static Point Multiply(this Point p, int scalar)
+        {
+            return new Point(p.X * scalar, p.Y * scalar);
+        }
+
+        public static Point Multiply(this Point p, float scalar)
+        {
+            return new Point((int)(p.X * scalar), (int)(p.Y * scalar));
+        }
+
+        // Divide a Point by a scalar (int or float)
+        public static Point Divide(this Point p, int scalar)
+        {
+            if (scalar == 0) throw new DivideByZeroException("Cannot divide by zero.");
+            return new Point(p.X / scalar, p.Y / scalar);
+        }
+
+        public static Point Divide(this Point p, float scalar)
+        {
+            if (scalar == 0) throw new DivideByZeroException("Cannot divide by zero.");
+            return new Point((int)(p.X / scalar), (int)(p.Y / scalar));
+        }
+
+        public static Point GetDirection(this Point p1, Point p2)
+        {
+            return new Point(p1.X - p2.X, p1.Y - p2.Y);
+        }
+
+        public static double GetDirectionAngle(this Point p1, Point p2)
+        {
+            int dx = p2.X - p1.X;
+            int dy = p2.Y - p1.Y;
+
+            double angleRad = Math.Atan2(dy, dx); // -π to π
+            double angleDeg = angleRad * (180.0 / Math.PI); // convert to degrees
+
+            if (angleDeg < 0)
+                angleDeg += 360; // normalize to [0, 360)
+
+            return angleDeg;
+        }
+
+        public static float Distance(this Point p1, Point p2)
+        {
+            float dx = p1.X - p2.X;
+            float dy = p1.Y - p2.Y;
+            return MathF.Sqrt(dx * dx + dy * dy);
+        }
+
+        public static long DistanceSquared(this Point p1, Point p2)
+        {
+            long dx = p1.X - p2.X;
+            long dy = p1.Y - p2.Y;
+            return dx * dx + dy * dy;
         }
     }
 }
