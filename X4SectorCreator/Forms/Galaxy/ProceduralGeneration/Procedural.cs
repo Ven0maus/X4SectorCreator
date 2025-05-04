@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Helpers;
+﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.NameAlgorithms;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
@@ -11,11 +12,19 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
         public abstract IEnumerable<Cluster> Generate();
 
+        private readonly ScifiNameGen _nameGenerator = new(settings);
+        private readonly ScifiNameGen.NameStyle[] _nameStyles = Enum.GetValues<ScifiNameGen.NameStyle>();
         private static int _count = 0;
+
         protected Cluster CreateClusterAndSectors(Point coordinate)
         {
-            Cluster cluster = new() { Id = _count++, Position = coordinate, Sectors = [] };
-            cluster.Name = cluster.Id.ToString();
+            Cluster cluster = new()
+            {
+                Id = ++_count,
+                Position = coordinate,
+                Sectors = [],
+                Name = _nameGenerator.Generate(_nameStyles[Random.Next(_nameStyles.Length)], Random.Next(2) == 0)
+            };
 
             // 2. Generate sectors in this cluster (0–3)
             int numSectors = Random.Next(100) < Settings.MultiSectorChance ? Random.Next(1, 4) : 1;
@@ -23,8 +32,9 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
             {
                 var sector = new Sector
                 {
-                    Id = cluster.Sectors.Count,
-                    Name = cluster.Name + "_" + cluster.Sectors.Count
+                    Id = cluster.Sectors.Count + 1,
+                    Name = numSectors == 1 ? cluster.Name : 
+                        cluster.Name + " " + (cluster.Sectors.Count + 1).ToRomanString()
                 };
                 cluster.Sectors.Add(sector);
             }

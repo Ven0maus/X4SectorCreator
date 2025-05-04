@@ -1,6 +1,7 @@
 ﻿using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Numerics;
+using System.Text;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.CustomComponents;
 
@@ -201,6 +202,32 @@ namespace X4SectorCreator.Helpers
         public static string CapitalizeFirstLetter(this string input)
         {
             return string.IsNullOrEmpty(input) ? input : char.ToUpper(input[0]) + input[1..];
+        }
+
+        public static string ToRomanString(this int number)
+        {
+            if (number < 1 || number > 3999)
+                throw new ArgumentOutOfRangeException(nameof(number), "Value must be in the range 1-3999.");
+
+            var romanNumerals = new (int value, string symbol)[]
+            {
+                (1000, "M"), (900, "CM"), (500, "D"), (400, "CD"),
+                (100, "C"), (90, "XC"), (50, "L"), (40, "XL"),
+                (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")
+            };
+
+            var result = new StringBuilder();
+
+            foreach (var (value, symbol) in romanNumerals)
+            {
+                while (number >= value)
+                {
+                    result.Append(symbol);
+                    number -= value;
+                }
+            }
+
+            return result.ToString();
         }
 
         public static bool HasStringChanged(string old, string @new)

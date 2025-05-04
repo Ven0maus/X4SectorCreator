@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
+﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
@@ -126,30 +125,6 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             }
         }
 
-        private static Point CombineWithDirection(Point position, Point direction)
-        {
-            return new Point(position.X + direction.X, position.Y + direction.Y);
-        }
-
-        private static Point GetDirection(Point source, Point target)
-        {
-            return new Point(source.X -  target.X, source.Y - target.Y);
-        }
-
-        private static double GetDirectionAngle(Point source, Point target)
-        {
-            int dx = target.X - source.X;
-            int dy = target.Y - source.Y;
-
-            double angleRad = Math.Atan2(dy, dx); // -π to π
-            double angleDeg = angleRad * (180.0 / Math.PI); // convert to degrees
-
-            if (angleDeg < 0)
-                angleDeg += 360; // normalize to [0, 360)
-
-            return angleDeg;
-        }
-
         private void AddGate(Cluster from, Sector fromSector, Cluster to, Sector toSector)
         {
             var sourceSector = fromSector;
@@ -254,6 +229,30 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.GateAlgorithms
             return Math.Abs(px) <= r &&
                    Math.Abs(py) <= r * 0.866f &&   // sin(60°)
                    Math.Abs(py) <= -q2 + r * 0.866f;
+        }
+
+        private static Point CombineWithDirection(Point position, Point direction)
+        {
+            return new Point(position.X + direction.X, position.Y + direction.Y);
+        }
+
+        private static Point GetDirection(Point source, Point target)
+        {
+            return new Point(source.X - target.X, source.Y - target.Y);
+        }
+
+        private static double GetDirectionAngle(Point source, Point target)
+        {
+            int dx = target.X - source.X;
+            int dy = target.Y - source.Y;
+
+            double angleRad = Math.Atan2(dy, dx); // -π to π
+            double angleDeg = angleRad * (180.0 / Math.PI); // convert to degrees
+
+            if (angleDeg < 0)
+                angleDeg += 360; // normalize to [0, 360)
+
+            return angleDeg;
         }
 
         private static float Distance(Point a, Point b)
