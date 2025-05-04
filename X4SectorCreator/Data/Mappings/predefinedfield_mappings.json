@@ -115,6 +115,29 @@
   },
   {
     "Type": "asteroid",
+    "GroupRef": "asteroid_nividium_m",
+    "DensityFactor": 12.0,
+    "Rotation": 360,
+    "RotationVariation": 8,
+    "NoiseScale": 1500,
+    "Seed": 2001,
+    "MinNoiseValue": 0.6,
+    "MaxNoiseValue": 1.0
+  },
+  {
+    "Type": "asteroid",
+    "GroupRef": "asteroid_ice_xl",
+    "LodRule": "asteroidxl",
+    "DensityFactor": 1.0,
+    "Rotation": 0,
+    "RotationVariation": 4,
+    "NoiseScale": 35000,
+    "Seed": 26041984,
+    "MinNoiseValue": 0.05,
+    "MaxNoiseValue": 0.25
+  },
+  {
+    "Type": "asteroid",
     "GroupRef": "asteroid_ore_l",
     "DensityFactor": 1.0,
     "Rotation": 0,
