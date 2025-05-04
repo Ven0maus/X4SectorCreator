@@ -64,10 +64,8 @@
             TxtRegionSeed = new TextBox();
             panel1 = new Panel();
             ChkFactionsRandomizeSeed = new CheckBox();
-            ChkCustomFactions = new CheckBox();
             label5 = new Label();
             TxtFactionSeed = new TextBox();
-            ChkVanillaFactions = new CheckBox();
             panel2 = new Panel();
             ChkMapRandomizeSeed = new CheckBox();
             MapAlgorithmOptions = new TabControl();
@@ -142,7 +140,7 @@
             // 
             // BtnOpenSectorMap
             // 
-            BtnOpenSectorMap.Location = new Point(13, 426);
+            BtnOpenSectorMap.Location = new Point(13, 430);
             BtnOpenSectorMap.Name = "BtnOpenSectorMap";
             BtnOpenSectorMap.Size = new Size(279, 35);
             BtnOpenSectorMap.TabIndex = 0;
@@ -248,7 +246,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(4, 46);
+            label7.Location = new Point(4, 8);
             label7.Name = "label7";
             label7.Size = new Size(83, 15);
             label7.TabIndex = 15;
@@ -256,7 +254,7 @@
             // 
             // NrFactionMin
             // 
-            NrFactionMin.Location = new Point(151, 42);
+            NrFactionMin.Location = new Point(151, 4);
             NrFactionMin.Name = "NrFactionMin";
             NrFactionMin.Size = new Size(41, 23);
             NrFactionMin.TabIndex = 16;
@@ -264,7 +262,7 @@
             // 
             // NrFactionMax
             // 
-            NrFactionMax.Location = new Point(228, 42);
+            NrFactionMax.Location = new Point(228, 4);
             NrFactionMax.Name = "NrFactionMax";
             NrFactionMax.Size = new Size(41, 23);
             NrFactionMax.TabIndex = 17;
@@ -273,7 +271,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(97, 46);
+            label8.Location = new Point(97, 8);
             label8.Name = "label8";
             label8.Size = new Size(52, 15);
             label8.TabIndex = 18;
@@ -282,7 +280,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(196, 46);
+            label9.Location = new Point(196, 8);
             label9.Name = "label9";
             label9.Size = new Size(27, 15);
             label9.TabIndex = 19;
@@ -337,7 +335,7 @@
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(4, 71);
+            label16.Location = new Point(4, 33);
             label16.Name = "label16";
             label16.Size = new Size(86, 15);
             label16.TabIndex = 30;
@@ -346,7 +344,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new Point(196, 71);
+            label17.Location = new Point(196, 33);
             label17.Name = "label17";
             label17.Size = new Size(27, 15);
             label17.TabIndex = 34;
@@ -355,7 +353,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new Point(97, 71);
+            label18.Location = new Point(97, 33);
             label18.Name = "label18";
             label18.Size = new Size(52, 15);
             label18.TabIndex = 33;
@@ -363,7 +361,7 @@
             // 
             // NrFacControlMax
             // 
-            NrFacControlMax.Location = new Point(228, 67);
+            NrFacControlMax.Location = new Point(228, 29);
             NrFacControlMax.Name = "NrFacControlMax";
             NrFacControlMax.Size = new Size(41, 23);
             NrFacControlMax.TabIndex = 32;
@@ -371,7 +369,7 @@
             // 
             // NrFacControlMin
             // 
-            NrFacControlMin.Location = new Point(151, 67);
+            NrFacControlMin.Location = new Point(151, 29);
             NrFacControlMin.Name = "NrFacControlMin";
             NrFacControlMin.Size = new Size(41, 23);
             NrFacControlMin.TabIndex = 31;
@@ -380,7 +378,7 @@
             // label19
             // 
             label19.AutoSize = true;
-            label19.Location = new Point(5, 96);
+            label19.Location = new Point(5, 58);
             label19.Name = "label19";
             label19.Size = new Size(72, 15);
             label19.TabIndex = 35;
@@ -390,7 +388,7 @@
             // 
             CmbCustomFactionDistribution.FormattingEnabled = true;
             CmbCustomFactionDistribution.Items.AddRange(new object[] { "Balanced" });
-            CmbCustomFactionDistribution.Location = new Point(97, 92);
+            CmbCustomFactionDistribution.Location = new Point(97, 54);
             CmbCustomFactionDistribution.Name = "CmbCustomFactionDistribution";
             CmbCustomFactionDistribution.Size = new Size(172, 23);
             CmbCustomFactionDistribution.TabIndex = 36;
@@ -463,12 +461,10 @@
             // 
             panel1.BackColor = SystemColors.ButtonHighlight;
             panel1.Controls.Add(ChkFactionsRandomizeSeed);
-            panel1.Controls.Add(ChkCustomFactions);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(label19);
             panel1.Controls.Add(TxtFactionSeed);
             panel1.Controls.Add(label7);
-            panel1.Controls.Add(ChkVanillaFactions);
             panel1.Controls.Add(CmbCustomFactionDistribution);
             panel1.Controls.Add(NrFactionMin);
             panel1.Controls.Add(NrFactionMax);
@@ -481,7 +477,7 @@
             panel1.Controls.Add(NrFacControlMin);
             panel1.Location = new Point(302, 322);
             panel1.Name = "panel1";
-            panel1.Size = new Size(279, 160);
+            panel1.Size = new Size(279, 126);
             panel1.TabIndex = 38;
             // 
             // ChkFactionsRandomizeSeed
@@ -489,29 +485,17 @@
             ChkFactionsRandomizeSeed.AutoSize = true;
             ChkFactionsRandomizeSeed.Checked = true;
             ChkFactionsRandomizeSeed.CheckState = CheckState.Checked;
-            ChkFactionsRandomizeSeed.Location = new Point(87, 140);
+            ChkFactionsRandomizeSeed.Location = new Point(87, 102);
             ChkFactionsRandomizeSeed.Name = "ChkFactionsRandomizeSeed";
             ChkFactionsRandomizeSeed.Size = new Size(184, 19);
             ChkFactionsRandomizeSeed.TabIndex = 48;
             ChkFactionsRandomizeSeed.Text = "Randomize seed on Generate?";
             ChkFactionsRandomizeSeed.UseVisualStyleBackColor = true;
             // 
-            // ChkCustomFactions
-            // 
-            ChkCustomFactions.AutoSize = true;
-            ChkCustomFactions.Checked = true;
-            ChkCustomFactions.CheckState = CheckState.Checked;
-            ChkCustomFactions.Location = new Point(5, 23);
-            ChkCustomFactions.Name = "ChkCustomFactions";
-            ChkCustomFactions.Size = new Size(165, 19);
-            ChkCustomFactions.TabIndex = 40;
-            ChkCustomFactions.Text = "Generate Custom Factions";
-            ChkCustomFactions.UseVisualStyleBackColor = true;
-            // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(9, 122);
+            label5.Location = new Point(9, 84);
             label5.Name = "label5";
             label5.Size = new Size(35, 15);
             label5.TabIndex = 47;
@@ -519,20 +503,10 @@
             // 
             // TxtFactionSeed
             // 
-            TxtFactionSeed.Location = new Point(45, 117);
+            TxtFactionSeed.Location = new Point(45, 79);
             TxtFactionSeed.Name = "TxtFactionSeed";
             TxtFactionSeed.Size = new Size(224, 23);
             TxtFactionSeed.TabIndex = 46;
-            // 
-            // ChkVanillaFactions
-            // 
-            ChkVanillaFactions.AutoSize = true;
-            ChkVanillaFactions.Location = new Point(5, 4);
-            ChkVanillaFactions.Name = "ChkVanillaFactions";
-            ChkVanillaFactions.Size = new Size(157, 19);
-            ChkVanillaFactions.TabIndex = 39;
-            ChkVanillaFactions.Text = "Generate Vanilla Factions";
-            ChkVanillaFactions.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -832,7 +806,7 @@
             panel3.Controls.Add(NrMaxGates);
             panel3.Controls.Add(label22);
             panel3.Controls.Add(label24);
-            panel3.Location = new Point(302, 510);
+            panel3.Location = new Point(302, 475);
             panel3.Name = "panel3";
             panel3.Size = new Size(279, 120);
             panel3.TabIndex = 40;
@@ -951,7 +925,7 @@
             ChkGenerateConnections.AutoSize = true;
             ChkGenerateConnections.Checked = true;
             ChkGenerateConnections.CheckState = CheckState.Checked;
-            ChkGenerateConnections.Location = new Point(307, 488);
+            ChkGenerateConnections.Location = new Point(307, 453);
             ChkGenerateConnections.Name = "ChkGenerateConnections";
             ChkGenerateConnections.Size = new Size(170, 19);
             ChkGenerateConnections.TabIndex = 39;
@@ -960,7 +934,7 @@
             // 
             // BtnGenerate
             // 
-            BtnGenerate.Location = new Point(12, 464);
+            BtnGenerate.Location = new Point(12, 468);
             BtnGenerate.Name = "BtnGenerate";
             BtnGenerate.Size = new Size(279, 33);
             BtnGenerate.TabIndex = 39;
@@ -970,9 +944,9 @@
             // 
             // BtnExit
             // 
-            BtnExit.Location = new Point(15, 583);
+            BtnExit.Location = new Point(13, 600);
             BtnExit.Name = "BtnExit";
-            BtnExit.Size = new Size(279, 47);
+            BtnExit.Size = new Size(568, 35);
             BtnExit.TabIndex = 41;
             BtnExit.Text = "Exit";
             BtnExit.UseVisualStyleBackColor = true;
@@ -982,7 +956,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(585, 635);
+            ClientSize = new Size(585, 638);
             Controls.Add(BtnExit);
             Controls.Add(BtnGenerate);
             Controls.Add(panel3);
@@ -1084,7 +1058,6 @@
         private Label label22;
         private Label label24;
         private CheckBox ChkGenerateConnections;
-        private CheckBox ChkVanillaFactions;
         private NumericUpDown NrClusterChance;
         private Label label23;
         private Button BtnGenerateCustomFactions;
@@ -1094,7 +1067,6 @@
         private Button BtnExit;
         private TabControl MapAlgorithmOptions;
         private TabPage TabRandom;
-        private CheckBox ChkCustomFactions;
         private TabPage TabNoise;
         private Label label21;
         private PictureBox NoiseVisual;

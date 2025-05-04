@@ -170,8 +170,6 @@ namespace X4SectorCreator.Forms.Galaxy
                 var settings = new ProceduralSettings
                 {
                     Seed = GetSeed(TxtFactionSeed),
-                    GenerateCustomFactions = ChkCustomFactions.Checked,
-                    GenerateVanillaFactions = ChkVanillaFactions.Checked,
                     MinTotalFactions = (int)NrFactionMin.Value,
                     MaxTotalFactions = (int)NrFactionMax.Value,
                     MinSectorOwnership = (int)NrFacControlMin.Value,

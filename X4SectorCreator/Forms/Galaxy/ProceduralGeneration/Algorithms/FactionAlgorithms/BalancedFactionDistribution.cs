@@ -1,5 +1,4 @@
-﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.NameAlgorithms;
-using X4SectorCreator.Objects;
+﻿using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAlgorithms
 {
@@ -10,81 +9,53 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
 
         public void GenerateFactions(List<Cluster> clusters)
         {
-            if (_settings.GenerateCustomFactions)
+            var total = _random.Next(_settings.MinTotalFactions, _settings.MaxTotalFactions + 1);
+            var factionCreator = new FactionCreator(_settings.Seed);
+
+            // 20% of custom factions are pirates
+            var pirates = (int)(total / 100f * 20f);
+            var mainFactions = total - pirates;
+
+            // Create main factions
+            for (int i = 0; i < mainFactions; i++)
             {
-                var total = _random.Next(_settings.MinTotalFactions, _settings.MaxTotalFactions + 1);
-
-                // Define how many custom factions will be created
-                int totalCustom;
-                if (_settings.GenerateVanillaFactions)
-                {
-                    // Vanilla factions will take the flooring
-                    totalCustom = (int)Math.Ceiling(total / 2f);
-                }
-                else
-                {
-                    totalCustom = total;
-                }
-
-                var factionCreator = new FactionCreator(_settings.Seed);
-
-                // 20% of custom factions are pirates
-                var pirates = (int)(totalCustom / 100f * 20f);
-                var mainFactions = totalCustom - pirates;
-
-                // Create main factions
-                for (int i=0; i < mainFactions; i++)
-                {
-                    var faction = factionCreator.Generate(false);
-                    FactionsForm.AllCustomFactions.Add(faction.Id, faction);
-                }
-
-                // Create pirate factions
-                for (int i = 0; i < pirates; i++)
-                {
-                    var faction = factionCreator.Generate(true);
-                    FactionsForm.AllCustomFactions.Add(faction.Id, faction);
-                }
-            }
-        }
-
-        public void GenerateJobs(List<Cluster> clusters)
-        {
-            if (_settings.GenerateCustomFactions)
-            {
-
+                var faction = factionCreator.Generate(false);
+                FactionsForm.AllCustomFactions.Add(faction.Id, faction);
             }
 
-            if (_settings.GenerateVanillaFactions)
+            // Create pirate factions
+            for (int i = 0; i < pirates; i++)
             {
-
-            }
-        }
-
-        public void GenerateFactories(List<Cluster> clusters)
-        {
-            if (_settings.GenerateCustomFactions)
-            {
-
-            }
-
-            if (_settings.GenerateVanillaFactions)
-            {
-
+                var faction = factionCreator.Generate(true);
+                FactionsForm.AllCustomFactions.Add(faction.Id, faction);
             }
         }
 
         public void GenerateStations(List<Cluster> clusters)
         {
-            if (_settings.GenerateCustomFactions)
-            {
+            // For each main faction, define a starting cluster
 
-            }
+            // Place wharf and shipyard in starting cluster (both in 1 sector, or divide over multiple sectors, if cluster is a multi sector)
 
-            if (_settings.GenerateVanillaFactions)
-            {
+            // Expand in a realistic manner to neighboring clusters / sectors
 
-            }
+            // Try to guide expansion towards available sought-after resources (lacking resources in starting cluster)
+
+            // Place defense stations near gates (to claim ownership of sectors)
+
+            // Place trade station and equipment dock in a random owned cluster
+
+            // Pirate factions will just spawn in left over unowned clusters (random chance for a piratedock/piratebase or freeport to spawn)
+        }
+
+        public void GenerateJobs(List<Cluster> clusters)
+        {
+
+        }
+
+        public void GenerateFactories(List<Cluster> clusters)
+        {
+
         }
     }
 }

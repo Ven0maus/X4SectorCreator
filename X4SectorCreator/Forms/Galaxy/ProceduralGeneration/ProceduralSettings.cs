@@ -29,8 +29,6 @@
         public Dictionary<string, string> Resources { get; set; }
 
         /* Faction Options */
-        public bool GenerateCustomFactions { get; set; }
-        public bool GenerateVanillaFactions { get; set; }
         public int MinTotalFactions { get; set; }
         public int MaxTotalFactions { get; set; }
         public int MinSectorOwnership { get; set; }
