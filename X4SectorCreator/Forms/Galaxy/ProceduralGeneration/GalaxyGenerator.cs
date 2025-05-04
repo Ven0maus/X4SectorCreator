@@ -18,7 +18,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
         public static void CreateRegions(List<Cluster> clusters, ProceduralSettings settings)
         {
-            // Clear all existing regions
+            // Clear all existing regions and region definitions
+            RegionDefinitionForm.RegionDefinitions.Clear();
             foreach (var zone in clusters.SelectMany(c => c.Sectors))
                 zone.Regions.Clear();
 
@@ -33,7 +34,9 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
         public static void CreateCustomFactions(List<Cluster> clusters)
         {
-
+            Forms.FactoriesForm.AllFactories.Clear();
+            Forms.JobsForm.AllJobs.Clear();
+            Forms.FactionsForm.AllCustomFactions.Clear();
         }
 
         public static void CreateVanillaFactions(List<Cluster> clusters)

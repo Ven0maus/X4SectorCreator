@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Globalization;
+﻿using System.Globalization;
 using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -79,35 +78,46 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                 }
 
                 var yield = PickYield(richness);
-                var regionName = $"{resource}_{yield}";
-                if (!_regionDefinitions.TryGetValue(regionName, out var definition))
-                {
-                    _regionDefinitions[regionName] = definition = new RegionDefinition
-                    {
-                        Guid = new Guid().ToString(),
-                        Name = regionName,
-                        Resources =
-                       [
-                           new()
-                            {
-                                Ware = resource,
-                                Yield = yield
-                            }
-                       ]
-                    };
-                }
+                var definition = GetOrCreateRegionDefinition(resource, yield);
 
+                var radius = (int)(sector.DiameterRadius / 2f);
                 var region = new Region
                 {
-                    Name = $"{resource}_{i + 1}",
+                    Id = i + 1,
+                    Name = $"{resource}_{yield}_{i + 1}",
                     Position = position,
                     Definition = definition,
-                    BoundaryLinear = "5000",
-                    BoundaryRadius = "10000"
+                    BoundaryLinear = _random.Next(2500, 15001).ToString(),
+                    BoundaryRadius = ((int)(radius * (0.3 * _random.NextDouble()))).ToString()
                 };
                 sector.Regions.Add(region);
                 nearbyResources.Add(resource);
             }
+        }
+
+        private RegionDefinition GetOrCreateRegionDefinition(string resource, string yield)
+        {
+            string definitionName = $"{resource}_{yield}";
+            if (!_regionDefinitions.TryGetValue(definitionName, out var definition))
+            {
+                _regionDefinitions[definitionName] = definition = new RegionDefinition
+                {
+                    Guid = new Guid().ToString(),
+                    Name = definitionName,
+                    BoundaryType = "cylinder",
+                    Seed = _settings.Seed.ToString(),
+                    Resources =
+                    [
+                        new()
+                        {
+                            Ware = resource,
+                            Yield = yield
+                        }
+                    ]
+                };
+                RegionDefinitionForm.RegionDefinitions.Add(definition);
+            }
+            return definition;
         }
 
         private string PickYield(double richness)
@@ -226,31 +236,17 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                                 }
 
                                 var yield = PickYield(_random.NextDouble());
-                                var regionName = $"{resource}_{yield}";
-                                if (!_regionDefinitions.TryGetValue(regionName, out var definition))
-                                {
-                                    _regionDefinitions[regionName] = definition = new RegionDefinition
-                                    {
-                                        Guid = new Guid().ToString(),
-                                        Name = regionName,
-                                        Resources =
-                                        [
-                                            new()
-                                            {
-                                                Ware = resource,
-                                                Yield = yield
-                                            }
-                                        ]
-                                    };
-                                }
+                                var definition = GetOrCreateRegionDefinition(resource, yield);
 
+                                var radius = (int)(sector.DiameterRadius / 2f);
                                 var region = new Region
                                 {
+                                    Id = sector.Regions.Count + 1,
                                     Name = $"{resource}_{yield}_{sector.Regions.Count + 1}",
                                     Position = position,
                                     Definition = definition,
-                                    BoundaryLinear = "5000",
-                                    BoundaryRadius = "10000"
+                                    BoundaryLinear = _random.Next(2500, 15001).ToString(),
+                                    BoundaryRadius = ((int)(radius * (0.3 * _random.NextDouble()))).ToString()
                                 };
                                 nearbyResources.Add(resource);
                                 sector.Regions.Add(region);
@@ -260,7 +256,6 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                     }
                 }
             }
-            Debug.WriteLine("Regions added for starved sectors: " + count);
         }
     }
 }

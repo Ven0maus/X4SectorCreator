@@ -80,7 +80,7 @@ namespace X4SectorCreator
 
         public void SetProceduralGalaxy(IEnumerable<Cluster> allClusters)
         {
-            Reset(false, resetGalaxyType: false);
+            Reset(false, resetGalaxyType: false, resetStatics : false);
             AllClusters = allClusters.ToDictionary(a => (a.Position.X, a.Position.Y), a => a);
         }
 
@@ -552,7 +552,7 @@ namespace X4SectorCreator
         #endregion
 
         #region Configuration
-        public void Reset(bool fromImport, bool resetGalaxyType = true)
+        public void Reset(bool fromImport, bool resetGalaxyType = true, bool resetStatics = true)
         {
             // Reset
             if (!fromImport)
@@ -564,11 +564,14 @@ namespace X4SectorCreator
                     Forms.GalaxySettingsForm.IsCustomGalaxy = false;
                 }
 
-                RegionDefinitionForm.RegionDefinitions.Clear();
-                Forms.FactoriesForm.AllFactories.Clear();
-                Forms.JobsForm.AllJobs.Clear();
+                if (resetStatics)
+                {
+                    RegionDefinitionForm.RegionDefinitions.Clear();
+                    Forms.FactoriesForm.AllFactories.Clear();
+                    Forms.JobsForm.AllJobs.Clear();
+                    Forms.FactionsForm.AllCustomFactions.Clear();
+                }
                 Forms.JobsForm.AllBaskets.Clear();
-                Forms.FactionsForm.AllCustomFactions.Clear();
             }
 
             // Re-initialize all clusters properly
