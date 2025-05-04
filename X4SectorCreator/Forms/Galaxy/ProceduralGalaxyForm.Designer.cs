@@ -95,6 +95,8 @@
             label11 = new Label();
             label10 = new Label();
             panel3 = new Panel();
+            label32 = new Label();
+            NrMultiConnectionChance = new NumericUpDown();
             BtnGenerateConnections = new Button();
             label12 = new Label();
             label20 = new Label();
@@ -106,8 +108,6 @@
             ChkGenerateConnections = new CheckBox();
             BtnGenerateAll = new Button();
             BtnExit = new Button();
-            label32 = new Label();
-            NrMultiConnectionChance = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)NrRegionSpawnChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxRegionPerSector).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
@@ -134,9 +134,9 @@
             ((System.ComponentModel.ISupportInitialize)NrGridHeight).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrGridWidth).BeginInit();
             panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NrMultiConnectionChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMinGates).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxGates).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)NrMultiConnectionChance).BeginInit();
             SuspendLayout();
             // 
             // BtnOpenSectorMap
@@ -237,6 +237,7 @@
             // NrMaxRegionPerSector
             // 
             NrMaxRegionPerSector.Location = new Point(113, 30);
+            NrMaxRegionPerSector.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NrMaxRegionPerSector.Name = "NrMaxRegionPerSector";
             NrMaxRegionPerSector.Size = new Size(41, 23);
             NrMaxRegionPerSector.TabIndex = 12;
@@ -764,6 +765,7 @@
             // NrGridHeight
             // 
             NrGridHeight.Location = new Point(197, 5);
+            NrGridHeight.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NrGridHeight.Name = "NrGridHeight";
             NrGridHeight.Size = new Size(41, 23);
             NrGridHeight.TabIndex = 33;
@@ -772,6 +774,7 @@
             // NrGridWidth
             // 
             NrGridWidth.Location = new Point(77, 5);
+            NrGridWidth.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NrGridWidth.Name = "NrGridWidth";
             NrGridWidth.Size = new Size(41, 23);
             NrGridWidth.TabIndex = 32;
@@ -812,6 +815,23 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(279, 120);
             panel3.TabIndex = 40;
+            // 
+            // label32
+            // 
+            label32.AutoSize = true;
+            label32.Location = new Point(6, 30);
+            label32.Name = "label32";
+            label32.Size = new Size(88, 15);
+            label32.TabIndex = 37;
+            label32.Text = "Chance for > 1:";
+            // 
+            // NrMultiConnectionChance
+            // 
+            NrMultiConnectionChance.Location = new Point(100, 28);
+            NrMultiConnectionChance.Name = "NrMultiConnectionChance";
+            NrMultiConnectionChance.Size = new Size(41, 23);
+            NrMultiConnectionChance.TabIndex = 38;
+            NrMultiConnectionChance.Value = new decimal(new int[] { 5, 0, 0, 0 });
             // 
             // BtnGenerateConnections
             // 
@@ -854,6 +874,7 @@
             // NrMinGates
             // 
             NrMinGates.Location = new Point(154, 4);
+            NrMinGates.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NrMinGates.Name = "NrMinGates";
             NrMinGates.Size = new Size(41, 23);
             NrMinGates.TabIndex = 16;
@@ -862,6 +883,7 @@
             // NrMaxGates
             // 
             NrMaxGates.Location = new Point(231, 4);
+            NrMaxGates.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NrMaxGates.Name = "NrMaxGates";
             NrMaxGates.Size = new Size(41, 23);
             NrMaxGates.TabIndex = 17;
@@ -916,23 +938,6 @@
             BtnExit.Text = "Exit";
             BtnExit.UseVisualStyleBackColor = true;
             BtnExit.Click += BtnExit_Click;
-            // 
-            // label32
-            // 
-            label32.AutoSize = true;
-            label32.Location = new Point(6, 30);
-            label32.Name = "label32";
-            label32.Size = new Size(88, 15);
-            label32.TabIndex = 37;
-            label32.Text = "Chance for > 1:";
-            // 
-            // NrMultiConnectionChance
-            // 
-            NrMultiConnectionChance.Location = new Point(100, 28);
-            NrMultiConnectionChance.Name = "NrMultiConnectionChance";
-            NrMultiConnectionChance.Size = new Size(41, 23);
-            NrMultiConnectionChance.TabIndex = 38;
-            NrMultiConnectionChance.Value = new decimal(new int[] { 5, 0, 0, 0 });
             // 
             // ProceduralGalaxyForm
             // 
@@ -991,9 +996,9 @@
             ((System.ComponentModel.ISupportInitialize)NrGridWidth).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NrMultiConnectionChance).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrMinGates).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxGates).EndInit();
-            ((System.ComponentModel.ISupportInitialize)NrMultiConnectionChance).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
