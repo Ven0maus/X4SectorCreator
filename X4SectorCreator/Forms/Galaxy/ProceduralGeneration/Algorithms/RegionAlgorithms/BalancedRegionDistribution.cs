@@ -152,10 +152,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                         Guid = Guid.NewGuid().ToString(),
                         Name = definitionName + $"_{definitions.Count + 1}",
                         BoundaryType = "cylinder",
-                        Density = "1.5",
+                        Density = (_random.NextDouble() * _random.Next(1, 3)).ToString("0.##"),
                         Rotation = "0",
                         NoiseScale = _random.Next(2500, 10001).ToString(),
-                        MinNoiseValue = "0.15",
+                        MinNoiseValue = _random.NextDouble().ToString("0.##"),
                         MaxNoiseValue = "1",
                         Seed = _settings.Seed.ToString(),
                         Resources =
