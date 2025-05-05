@@ -117,8 +117,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             {
                 if (unOwnedSectors.Count == 0) break;
 
-                // 1 - 4 pirate stations per pirate faction
-                var amountOfStations = _random.Next(1, 5);
+                // 2 - 5 pirate stations per pirate faction
+                var amountOfStations = _random.Next(2, 6);
                 for (int i = 0; i < amountOfStations; i++)
                 {
                     var sector = unOwnedSectors[_random.Next(unOwnedSectors.Count)];
@@ -179,12 +179,12 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             // squared dist
             long minDistance = 100000L * 100000L;
 
-            var point = new Point(_random.Next(0, (int)radius), _random.Next(0, (int)radius));
+            var point = new Point(_random.Next(-(int)radius, (int)radius), _random.Next(-(int)radius, (int)radius));
             int attempts = 500;
             while (positions.Any(a => point.DistanceSquared(a) < minDistance))
             {
                 if (attempts <= 0) break;
-                point = new Point(_random.Next(0, (int)radius), _random.Next(0, (int)radius));
+                point = new Point(_random.Next(-(int)radius, (int)radius), _random.Next(-(int)radius, (int)radius));
                 attempts--;
             }
             return point;

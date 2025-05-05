@@ -147,7 +147,7 @@
             // 
             // BtnOpenSectorMap
             // 
-            BtnOpenSectorMap.Location = new Point(13, 430);
+            BtnOpenSectorMap.Location = new Point(13, 394);
             BtnOpenSectorMap.Name = "BtnOpenSectorMap";
             BtnOpenSectorMap.Size = new Size(279, 35);
             BtnOpenSectorMap.TabIndex = 0;
@@ -157,7 +157,7 @@
             // 
             // label1
             // 
-            label1.Location = new Point(17, 518);
+            label1.Location = new Point(17, 501);
             label1.Name = "label1";
             label1.Size = new Size(273, 63);
             label1.TabIndex = 2;
@@ -207,7 +207,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Underline);
-            label3.Location = new Point(7, 39);
+            label3.Location = new Point(7, 8);
             label3.Name = "label3";
             label3.Size = new Size(146, 21);
             label3.TabIndex = 7;
@@ -515,7 +515,7 @@
             NrMaxPirateFactions.Name = "NrMaxPirateFactions";
             NrMaxPirateFactions.Size = new Size(41, 23);
             NrMaxPirateFactions.TabIndex = 51;
-            NrMaxPirateFactions.Value = new decimal(new int[] { 3, 0, 0, 0 });
+            NrMaxPirateFactions.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
             // label36
             // 
@@ -578,7 +578,7 @@
             panel2.Controls.Add(NrChanceMultiSectors);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(TxtMapSeed);
-            panel2.Location = new Point(12, 64);
+            panel2.Location = new Point(12, 33);
             panel2.Name = "panel2";
             panel2.Size = new Size(279, 357);
             panel2.TabIndex = 40;
@@ -902,7 +902,7 @@
             NrMultiConnectionChance.Name = "NrMultiConnectionChance";
             NrMultiConnectionChance.Size = new Size(41, 23);
             NrMultiConnectionChance.TabIndex = 38;
-            NrMultiConnectionChance.Value = new decimal(new int[] { 15, 0, 0, 0 });
+            NrMultiConnectionChance.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
             // TxtConnectionSeed
             // 
@@ -989,9 +989,9 @@
             // 
             // BtnGenerate
             // 
-            BtnGenerate.Location = new Point(12, 468);
+            BtnGenerate.Location = new Point(12, 433);
             BtnGenerate.Name = "BtnGenerate";
-            BtnGenerate.Size = new Size(279, 33);
+            BtnGenerate.Size = new Size(279, 59);
             BtnGenerate.TabIndex = 39;
             BtnGenerate.Text = "Generate";
             BtnGenerate.UseVisualStyleBackColor = true;
@@ -999,9 +999,9 @@
             // 
             // BtnExit
             // 
-            BtnExit.Location = new Point(13, 600);
+            BtnExit.Location = new Point(13, 576);
             BtnExit.Name = "BtnExit";
-            BtnExit.Size = new Size(278, 35);
+            BtnExit.Size = new Size(278, 59);
             BtnExit.TabIndex = 41;
             BtnExit.Text = "Exit";
             BtnExit.UseVisualStyleBackColor = true;
