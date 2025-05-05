@@ -29,8 +29,10 @@
         public Dictionary<string, string> Resources { get; set; }
 
         /* Faction Options */
-        public int MinTotalFactions { get; set; }
-        public int MaxTotalFactions { get; set; }
+        public int MinMainFactions { get; set; }
+        public int MaxMainFactions { get; set; }
+        public int MinPirateFactions { get; set; }
+        public int MaxPirateFactions { get; set; }
         public int MinSectorOwnership { get; set; }
         public int MaxSectorOwnership { get; set; }
     }

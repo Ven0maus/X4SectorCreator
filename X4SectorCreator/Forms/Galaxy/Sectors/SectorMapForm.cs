@@ -239,6 +239,9 @@ namespace X4SectorCreator
 
         public static Image GetIconFromStore(string iconName)
         {
+            if (iconName.Equals("piratedock") || iconName.Equals("freeport"))
+                iconName = "piratebase";
+
             if (!_imageMap.TryGetValue(iconName, out var image))
             {
                 var path = Path.Combine(Application.StartupPath, $"Data/Icons/{iconName}.png");
@@ -938,13 +941,20 @@ namespace X4SectorCreator
                             stationScreenPosition.X += hexCenter.X;
                             stationScreenPosition.Y += hexCenter.Y;
 
-                            Color color = FactionsForm.GetColorForFaction(station.Owner);
+                            Color color = FactionsForm.GetColorForFaction(station.Owner, checkClaimSpace: false);
 
                             // Define the size for the resized icon (width and height)
                             int width = cluster.Sectors.Count == 1 ? sizeLarge.X : sizeSmall.X;
                             int height = cluster.Sectors.Count == 1 ? sizeLarge.Y : sizeSmall.Y;
                             width /= 2;
                             height /= 2;
+
+                            // Reduce icon size of 1 sector clusters
+                            if (cluster.Sectors.Count == 1)
+                            {
+                                width = (int)(width * 0.8f);
+                                height = (int)(height * 0.8f);
+                            }
 
                             Image resizedIcon;
                             if (cluster.Sectors.Count == 1)
