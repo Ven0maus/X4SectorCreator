@@ -28,11 +28,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             foreach (var faction in main)
             {
                 var sector = GetBestStartingSector(availableSectors, clusters, factionSectors, faction);
-                if (sector != null)
-                {
-                    factionSectors[sector] = faction;
-                    availableSectors.Remove(sector);
-                }
+                factionSectors[sector] = faction;
+                availableSectors.Remove(sector);
             }
 
             // Place wharf and shipyard in starting cluster (both in 1 sector, or divide over multiple sectors, if cluster is a multi sector)
@@ -113,15 +110,22 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             var unOwnedSectors = allSectors
                 .Where(c => !factionSectors.ContainsKey(c))
                 .ToList();
+
             foreach (var pirate in pirates)
             {
-                if (unOwnedSectors.Count == 0) break;
+                // Make sure there are always sectors for pirates to spawn in
+                if (unOwnedSectors.Count == 0)
+                    unOwnedSectors = [.. factionSectors.Keys];
 
                 // 2 - 5 pirate stations per pirate faction
                 var amountOfStations = _random.Next(2, 6);
+                Sector firstSector = null;
                 for (int i = 0; i < amountOfStations; i++)
                 {
                     var sector = unOwnedSectors[_random.Next(unOwnedSectors.Count)];
+                    if (firstSector == null)
+                        firstSector = sector;
+
                     unOwnedSectors.Remove(sector);
 
                     var type = _random.Next(3) switch
@@ -133,6 +137,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
 
                     CreateStation(sector, type, pirate);
                 }
+
+                // Set prefered HQ space
+                var cluster = clusters.First(a => a.Sectors.Contains(firstSector));
+                pirate.PrefferedHqSpace = cluster.Sectors.Count == 1 ? GetClusterMacro(cluster) : GetSectorMacro(cluster, firstSector);
             }
         }
 

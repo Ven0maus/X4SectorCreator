@@ -46,7 +46,43 @@ namespace X4SectorCreator.Forms.Factories
             _mscFactions = new MultiSelectCombo(CmbFactions);
         }
 
-        private void BtnConfirm_Click(object sender, EventArgs e)
+        public static void ExecuteForProcGen(Faction faction, int coverage)
+        {
+            using var psf = new PresetSelectionForm();
+            using var factoriesForm = new FactoriesForm();
+            using var jobsForm = new JobsForm();
+
+            // Set all fields
+            psf.SetAllFieldsToFaction(faction, coverage);
+
+            // Generate factories
+            psf.FactoriesForm = factoriesForm;
+            psf.BtnConfirm_Click(null, null);
+
+            // Generate jobs
+            psf.FactoriesForm = null;
+            psf.JobsForm = jobsForm;
+            psf.BtnConfirm_Click(null, null);
+        }
+
+        private bool _isProcGen = false;
+        public void SetAllFieldsToFaction(Faction faction, int coverage)
+        {
+            string selectedPresetFaction = faction.Primaryrace.Equals("split", StringComparison.OrdinalIgnoreCase) ?
+                "zyarth" : faction.Primaryrace;
+
+            // Take scaleplate for pirate factions
+            if (faction.Tags.Contains("plunder", StringComparison.OrdinalIgnoreCase))
+                selectedPresetFaction = "scaleplate";
+
+            CmbFaction.SelectedItem = selectedPresetFaction;
+            CmbOwner.SelectedItem = faction.Id;
+            _mscFactions.Select(faction.Id);
+            TxtSectorCoverage.Text = coverage.ToString();
+            _isProcGen = true;
+        }
+
+        public void BtnConfirm_Click(object sender, EventArgs e)
         {
             var faction = CmbFaction.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(faction))
@@ -69,11 +105,14 @@ namespace X4SectorCreator.Forms.Factories
                 return;
             }
 
-            var type = FactoriesForm != null ? "factories" : "jobs";
-            if (MessageBox.Show($"This will overwrite existing {type} that have the same ID, are you sure you want to do this?", 
-                "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
+            if (!_isProcGen)
             {
-                return;
+                var type = FactoriesForm != null ? "factories" : "jobs";
+                if (MessageBox.Show($"This will overwrite existing {type} that have the same ID, are you sure you want to do this?",
+                    "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    return;
+                }
             }
 
             string json = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);

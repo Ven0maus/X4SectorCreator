@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Objects;
+﻿using X4SectorCreator.Forms.Factories;
+using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAlgorithms
 {
@@ -26,22 +27,29 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 var faction = factionCreator.Generate(true);
                 FactionsForm.AllCustomFactions.Add(faction.Id, faction);
             }
+
+            GenerateStations(clusters);
+            GenerateQuotas(clusters);
         }
 
-        public void GenerateStations(List<Cluster> clusters)
+        private void GenerateStations(List<Cluster> clusters)
         {
             var stationGen = new StationGenAlgorithm(_random, _settings);
             stationGen.GenerateStations(clusters);
         }
 
-        public void GenerateJobs(List<Cluster> clusters)
+        private static void GenerateQuotas(List<Cluster> clusters)
         {
-
-        }
-
-        public void GenerateFactories(List<Cluster> clusters)
-        {
-
+            foreach (var faction in FactionsForm.AllCustomFactions.Values) 
+            {
+                var coverage = clusters
+                    .SelectMany(a => a.Sectors)
+                    .SelectMany(a => a.Zones)
+                    .SelectMany(a => a.Stations)
+                    .Where(a => a.Owner == faction.Id)
+                    .Count();
+                PresetSelectionForm.ExecuteForProcGen(faction, coverage);
+            }
         }
     }
 }
