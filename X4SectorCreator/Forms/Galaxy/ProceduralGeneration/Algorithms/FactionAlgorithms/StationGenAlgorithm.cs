@@ -80,8 +80,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 var sector = kvp.Key;
                 var faction = kvp.Value;
 
-                // Pirates don't have defence platforms
-                if (faction.Tags.Contains("plunder", StringComparison.OrdinalIgnoreCase)) continue;
+                // Exclude factions that don't claimspace
+                if (!faction.Tags.Contains("claimspace", StringComparison.OrdinalIgnoreCase)) continue;
 
                 var stations = 0;
                 foreach (var zone in sector.Zones.ToList())
