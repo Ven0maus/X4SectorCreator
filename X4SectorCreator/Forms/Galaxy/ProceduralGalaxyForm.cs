@@ -124,14 +124,10 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void BtnGenerate_Click(object sender, EventArgs e)
         {
-            var currentMapSeed = GetSeed(TxtMapSeed);
-
             RandomizeSeeds();
 
-            var regeneratedMap = (!_mapGenerated || currentMapSeed != GetSeed(TxtMapSeed));
             // Generate map if not generated before or seed changed
-            List<Cluster> clusters = regeneratedMap ? 
-                GenerateClusters() : [.. MainForm.Instance.AllClusters.Values];
+            List<Cluster> clusters = GenerateClusters();
 
             // Connections
             if (ChkGenerateConnections.Checked)
@@ -160,8 +156,7 @@ namespace X4SectorCreator.Forms.Galaxy
             }
             else
             {
-                if (regeneratedMap)
-                    RegionDefinitionForm.RegionDefinitions.Clear();
+                RegionDefinitionForm.RegionDefinitions.Clear();
             }
 
             // Factions

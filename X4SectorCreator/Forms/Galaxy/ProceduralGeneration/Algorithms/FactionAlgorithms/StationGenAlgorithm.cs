@@ -221,7 +221,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 })
                 .OrderByDescending(x => x.Score + _random.NextDouble())
                 .Select(a => a.Sector)
-                .RandomOrDefault()
+                .FirstOrDefault()
                 ?? sectors
                 .Where(a => !IsNearbyOtherFaction(clusters, a, faction, factionSectors, 1))
                 .Select(c => new
@@ -231,8 +231,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 })
                 .OrderByDescending(x => x.Score + _random.NextDouble())
                 .Select(a => a.Sector)
-                .RandomOrDefault()
-                ?? sectors.RandomOrDefault();
+                .FirstOrDefault()
+                ?? sectors.RandomOrDefault(_random);
         }
 
         private static int ScoreCluster(Sector sector)
@@ -331,7 +331,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private Sector WeightedRandomChoice(List<(Sector Sector, int Score)> scoredSectors)
         {
             int totalScore = scoredSectors.Sum(x => x.Score);
-            if (totalScore == 0) return scoredSectors.Select(a => a.Sector).RandomOrDefault();
+            if (totalScore == 0) return scoredSectors.Select(a => a.Sector).RandomOrDefault(_random);
 
             int roll = _random.Next(totalScore);
             int cumulative = 0;
@@ -343,7 +343,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                     return entry.Sector;
             }
 
-            return scoredSectors.Select(a => a.Sector).RandomOrDefault(); // fallback
+            return scoredSectors.Select(a => a.Sector).RandomOrDefault(_random); // fallback
         }
     }
 }

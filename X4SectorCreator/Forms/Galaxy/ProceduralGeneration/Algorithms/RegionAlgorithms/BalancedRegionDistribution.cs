@@ -185,7 +185,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                 }
             }
 
-            return definitions.RandomOrDefault(); // Assumes caller just wants any definition
+            return definitions.RandomOrDefault(_random); // Assumes caller just wants any definition
         }
 
         private string PickYield(double richness)
@@ -281,7 +281,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                 if (gases.Contains(resource))
                 {
                     // Gases can take only one
-                    var takenField = fieldObjects.RandomOrDefault() ?? throw new Exception($"Missing field obj for resource \"{resource}\".");
+                    var takenField = fieldObjects.RandomOrDefault(_random) ?? throw new Exception($"Missing field obj for resource \"{resource}\".");
                     fields.Add(takenField);
                 }
                 else
@@ -294,7 +294,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
 
                     for (int i=0; i < amount; i++)
                     {
-                        var selected = values.RandomOrDefault();
+                        var selected = values.RandomOrDefault(_random);
                         if (selected != null)
                         {
                             values.Remove(selected);

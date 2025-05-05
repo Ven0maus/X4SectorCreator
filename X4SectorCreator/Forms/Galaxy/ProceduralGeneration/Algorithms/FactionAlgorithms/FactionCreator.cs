@@ -15,7 +15,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private readonly FactionColorGen _factionColorGen = new(seed);
         private readonly FactionNameGen.FactionNameStyle[] _factionTypes = Enum.GetValues<FactionNameGen.FactionNameStyle>();
 
-        private readonly string[] _races = ["argon", "terran", "teladi", "paranid", "boron", "split"];
+        private readonly string[] _races = ["argon", "terran", "teladi", "paranid", "split"];
         private readonly string[] _levels = ["verylow", "low", "normal", "high", "veryhigh"];
 
         public Faction Generate(bool isPirateFaction)
@@ -112,7 +112,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             var defaultLicenses = FactionForm.GetPlaceholderLicenses();
             foreach (var license in defaultLicenses)
                 faction.Licences.Licence.Add(license);
-            FactionForm.UpdateLicenseNames(faction, true);
+            FactionForm.UpdateLicenseNames(faction, false);
         }
 
         private static string GetShortName(string fullName)

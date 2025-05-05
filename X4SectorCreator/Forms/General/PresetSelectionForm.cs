@@ -291,6 +291,11 @@ namespace X4SectorCreator.Forms.Factories
                 factory.Module.Select.Faction = factory.Owner;
             factory.Location ??= new Factory.LocationObj();
             factory.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+
+            if (GalaxySettingsForm.IsCustomGalaxy)
+            {
+                factory.Location.Macro = $"{GalaxySettingsForm.GalaxyName}_macro";
+            }
         }
 
         private void EditJobData(Job job, string ownerId, string raceKey)
@@ -339,6 +344,11 @@ namespace X4SectorCreator.Forms.Factories
                         }
                     }
                 }
+            }
+
+            if (GalaxySettingsForm.IsCustomGalaxy)
+            {
+                job.Location.Macro = $"{GalaxySettingsForm.GalaxyName}_macro";
             }
         }
     }
