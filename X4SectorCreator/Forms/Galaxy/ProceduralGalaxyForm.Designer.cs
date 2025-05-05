@@ -902,7 +902,7 @@
             NrMultiConnectionChance.Name = "NrMultiConnectionChance";
             NrMultiConnectionChance.Size = new Size(41, 23);
             NrMultiConnectionChance.TabIndex = 38;
-            NrMultiConnectionChance.Value = new decimal(new int[] { 5, 0, 0, 0 });
+            NrMultiConnectionChance.Value = new decimal(new int[] { 15, 0, 0, 0 });
             // 
             // TxtConnectionSeed
             // 
@@ -946,7 +946,7 @@
             NrMinGates.Name = "NrMinGates";
             NrMinGates.Size = new Size(41, 23);
             NrMinGates.TabIndex = 16;
-            NrMinGates.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            NrMinGates.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
             // NrMaxGates
             // 

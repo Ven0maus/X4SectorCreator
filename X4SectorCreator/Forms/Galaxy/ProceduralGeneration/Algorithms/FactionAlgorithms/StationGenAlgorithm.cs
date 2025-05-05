@@ -44,6 +44,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 // Random sector or first sector
                 CreateStation(sector, "wharf", faction);
                 CreateStation(sector, "shipyard", faction);
+
+                // Set prefered HQ space
+                var cluster = clusters.First(a => a.Sectors.Contains(sector));
+                faction.PrefferedHqSpace = cluster.Sectors.Count == 1 ? GetClusterMacro(cluster) : GetSectorMacro(cluster, sector);
             }
 
             // Expand in a realistic manner to neighboring clusters / sectors
@@ -130,6 +134,16 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                     CreateStation(sector, type, pirate);
                 }
             }
+        }
+
+        private static string GetClusterMacro(Cluster cluster)
+        {
+            return $"PREFIX_CL_c{cluster.Id:D3}_macro";
+        }
+
+        private static string GetSectorMacro(Cluster cluster, Sector sector)
+        {
+            return $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
         }
 
         private void CreateStation(Sector sector, string type, Faction faction, Point? position = null)
