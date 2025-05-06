@@ -65,6 +65,10 @@ namespace X4SectorCreator.XmlGeneration
             foreach (var module in modules)
             {
                 var races = ParseMultiField(module.CategoryObj.Race);
+                var extensionRaces = module.CategoryObj.Extension?.SelectMany(a => ParseMultiField(a.Race)) ?? [];
+                foreach (var race in extensionRaces)
+                    races.Add(race);
+
                 foreach (var race in races)
                 {
                     if (!factionModules.TryGetValue(race, out var moduleList))
