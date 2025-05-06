@@ -508,6 +508,7 @@ namespace X4SectorCreator
                     () => FactionLogicEconomyGeneration.Generate(modFolder),
                     () => FactionLogicStationsGeneration.Generate(modFolder),
                     () => WarSubscriptionsGeneration.Generate(modFolder),
+                    () => DrainStationsGeneration.Generate(modFolder),
 
 
                     // Localisation after all the generation

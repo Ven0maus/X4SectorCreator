@@ -7,20 +7,28 @@ namespace X4SectorCreator.MdGeneration
     {
         public static void Generate(string modPrefix, string folder)
         {
-            if (FactionsForm.AllCustomFactions.Count == 0)
+            var mainCue = FactionsForm.AllCustomFactions.Count == 0 ? null : GetOrCreateMainCue(modPrefix);
+
+            if (mainCue != null || GalaxySettingsForm.IsCustomGalaxy)
             {
-                return;
+                XDocument xmlDocument = new(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("diff",
+                        CreateGalaxyReplaceElement(),
+                        mainCue
+                    )
+                );
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"md/factionlogic.xml")));
             }
+        }
 
-            var mainCue = GetOrCreateMainCue(modPrefix);
+        private static XElement CreateGalaxyReplaceElement()
+        {
+            if (!GalaxySettingsForm.IsCustomGalaxy) return null;
 
-            XDocument xmlDocument = new(
-                new XDeclaration("1.0", "utf-8", null),
-                new XElement("diff",
-                    mainCue
-                )
-            );
-            xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"md/factionlogic.xml")));
+            return new XElement("replace", 
+                new XAttribute("sel", "//cue[@name='FactionLogicManagers']/conditions/check_value/@value"),
+                $"player.galaxy.macro.ismacro.{{macro.{GalaxySettingsForm.GalaxyName}_macro}}");
         }
 
         private static XElement GetOrCreateMainCue(string modPrefix)
