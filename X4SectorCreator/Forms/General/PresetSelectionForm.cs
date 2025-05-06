@@ -152,7 +152,9 @@ namespace X4SectorCreator.Forms.Factories
                         (faction.Equals("scaleplate", StringComparison.OrdinalIgnoreCase) && factory.Id.StartsWith("pir_", StringComparison.OrdinalIgnoreCase)))
                     {
                         if (ContainsTag(factory.Location.Tags, "anarchy")) continue;
-                        factory.Location.Excludedtags = RemoveFromTag(factory.Location.Excludedtags, "anarchy");
+
+                        factory.Location.Excludedtags = null;
+                        factory.Location.Tags = null;
 
                         EditFactoryData(factory, owner, raceKey);
                         if (adjustQuotas)
@@ -178,7 +180,9 @@ namespace X4SectorCreator.Forms.Factories
                     if (job.Id.StartsWith(faction, StringComparison.OrdinalIgnoreCase))
                     {
                         if (ContainsTag(job.Location.Tags, "anarchy")) continue;
-                        job.Location.Excludedtags = RemoveFromTag(job.Location.Excludedtags, "anarchy");
+
+                        job.Location.Excludedtags = null;
+                        job.Location.Tags = null;
 
                         EditJobData(job, owner, faction);
                         if (adjustQuotas)
