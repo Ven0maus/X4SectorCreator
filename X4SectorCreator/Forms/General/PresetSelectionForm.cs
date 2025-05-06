@@ -137,6 +137,7 @@ namespace X4SectorCreator.Forms.Factories
             {
                 // All factories where class is galaxy
                 var templateFactories = GetTemplateFactories()
+                    .Where(a => !a.Id.Contains("dlc_split", StringComparison.OrdinalIgnoreCase) && !a.Id.EndsWith("_new", StringComparison.OrdinalIgnoreCase))
                     .Where(a => a.Location != null && !string.IsNullOrWhiteSpace(a.Location.Class) &&
                         a.Location.Class.Equals("Galaxy", StringComparison.OrdinalIgnoreCase))
                     .ToArray();

@@ -115,7 +115,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                     attempts++;
                 }
 
-                var yield = PickYield(richness);
+                var yield = PickYield(richness) ?? "low";
                 var definition = GetOrCreateRegionDefinition(resource, yield);
 
                 var radius = (int)(sector.DiameterRadius / 2f);
@@ -347,7 +347,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                                     attempts++;
                                 }
 
-                                var yield = PickYield(_random.NextDouble());
+                                var yield = PickYield(_random.NextDouble()) ?? "low";
                                 var definition = GetOrCreateRegionDefinition(resource, yield);
 
                                 var radius = (int)(sector.DiameterRadius / 2f);
