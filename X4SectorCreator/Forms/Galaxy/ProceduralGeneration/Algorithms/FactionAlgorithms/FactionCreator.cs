@@ -15,6 +15,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private readonly FactionColorGen _factionColorGen = new(seed);
         private readonly FactionNameGen.FactionNameStyle[] _factionTypes = Enum.GetValues<FactionNameGen.FactionNameStyle>();
 
+        private readonly string[] _pirateRaces = ["argon", "teladi", "parandi"];
         private readonly string[] _races = ["argon", "terran", "teladi", "paranid", "boron", "split"];
         private readonly string[] _levels = ["verylow", "low", "normal", "high", "veryhigh"];
 
@@ -27,11 +28,13 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 Description = _descGen.Generate(factionType)
             };
 
+            var race = isPirateFaction ? _pirateRaces.RandomOrDefault(_random) : _races.RandomOrDefault(_random)
+
             faction.Id = SanitizeNameForId(faction.Name);
             faction.Shortname = GetShortName(faction.Name);
             faction.Prefixname = faction.Shortname;
             faction.PoliceFaction = isPirateFaction ? null : "self";
-            faction.Primaryrace = _races[_random.Next(_races.Length)];
+            faction.Primaryrace = race;
             faction.AggressionLevel = _levels[_random.Next(_levels.Length)];
             faction.AvariceLevel = _levels[_random.Next(_levels.Length)];
             faction.Lawfulness = _random.NextDouble().ToString("0.##");
