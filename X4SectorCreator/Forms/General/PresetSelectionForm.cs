@@ -147,8 +147,12 @@ namespace X4SectorCreator.Forms.Factories
                 foreach (var factory in templateFactories)
                 {
                     var raceKey = GetRaceKey(faction);
-                    if (factory.Id.StartsWith(raceKey, StringComparison.OrdinalIgnoreCase))
+                    if (factory.Id.StartsWith(raceKey, StringComparison.OrdinalIgnoreCase) || 
+                        (faction.Equals("scaleplate", StringComparison.OrdinalIgnoreCase) && factory.Id.StartsWith("pir_", StringComparison.OrdinalIgnoreCase)))
                     {
+                        if (ContainsTag(factory.Location.Tags, "anarchy")) continue;
+                        factory.Location.Excludedtags = RemoveFromTag(factory.Location.Excludedtags, "anarchy");
+
                         EditFactoryData(factory, owner, raceKey);
                         if (adjustQuotas)
                             ApplyQuotaAdjustment(coverage, ownership, factoryQuota: factory.Quotas?.Quota);
@@ -172,6 +176,9 @@ namespace X4SectorCreator.Forms.Factories
                     // Jobs have the full race, not just the 3 initials
                     if (job.Id.StartsWith(faction, StringComparison.OrdinalIgnoreCase))
                     {
+                        if (ContainsTag(job.Location.Tags, "anarchy")) continue;
+                        job.Location.Excludedtags = RemoveFromTag(job.Location.Excludedtags, "anarchy");
+
                         EditJobData(job, owner, faction);
                         if (adjustQuotas)
                             ApplyQuotaAdjustment(coverage, ownership, jobQuota: job.Quota);
@@ -274,6 +281,23 @@ namespace X4SectorCreator.Forms.Factories
                     jobQuota.Zone = Math.Max(1, Math.Ceiling((double)zoneQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
             }
+        }
+
+        private static bool ContainsTag(string field, string value)
+        {
+            return !string.IsNullOrWhiteSpace(field) && field.Contains(value, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static string RemoveFromTag(string field, string value)
+        {
+            string newTag = field;
+            if (!string.IsNullOrWhiteSpace(field) && field.Contains(value, StringComparison.OrdinalIgnoreCase))
+            {
+                newTag = field.Replace(value, string.Empty).Trim();
+                if (newTag == string.Empty)
+                    newTag = null;
+            }
+            return newTag;
         }
 
         private void EditFactoryData(Factory factory, string ownerId, string raceKey)
