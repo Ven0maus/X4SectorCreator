@@ -5120,6 +5120,7 @@
     </research>
     <component ref="prod_gen_claytronics_macro"/>
     <restriction licence="station_gen_intermediate"/>
+	<owner faction="paranid"/>
     <owner faction="antigone"/>
     <owner faction="argon"/>
     <owner faction="holyorder"/>
@@ -5145,6 +5146,9 @@
     </research>
     <component ref="prod_gen_dronecomponents_macro"/>
     <restriction licence="station_gen_intermediate"/>
+	<owner faction="antigone"/>
+	<owner faction="teladi"/>
+	<owner faction="paranid"/>
     <owner faction="argon"/>
     <owner faction="holyorder"/>
     <owner faction="ministry"/>
@@ -5195,6 +5199,7 @@
     </research>
     <component ref="prod_gen_engineparts_macro"/>
     <restriction licence="station_gen_basic"/>
+	<owner faction="holyorder"/>
     <owner faction="antigone"/>
     <owner faction="argon"/>
     <owner faction="paranid"/>
@@ -5220,6 +5225,8 @@
     </research>
     <component ref="prod_gen_fieldcoils_macro"/>
     <restriction licence="station_gen_intermediate"/>
+	<owner faction="argon"/>
+    <owner faction="holyorder"/>
     <owner faction="antigone"/>
     <owner faction="paranid"/>
     <owner faction="teladi"/>
@@ -5323,6 +5330,8 @@
     <component ref="prod_gen_missilecomponents_macro"/>
     <restriction licence="station_gen_advanced"/>
     <owner faction="argon"/>
+	<owner faction="teladi"/>
+	<owner faction="antigone"/>
     <owner faction="holyorder"/>
     <owner faction="ministry"/>
     <owner faction="paranid"/>
@@ -5520,6 +5529,8 @@
     <component ref="prod_gen_smartchips_macro"/>
     <restriction licence="station_gen_advanced"/>
     <owner faction="antigone"/>
+	<owner faction="argon"/>
+	<owner faction="holyorder"/>
     <owner faction="paranid"/>
     <owner faction="teladi"/>
     <owner faction="trinity"/>
@@ -5595,6 +5606,9 @@
     <component ref="prod_gen_turretcomponents_macro"/>
     <restriction licence="station_gen_advanced"/>
     <owner faction="argon"/>
+    <owner faction="antigone"/>
+	<owner faction="holyorder"/>
+	<owner faction="teladi"/>
     <owner faction="ministry"/>
     <owner faction="paranid"/>
     <owner faction="trinity"/>
@@ -5644,6 +5658,9 @@
     </research>
     <component ref="prod_gen_weaponcomponents_macro"/>
     <restriction licence="station_gen_advanced"/>
+	<owner faction="antigone"/>
+	<owner faction="teladi"/>
+	<owner faction="paranid"/>
     <owner faction="argon"/>
     <owner faction="holyorder"/>
     <owner faction="ministry"/>
