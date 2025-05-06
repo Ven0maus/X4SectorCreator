@@ -35,7 +35,7 @@ namespace X4SectorCreator
 
         private const float _defaultZoom = 1f; // 1.0 means 100% scale
         private static PointF _offset;
-        private static float _zoom = 0.8f;
+        private static float _zoom = 0.45f;
         private const float _minZoom = 0.075f, _maxZoom = 2.5f;
         private const float _gateSizeRadius = 8f;
 
@@ -65,7 +65,7 @@ namespace X4SectorCreator
         private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
         private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
 
-        // TODO: Rework to use ImageList in treeview with image nodes and colors
+        // TODO: Include factions and their color
         private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
         {
             {
