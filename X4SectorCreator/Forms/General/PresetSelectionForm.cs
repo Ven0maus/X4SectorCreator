@@ -293,18 +293,6 @@ namespace X4SectorCreator.Forms.Factories
             return !string.IsNullOrWhiteSpace(field) && field.Contains(value, StringComparison.OrdinalIgnoreCase);
         }
 
-        private static string RemoveFromTag(string field, string value)
-        {
-            string newTag = field;
-            if (!string.IsNullOrWhiteSpace(field) && field.Contains(value, StringComparison.OrdinalIgnoreCase))
-            {
-                newTag = field.Replace(value, string.Empty).Trim();
-                if (newTag == string.Empty)
-                    newTag = null;
-            }
-            return newTag;
-        }
-
         private void EditFactoryData(Factory factory, string ownerId, string raceKey)
         {
             // Replace the first instance of the raceKey
@@ -326,7 +314,12 @@ namespace X4SectorCreator.Forms.Factories
             if (factory.Module?.Select?.Faction != null)
                 factory.Module.Select.Faction = factory.Owner;
             factory.Location ??= new Factory.LocationObj();
-            factory.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+
+            // Only replace faction location if its not ownerless (pirate stations and jobs spawn in unowned sectors)
+            if (factory.Location.Faction != null && !factory.Location.Faction.Contains("ownerless", StringComparison.OrdinalIgnoreCase))
+            {
+                factory.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+            }
 
             if (GalaxySettingsForm.IsCustomGalaxy)
             {
@@ -348,7 +341,12 @@ namespace X4SectorCreator.Forms.Factories
             {
                 if (job.Location?.Policefaction != null)
                     job.Location.Policefaction = owner;
-                job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+
+                // Only replace faction location if its not ownerless (pirate stations and jobs spawn in unowned sectors)
+                if (job.Location.Faction != null && !job.Location.Faction.Contains("ownerless", StringComparison.OrdinalIgnoreCase))
+                {
+                    job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+                }
             }
 
             if (job.Ship?.Select != null)
