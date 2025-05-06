@@ -303,10 +303,17 @@ namespace X4SectorCreator.Forms.Factories
         private void EditFactoryData(Factory factory, string ownerId, string raceKey)
         {
             // Replace the first instance of the raceKey
-            int index = factory.Id.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
-            if (index >= 0)
+            if (factory.Id.StartsWith("pir_", StringComparison.OrdinalIgnoreCase))
             {
-                factory.Id = string.Concat(factory.Id.AsSpan(0, index), ownerId, factory.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
+                factory.Id = string.Concat(ownerId, factory.Id.AsSpan("pir".Length)).Replace(" ", "_");
+            }
+            else
+            {
+                int index = factory.Id.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
+                if (index >= 0)
+                {
+                    factory.Id = string.Concat(factory.Id.AsSpan(0, index), ownerId, factory.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
+                }
             }
             
             // Set owner faction
