@@ -21,7 +21,7 @@ namespace X4SectorCreator.MdGeneration
 
         private static XElement CreateGalaxyReplaceElement()
         {
-            return new XElement("replace", new XAttribute("sel", "/cues/cue[@name='Start']/conditions/check_value/@value"),
+            return new XElement("replace", new XAttribute("sel", "//cue[@name='Start']/conditions/check_value/@value"),
                 $"player.galaxy.macro.ismacro.{{macro.{GalaxySettingsForm.GalaxyName}_macro}}");
         }
 

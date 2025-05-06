@@ -11,10 +11,14 @@ namespace X4SectorCreator.MdGeneration
 
             if (mainCue != null || GalaxySettingsForm.IsCustomGalaxy)
             {
+                var customGalaxyElements = CreateCustomGalaxyElements();
+                if (customGalaxyElements != null && !customGalaxyElements.Any())
+                    customGalaxyElements = null;
+
                 XDocument xmlDocument = new(
                     new XDeclaration("1.0", "utf-8", null),
                     new XElement("diff",
-                        CreateGalaxyReplaceElement(),
+                        customGalaxyElements,
                         mainCue
                     )
                 );
@@ -22,13 +26,17 @@ namespace X4SectorCreator.MdGeneration
             }
         }
 
-        private static XElement CreateGalaxyReplaceElement()
+        private static IEnumerable<XElement> CreateCustomGalaxyElements()
         {
-            if (!GalaxySettingsForm.IsCustomGalaxy) return null;
+            if (!GalaxySettingsForm.IsCustomGalaxy) yield break;
 
-            return new XElement("replace", 
+            // Galaxy macro
+            yield return new XElement("replace", 
                 new XAttribute("sel", "//cue[@name='FactionLogicManagers']/conditions/check_value/@value"),
                 $"player.galaxy.macro.ismacro.{{macro.{GalaxySettingsForm.GalaxyName}_macro}}");
+
+            // Crisis
+            yield return new XElement("remove", new XAttribute("sel", "//cue[@name='XenonFactionLogic_KhaakCrisis']"));
         }
 
         private static XElement GetOrCreateMainCue(string modPrefix)
