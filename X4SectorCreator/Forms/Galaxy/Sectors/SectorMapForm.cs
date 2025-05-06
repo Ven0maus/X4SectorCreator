@@ -65,7 +65,6 @@ namespace X4SectorCreator
         private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
         private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
 
-        // TODO: Include factions and their color
         private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
         {
             {
