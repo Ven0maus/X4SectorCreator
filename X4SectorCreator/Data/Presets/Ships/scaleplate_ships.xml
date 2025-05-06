@@ -42,4 +42,14 @@
 		<drop ref="ship_small_pirate"/>
 		<people ref="scaleplate_pirate_crew"/>
 	</ship>
+
+	<ship id="sca_trader_container_s" group="tel_trader_container_s">
+		<category tags="[trader, container, mission]" faction="[scaleplate]" size="ship_s"/>
+		<pilot>
+			<select faction="scaleplate" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_small_civilian"/>
+		<people ref="scaleplate_pirate_crew"/>
+	</ship>
 </ships>
