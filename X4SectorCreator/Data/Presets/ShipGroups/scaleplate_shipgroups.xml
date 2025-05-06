@@ -27,4 +27,13 @@
 		<select macro="ship_tel_s_fighter_01_a_macro" weight="10"/>
 		<select macro="ship_tel_s_fighter_01_b_macro" weight="10"/>
 	</group>
+
+	<group name="sca_trader_container_s">
+		<select macro="ship_tel_s_trans_container_01_a_macro" weight="100"/>
+		<select macro="ship_tel_s_trans_container_01_b_macro" weight="100"/>
+		<select macro="ship_arg_s_trans_container_01_a_macro" weight="400"/>
+		<select macro="ship_arg_s_trans_container_01_b_macro" weight="100"/>
+		<select macro="ship_arg_s_trans_container_02_a_macro" weight="400"/>
+		<select macro="ship_arg_s_trans_container_02_b_macro" weight="100"/>
+	</group>
 </groups>
