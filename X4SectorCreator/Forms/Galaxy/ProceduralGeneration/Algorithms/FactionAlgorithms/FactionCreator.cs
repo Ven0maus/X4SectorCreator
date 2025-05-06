@@ -60,8 +60,6 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 faction.StationTypes = ["piratedock", "piratebase", "freeport"];
             }
 
-            // TODO: HQ needs to be set after ownership definition
-
             DefineLicenses(faction);
             DefineIcon(faction, factionType);
             DefineFactionShips(faction, isPirateFaction);

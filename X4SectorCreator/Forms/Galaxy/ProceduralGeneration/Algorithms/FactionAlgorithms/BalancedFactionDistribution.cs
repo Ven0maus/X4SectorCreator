@@ -11,7 +11,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         public void GenerateFactions(List<Cluster> clusters)
         {
             var factionCreator = new FactionCreator(_settings.Seed);
-            var pirates = _random.Next(_settings.MinPirateFactions, _settings.MaxPirateFactions + 1);
+            var pirateFactions = _random.Next(_settings.MinPirateFactions, _settings.MaxPirateFactions + 1);
             var mainFactions = _random.Next(_settings.MinMainFactions, _settings.MaxMainFactions + 1);
 
             // Create main factions
@@ -21,15 +21,23 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 FactionsForm.AllCustomFactions.Add(faction.Id, faction);
             }
 
+            var mainFactionObjects = FactionsForm.AllCustomFactions.Values.ToList();
+
             // Create pirate factions
-            for (int i = 0; i < pirates; i++)
+            for (int i = 0; i < pirateFactions; i++)
             {
                 var faction = factionCreator.Generate(true);
                 FactionsForm.AllCustomFactions.Add(faction.Id, faction);
             }
 
+            DefineFactionRelations(mainFactionObjects, FactionsForm.AllCustomFactions.Values.Except(mainFactionObjects).ToList());
             GenerateStations(clusters);
             GenerateQuotas(clusters);
+        }
+
+        private void DefineFactionRelations(List<Faction> mainFactions, List<Faction> pirateFactions)
+        {
+            new FactionRelationDistribution(_random).DefineFactionRelations(mainFactions, pirateFactions);
         }
 
         private void GenerateStations(List<Cluster> clusters)
