@@ -86,6 +86,34 @@ namespace X4SectorCreator
                 {
                     "Faction Logic Disabled"
                 }
+            },
+            {
+                "Factions", new List<object>
+                {
+                    ("Argon", "#001eff"),
+                    ("Antigone", "#0073ff"),
+                    ("Teladi", "#ddff00"),
+                    ("Paranid", "#9500ff"),
+                    ("HolyOrder", "#ff82cf"),
+                    ("Terran", "#bdebff"),
+                    ("Segaris", "#286d7a"),
+                    ("Zyarth", "#b87811"),
+                    ("FreeSplit", "#8c5906"),
+                    ("Hatikvah", "#00f2ff"),
+                    ("Xenon", "#ff0000"),
+                    ("Riptide", "#031f57"),
+                    ("Boron", "#00aeff"),
+                    ("Vigor", "#a19958"),
+                    ("Quettanauts", "#baa079"),
+                    ("Yaki", "#ff00ea"),
+                    ("Scaleplate", "#524e34"),
+                    ("FallenSplit", "#6e300c"),
+                    ("Ministry", "#546339"),
+                    ("Alliance", "#3d1f4d"),
+                    ("Buccaneers", "#361f0d"),
+                    ("Player", "#00ff15"),
+                    ("Khaak", "#d16fba")
+                }
             }
         };
 
@@ -171,18 +199,38 @@ namespace X4SectorCreator
         private void SetupLegendTree()
         {
             LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+            LegendTree.Nodes.Clear();
             LegendTree.DrawNode += LegendTree_DrawNode;
             LegendTree.ImageList = new ImageList
             {
                 ImageSize = new Size(16, 16)
             };
 
-            // Init region images
             var regionImage = GetIconFromStore("region_resource");
+            if (FactionsForm.AllCustomFactions.Count > 0)
+            {
+                _legend["Custom Factions"] = new List<object>(FactionsForm.AllCustomFactions.Values);
+                foreach (Faction faction in _legend["Custom Factions"].Cast<Faction>())
+                    LegendTree.ImageList.Images.Add(faction.Id, regionImage.CopyAsTint(faction.Color));
+            }
+
+            // Don't show vanilla, if no sector contains vanilla factions
+            if (MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).All(a => string.IsNullOrWhiteSpace(a.Owner)))
+                _legend.Remove("factions");
+
+            // Init region images
             foreach (var resource in _legend["resources"])
             {
                 var (name, color) = ((string name, Color color))resource;
                 LegendTree.ImageList.Images.Add(name, regionImage.CopyAsTint(color));
+            }
+            if (_legend.TryGetValue("factions", out var factions))
+            {
+                foreach (var faction in factions)
+                {
+                    var (name, colorHex) = ((string, string))faction;
+                    LegendTree.ImageList.Images.Add(name, regionImage.CopyAsTint(colorHex.HexToColor()));
+                }
             }
             LegendTree.ImageList.Images.Add("Faction Logic Disabled", GetIconFromStore("faction_logic_disabled"));
 
@@ -197,11 +245,28 @@ namespace X4SectorCreator
                 foreach (var entry in legendEntry.Value)
                 {
                     TreeNode childNode;
-                    if (entry is string entryStr)
+                    if (legendEntry.Key == "Others")
                     {
+                        var entryStr = entry as string;
                         childNode = new TreeNode(entryStr);
                         if (entryStr.Equals("Faction Logic Disabled", StringComparison.OrdinalIgnoreCase))
                             childNode.ImageKey = entryStr;
+                    }
+                    else if (legendEntry.Key == "Factions")
+                    {
+                        var (name, _) = ((string, string))entry;
+                        childNode = new TreeNode(name)
+                        {
+                            ImageKey = name
+                        };
+                    }
+                    else if (legendEntry.Key == "Custom Factions")
+                    {
+                        var faction = (Faction)entry;
+                        childNode = new TreeNode(faction.Name)
+                        {
+                            ImageKey = faction.Id
+                        };
                     }
                     else
                     {
@@ -368,6 +433,7 @@ namespace X4SectorCreator
                 _rows = ((int)((Math.Max(Math.Abs(allClusters.Max(b => b.Position.Y)), Math.Abs(allClusters.Min(b => b.Position.Y))) + (_minExpansionRoom / 2)) * 1.5f)) + 1;
             }
 
+            SetupLegendTree();
             GenerateHexagons();
             Invalidate();
         }
