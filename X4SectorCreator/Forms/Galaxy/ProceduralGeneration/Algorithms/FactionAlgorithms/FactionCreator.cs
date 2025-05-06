@@ -15,7 +15,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private readonly FactionColorGen _factionColorGen = new(seed);
         private readonly FactionNameGen.FactionNameStyle[] _factionTypes = Enum.GetValues<FactionNameGen.FactionNameStyle>();
 
-        private readonly string[] _races = ["argon", "terran", "teladi", "paranid", "split"];
+        private readonly string[] _races = ["argon", "terran", "teladi", "paranid", "boron", "split"];
         private readonly string[] _levels = ["verylow", "low", "normal", "high", "veryhigh"];
 
         public Faction Generate(bool isPirateFaction)
@@ -64,17 +64,18 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
 
             DefineLicenses(faction);
             DefineIcon(faction, factionType);
-            DefineFactionShips(faction);
+            DefineFactionShips(faction, isPirateFaction);
 
             return faction;
         }
 
-        private static void DefineFactionShips(Faction faction)
+        private static void DefineFactionShips(Faction faction, bool isPirateFaction)
         {
             faction.ShipGroups = [];
             faction.Ships = [];
 
-            var shipGroups = FactionShipsForm.ShipGroupPresets[faction.Primaryrace];
+            var race = isPirateFaction ? "scaleplate" : faction.Primaryrace;
+            var shipGroups = FactionShipsForm.ShipGroupPresets[race];
             foreach (var shipGroup in shipGroups.Group)
             {
                 var newGroup = shipGroup.Clone();
@@ -83,7 +84,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 faction.ShipGroups.Add(newGroup);
             }
 
-            var ships = FactionShipsForm.ShipPresets[faction.Primaryrace];
+            var ships = FactionShipsForm.ShipPresets[race];
             foreach (var ship in ships.Ship)
             {
                 var newShip = ship.Clone();
