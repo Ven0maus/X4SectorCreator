@@ -147,15 +147,19 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
 
                 while (definitions.Count < 4 && attempts < maxAttempts)
                 {
+                    var density = _random.NextDouble() * _random.Next(1, 3);
+                    while (density <= 0.001)
+                        density = _random.NextDouble() * _random.Next(1, 3);
+
                     var definition = new RegionDefinition
                     {
                         Guid = Guid.NewGuid().ToString(),
                         Name = definitionName + $"_{definitions.Count + 1}",
                         BoundaryType = "cylinder",
-                        Density = (_random.NextDouble() * _random.Next(1, 3)).ToString("0.##"),
+                        Density = density.ToString("#.##"),
                         Rotation = "0",
                         NoiseScale = _random.Next(2500, 10001).ToString(),
-                        MinNoiseValue = _random.NextDouble().ToString("0.##"),
+                        MinNoiseValue = "0.0",
                         MaxNoiseValue = "1",
                         Seed = _settings.Seed.ToString(),
                         Resources =
