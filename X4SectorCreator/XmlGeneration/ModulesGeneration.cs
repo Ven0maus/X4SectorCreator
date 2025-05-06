@@ -33,7 +33,26 @@ namespace X4SectorCreator.XmlGeneration
             foreach (var faction in FactionsForm.AllCustomFactions)
             {
                 var race = faction.Value.Primaryrace;
-                var modules = raceModules[race];
+                var modules = raceModules[race].ToHashSet();
+
+                // Check if faction owns factory that produces spaceweed, spacefuel, maja snails, maja dust
+                // Then add these missing modules if they don't exist yet
+                var illegalModules = CollectIllegalModules(faction.Value);
+                if (illegalModules.Count > 0)
+                {
+                    var missingModules = illegalModules
+                        .Where(a => !modules.Any(b => b.CategoryObj?.Ware != null && b.CategoryObj.Ware.Equals(a, StringComparison.OrdinalIgnoreCase)))
+                        .ToArray();
+                    if (missingModules.Length > 0)
+                    {
+                        var allModulesFlat = raceModules.Values.SelectMany(a => a).ToArray();
+                        foreach (var missingModule in missingModules)
+                        {
+                            var misModule = allModulesFlat.First(a => a.CategoryObj?.Ware != null && a.CategoryObj.Ware.Equals(missingModule, StringComparison.OrdinalIgnoreCase));
+                            modules.Add(misModule);
+                        }
+                    }
+                }
 
                 foreach (var module in modules)
                 {
@@ -51,6 +70,23 @@ namespace X4SectorCreator.XmlGeneration
                         new XAttribute("faction", $"[{faction.Value.Id}]")));
                 }
             }
+        }
+
+        private static HashSet<string> CollectIllegalModules(Faction faction)
+        {
+            var illegalWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "spaceweed", "majadust", "majasnails", "spacefuel" };
+            var foundWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var factory in FactoriesForm.AllFactories.Values)
+            {
+                if (factory.Owner.Equals(faction.Id, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (factory.Module?.Select?.Ware != null && illegalWares.Contains(factory.Module.Select.Ware))
+                    {
+                        foundWares.Add(factory.Module.Select.Ware);
+                    }
+                }
+            }
+            return foundWares;
         }
 
         private static Dictionary<string, HashSet<Module>> CollectRaceModules()
