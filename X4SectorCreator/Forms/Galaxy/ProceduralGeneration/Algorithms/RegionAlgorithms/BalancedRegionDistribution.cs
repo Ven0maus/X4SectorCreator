@@ -37,9 +37,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             ["medhigh"] = 32,
             ["highlow"] = 48,
             ["high"] = 60,
-            ["highplus"] = 120,
-            ["veryhigh"] = 3600,
-            ["highest"] = 60000
+            ["highplus"] = 120
         };
 
         private readonly Dictionary<string, List<RegionDefinition>> _regionDefinitions = new(StringComparer.OrdinalIgnoreCase);
@@ -199,7 +197,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             else if (richness < 0.75f)
                 return _yieldDensities.Where(a => a.Value >= 16 && a.Value <= 32).Select(a => a.Key).RandomOrDefault(_random);
             else 
-                return _yieldDensities.Where(a => a.Value >= 32 && a.Value <= 60000).Select(a => a.Key).RandomOrDefault(_random);
+                return _yieldDensities.Where(a => a.Value >= 32 && a.Value <= 120).Select(a => a.Key).RandomOrDefault(_random);
         }
 
         private static List<Cluster> GetNearbyClusters(List<Cluster> clusters, Cluster targetCluster, float range)
