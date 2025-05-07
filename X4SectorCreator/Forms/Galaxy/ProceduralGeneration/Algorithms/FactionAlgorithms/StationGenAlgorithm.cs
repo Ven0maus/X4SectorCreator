@@ -123,8 +123,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                         unOwnedSectors = [.. factionSectors.Keys];
 
                     var sector = unOwnedSectors[_random.Next(unOwnedSectors.Count)];
-                    if (firstSector == null)
-                        firstSector = sector;
+                    firstSector ??= sector;
 
                     unOwnedSectors.Remove(sector);
 

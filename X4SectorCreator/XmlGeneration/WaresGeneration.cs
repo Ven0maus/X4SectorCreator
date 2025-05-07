@@ -55,6 +55,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> CollectWares()
         {
+            // TODO: Improve returning only 1 ware edit instead of multiple of same ware id
             var xml = File.ReadAllText(Constants.DataPaths.WaresMappingPath);
             var allWares = Wares.Deserialize(xml).Ware;
             var illegalWaresCache = new Dictionary<Faction, HashSet<string>>();
