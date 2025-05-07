@@ -156,6 +156,10 @@ namespace X4SectorCreator.Forms.Factories
                         factory.Location.Excludedtags = null;
                         factory.Location.Tags = null;
 
+                        // Economy is too restrictive on factory presets, remove it!
+                        if (factory.Location?.Economy != null)
+                            factory.Location.Economy = null;
+
                         EditFactoryData(factory, owner, raceKey);
                         if (adjustQuotas)
                             ApplyQuotaAdjustment(coverage, ownership, factoryQuota: factory.Quotas?.Quota);
