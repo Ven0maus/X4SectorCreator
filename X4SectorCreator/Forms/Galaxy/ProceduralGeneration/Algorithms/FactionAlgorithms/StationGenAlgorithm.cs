@@ -1,4 +1,5 @@
-﻿using X4SectorCreator.Helpers;
+﻿using System.Linq;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAlgorithms
@@ -155,13 +156,17 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
 
         private void CreateStation(Sector sector, string type, Faction faction, Point? position = null)
         {
-            var zone = new Zone { Position = position ?? GetValidStationPosition(sector) };
+            var zone = new Zone
+            {
+                Id = sector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
+                Position = position ?? GetValidStationPosition(sector)
+            };
             sector.Zones.Add(zone);
 
             var station = new Station
             {
                 Faction = faction.Id,
-                Id = sector.Zones.SelectMany(a => a.Stations).Count() + 1,
+                Id = sector.Zones.SelectMany(a => a.Stations).DefaultIfEmpty(new Station()).Max(a => a.Id) + 1,
                 Owner = faction.Id,
                 Race = faction.Primaryrace,
                 Type = type,

@@ -6,11 +6,12 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.MapAlgori
     {
         public override IEnumerable<Cluster> Generate()
         {
+            int count = 0;
             foreach (var coordinate in Coordinates)
             {
                 if (Random.Next(100) < Settings.ClusterChance)
                 {
-                    yield return CreateClusterAndSectors(coordinate);
+                    yield return CreateClusterAndSectors(coordinate, ++count);
                 }
             }
         }

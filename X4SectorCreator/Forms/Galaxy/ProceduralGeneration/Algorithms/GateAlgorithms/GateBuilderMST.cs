@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
+﻿using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -133,10 +132,14 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgor
             var directionTarget = targetCluster.Position.Add(targetSector.PlacementDirection);
 
             // Source
-            var sourceZone = new Zone { Position = CalculateValidGatePosition(sourceSector, directionTarget.GetDirection(directionSource)) };
+            var sourceZone = new Zone 
+            { 
+                Id = sourceSector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
+                Position = CalculateValidGatePosition(sourceSector, directionTarget.GetDirection(directionSource)) 
+            };
             var sourceGate = new Gate
             {
-                Id = sourceSector.Zones.SelectMany(a => a.Gates).Count() + 1,
+                Id = sourceSector.Zones.SelectMany(a => a.Gates).DefaultIfEmpty(new Gate()).Max(a => a.Id) + 1,
                 DestinationSectorName = targetSector.Name,
                 ParentSectorName = sourceSector.Name,
                 Yaw = (int)directionSource.GetDirectionAngle(directionTarget)
@@ -145,10 +148,14 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgor
             sourceSector.Zones.Add(sourceZone);
 
             // Target
-            var targetZone = new Zone { Position = CalculateValidGatePosition(targetSector, directionSource.GetDirection(directionTarget)) };
+            var targetZone = new Zone 
+            {
+                Id = targetSector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
+                Position = CalculateValidGatePosition(targetSector, directionSource.GetDirection(directionTarget))
+            };
             var targetGate = new Gate
             {
-                Id = targetSector.Zones.SelectMany(a => a.Gates).Count() + 1,
+                Id = targetSector.Zones.SelectMany(a => a.Gates).DefaultIfEmpty(new Gate()).Max(a => a.Id) + 1,
                 DestinationSectorName = sourceSector.Name,
                 ParentSectorName = targetSector.Name,
                 Yaw = (int)directionTarget.GetDirectionAngle(directionSource)

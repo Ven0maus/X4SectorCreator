@@ -13,6 +13,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.MapAlgori
             var noiseMap = OpenSimplex2.GenerateNoiseMap(Settings.Width, Settings.Height, Settings.Seed,
                 Settings.NoiseScale, Settings.NoiseOctaves, Settings.NoisePersistance, Settings.NoiseLacunarity, Settings.NoiseOffset);
 
+            int count = 0;
             foreach (var coordinate in Coordinates)
             {
                 var gridCoordinate = coordinate.HexToSquareGridCoordinate();
@@ -23,7 +24,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.MapAlgori
                 var noise = Math.Clamp(noiseMap[gridCoordinate.Y * Settings.Width + gridCoordinate.X], 0f, 1f);
                 if (noise < Settings.NoiseThreshold)
                 {
-                    yield return CreateClusterAndSectors(coordinate);
+                    yield return CreateClusterAndSectors(coordinate, ++count);
                 }
             }
         }
