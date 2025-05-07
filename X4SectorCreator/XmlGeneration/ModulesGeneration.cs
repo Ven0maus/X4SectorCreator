@@ -74,7 +74,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static HashSet<string> CollectIllegalModules(Faction faction)
         {
-            var illegalWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "spaceweed", "majadust", "majasnails", "spacefuel", "sojahusk", "sojabeans" };
+            var illegalWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "spaceweed", "majadust", "majasnails", "spacefuel" };
             var foundWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var factory in FactoriesForm.AllFactories.Values)
             {

@@ -38,7 +38,7 @@ namespace X4SectorCreator.XmlGeneration
 
         private static HashSet<string> CollectSpecialModules(Faction faction)
         {
-            var illegalWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "spaceweed", "majadust", "majasnails", "spacefuel", "sojahusk", "sojabeans" };
+            var illegalWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "spaceweed", "majadust", "majasnails", "spacefuel" };
             var foundWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var factory in FactoriesForm.AllFactories.Values)
             {
@@ -55,6 +55,9 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> CollectWares()
         {
+            // TODO: Include sojabeans and sojahusk for factions that use piratedock and freeport
+            // do this also in module generation
+
             var xml = File.ReadAllText(Constants.DataPaths.WaresMappingPath);
             var allWares = Wares.Deserialize(xml).Ware;
             var illegalWaresCache = new Dictionary<Faction, HashSet<string>>();
