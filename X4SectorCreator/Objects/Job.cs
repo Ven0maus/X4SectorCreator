@@ -508,7 +508,7 @@ namespace X4SectorCreator.Objects
         public class Stationfactions
         {
             [XmlElement(ElementName = "stationfaction")]
-            public StationFaction StationFaction { get; set; }
+            public List<StationFaction> StationFaction { get; set; }
         }
 
         [XmlRoot(ElementName = "task")]
