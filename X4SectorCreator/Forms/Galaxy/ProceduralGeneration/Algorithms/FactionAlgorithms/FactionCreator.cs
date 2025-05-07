@@ -28,7 +28,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 Description = _descGen.Generate(factionType)
             };
 
-            var race = isPirateFaction ? _pirateRaces.RandomOrDefault(_random) : _races.RandomOrDefault(_random)
+            var race = isPirateFaction ? _pirateRaces.RandomOrDefault(_random) : _races.RandomOrDefault(_random);
 
             faction.Id = SanitizeNameForId(faction.Name);
             faction.Shortname = GetShortName(faction.Name);
