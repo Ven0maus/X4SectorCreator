@@ -248,7 +248,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             var adjustedResources = _weightedResources
                 .Select(r => new
                 {
-                    Resource = r.Resource,
+                    r.Resource,
                     Weight = nearbyResources.Contains(r.Resource) ? r.Weight * nearbyPenaltyMultiplier : r.Weight
                 })
                 .ToList();

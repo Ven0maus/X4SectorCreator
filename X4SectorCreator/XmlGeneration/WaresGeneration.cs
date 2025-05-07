@@ -57,6 +57,8 @@ namespace X4SectorCreator.XmlGeneration
             var allWares = Wares.Deserialize(xml).Ware;
             var illegalWaresCache = new Dictionary<Faction, HashSet<string>>();
 
+            var trackedWares = new Dictionary<Ware, HashSet<Faction>>();
+
             // Add respective owners to wares
             foreach (var ware in allWares)
             {
@@ -69,6 +71,7 @@ namespace X4SectorCreator.XmlGeneration
                             .Equals(faction.Value.Primaryrace, StringComparison.OrdinalIgnoreCase)))
                     {
                         wareElement.Add(new XElement("owner", new XAttribute("faction", faction.Value.Id)));
+                        TrackWare(trackedWares, ware, faction.Value);
                         count++;
                     }
                     else
@@ -83,6 +86,7 @@ namespace X4SectorCreator.XmlGeneration
                             if (illegalWares.Contains(illegalWare))
                             {
                                 wareElement.Add(new XElement("owner", new XAttribute("faction", faction.Value.Id)));
+                                TrackWare(trackedWares, ware, faction.Value);
                                 count++;
                             }
                         }
@@ -90,6 +94,69 @@ namespace X4SectorCreator.XmlGeneration
                 }
                 if (count > 0)
                     yield return wareElement;
+            }
+
+            foreach (var faction in FactionsForm.AllCustomFactions.Values)
+            {
+                var usedShipMacros = faction.ShipGroups
+                    .SelectMany(a => a.SelectObj)
+                    .Select(a => a.Macro)
+                    .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+                var matchingShipWares = usedShipMacros
+                    .Select(a => allWares.FirstOrDefault(b => b.ComponentObj?.Ref != null && b.ComponentObj.Ref.Equals(a, StringComparison.OrdinalIgnoreCase)))
+                    .Where(a => a != null)
+                    .ToArray();
+
+                // Add faction owner to all matching ship wares
+                foreach (var matchingShipWare in matchingShipWares)
+                {
+                    if (trackedWares.TryGetValue(matchingShipWare, out var factions))
+                    {
+                        if (factions.Contains(faction)) continue;
+                    }
+
+                    var wareElement = new XElement("add", new XAttribute("sel", $"/wares/ware[@id='{matchingShipWare.Id}']"));
+                    wareElement.Add(new XElement("owner", new XAttribute("faction", faction.Id)));
+                    TrackWare(trackedWares, matchingShipWare, faction);
+
+                    yield return wareElement;
+                }
+
+                var equipmentRequiredFromFactions = matchingShipWares
+                    .Where(a => a.OwnerObj != null)
+                    .SelectMany(a => a.OwnerObj)
+                    .Select(a => a.Faction)
+                    .Where(a => a != null)
+                    .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+                // Collect all equipment (turrets, shields, weapons, engines) for the given factions, and add the current custom faction to it
+                foreach (var eqFaction in equipmentRequiredFromFactions)
+                {
+                    // Collect equipment wares for eqFaction
+                    var turrets = CollectGroupWaresFromFaction(allWares, "turrets", eqFaction);
+                    var shields = CollectGroupWaresFromFaction(allWares, "shields", eqFaction);
+                    var weapons = CollectGroupWaresFromFaction(allWares, "weapons", eqFaction);
+                    var engines = CollectGroupWaresFromFaction(allWares, "engines", eqFaction);
+
+                    var allEquipmentWares = turrets
+                        .Concat(shields)
+                        .Concat(weapons)
+                        .Concat(engines)
+                        .ToHashSet();
+                    foreach (var equipmentWare in allEquipmentWares)
+                    {
+                        if (trackedWares.TryGetValue(equipmentWare, out var factions))
+                        {
+                            if (factions.Contains(faction)) continue;
+                        }
+                        var wareElement = new XElement("add", new XAttribute("sel", $"/wares/ware[@id='{equipmentWare.Id}']"));
+                        wareElement.Add(new XElement("owner", new XAttribute("faction", faction.Id)));
+                        TrackWare(trackedWares, equipmentWare, faction);
+
+                        yield return wareElement;
+                    }
+                }
             }
 
             // Add paintmod wares
@@ -111,6 +178,25 @@ namespace X4SectorCreator.XmlGeneration
                 );
             }
             yield return paintModsElement;
+        }
+
+        private static IEnumerable<Ware> CollectGroupWaresFromFaction(List<Ware> wares, string groupName, string faction)
+        {
+            foreach (var ware in wares)
+            {
+                if (ware.Group != null && ware.Group.Equals(groupName, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (ware.OwnerObj != null && ware.OwnerObj.Any(a => a.Faction != null && a.Faction.Equals(faction, StringComparison.OrdinalIgnoreCase)))
+                        yield return ware;
+                }
+            }
+        }
+
+        private static void TrackWare(Dictionary<Ware, HashSet<Faction>> trackedWares, Ware ware, Faction faction)
+        {
+            if (!trackedWares.TryGetValue(ware, out var factions))
+                trackedWares.Add(ware, factions = []);
+            factions.Add(faction);
         }
 
         private static string EnsureDirectoryExists(string filePath)
