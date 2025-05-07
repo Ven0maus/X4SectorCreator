@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Text.Json;
+using System.Xml.Linq;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
 using X4SectorCreator.Helpers;
@@ -117,13 +118,13 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                 var radius = (int)(sector.DiameterRadius / 2f);
                 var region = new Region
                 {
-                    Id = i + 1,
-                    Name = $"{resource}_{yield}_{i + 1}",
+                    Id = sector.Regions.DefaultIfEmpty(new Region()).Max(a => a.Id) + 1,
                     Position = position,
                     Definition = definition,
                     BoundaryLinear = _random.Next(2500, 15001).ToString(),
                     BoundaryRadius = ((int)(radius * (0.4 * (0.6 + _random.NextDouble())))).ToString()
                 };
+                region.Name = $"{resource}_{yield}_{region.Id}";
                 sector.Regions.Add(region);
                 nearbyResources.Add(resource);
             }
@@ -353,13 +354,14 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                                 var radius = (int)(sector.DiameterRadius / 2f);
                                 var region = new Region
                                 {
-                                    Id = sector.Regions.Count + 1,
-                                    Name = $"{resource}_{yield}_{sector.Regions.Count + 1}",
+                                    Id = sector.Regions.DefaultIfEmpty(new Region()).Max(a => a.Id) + 1,
+   
                                     Position = position,
                                     Definition = definition,
                                     BoundaryLinear = _random.Next(2500, 15001).ToString(),
                                     BoundaryRadius = ((int)(radius * (0.4 * (0.6 + _random.NextDouble())))).ToString()
                                 };
+                                region.Name = $"{resource}_{yield}_{region.Id}";
                                 nearbyResources.Add(resource);
                                 sector.Regions.Add(region);
                                 count++;
