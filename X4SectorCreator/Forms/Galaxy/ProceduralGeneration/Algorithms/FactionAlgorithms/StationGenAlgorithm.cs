@@ -113,15 +113,15 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
 
             foreach (var pirate in pirates)
             {
-                // Make sure there are always sectors for pirates to spawn in
-                if (unOwnedSectors.Count == 0)
-                    unOwnedSectors = [.. factionSectors.Keys];
-
                 // 2 - 5 pirate stations per pirate faction
                 var amountOfStations = _random.Next(2, 6);
                 Sector firstSector = null;
                 for (int i = 0; i < amountOfStations; i++)
                 {
+                    // Make sure there are always sectors for pirates to spawn in
+                    if (unOwnedSectors.Count == 0)
+                        unOwnedSectors = [.. factionSectors.Keys];
+
                     var sector = unOwnedSectors[_random.Next(unOwnedSectors.Count)];
                     if (firstSector == null)
                         firstSector = sector;

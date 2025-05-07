@@ -15,7 +15,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private readonly FactionColorGen _factionColorGen = new(seed);
         private readonly FactionNameGen.FactionNameStyle[] _factionTypes = Enum.GetValues<FactionNameGen.FactionNameStyle>();
 
-        private readonly string[] _pirateRaces = ["argon", "teladi", "parandi"];
+        private readonly string[] _pirateRaces = ["argon", "teladi", "paranid"];
         private readonly string[] _races = ["argon", "terran", "teladi", "paranid", "boron", "split"];
         private readonly string[] _levels = ["verylow", "low", "normal", "high", "veryhigh"];
 

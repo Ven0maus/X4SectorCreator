@@ -31,12 +31,14 @@ namespace X4SectorCreator.XmlGeneration
             {"module_tel_prod_spaceweed_01", "spaceweed" },
             {"module_arg_prod_spacefuel_01", "spacefuel" },
             {"module_par_prod_majasnails_01", "majasnails" },
-            {"module_par_prod_majadust_01", "majadust" }
+            {"module_par_prod_majadust_01", "majadust" },
+            {"module_par_prod_sojahusk_01", "sojahusk" },
+            {"module_par_prod_sojabeans_01", "sojabeans" }
         };
 
-        private static HashSet<string> CollectIllegalModules(Faction faction)
+        private static HashSet<string> CollectSpecialModules(Faction faction)
         {
-            var illegalWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "spaceweed", "majadust", "majasnails", "spacefuel" };
+            var illegalWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "spaceweed", "majadust", "majasnails", "spacefuel", "sojahusk", "sojabeans" };
             var foundWares = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var factory in FactoriesForm.AllFactories.Values)
             {
@@ -81,7 +83,7 @@ namespace X4SectorCreator.XmlGeneration
                         {
                             if (!illegalWaresCache.TryGetValue(faction.Value, out var illegalWares))
                             {
-                                illegalWaresCache[faction.Value] = illegalWares = CollectIllegalModules(faction.Value);
+                                illegalWaresCache[faction.Value] = illegalWares = CollectSpecialModules(faction.Value);
                             }
                             if (illegalWares.Contains(illegalWare))
                             {
