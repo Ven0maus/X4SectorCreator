@@ -7,9 +7,9 @@ namespace X4SectorCreator.MdGeneration
     {
         public static void Generate(string modPrefix, string folder)
         {
-            var mainCue = FactionsForm.AllCustomFactions.Count == 0 ? null : GetOrCreateMainCue(modPrefix);
+            var factionLogicElement = FactionsForm.AllCustomFactions.Count == 0 ? null : AddFactionsToFactionLogic(modPrefix);
 
-            if (mainCue != null || GalaxySettingsForm.IsCustomGalaxy)
+            if (factionLogicElement != null || GalaxySettingsForm.IsCustomGalaxy)
             {
                 var customGalaxyElements = CreateCustomGalaxyElements();
                 if (customGalaxyElements != null && !customGalaxyElements.Any())
@@ -19,7 +19,7 @@ namespace X4SectorCreator.MdGeneration
                     new XDeclaration("1.0", "utf-8", null),
                     new XElement("diff",
                         customGalaxyElements,
-                        mainCue
+                        factionLogicElement
                     )
                 );
                 xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"md/factionlogic.xml")));
@@ -35,74 +35,15 @@ namespace X4SectorCreator.MdGeneration
                 new XAttribute("sel", "//cue[@name='FactionLogicManagers']/conditions/check_value/@value"),
                 $"player.galaxy.macro.ismacro.{{macro.{GalaxySettingsForm.GalaxyName}_macro}}");
 
-            // Crisis
+            // Disable Crisis
             yield return new XElement("remove", new XAttribute("sel", "//cue[@name='XenonFactionLogic_KhaakCrisis']"));
         }
 
-        private static XElement GetOrCreateMainCue(string modPrefix)
+        private static XElement AddFactionsToFactionLogic(string modPrefix)
         {
-            XElement mainCue;
-            XElement cuesCue;
-            if (GalaxySettingsForm.IsCustomGalaxy)
-            {
-                var managerCue = CreateManagerCue(modPrefix, out cuesCue);
-                mainCue = new XElement("add", new XAttribute("sel", "/mdscript/cues"));
-                mainCue.Add(managerCue);
-            }
-            else
-            {
-                mainCue = cuesCue = new XElement("add", new XAttribute("sel", "//cue[@name='FactionLogicManagers']/cues"));
-            }
-
-            var setupCue = CreateSetupCue(modPrefix);
-            cuesCue.Add(setupCue);
-            cuesCue.Add(CreateFactionCues(modPrefix));
-
-            return mainCue;
-        }
-
-        private static XElement CreateManagerCue(string modPrefix, out XElement cuesCue)
-        {
-            cuesCue = new XElement("cues");
-            var managerCue = new XElement("cue",
-                new XAttribute("name", $"FactionLogicManagersX4SectorCreator{modPrefix}"),
-                new XAttribute("mapeditor", "false"),
-                new XAttribute("version", "3"),
-                new XElement("conditions",
-                    new XElement("event_cue_signalled",
-                    new XAttribute("cue", "md.Setup.Start")),
-                    new XElement("check_value", new XAttribute("value", $"player.galaxy.macro.ismacro.{{macro.{GalaxySettingsForm.GalaxyName}_macro}}"))),
-                new XElement("actions",
-                    new XElement("set_value",
-                    new XAttribute("name", "md.$DefaultShipStrengthTable"),
-                    new XAttribute("exact", @"table[{class.ship_xl} = 23,{class.ship_l} = 11,{class.ship_m} = 3,{class.ship_s} = 1]")
-                ),
-                new XElement("set_value",
-                    new XAttribute("name", "md.$DefaultSubordinateStrengthTable"),
-                    new XAttribute("exact", @"table[{class.ship_xl} = 21,{class.ship_l} = 9,{class.ship_m} = 3,{class.ship_s} = 1]")
-                )),
-                cuesCue);
-            return managerCue;
-        }
-
-        private static XElement CreateSetupCue(string modPrefix)
-        {
-            var setupCue = new XElement("cue",
-                new XAttribute("name", $"SetupX4SectorCreator{modPrefix}CustomFactions"));
-
-            var actionsCue = new XElement("actions");
-            setupCue.Add(actionsCue);
-
-            foreach (var faction in FactionsForm.AllCustomFactions.Values)
-            {
-                var setValueCue = new XElement("set_value",
-                    new XAttribute("name", $"md.$FactionData.{{faction.{faction.Id}}}"),
-                    new XAttribute("exact", "table[]")
-                    );
-                actionsCue.Add(setValueCue);
-            }
-            
-            return setupCue;
+            return new XElement("add", 
+                new XAttribute("sel", "//cue[@name='FactionLogicManagers']/cues"), 
+                CreateFactionCues(modPrefix));
         }
 
         private static IEnumerable<XElement> CreateFactionCues(string modPrefix)
