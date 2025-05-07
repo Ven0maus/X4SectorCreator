@@ -55,27 +55,23 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> CollectWares()
         {
-            // TODO: Improve returning only 1 ware edit instead of multiple of same ware id
             var xml = File.ReadAllText(Constants.DataPaths.WaresMappingPath);
             var allWares = Wares.Deserialize(xml).Ware;
             var illegalWaresCache = new Dictionary<Faction, HashSet<string>>();
 
             var trackedWares = new Dictionary<Ware, HashSet<Faction>>();
+            var wareElements = new Dictionary<Ware, XElement>();
 
             // Add respective owners to wares
             foreach (var ware in allWares)
             {
-                var wareElement = new XElement("add", new XAttribute("sel", $"/wares/ware[@id='{ware.Id}']"));
-                int count = 0;
                 foreach (var faction in FactionsForm.AllCustomFactions)
                 {
                     if (ware.OwnerObj != null && ware.OwnerObj
                         .Any(a => a.Faction != null && a.Faction
                             .Equals(faction.Value.Primaryrace, StringComparison.OrdinalIgnoreCase)))
                     {
-                        wareElement.Add(new XElement("owner", new XAttribute("faction", faction.Value.Id)));
-                        TrackWare(trackedWares, ware, faction.Value);
-                        count++;
+                        TrackWare(trackedWares, wareElements, ware, faction.Value);
                     }
                     else
                     {
@@ -88,15 +84,11 @@ namespace X4SectorCreator.XmlGeneration
                             }
                             if (illegalWares.Contains(illegalWare))
                             {
-                                wareElement.Add(new XElement("owner", new XAttribute("faction", faction.Value.Id)));
-                                TrackWare(trackedWares, ware, faction.Value);
-                                count++;
+                                TrackWare(trackedWares, wareElements, ware, faction.Value);
                             }
                         }
                     }
                 }
-                if (count > 0)
-                    yield return wareElement;
             }
 
             foreach (var faction in FactionsForm.AllCustomFactions.Values)
@@ -118,12 +110,7 @@ namespace X4SectorCreator.XmlGeneration
                     {
                         if (factions.Contains(faction)) continue;
                     }
-
-                    var wareElement = new XElement("add", new XAttribute("sel", $"/wares/ware[@id='{matchingShipWare.Id}']"));
-                    wareElement.Add(new XElement("owner", new XAttribute("faction", faction.Id)));
-                    TrackWare(trackedWares, matchingShipWare, faction);
-
-                    yield return wareElement;
+                    TrackWare(trackedWares, wareElements, matchingShipWare, faction);
                 }
 
                 var equipmentRequiredFromFactions = matchingShipWares
@@ -153,14 +140,14 @@ namespace X4SectorCreator.XmlGeneration
                         {
                             if (factions.Contains(faction)) continue;
                         }
-                        var wareElement = new XElement("add", new XAttribute("sel", $"/wares/ware[@id='{equipmentWare.Id}']"));
-                        wareElement.Add(new XElement("owner", new XAttribute("faction", faction.Id)));
-                        TrackWare(trackedWares, equipmentWare, faction);
-
-                        yield return wareElement;
+                        TrackWare(trackedWares, wareElements, equipmentWare, faction);
                     }
                 }
             }
+
+            // Return all captured wares
+            foreach (var wareElement in wareElements.Values)
+                yield return wareElement;
 
             // Add paintmod wares
             var paintModsElement = new XElement("add", new XAttribute("sel", "//wares"));
@@ -195,10 +182,18 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
-        private static void TrackWare(Dictionary<Ware, HashSet<Faction>> trackedWares, Ware ware, Faction faction)
+        private static void TrackWare(Dictionary<Ware, HashSet<Faction>> trackedWares, Dictionary<Ware, XElement> wareElements, Ware ware, Faction faction)
         {
             if (!trackedWares.TryGetValue(ware, out var factions))
+            {
                 trackedWares.Add(ware, factions = []);
+            }
+            if (!wareElements.TryGetValue(ware, out var wareElement))
+            {
+                wareElements.Add(ware, wareElement = new XElement("add", new XAttribute("sel", $"/wares/ware[@id='{ware.Id}']")));
+            }
+
+            wareElement.Add(new XElement("owner", new XAttribute("faction", faction.Id)));
             factions.Add(faction);
         }
 
