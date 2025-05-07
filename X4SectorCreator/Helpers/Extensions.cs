@@ -303,18 +303,16 @@ namespace X4SectorCreator.Helpers
             return new Point(p1.X - p2.X, p1.Y - p2.Y);
         }
 
-        public static double GetDirectionAngle(this Point p1, Point p2)
+        public static double GetDirectionAngleCompassStyle(this Point a, Point b)
         {
-            int dx = p2.X - p1.X;
-            int dy = p2.Y - p1.Y;
+            int dx = b.X - a.X;
+            int dy = b.Y - a.Y;
 
-            double angleRad = Math.Atan2(dy, dx); // -π to π
-            double angleDeg = angleRad * (180.0 / Math.PI); // convert to degrees
+            double angleRad = Math.Atan2(dy, dx);
+            double mathAngle = (angleRad * (180.0 / Math.PI) + 360) % 360;
+            double compassAngle = (450 - mathAngle) % 360;
 
-            if (angleDeg < 0)
-                angleDeg += 360; // normalize to [0, 360)
-
-            return angleDeg;
+            return compassAngle;
         }
 
         public static float Distance(this Point p1, Point p2)

@@ -129,7 +129,12 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgor
         private void AddGate(Cluster sourceCluster, Sector sourceSector, Cluster targetCluster, Sector targetSector)
         {
             var directionSource = sourceCluster.Position.Add(sourceSector.PlacementDirection);
+            if (sourceCluster.Sectors.Count == 1)
+                directionSource = sourceCluster.Position;
+
             var directionTarget = targetCluster.Position.Add(targetSector.PlacementDirection);
+            if (targetCluster.Sectors.Count == 1)
+                directionTarget = targetCluster.Position;
 
             // Source
             var sourceZone = new Zone 
@@ -142,7 +147,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgor
                 Id = sourceSector.Zones.SelectMany(a => a.Gates).DefaultIfEmpty(new Gate()).Max(a => a.Id) + 1,
                 DestinationSectorName = targetSector.Name,
                 ParentSectorName = sourceSector.Name,
-                Yaw = (int)directionSource.GetDirectionAngle(directionTarget)
+                Yaw = (int)sourceZone.Position.GetDirectionAngleCompassStyle(new Point(0, 0)) // Point towards center
             };
             sourceZone.Gates.Add(sourceGate);
             sourceSector.Zones.Add(sourceZone);
@@ -153,12 +158,13 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgor
                 Id = targetSector.Zones.DefaultIfEmpty(new Zone()).Max(a => a.Id) + 1,
                 Position = CalculateValidGatePosition(targetSector, directionSource.GetDirection(directionTarget))
             };
+
             var targetGate = new Gate
             {
                 Id = targetSector.Zones.SelectMany(a => a.Gates).DefaultIfEmpty(new Gate()).Max(a => a.Id) + 1,
                 DestinationSectorName = sourceSector.Name,
                 ParentSectorName = targetSector.Name,
-                Yaw = (int)directionTarget.GetDirectionAngle(directionSource)
+                Yaw = (int)targetZone.Position.GetDirectionAngleCompassStyle(new Point(0, 0)) // Point towards center
             };
             targetZone.Gates.Add(targetGate);
             targetSector.Zones.Add(targetZone);
