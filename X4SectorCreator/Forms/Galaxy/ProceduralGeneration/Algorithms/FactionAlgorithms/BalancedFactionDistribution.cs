@@ -50,12 +50,22 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         {
             foreach (var faction in FactionsForm.AllCustomFactions.Values) 
             {
-                var coverage = clusters
-                    .SelectMany(a => a.Sectors)
-                    .SelectMany(a => a.Zones)
-                    .SelectMany(a => a.Stations)
-                    .Where(a => a.Owner == faction.Id)
-                    .Count();
+                int coverage = 0;
+                foreach (var cluster in clusters)
+                {
+                    foreach (var sector in cluster.Sectors)
+                    {
+                        foreach (var station in sector.Zones.SelectMany(a => a.Stations))
+                        {
+                            if (station.Owner == faction.Id)
+                            {
+                                coverage++;
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 PresetSelectionForm.ExecuteForProcGen(faction, coverage);
             }
         }
