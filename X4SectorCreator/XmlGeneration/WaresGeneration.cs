@@ -32,8 +32,6 @@ namespace X4SectorCreator.XmlGeneration
             {"module_arg_prod_spacefuel_01", "spacefuel" },
             {"module_par_prod_majasnails_01", "majasnails" },
             {"module_par_prod_majadust_01", "majadust" },
-            {"module_par_prod_sojahusk_01", "sojahusk" },
-            {"module_par_prod_sojabeans_01", "sojabeans" }
         };
 
         private static HashSet<string> CollectSpecialModules(Faction faction)
@@ -55,9 +53,6 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> CollectWares()
         {
-            // TODO: Include sojabeans and sojahusk for factions that use piratedock and freeport
-            // do this also in module generation
-
             var xml = File.ReadAllText(Constants.DataPaths.WaresMappingPath);
             var allWares = Wares.Deserialize(xml).Ware;
             var illegalWaresCache = new Dictionary<Faction, HashSet<string>>();
@@ -145,6 +140,20 @@ namespace X4SectorCreator.XmlGeneration
                         }
                         TrackWare(trackedWares, wareElements, equipmentWare, faction);
                     }
+                }
+
+                // Include sojabeans and sojahusk if faction has a freeport or piratedock station
+                var requiresSojabeansAndHusk = MainForm.Instance.AllClusters.Values
+                    .SelectMany(a => a.Sectors)
+                    .SelectMany(a => a.Zones)
+                    .SelectMany(a => a.Stations)
+                    .Where(a => a.Owner == faction.Id)
+                    .Any(a => a.Type.Equals("piratedock", StringComparison.OrdinalIgnoreCase) || 
+                        a.Type.Equals("freeport", StringComparison.OrdinalIgnoreCase));
+                if (requiresSojabeansAndHusk)
+                {
+                    TrackWare(trackedWares, wareElements, allWares.First(a => a.Id.Equals("module_par_prod_sojabeans_01", StringComparison.OrdinalIgnoreCase)), faction);
+                    TrackWare(trackedWares, wareElements, allWares.First(a => a.Id.Equals("module_par_prod_sojahusk_01", StringComparison.OrdinalIgnoreCase)), faction);
                 }
             }
 

@@ -28,6 +28,7 @@ namespace X4SectorCreator.XmlGeneration
         private static IEnumerable<XElement> CollectModuleEdits()
         {
             var raceModules = CollectRaceModules();
+            Module[] allModulesFlat = null;
 
             // Foreach new faction, add the faction to the modules of the matching race
             foreach (var faction in FactionsForm.AllCustomFactions)
@@ -45,13 +46,30 @@ namespace X4SectorCreator.XmlGeneration
                         .ToArray();
                     if (missingModules.Length > 0)
                     {
-                        var allModulesFlat = raceModules.Values.SelectMany(a => a).ToArray();
+                        allModulesFlat ??= raceModules.Values.SelectMany(a => a).ToArray();
                         foreach (var missingModule in missingModules)
                         {
                             var misModule = allModulesFlat.First(a => a.CategoryObj?.Ware != null && a.CategoryObj.Ware.Equals(missingModule, StringComparison.OrdinalIgnoreCase));
                             modules.Add(misModule);
                         }
                     }
+                }
+
+                // Include sojabeans and sojahusk if faction has a freeport or piratedock station
+                var requiresSojabeansAndHusk = MainForm.Instance.AllClusters.Values
+                    .SelectMany(a => a.Sectors)
+                    .SelectMany(a => a.Zones)
+                    .SelectMany(a => a.Stations)
+                    .Where(a => a.Owner == faction.Value.Id)
+                    .Any(a => a.Type.Equals("piratedock", StringComparison.OrdinalIgnoreCase) || 
+                        a.Type.Equals("freeport", StringComparison.OrdinalIgnoreCase));
+                if (requiresSojabeansAndHusk)
+                {
+                    allModulesFlat ??= raceModules.Values.SelectMany(a => a).ToArray();
+                    var sojaBeansModule = allModulesFlat.First(a => a.CategoryObj?.Ware != null && a.CategoryObj.Ware.Equals("sojabeans", StringComparison.OrdinalIgnoreCase));
+                    var sojaHuskModule = allModulesFlat.First(a => a.CategoryObj?.Ware != null && a.CategoryObj.Ware.Equals("sojahusk", StringComparison.OrdinalIgnoreCase));
+                    modules.Add(sojaBeansModule);
+                    modules.Add(sojaHuskModule);
                 }
 
                 foreach (var module in modules)
