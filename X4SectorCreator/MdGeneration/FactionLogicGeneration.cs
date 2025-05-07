@@ -37,6 +37,9 @@ namespace X4SectorCreator.MdGeneration
 
             // Disable Crisis
             yield return new XElement("remove", new XAttribute("sel", "//cue[@name='XenonFactionLogic_KhaakCrisis']"));
+
+            // Remove kaori trigger
+            yield return new XElement("remove", new XAttribute("sel", "/mdscript/cues/cue[@name='FactionLogicManagers']/cues/cue[@name='KaoriFactionLogic_GamestatTrigger']"));
         }
 
         private static XElement AddFactionsToFactionLogic(string modPrefix)
