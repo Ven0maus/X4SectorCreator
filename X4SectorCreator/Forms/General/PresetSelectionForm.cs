@@ -353,22 +353,11 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
                 }
-
-                // Scaleplate stuff
-                if (job.Location.Stationfaction != null)
-                    job.Location.Stationfaction = owner;
-                if (job.Location.Stationfactions?.StationFaction != null) 
-                {
-                    job.Location.Stationfactions.StationFaction.Clear();
-                    job.Location.Stationfactions.StationFaction.Add(new Job.StationFaction { Stationfaction = owner });
-                }
             }
 
             if (job.Ship?.Select != null)
             {
                 job.Ship.Select.Faction = owner;
-                if (job.Ship.Select.Tags != null && job.Ship.Select.Tags.Equals("[scaleplateboron]"))
-                    job.Ship.Select.Tags = "[plunderer]";
             }
 
             if (job.Ship?.Owner != null)
