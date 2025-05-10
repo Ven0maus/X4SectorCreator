@@ -69,7 +69,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             return cache;
         }
 
-        public void GenerateMinerals(List<Cluster> clusters, Cluster cluster, Sector sector)
+        public void GenerateMinerals(Dictionary<string, Sector> sectorMap, List<Cluster> clusters, Cluster cluster, Sector sector)
         {
             var sectorPosition = cluster.Position.Add(sector.PlacementDirection);
             float richness = OpenSimplex2.Noise2(_settings.Seed, sectorPosition.X * 0.01f, sectorPosition.Y * 0.01f);
@@ -88,8 +88,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
 
             if (nodeCount == 0) return;
 
-            var nearbyResources = GetNearbyClusters(clusters, cluster, 4)
-                .SelectMany(a => a.Sectors)
+            var nearbyResources = GetNeighbors(sector, sectorMap, 3)
                 .SelectMany(a => a.Regions)
                 .SelectMany(a => a.Definition.Resources)
                 .Select(a => a.Ware)
@@ -199,33 +198,22 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                 return _yieldDensities.Where(a => a.Value >= 6 && a.Value <= 48).Select(a => a.Key).RandomOrDefault(_random);
         }
 
-        private static List<Cluster> GetNearbyClusters(List<Cluster> clusters, Cluster targetCluster, float range)
+        private static IEnumerable<Sector> GetNeighbors(Sector sector, Dictionary<string, Sector> sectorMap, int range)
         {
-            // First, determine the range squared for efficient comparison
-            float rangeSquared = range * range;
-
-            // Assume each cluster has a Position (e.g., Point or PointF). Adjust if needed.
-            var nearby = new List<Cluster>();
-
-            foreach (var cluster in clusters)
+            foreach (var gate in sector.Zones.SelectMany(a => a.Gates))
             {
-                if (cluster == targetCluster)
-                    continue;
-
-                var squarePosSource = cluster.Position.HexToSquareGridCoordinate();
-                var squarePosTarget = targetCluster.Position.HexToSquareGridCoordinate();
-
-                float dx = squarePosSource.X - squarePosTarget.X;
-                float dy = squarePosSource.Y - squarePosTarget.Y;
-                float distSquared = dx * dx + dy * dy;
-
-                if (distSquared <= rangeSquared)
+                if (sectorMap.TryGetValue(gate.DestinationSectorName, out var destSector))
                 {
-                    nearby.Add(cluster);
+                    yield return destSector;
+
+                    // Continue searching until range exceeds
+                    if (range > 1)
+                    {
+                        foreach (var neighbor in GetNeighbors(destSector, sectorMap, range -1))
+                            yield return neighbor;
+                    }
                 }
             }
-
-            return nearby;
         }
 
         private Point GenerateClusteredPoint(Sector sector)
@@ -312,60 +300,55 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             regionDefinition.Fields.AddRange(fields);
         }
 
-        public void PreventRegionStarvedSectors(List<Cluster> clusters)
+        public void PreventRegionStarvedSectors(List<Cluster> clusters, Dictionary<string, Sector> sectorMap)
         {
             int count = 0;
             foreach (var cluster in clusters)
             {
                 foreach (var sector in cluster.Sectors)
                 {
-                    if (sector.Regions.Count == 0)
+                    var nearbyResources = GetNeighbors(sector, sectorMap, 3)
+                        .SelectMany(a => a.Regions)
+                        .SelectMany(a => a.Definition.Resources)
+                        .Select(a => a.Ware)
+                        .ToHashSet(StringComparer.OrdinalIgnoreCase);
+                    if (nearbyResources.Count <= 5)
                     {
-                        var nearbyResources = GetNearbyClusters(clusters, cluster, 3)
-                            .SelectMany(a => a.Sectors)
-                            .SelectMany(a => a.Regions)
-                            .SelectMany(a => a.Definition.Resources)
-                            .Select(a => a.Ware)
-                            .ToHashSet(StringComparer.OrdinalIgnoreCase);
-                        if (nearbyResources.Count < 3)
+                        var chance = _random.Next(100);
+                        var totalRegions = chance < 15 ? 3 : chance < 40 ? 2 : 1;
+                        for (int i = 0; i < totalRegions; i++)
                         {
-                            var chance = _random.Next(100);
-                            var totalRegions = chance < 15 ? 3 : chance < 40 ? 2 : 1;
-                            for (int i = 0; i < totalRegions; i++)
+                            var position = GenerateClusteredPoint(sector);
+                            var resource = PickResource(nearbyResources);
+                            int attempts = 0;
+                            while (nearbyResources.Contains(resource))
                             {
-                                var position = GenerateClusteredPoint(sector);
-                                var resource = PickResource(nearbyResources);
-                                int attempts = 0;
-                                while (nearbyResources.Contains(resource))
+                                if (attempts >= 50)
                                 {
-                                    if (attempts >= 50)
-                                    {
-                                        nearbyResources.Clear();
-                                        break;
-                                    }
-
-                                    resource = PickResource(nearbyResources);
-                                    attempts++;
+                                    nearbyResources.Clear();
+                                    break;
                                 }
 
-                                var yield = PickYield(_random.NextDouble()) ?? "low";
-                                var definition = GetOrCreateRegionDefinition(resource, yield);
-
-                                var radius = (int)(sector.DiameterRadius / 2f);
-                                var region = new Region
-                                {
-                                    Id = sector.Regions.DefaultIfEmpty(new Region()).Max(a => a.Id) + 1,
-   
-                                    Position = position,
-                                    Definition = definition,
-                                    BoundaryLinear = _random.Next(2500, 15001).ToString(),
-                                    BoundaryRadius = ((int)(radius * (0.4 * (0.6 + _random.NextDouble())))).ToString()
-                                };
-                                region.Name = $"{resource}_{yield}_{region.Id}";
-                                nearbyResources.Add(resource);
-                                sector.Regions.Add(region);
-                                count++;
+                                resource = PickResource(nearbyResources);
+                                attempts++;
                             }
+
+                            var yield = PickYield(_random.NextDouble()) ?? "low";
+                            var definition = GetOrCreateRegionDefinition(resource, yield);
+
+                            var radius = (int)(sector.DiameterRadius / 2f);
+                            var region = new Region
+                            {
+                                Id = sector.Regions.DefaultIfEmpty(new Region()).Max(a => a.Id) + 1,
+                                Position = position,
+                                Definition = definition,
+                                BoundaryLinear = _random.Next(2500, 15001).ToString(),
+                                BoundaryRadius = ((int)(radius * (0.4 * (0.6 + _random.NextDouble())))).ToString()
+                            };
+                            region.Name = $"{resource}_{yield}_{region.Id}";
+                            nearbyResources.Add(resource);
+                            sector.Regions.Add(region);
+                            count++;
                         }
                     }
                 }

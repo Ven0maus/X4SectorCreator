@@ -25,12 +25,13 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
                 zone.Regions.Clear();
 
             var randomGen = new BalancedRegionDistribution(settings, settings.Resources);
+            var sectorMap = clusters.SelectMany(a => a.Sectors).ToDictionary(a => a.Name, a => a);
             foreach (var cluster in clusters)
                 foreach (var sector in cluster.Sectors)
-                    randomGen.GenerateMinerals(clusters, cluster, sector);
+                    randomGen.GenerateMinerals(sectorMap, clusters, cluster, sector);
 
             // Prevent sectors that have no regions and nearby neighbors have too little resources
-            randomGen.PreventRegionStarvedSectors(clusters);
+            randomGen.PreventRegionStarvedSectors(clusters, sectorMap);
 
             // Cleanup any unused region definitions from generation
             var definitions = clusters
