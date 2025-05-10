@@ -25,13 +25,27 @@ namespace X4SectorCreator.Forms.Galaxy
         private readonly Dictionary<string, TabPage> _originalTabPageNames = new(StringComparer.OrdinalIgnoreCase);
 
         private bool _mapGenerated = false;
+        private readonly System.Windows.Forms.Timer _progressResetTimer;
 
         public ProceduralGalaxyForm()
         {
             InitializeComponent();
+
+            _progressResetTimer = new System.Windows.Forms.Timer
+            {
+                Interval = 1000
+            };
+            _progressResetTimer.Tick += ProgressResetTimerTick;
+
             InitializePageAlgorithmOptions();
             InitResourceRarities();
             NoiseProperty_ValueChanged(this, null);
+        }
+
+        private void ProgressResetTimerTick(object sender, EventArgs e)
+        {
+            ProcGenProcess.Value = 0;
+            _progressResetTimer.Stop();
         }
 
         private void InitializePageAlgorithmOptions()
@@ -124,10 +138,17 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void BtnGenerate_Click(object sender, EventArgs e)
         {
+            ProcGenProcess.Minimum = 0;
+            ProcGenProcess.Maximum = 6;
+            ProcGenProcess.Value = 0;
+            ProcGenProcess.Step = 1;
+
             RandomizeSeeds();
+            ProcGenProcess.PerformStep();
 
             // Generate map if not generated before or seed changed
             List<Cluster> clusters = GenerateClusters();
+            ProcGenProcess.PerformStep();
 
             // Connections
             if (ChkGenerateConnections.Checked)
@@ -142,6 +163,7 @@ namespace X4SectorCreator.Forms.Galaxy
 
                 GalaxyGenerator.CreateConnections(clusters, settings);
             }
+            ProcGenProcess.PerformStep();
 
             // Regions
             if (ChkRegions.Checked)
@@ -158,6 +180,7 @@ namespace X4SectorCreator.Forms.Galaxy
             {
                 RegionDefinitionForm.RegionDefinitions.Clear();
             }
+            ProcGenProcess.PerformStep();
 
             // Factions
             if (ChkFactions.Checked)
@@ -175,8 +198,12 @@ namespace X4SectorCreator.Forms.Galaxy
 
                 GalaxyGenerator.CreateFactions(clusters, settings);
             }
+            ProcGenProcess.PerformStep();
 
             SetProceduralGalaxy(clusters);
+            ProcGenProcess.PerformStep();
+
+            _progressResetTimer.Start();
         }
 
         private static void SetProceduralGalaxy(IEnumerable<Cluster> clusters)

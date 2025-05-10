@@ -114,6 +114,7 @@
             ChkGenerateConnections = new CheckBox();
             BtnGenerate = new Button();
             BtnExit = new Button();
+            ProcGenProcess = new ProgressBar();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMinMainFactions).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxMainFactions).BeginInit();
@@ -157,7 +158,7 @@
             // 
             // label1
             // 
-            label1.Location = new Point(17, 501);
+            label1.Location = new Point(17, 527);
             label1.Name = "label1";
             label1.Size = new Size(273, 63);
             label1.TabIndex = 2;
@@ -999,19 +1000,27 @@
             // 
             // BtnExit
             // 
-            BtnExit.Location = new Point(13, 576);
+            BtnExit.Location = new Point(13, 593);
             BtnExit.Name = "BtnExit";
-            BtnExit.Size = new Size(278, 59);
+            BtnExit.Size = new Size(278, 42);
             BtnExit.TabIndex = 41;
             BtnExit.Text = "Exit";
             BtnExit.UseVisualStyleBackColor = true;
             BtnExit.Click += BtnExit_Click;
+            // 
+            // ProcGenProcess
+            // 
+            ProcGenProcess.Location = new Point(13, 497);
+            ProcGenProcess.Name = "ProcGenProcess";
+            ProcGenProcess.Size = new Size(278, 21);
+            ProcGenProcess.TabIndex = 42;
             // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(585, 638);
+            Controls.Add(ProcGenProcess);
             Controls.Add(BtnExit);
             Controls.Add(BtnGenerate);
             Controls.Add(panel3);
@@ -1160,5 +1169,6 @@
         private NumericUpDown NrMaxPirateFactions;
         private Label label36;
         private Label label37;
+        private ProgressBar ProcGenProcess;
     }
 }
