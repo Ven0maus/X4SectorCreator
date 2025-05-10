@@ -24,7 +24,6 @@ namespace X4SectorCreator.Forms.Galaxy
         private readonly Dictionary<string, Type> _mapAlgorithms = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, TabPage> _originalTabPageNames = new(StringComparer.OrdinalIgnoreCase);
 
-        private bool _mapGenerated = false;
         private readonly System.Windows.Forms.Timer _progressResetTimer;
 
         public ProceduralGalaxyForm()
