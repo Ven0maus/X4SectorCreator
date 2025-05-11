@@ -137,6 +137,12 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void BtnGenerate_Click(object sender, EventArgs e)
         {
+            // Cleanup before start
+            FactoriesForm.AllFactories.Clear();
+            JobsForm.AllJobs.Clear();
+            FactionsForm.AllCustomFactions.Clear();
+            RegionDefinitionForm.RegionDefinitions.Clear();
+
             ProcGenProcess.Minimum = 0;
             ProcGenProcess.Maximum = 6;
             ProcGenProcess.Value = 0;
@@ -175,10 +181,6 @@ namespace X4SectorCreator.Forms.Galaxy
 
                 GalaxyGenerator.CreateRegions(clusters, settings);
             }
-            else
-            {
-                RegionDefinitionForm.RegionDefinitions.Clear();
-            }
             ProcGenProcess.PerformStep();
 
             // Factions
@@ -201,7 +203,6 @@ namespace X4SectorCreator.Forms.Galaxy
 
             SetProceduralGalaxy(clusters);
             ProcGenProcess.PerformStep();
-
             _progressResetTimer.Start();
         }
 
