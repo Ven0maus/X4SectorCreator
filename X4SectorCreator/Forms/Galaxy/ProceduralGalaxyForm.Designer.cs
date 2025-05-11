@@ -115,6 +115,8 @@
             BtnGenerate = new Button();
             BtnExit = new Button();
             ProcGenProcess = new ProgressBar();
+            label38 = new Label();
+            NrMaxSectorRadius = new NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)RegionResourceRarity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMinMainFactions).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxMainFactions).BeginInit();
@@ -144,6 +146,7 @@
             ((System.ComponentModel.ISupportInitialize)NrMultiConnectionChance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMinGates).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxGates).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)NrMaxSectorRadius).BeginInit();
             SuspendLayout();
             // 
             // BtnOpenSectorMap
@@ -335,7 +338,7 @@
             CmbClusterDistribution.Items.AddRange(new object[] { "Noise", "Random" });
             CmbClusterDistribution.Location = new Point(81, 60);
             CmbClusterDistribution.Name = "CmbClusterDistribution";
-            CmbClusterDistribution.Size = new Size(192, 23);
+            CmbClusterDistribution.Size = new Size(124, 23);
             CmbClusterDistribution.TabIndex = 29;
             CmbClusterDistribution.Text = "Noise";
             CmbClusterDistribution.SelectedIndexChanged += CmbClusterDistribution_SelectedIndexChanged;
@@ -567,6 +570,8 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.ButtonHighlight;
+            panel2.Controls.Add(NrMaxSectorRadius);
+            panel2.Controls.Add(label38);
             panel2.Controls.Add(ChkMapRandomizeSeed);
             panel2.Controls.Add(MapAlgorithmOptions);
             panel2.Controls.Add(NrGridHeight);
@@ -1015,6 +1020,24 @@
             ProcGenProcess.Size = new Size(278, 21);
             ProcGenProcess.TabIndex = 42;
             // 
+            // label38
+            // 
+            label38.Location = new Point(209, 30);
+            label38.Name = "label38";
+            label38.Size = new Size(67, 30);
+            label38.TabIndex = 43;
+            label38.Text = "Max Sector Radius:";
+            // 
+            // NrMaxSectorRadius
+            // 
+            NrMaxSectorRadius.Location = new Point(213, 60);
+            NrMaxSectorRadius.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            NrMaxSectorRadius.Minimum = new decimal(new int[] { 100, 0, 0, 0 });
+            NrMaxSectorRadius.Name = "NrMaxSectorRadius";
+            NrMaxSectorRadius.Size = new Size(59, 23);
+            NrMaxSectorRadius.TabIndex = 44;
+            NrMaxSectorRadius.Value = new decimal(new int[] { 300, 0, 0, 0 });
+            // 
             // ProceduralGalaxyForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1073,6 +1096,7 @@
             ((System.ComponentModel.ISupportInitialize)NrMultiConnectionChance).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrMinGates).EndInit();
             ((System.ComponentModel.ISupportInitialize)NrMaxGates).EndInit();
+            ((System.ComponentModel.ISupportInitialize)NrMaxSectorRadius).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1170,5 +1194,7 @@
         private Label label36;
         private Label label37;
         private ProgressBar ProcGenProcess;
+        private Label label38;
+        private NumericUpDown NrMaxSectorRadius;
     }
 }

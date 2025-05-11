@@ -19,13 +19,9 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
         public static void CreateRegions(List<Cluster> clusters, ProceduralSettings settings)
         {           
-            // Clear all existing regions and region definitions
-            RegionDefinitionForm.RegionDefinitions.Clear();
-            foreach (var zone in clusters.SelectMany(c => c.Sectors))
-                zone.Regions.Clear();
-
             var randomGen = new BalancedRegionDistribution(settings, settings.Resources);
             var sectorMap = clusters.SelectMany(a => a.Sectors).ToDictionary(a => a.Name, a => a);
+
             foreach (var cluster in clusters)
                 foreach (var sector in cluster.Sectors)
                     randomGen.GenerateMinerals(sectorMap, cluster, sector);
@@ -44,10 +40,6 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
 
         public static void CreateFactions(List<Cluster> clusters, ProceduralSettings settings)
         {
-            FactoriesForm.AllFactories.Clear();
-            JobsForm.AllJobs.Clear();
-            FactionsForm.AllCustomFactions.Clear();
-
             var balancedGen = new BalancedFactionDistribution(settings);
             balancedGen.GenerateFactions(clusters);
         }

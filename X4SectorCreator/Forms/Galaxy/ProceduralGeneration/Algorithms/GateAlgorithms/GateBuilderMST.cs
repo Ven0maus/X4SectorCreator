@@ -91,7 +91,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.GateAlgor
                             if (connectedPairs.Contains(key))
                                 continue;
 
-                            var neighborSector = neighbor.Sectors.FirstOrDefault(s => s.Zones.All(z => z.Gates.Count < _settings.MaxGatesPerSector));
+                            var neighborSector = neighbor.Sectors.Where(s => s.Zones.All(z => z.Gates.Count < _settings.MaxGatesPerSector)).RandomOrDefault(_random);
                             if (neighborSector == null)
                                 continue;
 

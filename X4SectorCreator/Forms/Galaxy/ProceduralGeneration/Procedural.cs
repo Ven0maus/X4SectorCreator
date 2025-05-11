@@ -42,7 +42,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
                 var sector = new Sector
                 {
                     Id = cluster.Sectors.Count + 1,
-                    DiameterRadius = Random.Next(200, 500) * 2 * 1000, // in km
+                    DiameterRadius = Random.Next(100, Settings.MaxSectorRadius) * 2 * 1000, // in km
                     Name = numSectors == 1 ? cluster.Name :
                         cluster.Name + " " + (cluster.Sectors.Count + 1).ToRomanString(),
                     Sunlight = DetermineSunlightSample()
