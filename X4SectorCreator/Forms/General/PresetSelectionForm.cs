@@ -252,6 +252,8 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     factoryQuota.Galaxy = Math.Max(1, Math.Ceiling((double)galaxyQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
+
+                /*
                 if (factoryQuota.Cluster != null && 
                     int.TryParse(factoryQuota.Cluster, CultureInfo.InvariantCulture, out var clusterQuota))
                 {
@@ -267,6 +269,7 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     factoryQuota.Zone = Math.Max(1, Math.Ceiling((double)zoneQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
+                */
             }
 
             if (jobQuota != null)
@@ -276,6 +279,8 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     jobQuota.Galaxy = Math.Max(1, Math.Ceiling((double)galaxyQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
+
+                /*
                 if (jobQuota.Cluster != null &&
                     int.TryParse(jobQuota.Cluster, CultureInfo.InvariantCulture, out var clusterQuota))
                 {
@@ -291,6 +296,7 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     jobQuota.Zone = Math.Max(1, Math.Ceiling((double)zoneQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
+                */
             }
         }
 
