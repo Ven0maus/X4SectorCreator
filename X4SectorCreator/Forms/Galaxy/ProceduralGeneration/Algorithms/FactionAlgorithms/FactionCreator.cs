@@ -104,7 +104,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
 
         private void DefineIcon(Faction faction, FactionNameGen.FactionNameStyle style)
         {
-            var factionIcon = FactionIconGen.GenerateFactionIcon(seed + 1, style);
+            var factionIcon = FactionIconGen.GenerateFactionIcon(_random.Next(0, 1000000), style);
             faction.Icon = ImageHelper.ImageToBase64(factionIcon, ImageFormat.Png);
         }
 

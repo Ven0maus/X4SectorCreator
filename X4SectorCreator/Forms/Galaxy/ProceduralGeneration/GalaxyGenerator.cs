@@ -28,7 +28,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
             var sectorMap = clusters.SelectMany(a => a.Sectors).ToDictionary(a => a.Name, a => a);
             foreach (var cluster in clusters)
                 foreach (var sector in cluster.Sectors)
-                    randomGen.GenerateMinerals(sectorMap, clusters, cluster, sector);
+                    randomGen.GenerateMinerals(sectorMap, cluster, sector);
 
             // Prevent sectors that have no regions and nearby neighbors have too little resources
             randomGen.PreventRegionStarvedSectors(clusters, sectorMap);
