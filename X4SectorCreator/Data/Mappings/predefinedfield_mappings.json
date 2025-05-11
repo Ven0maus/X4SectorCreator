@@ -67,7 +67,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.54,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -78,7 +79,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.54,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -90,7 +92,7 @@
     "Seed": 32,
     "MinNoiseValue": 0.6,
     "MaxNoiseValue": 1.0,
-    "DistanceFactor": 1.0
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -102,7 +104,7 @@
     "Seed": 32,
     "MinNoiseValue": 0.6,
     "MaxNoiseValue": 1.0,
-    "DistanceFactor": 1.0
+    "DistanceFactor": 2.0
   },
   {
     "Type": "object",
@@ -372,7 +374,8 @@
     "NoiseScale": 1000,
     "Seed": 32,
     "MinNoiseValue": 0.0,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -383,7 +386,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.540,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -394,7 +398,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.540,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "positional",
@@ -519,7 +524,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.5,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -530,7 +536,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.5,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -541,7 +548,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.5,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -552,7 +560,8 @@
     "NoiseScale": 1000,
     "Seed": 32,
     "MinNoiseValue": 0.0,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -563,7 +572,8 @@
     "NoiseScale": 1000,
     "Seed": 32,
     "MinNoiseValue": 0.0,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "volumetricfog",

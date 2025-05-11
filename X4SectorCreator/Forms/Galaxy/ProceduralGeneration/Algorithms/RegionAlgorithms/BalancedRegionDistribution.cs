@@ -69,7 +69,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             return cache;
         }
 
-        public void GenerateMinerals(Dictionary<string, Sector> sectorMap, List<Cluster> clusters, Cluster cluster, Sector sector)
+        public void GenerateMinerals(Dictionary<string, Sector> sectorMap, Cluster cluster, Sector sector)
         {
             var sectorPosition = cluster.Position.Add(sector.PlacementDirection);
             float richness = OpenSimplex2.Noise2(_settings.Seed, sectorPosition.X * 0.01f, sectorPosition.Y * 0.01f);
@@ -146,6 +146,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                     var density = _random.NextDouble() * _random.Next(1, 3);
                     while (density <= 0.001)
                         density = _random.NextDouble() * _random.Next(1, 3);
+
+                    if (resource == "rawscrap")
+                    {
+                        density = 0.1;
+                    }
 
                     var definition = new RegionDefinition
                     {
@@ -278,8 +283,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                     // Others can take multiple
                     var values = fieldObjects.ToList();
                     var amount = _random.Next(1, fieldObjects.Count);
+
                     if (resource == "rawscrap")
+                    {
                         amount = _random.Next(1, fieldObjects.Count / 2);
+                    }
 
                     for (int i=0; i < amount; i++)
                     {
