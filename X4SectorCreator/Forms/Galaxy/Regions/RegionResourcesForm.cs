@@ -49,15 +49,15 @@ namespace X4SectorCreator.Forms
                         Ware = cmbWare.Text,
                         Yield = cmbYield.Text,
                     };
-                    _ = MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value.ListBoxResources.Items.Add(resource);
+                    _ = MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.Items.Add(resource);
                     break;
                 case "Update":
-                    int index = MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value.ListBoxResources.SelectedIndex;
-                    MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value.ListBoxResources.Items.Remove(Resource);
+                    int index = MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.SelectedIndex;
+                    MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.Items.Remove(Resource);
                     Resource.Ware = cmbWare.Text;
                     Resource.Yield = cmbYield.Text;
-                    MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value.ListBoxResources.Items.Insert(index, Resource);
-                    MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value.ListBoxResources.SelectedItem = Resource;
+                    MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.Items.Insert(index, Resource);
+                    MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.SelectedItem = Resource;
                     break;
             }
 

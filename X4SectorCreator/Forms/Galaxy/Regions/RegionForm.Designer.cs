@@ -38,12 +38,11 @@
             label14 = new Label();
             txtRegionName = new TextBox();
             SectorHexagon = new PictureBox();
-            ListBoxRegionDefinitions = new ListBox();
-            label1 = new Label();
-            BtnNewDefinition = new Button();
-            BtnRemoveDefinition = new Button();
             BtnCreateRegion = new Button();
             label2 = new Label();
+            label3 = new Label();
+            CmbRegionDefinition = new ComboBox();
+            BtnEditRegionDefinitions = new Button();
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).BeginInit();
             SuspendLayout();
             // 
@@ -139,47 +138,6 @@
             SectorHexagon.TabIndex = 82;
             SectorHexagon.TabStop = false;
             // 
-            // ListBoxRegionDefinitions
-            // 
-            ListBoxRegionDefinitions.FormattingEnabled = true;
-            ListBoxRegionDefinitions.HorizontalScrollbar = true;
-            ListBoxRegionDefinitions.Location = new Point(12, 265);
-            ListBoxRegionDefinitions.Name = "ListBoxRegionDefinitions";
-            ListBoxRegionDefinitions.Size = new Size(230, 139);
-            ListBoxRegionDefinitions.TabIndex = 92;
-            ListBoxRegionDefinitions.SelectedIndexChanged += ListBoxRegionDefinitions_SelectedIndexChanged;
-            ListBoxRegionDefinitions.DoubleClick += ListBoxRegionDefinitions_DoubleClick;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(10, 241);
-            label1.Name = "label1";
-            label1.Size = new Size(194, 21);
-            label1.TabIndex = 93;
-            label1.Text = "Shared Region Definitions:";
-            // 
-            // BtnNewDefinition
-            // 
-            BtnNewDefinition.Location = new Point(12, 408);
-            BtnNewDefinition.Name = "BtnNewDefinition";
-            BtnNewDefinition.Size = new Size(149, 23);
-            BtnNewDefinition.TabIndex = 94;
-            BtnNewDefinition.Text = "New definition";
-            BtnNewDefinition.UseVisualStyleBackColor = true;
-            BtnNewDefinition.Click += BtnNewDefinition_Click;
-            // 
-            // BtnRemoveDefinition
-            // 
-            BtnRemoveDefinition.Location = new Point(167, 408);
-            BtnRemoveDefinition.Name = "BtnRemoveDefinition";
-            BtnRemoveDefinition.Size = new Size(75, 23);
-            BtnRemoveDefinition.TabIndex = 95;
-            BtnRemoveDefinition.Text = "Remove";
-            BtnRemoveDefinition.UseVisualStyleBackColor = true;
-            BtnRemoveDefinition.Click += BtnRemoveDefinition_Click;
-            // 
             // BtnCreateRegion
             // 
             BtnCreateRegion.Location = new Point(248, 343);
@@ -199,17 +157,45 @@
             label2.TabIndex = 97;
             label2.Text = "(Hold right-click and drag the region to resize the radius.)";
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F);
+            label3.Location = new Point(10, 246);
+            label3.Name = "label3";
+            label3.Size = new Size(134, 21);
+            label3.TabIndex = 98;
+            label3.Text = "Region Definition:";
+            // 
+            // CmbRegionDefinition
+            // 
+            CmbRegionDefinition.FormattingEnabled = true;
+            CmbRegionDefinition.Location = new Point(12, 270);
+            CmbRegionDefinition.Name = "CmbRegionDefinition";
+            CmbRegionDefinition.Size = new Size(228, 23);
+            CmbRegionDefinition.TabIndex = 99;
+            CmbRegionDefinition.SelectedIndexChanged += CmbRegionDefinition_SelectedIndexChanged;
+            // 
+            // BtnEditRegionDefinitions
+            // 
+            BtnEditRegionDefinitions.Location = new Point(14, 343);
+            BtnEditRegionDefinitions.Name = "BtnEditRegionDefinitions";
+            BtnEditRegionDefinitions.Size = new Size(228, 43);
+            BtnEditRegionDefinitions.TabIndex = 100;
+            BtnEditRegionDefinitions.Text = "Edit Region Definitions";
+            BtnEditRegionDefinitions.UseVisualStyleBackColor = true;
+            BtnEditRegionDefinitions.Click += BtnEditRegionDefinitions_Click;
+            // 
             // RegionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(564, 437);
+            ClientSize = new Size(556, 391);
+            Controls.Add(BtnEditRegionDefinitions);
+            Controls.Add(CmbRegionDefinition);
+            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(BtnCreateRegion);
-            Controls.Add(BtnRemoveDefinition);
-            Controls.Add(BtnNewDefinition);
-            Controls.Add(label1);
-            Controls.Add(ListBoxRegionDefinitions);
             Controls.Add(label15);
             Controls.Add(txtRegionLinear);
             Controls.Add(label8);
@@ -242,11 +228,10 @@
         private Label label14;
         private TextBox txtRegionName;
         private PictureBox SectorHexagon;
-        private Label label1;
-        private Button BtnNewDefinition;
-        private Button BtnRemoveDefinition;
         private Button BtnCreateRegion;
-        internal ListBox ListBoxRegionDefinitions;
         private Label label2;
+        private Label label3;
+        private Button BtnEditRegionDefinitions;
+        internal ComboBox CmbRegionDefinition;
     }
 }

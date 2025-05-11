@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using X4SectorCreator.Forms.Galaxy.Regions;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 using Region = X4SectorCreator.Objects.Region;
@@ -41,18 +42,18 @@ namespace X4SectorCreator.Forms
                     txtRegionRadius.Text = _circleRadius.ToString();
 
                     // Just incase it is somehow deleted, we must still display it here
-                    if (!ListBoxRegionDefinitions.Items.Contains(CustomRegion.Definition))
+                    if (!CmbRegionDefinition.Items.Contains(CustomRegion.Definition))
                     {
-                        _ = ListBoxRegionDefinitions.Items.Add(CustomRegion.Definition);
+                        _ = CmbRegionDefinition.Items.Add(CustomRegion.Definition);
                     }
 
-                    ListBoxRegionDefinitions.SelectedItem = CustomRegion.Definition;
+                    CmbRegionDefinition.SelectedItem = CustomRegion.Definition;
                     BtnCreateRegion.Text = "Update Region";
                 }
             }
         }
 
-        public readonly LazyEvaluated<RegionDefinitionForm> RegionDefinitionForm = new(() => new RegionDefinitionForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<RegionDefinitionsForm> RegionDefinitionsForm = new(() => new RegionDefinitionsForm(), a => !a.IsDisposed);
 
         #region Hexagon Data
         private readonly int _hexRadius;
@@ -262,13 +263,10 @@ namespace X4SectorCreator.Forms
             UpdateRegionPosition();
 
             // Init listbox definitions stored by user
-            foreach (RegionDefinition definition in Forms.RegionDefinitionForm.RegionDefinitions.OrderBy(a => a.Name))
+            foreach (RegionDefinition definition in RegionDefinitionForm.RegionDefinitions.OrderBy(a => a.Name))
             {
-                _ = ListBoxRegionDefinitions.Items.Add(definition);
+                _ = CmbRegionDefinition.Items.Add(definition);
             }
-
-            ListBoxRegionDefinitions.SelectedItem = Forms.RegionDefinitionForm.RegionDefinitions.Count > 0 ?
-                Forms.RegionDefinitionForm.RegionDefinitions.OrderBy(a => a.Name).First() : null;
         }
 
         private void BtnCreateRegion_Click(object sender, EventArgs e)
@@ -280,7 +278,7 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition)
+            if (CmbRegionDefinition.SelectedItem is not RegionDefinition selectedRegionDefinition)
             {
                 _ = MessageBox.Show("Please select a valid region definition for this region.");
                 return;
@@ -330,68 +328,18 @@ namespace X4SectorCreator.Forms
                     break;
             }
 
-
             Close();
         }
 
-        private void ListBoxRegionDefinitions_SelectedIndexChanged(object sender, EventArgs e)
+        private void BtnEditRegionDefinitions_Click(object sender, EventArgs e)
         {
-            txtRegionLinear.Enabled = ListBoxRegionDefinitions.SelectedItem is RegionDefinition selectedRegionDefinition &&
+            RegionDefinitionsForm.Value.Show();
+        }
+
+        private void CmbRegionDefinition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtRegionLinear.Enabled = CmbRegionDefinition.SelectedItem is RegionDefinition selectedRegionDefinition &&
                 selectedRegionDefinition.BoundaryType.Equals("Cylinder", StringComparison.OrdinalIgnoreCase);
-        }
-
-        private void BtnNewDefinition_Click(object sender, EventArgs e)
-        {
-            RegionDefinitionForm.Value.InitDefaultFalloff();
-            RegionDefinitionForm.Value.Show();
-        }
-
-        private void BtnRemoveDefinition_Click(object sender, EventArgs e)
-        {
-            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition)
-            {
-                return;
-            }
-
-            // Check if regions exist that use this given region definition
-            var regionsThatUseThisDefinition = MainForm.Instance.AllClusters.Values
-                .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
-                .SelectMany(cs => cs.sector.Regions, (cs, region) => new { cs.cluster, cs.sector, region })
-                .Where(x => x.region.Definition.Equals(selectedRegionDefinition))
-                .Where(x => CustomRegion == null || !x.region.Equals(CustomRegion))
-                .ToArray();
-
-            if (regionsThatUseThisDefinition.Length > 0)
-            {
-                string message = "Following regions use this region definition, they must first be changed or deleted before this definition can be deleted:\n" +
-                    string.Join("\n", regionsThatUseThisDefinition
-                    .OrderBy(a => a.cluster.Name)
-                    .ThenBy(a => a.sector.Name)
-                    .Select(x => $"- {x.region.Name} (Cluster: {x.cluster.Name}, Sector: {x.sector.Name})"));
-
-                _ = MessageBox.Show(message);
-                return;
-            }
-
-            int index = ListBoxRegionDefinitions.Items.IndexOf(selectedRegionDefinition);
-            ListBoxRegionDefinitions.Items.Remove(selectedRegionDefinition);
-            _ = Forms.RegionDefinitionForm.RegionDefinitions.Remove(selectedRegionDefinition); // remove from static cache
-
-            // Ensure index is within valid range
-            index--;
-            index = Math.Max(0, index);
-            ListBoxRegionDefinitions.SelectedItem = index >= 0 && ListBoxRegionDefinitions.Items.Count > 0 ? ListBoxRegionDefinitions.Items[index] : null;
-        }
-
-        private void ListBoxRegionDefinitions_DoubleClick(object sender, EventArgs e)
-        {
-            if (ListBoxRegionDefinitions.SelectedItem is not RegionDefinition selectedRegionDefinition)
-            {
-                return;
-            }
-
-            RegionDefinitionForm.Value.RegionDefinition = selectedRegionDefinition;
-            RegionDefinitionForm.Value.Show();
         }
     }
 }

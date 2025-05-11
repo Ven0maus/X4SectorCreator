@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Forms.Galaxy.Regions;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
@@ -124,7 +125,7 @@ namespace X4SectorCreator.Forms
             switch (BtnAdd.Text)
             {
                 case "Add":
-                    RegionDefinitionForm regionForm = MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value;
+                    RegionDefinitionForm regionForm = MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value;
                     _ = regionForm.ListBoxFields.Items.Add(newField);
                     regionForm.ListBoxFields.SelectedItem = newField;
                     break;
