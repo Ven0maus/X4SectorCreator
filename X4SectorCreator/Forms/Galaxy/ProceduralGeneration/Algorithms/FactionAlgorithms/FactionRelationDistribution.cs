@@ -34,7 +34,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             [RelationType.Nemesis] = -1f,
         };
 
-        private static readonly RelationType[] _balancedRelationPool = [RelationType.Friend, RelationType.Neutral, RelationType.Enemy];
+        private static readonly RelationType[] _balancedRelationPool = [RelationType.Neutral, RelationType.Enemy];
 
         private RelationType GetRandomRelationType() =>
             _balancedRelationPool[_random.Next(_balancedRelationPool.Length)];
