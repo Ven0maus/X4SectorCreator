@@ -511,6 +511,7 @@ namespace X4SectorCreator
                     () => DrainStationsGeneration.Generate(modFolder),
                     () => FinaliseStationsGeneration.Generate(modFolder),
                     () => GmcDynamicGeneration.Generate(modFolder),
+                    () => FactionGoalInvadeSpaceGeneration.Generate(modFolder),
 
                     // Localisation after all the generation
                     () => Localisation.LocaliseAllFiles(modFolder)
