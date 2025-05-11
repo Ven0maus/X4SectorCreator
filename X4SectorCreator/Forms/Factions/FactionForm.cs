@@ -190,6 +190,8 @@ namespace X4SectorCreator.Forms
             foreach (var faction in factions)
                 CmbPoliceFaction.Items.Add(faction);
             CmbPoliceFaction.SelectedItem = "self"; //Default value
+
+            TagsListBox.Items.Add("custom");
         }
 
         public static List<Faction.Licence> GetPlaceholderLicenses()
@@ -274,6 +276,9 @@ namespace X4SectorCreator.Forms
             faction.AggressionLevel = CmbAggression.SelectedItem as string;
             faction.AvariceLevel = CmbAvarice.SelectedItem as string;
             faction.Lawfulness = TxtLawfulness.Text;
+
+            if (!faction.Tags.Contains("custom"))
+                faction.Tags = (faction.Tags + " custom").Trim();
 
             switch (BtnCreate.Text)
             {
@@ -698,6 +703,12 @@ namespace X4SectorCreator.Forms
         {
             if (TagsListBox.SelectedItem is string tag && !string.IsNullOrWhiteSpace(tag))
             {
+                if (tag.Equals("custom", StringComparison.OrdinalIgnoreCase))
+                {
+                    _ = MessageBox.Show("\"custom\" tag cannot be removed.");
+                    return;
+                }    
+
                 int index = TagsListBox.Items.IndexOf(TagsListBox.SelectedItem);
                 TagsListBox.Items.Remove(TagsListBox.SelectedItem);
 
@@ -725,6 +736,9 @@ namespace X4SectorCreator.Forms
             TagsListBox.Items.Clear();
             foreach (var tag in _tagPresets[preset])
                 TagsListBox.Items.Add(tag);
+
+            if (!TagsListBox.Items.Contains("custom"))
+                TagsListBox.Items.Add("custom");
         }
 
         private void BtnSetIcon_Click(object sender, EventArgs e)

@@ -52,13 +52,13 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 faction.DesiredWharfs = "1";
                 faction.DesiredShipyards = "1";
                 faction.DesiredTradeStations = "1";
-                faction.Tags = "claimspace economic police privateloadout privateship protective publicloadout publicship standard watchdoguser";
+                faction.Tags = "claimspace economic police privateloadout privateship protective publicloadout publicship standard watchdoguser custom";
                 faction.PrefferedHqStationTypes = ["shipbuilding"];
                 faction.StationTypes = ["wharf", "shipyard", "tradestation", "defence", "equipmentdock"];
             }
             else
             {
-                faction.Tags = "economic pirate plunder privateloadout privateship protective watchdoguser";
+                faction.Tags = "economic pirate plunder privateloadout privateship protective watchdoguser custom";
                 faction.PrefferedHqStationTypes = ["any"];
                 faction.StationTypes = ["piratedock", "piratebase", "freeport"];
             }
