@@ -514,6 +514,7 @@ namespace X4SectorCreator
                     () => FactionGoalInvadeSpaceGeneration.Generate(modFolder),
                     () => ComponentsGeneration.Generate(modFolder, modPrefix, modName),
                     () => PlayerReputationGeneration.Generate(modFolder),
+                    () => SetupGeneration.Generate(modFolder),
 
                     // Localisation after all the generation
                     () => Localisation.LocaliseAllFiles(modFolder)
