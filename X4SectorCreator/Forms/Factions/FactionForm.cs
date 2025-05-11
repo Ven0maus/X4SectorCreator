@@ -12,7 +12,7 @@ namespace X4SectorCreator.Forms
 {
     public partial class FactionForm : Form
     {
-        private static readonly string _factionTemplateXml = @"<faction id=""placeholder"" name=""placeholder"" description=""placeholder"" shortname=""placeholder"" prefixname=""placeholder"" primaryrace=""argon"" behaviourset=""default"" tags="""">
+        private const string _factionTemplateXml = @"<faction id=""placeholder"" name=""placeholder"" description=""placeholder"" shortname=""placeholder"" prefixname=""placeholder"" primaryrace=""argon"" behaviourset=""default"" tags="""">
     <color ref=""placeholder"" />
     <icon active=""placeholder"" inactive=""placeholder"" />
     <licences>

@@ -512,6 +512,7 @@ namespace X4SectorCreator
                     () => FinaliseStationsGeneration.Generate(modFolder),
                     () => GmcDynamicGeneration.Generate(modFolder),
                     () => FactionGoalInvadeSpaceGeneration.Generate(modFolder),
+                    () => ComponentsGeneration.Generate(modFolder, modPrefix, modName),
 
                     // Localisation after all the generation
                     () => Localisation.LocaliseAllFiles(modFolder)
@@ -856,6 +857,7 @@ namespace X4SectorCreator
                 cluster.BackgroundVisualMapping = New.BackgroundVisualMapping;
                 cluster.Position = New.Position;
                 cluster.CustomSectorPositioning = New.CustomSectorPositioning;
+                cluster.CustomClusterXml = New.CustomClusterXml;
                 cluster.Soundtrack = New.Soundtrack;
 
                 if (cluster.Name.Equals("Mitsuno's Sacrifice", StringComparison.OrdinalIgnoreCase))
@@ -947,6 +949,7 @@ namespace X4SectorCreator
             currentCluster.BackgroundVisualMapping = cluster.BackgroundVisualMapping;
             currentCluster.CustomSectorPositioning = cluster.CustomSectorPositioning;
             currentCluster.Soundtrack = cluster.Soundtrack;
+            currentCluster.CustomClusterXml = cluster.CustomClusterXml;
 
             foreach (Sector newSector in cluster.Sectors)
             {
@@ -1368,6 +1371,7 @@ namespace X4SectorCreator
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
 
             ClusterForm.Value.Cluster = cluster.Value;
+            ClusterForm.Value.ClusterXml = cluster.Value.CustomClusterXml;
             ClusterForm.Value.BtnCreate.Text = "Update";
             ClusterForm.Value.TxtName.Text = selectedClusterName;
             ClusterForm.Value.txtDescription.Text = cluster.Value.Description;
