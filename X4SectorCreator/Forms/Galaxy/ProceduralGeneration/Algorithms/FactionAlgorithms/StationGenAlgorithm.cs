@@ -84,17 +84,15 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 var stations = 0;
                 foreach (var zone in sector.Zones.ToList())
                 {
+                    if (stations > 0) break;
+                    
                     foreach (var gate in zone.Gates)
                     {
-                        if (stations > 0)
-                        {
-                            // Not all gates need one
-                            if (_random.Next(100) > 30) continue;
-                        }
+                        if (stations > 0) break;
 
                         // Get random position x distance away in any direction from the gate
                         double angle = _random.NextDouble() * 2 * Math.PI; // Random angle in radians
-                        int distance = _random.Next(15000, 30000); // Distance from the original point
+                        int distance = _random.Next(30000, 70000); // Distance from the original point
 
                         int newX = zone.Position.X + (int)(Math.Cos(angle) * distance);
                         int newY = zone.Position.Y + (int)(Math.Sin(angle) * distance);

@@ -266,7 +266,7 @@
             NrMinMainFactions.Name = "NrMinMainFactions";
             NrMinMainFactions.Size = new Size(41, 23);
             NrMinMainFactions.TabIndex = 16;
-            NrMinMainFactions.Value = new decimal(new int[] { 6, 0, 0, 0 });
+            NrMinMainFactions.Value = new decimal(new int[] { 8, 0, 0, 0 });
             // 
             // NrMaxMainFactions
             // 
@@ -274,7 +274,7 @@
             NrMaxMainFactions.Name = "NrMaxMainFactions";
             NrMaxMainFactions.Size = new Size(41, 23);
             NrMaxMainFactions.TabIndex = 17;
-            NrMaxMainFactions.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            NrMaxMainFactions.Value = new decimal(new int[] { 12, 0, 0, 0 });
             // 
             // label8
             // 
@@ -381,7 +381,7 @@
             NrFacControlMin.Name = "NrFacControlMin";
             NrFacControlMin.Size = new Size(41, 23);
             NrFacControlMin.TabIndex = 31;
-            NrFacControlMin.Value = new decimal(new int[] { 5, 0, 0, 0 });
+            NrFacControlMin.Value = new decimal(new int[] { 6, 0, 0, 0 });
             // 
             // label19
             // 
@@ -903,7 +903,7 @@
             NrMultiConnectionChance.Name = "NrMultiConnectionChance";
             NrMultiConnectionChance.Size = new Size(41, 23);
             NrMultiConnectionChance.TabIndex = 38;
-            NrMultiConnectionChance.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            NrMultiConnectionChance.Value = new decimal(new int[] { 15, 0, 0, 0 });
             // 
             // TxtConnectionSeed
             // 
