@@ -238,7 +238,6 @@ namespace X4SectorCreator.Forms.Galaxy
             var selectedAlgorithm = CmbClusterDistribution.SelectedItem as string;
             var procedural = (Procedural)Activator.CreateInstance(_mapAlgorithms[selectedAlgorithm], settings);
             var clusters = procedural.Generate().ToList();
-            _mapGenerated = true;
             return clusters;
         }
 
