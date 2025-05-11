@@ -15,7 +15,7 @@ namespace X4SectorCreator.MdGeneration
                         CreateGalaxyReplaceElement()
                     )
                 );
-                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"md/playerrepuration.xml")));
+                xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"md/playerreputation.xml")));
             }
         }
 
