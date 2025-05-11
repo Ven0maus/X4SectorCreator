@@ -21,35 +21,23 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             Nemesis
         }
 
-        private static readonly Dictionary<RelationType, (float Min, float Max)> RelationRanges = new()
+        private static readonly Dictionary<RelationType, float> RelationRanges = new()
         {
-            [RelationType.Self] = (1.0f, 1.0f),
-            [RelationType.Ally] = (0.5f, 1.0f),
-            [RelationType.Member] = (0.1f, 1.0f),
-            [RelationType.Friend] = (0.01f, 1.0f),
-            [RelationType.Neutral] = (-0.01f, 0.01f),
-            [RelationType.Enemy] = (-1.0f, -0.01f),
-            [RelationType.KillMilitary] = (-1.0f, -0.1f),
-            [RelationType.Kill] = (-1.0f, -0.32f),
-            [RelationType.Nemesis] = (-1.0f, -1.0f),
+            [RelationType.Self] = 1.0f,
+            [RelationType.Ally] = 0.5f,
+            [RelationType.Member] = 0.1f,
+            [RelationType.Friend] = 0.01f,
+            [RelationType.Neutral] = 0f,
+            [RelationType.Enemy] = -0.01f,
+            [RelationType.KillMilitary] = -0.1f,
+            [RelationType.Kill] = -0.32f,
+            [RelationType.Nemesis] = -1f,
         };
 
-        private static readonly RelationType[] RandomRelationPool =
-        [
-            RelationType.Friend,
-            RelationType.Neutral,
-            RelationType.Enemy,
-            RelationType.Kill,
-            RelationType.Member,
-            RelationType.Ally,
-            RelationType.KillMilitary
-        ];
-
-        private float RandomFloat(float min, float max) =>
-            (float)(_random.NextDouble() * (max - min) + min);
+        private static readonly RelationType[] _balancedRelationPool = [RelationType.Friend, RelationType.Neutral, RelationType.Enemy];
 
         private RelationType GetRandomRelationType() =>
-            RandomRelationPool[_random.Next(RandomRelationPool.Length)];
+            _balancedRelationPool[_random.Next(_balancedRelationPool.Length)];
 
         public void DefineFactionRelations(List<Faction> mainFactions, List<Faction> pirateFactions)
         {
@@ -96,20 +84,16 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                     }
                     else if (hostileFactions.Contains(a) || hostileFactions.Contains(b))
                     {
-                        // One of the two is hostile — use an enemy-style value
-                        var (min, max) = RelationRanges[RelationType.Kill]; // Or Enemy/KillMilitary if preferred
-                        value = RandomFloat(min, max);
+                        value = RelationRanges[RelationType.KillMilitary];
                     }
                     else if (nemesisFaction != null && (a == nemesisFaction || b == nemesisFaction))
                     {
-                        value = -1;
+                        value = RelationRanges[RelationType.Nemesis];
                     }
                     else
                     {
-                        // Normal random
                         var type = GetRandomRelationType();
-                        var (min, max) = RelationRanges[type];
-                        value = RandomFloat(min, max);
+                        value = RelationRanges[type];
                     }
 
                     // Assign symmetric relation
@@ -119,17 +103,16 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             }
         }
 
-        private static readonly RelationType[] _validPlayerRelations = [RelationType.Friend, RelationType.Neutral, RelationType.Enemy];
         private void SetPlayerRelations(List<Faction> pirateFactions, List<Faction> allFactions, Faction nemesis)
         {
             // Add player relations for pirates
             foreach (var pirate in pirateFactions)
             {
-                pirate.Relations.Relation.Add(new Faction.Relation { Faction = "player", RelationValue = "-0.0032" });
+                pirate.Relations.Relation.Add(new Faction.Relation { Faction = "player", RelationValue = "-0.0032" }); // -5 pirate range
             }
 
             // Set nemesis relation
-            nemesis?.Relations.Relation.Add(new Faction.Relation { Faction = "player", RelationValue = "-1" });
+            nemesis?.Relations.Relation.Add(new Faction.Relation { Faction = "player", RelationValue = RelationRanges[RelationType.Nemesis].ToString(CultureInfo.InvariantCulture) });
 
             foreach (var faction in allFactions)
             {
@@ -138,9 +121,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                     continue;
                 }
 
-                var type = _validPlayerRelations[_random.Next(_validPlayerRelations.Length)];
-                var (min, max) = RelationRanges[type];
-                var value = RandomFloat(min, max);
+                var type = GetRandomRelationType();
+                var value = RelationRanges[type];
 
                 faction.Relations.Relation.Add(new Faction.Relation { Faction = "player", RelationValue = value.ToString(CultureInfo.InvariantCulture) });
             }
