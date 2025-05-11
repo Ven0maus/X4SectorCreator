@@ -34,8 +34,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             [RelationType.Nemesis] = (-1.0f, -1.0f),
         };
 
-        private static readonly RelationType[] RandomRelationPool = new[]
-        {
+        private static readonly RelationType[] RandomRelationPool =
+        [
             RelationType.Friend,
             RelationType.Neutral,
             RelationType.Enemy,
@@ -43,7 +43,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             RelationType.Member,
             RelationType.Ally,
             RelationType.KillMilitary
-        };
+        ];
 
         private float RandomFloat(float min, float max) =>
             (float)(_random.NextDouble() * (max - min) + min);
@@ -55,7 +55,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         {
             var allFactions = mainFactions.Concat(pirateFactions).ToList();
 
-            // Mark 50% of non-pirate factions as "hostile"
+            // Mark 30% of non-pirate factions as "hostile"
             int hostileCount = (int)Math.Ceiling(mainFactions.Count / 100f * 30);
             var hostileFactions = mainFactions
                 .TakeRandom(hostileCount, _random)
@@ -67,8 +67,12 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             // Ensure all factions have initialized relations
             foreach (var faction in allFactions)
             {
-                faction.Relations ??= new Faction.RelationsObj { Relation = new() };
+                // Lock pirate faction relations
+                faction.Relations ??= new Faction.RelationsObj { Relation = [], Locked = pirateFactions.Contains(faction) ? "1" : null };
             }
+
+            // Ensure player relations are set too
+            SetPlayerRelations(pirateFactions, allFactions, nemesisFaction);
 
             for (int i = 0; i < allFactions.Count; i++)
             {
@@ -85,7 +89,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
 
                     if (isPirateA || isPirateB)
                     {
-                        value = -0.0032f;
+                        if (isPirateA && isPirateB)
+                            value = 0.0032f; // pirates are friendly to each other
+                        else
+                            value = -0.0032f;
                     }
                     else if (hostileFactions.Contains(a) || hostileFactions.Contains(b))
                     {
@@ -109,6 +116,33 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                     a.Relations.Relation.Add(new Faction.Relation { Faction = b.Id, RelationValue = value.ToString(CultureInfo.InvariantCulture) });
                     b.Relations.Relation.Add(new Faction.Relation { Faction = a.Id, RelationValue = value.ToString(CultureInfo.InvariantCulture) });
                 }
+            }
+        }
+
+        private static readonly RelationType[] _validPlayerRelations = [RelationType.Friend, RelationType.Neutral, RelationType.Enemy];
+        private void SetPlayerRelations(List<Faction> pirateFactions, List<Faction> allFactions, Faction nemesis)
+        {
+            // Add player relations for pirates
+            foreach (var pirate in pirateFactions)
+            {
+                pirate.Relations.Relation.Add(new Faction.Relation { Faction = "player", RelationValue = "-0.0032" });
+            }
+
+            // Set nemesis relation
+            nemesis?.Relations.Relation.Add(new Faction.Relation { Faction = "player", RelationValue = "-1" });
+
+            foreach (var faction in allFactions)
+            {
+                if (pirateFactions.Contains(faction) || (nemesis != null && nemesis == faction))
+                {
+                    continue;
+                }
+
+                var type = _validPlayerRelations[_random.Next(_validPlayerRelations.Length)];
+                var (min, max) = RelationRanges[type];
+                var value = RandomFloat(min, max);
+
+                faction.Relations.Relation.Add(new Faction.Relation { Faction = "player", RelationValue = value.ToString(CultureInfo.InvariantCulture) });
             }
         }
     }
