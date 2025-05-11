@@ -60,6 +60,9 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             var hostileFactions = mainFactions
                 .TakeRandom(hostileCount, _random)
                 .ToHashSet();
+            var nemesisFaction = hostileFactions.FirstOrDefault();
+            if (nemesisFaction != null)
+                hostileFactions.Remove(nemesisFaction);
 
             // Ensure all factions have initialized relations
             foreach (var faction in allFactions)
@@ -89,6 +92,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                         // One of the two is hostile — use an enemy-style value
                         var (min, max) = RelationRanges[RelationType.Kill]; // Or Enemy/KillMilitary if preferred
                         value = RandomFloat(min, max);
+                    }
+                    else if (nemesisFaction != null && (a == nemesisFaction || b == nemesisFaction))
+                    {
+                        value = -1;
                     }
                     else
                     {
