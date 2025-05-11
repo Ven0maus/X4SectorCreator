@@ -10,7 +10,7 @@
     "UniformGreen": 107,
     "UniformBlue": 129,
     "UniformDensity": 0.5,
-    "BackgroundFog": true,
+    "BackgroundFog": false,
     "Resources": "hydrogen"
   },
   {
@@ -450,7 +450,7 @@
     "UniformGreen": 49,
     "UniformBlue": 49,
     "UniformDensity": 0.2,
-    "BackgroundFog": true,
+    "BackgroundFog": false,
     "Resources": "hydrogen"
   },
   {
@@ -481,7 +481,7 @@
     "UniformGreen": 49,
     "UniformBlue": 49,
     "UniformDensity": 0.2,
-    "BackgroundFog": true,
+    "BackgroundFog": false,
     "Resources": "helium"
   },
   {
@@ -512,7 +512,7 @@
     "UniformGreen": 49,
     "UniformBlue": 49,
     "UniformDensity": 0.2,
-    "BackgroundFog": true,
+    "BackgroundFog": false,
     "Resources": "methane"
   },
   {

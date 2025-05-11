@@ -333,6 +333,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnEditRegionDefinitions_Click(object sender, EventArgs e)
         {
+            RegionDefinitionsForm.Value.ListBoxRegionDefinitions.SelectedItem = CustomRegion?.Definition;
             RegionDefinitionsForm.Value.Show();
         }
 
