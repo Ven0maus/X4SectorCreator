@@ -7,6 +7,7 @@
         public int Height { get; set; }
         public int MultiSectorChance { get; set; }
         public string MapAlgorithm { get; set; }
+        public int MaxSectorRadius { get; set; }
 
         /* Algorithm Options */
         // Pure Random

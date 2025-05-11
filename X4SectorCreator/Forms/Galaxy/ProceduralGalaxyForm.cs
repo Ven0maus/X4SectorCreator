@@ -227,6 +227,7 @@ namespace X4SectorCreator.Forms.Galaxy
                 Width = (int)NrGridWidth.Value,
                 Height = (int)NrGridHeight.Value,
                 MultiSectorChance = (int)NrChanceMultiSectors.Value,
+                MaxSectorRadius = (int)NrMaxSectorRadius.Value,
                 MapAlgorithm = CmbClusterDistribution.SelectedItem as string,
 
                 /* Algorithm data */
