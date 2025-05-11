@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ships>
+	<ship id="sca_plunderer" group="sca_pirate_l">
+		<category tags="[military, plunderer, mission]" faction="[scaleplate]" size="ship_l"/>
+		<owner exact="scaleplate" overridenpc="true"/>
+		<pilot>
+			<select faction="scaleplate" tags="commander"/>
+		</pilot>
+		<basket basket="pirate_container"/>
+		<drop ref="ship_large_military"/>
+		<people ref="scaleplate_pirate_crew"/>
+	</ship>
+
+	<ship id="sca_scavenger" group="sca_pirate">
+		<category tags="[military, plunderer, mission]" faction="[scaleplate]" size="ship_m"/>
+		<owner exact="scaleplate" overridenpc="true"/>
+		<pilot>
+			<select faction="scaleplate" tags="commander"/>
+		</pilot>
+		<basket basket="pirate_container"/>
+		<drop ref="ship_small_pirate"/>
+		<people ref="scaleplate_pirate_crew"/>
+	</ship>
+
+	<ship id="sca_mixed_sm"  group="sca_pirate_sm">
+		<category tags="[military, plunderer, mixed]" faction="[scaleplate]"/>
+		<owner exact="scaleplate" overridenpc="true"/>
+		<pilot>
+			<select faction="scaleplate" tags="fighterpilot"/>
+		</pilot>
+		<basket basket="pirate_container"/>
+		<drop ref="ship_small_pirate"/>
+		<people ref="scaleplate_pirate_crew"/>
+	</ship>
+
+	<ship id="sca_escort_s"  group="sca_pirate_s">
+		<category tags="[military, escort, light]" faction="[scaleplate]" size="ship_s"/>
+		<owner exact="scaleplate" overridenpc="true"/>
+		<pilot>
+			<select faction="scaleplate" tags="fighterpilot"/>
+		</pilot>
+		<drop ref="ship_small_pirate"/>
+		<people ref="scaleplate_pirate_crew"/>
+	</ship>
+
+	<ship id="sca_trader_container_s" group="sca_trader_container_s">
+		<category tags="[trader, container, mission]" faction="[scaleplate]" size="ship_s"/>
+		<pilot>
+			<select faction="scaleplate" tags="traderpilot"/>
+		</pilot>
+		<basket basket="all_container"/>
+		<drop ref="ship_small_civilian"/>
+		<people ref="scaleplate_pirate_crew"/>
+	</ship>
+</ships>

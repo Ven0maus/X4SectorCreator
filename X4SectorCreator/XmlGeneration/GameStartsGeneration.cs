@@ -48,21 +48,14 @@ namespace X4SectorCreator.XmlGeneration
                 return null;
             }
 
-            Cluster cluster = null;
-            Sector sector = null;
-            if (!string.IsNullOrWhiteSpace(GalaxySettingsForm.StartingSector))
-            {
-                var result = clusters
-                    .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
-                    .FirstOrDefault(x => x.sector.Name.Equals(GalaxySettingsForm.StartingSector, StringComparison.OrdinalIgnoreCase));
-                cluster = result?.cluster;
-                sector = result?.sector;
-            }
-            else
-            {
-                cluster = clusters.OrderBy(a => a.Name).FirstOrDefault(a => !a.IsBaseGame);
-                sector = cluster?.Sectors.FirstOrDefault();
-            }
+            // Take the first one alphabetically
+            var result = clusters
+                .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
+                .OrderBy(a => a.cluster.Name)
+                .FirstOrDefault();
+
+            Cluster cluster = result?.cluster;
+            Sector sector = result?.sector;
 
             if (cluster == null || sector == null)
             {
@@ -70,79 +63,24 @@ namespace X4SectorCreator.XmlGeneration
             }
 
             string sectorMacro = $"{modPrefix}_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
-            XElement gameStartElement = new("gamestart",
-                new XAttribute("id", $"{modPrefix}_sectorcreator_customgalaxy"),
-                new XAttribute("name", $"{{local:{GalaxySettingsForm.GalaxyName}}}"),
-                new XAttribute("description", $"{{local:{GalaxySettingsForm.GalaxyName} entrypoint.}}"),
-                new XAttribute("image", "gamestart_1"),
-                new XElement("location",
-                    new XAttribute("galaxy", $"{GalaxySettingsForm.GalaxyName}_macro"),
-                    new XAttribute("sector", $"{sectorMacro.ToLower()}"),
-                    new XElement("position",
-                        new XAttribute("x", "0"),
-                        new XAttribute("y", "0"),
-                        new XAttribute("z", "0")
-                    ),
-                    new XElement("rotation",
-                        new XAttribute("yaw", "0"),
-                        new XAttribute("pitch", "0"),
-                        new XAttribute("roll", "0")
-                    )
-                ),
-                new XElement("player",
-                    new XAttribute("macro", "character_player_custom_f_asi_macro"),
-                    new XAttribute("female", "true"),
-                    new XAttribute("money", "75000"),
-                    new XAttribute("name", "{local:Jade Miras}"),
-                    new XElement("ship",
-                        new XAttribute("macro", "ship_par_s_fighter_01_a_macro"),
-                        new XElement("loadout",
-                            new XElement("macros",
-                                new XElement("engine", new XAttribute("macro", "engine_par_s_combat_01_mk1_macro"), new XAttribute("path", "../con_engine_01")),
-                                new XElement("engine", new XAttribute("macro", "engine_par_s_combat_01_mk1_macro"), new XAttribute("path", "../con_engine_02")),
-                                new XElement("engine", new XAttribute("macro", "engine_par_s_combat_01_mk1_macro"), new XAttribute("path", "../con_engine_03")),
-                                new XElement("weapon", new XAttribute("macro", "weapon_gen_s_laser_01_mk1_macro"), new XAttribute("path", "../con_weapon_01"), new XAttribute("optional", "true")),
-                                new XElement("weapon", new XAttribute("macro", "weapon_gen_s_guided_01_mk1_macro"), new XAttribute("path", "../con_weapon_02"), new XAttribute("optional", "true")),
-                                new XElement("shield", new XAttribute("macro", "shield_par_s_standard_01_mk1_macro"), new XAttribute("path", "../con_shield_01"), new XAttribute("optional", "true"))
-                            ),
-                            new XElement("ammunition",
-                                new XElement("ammunition", new XAttribute("macro", "missile_guided_light_mk1_macro"), new XAttribute("exact", "10"), new XAttribute("optional", "true")),
-                                new XElement("ammunition", new XAttribute("macro", "eq_arg_satellite_01_macro"), new XAttribute("exact", "5"), new XAttribute("optional", "true")),
-                                new XElement("ammunition", new XAttribute("macro", "env_deco_nav_beacon_t1_macro"), new XAttribute("exact", "5"), new XAttribute("optional", "true")),
-                                new XElement("ammunition", new XAttribute("macro", "eq_arg_resourceprobe_01_macro"), new XAttribute("exact", "5"), new XAttribute("optional", "true"))
-                            ),
-                            new XElement("software",
-                                new XElement("software", new XAttribute("ware", "software_targetmk1"))
-                            ),
-                            new XElement("virtualmacros",
-                                new XElement("thruster", new XAttribute("macro", "thruster_gen_s_allround_01_mk1_macro"))
-                            )
-                        )
-                    ),
-                    new XElement("inventory",
-                        new XElement("ware", new XAttribute("ware", "weapon_gen_spacesuit_repairlaser_01_mk1"), new XAttribute("amount", "1")),
-                        new XElement("ware", new XAttribute("ware", "software_scannerobjectmk3"), new XAttribute("amount", "1"))
-                    ),
-                    new XElement("blueprints",
-                        new XElement("ware", new XAttribute("ware", "module_arg_dock_m_01_lowtech")),
-                        new XElement("ware", new XAttribute("ware", "module_arg_stor_container_s_01")),
-                        new XElement("ware", new XAttribute("ware", "module_arg_conn_base_01")),
-                        new XElement("ware", new XAttribute("ware", "module_arg_conn_cross_01")),
-                        new XElement("ware", new XAttribute("ware", "module_arg_conn_vertical_01")),
-                        new XElement("ware", new XAttribute("ware", "module_gen_prod_energycells_01"))
-                    ),
-                    new XElement("research",
-                        new XElement("ware", new XAttribute("ware", "research_radioreceiver")),
-                        new XElement("ware", new XAttribute("ware", "research_sensorbooster")),
-                        new XElement("ware", new XAttribute("ware", "research_tradeinterface"))
-                    ),
-                    new XElement("theme", new XAttribute("paint", "painttheme_player_01")),
-                    new XElement("knownspace", clusters
-                        .SelectMany(cluster => cluster.Sectors, (cluster, sector) => new { cluster, sector })
-                        .Select(a => new XElement("space",
-                            new XAttribute("sector", $"{modPrefix}_SE_c{a.cluster.Id:D3}_s{a.sector.Id:D3}_macro".ToLower()))))
-                )
-            );
+
+            XElement gameStartElement = null;
+            try
+            {
+                var xml = File.ReadAllText(Constants.DataPaths.CustomGameStartPath);
+                gameStartElement = XElement.Parse(xml);
+
+                // Set galaxy, sector & known space
+                XElement locationElement = gameStartElement.Element("location");
+                locationElement?.SetAttributeValue("galaxy", $"{GalaxySettingsForm.GalaxyName}_macro");
+                locationElement?.SetAttributeValue("sector", sectorMacro);
+                var knownSpaceElement = gameStartElement.Element("player")?.Element("knownspace")?.Element("space");
+                knownSpaceElement?.SetAttributeValue("sector", sectorMacro);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("The custom_galaxy_gamestart.xml mapping is invalid: " + e.Message);
+            }
 
             XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
             return new XElement("gamestarts", new XAttribute(XNamespace.Xmlns + "xsi", xsi),

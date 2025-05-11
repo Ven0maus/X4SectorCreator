@@ -16,6 +16,7 @@
             public static readonly string ModulesMappingsPath = Path.Combine(Application.StartupPath, "Data/Mappings/modules_mappings.xml");
             public static readonly string DefaultCharactersPath = Path.Combine(Application.StartupPath, "Data/Presets/Characters/characters_default.xml");
             public static readonly string WaresMappingPath = Path.Combine(Application.StartupPath, "Data/Mappings/wares_mappings.xml");
+            public static readonly string CustomGameStartPath = Path.Combine(Application.StartupPath, "Data/Mappings/custom_galaxy_gamestart.xml");
             public static readonly string VersionFilePath = Path.Combine(Application.StartupPath, "version.json");
             public static readonly string ModDirectoryPath = Path.Combine(Application.StartupPath, "GeneratedXml");
         }

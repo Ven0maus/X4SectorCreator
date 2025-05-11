@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<groups>
+	<group name="sca_pirate">
+		<select macro="ship_arg_m_bomber_02_a_macro" weight="100"/>
+	</group>
+
+	<group name="sca_pirate_l">
+		<select macro="ship_arg_l_destroyer_02_a_macro" weight="30"/>
+		<select macro="ship_tel_l_destroyer_02_a_macro" weight="70"/>
+	</group>
+
+	<group name="sca_pirate_sm">
+		<select macro="ship_arg_m_bomber_02_a_macro" weight="10"/>
+		<select macro="ship_arg_s_scout_01_a_macro" weight="360"/>
+		<select macro="ship_arg_s_scout_01_b_macro" weight="360"/>
+		<select macro="ship_tel_s_scout_01_a_macro" weight="540"/>
+		<select macro="ship_tel_s_scout_01_b_macro" weight="540"/>
+		<select macro="ship_tel_s_fighter_01_a_macro" weight="90"/>
+		<select macro="ship_tel_s_fighter_01_b_macro" weight="90"/>
+	</group>
+
+	<group name="sca_pirate_s">
+		<select macro="ship_arg_s_scout_01_a_macro" weight="300"/>
+		<select macro="ship_arg_s_scout_01_b_macro" weight="300"/>
+		<select macro="ship_tel_s_scout_01_a_macro" weight="700"/>
+		<select macro="ship_tel_s_scout_01_b_macro" weight="700"/>
+		<select macro="ship_tel_s_fighter_01_a_macro" weight="10"/>
+		<select macro="ship_tel_s_fighter_01_b_macro" weight="10"/>
+	</group>
+
+	<group name="sca_trader_container_s">
+		<select macro="ship_tel_s_trans_container_01_a_macro" weight="100"/>
+		<select macro="ship_tel_s_trans_container_01_b_macro" weight="100"/>
+		<select macro="ship_arg_s_trans_container_01_a_macro" weight="400"/>
+		<select macro="ship_arg_s_trans_container_01_b_macro" weight="100"/>
+		<select macro="ship_arg_s_trans_container_02_a_macro" weight="400"/>
+		<select macro="ship_arg_s_trans_container_02_b_macro" weight="100"/>
+	</group>
+</groups>

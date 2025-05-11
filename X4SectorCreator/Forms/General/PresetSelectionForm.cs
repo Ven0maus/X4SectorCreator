@@ -46,7 +46,43 @@ namespace X4SectorCreator.Forms.Factories
             _mscFactions = new MultiSelectCombo(CmbFactions);
         }
 
-        private void BtnConfirm_Click(object sender, EventArgs e)
+        public static void ExecuteForProcGen(Faction faction, int coverage)
+        {
+            using var psf = new PresetSelectionForm();
+            using var factoriesForm = new FactoriesForm();
+            using var jobsForm = new JobsForm();
+
+            // Set all fields
+            psf.SetAllFieldsToFaction(faction, coverage);
+
+            // Generate factories
+            psf.FactoriesForm = factoriesForm;
+            psf.BtnConfirm_Click(null, null);
+
+            // Generate jobs
+            psf.FactoriesForm = null;
+            psf.JobsForm = jobsForm;
+            psf.BtnConfirm_Click(null, null);
+        }
+
+        private bool _isProcGen = false;
+        public void SetAllFieldsToFaction(Faction faction, int coverage)
+        {
+            string selectedPresetFaction = faction.Primaryrace.Equals("split", StringComparison.OrdinalIgnoreCase) ?
+                "zyarth" : faction.Primaryrace;
+
+            // Take scaleplate for pirate factions
+            if (faction.Tags.Contains("plunder", StringComparison.OrdinalIgnoreCase))
+                selectedPresetFaction = "scaleplate";
+
+            CmbFaction.SelectedItem = selectedPresetFaction;
+            CmbOwner.SelectedItem = faction.Id;
+            _mscFactions.Select(faction.Id);
+            TxtSectorCoverage.Text = coverage.ToString();
+            _isProcGen = true;
+        }
+
+        public void BtnConfirm_Click(object sender, EventArgs e)
         {
             var faction = CmbFaction.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(faction))
@@ -69,11 +105,14 @@ namespace X4SectorCreator.Forms.Factories
                 return;
             }
 
-            var type = FactoriesForm != null ? "factories" : "jobs";
-            if (MessageBox.Show($"This will overwrite existing {type} that have the same ID, are you sure you want to do this?", 
-                "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
+            if (!_isProcGen)
             {
-                return;
+                var type = FactoriesForm != null ? "factories" : "jobs";
+                if (MessageBox.Show($"This will overwrite existing {type} that have the same ID, are you sure you want to do this?",
+                    "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    return;
+                }
             }
 
             string json = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
@@ -98,6 +137,7 @@ namespace X4SectorCreator.Forms.Factories
             {
                 // All factories where class is galaxy
                 var templateFactories = GetTemplateFactories()
+                    .Where(a => !a.Id.Contains("dlc_split", StringComparison.OrdinalIgnoreCase) && !a.Id.EndsWith("_new", StringComparison.OrdinalIgnoreCase))
                     .Where(a => a.Location != null && !string.IsNullOrWhiteSpace(a.Location.Class) &&
                         a.Location.Class.Equals("Galaxy", StringComparison.OrdinalIgnoreCase))
                     .ToArray();
@@ -108,8 +148,20 @@ namespace X4SectorCreator.Forms.Factories
                 foreach (var factory in templateFactories)
                 {
                     var raceKey = GetRaceKey(faction);
-                    if (factory.Id.StartsWith(raceKey, StringComparison.OrdinalIgnoreCase))
+                    if (factory.Id.StartsWith(raceKey, StringComparison.OrdinalIgnoreCase) || 
+                        (faction.Equals("scaleplate", StringComparison.OrdinalIgnoreCase) && factory.Id.StartsWith("pir_", StringComparison.OrdinalIgnoreCase)))
                     {
+                        if (ContainsTag(factory.Location.Tags, "anarchy")) continue;
+
+                        factory.Location.Excludedtags = null;
+                        factory.Location.Tags = null;
+
+                        // Location is too restrictive on factory presets, remove it!
+                        if (factory.Location?.Economy != null)
+                            factory.Location.Economy = null;
+                        if (factory.Location?.Region != null)
+                            factory.Location.Region = null;
+
                         EditFactoryData(factory, owner, raceKey);
                         if (adjustQuotas)
                             ApplyQuotaAdjustment(coverage, ownership, factoryQuota: factory.Quotas?.Quota);
@@ -133,6 +185,11 @@ namespace X4SectorCreator.Forms.Factories
                     // Jobs have the full race, not just the 3 initials
                     if (job.Id.StartsWith(faction, StringComparison.OrdinalIgnoreCase))
                     {
+                        if (ContainsTag(job.Location.Tags, "anarchy")) continue;
+
+                        job.Location.Excludedtags = null;
+                        job.Location.Tags = null;
+
                         EditJobData(job, owner, faction);
                         if (adjustQuotas)
                             ApplyQuotaAdjustment(coverage, ownership, jobQuota: job.Quota);
@@ -195,6 +252,8 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     factoryQuota.Galaxy = Math.Max(1, Math.Ceiling((double)galaxyQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
+
+                /*
                 if (factoryQuota.Cluster != null && 
                     int.TryParse(factoryQuota.Cluster, CultureInfo.InvariantCulture, out var clusterQuota))
                 {
@@ -210,6 +269,7 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     factoryQuota.Zone = Math.Max(1, Math.Ceiling((double)zoneQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
+                */
             }
 
             if (jobQuota != null)
@@ -219,6 +279,8 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     jobQuota.Galaxy = Math.Max(1, Math.Ceiling((double)galaxyQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
+
+                /*
                 if (jobQuota.Cluster != null &&
                     int.TryParse(jobQuota.Cluster, CultureInfo.InvariantCulture, out var clusterQuota))
                 {
@@ -234,16 +296,29 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     jobQuota.Zone = Math.Max(1, Math.Ceiling((double)zoneQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
+                */
             }
+        }
+
+        private static bool ContainsTag(string field, string value)
+        {
+            return !string.IsNullOrWhiteSpace(field) && field.Contains(value, StringComparison.OrdinalIgnoreCase);
         }
 
         private void EditFactoryData(Factory factory, string ownerId, string raceKey)
         {
             // Replace the first instance of the raceKey
-            int index = factory.Id.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
-            if (index >= 0)
+            if (factory.Id.StartsWith("pir_", StringComparison.OrdinalIgnoreCase))
             {
-                factory.Id = string.Concat(factory.Id.AsSpan(0, index), ownerId, factory.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
+                factory.Id = string.Concat(ownerId, factory.Id.AsSpan("pir".Length)).Replace(" ", "_");
+            }
+            else
+            {
+                int index = factory.Id.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
+                if (index >= 0)
+                {
+                    factory.Id = string.Concat(factory.Id.AsSpan(0, index), ownerId, factory.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
+                }
             }
             
             // Set owner faction
@@ -251,7 +326,17 @@ namespace X4SectorCreator.Forms.Factories
             if (factory.Module?.Select?.Faction != null)
                 factory.Module.Select.Faction = factory.Owner;
             factory.Location ??= new Factory.LocationObj();
-            factory.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+
+            // Only replace faction location if its not ownerless (pirate stations and jobs spawn in unowned sectors)
+            if (factory.Location.Faction != null && !factory.Location.Faction.Contains("ownerless", StringComparison.OrdinalIgnoreCase))
+            {
+                factory.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+            }
+
+            if (GalaxySettingsForm.IsCustomGalaxy)
+            {
+                factory.Location.Macro = $"{GalaxySettingsForm.GalaxyName}_macro";
+            }
         }
 
         private void EditJobData(Job job, string ownerId, string raceKey)
@@ -268,7 +353,12 @@ namespace X4SectorCreator.Forms.Factories
             {
                 if (job.Location?.Policefaction != null)
                     job.Location.Policefaction = owner;
-                job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+
+                // Only replace faction location if its not ownerless (pirate stations and jobs spawn in unowned sectors)
+                if (job.Location.Faction != null && !job.Location.Faction.Contains("ownerless", StringComparison.OrdinalIgnoreCase))
+                {
+                    job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+                }
             }
 
             if (job.Ship?.Select != null)
@@ -300,6 +390,11 @@ namespace X4SectorCreator.Forms.Factories
                         }
                     }
                 }
+            }
+
+            if (GalaxySettingsForm.IsCustomGalaxy)
+            {
+                job.Location.Macro = $"{GalaxySettingsForm.GalaxyName}_macro";
             }
         }
     }

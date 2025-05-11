@@ -67,7 +67,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.54,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -78,7 +79,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.54,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -90,7 +92,7 @@
     "Seed": 32,
     "MinNoiseValue": 0.6,
     "MaxNoiseValue": 1.0,
-    "DistanceFactor": 1.0
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -102,7 +104,7 @@
     "Seed": 32,
     "MinNoiseValue": 0.6,
     "MaxNoiseValue": 1.0,
-    "DistanceFactor": 1.0
+    "DistanceFactor": 2.0
   },
   {
     "Type": "object",
@@ -112,6 +114,29 @@
     "RotationVariation": 70,
     "MinNoiseValue": 0.1,
     "MaxNoiseValue": 1.0
+  },
+  {
+    "Type": "asteroid",
+    "GroupRef": "asteroid_nividium_m",
+    "DensityFactor": 12.0,
+    "Rotation": 360,
+    "RotationVariation": 8,
+    "NoiseScale": 1500,
+    "Seed": 2001,
+    "MinNoiseValue": 0.6,
+    "MaxNoiseValue": 1.0
+  },
+  {
+    "Type": "asteroid",
+    "GroupRef": "asteroid_ice_xl",
+    "LodRule": "asteroidxl",
+    "DensityFactor": 1.0,
+    "Rotation": 0,
+    "RotationVariation": 4,
+    "NoiseScale": 35000,
+    "Seed": 26041984,
+    "MinNoiseValue": 0.05,
+    "MaxNoiseValue": 0.25
   },
   {
     "Type": "asteroid",
@@ -223,74 +248,6 @@
     "NoiseScale": 15000,
     "Seed": 8888,
     "MinNoiseValue": 0.6,
-    "MaxNoiseValue": 1.0
-  },
-  {
-    "Type": "asteroid",
-    "GroupRef": "asteroid_ore_nores_xxl",
-    "LodRule": "asteroidxl",
-    "DensityFactor": 1.1,
-    "Rotation": 0,
-    "RotationVariation": 4,
-    "NoiseScale": 15000,
-    "Seed": 8889,
-    "MinNoiseValue": 0.75,
-    "MaxNoiseValue": 1.0
-  },
-  {
-    "Type": "asteroid",
-    "GroupRef": "asteroid_ore_nores_xl",
-    "LodRule": "asteroidxl",
-    "DensityFactor": 1.1,
-    "Rotation": 0,
-    "RotationVariation": 4,
-    "NoiseScale": 15000,
-    "Seed": 8889,
-    "MinNoiseValue": 0.75,
-    "MaxNoiseValue": 1.0
-  },
-  {
-    "Type": "asteroid",
-    "GroupRef": "asteroid_ore_nores_l",
-    "DensityFactor": 1.0,
-    "Rotation": 0,
-    "RotationVariation": 4,
-    "NoiseScale": 15000,
-    "Seed": 8888,
-    "MinNoiseValue": 0.7,
-    "MaxNoiseValue": 1.0
-  },
-  {
-    "Type": "asteroid",
-    "GroupRef": "asteroid_ore_nores_m",
-    "DensityFactor": 2.0,
-    "Rotation": 0,
-    "RotationVariation": 8,
-    "NoiseScale": 15000,
-    "Seed": 8888,
-    "MinNoiseValue": 0.7,
-    "MaxNoiseValue": 1.0
-  },
-  {
-    "Type": "asteroid",
-    "GroupRef": "asteroid_ore_nores_s",
-    "DensityFactor": 2.0,
-    "Rotation": 0,
-    "RotationVariation": 16,
-    "NoiseScale": 1500,
-    "Seed": 8888,
-    "MinNoiseValue": 0.7,
-    "MaxNoiseValue": 1.0
-  },
-  {
-    "Type": "asteroid",
-    "GroupRef": "asteroid_ore_nores_xs",
-    "DensityFactor": 0.6,
-    "Rotation": 0,
-    "RotationVariation": 32,
-    "NoiseScale": 1500,
-    "Seed": 8888,
-    "MinNoiseValue": 0.65,
     "MaxNoiseValue": 1.0
   },
   {
@@ -417,7 +374,8 @@
     "NoiseScale": 1000,
     "Seed": 32,
     "MinNoiseValue": 0.0,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -428,7 +386,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.540,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -439,7 +398,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.540,
-    "MaxNoiseValue": 1.0
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "positional",
@@ -564,7 +524,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.5,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -575,7 +536,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.5,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -586,7 +548,8 @@
     "NoiseScale": 10000,
     "Seed": 32,
     "MinNoiseValue": 0.5,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -597,7 +560,8 @@
     "NoiseScale": 1000,
     "Seed": 32,
     "MinNoiseValue": 0.0,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "debris",
@@ -608,7 +572,8 @@
     "NoiseScale": 1000,
     "Seed": 32,
     "MinNoiseValue": 0.0,
-    "MaxNoiseValue": 1
+    "MaxNoiseValue": 1,
+    "DistanceFactor": 2.0
   },
   {
     "Type": "volumetricfog",

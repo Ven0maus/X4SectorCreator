@@ -22,6 +22,7 @@ namespace X4SectorCreator
         private Cluster[] _customClusters;
 
         private const int _hexSize = 200;
+        private const float _hexPadding = 10f;
         private const int _iconSize = 128;
 
         // How many extra rows and cols will be "open" around the base game sectors + custom sectors for the user to select
@@ -34,7 +35,7 @@ namespace X4SectorCreator
 
         private const float _defaultZoom = 1f; // 1.0 means 100% scale
         private static PointF _offset;
-        private static float _zoom = 0.8f;
+        private static float _zoom = 0.45f;
         private const float _minZoom = 0.075f, _maxZoom = 2.5f;
         private const float _gateSizeRadius = 8f;
 
@@ -64,7 +65,6 @@ namespace X4SectorCreator
         private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
         private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
 
-        // TODO: Rework to use ImageList in treeview with image nodes and colors
         private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
         {
             {
@@ -84,6 +84,34 @@ namespace X4SectorCreator
                 "Others", new List<object>
                 {
                     "Faction Logic Disabled"
+                }
+            },
+            {
+                "Factions", new List<object>
+                {
+                    ("Argon", "#001eff"),
+                    ("Antigone", "#0073ff"),
+                    ("Teladi", "#ddff00"),
+                    ("Paranid", "#9500ff"),
+                    ("HolyOrder", "#ff82cf"),
+                    ("Terran", "#bdebff"),
+                    ("Segaris", "#286d7a"),
+                    ("Zyarth", "#b87811"),
+                    ("FreeSplit", "#8c5906"),
+                    ("Hatikvah", "#00f2ff"),
+                    ("Xenon", "#ff0000"),
+                    ("Riptide", "#031f57"),
+                    ("Boron", "#00aeff"),
+                    ("Vigor", "#a19958"),
+                    ("Quettanauts", "#baa079"),
+                    ("Yaki", "#ff00ea"),
+                    ("Scaleplate", "#524e34"),
+                    ("FallenSplit", "#6e300c"),
+                    ("Ministry", "#546339"),
+                    ("Alliance", "#3d1f4d"),
+                    ("Buccaneers", "#361f0d"),
+                    ("Player", "#00ff15"),
+                    ("Khaak", "#d16fba")
                 }
             }
         };
@@ -109,17 +137,6 @@ namespace X4SectorCreator
         private static readonly Dictionary<string, Image> _imageMap = new(StringComparer.OrdinalIgnoreCase);
 
         private static bool _optionWasMinimzed = false, _legendWasMinimized = false;
-
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                // Used to start draw process on init of class
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
-                return cp;
-            }
-        }
 
         private readonly List<Sector> _availableSearchSectors = [];
         private readonly HashSet<Sector> _visibleSectorsFromSearch = [];
@@ -181,18 +198,38 @@ namespace X4SectorCreator
         private void SetupLegendTree()
         {
             LegendPanel.Top = ClientSize.Height - LegendPanel.Height - 3;
+            LegendTree.Nodes.Clear();
             LegendTree.DrawNode += LegendTree_DrawNode;
             LegendTree.ImageList = new ImageList
             {
                 ImageSize = new Size(16, 16)
             };
 
-            // Init region images
             var regionImage = GetIconFromStore("region_resource");
+            if (FactionsForm.AllCustomFactions.Count > 0)
+            {
+                _legend["Custom Factions"] = new List<object>(FactionsForm.AllCustomFactions.Values);
+                foreach (Faction faction in _legend["Custom Factions"].Cast<Faction>())
+                    LegendTree.ImageList.Images.Add(faction.Id, regionImage.CopyAsTint(faction.Color));
+            }
+
+            // Don't show vanilla, if no sector contains vanilla factions
+            if (MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).All(a => string.IsNullOrWhiteSpace(a.Owner)))
+                _legend.Remove("factions");
+
+            // Init region images
             foreach (var resource in _legend["resources"])
             {
                 var (name, color) = ((string name, Color color))resource;
                 LegendTree.ImageList.Images.Add(name, regionImage.CopyAsTint(color));
+            }
+            if (_legend.TryGetValue("factions", out var factions))
+            {
+                foreach (var faction in factions)
+                {
+                    var (name, colorHex) = ((string, string))faction;
+                    LegendTree.ImageList.Images.Add(name, regionImage.CopyAsTint(colorHex.HexToColor()));
+                }
             }
             LegendTree.ImageList.Images.Add("Faction Logic Disabled", GetIconFromStore("faction_logic_disabled"));
 
@@ -207,11 +244,28 @@ namespace X4SectorCreator
                 foreach (var entry in legendEntry.Value)
                 {
                     TreeNode childNode;
-                    if (entry is string entryStr)
+                    if (legendEntry.Key == "Others")
                     {
+                        var entryStr = entry as string;
                         childNode = new TreeNode(entryStr);
                         if (entryStr.Equals("Faction Logic Disabled", StringComparison.OrdinalIgnoreCase))
                             childNode.ImageKey = entryStr;
+                    }
+                    else if (legendEntry.Key == "Factions")
+                    {
+                        var (name, _) = ((string, string))entry;
+                        childNode = new TreeNode(name)
+                        {
+                            ImageKey = name
+                        };
+                    }
+                    else if (legendEntry.Key == "Custom Factions")
+                    {
+                        var faction = (Faction)entry;
+                        childNode = new TreeNode(faction.Name)
+                        {
+                            ImageKey = faction.Id
+                        };
                     }
                     else
                     {
@@ -249,6 +303,9 @@ namespace X4SectorCreator
 
         public static Image GetIconFromStore(string iconName)
         {
+            if (iconName.Equals("piratedock") || iconName.Equals("freeport"))
+                iconName = "piratebase";
+
             if (!_imageMap.TryGetValue(iconName, out var image))
             {
                 var path = Path.Combine(Application.StartupPath, $"Data/Icons/{iconName}.png");
@@ -375,13 +432,14 @@ namespace X4SectorCreator
                 _rows = ((int)((Math.Max(Math.Abs(allClusters.Max(b => b.Position.Y)), Math.Abs(allClusters.Min(b => b.Position.Y))) + (_minExpansionRoom / 2)) * 1.5f)) + 1;
             }
 
+            SetupLegendTree();
             GenerateHexagons();
             Invalidate();
         }
 
         private void HandleMouseWheel(object sender, MouseEventArgs e)
         {
-            const float zoomFactor = 1.1f; // 10% zoom per wheel step
+            const float zoomFactor = 1.2f; // 20% zoom per wheel step
             float oldZoom = _zoom;
 
             if (e.Delta > 0)
@@ -540,11 +598,6 @@ namespace X4SectorCreator
             }
         }
 
-        private static (int x, int y) TranslateCoordinate(int q, int r)
-        {
-            return (q, -((r * 2) + (q & 1)));
-        }
-
         private void GenerateHexagons()
         {
             _hexagons.Clear();
@@ -557,13 +610,13 @@ namespace X4SectorCreator
             {
                 for (int q = -halfCol; q <= halfCol; q++)
                 {
-                    (int x, int y) translatedCoordinate = TranslateCoordinate(q, r);
+                    var translatedCoordinate = new Point(q, r).SquareGridToHexCoordinate();
 
-                    _ = MainForm.Instance.AllClusters.TryGetValue(translatedCoordinate, out Cluster cluster);
+                    _ = MainForm.Instance.AllClusters.TryGetValue((translatedCoordinate.X, translatedCoordinate.Y), out Cluster cluster);
 
                     // Determine hex information
-                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, cluster?.Sectors, translatedCoordinate, _defaultZoom);
-                    _hexagons[translatedCoordinate] = hex;
+                    Hexagon hex = GenerateHexagonWithChildren(hexHeight, r, q, 0, 0, cluster?.Sectors, (translatedCoordinate.X, translatedCoordinate.Y), _defaultZoom);
+                    _hexagons[(translatedCoordinate.X, translatedCoordinate.Y)] = hex;
                 }
             }
         }
@@ -583,35 +636,39 @@ namespace X4SectorCreator
 
         private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, List<Sector> sectors, (int x, int y) translatedCoordinate, float zoom = 1.0f)
         {
-            // Scale parent hex
-            height *= zoom;
-            float width = (float)(4 * (height / 2 / Math.Sqrt(3))); // Compute width based on height
+            // Step 1: Scale base height with zoom
+            float zoomedHeight = height * zoom;
+            float zoomedWidth = (float)(4 * (zoomedHeight / 2 / Math.Sqrt(3)));
 
-            // Positioning parent hex
-            float xOffset = col * (width * 0.75f);
-            float yOffset = row * height;
+            // Step 2: Apply padding by shrinking the actual drawn hex size
+            float hexDrawHeight = zoomedHeight - _hexPadding;
+            float hexDrawWidth = zoomedWidth - _hexPadding;
+
+            // Step 3: Positioning the hex center using spacing based on full zoomed size
+            float xOffset = col * (zoomedWidth * 0.75f);
+            float yOffset = -row * zoomedHeight;
             if (col % 2 != 0)
             {
-                yOffset += height / 2;
+                yOffset -= zoomedHeight / 2;
             }
 
             xOffset += centerX;
-            yOffset += centerY;
+            yOffset -= centerY;
 
-            // Generate the parent hexagon
+            // Step 4: Build the actual hex points using the *shrunk* draw width/height
             PointF[] parentHex =
             [
                 new PointF(xOffset, yOffset),
-                new PointF(xOffset + (width * 0.25f), yOffset - (height / 2)),
-                new PointF(xOffset + (width * 0.75f), yOffset - (height / 2)),
-                new PointF(xOffset + width, yOffset),
-                new PointF(xOffset + (width * 0.75f), yOffset + (height / 2)),
-                new PointF(xOffset + (width * 0.25f), yOffset + (height / 2)),
+                new PointF(xOffset + (hexDrawWidth * 0.25f), yOffset - (hexDrawHeight / 2)),
+                new PointF(xOffset + (hexDrawWidth * 0.75f), yOffset - (hexDrawHeight / 2)),
+                new PointF(xOffset + hexDrawWidth, yOffset),
+                new PointF(xOffset + (hexDrawWidth * 0.75f), yOffset + (hexDrawHeight / 2)),
+                new PointF(xOffset + (hexDrawWidth * 0.25f), yOffset + (hexDrawHeight / 2)),
             ];
 
             // Child hexes are 50% of parent size
-            float childHeight = height / 2;
-            float childWidth = width / 2;
+            float childHeight = hexDrawHeight / 2;
+            float childWidth = hexDrawWidth / 2;
             List<PointF[]> childHexes = [];
 
             // Child hex positions (equally spaced inside parent)
@@ -623,7 +680,7 @@ namespace X4SectorCreator
                 // Child hex centers for top-left, bottom-right
                 for (int i = 0; i < children; i++)
                 {
-                    (float x, float y) = _childPlacementMappings[sectors[i].Placement](width, childHeight);
+                    (float x, float y) = _childPlacementMappings[sectors[i].Placement](hexDrawWidth, childHeight);
                     childHexPositions.Add(new PointF(xOffset + x, yOffset + y));
                 }
             }
@@ -737,6 +794,10 @@ namespace X4SectorCreator
             foreach (var group in iconDatas.GroupBy(a => a.Sector))
             {
                 if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(group.Key))
+                    continue;
+
+                if ((!chkShowX4Sectors.Checked && group.Key.IsBaseGame) ||
+                    (!chkShowCustomSectors.Checked && !group.Key.IsBaseGame))
                     continue;
 
                 var processed = 0;
@@ -923,6 +984,10 @@ namespace X4SectorCreator
                     if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
                         continue;
 
+                    if ((!chkShowX4Sectors.Checked && sector.IsBaseGame) || 
+                        (!chkShowCustomSectors.Checked && !sector.IsBaseGame))
+                        continue;
+
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
@@ -941,13 +1006,20 @@ namespace X4SectorCreator
                             stationScreenPosition.X += hexCenter.X;
                             stationScreenPosition.Y += hexCenter.Y;
 
-                            Color color = FactionsForm.GetColorForFaction(station.Owner);
+                            Color color = FactionsForm.GetColorForFaction(station.Owner, checkClaimSpace: false);
 
                             // Define the size for the resized icon (width and height)
                             int width = cluster.Sectors.Count == 1 ? sizeLarge.X : sizeSmall.X;
                             int height = cluster.Sectors.Count == 1 ? sizeLarge.Y : sizeSmall.Y;
                             width /= 2;
                             height /= 2;
+
+                            // Reduce icon size of 1 sector clusters
+                            if (cluster.Sectors.Count == 1)
+                            {
+                                width = (int)(width * 0.8f);
+                                height = (int)(height * 0.8f);
+                            }
 
                             Image resizedIcon;
                             if (cluster.Sectors.Count == 1)
@@ -1011,19 +1083,21 @@ namespace X4SectorCreator
                 RenderNonSectorGrid(e, nonExistantHexColor, hex);
             }
 
-            if (chkShowX4Sectors.Checked)
+            // Next step render the game clusters on top
+            foreach (Cluster cluster in _baseGameClusters.Values)
             {
-                // Next step render the game clusters on top
-                foreach (Cluster cluster in _baseGameClusters.Values)
+                if (cluster.Sectors.All(a => a.IsBaseGame) && !chkShowX4Sectors.Checked)
                 {
-                    // Check if the dlc is selected
-                    if (!IsDlcClusterEnabled(cluster))
-                    {
-                        continue;
-                    }
-
-                    RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                    continue;
                 }
+
+                // Check if the dlc is selected
+                if (!IsDlcClusterEnabled(cluster))
+                {
+                    continue;
+                }
+
+                RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
             }
 
             if (chkShowCustomSectors.Checked)
@@ -1049,19 +1123,19 @@ namespace X4SectorCreator
                 }
             }
 
-            if (chkShowX4Sectors.Checked)
+            // Next step render names
+            foreach (Cluster cluster in _baseGameClusters.Values)
             {
-                // Next step render names
-                foreach (Cluster cluster in _baseGameClusters.Values)
-                {
-                    // Check if the dlc is selected
-                    if (!IsDlcClusterEnabled(cluster))
-                    {
-                        continue;
-                    }
+                if (cluster.Sectors.All(a => a.IsBaseGame) && !chkShowX4Sectors.Checked)
+                    continue;
 
-                    RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                // Check if the dlc is selected
+                if (!IsDlcClusterEnabled(cluster))
+                {
+                    continue;
                 }
+
+                RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
             }
         }
 
@@ -1087,13 +1161,13 @@ namespace X4SectorCreator
                     PointF hexCenter = GetHexCenter(hex.Value.Points);
                     SizeF hexSize = GetHexSize(hex.Value.Points);
 
-                    using Font fBold = new(Font, FontStyle.Bold);
+                    using Font fBold = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold);
                     (int x, int y) = hex.Key;
                     string coordText = $"({x}, {y})";
                     textSize = e.Graphics.MeasureString(coordText, fBold);
                     e.Graphics.DrawString(coordText, fBold, Brushes.White,
                         hexCenter.X - (hexSize.Width * 0.25f),            // Align to the left
-                        hexCenter.Y + (hexSize.Height / 2) - textSize.Height); // Align to the bottom
+                        hexCenter.Y + (hexSize.Height / 2) - textSize.Height - (_hexPadding / 2f)); // Align to the bottom
                 }
             }
             else
@@ -1146,19 +1220,18 @@ namespace X4SectorCreator
                 }
             }
 
-            // Render base game cluster gates
-            if (chkShowX4Sectors.Checked)
+            foreach (KeyValuePair<(int, int), Cluster> cluster in _baseGameClusters)
             {
-                foreach (KeyValuePair<(int, int), Cluster> cluster in _baseGameClusters)
-                {
-                    // Check if the dlc is selected
-                    if (!IsDlcClusterEnabled(cluster.Value))
-                    {
-                        continue;
-                    }
+                if (cluster.Value.Sectors.All(a => a.IsBaseGame) && !chkShowX4Sectors.Checked)
+                    continue;
 
-                    gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
+                // Check if the dlc is selected
+                if (!IsDlcClusterEnabled(cluster.Value))
+                {
+                    continue;
                 }
+
+                gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
             }
 
             // Collect the source / target for each gate data in one connection
@@ -1226,6 +1299,9 @@ namespace X4SectorCreator
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
             {
+                if (!chkShowCustomSectors.Checked && !sourceGateData.Sector.IsBaseGame)
+                    continue;
+
                 // Find the connection with the matching path
                 if (processedTargets.Contains(sourceGateData.Gate) || !sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out GateData[] availableGateData))
                 {
@@ -1246,6 +1322,9 @@ namespace X4SectorCreator
                 {
                     continue;
                 }
+
+                if (!chkShowCustomSectors.Checked && !targetGateData.Sector.IsBaseGame)
+                    continue;
 
                 if (_visibleSectorsFromSearch.Count > 0 &&
                     (!_visibleSectorsFromSearch.Contains(targetGateData.Sector) ||
@@ -1404,6 +1483,10 @@ namespace X4SectorCreator
             {
                 render = false;
             }
+            if (!chkShowCustomSectors.Checked && !chkShowX4Sectors.Checked)
+            {
+                render = false;
+            }
 
             bool isMovingCluster = _movingCluster != null && _movingCluster == cluster;
             if (isMovingCluster)
@@ -1431,9 +1514,13 @@ namespace X4SectorCreator
                 foreach (Hexagon child in hex.Value.Children)
                 {
                     Sector sector = cluster.Sectors[index];
-                    Color ownerColor = GetSectorOwnershipColor(sector);
-
                     bool renderChild = true;
+                    if ((!chkShowCustomSectors.Checked && !sector.IsBaseGame) || (!chkShowX4Sectors.Checked && sector.IsBaseGame))
+                    {
+                        renderChild = false;
+                    }
+
+                    Color ownerColor = GetSectorOwnershipColor(sector);
                     if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
                     {
                         renderChild = false;
@@ -1464,13 +1551,13 @@ namespace X4SectorCreator
             SizeF textSize;
             if (chkShowCoordinates.Checked)
             {
-                using Font fBold = new(Font, FontStyle.Bold);
+                using Font fBold = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold);
                 (int x, int y) = hex.Key;
                 string coordText = $"({x}, {y})";
                 textSize = e.Graphics.MeasureString(coordText, fBold);
                 e.Graphics.DrawString(coordText, fBold, Brushes.White,
                     hexCenter.X - (hexSize.Width * 0.25f),                 // Align to the left
-                    hexCenter.Y + (hexSize.Height / 2) - textSize.Height); // Align to the bottom
+                    hexCenter.Y + (hexSize.Height / 2) - textSize.Height - (_hexPadding / 2f)); // Align to the bottom
             }
         }
 
@@ -1516,6 +1603,11 @@ namespace X4SectorCreator
             {
                 // Render child sector name
                 Sector sector = cluster.Sectors[index];
+                if ((!chkShowCustomSectors.Checked && !sector.IsBaseGame) || (!chkShowX4Sectors.Checked && sector.IsBaseGame))
+                {
+                    index++;
+                    continue;
+                }
                 if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
                 {
                     index++;
@@ -1534,7 +1626,8 @@ namespace X4SectorCreator
             // Render main hex sector name if no children
             if (hex.Value.Children.Count == 0 && cluster != null)
             {
-                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(cluster.Sectors.First()))
+                var sector = cluster.Sectors.First();
+                if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
                 {
                     return;
                 }

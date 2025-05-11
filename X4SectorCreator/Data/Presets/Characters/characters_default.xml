@@ -240,7 +240,7 @@
 		<owner list="[argon]" />
 		<stock ref="'default_shadyguy'" />
 	</character>
-	<character id="factionrepresentative_argon" group="argon.factionrepresentative.female">
+	<character id="factionrepresentative_argon" group="argon.factionrepresentative">
 		<category tags="[factionrepresentative]" faction="argon" race="argon"/>
 		<skills>
 			<skill type="management" min="10" max="15"/>
@@ -253,7 +253,7 @@
 		<page exact="10106"/>
 		<owner exact="argon"/>
 	</character>
-	<character id="factiondiplomat_argon" group="argon.factiondiplomat.male">
+	<character id="factiondiplomat_argon" group="argon.factiondiplomat">
 		<category tags="[factiondiplomat]" faction="argon" race="argon"/>
 		<skills>
 			<skill type="management" min="10" max="15"/>

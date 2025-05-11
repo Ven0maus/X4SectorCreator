@@ -46,7 +46,7 @@ namespace X4SectorCreator.Forms
                 .ToList();
 
             // If (old) faction name was modified, then don't include the old name
-            if (Faction.Id != FactionForm.Faction.Id)
+            if (FactionForm.Faction != null && Faction.Id != FactionForm.Faction.Id)
                 factions.Remove(FactionForm.Faction.Id);
 
             int index = 0;
