@@ -70,9 +70,9 @@
                 "{prefix} of the {core} {suffix}",
                 "{prefix} of {core}",
                 "The {core} {suffix}",
-                "{core}-{core} {suffix}",                    // e.g. "Nova-Astra Combine"
+                "{core}-{core2} {suffix}",                    // e.g. "Nova-Astra Combine"
                 "{core} of the {suffix}",                   // e.g. "Exodus of the Flame"
-                "{prefix} {core} of {core}",                // e.g. "Federation of Helios Ascension"
+                "{prefix} {core} of {core2}",                // e.g. "Federation of Helios Ascension"
                 "{prefix} {core}, {suffix}"                 // e.g. "Sovereign Unity, Empire"
             ];
 
@@ -124,15 +124,15 @@
             string[] alienTemplates =
             [
                 "{prefix} {core} {form}",             // "Ancient Xel Brood"
-                "{core}-{core} {form}",              // "N'vak-Thul Hegemony"
+                "{core}-{core2} {form}",              // "N'vak-Thul Hegemony"
                 "{form} of {core}",                  // "Swarm of Vrass"
                 "{core} {form} {suffix}",           // "Ghu Cluster of the Void"
                 "{prefix} {form} of {core}",         // "The Scourge of Jha"
                 "{form} {suffix}",                   // "Brood of Flesh"
                 "{form} of the {core} {form}",       // "Clutch of the Orx Continuum"
-                "{prefix} {core}-{core}",            // "Nameless Ghu-Zyn"
-                "{core}-{syllable}-{core} {form}",   // "Ch'rak-ia-Vrass Covenant"
-                "{form} of {core}-{core}"            // "Pulse of Ghu-Kzr"
+                "{prefix} {core}-{core2}",            // "Nameless Ghu-Zyn"
+                "{core}-{syllable}-{core2} {form}",   // "Ch'rak-ia-Vrass Covenant"
+                "{form} of {core}-{core2}"            // "Pulse of Ghu-Kzr"
             ];
 
 
@@ -192,7 +192,7 @@
                 "{prefix}-{core} {suffix}",          // NEX-Node Vault
                 "{core} of {prefix}",                // Directive of LUXR
                 "{prefix}-{core}-{suffix}",          // VCTR-Protocol-Prime
-                "{prefix}-{prefix} {core}",          // AXIOM-EXOD Assembly
+                "{prefix}-{prefix2} {core}",          // AXIOM-EXOD Assembly
                 "The {core} {suffix}",               // The Subroutine Arc
                 "{core} {suffix} of {prefix}",       // Loop Unit of MNX
                 "{title}",                           // The Singularity
@@ -214,6 +214,7 @@
 
             return template
                 .Replace("{prefix}", prefix1)
+                .Replace("{prefixé}", prefix2)
                 .Replace("{core}", core)
                 .Replace("{suffix}", suffix)
                 .Replace("{title}", title);
