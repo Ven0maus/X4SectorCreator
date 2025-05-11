@@ -33,7 +33,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             faction.Id = SanitizeNameForId(faction.Name);
             faction.Shortname = GetShortName(faction.Name);
             faction.Prefixname = faction.Shortname;
-            faction.PoliceFaction = isPirateFaction ? null : "self";
+            faction.PoliceFaction = isPirateFaction ? null : faction.Id;
             faction.Primaryrace = race;
             faction.AggressionLevel = _levels[_random.Next(_levels.Length)];
             faction.AvariceLevel = _levels[_random.Next(_levels.Length)];
