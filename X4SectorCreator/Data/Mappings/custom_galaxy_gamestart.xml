@@ -1,6 +1,6 @@
 ﻿<gamestart id="custom_creative" name="{1021,9020}" description="{1021,9021}" image="gamestart_custom_01" group="2" tags="customeditor">
 	<type name="{1021,94}" description="{1021,95}" />
-	<location galaxy="{custom_galaxy_name}" sector="{starting_sector}" />
+	<location galaxy="{custom_galaxy_name}" />
 	<player macro="character_player_custom_f_asi_macro" female="true" money="10000" name="{1021,102}">
 		<ship macro="ship_arg_s_scout_01_a_macro">
 			<loadout>
@@ -42,9 +42,7 @@
 		<encyclopedia>
 			<entry type="warebasket" ref="research_gamestart_common"/>
 		</encyclopedia>
-		<knownspace>
-			<space sector="{starting_sector}"/>
-		</knownspace>
+		<knownspace/>
 		<theme paint="painttheme_player_01" />
 	</player>
 	<custom>

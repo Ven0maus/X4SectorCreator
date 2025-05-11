@@ -73,9 +73,6 @@ namespace X4SectorCreator.XmlGeneration
                 // Set galaxy, sector & known space
                 XElement locationElement = gameStartElement.Element("location");
                 locationElement?.SetAttributeValue("galaxy", $"{GalaxySettingsForm.GalaxyName}_macro");
-                locationElement?.SetAttributeValue("sector", sectorMacro);
-                var knownSpaceElement = gameStartElement.Element("player")?.Element("knownspace")?.Element("space");
-                knownSpaceElement?.SetAttributeValue("sector", sectorMacro);
             }
             catch (Exception e)
             {
