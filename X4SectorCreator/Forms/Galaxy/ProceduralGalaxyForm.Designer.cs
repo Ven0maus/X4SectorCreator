@@ -1104,7 +1104,6 @@
         #endregion
 
         private Button BtnOpenSectorMap;
-        private Button BtnGenerateClusters;
         private Label label1;
         private CheckBox ChkRegions;
         private CheckBox ChkFactions;
@@ -1150,9 +1149,6 @@
         private CheckBox ChkGenerateConnections;
         private NumericUpDown NrClusterChance;
         private Label label23;
-        private Button BtnGenerateCustomFactions;
-        private Button BtnGenerateConnections;
-        private Button BtnGenerateRegions;
         private Button BtnGenerate;
         private Button BtnExit;
         private TabControl MapAlgorithmOptions;
