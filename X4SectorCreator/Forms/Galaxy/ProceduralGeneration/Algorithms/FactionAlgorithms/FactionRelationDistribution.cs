@@ -75,7 +75,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                     bool isPirateA = pirateFactions.Contains(a);
                     bool isPirateB = pirateFactions.Contains(b);
 
-                    if (isPirateA || isPirateB)
+                    if (nemesisFaction != null && (a == nemesisFaction || b == nemesisFaction))
+                    {
+                        value = RelationRanges[RelationType.Nemesis];
+                    }
+                    else if (isPirateA || isPirateB)
                     {
                         if (isPirateA && isPirateB)
                             value = 0.0032f; // pirates are friendly to each other
@@ -85,10 +89,6 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                     else if (hostileFactions.Contains(a) || hostileFactions.Contains(b))
                     {
                         value = RelationRanges[RelationType.KillMilitary];
-                    }
-                    else if (nemesisFaction != null && (a == nemesisFaction || b == nemesisFaction))
-                    {
-                        value = RelationRanges[RelationType.Nemesis];
                     }
                     else
                     {

@@ -513,6 +513,7 @@ namespace X4SectorCreator
                     () => GmcDynamicGeneration.Generate(modFolder),
                     () => FactionGoalInvadeSpaceGeneration.Generate(modFolder),
                     () => ComponentsGeneration.Generate(modFolder, modPrefix, modName),
+                    () => PlayerReputationGeneration.Generate(modFolder),
 
                     // Localisation after all the generation
                     () => Localisation.LocaliseAllFiles(modFolder)
