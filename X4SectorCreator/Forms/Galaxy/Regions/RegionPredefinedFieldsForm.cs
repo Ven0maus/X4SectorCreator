@@ -75,12 +75,12 @@ namespace X4SectorCreator.Forms
 
             foreach (FieldObj item in selectedFieldObjects)
             {
-                _ = MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value.ListBoxFields.Items.Add(item);
+                _ = MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxFields.Items.Add(item);
             }
 
             if (selectedFieldObjects.Length == 1)
             {
-                MainForm.Instance.RegionForm.Value.RegionDefinitionForm.Value.ListBoxFields.SelectedItem = selectedFieldObjects[0];
+                MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxFields.SelectedItem = selectedFieldObjects[0];
             }
 
             Close();

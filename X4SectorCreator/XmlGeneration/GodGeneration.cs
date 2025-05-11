@@ -74,6 +74,10 @@ namespace X4SectorCreator.XmlGeneration
                 string originalId = factory.Value.Id;
                 string originalMacro = factory.Value.Location?.Macro;
 
+                // Fix galaxy macro (can happen when switching galaxy name after factory is defined)
+                if (originalMacro != null && GalaxySettingsForm.IsCustomGalaxy && originalMacro != $"{GalaxySettingsForm.GalaxyName}_macro")
+                    factory.Value.Location.Macro = originalMacro = $"{GalaxySettingsForm.GalaxyName}_macro";
+
                 // Prepend prefix
                 factory.Value.Id = $"{modPrefix}_{factory.Value.Id}";
 

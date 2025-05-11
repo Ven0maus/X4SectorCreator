@@ -12,7 +12,7 @@ namespace X4SectorCreator.Forms
 {
     public partial class FactionForm : Form
     {
-        private string _factionXml = @"<faction id=""placeholder"" name=""placeholder"" description=""placeholder"" shortname=""placeholder"" prefixname=""placeholder"" primaryrace=""argon"" behaviourset=""default"" tags="""">
+        private const string _factionTemplateXml = @"<faction id=""placeholder"" name=""placeholder"" description=""placeholder"" shortname=""placeholder"" prefixname=""placeholder"" primaryrace=""argon"" behaviourset=""default"" tags="""">
     <color ref=""placeholder"" />
     <icon active=""placeholder"" inactive=""placeholder"" />
     <licences>
@@ -46,7 +46,9 @@ namespace X4SectorCreator.Forms
     </relations>
   </faction>";
 
-        private readonly Dictionary<string, string> _licenseNameMapping = new()
+        private string _factionXml = _factionTemplateXml;
+
+        private static readonly Dictionary<string, string> _licenseNameMapping = new()
         {
             { "capitalequipment", "Capital Equipment License" },
             { "capitalship", "Capital Ship License" },
@@ -188,6 +190,14 @@ namespace X4SectorCreator.Forms
             foreach (var faction in factions)
                 CmbPoliceFaction.Items.Add(faction);
             CmbPoliceFaction.SelectedItem = "self"; //Default value
+
+            TagsListBox.Items.Add("custom");
+        }
+
+        public static List<Faction.Licence> GetPlaceholderLicenses()
+        {
+            var factions = Faction.Deserialize(_factionTemplateXml);
+            return factions.Licences.Licence;
         }
 
         public void SetFactionXml(Faction faction)
@@ -266,6 +276,9 @@ namespace X4SectorCreator.Forms
             faction.AggressionLevel = CmbAggression.SelectedItem as string;
             faction.AvariceLevel = CmbAvarice.SelectedItem as string;
             faction.Lawfulness = TxtLawfulness.Text;
+
+            if (!faction.Tags.Contains("custom"))
+                faction.Tags = (faction.Tags + " custom").Trim();
 
             switch (BtnCreate.Text)
             {
@@ -512,19 +525,19 @@ namespace X4SectorCreator.Forms
                 {
                     if (MessageBox.Show("Update license names?", "Update license names?", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        UpdateLicenseNames(faction, false);
+                        UpdateLicenseNamesInternal(faction, false);
                         updated = true;
                     }
                 }
 
                 if (!updated)
                 {
-                    UpdateLicenseNames(faction, true);
+                    UpdateLicenseNamesInternal(faction, true);
                 }
             }
         }
 
-        private void UpdateLicenseNames(Faction faction, bool onlyPlaceholders)
+        public static void UpdateLicenseNames(Faction faction, bool onlyPlaceholders)
         {
             foreach (var license in faction.Licences.Licence)
             {
@@ -542,6 +555,11 @@ namespace X4SectorCreator.Forms
                     }
                 }
             }
+        }
+
+        private void UpdateLicenseNamesInternal(Faction faction, bool onlyPlaceholders)
+        {
+            UpdateLicenseNames(faction, onlyPlaceholders);
             _factionXml = faction.Serialize();
         }
 
@@ -573,7 +591,7 @@ namespace X4SectorCreator.Forms
         private bool ApplyFieldsContentToFactionXml()
         {
             // Validate if all fields have correct information to be converted
-            var name = Sanitize(TxtFactionName.Text, true, false);
+            var name = TxtFactionName.Text.Trim();
             if (string.IsNullOrWhiteSpace(name))
             {
                 _ = MessageBox.Show("Please first provide a valid faction name.");
@@ -595,7 +613,12 @@ namespace X4SectorCreator.Forms
                 return false;
             }
 
-            var id = name.Trim().ToLower().Replace(" ", "_");
+            var id = Sanitize(name, true, false).Trim().ToLower().Replace(" ", "_");
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                _ = MessageBox.Show("Invalid faction name, contains bad characters that end in empty name once filtered.");
+                return false;
+            }
 
             var policeFaction = CmbPoliceFaction.SelectedItem as string ?? "none";
             if (policeFaction.Equals("none", StringComparison.OrdinalIgnoreCase))
@@ -680,6 +703,12 @@ namespace X4SectorCreator.Forms
         {
             if (TagsListBox.SelectedItem is string tag && !string.IsNullOrWhiteSpace(tag))
             {
+                if (tag.Equals("custom", StringComparison.OrdinalIgnoreCase))
+                {
+                    _ = MessageBox.Show("\"custom\" tag cannot be removed.");
+                    return;
+                }    
+
                 int index = TagsListBox.Items.IndexOf(TagsListBox.SelectedItem);
                 TagsListBox.Items.Remove(TagsListBox.SelectedItem);
 
@@ -707,6 +736,9 @@ namespace X4SectorCreator.Forms
             TagsListBox.Items.Clear();
             foreach (var tag in _tagPresets[preset])
                 TagsListBox.Items.Add(tag);
+
+            if (!TagsListBox.Items.Contains("custom"))
+                TagsListBox.Items.Add("custom");
         }
 
         private void BtnSetIcon_Click(object sender, EventArgs e)

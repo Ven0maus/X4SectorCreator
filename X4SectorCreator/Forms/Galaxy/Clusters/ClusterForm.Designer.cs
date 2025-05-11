@@ -42,11 +42,12 @@
             label5 = new Label();
             label6 = new Label();
             TxtSoundtrack = new TextBox();
+            BtnEditClusterXml = new Button();
             SuspendLayout();
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(167, 318);
+            BtnCreate.Location = new Point(167, 351);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(236, 30);
             BtnCreate.TabIndex = 0;
@@ -56,7 +57,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 318);
+            BtnCancel.Location = new Point(12, 351);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(149, 30);
             BtnCancel.TabIndex = 1;
@@ -178,11 +179,22 @@
             TxtSoundtrack.TabIndex = 37;
             TxtSoundtrack.MouseClick += TxtSoundtrack_MouseClick;
             // 
+            // BtnEditClusterXml
+            // 
+            BtnEditClusterXml.Location = new Point(167, 319);
+            BtnEditClusterXml.Name = "BtnEditClusterXml";
+            BtnEditClusterXml.Size = new Size(236, 30);
+            BtnEditClusterXml.TabIndex = 38;
+            BtnEditClusterXml.Text = "Edit Cluster XML (Advanced)";
+            BtnEditClusterXml.UseVisualStyleBackColor = true;
+            BtnEditClusterXml.Click += BtnEditClusterXml_Click;
+            // 
             // ClusterForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(415, 353);
+            ClientSize = new Size(415, 385);
+            Controls.Add(BtnEditClusterXml);
             Controls.Add(TxtSoundtrack);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -221,5 +233,6 @@
         private Label label5;
         private Label label6;
         internal TextBox TxtSoundtrack;
+        internal Button BtnEditClusterXml;
     }
 }

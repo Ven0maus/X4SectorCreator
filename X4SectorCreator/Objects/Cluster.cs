@@ -15,6 +15,15 @@ namespace X4SectorCreator.Objects
         public List<Sector> Sectors { get; set; }
         public Point Position { get; set; }
         public bool CustomSectorPositioning { get; set; } = false;
+        public string CustomClusterXml { get; set; }
+
+        public const string TemplateClusterXml = @"<?xml version=""1.0""?>
+<components>
+	<component name=""{CLUSTERCODE}"" class=""celestialbody"">
+		<source geometry=""assets\environments\cluster\Cluster_01_data""/>
+		
+	</component>
+</components>";
 
         [JsonIgnore]
         public Hexagon Hexagon { get; set; }
@@ -51,6 +60,7 @@ namespace X4SectorCreator.Objects
                 Name = Name,
                 Position = Position,
                 Description = Description,
+                CustomClusterXml = CustomClusterXml,
                 Sectors = Sectors.Select(a => (Sector)a.Clone()).ToList()
             };
         }

@@ -1,8 +1,11 @@
-﻿using System.Drawing.Drawing2D;
+﻿using System;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Numerics;
+using System.Text;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.CustomComponents;
+using static X4SectorCreator.Objects.Ware;
 
 namespace X4SectorCreator.Helpers
 {
@@ -176,9 +179,57 @@ namespace X4SectorCreator.Helpers
             return new Point(rect.Left + (rect.Width / 2), rect.Top + (rect.Height / 2));
         }
 
+        /// <summary>
+        /// Convert's a square grid coordinate to a flat-topped hex grid coordinate.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public static Point SquareGridToHexCoordinate(this Point point)
+        {
+            return new Point(point.X, (point.Y * 2) + (point.X & 1));
+        }
+
+        /// <summary>
+        /// Convert's a flat-topped hex grid coordinate to a square grid coordinate.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public static Point HexToSquareGridCoordinate(this Point point)
+        {
+            int x = point.X;
+            int y = (point.Y - (x & 1)) / 2;
+            return new Point(x, y);
+        }
+
         public static string CapitalizeFirstLetter(this string input)
         {
             return string.IsNullOrEmpty(input) ? input : char.ToUpper(input[0]) + input[1..];
+        }
+
+        public static string ToRomanString(this int number)
+        {
+            if (number < 1 || number > 3999)
+                throw new ArgumentOutOfRangeException(nameof(number), "Value must be in the range 1-3999.");
+
+            var romanNumerals = new (int value, string symbol)[]
+            {
+                (1000, "M"), (900, "CM"), (500, "D"), (400, "CD"),
+                (100, "C"), (90, "XC"), (50, "L"), (40, "XL"),
+                (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")
+            };
+
+            var result = new StringBuilder();
+
+            foreach (var (value, symbol) in romanNumerals)
+            {
+                while (number >= value)
+                {
+                    result.Append(symbol);
+                    number -= value;
+                }
+            }
+
+            return result.ToString();
         }
 
         public static bool HasStringChanged(string old, string @new)
@@ -210,5 +261,119 @@ namespace X4SectorCreator.Helpers
 
             return new CustomVector((int)angles.X, (int)angles.Y, (int)angles.Z);
         }
+
+        // Add two Points together
+        public static Point Add(this Point p1, Point p2)
+        {
+            return new Point(p1.X + p2.X, p1.Y + p2.Y);
+        }
+
+        // Subtract one Point from another
+        public static Point Subtract(this Point p1, Point p2)
+        {
+            return new Point(p1.X - p2.X, p1.Y - p2.Y);
+        }
+
+        // Multiply a Point by a scalar (int or float)
+        public static Point Multiply(this Point p, int scalar)
+        {
+            return new Point(p.X * scalar, p.Y * scalar);
+        }
+
+        public static Point Multiply(this Point p, float scalar)
+        {
+            return new Point((int)(p.X * scalar), (int)(p.Y * scalar));
+        }
+
+        // Divide a Point by a scalar (int or float)
+        public static Point Divide(this Point p, int scalar)
+        {
+            if (scalar == 0) throw new DivideByZeroException("Cannot divide by zero.");
+            return new Point(p.X / scalar, p.Y / scalar);
+        }
+
+        public static Point Divide(this Point p, float scalar)
+        {
+            if (scalar == 0) throw new DivideByZeroException("Cannot divide by zero.");
+            return new Point((int)(p.X / scalar), (int)(p.Y / scalar));
+        }
+
+        public static Point GetDirection(this Point p1, Point p2)
+        {
+            return new Point(p1.X - p2.X, p1.Y - p2.Y);
+        }
+
+        public static double GetDirectionAngleCompassStyle(this Point a, Point b)
+        {
+            int dx = b.X - a.X;
+            int dy = b.Y - a.Y;
+
+            double angleRad = Math.Atan2(dy, dx);
+            double mathAngle = (angleRad * (180.0 / Math.PI) + 360) % 360;
+            double compassAngle = (450 - mathAngle) % 360;
+
+            return compassAngle;
+        }
+
+        public static float Distance(this Point p1, Point p2)
+        {
+            float dx = p1.X - p2.X;
+            float dy = p1.Y - p2.Y;
+            return MathF.Sqrt(dx * dx + dy * dy);
+        }
+
+        public static long DistanceSquared(this Point p1, Point p2)
+        {
+            long dx = p1.X - p2.X;
+            long dy = p1.Y - p2.Y;
+            return dx * dx + dy * dy;
+        }
+
+        public static IEnumerable<T> TakeRandom<T>(this IEnumerable<T> source, int amount, Random random = null)
+        {
+            if (source == null || amount <= 0)
+                return Enumerable.Empty<T>();
+
+            var list = source.ToList();
+            int count = list.Count;
+            if (count == 0)
+                return Enumerable.Empty<T>();
+
+            amount = Math.Min(amount, count);
+            random ??= new Random();
+
+            // Partial Fisher-Yates shuffle
+            for (int i = 0; i < amount; i++)
+            {
+                int j = random.Next(i, count); // pick from [i, count)
+                (list[i], list[j]) = (list[j], list[i]);
+            }
+
+            return list.Take(amount);
+        }
+
+        public static T RandomOrDefault<T>(this IEnumerable<T> source, Random random = null)
+        {
+            if (source == null)
+                return default;
+
+            var list = source.ToList();
+            int count = list.Count;
+            if (count == 0)
+                return default;
+
+            random ??= new Random();
+
+            // Partial Fisher-Yates shuffle
+            for (int i = 0; i < 1; i++)
+            {
+                int j = random.Next(i, count); // pick from [i, count)
+                (list[i], list[j]) = (list[j], list[i]);
+            }
+
+            return list.Take(1).FirstOrDefault();
+        }
+
+        public static T Pick<T>(this T[] array, Random random) => array[random.Next(array.Length)];
     }
 }

@@ -145,10 +145,17 @@ namespace X4SectorCreator.XmlGeneration
                 new XElement("macro",
                     new XElement("component",
                         new XAttribute("connection", "space"),
-                        new XAttribute("ref", cluster.BackgroundVisualMapping)
+                        new XAttribute("ref", string.IsNullOrWhiteSpace(cluster.CustomClusterXml) ? 
+                            cluster.BackgroundVisualMapping : GetClusterCode(cluster).Replace("PREFIX", modPrefix))
                     )
                 )
             );
+        }
+
+        private static string GetClusterCode(Cluster cluster)
+        {
+            // Used for custom cluster xml referencing
+            return $"PREFIX_CL_c{cluster.Id:D3}";
         }
 
         private static IEnumerable<(string dlc, XElement element)> GenerateVanillaChanges(string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)

@@ -26,13 +26,13 @@ namespace X4SectorCreator
         public readonly LazyEvaluated<GateForm> GateForm = new(() => new GateForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<JobsForm> JobsForm = new(() => new JobsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactoriesForm> FactoriesForm = new(() => new FactoriesForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<FactionsForm> FactionsForm = new(() => new FactionsForm(), a => !a.IsDisposed);
 
         private readonly LazyEvaluated<GalaxySettingsForm> _galaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<SectorForm> _sectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<StationForm> _stationForm = new(() => new StationForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ObjectOverviewForm> _objectOverviewForm = new(() => new ObjectOverviewForm(), a => !a.IsDisposed);
-        private readonly LazyEvaluated<FactionsForm> _factionsForm = new(() => new FactionsForm(), a => !a.IsDisposed);
         /* END OF FORMS */
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -45,6 +45,8 @@ namespace X4SectorCreator
         private ClusterOption _selectedClusterOption = ClusterOption.Custom;
         private string _currentModTargetVersion;
 
+        private string _currentConfiguration;
+
         public MainForm()
         {
             InitializeComponent();
@@ -56,9 +58,11 @@ namespace X4SectorCreator
 
             Instance = this;
 
+            FormClosing += MainForm_FormClosing;
+
             TxtSearch.EnableTextSearch(() => AllClusters.Values.ToList(), a => a.Name, ApplyFilter);
             Disposed += MainForm_Disposed;
-            ClusterCollection clusterCollection = InitAllClusters();
+            ClusterCollection clusterCollection = InitAllVanillaClusters();
 
             // Set background visual mapping
             BackgroundVisualMapping = AllClusters
@@ -76,6 +80,28 @@ namespace X4SectorCreator
 
             // Set the default value to be custom always
             UpdateClusterOptions();
+
+            _currentConfiguration = ExportJsonConfig();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var newConfig = ExportJsonConfig();
+            if (!_currentConfiguration.Equals(newConfig))
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to exit without exporting your configuration?", "Exit with unsaved changes?",
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    e.Cancel = true; // Cancel the closing event
+                }
+            }
+        }
+
+        public void SetProceduralGalaxy(IEnumerable<Cluster> allClusters)
+        {
+            Reset(false, resetGalaxyType: false, resetStatics : false);
+            AllClusters = allClusters.ToDictionary(a => (a.Position.X, a.Position.Y), a => a);
         }
 
         private void MainForm_Disposed(object sender, EventArgs e)
@@ -110,7 +136,7 @@ namespace X4SectorCreator
         }
 
         #region Initialization
-        public ClusterCollection InitAllClusters(bool replaceAllClusters = true)
+        public ClusterCollection InitAllVanillaClusters(bool replaceAllClusters = true)
         {
             string json = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
             ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.JsonSerializerOptions);
@@ -244,7 +270,7 @@ namespace X4SectorCreator
             ClustersListBox.SelectedIndex = ClustersListBox.Items.Count == 0 ? -1 : 0;
         }
 
-        private void UpdateClusterOptions()
+        public void UpdateClusterOptions()
         {
             if (Forms.GalaxySettingsForm.IsCustomGalaxy)
             {
@@ -442,7 +468,7 @@ namespace X4SectorCreator
                 List<Cluster> clusters = [.. AllClusters.Values];
 
                 // Collects all changes done to base game content
-                ClusterCollection nonModifiedBaseGameData = InitAllClusters(false);
+                ClusterCollection nonModifiedBaseGameData = InitAllVanillaClusters(false);
                 VanillaChanges vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
 
                 // Generate all xml files
@@ -482,7 +508,13 @@ namespace X4SectorCreator
                     () => FactionLogicEconomyGeneration.Generate(modFolder),
                     () => FactionLogicStationsGeneration.Generate(modFolder),
                     () => WarSubscriptionsGeneration.Generate(modFolder),
-
+                    () => DrainStationsGeneration.Generate(modFolder),
+                    () => FinaliseStationsGeneration.Generate(modFolder),
+                    () => GmcDynamicGeneration.Generate(modFolder),
+                    () => FactionGoalInvadeSpaceGeneration.Generate(modFolder),
+                    () => ComponentsGeneration.Generate(modFolder, modPrefix, modName),
+                    () => PlayerReputationGeneration.Generate(modFolder),
+                    () => SetupGeneration.Generate(modFolder),
 
                     // Localisation after all the generation
                     () => Localisation.LocaliseAllFiles(modFolder)
@@ -546,24 +578,29 @@ namespace X4SectorCreator
         #endregion
 
         #region Configuration
-        public void Reset(bool fromImport)
+        public void Reset(bool fromImport, bool resetGalaxyType = true, bool resetStatics = true)
         {
             // Reset
             if (!fromImport)
             {
-                Forms.GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
-                Forms.GalaxySettingsForm.StartingSector = null;
-                Forms.GalaxySettingsForm.IsCustomGalaxy = false;
+                if (resetGalaxyType)
+                {
+                    Forms.GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
+                    Forms.GalaxySettingsForm.IsCustomGalaxy = false;
+                }
 
-                RegionDefinitionForm.RegionDefinitions.Clear();
-                Forms.FactoriesForm.AllFactories.Clear();
-                Forms.JobsForm.AllJobs.Clear();
+                if (resetStatics)
+                {
+                    RegionDefinitionForm.RegionDefinitions.Clear();
+                    Forms.FactoriesForm.AllFactories.Clear();
+                    Forms.JobsForm.AllJobs.Clear();
+                    Forms.FactionsForm.AllCustomFactions.Clear();
+                }
                 Forms.JobsForm.AllBaskets.Clear();
-                Forms.FactionsForm.AllCustomFactions.Clear();
             }
 
             // Re-initialize all clusters properly
-            _ = InitAllClusters();
+            _ = InitAllVanillaClusters();
 
             // Set the default value to be custom
             UpdateClusterOptions();
@@ -571,6 +608,7 @@ namespace X4SectorCreator
         private void BtnReset_Click(object sender, EventArgs e)
         {
             Reset(false);
+            _currentConfiguration = ExportJsonConfig();
         }
 
         private void BtnExportConfig_Click(object sender, EventArgs e)
@@ -587,85 +625,8 @@ namespace X4SectorCreator
 
                 try
                 {
-                    List<Cluster> allModifiedClusters = AllClusters.Values
-                        .Where(a => !a.IsBaseGame)
-                        .ToList();
-
-                    ClusterCollection nonModifiedBaseGameData = InitAllClusters(false);
-                    HashSet<string> gateConnections = nonModifiedBaseGameData
-                        .Clusters
-                        .SelectMany(a => a.Sectors)
-                        .SelectMany(a => a.Zones)
-                        .SelectMany(a => a.Gates)
-                        .Select(a => a.ConnectionName)
-                        .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
-                    // Also add clusters that are basegame but have new connections compared to vanilla
-                    Cluster[] baseGameClusters = AllClusters.Values
-                        .Where(a => a.IsBaseGame)
-                        .Select(a => (Cluster)a.Clone())
-                        .ToArray();
-                    foreach (Cluster cluster in baseGameClusters)
-                    {
-                        foreach (Sector sector in cluster.Sectors)
-                        {
-                            // If sector doesn't exist in vanilla, we need to export it
-                            if (!sector.IsBaseGame)
-                            {
-                                allModifiedClusters.Add(cluster);
-                                break;
-                            }
-
-                            // Don't export base-game regions
-                            sector.Regions.RemoveAll(a => a.IsBaseGame);
-                            if (sector.Regions.Count != 0)
-                            {
-                                // Remove base-game clusters from export
-                                allModifiedClusters.Add(cluster);
-                                break;
-                            }
-
-                            bool breakout = false;
-                            foreach (Zone zone in sector.Zones)
-                            {
-                                if (zone.Stations.Count > 0)
-                                {
-                                    allModifiedClusters.Add(cluster);
-                                    breakout = true;
-                                    break;
-                                }
-
-                                // Don't export base-game gates
-                                zone.Gates.RemoveAll(a => a.IsBaseGame);
-                                foreach (Gate gate in zone.Gates)
-                                {
-                                    // Check if gate exists in vanilla
-                                    if (!gate.IsBaseGame)
-                                    {
-                                        allModifiedClusters.Add(cluster);
-                                        breakout = true;
-                                        break;
-                                    }
-                                }
-
-                                if (breakout)
-                                {
-                                    break;
-                                }
-                            }
-
-                            if (breakout)
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    // Support also vanilla changes
-                    VanillaChanges vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
-
-                    string jsonContent = ConfigSerializer.Serialize(allModifiedClusters, vanillaChanges);
-                    File.WriteAllText(filePath, jsonContent);
+                    _currentConfiguration = ExportJsonConfig();
+                    File.WriteAllText(filePath, _currentConfiguration);
                     _ = MessageBox.Show($"Configuration exported succesfully.", "Success");
                 }
                 catch (Exception)
@@ -678,6 +639,89 @@ namespace X4SectorCreator
 #endif
                 }
             }
+        }
+
+        private string ExportJsonConfig()
+        {
+            List<Cluster> allModifiedClusters = AllClusters.Values
+                                    .Where(a => !a.IsBaseGame)
+                                    .ToList();
+
+            ClusterCollection nonModifiedBaseGameData = InitAllVanillaClusters(false);
+            HashSet<string> gateConnections = nonModifiedBaseGameData
+                .Clusters
+                .SelectMany(a => a.Sectors)
+                .SelectMany(a => a.Zones)
+                .SelectMany(a => a.Gates)
+                .Select(a => a.ConnectionName)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            // Also add clusters that are basegame but have new connections compared to vanilla
+            Cluster[] baseGameClusters = AllClusters.Values
+                .Where(a => a.IsBaseGame)
+                .Select(a => (Cluster)a.Clone())
+                .ToArray();
+            foreach (Cluster cluster in baseGameClusters)
+            {
+                foreach (Sector sector in cluster.Sectors)
+                {
+                    // If sector doesn't exist in vanilla, we need to export it
+                    if (!sector.IsBaseGame)
+                    {
+                        allModifiedClusters.Add(cluster);
+                        break;
+                    }
+
+                    // Don't export base-game regions
+                    sector.Regions.RemoveAll(a => a.IsBaseGame);
+                    if (sector.Regions.Count != 0)
+                    {
+                        // Remove base-game clusters from export
+                        allModifiedClusters.Add(cluster);
+                        break;
+                    }
+
+                    bool breakout = false;
+                    foreach (Zone zone in sector.Zones)
+                    {
+                        if (zone.Stations.Count > 0)
+                        {
+                            allModifiedClusters.Add(cluster);
+                            breakout = true;
+                            break;
+                        }
+
+                        // Don't export base-game gates
+                        zone.Gates.RemoveAll(a => a.IsBaseGame);
+                        foreach (Gate gate in zone.Gates)
+                        {
+                            // Check if gate exists in vanilla
+                            if (!gate.IsBaseGame)
+                            {
+                                allModifiedClusters.Add(cluster);
+                                breakout = true;
+                                break;
+                            }
+                        }
+
+                        if (breakout)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (breakout)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // Support also vanilla changes
+            VanillaChanges vanillaChanges = CollectVanillaChanges(nonModifiedBaseGameData);
+
+            string jsonContent = ConfigSerializer.Serialize(allModifiedClusters, vanillaChanges);
+            return jsonContent;
         }
 
         private void BtnImportConfig_Click(object sender, EventArgs e)
@@ -709,7 +753,7 @@ namespace X4SectorCreator
                         SupportVanillaChangesInConfigImport(configuration);
                     }
 
-                    Lazy<Cluster[]> vanillaClustersLazy = new(() => InitAllClusters(false).Clusters.Where(a => a.IsBaseGame).ToArray());
+                    Lazy<Cluster[]> vanillaClustersLazy = new(() => InitAllVanillaClusters(false).Clusters.Where(a => a.IsBaseGame).ToArray());
 
                     // Import new configuration
                     foreach (Cluster cluster in clusters)
@@ -733,6 +777,7 @@ namespace X4SectorCreator
                     // Select first one so sector and zones populate automatically
                     ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
 
+                    _currentConfiguration = ExportJsonConfig();
                     _ = MessageBox.Show($"Configuration imported succesfully.", "Success");
                 }
             }
@@ -814,6 +859,7 @@ namespace X4SectorCreator
                 cluster.BackgroundVisualMapping = New.BackgroundVisualMapping;
                 cluster.Position = New.Position;
                 cluster.CustomSectorPositioning = New.CustomSectorPositioning;
+                cluster.CustomClusterXml = New.CustomClusterXml;
                 cluster.Soundtrack = New.Soundtrack;
 
                 if (cluster.Name.Equals("Mitsuno's Sacrifice", StringComparison.OrdinalIgnoreCase))
@@ -905,6 +951,7 @@ namespace X4SectorCreator
             currentCluster.BackgroundVisualMapping = cluster.BackgroundVisualMapping;
             currentCluster.CustomSectorPositioning = cluster.CustomSectorPositioning;
             currentCluster.Soundtrack = cluster.Soundtrack;
+            currentCluster.CustomClusterXml = cluster.CustomClusterXml;
 
             foreach (Sector newSector in cluster.Sectors)
             {
@@ -1098,11 +1145,29 @@ namespace X4SectorCreator
 
             Dictionary<string, Cluster> vanillaClusters = AllClusters.Values
                 .Where(a => a.IsBaseGame)
+                .Select(a => (Cluster)a.Clone())
                 .ToDictionary(a => a.BaseGameMapping);
 
             Dictionary<string, Cluster> nonModifiedVanillaClusters = nonModifiedBaseGameData
                 .Clusters
+                .Select(a => (Cluster)a.Clone())
                 .ToDictionary(a => a.BaseGameMapping);
+
+            // Clear up regions because they are not exported or modifyable in anyway
+            foreach (var cluster in vanillaClusters.Values)
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    sector.Regions.RemoveAll(a => a.IsBaseGame);
+                }
+            }
+            foreach (var cluster in nonModifiedVanillaClusters.Values)
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    sector.Regions.RemoveAll(a => a.IsBaseGame);
+                }
+            }
 
             VanillaChanges vanillaChanges = new();
 
@@ -1308,6 +1373,7 @@ namespace X4SectorCreator
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
 
             ClusterForm.Value.Cluster = cluster.Value;
+            ClusterForm.Value.ClusterXml = cluster.Value.CustomClusterXml;
             ClusterForm.Value.BtnCreate.Text = "Update";
             ClusterForm.Value.TxtName.Text = selectedClusterName;
             ClusterForm.Value.txtDescription.Text = cluster.Value.Description;
@@ -1872,7 +1938,7 @@ namespace X4SectorCreator
         #region Custom Factions
         private void BtnCustomFactions_Click(object sender, EventArgs e)
         {
-            _factionsForm.Value.Show();
+            FactionsForm.Value.Show();
         }
         #endregion
     }

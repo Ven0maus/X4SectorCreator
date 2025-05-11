@@ -23,13 +23,18 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        public static Color GetColorForFaction(string faction)
+        public static Color GetColorForFaction(string faction, bool checkClaimSpace = true)
         {
             // First check for custom faction
             var customFaction = AllCustomFactions.Values.FirstOrDefault(a => a.Id
                 .Equals(faction, StringComparison.OrdinalIgnoreCase));
             if (customFaction != null)
-                return customFaction.Color;
+            {
+                // Only when faction claims space
+                if (!checkClaimSpace || customFaction.Tags.Contains("claimspace", StringComparison.OrdinalIgnoreCase))
+                    return customFaction.Color;
+                return MainForm.Instance.FactionColorMapping["None"];
+            }
 
             // Then for vanilla faction
             if (MainForm.Instance.FactionColorMapping.TryGetValue(faction, out Color value))

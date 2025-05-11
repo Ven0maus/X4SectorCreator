@@ -1,0 +1,75 @@
+﻿<gamestart id="custom_creative" name="{1021,9020}" description="{1021,9021}" image="gamestart_custom_01" group="2" tags="customeditor">
+	<type name="{1021,94}" description="{1021,95}" />
+	<location galaxy="{custom_galaxy_name}" />
+	<player macro="character_player_custom_f_asi_macro" female="true" money="10000" name="{1021,102}">
+		<ship macro="ship_arg_s_scout_01_a_macro">
+			<loadout>
+				<macros>
+					<engine macro="engine_arg_s_travel_01_mk2_macro" path="../con_engine_01" />
+					<engine macro="engine_arg_s_travel_01_mk2_macro" path="../con_engine_02" />
+					<weapon macro="weapon_gen_s_laser_01_mk1_macro" path="../con_primaryweapon_01" optional="1" />
+					<weapon macro="weapon_gen_s_dumbfire_01_mk1_macro" path="../con_primaryweapon_02" optional="1" />
+					<shield macro="shield_arg_s_standard_01_mk1_macro" path="../con_shield_01" optional="1" />
+				</macros>
+				<ammunition>
+					<ammunition macro="missile_dumbfire_light_mk1_macro" exact="20" optional="1" />
+					<ammunition macro="countermeasure_flares_01_macro" exact="4" optional="false"/>
+					<ammunition macro="eq_arg_satellite_01_macro" exact="10" optional="true" />
+				</ammunition>
+				<software>
+					<software ware="software_trademk1" />
+					<software ware="software_scannerlongrangemk2" />
+				</software>
+				<virtualmacros>
+					<thruster macro="thruster_gen_s_allround_01_mk1_macro" />
+				</virtualmacros>
+			</loadout>
+		</ship>
+		<inventory>
+			<ware ware="weapon_gen_spacesuit_repairlaser_01_mk1" amount="1" />
+			<ware ware="software_scannerobjectmk3" amount="1" />
+		</inventory>
+		<blueprints>
+			<ware ware="paintmod_0006"/>
+			<ware ware="paintmod_0048"/>
+			<ware ware="paintmod_0049"/>
+			<ware ware="paintmod_0050"/>
+			<ware ware="paintmod_0097"/>
+			<ware ware="paintmod_0098"/>
+			<ware ware="paintmod_0099"/>
+			<ware ware="paintmod_0100"/>
+		</blueprints>
+		<encyclopedia>
+			<entry type="warebasket" ref="research_gamestart_common"/>
+		</encyclopedia>
+		<knownspace/>
+		<theme paint="painttheme_player_01" />
+	</player>
+	<custom>
+		<item value="seed" state="standard" />
+		<item value="sector" state="standard" />
+		<item value="offset" state="standard" />
+		<item value="universeringhighways" state="modified" />
+		<item value="universelinearhighways" state="modified" />
+		<item value="playername" state="standard" />
+		<item value="player" state="standard" list="character_npc_player_custom_f_asi_macro character_npc_player_custom_f_afr_macro character_npc_player_custom_f_cau_macro character_npc_player_custom_m_asi_macro character_npc_player_custom_m_afr_macro character_npc_player_custom_m_cau_macro character_npc_player_trade_macro character_npc_player_fight_macro" />
+		<item value="playermoney" state="modified" />
+		<item value="shipname" state="standard" />
+		<item value="ship" state="modified" />
+		<item value="shiploadout" state="modified" />
+		<item value="shippeople" state="modified" />
+		<item value="shippeoplefillpercent" state="modified" />
+		<item value="playerresearch" state="modified" />
+		<item value="universefactionrelations" state="modified" />
+		<item value="universestorystates" state="modified" />
+		<item value="playerknownfactions" state="modified" />
+		<item value="playerknownspace" state="modified" />
+		<item value="playerknownobjects" state="modified" />
+		<item value="playerinventory" state="modified" />
+		<item value="playerblueprints" state="modified" />
+		<item value="playerbuildmethod" state="standard" />
+		<item value="playerpainttheme" state="standard" />
+		<item value="playerproperty" state="modified" />
+		<item value="playerfemale" state="standard" />
+	</custom>
+</gamestart>

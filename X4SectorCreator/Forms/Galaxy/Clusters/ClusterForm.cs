@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Text.RegularExpressions;
+using X4SectorCreator.Forms.Galaxy.Clusters;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -10,7 +11,11 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Cluster Cluster { get; set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string ClusterXml { get; set; }
+
         private readonly LazyEvaluated<SoundtrackSelectorForm> _soundtrackSelectorForm = new(() => new SoundtrackSelectorForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<ClusterXmlEditorForm> _clusterXmlEditorForm = new(() => new ClusterXmlEditorForm(), a => !a.IsDisposed);
 
         public ClusterForm()
         {
@@ -86,6 +91,7 @@ namespace X4SectorCreator.Forms
                             Soundtrack = string.IsNullOrWhiteSpace(TxtSoundtrack.Text) ? null : TxtSoundtrack.Text,
                             Position = new Point(coordinate.X, coordinate.Y),
                             CustomSectorPositioning = !ChkAutoPlacement.Checked,
+                            CustomClusterXml = ClusterXml,
                             Sectors = []
                         });
 
@@ -118,6 +124,7 @@ namespace X4SectorCreator.Forms
                         Cluster.BackgroundVisualMapping = backgroundVisualMapping;
                         Cluster.Soundtrack = string.IsNullOrWhiteSpace(TxtSoundtrack.Text) ? null : TxtSoundtrack.Text;
                         Cluster.CustomSectorPositioning = !ChkAutoPlacement.Checked;
+                        Cluster.CustomClusterXml = ClusterXml;
                         MainForm.Instance.AllClusters.Add(coordinate, Cluster);
 
                         // Update listbox
@@ -177,6 +184,48 @@ namespace X4SectorCreator.Forms
             MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
             MainForm.Instance.SectorMapForm.Value.Reset();
             MainForm.Instance.SectorMapForm.Value.Show();
+        }
+
+        private void BtnEditClusterXml_Click(object sender, EventArgs e)
+        {
+            if (Cluster != null && Cluster.IsBaseGame)
+            {
+                _ = MessageBox.Show("Cluster XML editor is not available for vanilla clusters.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(ClusterXml))
+            {
+                _clusterXmlEditorForm.Value.TxtClusterXml.Text = GetTemplateXml(Cluster);
+            }
+            else
+            {
+                _clusterXmlEditorForm.Value.TxtClusterXml.Text = ClusterXml;
+            }
+
+            _clusterXmlEditorForm.Value.ClusterForm = this;
+            _clusterXmlEditorForm.Value.Show();
+        }
+
+        public static string GetTemplateXml(Cluster cluster)
+        {
+            return Cluster.TemplateClusterXml.Replace("{CLUSTERCODE}", GetClusterCode(cluster));
+        }
+
+        private static string GetClusterCode(Cluster cluster)
+        {
+            int id;
+            if (cluster == null)
+            {
+                id = MainForm.Instance.AllClusters.Values
+                                .Where(a => !a.IsBaseGame)
+                                .DefaultIfEmpty(new Cluster()).Max(a => a.Id) + 1;
+            }
+            else
+            {
+                id = cluster.Id;
+            }
+            return $"PREFIX_CL_c{id:D3}";
         }
     }
 
