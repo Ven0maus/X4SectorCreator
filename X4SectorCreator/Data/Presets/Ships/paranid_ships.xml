@@ -289,11 +289,4 @@
 		</pilot>
 		<drop ref="masstraffic_civilian"/>
 	</ship>
-	<ship id="masstraffic_holyorder_police" group="paranid_police_mass_traffic">
-		<owner exact="holyorder" overridenpc="true"/>
-		<pilot>
-			<select faction="holyorder" tags="pilot"/>
-		</pilot>
-		<drop ref="masstraffic_civilian"/>
-	</ship>
 </ships>
