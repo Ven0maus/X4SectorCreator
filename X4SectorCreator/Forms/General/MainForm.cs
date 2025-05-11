@@ -26,13 +26,13 @@ namespace X4SectorCreator
         public readonly LazyEvaluated<GateForm> GateForm = new(() => new GateForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<JobsForm> JobsForm = new(() => new JobsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactoriesForm> FactoriesForm = new(() => new FactoriesForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<FactionsForm> FactionsForm = new(() => new FactionsForm(), a => !a.IsDisposed);
 
         private readonly LazyEvaluated<GalaxySettingsForm> _galaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<SectorForm> _sectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<StationForm> _stationForm = new(() => new StationForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ObjectOverviewForm> _objectOverviewForm = new(() => new ObjectOverviewForm(), a => !a.IsDisposed);
-        private readonly LazyEvaluated<FactionsForm> _factionsForm = new(() => new FactionsForm(), a => !a.IsDisposed);
         /* END OF FORMS */
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -583,7 +583,6 @@ namespace X4SectorCreator
                 if (resetGalaxyType)
                 {
                     Forms.GalaxySettingsForm.GalaxyName = "xu_ep2_universe";
-                    Forms.GalaxySettingsForm.StartingSector = null;
                     Forms.GalaxySettingsForm.IsCustomGalaxy = false;
                 }
 
@@ -1933,7 +1932,7 @@ namespace X4SectorCreator
         #region Custom Factions
         private void BtnCustomFactions_Click(object sender, EventArgs e)
         {
-            _factionsForm.Value.Show();
+            FactionsForm.Value.Show();
         }
         #endregion
     }

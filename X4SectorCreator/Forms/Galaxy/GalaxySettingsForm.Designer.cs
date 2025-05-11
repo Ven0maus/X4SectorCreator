@@ -34,9 +34,6 @@
             BtnSave = new Button();
             BtnCancel = new Button();
             chkDisableAllStorylines = new CheckBox();
-            label2 = new Label();
-            cmbStartSector = new ComboBox();
-            LblStartingSector = new Label();
             BtnGenerateProceduralGalaxy = new Button();
             BtnSaveAndClose = new Button();
             SuspendLayout();
@@ -75,7 +72,7 @@
             // 
             // BtnSave
             // 
-            BtnSave.Location = new Point(89, 135);
+            BtnSave.Location = new Point(89, 70);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(88, 33);
             BtnSave.TabIndex = 3;
@@ -85,7 +82,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 136);
+            BtnCancel.Location = new Point(12, 71);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(71, 33);
             BtnCancel.TabIndex = 4;
@@ -104,38 +101,9 @@
             chkDisableAllStorylines.UseVisualStyleBackColor = true;
             chkDisableAllStorylines.CheckedChanged += chkDisableAllStorylines_CheckedChanged;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(2, 75);
-            label2.Name = "label2";
-            label2.Size = new Size(115, 21);
-            label2.TabIndex = 6;
-            label2.Text = "Starting Sector:";
-            // 
-            // cmbStartSector
-            // 
-            cmbStartSector.Enabled = false;
-            cmbStartSector.FormattingEnabled = true;
-            cmbStartSector.Location = new Point(119, 75);
-            cmbStartSector.Name = "cmbStartSector";
-            cmbStartSector.Size = new Size(241, 23);
-            cmbStartSector.TabIndex = 7;
-            cmbStartSector.SelectedIndexChanged += cmbStartSector_SelectedIndexChanged;
-            // 
-            // LblStartingSector
-            // 
-            LblStartingSector.Font = new Font("Segoe UI", 9F);
-            LblStartingSector.Location = new Point(119, 100);
-            LblStartingSector.Name = "LblStartingSector";
-            LblStartingSector.Size = new Size(247, 32);
-            LblStartingSector.TabIndex = 8;
-            LblStartingSector.Text = "(Selection becomes active for Custom Galaxy once atleast one custom sector exists.)";
-            // 
             // BtnGenerateProceduralGalaxy
             // 
-            BtnGenerateProceduralGalaxy.Location = new Point(12, 172);
+            BtnGenerateProceduralGalaxy.Location = new Point(12, 107);
             BtnGenerateProceduralGalaxy.Name = "BtnGenerateProceduralGalaxy";
             BtnGenerateProceduralGalaxy.Size = new Size(348, 33);
             BtnGenerateProceduralGalaxy.TabIndex = 9;
@@ -145,7 +113,7 @@
             // 
             // BtnSaveAndClose
             // 
-            BtnSaveAndClose.Location = new Point(183, 136);
+            BtnSaveAndClose.Location = new Point(183, 71);
             BtnSaveAndClose.Name = "BtnSaveAndClose";
             BtnSaveAndClose.Size = new Size(177, 33);
             BtnSaveAndClose.TabIndex = 10;
@@ -157,12 +125,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(366, 209);
+            ClientSize = new Size(366, 149);
             Controls.Add(BtnSaveAndClose);
             Controls.Add(BtnGenerateProceduralGalaxy);
-            Controls.Add(LblStartingSector);
-            Controls.Add(cmbStartSector);
-            Controls.Add(label2);
             Controls.Add(chkDisableAllStorylines);
             Controls.Add(BtnCancel);
             Controls.Add(BtnSave);
@@ -186,9 +151,6 @@
         private Button BtnSave;
         private Button BtnCancel;
         private CheckBox chkDisableAllStorylines;
-        private Label label2;
-        private ComboBox cmbStartSector;
-        private Label LblStartingSector;
         private Button BtnGenerateProceduralGalaxy;
         private Button BtnSaveAndClose;
     }

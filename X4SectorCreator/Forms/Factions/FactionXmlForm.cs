@@ -50,7 +50,7 @@ namespace X4SectorCreator.Forms
                 return false;
             }
 
-            var name = FactionForm.Sanitize(faction.Name, true, false)?.Trim();
+            var name = faction.Name.Trim();
             if (string.IsNullOrWhiteSpace(name))
             {
                 _ = MessageBox.Show("Please first provide a valid faction name.");

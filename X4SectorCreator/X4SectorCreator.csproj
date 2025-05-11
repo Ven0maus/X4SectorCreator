@@ -53,6 +53,9 @@
     <None Update="Data\Mappings\cluster_soundtrack_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Mappings\custom_galaxy_gamestart.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Mappings\dlc_mappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

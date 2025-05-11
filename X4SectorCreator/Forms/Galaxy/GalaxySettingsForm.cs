@@ -18,9 +18,6 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static string GalaxyName { get; set; } = "xu_ep2_universe";
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public static string StartingSector { get; set; } = null;
-
         private static Dictionary<(int, int), Cluster> _baseGameClusters;
 
         private readonly LazyEvaluated<ProceduralGalaxyForm> _proceduralGalaxyForm = new(() => new ProceduralGalaxyForm(), a => !a.IsDisposed);
@@ -28,7 +25,6 @@ namespace X4SectorCreator.Forms
         private bool _originalDisableStoryLins;
         private bool _originalCustomGalaxy;
         private string _originalGalaxyName;
-        private Sector _originalStartSector;
 
         public GalaxySettingsForm()
         {
@@ -41,24 +37,7 @@ namespace X4SectorCreator.Forms
             txtGalaxyName.Text = GalaxyName;
 
             // Init sector values
-            cmbStartSector.Items.Clear();
-            Sector[] sectors = MainForm.Instance.AllClusters.Values
-                .SelectMany(a => a.Sectors)
-                .Where(a => !a.IsBaseGame)
-                .OrderBy(a => a.Name)
-                .ToArray();
-            foreach (Sector sector in sectors)
-            {
-                _ = cmbStartSector.Items.Add(sector);
-            }
-
             BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
-            cmbStartSector.Enabled = IsCustomGalaxy && cmbStartSector.Items.Count > 0;
-            LblStartingSector.Visible = !cmbStartSector.Enabled;
-            cmbStartSector.SelectedItem = StartingSector == null
-                ? null
-                : (object)(!IsCustomGalaxy ? null : MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors)
-                    .FirstOrDefault(a => a.Name.Equals(StartingSector, StringComparison.OrdinalIgnoreCase)));
 
             EnableSaveButtons(false);
 
@@ -70,7 +49,6 @@ namespace X4SectorCreator.Forms
             _originalDisableStoryLins = chkDisableAllStorylines.Checked;
             _originalCustomGalaxy = chkCustomGalaxy.Checked;
             _originalGalaxyName = txtGalaxyName.Text;
-            _originalStartSector = cmbStartSector.SelectedItem as Sector;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -96,7 +74,6 @@ namespace X4SectorCreator.Forms
             if (IsCustomGalaxy == chkCustomGalaxy.Checked)
             {
                 GalaxyName = txtGalaxyName.Text.ToLower();
-                StartingSector = (cmbStartSector.SelectedItem as Sector)?.Name;
                 UpdateOriginals();
                 EnableSaveButtons(false);
                 return true;
@@ -164,7 +141,6 @@ namespace X4SectorCreator.Forms
             // Apply change
             IsCustomGalaxy = chkCustomGalaxy.Checked;
             DisableAllStorylines = chkDisableAllStorylines.Checked;
-            StartingSector = (cmbStartSector.SelectedItem as Sector)?.Name;
             BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
 
             // Toggle galaxy mode
@@ -259,7 +235,6 @@ namespace X4SectorCreator.Forms
                 txtGalaxyName.Enabled = false;
                 chkDisableAllStorylines.Enabled = true;
                 chkDisableAllStorylines.Checked = false;
-                cmbStartSector.Enabled = false;
             }
             else
             {
@@ -267,10 +242,7 @@ namespace X4SectorCreator.Forms
                 chkDisableAllStorylines.Checked = true;
                 txtGalaxyName.Enabled = true;
                 txtGalaxyName.Text = string.Empty;
-                cmbStartSector.Enabled = cmbStartSector.Items.Count > 0;
             }
-
-            LblStartingSector.Visible = !cmbStartSector.Enabled;
 
             EnableSaveButtons(_originalCustomGalaxy != chkCustomGalaxy.Checked);
         }
@@ -328,11 +300,6 @@ namespace X4SectorCreator.Forms
         {
             BtnSave.Enabled = enable;
             BtnSaveAndClose.Enabled = enable;
-        }
-
-        private void cmbStartSector_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            EnableSaveButtons(cmbStartSector.SelectedItem != _originalStartSector);
         }
 
         private void txtGalaxyName_TextChanged(object sender, EventArgs e)

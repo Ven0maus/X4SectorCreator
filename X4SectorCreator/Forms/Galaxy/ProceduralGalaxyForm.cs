@@ -208,8 +208,14 @@ namespace X4SectorCreator.Forms.Galaxy
         private static void SetProceduralGalaxy(IEnumerable<Cluster> clusters)
         {
             MainForm.Instance.SetProceduralGalaxy(clusters);
-            MainForm.Instance.SectorMapForm.Value.Reset();
+
+            if (MainForm.Instance.SectorMapForm.IsInitialized)
+                MainForm.Instance.SectorMapForm.Value.Reset();
+
             MainForm.Instance.UpdateClusterOptions();
+
+            if (MainForm.Instance.FactionsForm.IsInitialized)
+                MainForm.Instance.FactionsForm.Value.InitFactionValues();
         }
 
         private List<Cluster> GenerateClusters()
