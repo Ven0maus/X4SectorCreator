@@ -231,14 +231,17 @@ namespace X4SectorCreator.Forms.General
 
         private void BtnDeselect_Click(object sender, EventArgs e)
         {
-            int index = SelectedTemplatesListBox.Items.IndexOf(SelectedTemplatesListBox.SelectedItem);
-            SelectedTemplatesListBox.Items.Remove(SelectedTemplatesListBox.SelectedItem);
+            if (SelectedTemplatesListBox.SelectedItem != null)
+            {
+                int index = SelectedTemplatesListBox.Items.IndexOf(SelectedTemplatesListBox.SelectedItem);
+                SelectedTemplatesListBox.Items.Remove(SelectedTemplatesListBox.SelectedItem);
 
-            // Ensure index is within valid range
-            index--;
-            index = Math.Max(0, index);
-            SelectedTemplatesListBox.SelectedItem = index >= 0 && SelectedTemplatesListBox.Items.Count > 0 ?
-                SelectedTemplatesListBox.Items[index] : null;
+                // Ensure index is within valid range
+                index--;
+                index = Math.Max(0, index);
+                SelectedTemplatesListBox.SelectedItem = index >= 0 && SelectedTemplatesListBox.Items.Count > 0 ?
+                    SelectedTemplatesListBox.Items[index] : null;
+            }
         }
 
         private void BtnSelect_Click(object sender, EventArgs e)
