@@ -57,6 +57,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             {
                 // Lock pirate faction relations
                 faction.Relations ??= new Faction.RelationsObj { Relation = [], Locked = pirateFactions.Contains(faction) ? "1" : null };
+
+                // Add default relations for criminal and smuggler
+                faction.Relations.Relation.Add(new Faction.Relation { Faction = "criminal", RelationValue = "-0.5" });
+                faction.Relations.Relation.Add(new Faction.Relation { Faction = "smuggler", RelationValue = "-0.06" });
             }
 
             // Ensure player relations are set too
