@@ -11,6 +11,7 @@ A tool to help mod new sectors and gate connections in *X4: Foundations*. This t
 - Jobs (ship quotas)
 - Factories (products)
 - Custom Factions
+- Procedural Galaxy Generation
 
 ## Installation
 1. Go to the releases page of this repository and download the latest release. (https://github.com/Ven0maus/X4SectorCreator/releases)
