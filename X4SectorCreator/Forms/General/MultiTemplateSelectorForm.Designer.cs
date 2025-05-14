@@ -256,6 +256,9 @@
             Controls.Add(TxtSearch);
             Controls.Add(label2);
             Controls.Add(ListTemplates);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "MultiTemplateSelectorForm";
             Text = "Template Selection";
             Load += MultiTemplateSelectorForm_Load;

@@ -36,6 +36,8 @@
             chkDisableAllStorylines = new CheckBox();
             BtnGenerateProceduralGalaxy = new Button();
             BtnSaveAndClose = new Button();
+            label2 = new Label();
+            CmbPlayerHq = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -72,7 +74,7 @@
             // 
             // BtnSave
             // 
-            BtnSave.Location = new Point(89, 70);
+            BtnSave.Location = new Point(88, 98);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(88, 33);
             BtnSave.TabIndex = 3;
@@ -82,7 +84,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 71);
+            BtnCancel.Location = new Point(11, 99);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(71, 33);
             BtnCancel.TabIndex = 4;
@@ -103,7 +105,7 @@
             // 
             // BtnGenerateProceduralGalaxy
             // 
-            BtnGenerateProceduralGalaxy.Location = new Point(12, 107);
+            BtnGenerateProceduralGalaxy.Location = new Point(11, 135);
             BtnGenerateProceduralGalaxy.Name = "BtnGenerateProceduralGalaxy";
             BtnGenerateProceduralGalaxy.Size = new Size(348, 33);
             BtnGenerateProceduralGalaxy.TabIndex = 9;
@@ -113,7 +115,7 @@
             // 
             // BtnSaveAndClose
             // 
-            BtnSaveAndClose.Location = new Point(183, 71);
+            BtnSaveAndClose.Location = new Point(182, 99);
             BtnSaveAndClose.Name = "BtnSaveAndClose";
             BtnSaveAndClose.Size = new Size(177, 33);
             BtnSaveAndClose.TabIndex = 10;
@@ -121,11 +123,31 @@
             BtnSaveAndClose.UseVisualStyleBackColor = true;
             BtnSaveAndClose.Click += BtnSaveAndClose_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F);
+            label2.Location = new Point(24, 71);
+            label2.Name = "label2";
+            label2.Size = new Size(93, 21);
+            label2.TabIndex = 11;
+            label2.Text = "PHQ Sector:";
+            // 
+            // CmbPlayerHq
+            // 
+            CmbPlayerHq.FormattingEnabled = true;
+            CmbPlayerHq.Location = new Point(119, 71);
+            CmbPlayerHq.Name = "CmbPlayerHq";
+            CmbPlayerHq.Size = new Size(241, 23);
+            CmbPlayerHq.TabIndex = 12;
+            // 
             // GalaxySettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(366, 149);
+            ClientSize = new Size(366, 173);
+            Controls.Add(CmbPlayerHq);
+            Controls.Add(label2);
             Controls.Add(BtnSaveAndClose);
             Controls.Add(BtnGenerateProceduralGalaxy);
             Controls.Add(chkDisableAllStorylines);
@@ -153,5 +175,7 @@
         private CheckBox chkDisableAllStorylines;
         private Button BtnGenerateProceduralGalaxy;
         private Button BtnSaveAndClose;
+        private Label label2;
+        private ComboBox CmbPlayerHq;
     }
 }

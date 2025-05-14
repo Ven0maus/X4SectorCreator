@@ -27,8 +27,8 @@ namespace X4SectorCreator
         public readonly LazyEvaluated<JobsForm> JobsForm = new(() => new JobsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactoriesForm> FactoriesForm = new(() => new FactoriesForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactionsForm> FactionsForm = new(() => new FactionsForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<GalaxySettingsForm> GalaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
 
-        private readonly LazyEvaluated<GalaxySettingsForm> _galaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<SectorForm> _sectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<StationForm> _stationForm = new(() => new StationForm(), a => !a.IsDisposed);
@@ -382,8 +382,8 @@ namespace X4SectorCreator
 
         private void BtnGalaxySettings_Click(object sender, EventArgs e)
         {
-            _galaxySettingsForm.Value.Initialize();
-            _galaxySettingsForm.Value.Show();
+            GalaxySettingsForm.Value.Initialize();
+            GalaxySettingsForm.Value.Show();
         }
         #endregion
 
@@ -515,6 +515,7 @@ namespace X4SectorCreator
                     () => ComponentsGeneration.Generate(modFolder, modPrefix, modName),
                     () => PlayerReputationGeneration.Generate(modFolder),
                     () => SetupGeneration.Generate(modFolder),
+                    () => PlayerHqGeneration.Generate(modFolder, modPrefix),
 
                     // Localisation after all the generation
                     () => Localisation.LocaliseAllFiles(modFolder)

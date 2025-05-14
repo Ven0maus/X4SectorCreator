@@ -144,7 +144,7 @@ namespace X4SectorCreator.Forms.Galaxy
             RegionDefinitionForm.RegionDefinitions.Clear();
 
             ProcGenProcess.Minimum = 0;
-            ProcGenProcess.Maximum = 6;
+            ProcGenProcess.Maximum = 7;
             ProcGenProcess.Value = 0;
             ProcGenProcess.Step = 1;
 
@@ -201,22 +201,102 @@ namespace X4SectorCreator.Forms.Galaxy
             }
             ProcGenProcess.PerformStep();
 
+            // Pick new player HQ sector
+            SetPlayerHQSector(clusters);
+            ProcGenProcess.PerformStep();
+
+            // Assign galaxy
             SetProceduralGalaxy(clusters);
             ProcGenProcess.PerformStep();
             _progressResetTimer.Start();
         }
 
-        private static void SetProceduralGalaxy(IEnumerable<Cluster> clusters)
+        public static void SetPlayerHQSector(List<Cluster> clusters)
+        {
+            // Attempt to find a cluster with only one unowned sector
+            // Prefer a sector with only one gate connection (cornered)
+            var claimSpaceFactions = FactionsForm.AllCustomFactions.Values
+                .Where(a => a.Tags.Contains("claimspace", StringComparison.OrdinalIgnoreCase))
+                .Select(a => a.Id)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            // Filter clusters that only contain unowned sectors
+            var validClusters = clusters
+                .Where(c => c.Sectors.All(s => IsOwnerless(s, claimSpaceFactions)))
+                .ToList();
+
+            // Try to prefer cluster with exactly one sector and one zone gate
+            var preferredCluster = validClusters
+                .FirstOrDefault(c =>
+                    c.Sectors.Count == 1 &&
+                    GetZoneGateCount(c.Sectors.First()) == 1
+                );
+
+            // Next attempt only one sector
+            preferredCluster ??= validClusters.FirstOrDefault(c => c.Sectors.Count == 1);
+
+            // Fallback to first valid cluster if no preferred one is found
+            var selectedCluster = preferredCluster ?? validClusters.FirstOrDefault() ?? clusters.First();
+            var selectedSector = selectedCluster.Sectors.First();
+
+            // Disable faction logic if sector is ownerless
+            if (IsOwnerless(selectedSector, claimSpaceFactions))
+                selectedSector.DisableFactionLogic = true;
+
+            // Set as headquarters sector
+            GalaxySettingsForm.HeadQuartersSector = GetSectorMacro(selectedCluster, selectedSector);
+        }
+
+        private static string GetSectorMacro(Cluster cluster, Sector sector)
+        {
+            var sectorMacro = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
+            if (cluster.IsBaseGame && sector.IsBaseGame)
+            {
+                sectorMacro = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_macro";
+            }
+            else if (cluster.IsBaseGame)
+            {
+                sectorMacro = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}_macro";
+            }
+            return sectorMacro;
+        }
+
+        private static int GetZoneGateCount(Sector sector)
+        {
+            return sector.Zones.SelectMany(a => a.Gates).Count();
+        }
+
+        private static bool IsOwnerless(Sector sector, HashSet<string> claimSpaceFactions)
+        {
+            foreach (var zone in sector.Zones)
+            {
+                foreach (var station in zone.Stations)
+                {
+                    if (claimSpaceFactions.Contains(station.Owner))
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        private static void SetProceduralGalaxy(List<Cluster> clusters)
         {
             MainForm.Instance.SetProceduralGalaxy(clusters);
 
+            // Visual update the sector map if opened
             if (MainForm.Instance.SectorMapForm.IsInitialized)
                 MainForm.Instance.SectorMapForm.Value.Reset();
 
+            // Update cluster options
             MainForm.Instance.UpdateClusterOptions();
 
+            // Update faction values if opened
             if (MainForm.Instance.FactionsForm.IsInitialized)
                 MainForm.Instance.FactionsForm.Value.InitFactionValues();
+
+            // Update player HQ selection in combobox if opened
+            if (MainForm.Instance.GalaxySettingsForm.IsInitialized)
+                MainForm.Instance.GalaxySettingsForm.Value.InitPlayerHqSectorSelection();
         }
 
         private List<Cluster> GenerateClusters()
