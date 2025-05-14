@@ -12,7 +12,12 @@
             for (int attempts = 0; attempts < 100; attempts++)
             {
                 // Generate using spaced HSL: Vivid colors
-                double hue = _random.NextDouble();           // 0–1
+                double hue;
+                do
+                {
+                    hue = _random.NextDouble(); // 0-1
+                } while (hue >= 0.25 && hue <= 0.42); // Avoid green range (player faction)
+
                 double saturation = 0.7 + _random.NextDouble() * 0.3; // 0.7–1
                 double lightness = 0.4 + _random.NextDouble() * 0.2;  // 0.4–0.6
 

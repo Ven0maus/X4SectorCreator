@@ -127,11 +127,11 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(33, 72);
+            label2.Location = new Point(24, 71);
             label2.Name = "label2";
-            label2.Size = new Size(83, 21);
+            label2.Size = new Size(93, 21);
             label2.TabIndex = 11;
-            label2.Text = "Player HQ:";
+            label2.Text = "PHQ Sector:";
             // 
             // CmbPlayerHq
             // 
