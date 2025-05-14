@@ -87,9 +87,9 @@ namespace X4SectorCreator.Forms
             return sectorMacro;
         }
 
-        public void InitPlayerHqSectorSelection()
+        public void InitPlayerHqSectorSelection(bool? overwrite = null)
         {
-            CmbPlayerHq.Enabled = IsCustomGalaxy;
+            CmbPlayerHq.Enabled = overwrite ?? IsCustomGalaxy;
             if (!CmbPlayerHq.Enabled)
             {
                 CmbPlayerHq.SelectedIndex = -1;
@@ -310,9 +310,11 @@ namespace X4SectorCreator.Forms
                 chkDisableAllStorylines.Enabled = false;
                 chkDisableAllStorylines.Checked = true;
                 txtGalaxyName.Enabled = true;
-                txtGalaxyName.Text = string.Empty;
+                txtGalaxyName.Text = (_originalGalaxyName == "xu_ep2_universe" || _originalGalaxyName == null) ? 
+                    string.Empty : _originalGalaxyName;
             }
 
+            InitPlayerHqSectorSelection(chkCustomGalaxy.Checked);
             EnableSaveButtons(_originalCustomGalaxy != chkCustomGalaxy.Checked);
         }
 
