@@ -18,6 +18,9 @@ namespace X4SectorCreator.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static string GalaxyName { get; set; } = "xu_ep2_universe";
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public static string HeadQuartersSector { get; set; }
+
         private static Dictionary<(int, int), Cluster> _baseGameClusters;
 
         private readonly LazyEvaluated<ProceduralGalaxyForm> _proceduralGalaxyForm = new(() => new ProceduralGalaxyForm(), a => !a.IsDisposed);
@@ -38,10 +41,71 @@ namespace X4SectorCreator.Forms
 
             // Init sector values
             BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
-
+            CmbPlayerHq.DropDown += CmbPlayerHq_DropDown;
+            
             EnableSaveButtons(false);
-
             UpdateOriginals();
+            InitPlayerHqSectorSelection();
+        }
+
+        private void CmbPlayerHq_DropDown(object sender, EventArgs e)
+        {
+            InitPlayerHqSectorSelection();
+        }
+
+        private void SetPlayerHqAsSelectedItem()
+        {
+            if (!string.IsNullOrWhiteSpace(HeadQuartersSector))
+            {
+                foreach (var cluster in MainForm.Instance.AllClusters.Values)
+                {
+                    foreach (var sector in cluster.Sectors)
+                    {
+                        var macro = GetSectorMacro(cluster, sector);
+                        if (HeadQuartersSector == macro)
+                        {
+                            if (CmbPlayerHq.Items.Contains(sector))
+                                CmbPlayerHq.SelectedItem = sector;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        private static string GetSectorMacro(Cluster cluster, Sector sector)
+        {
+            var sectorMacro = $"PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}_macro";
+            if (cluster.IsBaseGame && sector.IsBaseGame)
+            {
+                sectorMacro = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}_macro";
+            }
+            else if (cluster.IsBaseGame)
+            {
+                sectorMacro = $"PREFIX_SE_c{cluster.BaseGameMapping}_s{sector.Id}_macro";
+            }
+            return sectorMacro;
+        }
+
+        public void InitPlayerHqSectorSelection()
+        {
+            CmbPlayerHq.Enabled = IsCustomGalaxy;
+            if (!CmbPlayerHq.Enabled)
+            {
+                CmbPlayerHq.SelectedIndex = -1;
+                CmbPlayerHq.Items.Clear();
+                return;
+            }
+
+            // Setup items
+            var sectors = MainForm.Instance.AllClusters.Values
+                .SelectMany(a => a.Sectors)
+                .Where(a => !a.IsBaseGame);
+            foreach (var sector in sectors)
+                CmbPlayerHq.Items.Add(sector);
+
+            // Setup selection
+            SetPlayerHqAsSelectedItem();
         }
 
         private void UpdateOriginals()
@@ -142,6 +206,11 @@ namespace X4SectorCreator.Forms
             IsCustomGalaxy = chkCustomGalaxy.Checked;
             DisableAllStorylines = chkDisableAllStorylines.Checked;
             BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
+            
+            if (CmbPlayerHq.Enabled != IsCustomGalaxy)
+            {
+                InitPlayerHqSectorSelection();
+            }
 
             // Toggle galaxy mode
             MainForm.Instance.ToggleGalaxyMode(mergedClusters);
