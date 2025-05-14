@@ -14,6 +14,7 @@ namespace X4SectorCreator.Configuration
         public List<Constructionplan> ConstructionPlans { get; set; }
         public VanillaChanges VanillaChanges { get; set; }
         public string GalaxyName { get; set; }
+        public string PlayerHQSector { get; set; }
         public string Version { get; set; }
 
         [JsonIgnore]
