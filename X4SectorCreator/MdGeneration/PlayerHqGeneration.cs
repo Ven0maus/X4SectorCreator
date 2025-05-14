@@ -44,7 +44,7 @@ namespace X4SectorCreator.MdGeneration
                             new XElement("set_value", new XAttribute("name", "$X"), new XAttribute("min", "$HQPosition.x - 150km"), new XAttribute("max", "$HQPosition.x + 150km")),
                             new XElement("set_value", new XAttribute("name", "$Y"), new XAttribute("min", "$HQPosition.y - 10km"), new XAttribute("max", "$HQPosition.y + 10km")),
                             new XElement("set_value", new XAttribute("name", "$Z"), new XAttribute("min", "$HQPosition.z - 150km"), new XAttribute("max", "$HQPosition.z + 150km")),
-                            new XElement("find_sector", new XAttribute("name", "$playersectorstart"), new XAttribute("macro", $"macro.{GalaxySettingsForm.HeadQuartersSector.Replace("PREFIX", modPrefix)}_macro")),
+                            new XElement("find_sector", new XAttribute("name", "$playersectorstart"), new XAttribute("macro", $"macro.{GalaxySettingsForm.HeadQuartersSector.Replace("PREFIX", modPrefix)}")),
                             new XElement("create_station",
                                 new XAttribute("name", "$HQ"),
                                 new XAttribute("macro", "macro.station_pla_headquarters_base_01_macro"),
