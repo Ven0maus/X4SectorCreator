@@ -1,5 +1,6 @@
 ﻿using System.Xml.Linq;
 using X4SectorCreator.Forms;
+using X4SectorCreator.Forms.Galaxy;
 
 namespace X4SectorCreator.MdGeneration
 {
@@ -19,6 +20,12 @@ namespace X4SectorCreator.MdGeneration
 
         private static XElement CreateHQElement(string modPrefix)
         {
+            if (string.IsNullOrWhiteSpace(GalaxySettingsForm.HeadQuartersSector))
+            {
+                // Fall-back
+                ProceduralGalaxyForm.SetPlayerHQSector([.. MainForm.Instance.AllClusters.Values]);
+            }
+
             return new XElement("mdscript",
                 new XAttribute("name", "XFourSectorCreator_HQ_Setup"),
                 new XAttribute(XNamespace.Xmlns + "xsi", "http://www.w3.org/2001/XMLSchema-instance"),

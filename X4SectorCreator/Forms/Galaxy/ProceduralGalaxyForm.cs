@@ -211,7 +211,7 @@ namespace X4SectorCreator.Forms.Galaxy
             _progressResetTimer.Start();
         }
 
-        private static void SetPlayerHQSector(List<Cluster> clusters)
+        public static void SetPlayerHQSector(List<Cluster> clusters)
         {
             // Attempt to find a cluster with only one unowned sector
             // Prefer a sector with only one gate connection (cornered)
