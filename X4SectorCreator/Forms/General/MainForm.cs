@@ -407,7 +407,7 @@ namespace X4SectorCreator
                 .ToArray();
             if (invalidClusters.Length != 0)
             {
-                _ = MessageBox.Show($"Following clusters have sectors that have overlapped placements, please fix these first:\n- " +
+                _ = MessageBox.Show($"Following clusters have sectors that have overlapped or invalid placements, please fix these first:\n- " +
                     string.Join("\n- ", invalidClusters.Select(a => a.Name)));
                 return;
             }

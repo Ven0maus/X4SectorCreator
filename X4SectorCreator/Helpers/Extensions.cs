@@ -374,6 +374,28 @@ namespace X4SectorCreator.Helpers
             return list.Take(1).FirstOrDefault();
         }
 
+        public static T Random<T>(this IEnumerable<T> source, Random random = null)
+        {
+            if (source == null)
+                return default;
+
+            var list = source.ToList();
+            int count = list.Count;
+            if (count == 0)
+                return default;
+
+            random ??= new Random();
+
+            // Partial Fisher-Yates shuffle
+            for (int i = 0; i < 1; i++)
+            {
+                int j = random.Next(i, count); // pick from [i, count)
+                (list[i], list[j]) = (list[j], list[i]);
+            }
+
+            return list.Take(1).First();
+        }
+
         public static T Pick<T>(this T[] array, Random random) => array[random.Next(array.Length)];
     }
 }

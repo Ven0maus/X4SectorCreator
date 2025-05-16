@@ -387,10 +387,7 @@ namespace X4SectorCreator
         private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
         {
             pos = null;
-            foreach (var hex in _baseGameClusters.Values
-                .Concat(_customClusters)
-                .Select(a => a.Hexagon)
-                .Where(a => a != null))
+            foreach (var hex in _hexagons.Values)
             {
                 // Determine if there is a cluster at the position we clicked
                 if (IsPointInPolygon(hex.Points, mousePos))

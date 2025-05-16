@@ -49,7 +49,6 @@ namespace X4SectorCreator.Forms
             [SectorPlacement.TopRight, SectorPlacement.BottomRight, SectorPlacement.MiddleLeft],
             [SectorPlacement.TopLeft, SectorPlacement.BottomRight],
             [SectorPlacement.TopRight, SectorPlacement.BottomLeft],
-            [SectorPlacement.MiddleLeft, SectorPlacement.MiddleRight]
         ];
 
         public SectorForm()
