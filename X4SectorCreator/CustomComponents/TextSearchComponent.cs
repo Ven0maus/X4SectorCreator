@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
+using System.Text;
+using System.Text.RegularExpressions;
 using Timer = System.Windows.Forms.Timer;
 
 namespace X4SectorCreator.CustomComponents
@@ -37,24 +39,62 @@ namespace X4SectorCreator.CustomComponents
 
         }
 
+        protected static string RemoveDiacritics(string text) =>
+            new(text.Normalize(NormalizationForm.FormD)
+                           .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                           .ToArray());
+
         protected static int GetMatchScore(string text, string search)
         {
             if (string.IsNullOrWhiteSpace(text) || string.IsNullOrWhiteSpace(search))
                 return 0;
 
-            text = text.ToLower();
-            search = search.ToLower();
+            // Lowercase and remove diacritics
+            string rawText = RemoveDiacritics(text.ToLowerInvariant());
+            string rawSearch = RemoveDiacritics(search.ToLowerInvariant());
 
-            string normalizedId = NormalizeRegex().Replace(text, "");
-            string tokenizedId = TokenizeRegex().Replace(text, "$1 $2").Replace("_", " ").Replace("-", " ");
+            // Tokenize (split camelCase, _, -), then normalize (remove special chars, diacritics)
+            string tokenized = TokenizeRegex()
+                .Replace(text, "$1 $2")
+                .Replace("_", " ")
+                .Replace("-", " ")
+                .ToLowerInvariant();
 
-            if (text == search) return 100;
-            if (normalizedId.StartsWith(search)) return 90;
-            if (tokenizedId.Contains(search)) return 75;
-            if (normalizedId.Contains(search)) return 60;
+            string normalizedTokenized = NormalizeRegex().Replace(RemoveDiacritics(tokenized), "");
 
-            int distance = LevenshteinDistance(text, search);
-            return distance <= 2 ? 50 - distance * 10 : 0;
+            int score = 0;
+
+            // 1. Exact match
+            if (rawText == rawSearch)
+                return 100;
+
+            // 2. Prefix match
+            if (rawText.StartsWith(rawSearch))
+                score += 50;
+
+            // 3. Tokenized contains search
+            if (normalizedTokenized.Contains(rawSearch))
+                score += 30;
+
+            // 4. Raw contains search
+            if (rawText.Contains(rawSearch))
+                score += 20;
+
+            // 5. Bonus for prefix position in tokenized string
+            int tokenIndex = normalizedTokenized.IndexOf(rawSearch);
+            if (tokenIndex == 0)
+                score += 15;
+            else if (tokenIndex > 0 && tokenIndex <= 10)
+                score += 5;
+
+            // 6. Fuzzy match fallback if score is still low
+            if (score < 40)
+            {
+                int distance = LevenshteinDistance(rawText, rawSearch);
+                score += Math.Max(0, 30 - distance * 10);
+            }
+
+            return score;
         }
 
         private static int LevenshteinDistance(string s, string t)
@@ -93,9 +133,9 @@ namespace X4SectorCreator.CustomComponents
             Dispose();
         }
 
-        [GeneratedRegex(@"[_\-]")]
+        [GeneratedRegex(@"[\W_]+", RegexOptions.Compiled)]
         private static partial Regex NormalizeRegex();
-        [GeneratedRegex(@"([a-z])([A-Z])")]
+        [GeneratedRegex(@"(?<=[a-z0-9])(?=[A-Z])", RegexOptions.Compiled)]
         private static partial Regex TokenizeRegex();
     }
 
@@ -146,17 +186,31 @@ namespace X4SectorCreator.CustomComponents
             _onFiltered.Invoke(FilterItems());
         }
 
+        private readonly Dictionary<(string itemKey, string search), int> _scoreCache = [];
+
         private List<T> FilterItems()
         {
-            // Return all items if empty
-            if (string.IsNullOrWhiteSpace(TextBox.Text))
-                return [.. _items ?? _itemGetter.Invoke()]; // Create new list instance always
+            string search = TextBox.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(search))
+                return [.. (_items ?? _itemGetter.Invoke())]; // Return new list always
 
-            return [.. (_items ?? _itemGetter.Invoke())
-                .Select(item => new
+            search = RemoveDiacritics(search.ToLowerInvariant()); // Normalize once
+
+            var items = _items ?? _itemGetter.Invoke();
+
+            return [.. items
+                .Select(item =>
                 {
-                    Item = item,
-                    Score = GetMatchScore(_filterCriteriaSelector(item), TextBox.Text)
+                    string key = _filterCriteriaSelector(item);
+                    var cacheKey = (key, search);
+
+                    if (!_scoreCache.TryGetValue(cacheKey, out int score))
+                    {
+                        score = GetMatchScore(key, search);
+                        _scoreCache[cacheKey] = score;
+                    }
+
+                    return new { Item = item, Score = score };
                 })
                 .Where(x => x.Score > 0)
                 .OrderByDescending(x => x.Score)
