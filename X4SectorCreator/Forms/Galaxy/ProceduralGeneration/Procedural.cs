@@ -51,7 +51,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration
                 cluster.Sectors.Add(sector);
             }
 
-            cluster.AutoPositionSectors();
+            // Fix sector positioning + offset
+            cluster.AutoPositionSectors(true, Random);
+            foreach (var sector in cluster.Sectors)
+                SectorForm.DetermineSectorOffset(cluster, sector);
 
             return cluster;
         }

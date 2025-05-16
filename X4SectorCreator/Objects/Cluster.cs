@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using X4SectorCreator.Forms;
+using X4SectorCreator.Helpers;
 
 namespace X4SectorCreator.Objects
 {
@@ -31,7 +32,7 @@ namespace X4SectorCreator.Objects
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);
 
-        public void AutoPositionSectors()
+        public void AutoPositionSectors(bool randomize = false, Random random = null)
         {
             int sectorCount = Sectors.Count;
             if (sectorCount <= 1)
@@ -39,7 +40,13 @@ namespace X4SectorCreator.Objects
                 return; // Always centered, placement has no effect
             }
 
-            SectorPlacement[] combination = SectorForm.ValidSectorCombinations.First(a => a.Length == sectorCount);
+            var combinations = SectorForm.ValidSectorCombinations
+                .Where(a => a.Length == sectorCount)
+                .ToArray();
+
+            SectorPlacement[] combination = randomize ? 
+                combinations.Random(random) : combinations.First();
+
             for (int i = 0; i < sectorCount; i++)
             {
                 Sectors[i].Placement = combination[i];
