@@ -28,6 +28,7 @@ namespace X4SectorCreator.Forms
         private bool _originalDisableStoryLins;
         private bool _originalCustomGalaxy;
         private string _originalGalaxyName;
+        private Sector _originalHeadQuartersSector;
 
         public GalaxySettingsForm()
         {
@@ -42,7 +43,7 @@ namespace X4SectorCreator.Forms
             // Init sector values
             BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
             CmbPlayerHq.DropDown += CmbPlayerHq_DropDown;
-            
+
             EnableSaveButtons(false);
             UpdateOriginals();
             InitPlayerHqSectorSelection();
@@ -90,10 +91,11 @@ namespace X4SectorCreator.Forms
         public void InitPlayerHqSectorSelection(bool? overwrite = null)
         {
             CmbPlayerHq.Enabled = overwrite ?? IsCustomGalaxy;
+            CmbPlayerHq.Items.Clear();
+
             if (!CmbPlayerHq.Enabled)
             {
                 CmbPlayerHq.SelectedIndex = -1;
-                CmbPlayerHq.Items.Clear();
                 return;
             }
 
@@ -113,6 +115,7 @@ namespace X4SectorCreator.Forms
             _originalDisableStoryLins = chkDisableAllStorylines.Checked;
             _originalCustomGalaxy = chkCustomGalaxy.Checked;
             _originalGalaxyName = txtGalaxyName.Text;
+            _originalHeadQuartersSector = CmbPlayerHq.SelectedItem as Sector;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -138,6 +141,7 @@ namespace X4SectorCreator.Forms
             if (IsCustomGalaxy == chkCustomGalaxy.Checked)
             {
                 GalaxyName = txtGalaxyName.Text.ToLower();
+                SetHQ();
                 UpdateOriginals();
                 EnableSaveButtons(false);
                 return true;
@@ -206,7 +210,8 @@ namespace X4SectorCreator.Forms
             IsCustomGalaxy = chkCustomGalaxy.Checked;
             DisableAllStorylines = chkDisableAllStorylines.Checked;
             BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
-            
+            SetHQ();
+
             if (CmbPlayerHq.Enabled != IsCustomGalaxy)
             {
                 InitPlayerHqSectorSelection();
@@ -219,6 +224,19 @@ namespace X4SectorCreator.Forms
             EnableSaveButtons(false);
 
             return true;
+        }
+
+        private void SetHQ()
+        {
+            if (CmbPlayerHq.SelectedItem is not Sector hqSector)
+            {
+                HeadQuartersSector = null;
+            }
+            else
+            {
+                var hqCluster = MainForm.Instance.AllClusters.Values.First(a => a.Sectors.Contains(hqSector));
+                HeadQuartersSector = GetSectorMacro(hqCluster, hqSector);
+            }
         }
 
         private static bool ContainsGateConnectionsToBaseGameClusters(out List<(Cluster, Sector, Gate)> invalidClusters)
@@ -310,7 +328,7 @@ namespace X4SectorCreator.Forms
                 chkDisableAllStorylines.Enabled = false;
                 chkDisableAllStorylines.Checked = true;
                 txtGalaxyName.Enabled = true;
-                txtGalaxyName.Text = (_originalGalaxyName == "xu_ep2_universe" || _originalGalaxyName == null) ? 
+                txtGalaxyName.Text = (_originalGalaxyName == "xu_ep2_universe" || _originalGalaxyName == null) ?
                     string.Empty : _originalGalaxyName;
             }
 
@@ -376,6 +394,11 @@ namespace X4SectorCreator.Forms
         private void txtGalaxyName_TextChanged(object sender, EventArgs e)
         {
             EnableSaveButtons(txtGalaxyName.Text != _originalGalaxyName);
+        }
+
+        private void CmbPlayerHq_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            EnableSaveButtons(_originalHeadQuartersSector != CmbPlayerHq.SelectedItem);
         }
     }
 }

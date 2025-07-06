@@ -140,6 +140,7 @@
             CmbPlayerHq.Name = "CmbPlayerHq";
             CmbPlayerHq.Size = new Size(241, 23);
             CmbPlayerHq.TabIndex = 12;
+            CmbPlayerHq.SelectedIndexChanged += CmbPlayerHq_SelectedIndexChanged;
             // 
             // GalaxySettingsForm
             // 
