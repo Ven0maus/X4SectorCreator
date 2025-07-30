@@ -144,6 +144,7 @@ namespace X4SectorCreator
 
         private void BtnSaveSectorMapping_Click(object sender, EventArgs e)
         {
+#if DEBUG
             // Load the JSON as a mutable DOM
             var jsonText = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
             var root = JsonNode.Parse(jsonText)!;
@@ -189,6 +190,12 @@ namespace X4SectorCreator
 
             // Save only modified JSON (with original structure preserved)
             File.WriteAllText(Constants.DataPaths.SectorMappingFilePath, root.ToJsonString(jsonSerializerOptions));
+#endif
+        }
+
+        private void BtnGuide_Click(object sender, EventArgs e)
+        {
+            // TODO
         }
 
         #region Initialization
