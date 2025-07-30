@@ -83,6 +83,24 @@
       }
     },
     {
+      "Name": "Void of Opportunity",
+      "BaseGameMapping": "Cluster_725",
+      "Soundtrack": "music_soundtrack_periphery",
+      "Sectors": [
+        {
+          "Name": "Void of Opportunity",
+          "Owner": "None",
+          "Sunlight": 0.83,
+          "Economy": 0.5,
+          "Security": 0.25
+        }
+      ],
+      "Position": {
+        "X": -2,
+        "Y": -2
+      }
+    },
+    {
       "Name": "Black Hole Sun",
       "BaseGameMapping": "Cluster_06",
       "Soundtrack": "music_soundtrack_argon",
