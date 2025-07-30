@@ -374,6 +374,9 @@ namespace X4SectorCreator
                         return;
                     }
 
+                    if (coordinate == null)
+                        return;
+
                     // Place cluster down at the new position if it is valid
                     _ = MainForm.Instance.AllClusters.Remove((_movingCluster.Position.X, _movingCluster.Position.Y));
                     _movingCluster.Position = new Point(coordinate.Value.x, coordinate.Value.y);
