@@ -64,6 +64,7 @@
             TxtSearch = new TextBox();
             BtnCustomFactions = new Button();
             GenerateModProgressBar = new ProgressBar();
+            BtnSaveSectorMapping = new Button();
             SuspendLayout();
             // 
             // BtnRemoveCluster
@@ -425,11 +426,24 @@
             GenerateModProgressBar.Size = new Size(151, 12);
             GenerateModProgressBar.TabIndex = 53;
             // 
+            // BtnSaveSectorMapping
+            // 
+            BtnSaveSectorMapping.Enabled = false;
+            BtnSaveSectorMapping.Location = new Point(416, 305);
+            BtnSaveSectorMapping.Name = "BtnSaveSectorMapping";
+            BtnSaveSectorMapping.Size = new Size(238, 28);
+            BtnSaveSectorMapping.TabIndex = 54;
+            BtnSaveSectorMapping.Text = "Save Sector Mapping";
+            BtnSaveSectorMapping.UseVisualStyleBackColor = true;
+            BtnSaveSectorMapping.Visible = false;
+            BtnSaveSectorMapping.Click += BtnSaveSectorMapping_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(661, 596);
+            Controls.Add(BtnSaveSectorMapping);
             Controls.Add(GenerateModProgressBar);
             Controls.Add(BtnCustomFactions);
             Controls.Add(TxtSearch);
@@ -513,5 +527,6 @@
         private TextBox TxtSearch;
         private Button BtnCustomFactions;
         private ProgressBar GenerateModProgressBar;
+        private Button BtnSaveSectorMapping;
     }
 }

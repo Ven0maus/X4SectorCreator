@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
@@ -58,6 +59,12 @@ namespace X4SectorCreator
 
             Instance = this;
 
+#if DEBUG
+            // Used to move sectors around and save it to the mapping file (only available in debug mode)
+            BtnSaveSectorMapping.Visible = true;
+            BtnSaveSectorMapping.Enabled = true;
+#endif
+
             FormClosing += MainForm_FormClosing;
 
             TxtSearch.EnableTextSearch(() => AllClusters.Values.ToList(), a => a.Name, ApplyFilter);
@@ -100,7 +107,7 @@ namespace X4SectorCreator
 
         public void SetProceduralGalaxy(IEnumerable<Cluster> allClusters)
         {
-            Reset(false, resetGalaxyType: false, resetStatics : false);
+            Reset(false, resetGalaxyType: false, resetStatics: false);
             AllClusters = allClusters.ToDictionary(a => (a.Position.X, a.Position.Y), a => a);
         }
 
@@ -133,6 +140,55 @@ namespace X4SectorCreator
                 ClustersListBox.SelectedIndex = 0;
             else
                 ClustersListBox.SelectedIndex = -1;
+        }
+
+        private void BtnSaveSectorMapping_Click(object sender, EventArgs e)
+        {
+            // Load the JSON as a mutable DOM
+            var jsonText = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
+            var root = JsonNode.Parse(jsonText)!;
+
+            // Navigate to clusters
+            var clusters = root["Clusters"]?.AsArray();
+            if (clusters == null) return;
+
+            foreach (var clusterNode in clusters)
+            {
+                var baseGameMapping = clusterNode?["BaseGameMapping"]?.ToString();
+                if (string.IsNullOrEmpty(baseGameMapping)) continue;
+
+                // Find corresponding runtime cluster
+                var match = AllClusters.Values.FirstOrDefault(a => a.IsBaseGame && a.BaseGameMapping == baseGameMapping);
+                if (match == null) continue;
+
+                var point = clusterNode["Position"].Deserialize<Point>();
+                if (point.X != match.Position.X || point.Y != match.Position.Y)
+                {
+                    // Update only the Position field
+                    var position = new JsonObject
+                    {
+                        ["X"] = match.Position.X,
+                        ["Y"] = match.Position.Y
+                    };
+
+                    clusterNode["Position"] = position;
+
+                    Debug.WriteLine($"Cluster \"{match.Name}\" position updated.");
+                }
+            }
+
+            // Use custom one with custom encoder
+            var jsonSerializerOptions = new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                PropertyNameCaseInsensitive = true,
+                Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter(), new Configuration.Converters.ColorJsonConverter() },
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+
+            // Save only modified JSON (with original structure preserved)
+            File.WriteAllText(Constants.DataPaths.SectorMappingFilePath, root.ToJsonString(jsonSerializerOptions));
         }
 
         #region Initialization
@@ -202,14 +258,14 @@ namespace X4SectorCreator
             {
                 // Find matching cluster
                 var cluster = allClusters.Values
-                    .FirstOrDefault(a => a.IsBaseGame && 
+                    .FirstOrDefault(a => a.IsBaseGame &&
                         a.BaseGameMapping.Equals(refCluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
                 if (cluster != null)
                 {
                     foreach (var refSector in refCluster.Sectors)
                     {
                         // Find matching sector
-                        var sector = cluster.Sectors.FirstOrDefault(a => a.IsBaseGame && 
+                        var sector = cluster.Sectors.FirstOrDefault(a => a.IsBaseGame &&
                             a.BaseGameMapping.Equals(refSector.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
                         if (sector != null)
                         {

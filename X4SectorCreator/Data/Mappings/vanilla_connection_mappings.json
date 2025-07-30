@@ -1332,6 +1332,63 @@
     },
     {
       "Source": {
+        "Name": "ClusterGate006To725",
+        "Path": "../Cluster_06_connection/Cluster_06_Sector002_connection/Zone003_Cluster_06_Sector002_connection/connection_ClusterGate006To725",
+        "Cluster": "Cluster_06_connection",
+        "Sector": "Cluster_06_Sector002_connection",
+        "Zone": "Zone003_Cluster_06_Sector002_connection",
+        "Gate": "Cluster_06_connection"
+      },
+      "Destination": {
+        "Name": "destination",
+        "Path": "../../../../../Cluster_725_connection/Cluster_725_Sector001_connection/Zone001_Cluster_725_Sector001_connection/connection_ClusterGate725To006",
+        "Cluster": "Cluster_725_connection",
+        "Sector": "Cluster_725_Sector001_connection",
+        "Zone": "Zone001_Cluster_725_Sector001_connection",
+        "Gate": "Cluster_725_connection"
+      },
+      "IsHighway": false
+    },
+    {
+      "Source": {
+        "Name": "ClusterGate005To725",
+        "Path": "../Cluster_05_connection/Cluster_05_Sector001_connection/Zone004_Cluster_05_Sector001_connection/connection_ClusterGate005To725",
+        "Cluster": "Cluster_05_connection",
+        "Sector": "Cluster_05_Sector001_connection",
+        "Zone": "Zone004_Cluster_05_Sector001_connection",
+        "Gate": "Cluster_05_connection"
+      },
+      "Destination": {
+        "Name": "destination",
+        "Path": "../../../../../Cluster_725_connection/Cluster_725_Sector001_connection/Zone002_Cluster_725_Sector001_connection/connection_ClusterGate725To005",
+        "Cluster": "Cluster_725_connection",
+        "Sector": "Cluster_725_Sector001_connection",
+        "Zone": "Zone002_Cluster_725_Sector001_connection",
+        "Gate": "Cluster_725_connection"
+      },
+      "IsHighway": false
+    },
+    {
+      "Source": {
+        "Name": "ClusterGate024To725",
+        "Path": "../Cluster_24_connection/Cluster_24_Sector001_connection/Zone001_Cluster_24_Sector001_connection/connection_ClusterGate024To725",
+        "Cluster": "Cluster_24_connection",
+        "Sector": "Cluster_24_Sector001_connection",
+        "Zone": "Zone001_Cluster_24_Sector001_connection",
+        "Gate": "Cluster_24_connection"
+      },
+      "Destination": {
+        "Name": "destination",
+        "Path": "../../../../../Cluster_725_connection/Cluster_725_Sector001_connection/Zone005_Cluster_725_Sector001_connection/connection_ClusterGate725To024",
+        "Cluster": "Cluster_725_connection",
+        "Sector": "Cluster_725_Sector001_connection",
+        "Zone": "Zone005_Cluster_725_Sector001_connection",
+        "Gate": "Cluster_725_connection"
+      },
+      "IsHighway": false
+    },
+    {
+      "Source": {
         "Name": "ClusterGate401To402",
         "Path": "../Cluster_401_connection/Cluster_401_Sector001_connection/Zone002_Cluster_401_Sector001_connection/connection_ClusterGate401To402",
         "Cluster": "Cluster_401_connection",
@@ -4264,10 +4321,21 @@
       "ZoneName": "Zone001_Cluster_05_Sector001_connection"
     },
     {
+      "GatePosition": {
+        "X": -15411,
+        "Y": -40947
+      },
       "ZonePosition": {
         "X": -118115,
         "Y": -103207
       },
+      "Rotation": {
+        "X": 3,
+        "Y": 1,
+        "Z": 3
+      },
+      "GateType": "props_gates_anc_gate_macro",
+      "GateName": "connection_ClusterGate005To725",
       "ZoneName": "Zone004_Cluster_05_Sector001_connection"
     },
     {
@@ -4377,10 +4445,21 @@
       "ZoneName": "Zone002_Cluster_06_Sector002_connection"
     },
     {
+      "GatePosition": {
+        "X": -47436,
+        "Y": -60095
+      },
       "ZonePosition": {
         "X": 113094,
         "Y": -85379
       },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "GateType": "props_gates_anc_gate_macro",
+      "GateName": "connection_ClusterGate006To725",
       "ZoneName": "Zone003_Cluster_06_Sector002_connection"
     },
     {
@@ -5620,10 +5699,21 @@
       "ZoneName": "Zone004_Cluster_24_Sector001_connection"
     },
     {
+      "GatePosition": {
+        "X": -5459,
+        "Y": 40631
+      },
       "ZonePosition": {
         "X": 125914,
         "Y": 138761
       },
+      "Rotation": {
+        "X": 3,
+        "Y": 0,
+        "Z": 3
+      },
+      "GateType": "props_gates_anc_gate_macro",
+      "GateName": "connection_ClusterGate024To725",
       "ZoneName": "Zone001_Cluster_24_Sector001_connection"
     },
     {
@@ -8225,6 +8315,96 @@
       "GateType": "props_gates_anc_gate_macro",
       "GateName": "connection_ClusterGate724To",
       "ZoneName": "Zone005_Cluster_724_Sector001_connection"
+    },
+    {
+      "GatePosition": {
+        "X": 40436,
+        "Y": 37095
+      },
+      "ZonePosition": {
+        "X": 86,
+        "Y": 115545
+      },
+      "Rotation": {
+        "X": 3,
+        "Y": -1,
+        "Z": 3
+      },
+      "GateType": "props_gates_anc_gate_macro",
+      "GateName": "connection_ClusterGate725To006",
+      "ZoneName": "Zone001_Cluster_725_Sector001_connection"
+    },
+    {
+      "GatePosition": {
+        "X": 40436,
+        "Y": 37095
+      },
+      "ZonePosition": {
+        "X": 137328,
+        "Y": 176
+      },
+      "Rotation": {
+        "X": 3,
+        "Y": -1,
+        "Z": 3
+      },
+      "GateType": "props_gates_anc_gate_macro",
+      "GateName": "connection_ClusterGate725To005",
+      "ZoneName": "Zone002_Cluster_725_Sector001_connection"
+    },
+    {
+      "GatePosition": {
+        "X": -5600,
+        "Y": 24010
+      },
+      "ZonePosition": {
+        "X": 156890,
+        "Y": -124320
+      },
+      "Rotation": {
+        "X": 3,
+        "Y": -1,
+        "Z": 3
+      },
+      "GateType": "props_gates_anc_gate_macro",
+      "GateName": "connection_ClusterGate725To808",
+      "ZoneName": "Zone003_Cluster_725_Sector001_connection"
+    },
+    {
+      "GatePosition": {
+        "X": 0,
+        "Y": 0
+      },
+      "ZonePosition": {
+        "X": -100000,
+        "Y": 55000
+      },
+      "Rotation": {
+        "X": 3,
+        "Y": 1,
+        "Z": 3
+      },
+      "GateType": "props_gates_anc_gate_macro",
+      "GateName": "connection_ClusterGate725To740",
+      "ZoneName": "Zone004_Cluster_725_Sector001_connection"
+    },
+    {
+      "GatePosition": {
+        "X": -136,
+        "Y": -31095
+      },
+      "ZonePosition": {
+        "X": -1500,
+        "Y": -126970
+      },
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "GateType": "props_gates_anc_gate_macro",
+      "GateName": "connection_ClusterGate725To024",
+      "ZoneName": "Zone005_Cluster_725_Sector001_connection"
     },
     {
       "GatePosition": {
