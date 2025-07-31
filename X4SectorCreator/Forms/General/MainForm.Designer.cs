@@ -445,7 +445,7 @@
             BtnGuide.Name = "BtnGuide";
             BtnGuide.Size = new Size(156, 31);
             BtnGuide.TabIndex = 55;
-            BtnGuide.Text = "Read Manual / Guide";
+            BtnGuide.Text = "Tutorial / Guide";
             BtnGuide.UseVisualStyleBackColor = true;
             BtnGuide.Click += BtnGuide_Click;
             // 

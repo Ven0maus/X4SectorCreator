@@ -2,7 +2,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+#if DEBUG
 using System.Text.Json.Nodes;
+#endif
 using System.Text.RegularExpressions;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
