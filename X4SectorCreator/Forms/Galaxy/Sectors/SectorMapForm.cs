@@ -65,7 +65,7 @@ namespace X4SectorCreator
         private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
         private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
 
-        private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
+        private readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
         {
             {
                 "Resources", new List<object>
@@ -189,9 +189,11 @@ namespace X4SectorCreator
         private void SearchRender(List<Sector> data)
         {
             _visibleSectorsFromSearch.Clear();
-            foreach (var item in data)
-                _visibleSectorsFromSearch.Add(item);
-
+            if (!string.IsNullOrEmpty(TxtSearch.Text))
+            {
+                foreach (var item in data)
+                    _visibleSectorsFromSearch.Add(item);
+            }
             Invalidate();
         }
 
@@ -221,6 +223,10 @@ namespace X4SectorCreator
                 _legend["Custom Factions"] = new List<object>(FactionsForm.AllCustomFactions.Values);
                 foreach (Faction faction in _legend["Custom Factions"].Cast<Faction>())
                     LegendTree.ImageList.Images.Add(faction.Id, GetTintFromCache(regionImage, faction.Color));
+            }
+            else
+            {
+                _legend.Remove("Custom Factions");
             }
 
             // Don't show vanilla, if no sector contains vanilla factions
@@ -803,7 +809,9 @@ namespace X4SectorCreator
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
 
             // Each icon is rendered in the cluster or sector bottom right corner
-            foreach (var group in iconDatas.GroupBy(a => a.Sector))
+            foreach (var group in iconDatas
+                .Where(a => IsDlcClusterEnabled(a.Cluster))
+                .GroupBy(a => a.Sector))
             {
                 if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(group.Key))
                     continue;
@@ -990,6 +998,12 @@ namespace X4SectorCreator
 
             foreach (Cluster cluster in relevantClusters)
             {
+                // Check if the dlc is selected
+                if (!IsDlcClusterEnabled(cluster))
+                {
+                    continue;
+                }
+
                 int sectorIndex = 0;
                 foreach (Sector sector in cluster.Sectors)
                 {
