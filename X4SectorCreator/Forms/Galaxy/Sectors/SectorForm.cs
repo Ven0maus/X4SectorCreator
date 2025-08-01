@@ -157,7 +157,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
-            string name = TxtName.Text;
+            string name = TxtName.Text.Trim();
             if (string.IsNullOrWhiteSpace(name))
             {
                 _ = MessageBox.Show("Please select a valid (non empty / non whitespace) name.");
@@ -169,13 +169,19 @@ namespace X4SectorCreator.Forms
             {
                 foreach (Sector sector in cluster.Sectors)
                 {
-                    // Skip the one we are modifying
-                    if (Sector != null && Sector.Name.Equals(sector.Name, StringComparison.OrdinalIgnoreCase))
+                    bool invalidName = false;
+                    if (Sector != null)
                     {
-                        continue;
+                        // Check in case we are editing a sector
+                        invalidName = Sector != sector && sector.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
+                    }
+                    else
+                    {
+                        // Check in case we are creating a sector
+                        invalidName = sector.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
                     }
 
-                    if (sector.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                    if (invalidName)
                     {
                         _ = MessageBox.Show($"A sector with the name \"{name}\" already exists in cluster \"{cluster.Name}\", please choose another name.");
                         return;
