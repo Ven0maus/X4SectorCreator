@@ -65,7 +65,7 @@ namespace X4SectorCreator
         private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
         private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
 
-        private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
+        private readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
         {
             {
                 "Resources", new List<object>
