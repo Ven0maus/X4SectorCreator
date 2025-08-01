@@ -803,7 +803,9 @@ namespace X4SectorCreator
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
 
             // Each icon is rendered in the cluster or sector bottom right corner
-            foreach (var group in iconDatas.GroupBy(a => a.Sector))
+            foreach (var group in iconDatas
+                .Where(a => IsDlcClusterEnabled(a.Cluster))
+                .GroupBy(a => a.Sector))
             {
                 if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(group.Key))
                     continue;
@@ -990,6 +992,12 @@ namespace X4SectorCreator
 
             foreach (Cluster cluster in relevantClusters)
             {
+                // Check if the dlc is selected
+                if (!IsDlcClusterEnabled(cluster))
+                {
+                    continue;
+                }
+
                 int sectorIndex = 0;
                 foreach (Sector sector in cluster.Sectors)
                 {
