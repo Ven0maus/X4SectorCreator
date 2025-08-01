@@ -189,9 +189,11 @@ namespace X4SectorCreator
         private void SearchRender(List<Sector> data)
         {
             _visibleSectorsFromSearch.Clear();
-            foreach (var item in data)
-                _visibleSectorsFromSearch.Add(item);
-
+            if (!string.IsNullOrEmpty(TxtSearch.Text))
+            {
+                foreach (var item in data)
+                    _visibleSectorsFromSearch.Add(item);
+            }
             Invalidate();
         }
 
