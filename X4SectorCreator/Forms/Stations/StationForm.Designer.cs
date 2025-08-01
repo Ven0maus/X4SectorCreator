@@ -51,6 +51,7 @@
             CmbConstructionPlan = new ComboBox();
             BtnViewConstructionPlans = new Button();
             label11 = new Label();
+            label12 = new Label();
             ((System.ComponentModel.ISupportInitialize)SectorHexagon).BeginInit();
             SuspendLayout();
             // 
@@ -68,7 +69,7 @@
             // 
             cmbStationType.FormattingEnabled = true;
             cmbStationType.Items.AddRange(new object[] { "defence", "equipmentdock", "shipyard", "tradestation", "wharf", "piratebase", "piratedock", "freeport" });
-            cmbStationType.Location = new Point(112, 54);
+            cmbStationType.Location = new Point(112, 67);
             cmbStationType.Name = "cmbStationType";
             cmbStationType.Size = new Size(158, 23);
             cmbStationType.TabIndex = 1;
@@ -77,7 +78,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 54);
+            label1.Location = new Point(12, 67);
             label1.Name = "label1";
             label1.Size = new Size(97, 21);
             label1.TabIndex = 2;
@@ -87,7 +88,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(47, 83);
+            label2.Location = new Point(47, 96);
             label2.Name = "label2";
             label2.Size = new Size(62, 21);
             label2.TabIndex = 4;
@@ -96,7 +97,7 @@
             // cmbFaction
             // 
             cmbFaction.FormattingEnabled = true;
-            cmbFaction.Location = new Point(112, 83);
+            cmbFaction.Location = new Point(112, 96);
             cmbFaction.Name = "cmbFaction";
             cmbFaction.Size = new Size(158, 23);
             cmbFaction.TabIndex = 3;
@@ -121,7 +122,7 @@
             // 
             // txtPosition
             // 
-            txtPosition.Location = new Point(112, 214);
+            txtPosition.Location = new Point(112, 227);
             txtPosition.Name = "txtPosition";
             txtPosition.ReadOnly = true;
             txtPosition.Size = new Size(158, 23);
@@ -131,7 +132,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(41, 214);
+            label3.Location = new Point(41, 227);
             label3.Name = "label3";
             label3.Size = new Size(68, 21);
             label3.TabIndex = 8;
@@ -141,7 +142,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(52, 246);
+            label4.Location = new Point(52, 259);
             label4.Name = "label4";
             label4.Size = new Size(57, 21);
             label4.TabIndex = 10;
@@ -149,7 +150,7 @@
             // 
             // txtSector
             // 
-            txtSector.Location = new Point(112, 246);
+            txtSector.Location = new Point(112, 259);
             txtSector.Name = "txtSector";
             txtSector.ReadOnly = true;
             txtSector.Size = new Size(158, 23);
@@ -159,7 +160,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(54, 23);
+            label5.Location = new Point(54, 36);
             label5.Name = "label5";
             label5.Size = new Size(55, 21);
             label5.TabIndex = 12;
@@ -167,7 +168,7 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(112, 25);
+            txtName.Location = new Point(112, 38);
             txtName.Name = "txtName";
             txtName.Size = new Size(158, 23);
             txtName.TabIndex = 11;
@@ -176,7 +177,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(63, 185);
+            label6.Location = new Point(63, 198);
             label6.Name = "label6";
             label6.Size = new Size(46, 21);
             label6.TabIndex = 14;
@@ -185,7 +186,7 @@
             // cmbRace
             // 
             cmbRace.FormattingEnabled = true;
-            cmbRace.Location = new Point(112, 185);
+            cmbRace.Location = new Point(112, 198);
             cmbRace.Name = "cmbRace";
             cmbRace.Size = new Size(158, 23);
             cmbRace.TabIndex = 13;
@@ -194,7 +195,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(47, 133);
+            label7.Location = new Point(47, 146);
             label7.Name = "label7";
             label7.Size = new Size(60, 21);
             label7.TabIndex = 16;
@@ -203,14 +204,14 @@
             // cmbOwner
             // 
             cmbOwner.FormattingEnabled = true;
-            cmbOwner.Location = new Point(112, 133);
+            cmbOwner.Location = new Point(112, 146);
             cmbOwner.Name = "cmbOwner";
             cmbOwner.Size = new Size(158, 23);
             cmbOwner.TabIndex = 15;
             // 
             // label8
             // 
-            label8.Location = new Point(65, 109);
+            label8.Location = new Point(65, 122);
             label8.Name = "label8";
             label8.Size = new Size(205, 21);
             label8.TabIndex = 17;
@@ -218,7 +219,7 @@
             // 
             // label9
             // 
-            label9.Location = new Point(87, 159);
+            label9.Location = new Point(87, 172);
             label9.Name = "label9";
             label9.Size = new Size(183, 19);
             label9.TabIndex = 18;
@@ -263,11 +264,20 @@
             label11.Text = "(leave as 'None' to use vanilla stations)";
             label11.TextAlign = ContentAlignment.TopCenter;
             // 
+            // label12
+            // 
+            label12.Location = new Point(3, 3);
+            label12.Name = "label12";
+            label12.Size = new Size(267, 32);
+            label12.TabIndex = 23;
+            label12.Text = "(Note: If you don't see the station in game, check if the faction actually has this type of blueprint.)";
+            // 
             // StationForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(582, 391);
+            Controls.Add(label12);
             Controls.Add(label11);
             Controls.Add(BtnViewConstructionPlans);
             Controls.Add(CmbConstructionPlan);
@@ -327,5 +337,6 @@
         private Button BtnViewConstructionPlans;
         private Label label11;
         internal ComboBox CmbConstructionPlan;
+        private Label label12;
     }
 }

@@ -76,7 +76,7 @@ namespace X4SectorCreator.XmlGeneration
                                     new XAttribute("class", $"{region.Definition.BoundaryType}"),
                                     new XElement("size",
                                         new XAttribute("r", region.BoundaryRadius),
-                                        new XAttribute("linear", region.BoundaryLinear)
+                                        region.Definition.BoundaryType.Equals("Sphere", StringComparison.OrdinalIgnoreCase) ? null : new XAttribute("linear", region.BoundaryLinear)
                                     )
                                 ),
                                 new XElement("falloff",

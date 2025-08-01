@@ -65,7 +65,7 @@ namespace X4SectorCreator
         private readonly Dictionary<Color, Image> cachedRegionImagesLarge = [];
         private readonly Dictionary<Color, Image> cachedRegionImagesSmall = [];
 
-        private static readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
+        private readonly Dictionary<string, List<object>> _legend = new(StringComparer.OrdinalIgnoreCase)
         {
             {
                 "Resources", new List<object>
@@ -189,10 +189,22 @@ namespace X4SectorCreator
         private void SearchRender(List<Sector> data)
         {
             _visibleSectorsFromSearch.Clear();
-            foreach (var item in data)
-                _visibleSectorsFromSearch.Add(item);
-
+            if (!string.IsNullOrEmpty(TxtSearch.Text))
+            {
+                foreach (var item in data)
+                    _visibleSectorsFromSearch.Add(item);
+            }
             Invalidate();
+        }
+
+        private static readonly Dictionary<Image, Dictionary<Color, Image>> _tintCache = [];
+        private static Image GetTintFromCache(Image image, Color color)
+        {
+            if (!_tintCache.TryGetValue(image, out var cache))
+                _tintCache[image] = cache = [];
+            if (!cache.TryGetValue(color, out var value))
+                cache[color] = value = image.CopyAsTint(color);
+            return value;
         }
 
         private void SetupLegendTree()
@@ -210,7 +222,11 @@ namespace X4SectorCreator
             {
                 _legend["Custom Factions"] = new List<object>(FactionsForm.AllCustomFactions.Values);
                 foreach (Faction faction in _legend["Custom Factions"].Cast<Faction>())
-                    LegendTree.ImageList.Images.Add(faction.Id, regionImage.CopyAsTint(faction.Color));
+                    LegendTree.ImageList.Images.Add(faction.Id, GetTintFromCache(regionImage, faction.Color));
+            }
+            else
+            {
+                _legend.Remove("Custom Factions");
             }
 
             // Don't show vanilla, if no sector contains vanilla factions
@@ -221,14 +237,14 @@ namespace X4SectorCreator
             foreach (var resource in _legend["resources"])
             {
                 var (name, color) = ((string name, Color color))resource;
-                LegendTree.ImageList.Images.Add(name, regionImage.CopyAsTint(color));
+                LegendTree.ImageList.Images.Add(name, GetTintFromCache(regionImage, color));
             }
             if (_legend.TryGetValue("factions", out var factions))
             {
                 foreach (var faction in factions)
                 {
                     var (name, colorHex) = ((string, string))faction;
-                    LegendTree.ImageList.Images.Add(name, regionImage.CopyAsTint(colorHex.HexToColor()));
+                    LegendTree.ImageList.Images.Add(name, GetTintFromCache(regionImage, colorHex.HexToColor()));
                 }
             }
             LegendTree.ImageList.Images.Add("Faction Logic Disabled", GetIconFromStore("faction_logic_disabled"));
@@ -374,12 +390,15 @@ namespace X4SectorCreator
                         return;
                     }
 
+                    if (coordinate == null)
+                        return;
+
                     // Place cluster down at the new position if it is valid
                     _ = MainForm.Instance.AllClusters.Remove((_movingCluster.Position.X, _movingCluster.Position.Y));
                     _movingCluster.Position = new Point(coordinate.Value.x, coordinate.Value.y);
                     MainForm.Instance.AllClusters[coordinate.Value] = _movingCluster;
                     _movingCluster = null;
-                    Reset();
+                    Reset(false);
                 }
             }
         }
@@ -403,7 +422,7 @@ namespace X4SectorCreator
             return null;
         }
 
-        public void Reset()
+        public void Reset(bool resetLegendTree = true)
         {
             _movingCluster = null;
             _baseGameClusters = MainForm.Instance.AllClusters
@@ -429,7 +448,9 @@ namespace X4SectorCreator
                 _rows = ((int)((Math.Max(Math.Abs(allClusters.Max(b => b.Position.Y)), Math.Abs(allClusters.Min(b => b.Position.Y))) + (_minExpansionRoom / 2)) * 1.5f)) + 1;
             }
 
-            SetupLegendTree();
+            if (resetLegendTree)
+                SetupLegendTree();
+
             GenerateHexagons();
             Invalidate();
         }
@@ -788,7 +809,9 @@ namespace X4SectorCreator
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
 
             // Each icon is rendered in the cluster or sector bottom right corner
-            foreach (var group in iconDatas.GroupBy(a => a.Sector))
+            foreach (var group in iconDatas
+                .Where(a => IsDlcClusterEnabled(a.Cluster))
+                .GroupBy(a => a.Sector))
             {
                 if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(group.Key))
                     continue;
@@ -833,7 +856,7 @@ namespace X4SectorCreator
 
                     // Draw the resized icon at a specific position on the form (x, y)
                     var iconToUse = cluster.Sectors.Count == 1 ? icon.ImageLarge : icon.ImageSmall;
-                    e.Graphics.DrawImage(iconToUse, pos.X, pos.Y);
+                    e.Graphics.DrawImageUnscaled(iconToUse, new Point((int)pos.X, (int)pos.Y));
                     processed++;
 
                     if (!string.IsNullOrWhiteSpace(icon.Yield))
@@ -975,6 +998,12 @@ namespace X4SectorCreator
 
             foreach (Cluster cluster in relevantClusters)
             {
+                // Check if the dlc is selected
+                if (!IsDlcClusterEnabled(cluster))
+                {
+                    continue;
+                }
+
                 int sectorIndex = 0;
                 foreach (Sector sector in cluster.Sectors)
                 {
@@ -1075,9 +1104,11 @@ namespace X4SectorCreator
         {
             // First step render non existant hexagons
             Color nonExistantHexColor = "#121212".HexToColor();
+            using SolidBrush mainBrush = new(Color.Black);
+            using Pen mainPen = new(nonExistantHexColor, 4);
             foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
             {
-                RenderNonSectorGrid(e, nonExistantHexColor, hex);
+                RenderNonSectorGrid(e, mainBrush, mainPen, nonExistantHexColor, hex);
             }
 
             // Next step render the game clusters on top
@@ -1136,7 +1167,7 @@ namespace X4SectorCreator
             }
         }
 
-        private void RenderNonSectorGrid(PaintEventArgs e, Color nonExistantHexColor, KeyValuePair<(int, int), Hexagon> hex)
+        private void RenderNonSectorGrid(PaintEventArgs e, SolidBrush mainBrush, Pen mainPen, Color nonExistantHexColor, KeyValuePair<(int, int), Hexagon> hex)
         {
             // Render each non-existant hex first
             if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) ||
@@ -1145,8 +1176,6 @@ namespace X4SectorCreator
                 (!chkShowCustomSectors.Checked && !cluster.IsBaseGame) ||
                 _visibleSectorsFromSearch.Count > 0 && cluster.Sectors.Any(a => !_visibleSectorsFromSearch.Contains(a)))
             {
-                using SolidBrush mainBrush = new(Color.Black);
-                using Pen mainPen = new(nonExistantHexColor, 4);
                 // Fill hex
                 e.Graphics.FillPolygon(mainBrush, hex.Value.Points);
                 // Draw edges

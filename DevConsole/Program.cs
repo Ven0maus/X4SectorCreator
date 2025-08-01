@@ -1,4 +1,6 @@
 ﻿using DevConsole.Extractors;
+using DevConsole.PatchHelpers;
+using X4SectorCreator.Configuration;
 
 namespace DevConsole
 {
@@ -12,6 +14,7 @@ namespace DevConsole
 
         private static void Main()
         {
+            /*
             Console.WriteLine("Enter clusters.xml directory path: ");
             var path = Console.ReadLine();
             var clustersPath = Path.Combine(path, "clusters.xml");
@@ -20,16 +23,14 @@ namespace DevConsole
             {
                 RegionExtractor.ExtractRegions(clustersPath, regionDefinitionsPath);
             }
-
-            /*
-            MapPatcher.Patch();
-            return;
+            */
+            
+            //MapPatcher.Patch();
 
             EnsureDirectoriesExist();
 
             // Vanilla gate connection mappings
             VanillaGateConnectionParser.GenerateGateConnectionMappings(_readPath, _resultsPath);
-            */
         }
 
         private static void EnsureDirectoriesExist()
