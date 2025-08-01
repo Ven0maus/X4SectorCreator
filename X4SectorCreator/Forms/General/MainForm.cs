@@ -36,6 +36,7 @@ namespace X4SectorCreator
         private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<StationForm> _stationForm = new(() => new StationForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ObjectOverviewForm> _objectOverviewForm = new(() => new ObjectOverviewForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<TutorialVideoForm> _tutorialVideoForm = new(() => new TutorialVideoForm(), a => !a.IsDisposed);
         /* END OF FORMS */
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -197,7 +198,7 @@ namespace X4SectorCreator
 
         private void BtnGuide_Click(object sender, EventArgs e)
         {
-            // TODO
+            _tutorialVideoForm.Value.Show();
         }
 
         #region Initialization
