@@ -29,23 +29,35 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
-            string name = TxtName.Text;
+            string name = TxtName.Text.Trim();
             if (string.IsNullOrWhiteSpace(name))
             {
                 _ = MessageBox.Show("Please select a valid (non empty / non whitespace) name.");
                 return;
             }
 
-            // Check if name already exists
-            if (MainForm.Instance.AllClusters.Values.Any(a =>
+            // Check if name already exists in cluster or sectors
+            foreach (var cluster in MainForm.Instance.AllClusters.Values.OrderBy(a => a.Name))
             {
-                // Skip the cluster we're updating
-                return (Cluster == null || !Cluster.Name.Equals(a.Name, StringComparison.OrdinalIgnoreCase))
-                    && a.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
-            }))
-            {
-                _ = MessageBox.Show($"A cluster with the name \"{name}\" already exists, please choose another name.");
-                return;
+                bool invalidName = false;
+                if (Cluster != null)
+                {
+                    // Check in case we are editing a cluster
+                    invalidName = Cluster != cluster && (cluster.Name.Equals(name, StringComparison.OrdinalIgnoreCase) ||
+                        cluster.Sectors.Any(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase)));
+                }
+                else
+                {
+                    // Check in case we are creating a cluster
+                    invalidName = cluster.Name.Equals(name, StringComparison.OrdinalIgnoreCase) ||
+                        cluster.Sectors.Any(a => a.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                }
+
+                if (invalidName)
+                {
+                    _ = MessageBox.Show($"A cluster or sector with the name \"{name}\" already exists in cluster \"{cluster.Name}\", please choose another name.");
+                    return;
+                }
             }
 
             string location = TxtLocation.Text;
