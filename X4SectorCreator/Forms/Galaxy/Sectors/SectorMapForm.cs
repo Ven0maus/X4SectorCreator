@@ -222,6 +222,10 @@ namespace X4SectorCreator
                 foreach (Faction faction in _legend["Custom Factions"].Cast<Faction>())
                     LegendTree.ImageList.Images.Add(faction.Id, GetTintFromCache(regionImage, faction.Color));
             }
+            else
+            {
+                _legend.Remove("Custom Factions");
+            }
 
             // Don't show vanilla, if no sector contains vanilla factions
             if (MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).All(a => string.IsNullOrWhiteSpace(a.Owner)))
