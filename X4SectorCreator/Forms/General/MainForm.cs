@@ -1792,6 +1792,7 @@ namespace X4SectorCreator
         {
             // Collect target gate data
             Gate targetGate = GatesListBox.SelectedItem as Gate;
+            if (targetGate == null) return;
             if (targetGate.IsBaseGame)
             {
                 _ = MessageBox.Show("Editing vanilla gates is not supported, they can only be deleted.");
