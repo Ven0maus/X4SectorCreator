@@ -281,6 +281,7 @@ namespace X4SectorCreator
                         {
                             foreach (var region in refSector.Regions)
                             {
+                                region.IsBaseGame = true;
                                 sector.Regions.Add(region);
                             }
                         }

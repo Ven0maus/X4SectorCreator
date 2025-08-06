@@ -13,7 +13,7 @@ namespace X4SectorCreator.Objects
         public Point Position { get; set; }
 
         [JsonIgnore]
-        public bool IsBaseGame => string.IsNullOrWhiteSpace(BoundaryRadius);
+        public bool IsBaseGame { get; set; } = false;
 
         public object Clone()
         {
