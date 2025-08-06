@@ -81,7 +81,7 @@
             MapOptionsListBox.CheckOnClick = true;
             MapOptionsListBox.ForeColor = Color.White;
             MapOptionsListBox.FormattingEnabled = true;
-            MapOptionsListBox.Items.AddRange(new object[] { "Show Vanilla Sectors", "Show Custom Sectors", "Show Connections", "Show Coordinates", "Show Regions", "Show Stations" });
+            MapOptionsListBox.Items.AddRange(new object[] { "Show Vanilla Sectors", "Show Custom Sectors", "Show Connections", "Show Coordinates", "Show Vanilla Regions", "Show Custom Regions", "Visualize Regions", "Show Stations" });
             MapOptionsListBox.Location = new Point(3, 27);
             MapOptionsListBox.Name = "MapOptionsListBox";
             MapOptionsListBox.ScrollAlwaysVisible = true;
