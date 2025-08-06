@@ -279,6 +279,7 @@ namespace X4SectorCreator
                             a.BaseGameMapping.Equals(refSector.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
                         if (sector != null)
                         {
+                            sector.SectorRealOffset = refSector.SectorRealOffset;
                             foreach (var region in refSector.Regions)
                             {
                                 region.IsBaseGame = true;

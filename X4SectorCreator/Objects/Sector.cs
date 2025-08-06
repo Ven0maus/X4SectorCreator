@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace X4SectorCreator.Objects
 {
@@ -25,6 +26,9 @@ namespace X4SectorCreator.Objects
 
         [JsonIgnore]
         public (long X, long Y) Offset { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public (long X, long Y) SectorRealOffset { get; set; }
 
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);

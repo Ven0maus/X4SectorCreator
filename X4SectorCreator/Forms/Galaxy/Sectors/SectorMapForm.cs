@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
@@ -766,6 +767,9 @@ namespace X4SectorCreator
                 // Highlight selected hex
                 RenderHexSelection(e);
 
+                // Render region circles within hexes
+                RenderRegionCircles(e);
+
                 // Render gate connections above hexes + selected hex
                 RenderGateConnections(e);
 
@@ -787,6 +791,113 @@ namespace X4SectorCreator
                 Close();
 #endif
             }
+        }
+
+        private void RenderRegionCircles(PaintEventArgs e)
+        {
+            if (!IsMapOptionChecked(MapOption.Show_Regions)) return;
+
+            // Define region circle size based on boundary radius
+            // Place region at region coordinates based on sector position within cluster position
+
+            var clusters = _baseGameClusters.Values
+                .Concat(_customClusters);
+
+            using SolidBrush coreBrush = new SolidBrush(Color.FromArgb(40, Color.DarkViolet));
+            using SolidBrush edgeBrush = new SolidBrush(Color.FromArgb(180, Color.Violet));
+
+            // Calculate hex size and radius based on zoom and sector size
+            float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
+            float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+
+            foreach (var cluster in clusters)
+            {
+                // The region position is based on the sector position (center is not 0, 0, 0 but the position of the sector)
+                // Which is in the high numbers, and we don't have these coordinates in our mapping, so we need to find a way
+                // To convert these region positions to the correct position where 0,0,0 is the center of the sector
+
+                //var clusterPos = new PointF(cluster.Position.X * 15000 * 1000, cluster.Position.Y * 8660 * 1000);
+                int sectorIndex = 0;
+                foreach (var sector in cluster.Sectors)
+                {
+                    // Collect the child hexagon points
+                    Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                    PointF hexCenter = GetHexCenter(childHexagon.Points);
+                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
+
+                    foreach (var region in sector.Regions)
+                    {
+                        if (!string.IsNullOrWhiteSpace(region.BoundaryRadius) && int.TryParse(region.BoundaryRadius, out var radius))
+                        {
+                            // Offset the region with the base position
+                            var basePos = region.IsBaseGame ? new PointF(region.Position.X - sector.SectorRealOffset.X, region.Position.Y - sector.SectorRealOffset.Y) : region.Position;
+
+                            float screenRadius = Math.Max(10, Math.Min(ConvertFromWorldRadius(radius, hexRadius, sector.DiameterRadius), correctHexRadius * 1.6f));
+                            PointF regionScreenPosition = ConvertFromWorldCoordinate(basePos, sector.DiameterRadius, correctHexRadius);
+
+                            regionScreenPosition.X += hexCenter.X;
+                            regionScreenPosition.Y += hexCenter.Y;
+
+                            // Helper to visualize all regions
+                            //if (sector.Name == "Saturn 2")
+                            {
+                                e.Graphics.FillEllipse(Brushes.Orange, regionScreenPosition.X - screenRadius / 2f, regionScreenPosition.Y - screenRadius / 2f, screenRadius, screenRadius);
+                                e.Graphics.DrawLine(Pens.Cyan, hexCenter.X, hexCenter.Y, regionScreenPosition.X, regionScreenPosition.Y);
+                            }
+
+                            GraphicsPath hexPath = new GraphicsPath();
+                            hexPath.AddPolygon(childHexagon.Points);
+                            var hexClipRegion = new System.Drawing.Region(hexPath);
+
+                            // Save current clipping region
+                            var oldClip = e.Graphics.Clip.Clone();
+
+                            // Set clip to hex shape
+                            e.Graphics.SetClip(hexClipRegion, CombineMode.Intersect);
+
+                            float x = regionScreenPosition.X - screenRadius / 2f;
+                            float y = regionScreenPosition.Y - screenRadius / 2f;
+
+                            // First, draw dark core
+                            e.Graphics.FillEllipse(coreBrush, x, y, screenRadius, screenRadius);
+
+                            // Then, draw bright outer ring
+                            float ringThickness = screenRadius * 0.025f; // 15% thick rim
+                            float outerSize = screenRadius;
+                            float innerSize = screenRadius - ringThickness;
+
+                            using (GraphicsPath ringPath = new GraphicsPath())
+                            {
+                                ringPath.AddEllipse(x, y, outerSize, outerSize); // outer circle
+                                ringPath.AddEllipse(x + ringThickness / 2f, y + ringThickness / 2f, innerSize, innerSize); // hole
+
+                                // Use CombineMode.Exclude to punch hole in the ring
+                                using (var ringRegion = new System.Drawing.Region(ringPath))
+                                {
+                                    e.Graphics.FillRegion(
+                                        edgeBrush, // bright outer ring color
+                                        ringRegion
+                                    );
+                                }
+                            }
+
+                            // Restore the original clipping region
+                            e.Graphics.SetClip(oldClip, CombineMode.Replace);
+                        }
+                        else
+                        {
+                            Debug.WriteLine("test");
+                        }
+                    }
+
+                    sectorIndex++;
+                }
+            }
+        }
+
+        private int ConvertFromWorldRadius(int worldRadius, float hexRadius, float diameterRadius)
+        {
+            return (int)Math.Round(worldRadius * 2f * hexRadius / diameterRadius);
         }
 
         private void RenderTipLabel(PaintEventArgs e)

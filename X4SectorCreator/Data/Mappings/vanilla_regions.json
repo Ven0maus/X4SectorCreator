@@ -19,7 +19,7 @@
               "Id": 0,
               "Name": "C01S01_Region002_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -49,7 +49,7 @@
               "Id": 0,
               "Name": "C01S01_Region003_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -79,7 +79,7 @@
               "Id": 0,
               "Name": "C01S01_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -109,7 +109,7 @@
               "Id": 0,
               "Name": "C01S01_Region004_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -131,7 +131,7 @@
               "Id": 0,
               "Name": "C01S01_Region006_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -161,7 +161,7 @@
               "Id": 0,
               "Name": "C01S01_Region009_connection",
               "Definition": {
-                "Guid": "7189cc22-7ff9-4fd5-9a8e-b8215e086f01",
+                "Guid": "eecb95f6-2490-4c01-bd80-3afbc5cd373b",
                 "Name": "region_cluster_01_sector_001_c",
                 "Fields": [],
                 "Resources": [
@@ -191,7 +191,7 @@
               "Id": 0,
               "Name": "C01S01_Region008_connection",
               "Definition": {
-                "Guid": "9b6b60dd-58b8-4ef1-8094-590cd4901d2e",
+                "Guid": "8c3ea04e-2fb8-4d89-a7e3-be2dd1f5d5ab",
                 "Name": "region_cluster_01_sector_001_b",
                 "Fields": [],
                 "Resources": [
@@ -221,7 +221,7 @@
               "Id": 0,
               "Name": "C01S01_Region010_connection",
               "Definition": {
-                "Guid": "7beefade-5180-4479-a05c-83bc60d13718",
+                "Guid": "17ca1b13-1696-4fec-8357-a78423a511fc",
                 "Name": "region_highyield_ore",
                 "Fields": [],
                 "Resources": [
@@ -243,7 +243,7 @@
               "Id": 0,
               "Name": "C01S01_Region011_connection",
               "Definition": {
-                "Guid": "399f8c27-556f-4fad-aeef-b5f16b0e45bf",
+                "Guid": "dcc767c8-0cf4-4cdc-9bdf-3624d5db914d",
                 "Name": "p1_80km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -279,7 +279,7 @@
               "Id": 0,
               "Name": "C01S02_Region001_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -301,7 +301,7 @@
               "Id": 0,
               "Name": "C01S02_Region003_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -323,7 +323,7 @@
               "Id": 0,
               "Name": "C01S02_Region004_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -345,7 +345,7 @@
               "Id": 0,
               "Name": "C01S02_Region005_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -367,7 +367,7 @@
               "Id": 0,
               "Name": "C01S02_Region002_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -389,7 +389,7 @@
               "Id": 0,
               "Name": "C01S02_Region006_connection",
               "Definition": {
-                "Guid": "71dfb17d-b698-40e2-9130-b64695b5c3b8",
+                "Guid": "7d452768-dce6-4a15-b7b3-21b2c61e0ad0",
                 "Name": "region_cluster_01_sector_002_a",
                 "Fields": [],
                 "Resources": [
@@ -415,7 +415,7 @@
               "Id": 0,
               "Name": "C01S02_Region007_connection",
               "Definition": {
-                "Guid": "18ab3cd0-0ea3-4750-8091-ebd7a684037c",
+                "Guid": "eee624d0-1876-4e9a-aed0-4e36f3806881",
                 "Name": "region_cluster_01_sector_002_b",
                 "Fields": [],
                 "Resources": [
@@ -441,7 +441,7 @@
               "Id": 0,
               "Name": "C01S02_Region008_connection",
               "Definition": {
-                "Guid": "423d92e9-acfb-424a-8a93-0de585c043d7",
+                "Guid": "264a43bb-5963-4e6a-b1cb-25c2a211065a",
                 "Name": "region_cluster_01_sector_002_c",
                 "Fields": [],
                 "Resources": [
@@ -467,7 +467,7 @@
               "Id": 0,
               "Name": "C01S02_Region009_connection",
               "Definition": {
-                "Guid": "d3dbf16a-2e1a-4858-be19-b8c6594559fb",
+                "Guid": "04cce3d6-6c24-464a-b166-3dc8b8f53732",
                 "Name": "region_cluster_01_sector_002_d",
                 "Fields": [],
                 "Resources": [
@@ -493,7 +493,7 @@
               "Id": 0,
               "Name": "C01S02_Region010_connection",
               "Definition": {
-                "Guid": "00e83428-674c-4680-931d-0a60eb3f3489",
+                "Guid": "5ca8d7fb-aeee-4fed-8740-63c303aef0e6",
                 "Name": "region_cluster_01_sector_002_e",
                 "Fields": [],
                 "Resources": [
@@ -519,7 +519,7 @@
               "Id": 0,
               "Name": "C01S02_Region011_connection",
               "Definition": {
-                "Guid": "2fc82d33-ca56-4a03-8adf-1d48e12a33a5",
+                "Guid": "05444c5b-f6cb-4859-bb97-03f7b89d55f6",
                 "Name": "region_cluster_01_sector_002_f",
                 "Fields": [],
                 "Resources": [
@@ -545,7 +545,7 @@
               "Id": 0,
               "Name": "C01S02_Region012_connection",
               "Definition": {
-                "Guid": "2bf8495e-a38e-47e8-aa9d-515218f6e7ed",
+                "Guid": "841db871-76be-4c93-84cf-079f79d59aa1",
                 "Name": "region_cluster_01_sector_002_g",
                 "Fields": [],
                 "Resources": [
@@ -571,7 +571,7 @@
               "Id": 0,
               "Name": "C01S02_Region013_connection",
               "Definition": {
-                "Guid": "2bf8495e-a38e-47e8-aa9d-515218f6e7ed",
+                "Guid": "841db871-76be-4c93-84cf-079f79d59aa1",
                 "Name": "region_cluster_01_sector_002_g",
                 "Fields": [],
                 "Resources": [
@@ -597,7 +597,7 @@
               "Id": 0,
               "Name": "C01S02_Region014_connection",
               "Definition": {
-                "Guid": "7f624484-0671-4865-9785-966e6fa88977",
+                "Guid": "c2ee36d1-4284-49fe-9410-9c1a3b562b10",
                 "Name": "p1_wreckfield_station_10km",
                 "Fields": [],
                 "Resources": [
@@ -620,7 +620,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": -21113958,
+            "Y": 7381814
+          }
         },
         {
           "Id": 0,
@@ -637,7 +641,7 @@
               "Id": 0,
               "Name": "C01S03_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -667,7 +671,7 @@
               "Id": 0,
               "Name": "C01S03_Region002_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -689,7 +693,7 @@
               "Id": 0,
               "Name": "C01S03_Region003_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -711,7 +715,7 @@
               "Id": 0,
               "Name": "C01S03_Region004a_connection",
               "Definition": {
-                "Guid": "5b643ed8-139d-4483-8204-d2f7d05208dc",
+                "Guid": "15412a7e-b63d-441b-959c-f7b36797bb94",
                 "Name": "region_cluster_01_sector_003_a",
                 "Fields": [],
                 "Resources": [
@@ -737,7 +741,7 @@
               "Id": 0,
               "Name": "C01S03_Region005b_connection",
               "Definition": {
-                "Guid": "2bba5121-77b1-43a2-9ea3-4cbeba1e6b73",
+                "Guid": "d508f059-770c-430e-bca7-a17a8c0ebb46",
                 "Name": "region_cluster_01_sector_003_b",
                 "Fields": [],
                 "Resources": [
@@ -763,7 +767,7 @@
               "Id": 0,
               "Name": "C01S03_Region006c_connection",
               "Definition": {
-                "Guid": "34d671c3-9a34-4597-b718-8d6c9141ebf2",
+                "Guid": "fb85bfde-88fa-4f36-8e6e-af1327c1b211",
                 "Name": "region_cluster_01_sector_003_c",
                 "Fields": [],
                 "Resources": [
@@ -789,7 +793,7 @@
               "Id": 0,
               "Name": "C01S03_Region007d_connection",
               "Definition": {
-                "Guid": "4945fbc9-c2f8-4055-87c7-a71976ae553c",
+                "Guid": "1d10c0fb-d2b2-48d2-ac2b-313b4c9e8385",
                 "Name": "region_cluster_01_sector_003_d",
                 "Fields": [],
                 "Resources": [
@@ -815,7 +819,7 @@
               "Id": 0,
               "Name": "C01S03_Region008e_connection",
               "Definition": {
-                "Guid": "07157ce2-53b6-4ede-8ebb-ef74df0043ca",
+                "Guid": "00a12047-2907-4ae5-830c-6f7d26564372",
                 "Name": "region_cluster_01_sector_003_e",
                 "Fields": [],
                 "Resources": [
@@ -841,7 +845,7 @@
               "Id": 0,
               "Name": "C01S03_Region009f_connection",
               "Definition": {
-                "Guid": "5a6e44b0-9397-48c7-a9ea-1a595a8ef164",
+                "Guid": "c3aaf870-675c-44cb-a455-828f48a13ef7",
                 "Name": "region_cluster_01_sector_003_f",
                 "Fields": [],
                 "Resources": [
@@ -864,7 +868,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 38620000,
+            "Y": 53635320
+          }
         }
       ],
       "Position": {
@@ -893,7 +901,7 @@
               "Id": 0,
               "Name": "C02S02_Region002_connection",
               "Definition": {
-                "Guid": "e05f968b-9b44-4479-a6cb-018bb230077a",
+                "Guid": "79781942-dc6c-4b85-b06d-b53309b82476",
                 "Name": "region_cluster_02_sector_001b",
                 "Fields": [],
                 "Resources": [
@@ -953,7 +961,7 @@
               "Id": 0,
               "Name": "C03S01_Region002_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -975,7 +983,7 @@
               "Id": 0,
               "Name": "C03S01_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -1031,7 +1039,7 @@
               "Id": 0,
               "Name": "C04S01_Region002_connection",
               "Definition": {
-                "Guid": "85fff7b9-ae0e-4167-ad86-553fb0b8506e",
+                "Guid": "7f344b92-6179-47d3-b9f8-ce0b9c8dc3ac",
                 "Name": "region2_cluster_04_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -1069,7 +1077,7 @@
               "Id": 0,
               "Name": "C04S01_Region003_connection",
               "Definition": {
-                "Guid": "0ad20494-c219-42e2-8c26-497d920bbd2b",
+                "Guid": "45f3366d-c4d1-4468-a809-419a891b85e0",
                 "Name": "region3_cluster_04_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -1107,7 +1115,7 @@
               "Id": 0,
               "Name": "C04S01_Region004_connection",
               "Definition": {
-                "Guid": "9fb9ec0e-07b7-44f3-b5f4-2b5fb1d93018",
+                "Guid": "2452209f-fd95-4363-a16f-a50418525593",
                 "Name": "region_highyield_nividium",
                 "Fields": [],
                 "Resources": [
@@ -1139,7 +1147,11 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 1046580,
+            "Y": -20353148
+          }
         }
       ],
       "Position": {
@@ -1193,7 +1205,7 @@
               "Id": 0,
               "Name": "C06S01_Region002_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -1215,7 +1227,7 @@
               "Id": 0,
               "Name": "C06S01_Region003_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -1237,7 +1249,7 @@
               "Id": 0,
               "Name": "C06S01_Region004_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -1259,7 +1271,7 @@
               "Id": 0,
               "Name": "C06S01_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -1303,7 +1315,7 @@
               "Id": 0,
               "Name": "C06S02_Region005_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -1325,7 +1337,7 @@
               "Id": 0,
               "Name": "C06S02_Region001_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -1347,7 +1359,7 @@
               "Id": 0,
               "Name": "C06S02_Region003_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -1369,7 +1381,7 @@
               "Id": 0,
               "Name": "C06S02_Region004_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -1391,7 +1403,7 @@
               "Id": 0,
               "Name": "C06S02_Region002_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -1410,7 +1422,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 47759560,
+            "Y": -5868100
+          }
         }
       ],
       "Position": {
@@ -1439,7 +1455,7 @@
               "Id": 0,
               "Name": "C07S01_Region002_connection",
               "Definition": {
-                "Guid": "9bd297c6-5b48-4a97-9423-4d6748d2a31b",
+                "Guid": "c416c71f-8cef-4e08-b524-f0a8c90b14fd",
                 "Name": "region_cluster_07_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -1562,7 +1578,7 @@
               "Id": 0,
               "Name": "C11S01_Region008_connection",
               "Definition": {
-                "Guid": "c45a14c8-53b8-4f84-8734-f580ba416c06",
+                "Guid": "d902ae4d-31ab-4f02-b3e7-3103059072c1",
                 "Name": "p1_40km_helium_highyield_field",
                 "Fields": [],
                 "Resources": [
@@ -1584,7 +1600,7 @@
               "Id": 0,
               "Name": "C11S01_Region006_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -1606,7 +1622,7 @@
               "Id": 0,
               "Name": "C11S01_Region005_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -1628,7 +1644,7 @@
               "Id": 0,
               "Name": "C11S01_Region007_connection",
               "Definition": {
-                "Guid": "e8a253b3-09bf-4152-a63e-4202e950fbed",
+                "Guid": "62eade4d-0115-43b3-a232-56572e1ba0d7",
                 "Name": "p1_40km_methane_highyield_field",
                 "Fields": [],
                 "Resources": [
@@ -1650,7 +1666,7 @@
               "Id": 0,
               "Name": "C11S01_Region002_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -1672,7 +1688,7 @@
               "Id": 0,
               "Name": "C11S01_Region004_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -1694,7 +1710,7 @@
               "Id": 0,
               "Name": "C11S01_Region003_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -1716,7 +1732,7 @@
               "Id": 0,
               "Name": "C11S01_Region001_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -1839,7 +1855,7 @@
               "Id": 0,
               "Name": "C15S01_Region002_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -1861,7 +1877,7 @@
               "Id": 0,
               "Name": "C15S01_Region004_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -1883,7 +1899,7 @@
               "Id": 0,
               "Name": "C15S01_Region005_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -1905,7 +1921,7 @@
               "Id": 0,
               "Name": "C15S01_Region006_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -1927,7 +1943,7 @@
               "Id": 0,
               "Name": "C15S01_Region001_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -1949,7 +1965,7 @@
               "Id": 0,
               "Name": "C15S01_Region003_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -1985,7 +2001,7 @@
               "Id": 0,
               "Name": "C15S02_Region006_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -2007,7 +2023,7 @@
               "Id": 0,
               "Name": "C15S02_Region005_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -2029,7 +2045,7 @@
               "Id": 0,
               "Name": "C15S02_Region004_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -2051,7 +2067,7 @@
               "Id": 0,
               "Name": "C15S02_Region003_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2081,7 +2097,7 @@
               "Id": 0,
               "Name": "C15S02_Region002_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2111,7 +2127,7 @@
               "Id": 0,
               "Name": "C15S02_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2138,7 +2154,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 109979864,
+            "Y": 0
+          }
         }
       ],
       "Position": {
@@ -2167,7 +2187,7 @@
               "Id": 0,
               "Name": "C16S01_Region002_connection",
               "Definition": {
-                "Guid": "b6b7ba6c-c109-4565-935c-7e4ceb915723",
+                "Guid": "38798919-9237-4fbb-bedc-80a646a5e048",
                 "Name": "region_cluster_16_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -2248,7 +2268,7 @@
               "Id": 0,
               "Name": "C18S01_Region006_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -2270,7 +2290,7 @@
               "Id": 0,
               "Name": "C18S01_Region005_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -2292,7 +2312,7 @@
               "Id": 0,
               "Name": "C18S01_Region002_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -2314,7 +2334,7 @@
               "Id": 0,
               "Name": "C18S01_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2344,7 +2364,7 @@
               "Id": 0,
               "Name": "C18S01_Region003_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -2366,7 +2386,7 @@
               "Id": 0,
               "Name": "C18S01_Region004_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -2414,7 +2434,7 @@
               "Id": 0,
               "Name": "C19S01_Region005_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -2436,7 +2456,7 @@
               "Id": 0,
               "Name": "C19S01_Region003_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -2458,7 +2478,7 @@
               "Id": 0,
               "Name": "C19S01_Region004_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -2480,7 +2500,7 @@
               "Id": 0,
               "Name": "C19S01_Region002_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2510,7 +2530,7 @@
               "Id": 0,
               "Name": "C19S01_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2554,7 +2574,7 @@
               "Id": 0,
               "Name": "C19S02_Region008_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -2576,7 +2596,7 @@
               "Id": 0,
               "Name": "C19S02_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2606,7 +2626,7 @@
               "Id": 0,
               "Name": "C19S02_Region007_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -2628,7 +2648,7 @@
               "Id": 0,
               "Name": "C19S02_Region002_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2658,7 +2678,7 @@
               "Id": 0,
               "Name": "C19S02_Region006_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -2680,7 +2700,7 @@
               "Id": 0,
               "Name": "C19S02_Region003_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2710,7 +2730,7 @@
               "Id": 0,
               "Name": "C19S02_Region004_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2740,7 +2760,7 @@
               "Id": 0,
               "Name": "C19S02_Region005_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2767,7 +2787,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 112672928,
+            "Y": 0
+          }
         }
       ],
       "Position": {
@@ -2821,7 +2845,7 @@
               "Id": 0,
               "Name": "C21S01_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2851,7 +2875,7 @@
               "Id": 0,
               "Name": "C21S01_Region002_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -2881,7 +2905,7 @@
               "Id": 0,
               "Name": "C21S01_Region005_connection",
               "Definition": {
-                "Guid": "5b573598-c483-4d45-a71d-4c2c1a4ab149",
+                "Guid": "957f3fd8-721d-4f12-ac82-0dc146ac6c50",
                 "Name": "p1_wreckfield_xenon_teladi_battle_200km",
                 "Fields": [],
                 "Resources": [
@@ -2921,7 +2945,7 @@
               "Id": 0,
               "Name": "C21S02_Region002_connection",
               "Definition": {
-                "Guid": "fbb82f40-489e-4ade-950d-c6d688473655",
+                "Guid": "53e9e735-959c-438f-914f-ad484239d19c",
                 "Name": "region_cluster_21_sector_002_b",
                 "Fields": [],
                 "Resources": [
@@ -2944,7 +2968,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": -186899,
+            "Y": 46710032
+          }
         }
       ],
       "Position": {
@@ -3023,7 +3051,7 @@
               "Id": 0,
               "Name": "C24S01_Region008_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -3045,7 +3073,7 @@
               "Id": 0,
               "Name": "C24S01_Region006_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -3067,7 +3095,7 @@
               "Id": 0,
               "Name": "C24S01_Region007_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -3089,7 +3117,7 @@
               "Id": 0,
               "Name": "C24S01_Region002_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -3119,7 +3147,7 @@
               "Id": 0,
               "Name": "C24S01_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -3149,7 +3177,7 @@
               "Id": 0,
               "Name": "C24S01_Region003_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -3179,7 +3207,7 @@
               "Id": 0,
               "Name": "C24S01_Region005_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -3201,7 +3229,7 @@
               "Id": 0,
               "Name": "C24S01_Region004_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -3249,7 +3277,7 @@
               "Id": 0,
               "Name": "C25S01_Region003_connection",
               "Definition": {
-                "Guid": "07dd839f-0af0-43c5-9efa-6084f07ca55d",
+                "Guid": "516a5ca1-4e42-4a19-accd-01bdee577362",
                 "Name": "p1_wreckfield_xenon_paranid_cluster25",
                 "Fields": [],
                 "Resources": [
@@ -3271,7 +3299,7 @@
               "Id": 0,
               "Name": "C25S01_Region002_connection",
               "Definition": {
-                "Guid": "2f5db720-c652-46c7-9b51-80f5feefc90a",
+                "Guid": "f310e38b-92a6-4f46-92e6-bb1f17991ce0",
                 "Name": "region_cluster_25_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -3315,7 +3343,7 @@
               "Id": 0,
               "Name": "C25S02_Region002_connection",
               "Definition": {
-                "Guid": "d42b28d7-6d62-4007-876d-507116510e57",
+                "Guid": "dc6ec2dc-396d-4d59-88fa-aec66ee555c5",
                 "Name": "region_cluster_25_sector_002",
                 "Fields": [],
                 "Resources": [
@@ -3342,7 +3370,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 0,
+            "Y": -37855016
+          }
         }
       ],
       "Position": {
@@ -3371,7 +3403,7 @@
               "Id": 0,
               "Name": "C26S01_Region002_connection",
               "Definition": {
-                "Guid": "9c584e5c-12e3-481e-8831-3b7fec0d005b",
+                "Guid": "a12da67b-9b53-4ce3-ae29-3afcb621862f",
                 "Name": "region_cluster_26_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -3415,7 +3447,7 @@
               "Id": 0,
               "Name": "C26S02_Region002_connection",
               "Definition": {
-                "Guid": "7565a569-2fef-4f0a-9765-90b3292f7b5f",
+                "Guid": "a0fc4fbc-e195-4331-97f7-ecf17281b314",
                 "Name": "region_cluster_26_sector_002",
                 "Fields": [],
                 "Resources": [
@@ -3446,7 +3478,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 26673982,
+            "Y": -55409964
+          }
         }
       ],
       "Position": {
@@ -3475,7 +3511,7 @@
               "Id": 0,
               "Name": "C27S01_Region006_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -3497,7 +3533,7 @@
               "Id": 0,
               "Name": "C27S01_Region005_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -3519,7 +3555,7 @@
               "Id": 0,
               "Name": "C27S01_Region004_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -3541,7 +3577,7 @@
               "Id": 0,
               "Name": "C27S01_Region008_connection",
               "Definition": {
-                "Guid": "326f761d-3cbd-41dc-a82f-d6435ff50852",
+                "Guid": "8d54f6da-720d-4c86-ba37-b4135370d610",
                 "Name": "region2_cluster_27_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -3571,7 +3607,7 @@
               "Id": 0,
               "Name": "C27S01_Region009_connection",
               "Definition": {
-                "Guid": "326f761d-3cbd-41dc-a82f-d6435ff50852",
+                "Guid": "8d54f6da-720d-4c86-ba37-b4135370d610",
                 "Name": "region2_cluster_27_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -3601,7 +3637,7 @@
               "Id": 0,
               "Name": "C27S01_Region001_connection",
               "Definition": {
-                "Guid": "9cc6daf7-0ca1-4a03-a6aa-e444ebf9d5cd",
+                "Guid": "d22a6ed3-4ea7-4182-8709-c3c01b276079",
                 "Name": "region_cluster_27_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -3665,7 +3701,7 @@
               "Id": 0,
               "Name": "C28S01_Region004_connection",
               "Definition": {
-                "Guid": "c45a14c8-53b8-4f84-8734-f580ba416c06",
+                "Guid": "d902ae4d-31ab-4f02-b3e7-3103059072c1",
                 "Name": "p1_40km_helium_highyield_field",
                 "Fields": [],
                 "Resources": [
@@ -3726,7 +3762,7 @@
               "Id": 0,
               "Name": "C29S02_Region012_connection",
               "Definition": {
-                "Guid": "5b8939db-d679-4ea4-b31f-45abf1ec01bb",
+                "Guid": "6f8e1270-ac65-46b2-964d-2a91bc356733",
                 "Name": "p1_40km_methane_field",
                 "Fields": [],
                 "Resources": [
@@ -3748,7 +3784,7 @@
               "Id": 0,
               "Name": "C29S02_Region001_connection",
               "Definition": {
-                "Guid": "115e1713-3715-4e9c-86ff-4061f2c75690",
+                "Guid": "834c49ac-a18e-40d9-ac24-197d0055561e",
                 "Name": "p1_40km_asteroid_field",
                 "Fields": [],
                 "Resources": [
@@ -3778,7 +3814,7 @@
               "Id": 0,
               "Name": "C29S02_Region011_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -3800,7 +3836,7 @@
               "Id": 0,
               "Name": "C29S02_Region008_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -3822,7 +3858,7 @@
               "Id": 0,
               "Name": "C29S02_Region009_connection",
               "Definition": {
-                "Guid": "c2cf8065-ab8d-4f68-a11b-94f52df75ded",
+                "Guid": "5660dff4-cbaa-455f-abfd-9b9b05e599e4",
                 "Name": "p1_40km_hydrogen_field",
                 "Fields": [],
                 "Resources": [
@@ -3844,7 +3880,7 @@
               "Id": 0,
               "Name": "C29S02_Region007_connection",
               "Definition": {
-                "Guid": "00c9304b-e995-4a90-8d7a-e0bef506bdea",
+                "Guid": "b4d5effd-9673-43cb-8631-280bbb0996b1",
                 "Name": "p1_40km_ice_field",
                 "Fields": [],
                 "Resources": [
@@ -3866,7 +3902,7 @@
               "Id": 0,
               "Name": "C29S02_Region010_connection",
               "Definition": {
-                "Guid": "1829a1bc-d75f-475d-9e84-374414a3ba98",
+                "Guid": "22e38436-8d19-4dfb-932d-95484d602b23",
                 "Name": "p1_40km_helium_field",
                 "Fields": [],
                 "Resources": [
@@ -3888,7 +3924,7 @@
               "Id": 0,
               "Name": "C29S02_Region004_connection",
               "Definition": {
-                "Guid": "edc7aac4-f567-478f-81c7-3cbe582678d9",
+                "Guid": "239085d9-05c4-4f9c-806e-c2acaaba1750",
                 "Name": "region_cluster_29_sector_002",
                 "Fields": [],
                 "Resources": [
@@ -3915,7 +3951,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 80377000,
+            "Y": 27158380
+          }
         }
       ],
       "Position": {
@@ -3969,7 +4009,7 @@
               "Id": 0,
               "Name": "C31S01_Region003_connection",
               "Definition": {
-                "Guid": "7b677e52-796f-4fad-b9a0-78294ebdaf53",
+                "Guid": "dd100bef-7602-4cc0-b0bd-2daa384c9e12",
                 "Name": "p1_wreckfield_xenon_split_cluster32",
                 "Fields": [],
                 "Resources": [
@@ -4017,7 +4057,7 @@
               "Id": 0,
               "Name": "C32S01_Region001_connection",
               "Definition": {
-                "Guid": "8bfc1c0c-b3b3-41ef-ab06-229fb4884dc1",
+                "Guid": "255cabbf-0d35-4e2e-b3bf-6ea2bce7ff51",
                 "Name": "region_cluster_32_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -4051,7 +4091,7 @@
               "Id": 0,
               "Name": "C32S01_Region003_connection",
               "Definition": {
-                "Guid": "7b677e52-796f-4fad-b9a0-78294ebdaf53",
+                "Guid": "dd100bef-7602-4cc0-b0bd-2daa384c9e12",
                 "Name": "p1_wreckfield_xenon_split_cluster32",
                 "Fields": [],
                 "Resources": [
@@ -4087,7 +4127,7 @@
               "Id": 0,
               "Name": "C32S02_Region001_connection",
               "Definition": {
-                "Guid": "67d83171-30f0-452b-8524-7c93a3aafcab",
+                "Guid": "3781aed5-d7d9-4352-ba0b-7e5f5a7c3d35",
                 "Name": "region_cluster_32_sector_002",
                 "Fields": [],
                 "Resources": [
@@ -4114,7 +4154,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 0,
+            "Y": 33149454
+          }
         }
       ],
       "Position": {
@@ -4143,7 +4187,7 @@
               "Id": 0,
               "Name": "C33S01_Region03_connection",
               "Definition": {
-                "Guid": "6cc751d2-b00d-4607-a8a0-3b50ca4f2864",
+                "Guid": "b2d611c1-f3e9-423b-ac16-87ff731f77dc",
                 "Name": "p1_wreckfield_xenon_teladi_10km",
                 "Fields": [],
                 "Resources": [
@@ -4169,7 +4213,7 @@
               "Id": 0,
               "Name": "C33S01_Region04_connection",
               "Definition": {
-                "Guid": "1401074d-b07a-46e0-9e73-515d1ac9ea24",
+                "Guid": "d7a5a3af-3d22-41ba-b9b8-32f30758adb0",
                 "Name": "p1_wreckfield_xenon_battle_60km",
                 "Fields": [],
                 "Resources": [
@@ -4246,7 +4290,7 @@
               "Id": 0,
               "Name": "C35S01_Region002_connection",
               "Definition": {
-                "Guid": "b7baaede-3463-4a83-a7f0-dca6cf024395",
+                "Guid": "450675c9-4f04-414f-885a-36ad8e4abed2",
                 "Name": "region_cluster_35_sector_001_a",
                 "Fields": [],
                 "Resources": [
@@ -4306,7 +4350,7 @@
               "Id": 0,
               "Name": "C36S01_Region002_connection",
               "Definition": {
-                "Guid": "f6631401-963a-48b1-bcbd-b048bc4f57ff",
+                "Guid": "33fb7b37-1cb3-454b-8d24-edf6435bfe47",
                 "Name": "region_cluster_36_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -4362,7 +4406,7 @@
               "Id": 0,
               "Name": "C37S01_Region01_connection_connection",
               "Definition": {
-                "Guid": "00adcc1d-49a5-4afe-a844-6b2bbed36cf9",
+                "Guid": "98ba63e3-bdb9-4270-a27d-5f4c0032e73d",
                 "Name": "region_cluster_37_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -4392,7 +4436,7 @@
               "Id": 0,
               "Name": "C37S01_Region03_connection_connection",
               "Definition": {
-                "Guid": "e930e38f-e70a-4c58-8274-fa36e6815643",
+                "Guid": "da6009c2-1eef-4f53-b835-e829ab29ac4d",
                 "Name": "region_highyield_silicon",
                 "Fields": [],
                 "Resources": [
@@ -4414,7 +4458,7 @@
               "Id": 0,
               "Name": "C37S01_Region02_connection_connection",
               "Definition": {
-                "Guid": "7beefade-5180-4479-a05c-83bc60d13718",
+                "Guid": "17ca1b13-1696-4fec-8357-a78423a511fc",
                 "Name": "region_highyield_ore",
                 "Fields": [],
                 "Resources": [
@@ -4462,7 +4506,7 @@
               "Id": 0,
               "Name": "C38S01_Region02_connection_connection",
               "Definition": {
-                "Guid": "bbc17b90-07f3-459c-b857-b531e060840c",
+                "Guid": "fbd7a396-dda6-42ff-ba8e-5d7f0c72e2a2",
                 "Name": "region_cluster_38_sector_001_b",
                 "Fields": [],
                 "Resources": [
@@ -4504,7 +4548,7 @@
               "Id": 0,
               "Name": "C38S01_Region01_connection_connection",
               "Definition": {
-                "Guid": "52861c1b-3a44-4a11-a52f-b4d9660db60a",
+                "Guid": "cefae5eb-d310-4981-b634-725ea3d666c4",
                 "Name": "region_cluster_38_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -4546,7 +4590,7 @@
               "Id": 0,
               "Name": "C38S01_Region03_connection_connection",
               "Definition": {
-                "Guid": "e930e38f-e70a-4c58-8274-fa36e6815643",
+                "Guid": "da6009c2-1eef-4f53-b835-e829ab29ac4d",
                 "Name": "region_highyield_silicon",
                 "Fields": [],
                 "Resources": [
@@ -4568,7 +4612,7 @@
               "Id": 0,
               "Name": "C38S01_Region04_connection_connection",
               "Definition": {
-                "Guid": "7beefade-5180-4479-a05c-83bc60d13718",
+                "Guid": "17ca1b13-1696-4fec-8357-a78423a511fc",
                 "Name": "region_highyield_ore",
                 "Fields": [],
                 "Resources": [
@@ -4590,7 +4634,7 @@
               "Id": 0,
               "Name": "C38S01_Region05_connection_connection",
               "Definition": {
-                "Guid": "7beefade-5180-4479-a05c-83bc60d13718",
+                "Guid": "17ca1b13-1696-4fec-8357-a78423a511fc",
                 "Name": "region_highyield_ore",
                 "Fields": [],
                 "Resources": [
@@ -4612,7 +4656,7 @@
               "Id": 0,
               "Name": "C38S01_Region06_connection_connection",
               "Definition": {
-                "Guid": "e930e38f-e70a-4c58-8274-fa36e6815643",
+                "Guid": "da6009c2-1eef-4f53-b835-e829ab29ac4d",
                 "Name": "region_highyield_silicon",
                 "Fields": [],
                 "Resources": [
@@ -4685,7 +4729,7 @@
               "Id": 0,
               "Name": "C40S01_Region001_connection",
               "Definition": {
-                "Guid": "e37e07d1-b675-48b4-8126-7ff5d0649893",
+                "Guid": "042f2c7f-05ee-489e-adc1-6b96988ec260",
                 "Name": "region_cluster_40_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -4741,7 +4785,7 @@
               "Id": 0,
               "Name": "C41S01_Region001_connection",
               "Definition": {
-                "Guid": "49f5c0dc-0aa8-4de6-8a9a-a74e3dd645a8",
+                "Guid": "c8c676bc-c87b-4cea-96b7-553986a2f5bd",
                 "Name": "region_cluster_41_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -4802,7 +4846,11 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 112672928,
+            "Y": 0
+          }
         }
       ],
       "Position": {
@@ -4831,7 +4879,7 @@
               "Id": 0,
               "Name": "C43S01_Region001_connection",
               "Definition": {
-                "Guid": "e47fb576-2172-45d1-85e8-2820c328b7bd",
+                "Guid": "3bd8931a-1cdf-4010-8b62-e8b5b789958f",
                 "Name": "region_cluster_43_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -4887,7 +4935,7 @@
               "Id": 0,
               "Name": "C44S01_Region001_connection",
               "Definition": {
-                "Guid": "80f98546-d899-485f-991b-b481e212f234",
+                "Guid": "3a67961e-0aac-49fa-9b81-3060cf5a4a97",
                 "Name": "region_cluster_44_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -4947,7 +4995,7 @@
               "Id": 0,
               "Name": "C45S01_Region001_connection",
               "Definition": {
-                "Guid": "ed19818d-9cab-46e6-905d-a43ac1f3d7b9",
+                "Guid": "f2e4bbac-67fc-41c4-9e2c-741825bba43f",
                 "Name": "region_cluster_45_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -5003,7 +5051,7 @@
               "Id": 0,
               "Name": "C46S01_Region001_connection",
               "Definition": {
-                "Guid": "48cc0258-009c-4718-91ef-e6a09e143acc",
+                "Guid": "f40f4413-d228-46c8-b578-18f0ce92baa9",
                 "Name": "region_bigasteroids",
                 "Fields": [],
                 "Resources": [
@@ -5037,7 +5085,7 @@
               "Id": 0,
               "Name": "C46S01_Region002_connection",
               "Definition": {
-                "Guid": "de4afc6f-81f6-4258-8076-8f5462f8bfee",
+                "Guid": "0a56b699-8a11-4743-83e3-eed553e4b6a3",
                 "Name": "region_cluster_46_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -5105,7 +5153,7 @@
               "Id": 0,
               "Name": "C47S01_Region001_connection",
               "Definition": {
-                "Guid": "48cc0258-009c-4718-91ef-e6a09e143acc",
+                "Guid": "f40f4413-d228-46c8-b578-18f0ce92baa9",
                 "Name": "region_bigasteroids",
                 "Fields": [],
                 "Resources": [
@@ -5139,7 +5187,7 @@
               "Id": 0,
               "Name": "C47S01_Region002_connection",
               "Definition": {
-                "Guid": "bc33ce6e-0741-4b29-92a0-5a2e5f8b6d0c",
+                "Guid": "996940c8-1433-4070-8ee7-d337b84b73be",
                 "Name": "region_cluster_47_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -5185,7 +5233,7 @@
               "Id": 0,
               "Name": "C47S01_Region003_connection",
               "Definition": {
-                "Guid": "1b5434e9-89ea-44bb-b181-36e62b79a420",
+                "Guid": "d06ecbf2-6863-4bea-8f17-ef82aaa8dd70",
                 "Name": "region_cluster_47_sector_001b",
                 "Fields": [],
                 "Resources": [
@@ -5257,7 +5305,7 @@
               "Id": 0,
               "Name": "C49S01_Region003_connection",
               "Definition": {
-                "Guid": "c45a14c8-53b8-4f84-8734-f580ba416c06",
+                "Guid": "d902ae4d-31ab-4f02-b3e7-3103059072c1",
                 "Name": "p1_40km_helium_highyield_field",
                 "Fields": [],
                 "Resources": [
@@ -5279,7 +5327,7 @@
               "Id": 0,
               "Name": "C49S01_Region004_connection",
               "Definition": {
-                "Guid": "e8a253b3-09bf-4152-a63e-4202e950fbed",
+                "Guid": "62eade4d-0115-43b3-a232-56572e1ba0d7",
                 "Name": "p1_40km_methane_highyield_field",
                 "Fields": [],
                 "Resources": [
@@ -5352,7 +5400,7 @@
               "Id": 0,
               "Name": "C50S01_Region002_connection",
               "Definition": {
-                "Guid": "52538cde-8dad-44a4-a6ec-6938dd1a5f7e",
+                "Guid": "2fad21ae-c200-4cf2-b2a0-4fd4c50a3c15",
                 "Name": "region_cluster_50_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -5400,7 +5448,7 @@
               "Id": 0,
               "Name": "C50S02_Region002_connection",
               "Definition": {
-                "Guid": "7e4355f4-54c4-4a58-85a3-7b0f446e73ce",
+                "Guid": "4dc39beb-0e69-44f3-b15a-63a95267d554",
                 "Name": "region_cluster_50_sector_002",
                 "Fields": [],
                 "Resources": [
@@ -5431,7 +5479,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 26673982,
+            "Y": -55409964
+          }
         }
       ],
       "Position": {
@@ -5460,7 +5512,7 @@
               "Id": 0,
               "Name": "C709S01_Region01_connection",
               "Definition": {
-                "Guid": "387843de-ff13-48ae-9f1c-1ac869b5d01d",
+                "Guid": "2cfc2e3c-ba9d-4270-843b-0edc07f61da0",
                 "Name": "region_cluster_709_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -5490,7 +5542,7 @@
               "Id": 0,
               "Name": "C709S01_Region02_connection",
               "Definition": {
-                "Guid": "4a93b4f3-b255-4c38-8980-4189cc6320b7",
+                "Guid": "052d0b1c-1dd6-4501-93d0-4271d1234486",
                 "Name": "region_cluster_709_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -5546,7 +5598,7 @@
               "Id": 0,
               "Name": "C710S01_Region01_connection",
               "Definition": {
-                "Guid": "b5e20335-ba9d-4479-b24f-6b4c4878e8c0",
+                "Guid": "c5f13e21-e9c0-478f-9d91-7cac889530ce",
                 "Name": "region_cluster_710_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -5580,7 +5632,7 @@
               "Id": 0,
               "Name": "C710S01_Region02_connection",
               "Definition": {
-                "Guid": "8bea5a45-4709-4ecc-a656-e2b5d04ed48a",
+                "Guid": "8045facd-568f-4054-9994-64a83213f34c",
                 "Name": "region_cluster_710_sector_001_asteroids_2",
                 "Fields": [],
                 "Resources": [
@@ -5636,7 +5688,7 @@
               "Id": 0,
               "Name": "C711S01_Region01_connection",
               "Definition": {
-                "Guid": "71d0f62d-8fc3-4e99-aa26-d9bc5a359c39",
+                "Guid": "b7acbdc6-d6d6-47ed-8cd1-35ef67849f72",
                 "Name": "region_cluster_711_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -5666,7 +5718,7 @@
               "Id": 0,
               "Name": "C711S01_Region02_connection",
               "Definition": {
-                "Guid": "54a049ee-c0b8-4e08-8213-4668709cb88c",
+                "Guid": "3445d935-295b-4b7f-9139-ea665a120ebd",
                 "Name": "region_cluster_711_sector_001_asteroids_2",
                 "Fields": [],
                 "Resources": [
@@ -5726,7 +5778,7 @@
               "Id": 0,
               "Name": "C712S01_Region02_connection",
               "Definition": {
-                "Guid": "a23e5a85-529f-4398-80bd-22445bd5e3c9",
+                "Guid": "8045cac9-2bef-4183-93f5-d8ab6e5cda71",
                 "Name": "region_cluster_712_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -5786,7 +5838,7 @@
               "Id": 0,
               "Name": "C713S01_Region01_connection",
               "Definition": {
-                "Guid": "45efe517-63e3-4769-993a-63932706ae4d",
+                "Guid": "c2041cf2-2346-4d4e-a68e-bb43cd666373",
                 "Name": "region_cluster_713_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -5816,7 +5868,7 @@
               "Id": 0,
               "Name": "C713S01_Region02_connection",
               "Definition": {
-                "Guid": "cbf70fbd-1b9d-4db9-8f4e-49a23052bb47",
+                "Guid": "fe651d63-db61-4c2f-8837-8d89e5c147ab",
                 "Name": "region_cluster_713_sector_001_nebula_2",
                 "Fields": [],
                 "Resources": [
@@ -5846,7 +5898,7 @@
               "Id": 0,
               "Name": "C713S01_Region03_connection",
               "Definition": {
-                "Guid": "92e2a99c-0fde-4259-add8-c85adefdcabd",
+                "Guid": "466a53e9-b66d-4ca0-9064-a1287e5d9125",
                 "Name": "region_cluster_713_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -5927,7 +5979,7 @@
               "Id": 0,
               "Name": "C715S01_Region01_connection",
               "Definition": {
-                "Guid": "f87f26d2-8b83-42ca-a049-94987d73390a",
+                "Guid": "bc013ece-00d6-4526-be6d-e41f40517173",
                 "Name": "region_cluster_715_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -5957,7 +6009,7 @@
               "Id": 0,
               "Name": "C715S01_Region02_connection",
               "Definition": {
-                "Guid": "f2f77da7-4987-4b8d-bce6-1d41859eb327",
+                "Guid": "8366ffa7-eb9d-4b7e-b238-ecdf9420e305",
                 "Name": "region_cluster_715_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -5987,7 +6039,7 @@
               "Id": 0,
               "Name": "C715S01_Region03_connection",
               "Definition": {
-                "Guid": "c3fcdf69-59e8-41ff-9fe0-600c6fb196ff",
+                "Guid": "be9f6d89-2fd0-429c-a9b2-b313a369fdf5",
                 "Name": "region_cluster_715_sector_001_nebula_2",
                 "Fields": [],
                 "Resources": [
@@ -6043,7 +6095,7 @@
               "Id": 0,
               "Name": "C720S01_Region01_connection",
               "Definition": {
-                "Guid": "a3e3c88c-81c4-4d35-a3b8-b5fdebc8ee91",
+                "Guid": "40b17795-9b8c-4706-8c5d-5e807716f04c",
                 "Name": "region_cluster_720_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -6077,7 +6129,7 @@
               "Id": 0,
               "Name": "C720S01_Region02_connection",
               "Definition": {
-                "Guid": "1713d330-3f38-4e7e-9c9f-a54f1b2eb7d6",
+                "Guid": "3980c413-6671-470d-9eea-f0860c23e9f9",
                 "Name": "region_cluster_720_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -6099,7 +6151,7 @@
               "Id": 0,
               "Name": "C720S01_Region03_connection",
               "Definition": {
-                "Guid": "94f1d21c-65b6-4e79-a500-befeacbbe793",
+                "Guid": "7f3f587e-89cc-4bbb-8eec-4bd6f12e1704",
                 "Name": "region_cluster_720_sector_001_asteroids_2",
                 "Fields": [],
                 "Resources": [
@@ -6147,7 +6199,7 @@
               "Id": 0,
               "Name": "C721S01_Region01_connection",
               "Definition": {
-                "Guid": "14a77c82-ab86-4896-9f45-3972fd30fdb0",
+                "Guid": "fe59916f-ae99-48fc-b689-9296646e8860",
                 "Name": "region_cluster_721_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -6215,7 +6267,7 @@
               "Id": 0,
               "Name": "C722S01_Region01_connection",
               "Definition": {
-                "Guid": "2cadc2d5-d8b1-49a6-a7ba-225cff265a55",
+                "Guid": "0db2901c-2d45-4c0f-8401-c83d6c17a28c",
                 "Name": "region_cluster_722_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -6237,7 +6289,7 @@
               "Id": 0,
               "Name": "C722S01_Region02_connection",
               "Definition": {
-                "Guid": "cc084913-285d-4c78-8ece-6f9fa0ab324a",
+                "Guid": "4d9f4530-f09f-47a8-a453-24dba480e815",
                 "Name": "region_cluster_722_sector_001_asteroids_2",
                 "Fields": [],
                 "Resources": [
@@ -6267,7 +6319,7 @@
               "Id": 0,
               "Name": "C722S01_Region03_connection",
               "Definition": {
-                "Guid": "f03c38cb-e55c-43e1-bf92-8ef061602c6c",
+                "Guid": "7fdf9182-be25-42c5-a8f6-d95193c22868",
                 "Name": "region_cluster_722_sector_001_asteroids_3",
                 "Fields": [],
                 "Resources": [
@@ -6323,7 +6375,7 @@
               "Id": 0,
               "Name": "C723S01_Region01_connection",
               "Definition": {
-                "Guid": "7e6bb913-1019-4d4b-b9ee-bf4a89ac2bb5",
+                "Guid": "c862606a-356e-419c-9967-6894cb69f97e",
                 "Name": "region_cluster_723_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -6371,7 +6423,7 @@
               "Id": 0,
               "Name": "C724S01_Region01_connection",
               "Definition": {
-                "Guid": "1236fb46-c64a-4989-b0f5-69c59c4817a6",
+                "Guid": "a2cd2372-eefe-4ae4-9d44-16a904274703",
                 "Name": "region_cluster_724_sector_001_wreck_1",
                 "Fields": [],
                 "Resources": [
@@ -6393,7 +6445,7 @@
               "Id": 0,
               "Name": "C724S01_Region02_connection",
               "Definition": {
-                "Guid": "0c539b3c-7030-4115-90fc-50f58bc40fbb",
+                "Guid": "e867531e-3fb8-4ef7-b4e4-e84b26adaad2",
                 "Name": "region_cluster_724_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -6445,7 +6497,7 @@
               "Id": 0,
               "Name": "C725S01_Region02r_connection",
               "Definition": {
-                "Guid": "d960b363-b4b4-4f8e-85ad-dad6fdb6d1df",
+                "Guid": "2e902da0-b627-4b72-968d-04adf859cfca",
                 "Name": "region_cluster_725_sector_001_nebula_1_res",
                 "Fields": [],
                 "Resources": [
@@ -6475,7 +6527,7 @@
               "Id": 0,
               "Name": "C725S01_Region01_connection",
               "Definition": {
-                "Guid": "7f7db479-5b34-4cb9-9895-94be883d52cd",
+                "Guid": "a223f41c-1b88-4c3b-a7aa-8a2573decbe6",
                 "Name": "region_cluster_725_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -6505,7 +6557,7 @@
               "Id": 0,
               "Name": "C725S01_Region03_connection",
               "Definition": {
-                "Guid": "abf8d884-e9bb-4f85-944c-b3beeccbc346",
+                "Guid": "766b2a1e-6656-49c0-9f17-24a503868ec1",
                 "Name": "region_cluster_725_sector_002",
                 "Fields": [],
                 "Resources": [
@@ -6561,7 +6613,7 @@
               "Id": 0,
               "Name": "C401S01_Region02_connection",
               "Definition": {
-                "Guid": "5fc3bc2d-b91b-4aa1-81f0-c977d0eacfb1",
+                "Guid": "b581c852-c4f1-48c7-bac5-69b71f477d1a",
                 "Name": "region_cluster_401_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -6713,7 +6765,11 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": -18203762,
+            "Y": 14011029
+          }
         }
       ],
       "Position": {
@@ -6792,7 +6848,7 @@
               "Id": 0,
               "Name": "C410S01_Region02_connection",
               "Definition": {
-                "Guid": "582770b1-f178-481a-835f-4e61edde1068",
+                "Guid": "c2e4a323-1863-4030-b586-07ad9dc13a3a",
                 "Name": "region_cluster_410_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -6848,7 +6904,7 @@
               "Id": 0,
               "Name": "C411S01_Region02_connection",
               "Definition": {
-                "Guid": "f2138663-2559-464a-8e1c-fd7c603b166d",
+                "Guid": "189822da-2dc1-4e03-a2cb-dd02c560aec4",
                 "Name": "region_cluster_411_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -6874,7 +6930,7 @@
               "Id": 0,
               "Name": "C411S01_Region03_connection",
               "Definition": {
-                "Guid": "e2e2370d-6f42-4a24-bc27-87c4d980a817",
+                "Guid": "d238c3db-fa6e-4a56-b2aa-3184f9b9ea48",
                 "Name": "region_cluster_411_sector_001_b",
                 "Fields": [],
                 "Resources": [
@@ -7005,7 +7061,7 @@
               "Id": 0,
               "Name": "C418S01_Region03_connection",
               "Definition": {
-                "Guid": "ce19c8f8-d486-4df4-bb24-bd0437e8b764",
+                "Guid": "503ef762-fa19-4e06-8615-980bfba91044",
                 "Name": "region_cluster_418_sector_001_c",
                 "Fields": [],
                 "Resources": [
@@ -7027,7 +7083,7 @@
               "Id": 0,
               "Name": "C418S01_Region02_connection",
               "Definition": {
-                "Guid": "976472a0-9c80-4899-ae7e-3707faa83d7a",
+                "Guid": "d3a4ecbd-ee2b-4764-b1d5-8e7254dddcd0",
                 "Name": "region_cluster_418_sector_001_b",
                 "Fields": [],
                 "Resources": [
@@ -7049,7 +7105,7 @@
               "Id": 0,
               "Name": "C418S01_Region04_connection",
               "Definition": {
-                "Guid": "37b54fc6-2008-4b8e-8c6b-ad05a467178f",
+                "Guid": "cf1ea8c5-bdd1-4bfd-8006-b23d10acf3ff",
                 "Name": "region_cluster_418_sector_001_d",
                 "Fields": [],
                 "Resources": [
@@ -7146,7 +7202,7 @@
               "Id": 0,
               "Name": "C420S01_Region002_connection",
               "Definition": {
-                "Guid": "fae8c64a-c3ac-4285-8e08-f9c7c6424ab8",
+                "Guid": "39d11250-e059-4514-95a6-addabeeeddde",
                 "Name": "region_cluster_420_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -7211,7 +7267,7 @@
               "Id": 0,
               "Name": "C416S02_Region002_connection",
               "Definition": {
-                "Guid": "ea332fc8-d704-4133-821e-16dbffa9b84c",
+                "Guid": "8bf835ad-6dc3-47a3-9fad-f9de68b7bb1a",
                 "Name": "region_cluster_416_sector_002",
                 "Fields": [],
                 "Resources": [
@@ -7230,7 +7286,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": -9526876,
+            "Y": 24569310
+          }
         }
       ],
       "Position": {
@@ -7284,7 +7344,7 @@
               "Id": 0,
               "Name": "C421S01_Region002_connection",
               "Definition": {
-                "Guid": "318ac303-d708-46d2-a30c-90f98749db49",
+                "Guid": "37935085-9bc9-4ff2-b2e2-19a05084a008",
                 "Name": "region_cluster_421_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -7332,7 +7392,7 @@
               "Id": 0,
               "Name": "C422S01_Region02_connection",
               "Definition": {
-                "Guid": "32b0a0ad-a8b3-4e1a-a488-fbd74991e08c",
+                "Guid": "44d51a1d-d3f3-4bb4-aef8-b9b0ee72714f",
                 "Name": "region_cluster_422_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -7397,7 +7457,11 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 130226256,
+            "Y": 112144392
+          }
         }
       ],
       "Position": {
@@ -7426,7 +7490,7 @@
               "Id": 0,
               "Name": "C412S01_Region02_connection",
               "Definition": {
-                "Guid": "ae06738f-9aaf-4f25-a899-19f0985fd99a",
+                "Guid": "156291df-89ca-4d7b-a23e-4a25aeb8e80e",
                 "Name": "region_cluster_412_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -7486,7 +7550,7 @@
               "Id": 0,
               "Name": "C413S01_Region02_connection",
               "Definition": {
-                "Guid": "f04637ff-2f90-4849-9173-fd9d6926062a",
+                "Guid": "22760e8c-b917-41fa-b961-135c69f3797b",
                 "Name": "region_cluster_413_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -7546,7 +7610,7 @@
               "Id": 0,
               "Name": "C414S01_Region02_connection",
               "Definition": {
-                "Guid": "712763aa-c4e6-4a35-a1df-6d52a54dab03",
+                "Guid": "b1e5c26f-c41b-4713-872c-7d4350322319",
                 "Name": "region_cluster_414_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -7594,7 +7658,7 @@
               "Id": 0,
               "Name": "C415S01_Region02_connection",
               "Definition": {
-                "Guid": "9dc9a906-66fd-45c5-b148-748160e8ffb8",
+                "Guid": "8cf2b2c2-3319-4fd2-ba0e-3e3795458bb1",
                 "Name": "region_cluster_415_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -7671,7 +7735,7 @@
               "Id": 0,
               "Name": "C424S02_Region002_connection",
               "Definition": {
-                "Guid": "9828d969-25e0-4f7e-a227-c9b4e331553b",
+                "Guid": "7b8f9a08-fb33-45b1-8792-de22d258b458",
                 "Name": "region_cluster_424_sector_002",
                 "Fields": [],
                 "Resources": [
@@ -7694,7 +7758,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 136719008,
+            "Y": 3677055
+          }
         }
       ],
       "Position": {
@@ -7723,7 +7791,7 @@
               "Id": 0,
               "Name": "C425S01_Region02_connection",
               "Definition": {
-                "Guid": "3307e0ac-c440-4ddc-9db3-5f7292de84a2",
+                "Guid": "d655247a-ddd0-42e3-9890-6a908d7d4551",
                 "Name": "region_cluster_425_sector_001",
                 "Fields": [],
                 "Resources": [
@@ -7775,7 +7843,7 @@
               "Id": 0,
               "Name": "Cluster500_Sector001_Region002_connection",
               "Definition": {
-                "Guid": "47f07de8-65d8-4621-951c-b9ec24aa240e",
+                "Guid": "fd7cf958-c551-488e-b63f-843a988dcede",
                 "Name": "s2_grav",
                 "Fields": [],
                 "Resources": [
@@ -7805,7 +7873,7 @@
               "Id": 0,
               "Name": "Cluster500_Sector001_Region003_connection",
               "Definition": {
-                "Guid": "4bd978e2-460a-4ca9-bd0c-76fd6d06a4e2",
+                "Guid": "a733d7ee-9844-47dc-9c89-07d240d0e2e9",
                 "Name": "wave_asteroids",
                 "Fields": [],
                 "Resources": [
@@ -7851,7 +7919,7 @@
               "Id": 0,
               "Name": "Cluster500_Sector001_Region004_connection",
               "Definition": {
-                "Guid": "63be4d49-c020-45db-9418-eafa3b133949",
+                "Guid": "980c0477-005d-43f0-b782-c1544a5470ad",
                 "Name": "wave_active",
                 "Fields": [],
                 "Resources": [
@@ -7862,6 +7930,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "300000000",
               "Position": {
                 "IsEmpty": false,
                 "X": 35038240,
@@ -7869,7 +7938,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 35038240,
+            "Y": 55106290
+          }
         },
         {
           "Id": 0,
@@ -7886,7 +7959,7 @@
               "Id": 0,
               "Name": "Cluster500_Sector002_Region001_connection",
               "Definition": {
-                "Guid": "bc4a4a16-53a2-4207-90ca-e2677a8d2fac",
+                "Guid": "6bbb82ac-082b-4d7f-99f9-e5c116db533a",
                 "Name": "s2_grav_small",
                 "Fields": [],
                 "Resources": [
@@ -7916,7 +7989,7 @@
               "Id": 0,
               "Name": "Cluster500_Sector002_Region002_connection",
               "Definition": {
-                "Guid": "684903be-9c9d-4ca6-a497-ac211e5d6698",
+                "Guid": "659b6bfb-0965-49e8-9579-f1076cef070e",
                 "Name": "s2_grav_small_v2",
                 "Fields": [],
                 "Resources": [
@@ -7946,7 +8019,7 @@
               "Id": 0,
               "Name": "Cluster500_Sector002_Region003_connection",
               "Definition": {
-                "Guid": "684903be-9c9d-4ca6-a497-ac211e5d6698",
+                "Guid": "659b6bfb-0965-49e8-9579-f1076cef070e",
                 "Name": "s2_grav_small_v2",
                 "Fields": [],
                 "Resources": [
@@ -7973,7 +8046,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 986167,
+            "Y": -210804500
+          }
         },
         {
           "Id": 0,
@@ -7986,7 +8063,11 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": -110379200,
+            "Y": -45945560
+          }
         }
       ],
       "Position": {
@@ -8015,7 +8096,7 @@
               "Id": 0,
               "Name": "Cluster501_Sector001_Region002_connection",
               "Definition": {
-                "Guid": "13cb0c52-08e9-41dc-a399-1673ece4d7b9",
+                "Guid": "0e6fb549-68b1-40d3-8f0b-d56537b109cc",
                 "Name": "region_c501s01_res",
                 "Fields": [],
                 "Resources": [
@@ -8079,7 +8160,7 @@
               "Id": 0,
               "Name": "Cluster502_Sector001_Region001_connection",
               "Definition": {
-                "Guid": "3574d69d-621f-46cd-9362-7add5bda3777",
+                "Guid": "90ab5787-78b1-4893-bf48-35eb6923cdaf",
                 "Name": "region_c502s01_base",
                 "Fields": [],
                 "Resources": [
@@ -8101,7 +8182,7 @@
               "Id": 0,
               "Name": "Cluster502_Sector001_Region002_connection",
               "Definition": {
-                "Guid": "644f4a92-4470-452f-b17c-5b48fc842119",
+                "Guid": "c4335ed2-bedf-44f8-a352-19edb68430a8",
                 "Name": "region_c502s01_scrap",
                 "Fields": [],
                 "Resources": [
@@ -8149,7 +8230,7 @@
               "Id": 0,
               "Name": "Cluster503_Sector001_Region001_connection",
               "Definition": {
-                "Guid": "c0696d78-79ed-4f84-8630-a3c3d44806dd",
+                "Guid": "bf6b5237-d8ff-4296-89f6-95cb882802ad",
                 "Name": "region_c503s01_base",
                 "Fields": [],
                 "Resources": [
@@ -8171,7 +8252,7 @@
               "Id": 0,
               "Name": "Cluster503_Sector001_Region002_connection",
               "Definition": {
-                "Guid": "f5f22cd7-f9e5-4f30-9d00-c35c89cb6c2a",
+                "Guid": "21efd6c6-b06b-47ee-b9ba-de79e439768a",
                 "Name": "region_c503s01_casino",
                 "Fields": [],
                 "Resources": [
@@ -8193,7 +8274,7 @@
               "Id": 0,
               "Name": "Cluster503_Sector001_Region004_connection",
               "Definition": {
-                "Guid": "c62a1602-e1e5-4cf2-bd0f-2be7ebc85247",
+                "Guid": "4a9b38e7-3a08-4869-9bb1-1c72206af9ce",
                 "Name": "region_c503s01_casino3",
                 "Fields": [],
                 "Resources": [
@@ -8257,7 +8338,7 @@
               "Id": 0,
               "Name": "Cluster504_Sector001_Region002_connection",
               "Definition": {
-                "Guid": "6c9fe539-5888-4c37-a922-54ffea80c7ef",
+                "Guid": "edb6d39b-935f-438a-aa4b-86f420ec2b55",
                 "Name": "region504_grav",
                 "Fields": [],
                 "Resources": [
@@ -8287,7 +8368,7 @@
               "Id": 0,
               "Name": "Cluster504_Sector001_Region003_connection",
               "Definition": {
-                "Guid": "917f0d23-5918-4cf2-8597-48d4e3e9ff4e",
+                "Guid": "ef6726b2-83be-4579-b9b9-6d50f1439673",
                 "Name": "region504_asteroids",
                 "Fields": [],
                 "Resources": [
@@ -8317,7 +8398,7 @@
               "Id": 0,
               "Name": "Cluster504_Sector001_Region004_connection",
               "Definition": {
-                "Guid": "89908ef0-9188-4195-a10a-1c943914ef49",
+                "Guid": "060452ec-66a8-498b-9f4b-1d229760697f",
                 "Name": "region504wave_active",
                 "Fields": [],
                 "Resources": [
@@ -8328,6 +8409,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "1000000",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -8364,7 +8446,7 @@
               "Id": 0,
               "Name": "Cluster100_Sector001_Region001_connection",
               "Definition": {
-                "Guid": "8c11fe4f-17a3-476b-8fbd-0c4bd560f7eb",
+                "Guid": "7772818b-36ba-4e29-99fe-e29b830e6b0b",
                 "Name": "asteroidbelt_main",
                 "Fields": [],
                 "Resources": [
@@ -8481,40 +8563,7 @@
           "DiameterRadius": 500000,
           "AllowRandomAnomalies": true,
           "Zones": [],
-          "Regions": [
-            {
-              "Id": 0,
-              "Name": "Cluster104_Sector001_Region002_connection",
-              "Definition": {
-                "Guid": "133dfc62-cfbc-47b5-8dcb-e221be6f940d",
-                "Name": "torus_radiation_1",
-                "Fields": [],
-                "Resources": [],
-                "Falloff": []
-              },
-              "Position": {
-                "IsEmpty": false,
-                "X": -75900,
-                "Y": 127600
-              }
-            },
-            {
-              "Id": 0,
-              "Name": "Cluster104_Sector001_Region002b_connection",
-              "Definition": {
-                "Guid": "675e8fbf-3b98-42c3-b833-a591de8cfe5c",
-                "Name": "torus_radiation1b",
-                "Fields": [],
-                "Resources": [],
-                "Falloff": []
-              },
-              "Position": {
-                "IsEmpty": false,
-                "X": -75900,
-                "Y": 127610
-              }
-            }
-          ],
+          "Regions": [],
           "Placement": "TopLeft"
         },
         {
@@ -8528,7 +8577,11 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 0,
+            "Y": -175890496
+          }
         }
       ],
       "Position": {
@@ -8557,7 +8610,7 @@
               "Id": 0,
               "Name": "Cluster106_Sector001_Region001_connection",
               "Definition": {
-                "Guid": "15cbf6cf-f741-4e5e-98eb-a949cb97f571",
+                "Guid": "a3c0b85d-44bf-4795-96c2-d195c3cdb35b",
                 "Name": "mercury_field",
                 "Fields": [],
                 "Resources": [
@@ -8643,7 +8696,7 @@
               "Id": 0,
               "Name": "Cluster108_Sector002_Region001_connection",
               "Definition": {
-                "Guid": "de5efd28-d70e-4b43-af13-b87ea32ebe6d",
+                "Guid": "a37e39e5-c83a-4c4e-a9bb-d57be94eb85c",
                 "Name": "titan_field",
                 "Fields": [],
                 "Resources": [
@@ -8666,7 +8719,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": -55073532,
+            "Y": -159401120
+          }
         },
         {
           "Id": 0,
@@ -8683,7 +8740,7 @@
               "Id": 0,
               "Name": "Cluster108_Sector003_Region001_connection",
               "Definition": {
-                "Guid": "18863445-0020-43b8-a024-a402a6aca8c5",
+                "Guid": "0661d9d9-588a-4372-bb1d-5700278cad0a",
                 "Name": "saturn_field",
                 "Fields": [],
                 "Resources": [
@@ -8718,7 +8775,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": -32631400,
+            "Y": 134273000
+          }
         }
       ],
       "Position": {
@@ -8772,7 +8833,7 @@
               "Id": 0,
               "Name": "Cluster110_Sector001_Region001_connection",
               "Definition": {
-                "Guid": "fa9d29c7-7590-40b3-a5b5-4749df47e689",
+                "Guid": "e8736fdc-4c7d-4216-a19d-ececb035b91a",
                 "Name": "neptune_field",
                 "Fields": [],
                 "Resources": [
@@ -8849,7 +8910,7 @@
               "Id": 0,
               "Name": "Cluster112_Sector001_Region001_connection",
               "Definition": {
-                "Guid": "a06a4eba-e6c8-45ba-b660-e356d3a16e2d",
+                "Guid": "8a9cf023-b129-4a94-92bb-ef41c5d79229",
                 "Name": "cluster112_s1_region01",
                 "Fields": [],
                 "Resources": [
@@ -8905,7 +8966,7 @@
               "Id": 0,
               "Name": "Cluster112_Sector002_Region001_connection",
               "Definition": {
-                "Guid": "36ecde64-593a-4b36-afb3-c27ff2f84301",
+                "Guid": "f7021c32-79c1-4b4b-b880-69dabd4f1804",
                 "Name": "cluster112_s2_region01",
                 "Fields": [],
                 "Resources": [
@@ -8936,6 +8997,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "424264",
               "Position": {
                 "IsEmpty": false,
                 "X": 0,
@@ -8943,7 +9005,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 0,
+            "Y": -51054804
+          }
         }
       ],
       "Position": {
@@ -8972,7 +9038,7 @@
               "Id": 0,
               "Name": "Cluster113_Sector001_Region001_connection",
               "Definition": {
-                "Guid": "d15013f4-1539-466c-8ae9-5634be1c46c1",
+                "Guid": "1d3e0af9-6fbb-4aa5-a55d-0483c6460a39",
                 "Name": "cluster113_region01",
                 "Fields": [],
                 "Resources": [
@@ -9044,7 +9110,7 @@
               "Id": 0,
               "Name": "Cluster114_Sector001_Region001_connection",
               "Definition": {
-                "Guid": "b9afffc0-6bd4-482c-9f06-f2c91944e215",
+                "Guid": "f127961d-b599-48d4-ba66-809d9280a7ef",
                 "Name": "cluster114_region01",
                 "Fields": [],
                 "Resources": [
@@ -9137,7 +9203,7 @@
               "Id": 0,
               "Name": "Cluster116_Sector001_Region001_connection",
               "Definition": {
-                "Guid": "a0f983c6-1770-4c7b-9273-e5e3c7891b17",
+                "Guid": "6649b16a-9085-4e9a-9932-e95286ab020a",
                 "Name": "oort_field",
                 "Fields": [],
                 "Resources": [
@@ -9209,7 +9275,7 @@
               "Id": 0,
               "Name": "C602S01_Region01_connection",
               "Definition": {
-                "Guid": "2e1be42f-6e6d-4c91-85b2-da51d3db019a",
+                "Guid": "fb569b63-3923-4eba-852c-73f2f3e2a436",
                 "Name": "c602s1_region1",
                 "Fields": [],
                 "Resources": [
@@ -9224,6 +9290,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "20000",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9260,7 +9327,7 @@
               "Id": 0,
               "Name": "C603S01_Region01_connection",
               "Definition": {
-                "Guid": "314f68cb-62fb-4256-af65-0adb701c61c0",
+                "Guid": "26b9b39f-1fbb-482b-958b-8e601b3b52a6",
                 "Name": "c603s1_region1",
                 "Fields": [],
                 "Resources": [
@@ -9316,7 +9383,7 @@
               "Id": 0,
               "Name": "C605S01_Region01_connection",
               "Definition": {
-                "Guid": "672f8bb3-2221-418c-b912-de78ec4609e7",
+                "Guid": "261c890d-db82-4b16-80ea-389b42dcc431",
                 "Name": "c605s1_region",
                 "Fields": [],
                 "Resources": [
@@ -9335,6 +9402,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "300000",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9345,7 +9413,7 @@
               "Id": 0,
               "Name": "C605S01_Region12_connection",
               "Definition": {
-                "Guid": "48533924-0241-4307-9f7f-4d110f24261a",
+                "Guid": "fa4b2219-ac74-4769-8f48-4795b00b250c",
                 "Name": "c605s1_region12",
                 "Fields": [],
                 "Resources": [
@@ -9364,6 +9432,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "15000",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9374,7 +9443,7 @@
               "Id": 0,
               "Name": "C605S01_Region13_connection",
               "Definition": {
-                "Guid": "5942cf38-c8c7-4f75-b5e2-ab0fe6592267",
+                "Guid": "6bec7a22-a33b-406a-8ad8-86ef40623bdb",
                 "Name": "c605s1_region13",
                 "Fields": [],
                 "Resources": [
@@ -9393,6 +9462,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "12500",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9403,7 +9473,7 @@
               "Id": 0,
               "Name": "C605S01_Region14_connection",
               "Definition": {
-                "Guid": "1ebb4214-e2f9-4efd-b03a-79bb5188051b",
+                "Guid": "5599a32f-4d70-40ee-9632-e11519c5d71d",
                 "Name": "c605s1_region14",
                 "Fields": [],
                 "Resources": [
@@ -9422,6 +9492,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "1500",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9432,7 +9503,7 @@
               "Id": 0,
               "Name": "C605S01_Region15_connection",
               "Definition": {
-                "Guid": "9319f5e9-b8b3-4743-a17f-d0472bb5acd2",
+                "Guid": "ceec6716-842a-4027-9c31-6295878ea945",
                 "Name": "c605s1_region15",
                 "Fields": [],
                 "Resources": [
@@ -9451,6 +9522,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "2500",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9461,7 +9533,7 @@
               "Id": 0,
               "Name": "C605S01_Region16_connection",
               "Definition": {
-                "Guid": "306eceec-3661-4bd2-a090-b7e98129436f",
+                "Guid": "e85ec64b-2e98-466f-969b-074afb09d9b7",
                 "Name": "c605s1_region16",
                 "Fields": [],
                 "Resources": [
@@ -9480,6 +9552,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "2500",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9490,7 +9563,7 @@
               "Id": 0,
               "Name": "C605S01_Region17_connection",
               "Definition": {
-                "Guid": "e6d188fa-1d77-4430-a8cd-17b7f6e46e6f",
+                "Guid": "a5251b34-c3cd-4d32-abcd-ca88f9f9398e",
                 "Name": "c605s1_region17",
                 "Fields": [],
                 "Resources": [
@@ -9509,6 +9582,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "2500",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9519,7 +9593,7 @@
               "Id": 0,
               "Name": "C605S01_Region18_connection",
               "Definition": {
-                "Guid": "626b5d75-36a0-41ca-9e1e-ab68fed53be0",
+                "Guid": "9a192ebd-06da-47db-9087-d3772c63ddf4",
                 "Name": "c605s1_region18",
                 "Fields": [],
                 "Resources": [
@@ -9538,6 +9612,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "2500",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9548,7 +9623,7 @@
               "Id": 0,
               "Name": "C605S01_Region19_connection",
               "Definition": {
-                "Guid": "8628c99e-4524-4c67-a2ea-24916ef80388",
+                "Guid": "26cff17f-aa8d-4aa7-91c4-ebc24ea7b98b",
                 "Name": "c605s1_region19",
                 "Fields": [],
                 "Resources": [
@@ -9567,6 +9642,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "2500",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9577,7 +9653,7 @@
               "Id": 0,
               "Name": "C605S01_Region20_connection",
               "Definition": {
-                "Guid": "8c549a62-3cf6-4bfd-80b3-4c071fbb32b5",
+                "Guid": "662ce9e2-2b83-4699-bb70-c1d534fa060c",
                 "Name": "c605s1_region20",
                 "Fields": [],
                 "Resources": [
@@ -9596,6 +9672,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "2500",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -9645,7 +9722,7 @@
               "Id": 0,
               "Name": "C606S02_Region01_connection",
               "Definition": {
-                "Guid": "3c51df1f-e1fb-4ed6-99f2-9a9f3a784724",
+                "Guid": "136de622-2062-4eeb-950a-1dbbd831630f",
                 "Name": "c606s2_region",
                 "Fields": [],
                 "Resources": [
@@ -9664,7 +9741,11 @@
               }
             }
           ],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": -622191,
+            "Y": -41743070
+          }
         },
         {
           "Id": 0,
@@ -9677,7 +9758,11 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
-          "Placement": "TopLeft"
+          "Placement": "TopLeft",
+          "SectorRealOffset": {
+            "X": 59111760,
+            "Y": -2041270
+          }
         }
       ],
       "Position": {
@@ -9706,7 +9791,7 @@
               "Id": 0,
               "Name": "C604S01_Region01_connection",
               "Definition": {
-                "Guid": "6734bc88-48da-44ee-9d8d-9a3eeaad8214",
+                "Guid": "5440bd2d-2c7e-49c0-bb2d-99d7bef3dc12",
                 "Name": "c604s1_region1",
                 "Fields": [],
                 "Resources": [
@@ -9717,6 +9802,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "12500",
               "Position": {
                 "IsEmpty": false,
                 "X": 113703,
@@ -9753,7 +9839,7 @@
               "Id": 0,
               "Name": "C607S01_Region02_connection",
               "Definition": {
-                "Guid": "39959d89-b504-4af2-bb70-3a056c0def4f",
+                "Guid": "10c3ae99-b91f-4ceb-aa87-783abd4a04f8",
                 "Name": "c607s1_region2",
                 "Fields": [],
                 "Resources": [
@@ -9772,6 +9858,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "40000",
               "Position": {
                 "IsEmpty": false,
                 "X": -15937,
@@ -9782,7 +9869,7 @@
               "Id": 0,
               "Name": "C607S01_Region01_connection",
               "Definition": {
-                "Guid": "f6ebd622-bfee-424e-b09e-bf8f4e2504fe",
+                "Guid": "6a099728-b78f-4615-9730-d611b4f6d08b",
                 "Name": "c607s1_region1",
                 "Fields": [],
                 "Resources": [
@@ -9793,6 +9880,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "80000",
               "Position": {
                 "IsEmpty": false,
                 "X": 119988,
@@ -9829,7 +9917,7 @@
               "Id": 0,
               "Name": "C601S01_Region01_connection",
               "Definition": {
-                "Guid": "38d2e7cd-03d8-4f62-baee-973b66077a79",
+                "Guid": "66f61197-9c4a-4298-b535-204155c8ee3a",
                 "Name": "c601s1_region1",
                 "Fields": [],
                 "Resources": [
@@ -9856,6 +9944,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "50000",
               "Position": {
                 "IsEmpty": false,
                 "X": -92752,
@@ -9866,7 +9955,7 @@
               "Id": 0,
               "Name": "C601S01_Region02_connection",
               "Definition": {
-                "Guid": "88201511-25cf-4aae-9adb-ca10a3bbdd99",
+                "Guid": "cab4b564-9e34-4cb3-8676-62ce0d28a373",
                 "Name": "c601s1_region2",
                 "Fields": [],
                 "Resources": [
@@ -9885,6 +9974,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "67500",
               "Position": {
                 "IsEmpty": false,
                 "X": 115338,
@@ -9921,7 +10011,7 @@
               "Id": 0,
               "Name": "C608S01_Region01_connection",
               "Definition": {
-                "Guid": "f9d17681-bedc-4892-82df-a90ea757f373",
+                "Guid": "d364489c-7164-4f2b-91c5-a32841f0021f",
                 "Name": "c608s1_region1",
                 "Fields": [],
                 "Resources": [
@@ -9977,7 +10067,7 @@
               "Id": 0,
               "Name": "C609S01_Region01_connection",
               "Definition": {
-                "Guid": "52f73641-8f77-4b7b-96be-42ed82a55d16",
+                "Guid": "8dd63463-6d53-4f2f-a55d-0327dc7b2aa3",
                 "Name": "c609s1_region1",
                 "Fields": [],
                 "Resources": [
@@ -10058,7 +10148,7 @@
               "Id": 0,
               "Name": "C702S01_Region01_connection",
               "Definition": {
-                "Guid": "f83f8c01-1db6-4c68-9ffe-3e52ceb2ee5b",
+                "Guid": "9973399c-983f-4a8b-a4a6-e5dd032e0010",
                 "Name": "region_cluster_702_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -10088,7 +10178,7 @@
               "Id": 0,
               "Name": "C702S01_Region02_connection",
               "Definition": {
-                "Guid": "c1fcda0f-3e23-44f8-9c41-d9ed5a4af69f",
+                "Guid": "c39b65da-94ab-4882-88f2-02f49c17cb38",
                 "Name": "region_cluster_702_sector_001_nebula_2",
                 "Fields": [],
                 "Resources": [
@@ -10118,7 +10208,7 @@
               "Id": 0,
               "Name": "C702S01_Region06_connection",
               "Definition": {
-                "Guid": "4a398e42-8263-4069-baeb-a0e85834bc46",
+                "Guid": "f4aaa901-6931-4691-b99c-5009c7d683c7",
                 "Name": "region_cluster_702_sector_001_nebula_3",
                 "Fields": [],
                 "Resources": [
@@ -10148,7 +10238,7 @@
               "Id": 0,
               "Name": "C702S01_Region03_connection",
               "Definition": {
-                "Guid": "7a76846e-2698-44e6-a197-e30144067a1b",
+                "Guid": "8e66575a-efc4-4399-adfe-5c3406ff1ff4",
                 "Name": "region_cluster_702_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -10182,7 +10272,7 @@
               "Id": 0,
               "Name": "C702S01_Region04_connection",
               "Definition": {
-                "Guid": "6abd4e51-8de9-475e-87bd-80cddefc21f0",
+                "Guid": "63f8cbed-fc1b-4320-9371-c1e25e5a0aba",
                 "Name": "region_cluster_702_sector_001_asteroids_2",
                 "Fields": [],
                 "Resources": [
@@ -10242,7 +10332,7 @@
               "Id": 0,
               "Name": "C703S01_Region01_connection",
               "Definition": {
-                "Guid": "7647e704-295e-424b-ad0c-01c80ab8b8a6",
+                "Guid": "fbc24515-ceb3-493a-8326-672f406651b8",
                 "Name": "region_cluster_703_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -10272,7 +10362,7 @@
               "Id": 0,
               "Name": "C703S01_Region02_connection",
               "Definition": {
-                "Guid": "a61a4436-f19a-485d-9395-124f9b658371",
+                "Guid": "c9d55988-85fc-4921-b8c3-987f86436069",
                 "Name": "region_cluster_703_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -10332,7 +10422,7 @@
               "Id": 0,
               "Name": "C705S01_Region01_connection",
               "Definition": {
-                "Guid": "1b3a9694-074a-4217-8ebc-fe6b99d8f9be",
+                "Guid": "8cacb107-6a81-47db-8b17-a33e930d2767",
                 "Name": "region_cluster_705_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -10358,7 +10448,7 @@
               "Id": 0,
               "Name": "C705S01_Region02_connection",
               "Definition": {
-                "Guid": "8cf2a141-ae5b-4b2c-bf3e-97c7d63c1325",
+                "Guid": "3a8f7d70-d8f8-472c-bc40-3cf080ff7918",
                 "Name": "region_cluster_705_sector_001_asteroids_2",
                 "Fields": [],
                 "Resources": [
@@ -10384,7 +10474,7 @@
               "Id": 0,
               "Name": "C705S01_Region03_connection",
               "Definition": {
-                "Guid": "0be40076-7fc8-4dbd-8f1f-f2761f26c6e0",
+                "Guid": "0b6027eb-8287-4b77-8d03-e0eca8e0a8ec",
                 "Name": "region_cluster_705_sector_001_asteroids_3",
                 "Fields": [],
                 "Resources": [
@@ -10444,7 +10534,7 @@
               "Id": 0,
               "Name": "C706S01_Region01_connection",
               "Definition": {
-                "Guid": "8a687d7f-72c5-472d-b1df-952f92c89dfe",
+                "Guid": "6144983a-4c0e-407b-860a-bdc38162ae17",
                 "Name": "region_cluster_706_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -10500,7 +10590,7 @@
               "Id": 0,
               "Name": "C704S01_Region01_connection",
               "Definition": {
-                "Guid": "719100c0-0436-4842-8809-451d2d0b6f8e",
+                "Guid": "13809612-6234-4dc6-ab00-e178795016f6",
                 "Name": "region_cluster_704_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -10530,7 +10620,7 @@
               "Id": 0,
               "Name": "C704S01_Region02_connection",
               "Definition": {
-                "Guid": "3f980731-7a6c-4e5f-969f-780ca5775188",
+                "Guid": "3e2a749b-5f80-4696-9be9-17f86ba32a05",
                 "Name": "region_cluster_704_sector_001_asteroids_2",
                 "Fields": [],
                 "Resources": [
@@ -10550,23 +10640,6 @@
                 "IsEmpty": false,
                 "X": 150000,
                 "Y": -150000
-              }
-            },
-            {
-              "Id": 0,
-              "Name": "C704S01_Region04_connection",
-              "Definition": {
-                "Guid": "9b20b270-242f-4c6a-8063-5d6d9db01cb2",
-                "Name": "region_cluster_704_sector_001_nebula_1",
-                "Fields": [],
-                "Resources": [],
-                "Falloff": []
-              },
-              "BoundaryRadius": "150000",
-              "Position": {
-                "IsEmpty": false,
-                "X": -150000,
-                "Y": -200000
               }
             }
           ],
@@ -10599,7 +10672,7 @@
               "Id": 0,
               "Name": "C708S01_Region01_connection",
               "Definition": {
-                "Guid": "a00718a0-cf94-4b10-8e0c-8cb5afad99c9",
+                "Guid": "152aea13-f91e-4e15-be1c-4242da5fee91",
                 "Name": "region_cluster_708_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
@@ -10625,7 +10698,7 @@
               "Id": 0,
               "Name": "C708S01_Region03_connection",
               "Definition": {
-                "Guid": "9347693d-0f7c-4cc4-bceb-b654607f6541",
+                "Guid": "bb01c783-1c12-466d-aaf6-d5163d8809a7",
                 "Name": "region_cluster_708_sector_001_scrap_1",
                 "Fields": [],
                 "Resources": [
@@ -10636,6 +10709,7 @@
                 ],
                 "Falloff": []
               },
+              "BoundaryRadius": "12500",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -10672,7 +10746,7 @@
               "Id": 0,
               "Name": "C7300S01_Region01_connection",
               "Definition": {
-                "Guid": "44bdd09a-2fc4-47bd-90b9-4106e98de1f0",
+                "Guid": "feb97301-5418-4c3b-b29d-8ca115e9fd92",
                 "Name": "region_cluster_730_sector_001_nebula_1",
                 "Fields": [],
                 "Resources": [
@@ -10694,7 +10768,7 @@
               "Id": 0,
               "Name": "C7300S01_Region02_connection",
               "Definition": {
-                "Guid": "5927bf3f-e1e1-445f-abd6-adbb912ec8cf",
+                "Guid": "8a26c3d0-9c54-40b8-a0d3-97a2fffbf5d8",
                 "Name": "region_cluster_730_sector_001_asteroids_1",
                 "Fields": [],
                 "Resources": [
