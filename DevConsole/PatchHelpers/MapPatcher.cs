@@ -28,6 +28,17 @@ namespace DevConsole.PatchHelpers
             var vanillaFiles = Directory.GetFiles(vanillaFilesPath.path, "*.xml", SearchOption.AllDirectories)
                 .ToDictionary(a => a, a => new XmlPatcher(a));
 
+            // Also include region_definitions
+            var vanillaRegionDefinitionsPath = Path.Combine(Path.GetFullPath(Path.Combine(vanillaFilesPath.path, "..", "..")), "libraries", "region_definitions.xml");
+            var vanillaRegionDefintionsPatcher = new XmlPatcher(vanillaRegionDefinitionsPath);
+            foreach (var dir in directories.Where(a => a.prefix != null))
+            {
+                var filePath = Path.Combine(Path.GetFullPath(Path.Combine(dir.path, "..", "..")), "libraries", "region_definitions.xml");
+                if (!File.Exists(filePath)) continue;
+                vanillaRegionDefintionsPatcher.ApplyPatch(filePath);
+            }
+            vanillaRegionDefintionsPatcher.Save(Path.Combine("vanillamapfiles", Path.GetFileName("region_definitions.xml")));
+
             // Dlc files
             foreach (var directory in directories.Where(a => a.prefix != null))
             {

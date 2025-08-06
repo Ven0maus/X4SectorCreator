@@ -149,6 +149,21 @@ namespace DevConsole.Extractors
                 _regionDefintions.Remove(invalidDefinition.Name);
             }
 
+            // Set region boundary radius
+            foreach (var cluster in clusters.Values)
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    foreach (var region in sector.Regions)
+                    {
+                        if (definitions.TryGetValue(region.Definition.Name, out var def))
+                        {
+                            region.BoundaryRadius = def.BoundaryRadius;
+                        }
+                    }
+                }
+            }
+
             // Store region extraction file
             var clusterCollection = new ClusterCollection { Clusters = clusters.Values.ToList() };
             var xml = JsonSerializer.Serialize(clusterCollection, ConfigSerializer.JsonSerializerOptions);
@@ -208,6 +223,7 @@ namespace DevConsole.Extractors
                 yield return new RegionObj
                 {
                     Name = region.Attribute("name")?.Value,
+                    BoundaryRadius = region.Element("boundary")?.Element("size")?.Attribute("r")?.Value,
                     Resources = (region.Element("resources")?.Elements("resource") ?? [])
                         .Select(a => new Resource
                         {
@@ -222,6 +238,7 @@ namespace DevConsole.Extractors
         public class RegionObj
         {
             public string Name { get; set; }
+            public string BoundaryRadius { get; set; }
             public List<Resource> Resources { get; set; }
         }
 
