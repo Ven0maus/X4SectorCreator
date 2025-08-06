@@ -188,7 +188,6 @@ namespace X4SectorCreator.Forms
         private void TxtLocation_MouseClick(object sender, MouseEventArgs e)
         {
             MainForm.Instance.SectorMapForm.Value.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
-            MainForm.Instance.SectorMapForm.Value.chkShowX4Sectors.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
             MainForm.Instance.SectorMapForm.Value.GateSectorSelection = false;
             MainForm.Instance.SectorMapForm.Value.ClusterSectorSelection = true;
             MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Enabled = false;

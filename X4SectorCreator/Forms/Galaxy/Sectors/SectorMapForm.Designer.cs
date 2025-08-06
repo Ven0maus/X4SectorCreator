@@ -28,17 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            chkShowX4Sectors = new CheckBox();
             BtnSelectLocation = new Button();
-            chkShowCoordinates = new CheckBox();
-            chkShowCustomSectors = new CheckBox();
             ControlPanel = new Panel();
+            MapOptionsListBox = new CheckedListBox();
             BtnHideOptions = new Button();
             label1 = new Label();
             label3 = new Label();
-            ChkShowStations = new CheckBox();
-            ChkShowRegions = new CheckBox();
-            chkShowConnections = new CheckBox();
             DlcListBox = new CheckedListBox();
             LegendPanel = new Panel();
             BtnHideLegend = new Button();
@@ -49,23 +44,6 @@
             ControlPanel.SuspendLayout();
             LegendPanel.SuspendLayout();
             SuspendLayout();
-            // 
-            // chkShowX4Sectors
-            // 
-            chkShowX4Sectors.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            chkShowX4Sectors.AutoSize = true;
-            chkShowX4Sectors.BackColor = Color.Transparent;
-            chkShowX4Sectors.Checked = true;
-            chkShowX4Sectors.CheckState = CheckState.Checked;
-            chkShowX4Sectors.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            chkShowX4Sectors.ForeColor = SystemColors.ButtonFace;
-            chkShowX4Sectors.Location = new Point(4, 25);
-            chkShowX4Sectors.Name = "chkShowX4Sectors";
-            chkShowX4Sectors.Size = new Size(138, 23);
-            chkShowX4Sectors.TabIndex = 0;
-            chkShowX4Sectors.Text = "Show X4 Sectors";
-            chkShowX4Sectors.UseVisualStyleBackColor = false;
-            chkShowX4Sectors.CheckedChanged += ChkShowX4Sectors_CheckedChanged;
             // 
             // BtnSelectLocation
             // 
@@ -80,58 +58,36 @@
             BtnSelectLocation.UseVisualStyleBackColor = true;
             BtnSelectLocation.Click += BtnSelectLocation_Click;
             // 
-            // chkShowCoordinates
-            // 
-            chkShowCoordinates.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            chkShowCoordinates.AutoSize = true;
-            chkShowCoordinates.BackColor = Color.Transparent;
-            chkShowCoordinates.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            chkShowCoordinates.ForeColor = SystemColors.ButtonFace;
-            chkShowCoordinates.Location = new Point(4, 108);
-            chkShowCoordinates.Name = "chkShowCoordinates";
-            chkShowCoordinates.Size = new Size(149, 23);
-            chkShowCoordinates.TabIndex = 2;
-            chkShowCoordinates.Text = "Show Coordinates";
-            chkShowCoordinates.UseVisualStyleBackColor = false;
-            chkShowCoordinates.CheckedChanged += ChkShowCoordinates_CheckedChanged;
-            // 
-            // chkShowCustomSectors
-            // 
-            chkShowCustomSectors.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            chkShowCustomSectors.AutoSize = true;
-            chkShowCustomSectors.BackColor = Color.Transparent;
-            chkShowCustomSectors.Checked = true;
-            chkShowCustomSectors.CheckState = CheckState.Checked;
-            chkShowCustomSectors.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            chkShowCustomSectors.ForeColor = SystemColors.ButtonFace;
-            chkShowCustomSectors.Location = new Point(4, 54);
-            chkShowCustomSectors.Name = "chkShowCustomSectors";
-            chkShowCustomSectors.Size = new Size(171, 23);
-            chkShowCustomSectors.TabIndex = 3;
-            chkShowCustomSectors.Text = "Show Custom Sectors";
-            chkShowCustomSectors.UseVisualStyleBackColor = false;
-            chkShowCustomSectors.CheckedChanged += ChkShowCustomSectors_CheckedChanged;
-            // 
             // ControlPanel
             // 
             ControlPanel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ControlPanel.BackColor = Color.Black;
             ControlPanel.BorderStyle = BorderStyle.FixedSingle;
+            ControlPanel.Controls.Add(MapOptionsListBox);
             ControlPanel.Controls.Add(BtnHideOptions);
             ControlPanel.Controls.Add(label1);
             ControlPanel.Controls.Add(label3);
-            ControlPanel.Controls.Add(ChkShowStations);
-            ControlPanel.Controls.Add(ChkShowRegions);
-            ControlPanel.Controls.Add(chkShowConnections);
-            ControlPanel.Controls.Add(chkShowCoordinates);
             ControlPanel.Controls.Add(DlcListBox);
             ControlPanel.Controls.Add(BtnSelectLocation);
-            ControlPanel.Controls.Add(chkShowCustomSectors);
-            ControlPanel.Controls.Add(chkShowX4Sectors);
             ControlPanel.Location = new Point(795, 12);
             ControlPanel.Name = "ControlPanel";
             ControlPanel.Size = new Size(176, 347);
             ControlPanel.TabIndex = 4;
+            // 
+            // MapOptionsListBox
+            // 
+            MapOptionsListBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            MapOptionsListBox.BackColor = SystemColors.MenuText;
+            MapOptionsListBox.CheckOnClick = true;
+            MapOptionsListBox.ForeColor = Color.White;
+            MapOptionsListBox.FormattingEnabled = true;
+            MapOptionsListBox.Items.AddRange(new object[] { "Show Vanilla Sectors", "Show Custom Sectors", "Show Connections", "Show Coordinates", "Show Regions", "Show Stations" });
+            MapOptionsListBox.Location = new Point(3, 27);
+            MapOptionsListBox.Name = "MapOptionsListBox";
+            MapOptionsListBox.ScrollAlwaysVisible = true;
+            MapOptionsListBox.Size = new Size(167, 148);
+            MapOptionsListBox.TabIndex = 9;
+            MapOptionsListBox.ItemCheck += MapOptionsListBox_ItemCheck;
             // 
             // BtnHideOptions
             // 
@@ -173,57 +129,6 @@
             label3.TabIndex = 1;
             label3.Text = "Options";
             label3.TextAlign = ContentAlignment.TopCenter;
-            // 
-            // ChkShowStations
-            // 
-            ChkShowStations.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ChkShowStations.AutoSize = true;
-            ChkShowStations.BackColor = Color.Transparent;
-            ChkShowStations.Checked = true;
-            ChkShowStations.CheckState = CheckState.Checked;
-            ChkShowStations.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            ChkShowStations.ForeColor = SystemColors.ButtonFace;
-            ChkShowStations.Location = new Point(4, 156);
-            ChkShowStations.Name = "ChkShowStations";
-            ChkShowStations.Size = new Size(121, 23);
-            ChkShowStations.TabIndex = 8;
-            ChkShowStations.Text = "Show Stations";
-            ChkShowStations.UseVisualStyleBackColor = false;
-            ChkShowStations.CheckedChanged += ChkShowStations_CheckedChanged;
-            // 
-            // ChkShowRegions
-            // 
-            ChkShowRegions.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ChkShowRegions.AutoSize = true;
-            ChkShowRegions.BackColor = Color.Transparent;
-            ChkShowRegions.Checked = true;
-            ChkShowRegions.CheckState = CheckState.Checked;
-            ChkShowRegions.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            ChkShowRegions.ForeColor = SystemColors.ButtonFace;
-            ChkShowRegions.Location = new Point(4, 132);
-            ChkShowRegions.Name = "ChkShowRegions";
-            ChkShowRegions.Size = new Size(121, 23);
-            ChkShowRegions.TabIndex = 7;
-            ChkShowRegions.Text = "Show Regions";
-            ChkShowRegions.UseVisualStyleBackColor = false;
-            ChkShowRegions.CheckedChanged += ChkShowRegions_CheckedChanged;
-            // 
-            // chkShowConnections
-            // 
-            chkShowConnections.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            chkShowConnections.AutoSize = true;
-            chkShowConnections.BackColor = Color.Transparent;
-            chkShowConnections.Checked = true;
-            chkShowConnections.CheckState = CheckState.Checked;
-            chkShowConnections.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            chkShowConnections.ForeColor = SystemColors.ButtonFace;
-            chkShowConnections.Location = new Point(4, 81);
-            chkShowConnections.Name = "chkShowConnections";
-            chkShowConnections.Size = new Size(149, 23);
-            chkShowConnections.TabIndex = 6;
-            chkShowConnections.Text = "Show Connections";
-            chkShowConnections.UseVisualStyleBackColor = false;
-            chkShowConnections.CheckedChanged += ChkShowConnections_CheckedChanged;
             // 
             // DlcListBox
             // 
@@ -329,30 +234,24 @@
             WindowState = FormWindowState.Maximized;
             Load += SectorMapForm_Load;
             ControlPanel.ResumeLayout(false);
-            ControlPanel.PerformLayout();
             LegendPanel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private CheckBox chkShowCoordinates;
-        private CheckBox chkShowCustomSectors;
         internal Button BtnSelectLocation;
         internal Panel ControlPanel;
-        internal CheckBox chkShowX4Sectors;
         internal CheckedListBox DlcListBox;
-        private CheckBox chkShowConnections;
         private Panel LegendPanel;
         private Label label2;
         private TreeView LegendTree;
         internal Button BtnHideLegend;
-        private CheckBox ChkShowStations;
-        private CheckBox ChkShowRegions;
         private Label label1;
         private Label label3;
         internal Button BtnHideOptions;
         private TextBox TxtSearch;
         private Label label4;
+        internal CheckedListBox MapOptionsListBox;
     }
 }

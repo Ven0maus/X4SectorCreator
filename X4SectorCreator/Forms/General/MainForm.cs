@@ -1605,7 +1605,6 @@ namespace X4SectorCreator
         private void BtnShowSectorMap_Click(object sender, EventArgs e)
         {
             SectorMapForm.Value.DlcListBox.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
-            SectorMapForm.Value.chkShowX4Sectors.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
             SectorMapForm.Value.GateSectorSelection = false;
             SectorMapForm.Value.BtnSelectLocation.Enabled = false;
             SectorMapForm.Value.ControlPanel.Size = new Size(176, 311);

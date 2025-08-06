@@ -54,6 +54,7 @@ namespace X4SectorCreator
             .Select((a, i) => (a.Value, index: i))
             .ToDictionary(a => a.Value, a => a.index, StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<int, bool> _dlcsSelected = [];
+        private static readonly Dictionary<string, bool> _mapOptionsSelected = [];
 
         private static bool _sectorMapFirstTimeOpen = true;
         private int _originalLegendPanelHeight, _originalControlPanelHeight;
@@ -141,6 +142,16 @@ namespace X4SectorCreator
         private readonly List<Sector> _availableSearchSectors = [];
         private readonly HashSet<Sector> _visibleSectorsFromSearch = [];
 
+        public enum MapOption
+        {
+            Show_Vanilla_Sectors,
+            Show_Custom_Sectors,
+            Show_Connections,
+            Show_Coordinates,
+            Show_Regions,
+            Show_Stations,
+        }
+
         public SectorMapForm()
         {
             InitializeComponent();
@@ -168,6 +179,20 @@ namespace X4SectorCreator
                 DlcListBox.SetItemChecked(mapping.Value, value);
             }
 
+            // Init default map options
+            int mapOptionIndex = 0;
+            foreach (var mapOption in MapOptionsListBox.Items.OfType<string>().ToArray())
+            {
+                if (!_mapOptionsSelected.TryGetValue(mapOption, out var selected))
+                {
+                    // If not yet initialized, it will be by default selected except "show coordinates"
+                    _mapOptionsSelected[mapOption] = selected = !mapOption.Equals("Show Coordinates", StringComparison.OrdinalIgnoreCase);
+                }
+
+                MapOptionsListBox.SetItemChecked(mapOptionIndex, selected);
+                mapOptionIndex++;
+            }
+
             // Setup legend
             SetupLegendTree();
 
@@ -179,6 +204,12 @@ namespace X4SectorCreator
             MouseWheel += HandleMouseWheel;
             MouseClick += SectorMapForm_MouseClick;
             KeyDown += SectorMapForm_KeyDown;
+        }
+
+        public bool IsMapOptionChecked(MapOption mapOption)
+        {
+            var index = (int)mapOption;
+            return MapOptionsListBox.GetItemCheckState(index) == CheckState.Checked;
         }
 
         private void SectorMapForm_Disposed(object sender, EventArgs e)
@@ -816,8 +847,8 @@ namespace X4SectorCreator
                 if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(group.Key))
                     continue;
 
-                if ((!chkShowX4Sectors.Checked && group.Key.IsBaseGame) ||
-                    (!chkShowCustomSectors.Checked && !group.Key.IsBaseGame))
+                if ((!IsMapOptionChecked(MapOption.Show_Vanilla_Sectors) && group.Key.IsBaseGame) ||
+                    (!IsMapOptionChecked(MapOption.Show_Custom_Sectors) && !group.Key.IsBaseGame))
                     continue;
 
                 var processed = 0;
@@ -864,7 +895,7 @@ namespace X4SectorCreator
                         using Font fBold = new(Font.FontFamily, (cluster.Sectors.Count == 1 ? 12 : 10), FontStyle.Bold);
                         var text = icon.Yield;
                         e.Graphics.DrawString(text, fBold, Brushes.Black,
-                            pos.X - 1f, pos.Y -1f);
+                            pos.X - 1f, pos.Y - 1f);
                     }
 
                     // Reset
@@ -877,7 +908,7 @@ namespace X4SectorCreator
 
         private IEnumerable<IconData> CollectRegionIconData(Point small, Point large)
         {
-            if (!ChkShowRegions.Checked) yield break;
+            if (!IsMapOptionChecked(MapOption.Show_Regions)) yield break;
 
             List<Cluster> relevantClusters = _baseGameClusters.Values
                 .Concat(_customClusters)
@@ -951,7 +982,7 @@ namespace X4SectorCreator
         private IEnumerable<IconData> CollectOtherIconData(Point sizeSmall, Point sizeLarge)
         {
             // Also hide it behind regions
-            if (!ChkShowRegions.Checked) yield break;
+            if (!IsMapOptionChecked(MapOption.Show_Regions)) yield break;
 
             var factionLogicDisabledIcon = GetIconFromStore("faction_logic_disabled");
             if (factionLogicDisabledIcon == null) yield break;
@@ -981,7 +1012,7 @@ namespace X4SectorCreator
 
         private void RenderStationIcons(PaintEventArgs e, Point sizeSmall, Point sizeLarge)
         {
-            if (!ChkShowStations.Checked) return;
+            if (!IsMapOptionChecked(MapOption.Show_Stations)) return;
 
             List<Cluster> relevantClusters = _baseGameClusters.Values
                 .Concat(_customClusters)
@@ -1010,8 +1041,8 @@ namespace X4SectorCreator
                     if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
                         continue;
 
-                    if ((!chkShowX4Sectors.Checked && sector.IsBaseGame) || 
-                        (!chkShowCustomSectors.Checked && !sector.IsBaseGame))
+                    if ((!IsMapOptionChecked(MapOption.Show_Vanilla_Sectors) && sector.IsBaseGame) ||
+                        (!IsMapOptionChecked(MapOption.Show_Custom_Sectors) && !sector.IsBaseGame))
                         continue;
 
                     // Collect the child hexagon points
@@ -1114,7 +1145,7 @@ namespace X4SectorCreator
             // Next step render the game clusters on top
             foreach (Cluster cluster in _baseGameClusters.Values)
             {
-                if (cluster.Sectors.All(a => a.IsBaseGame) && !chkShowX4Sectors.Checked)
+                if (cluster.Sectors.All(a => a.IsBaseGame) && !IsMapOptionChecked(MapOption.Show_Vanilla_Sectors))
                 {
                     continue;
                 }
@@ -1128,7 +1159,7 @@ namespace X4SectorCreator
                 RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
             }
 
-            if (chkShowCustomSectors.Checked)
+            if (IsMapOptionChecked(MapOption.Show_Custom_Sectors))
             {
                 // Next step render the custom clusters
                 foreach (Cluster cluster in _customClusters)
@@ -1142,7 +1173,7 @@ namespace X4SectorCreator
 
         private void RenderAllHexNames(PaintEventArgs e)
         {
-            if (chkShowCustomSectors.Checked)
+            if (IsMapOptionChecked(MapOption.Show_Custom_Sectors))
             {
                 // Next step render names
                 foreach (Cluster cluster in _customClusters)
@@ -1154,7 +1185,7 @@ namespace X4SectorCreator
             // Next step render names
             foreach (Cluster cluster in _baseGameClusters.Values)
             {
-                if (cluster.Sectors.All(a => a.IsBaseGame) && !chkShowX4Sectors.Checked)
+                if (cluster.Sectors.All(a => a.IsBaseGame) && !IsMapOptionChecked(MapOption.Show_Vanilla_Sectors))
                     continue;
 
                 // Check if the dlc is selected
@@ -1172,8 +1203,8 @@ namespace X4SectorCreator
             // Render each non-existant hex first
             if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) ||
                 !IsDlcClusterEnabled(cluster) ||
-                (!chkShowX4Sectors.Checked && cluster.IsBaseGame) ||
-                (!chkShowCustomSectors.Checked && !cluster.IsBaseGame) ||
+                (!IsMapOptionChecked(MapOption.Show_Vanilla_Sectors) && cluster.IsBaseGame) ||
+                (!IsMapOptionChecked(MapOption.Show_Custom_Sectors) && !cluster.IsBaseGame) ||
                 _visibleSectorsFromSearch.Count > 0 && cluster.Sectors.Any(a => !_visibleSectorsFromSearch.Contains(a)))
             {
                 // Fill hex
@@ -1182,7 +1213,7 @@ namespace X4SectorCreator
                 e.Graphics.DrawPolygon(mainPen, hex.Value.Points);
 
                 SizeF textSize;
-                if (chkShowCoordinates.Checked)
+                if (IsMapOptionChecked(MapOption.Show_Coordinates))
                 {
                     PointF hexCenter = GetHexCenter(hex.Value.Points);
                     SizeF hexSize = GetHexSize(hex.Value.Points);
@@ -1230,7 +1261,7 @@ namespace X4SectorCreator
 
         private void RenderGateConnections(PaintEventArgs e)
         {
-            if (!chkShowConnections.Checked)
+            if (!IsMapOptionChecked(MapOption.Show_Connections))
             {
                 return;
             }
@@ -1238,7 +1269,7 @@ namespace X4SectorCreator
             List<GateData> gatesData = [];
 
             // Render custom cluster gates
-            if (chkShowCustomSectors.Checked)
+            if (IsMapOptionChecked(MapOption.Show_Custom_Sectors))
             {
                 foreach (Cluster cluster in _customClusters)
                 {
@@ -1248,7 +1279,7 @@ namespace X4SectorCreator
 
             foreach (KeyValuePair<(int, int), Cluster> cluster in _baseGameClusters)
             {
-                if (cluster.Value.Sectors.All(a => a.IsBaseGame) && !chkShowX4Sectors.Checked)
+                if (cluster.Value.Sectors.All(a => a.IsBaseGame) && !IsMapOptionChecked(MapOption.Show_Vanilla_Sectors))
                     continue;
 
                 // Check if the dlc is selected
@@ -1325,7 +1356,7 @@ namespace X4SectorCreator
             // Set to keep track of processed connections
             foreach (GateData sourceGateData in gatesData)
             {
-                if (!chkShowCustomSectors.Checked && !sourceGateData.Sector.IsBaseGame)
+                if (!IsMapOptionChecked(MapOption.Show_Custom_Sectors) && !sourceGateData.Sector.IsBaseGame)
                     continue;
 
                 // Find the connection with the matching path
@@ -1349,7 +1380,7 @@ namespace X4SectorCreator
                     continue;
                 }
 
-                if (!chkShowCustomSectors.Checked && !targetGateData.Sector.IsBaseGame)
+                if (!IsMapOptionChecked(MapOption.Show_Custom_Sectors) && !targetGateData.Sector.IsBaseGame)
                     continue;
 
                 if (_visibleSectorsFromSearch.Count > 0 &&
@@ -1509,7 +1540,7 @@ namespace X4SectorCreator
             {
                 render = false;
             }
-            if (!chkShowCustomSectors.Checked && !chkShowX4Sectors.Checked)
+            if (!IsMapOptionChecked(MapOption.Show_Custom_Sectors) && !IsMapOptionChecked(MapOption.Show_Vanilla_Sectors))
             {
                 render = false;
             }
@@ -1541,7 +1572,7 @@ namespace X4SectorCreator
                 {
                     Sector sector = cluster.Sectors[index];
                     bool renderChild = true;
-                    if ((!chkShowCustomSectors.Checked && !sector.IsBaseGame) || (!chkShowX4Sectors.Checked && sector.IsBaseGame))
+                    if ((!IsMapOptionChecked(MapOption.Show_Custom_Sectors) && !sector.IsBaseGame) || (!IsMapOptionChecked(MapOption.Show_Vanilla_Sectors) && sector.IsBaseGame))
                     {
                         renderChild = false;
                     }
@@ -1575,7 +1606,7 @@ namespace X4SectorCreator
             SizeF hexSize = GetHexSize(hex.Value.Points);
 
             SizeF textSize;
-            if (chkShowCoordinates.Checked)
+            if (IsMapOptionChecked(MapOption.Show_Coordinates))
             {
                 using Font fBold = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold);
                 (int x, int y) = hex.Key;
@@ -1629,7 +1660,7 @@ namespace X4SectorCreator
             {
                 // Render child sector name
                 Sector sector = cluster.Sectors[index];
-                if ((!chkShowCustomSectors.Checked && !sector.IsBaseGame) || (!chkShowX4Sectors.Checked && sector.IsBaseGame))
+                if ((!IsMapOptionChecked(MapOption.Show_Custom_Sectors) && !sector.IsBaseGame) || (!IsMapOptionChecked(MapOption.Show_Vanilla_Sectors) && sector.IsBaseGame))
                 {
                     index++;
                     continue;
@@ -1832,26 +1863,6 @@ namespace X4SectorCreator
             return selectedSector;
         }
 
-        private void ChkShowCoordinates_CheckedChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        private void ChkShowX4Sectors_CheckedChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        private void ChkShowCustomSectors_CheckedChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        private void ChkShowConnections_CheckedChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
         private void DlcListBox_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             _dlcsSelected[e.Index] = e.NewValue == CheckState.Checked;
@@ -1913,16 +1924,6 @@ namespace X4SectorCreator
                 BtnHideLegend.PerformClick();
         }
 
-        private void ChkShowStations_CheckedChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        private void ChkShowRegions_CheckedChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
         internal struct GateConnection
         {
             public GateData Source { get; set; }
@@ -1952,6 +1953,12 @@ namespace X4SectorCreator
         private void LegendTree_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
             e.Cancel = true;
+        }
+
+        private void MapOptionsListBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            _mapOptionsSelected[MapOptionsListBox.Items[e.Index] as string] = e.NewValue == CheckState.Checked;
+            Invalidate();
         }
     }
 }
