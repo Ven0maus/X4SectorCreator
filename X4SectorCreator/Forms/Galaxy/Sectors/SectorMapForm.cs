@@ -866,14 +866,12 @@ namespace X4SectorCreator
                             regionScreenPosition.Y += hexCenter.Y;
 
                             // Determine region color
-                            var regionColor = DetermineRegionColor(resourceColors, region);
-                            var coreBrush = GetBrushColor(LerpColor(regionColor, Color.Black, 0.8f));
-                            var edgeBrush = GetBrushColor(LerpColor(regionColor, Color.White, 0.3f));
+                            var regionColors = DetermineRegionColors(resourceColors, region);
 
                             // Visualize outside of hex bounds
                             if (!IsPointInPolygon(childHexagon.Points, regionScreenPosition))
                             {
-                                DrawRegionCircle(e, screenRadius, regionScreenPosition, coreBrush, edgeBrush);
+                                DrawRegionCircle(e.Graphics, screenRadius, regionScreenPosition, regionColors);
                                 e.Graphics.DrawLine(Pens.Fuchsia, hexCenter.X, hexCenter.Y, regionScreenPosition.X, regionScreenPosition.Y);
                                 continue;
                             }
@@ -888,7 +886,8 @@ namespace X4SectorCreator
                             // Set clip to hex shape
                             e.Graphics.SetClip(hexClipRegion, CombineMode.Intersect);
 
-                            DrawRegionCircle(e, screenRadius, regionScreenPosition, coreBrush, edgeBrush);
+                            // Draw the pie circle
+                            DrawRegionCircle(e.Graphics, screenRadius, regionScreenPosition, regionColors);
 
                             // Restore the original clipping region
                             e.Graphics.SetClip(oldClip, CombineMode.Replace);
@@ -906,29 +905,34 @@ namespace X4SectorCreator
             }
         }
 
-        private static void DrawRegionCircle(PaintEventArgs e, float screenRadius, PointF regionScreenPosition, SolidBrush coreBrush, SolidBrush edgeBrush)
+        private readonly Pen _edgePen = new(Color.FromArgb(150, Color.White), 1f);
+        private void DrawRegionCircle(Graphics g, float radius, PointF center, Color[] colors)
         {
-            float x = regionScreenPosition.X - screenRadius / 2f;
-            float y = regionScreenPosition.Y - screenRadius / 2f;
+            if (colors == null || colors.Length == 0)
+                return;
 
-            // First, draw dark core
-            e.Graphics.FillEllipse(coreBrush, x, y, screenRadius, screenRadius);
+            RectangleF rect = new(center.X - radius / 2f, center.Y - radius / 2f, radius, radius);
 
-            // Then, draw bright outer ring
-            float ringThickness = screenRadius * 0.025f; // 15% thick rim
-            float outerSize = screenRadius;
-            float innerSize = screenRadius - ringThickness;
-            using var ringPath = new GraphicsPath();
-            ringPath.AddEllipse(x, y, outerSize, outerSize); // outer circle
-            ringPath.AddEllipse(x + ringThickness / 2f, y + ringThickness / 2f, innerSize, innerSize); // hole
-            using var ringRegion = new System.Drawing.Region(ringPath);
-            e.Graphics.FillRegion(edgeBrush, ringRegion);
+            float startAngle = 0f;
+            float sweepAngle = 360f / colors.Length;
+
+            // Fill pie segments
+            foreach (var color in colors)
+            {
+                var brush = GetBrushColor(color);
+                g.FillPie(brush, rect, startAngle, sweepAngle);
+                startAngle += sweepAngle;
+            }
+
+            // Draw lighter outline (edge)
+            g.DrawEllipse(_edgePen, rect);
         }
 
-        private static Color DetermineRegionColor(Dictionary<string, Color> colorMappings, Objects.Region region) 
+        private static Color[] DetermineRegionColors(Dictionary<string, Color> colorMappings, Objects.Region region) 
         {
-            // TODO: Determine correct region color
-            return Color.Purple;
+            return [.. region.Definition.Resources
+                .GroupBy(a => a.Ware)
+                .Select(a => colorMappings[a.Key])];
         }
 
         private static int ConvertFromWorldRadius(int worldRadius, float hexRadius, float diameterRadius)
