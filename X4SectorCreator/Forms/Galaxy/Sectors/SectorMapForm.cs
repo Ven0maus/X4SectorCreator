@@ -817,10 +817,10 @@ namespace X4SectorCreator
 
             // Define region circle size based on boundary radius
             // Place region at region coordinates based on sector position within cluster position
-
             var clusters = _baseGameClusters.Values
                 .Concat(_customClusters);
 
+            // Collect resource colors from the legend
             var resourceColors = _legend["resources"]
                 .Select(a => ((string name, Color color))a)
                 .ToDictionary(a => a.name, a => a.color, StringComparer.OrdinalIgnoreCase);
@@ -828,6 +828,17 @@ namespace X4SectorCreator
             // Calculate hex size and radius based on zoom and sector size
             float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+
+            // Setup color mapping based on resources of region definitions
+            var colorMappings = clusters
+                .SelectMany(a => a.Sectors)
+                .SelectMany(a => a.Regions)
+                .Select(a => a.Definition)
+                .Distinct()
+                .ToDictionary(a => a, a => a.Resources
+                .GroupBy(a => a.Ware)
+                .Select(a => resourceColors[a.Key])
+                .ToArray());
 
             foreach (var cluster in clusters)
             {
@@ -866,7 +877,7 @@ namespace X4SectorCreator
                             regionScreenPosition.Y += hexCenter.Y;
 
                             // Determine region color
-                            var regionColors = DetermineRegionColors(resourceColors, region);
+                            var regionColors = colorMappings[region.Definition];
 
                             // Visualize outside of hex bounds
                             if (!IsPointInPolygon(childHexagon.Points, regionScreenPosition))
@@ -926,13 +937,6 @@ namespace X4SectorCreator
 
             // Draw lighter outline (edge)
             g.DrawEllipse(_edgePen, rect);
-        }
-
-        private static Color[] DetermineRegionColors(Dictionary<string, Color> colorMappings, Objects.Region region) 
-        {
-            return [.. region.Definition.Resources
-                .GroupBy(a => a.Ware)
-                .Select(a => colorMappings[a.Key])];
         }
 
         private static int ConvertFromWorldRadius(int worldRadius, float hexRadius, float diameterRadius)
