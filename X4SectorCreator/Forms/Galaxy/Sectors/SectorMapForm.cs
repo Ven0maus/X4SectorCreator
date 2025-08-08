@@ -887,7 +887,7 @@ namespace X4SectorCreator
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
-                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
+                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : cluster.Sectors.Count == 4 ? hexRadius / 2f / 1.25f : hexRadius / 2f;
 
                     // Ordered by desc, so biggest regions are drawn first and smaller ones on top
                     // This improves visibility
@@ -1064,7 +1064,7 @@ namespace X4SectorCreator
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
-                    float correctHexHeight = cluster.Sectors.Count == 1 ? hexHeight : hexHeight / 2;
+                    float correctHexHeight = cluster.Sectors.Count == 1 ? hexHeight : cluster.Sectors.Count == 4 ? hexHeight / 2f / 1.25f : hexHeight / 2f;
 
                     // Bottom left corner
                     float startX = hexCenter.X - correctHexHeight / 4 - (cluster.Sectors.Count == 1 ? 10 : 5);
@@ -1255,7 +1255,7 @@ namespace X4SectorCreator
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
-                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
+                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : cluster.Sectors.Count == 4 ? hexRadius / 2f / 1.25f : hexRadius / 2f;
 
                     foreach (Zone zone in sector.Zones)
                     {
