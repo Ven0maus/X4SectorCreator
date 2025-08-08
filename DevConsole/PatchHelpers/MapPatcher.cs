@@ -8,13 +8,10 @@ namespace DevConsole.PatchHelpers
     /// </summary>
     internal static class MapPatcher
     {
-        public static void Patch()
+        public static void Patch(string path)
         {
             if (!Directory.Exists("vanillafiles"))
                 Directory.CreateDirectory("vanillafiles");
-
-            Console.WriteLine("Enter x4 game directory path: ");
-            var path = Console.ReadLine();
 
             (string prefix, string path)[] directories =
             [

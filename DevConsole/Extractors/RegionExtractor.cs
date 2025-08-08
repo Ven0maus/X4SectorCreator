@@ -12,7 +12,7 @@ namespace DevConsole.Extractors
     {
         private static readonly Dictionary<string, RegionDefinition> _regionDefintions = new(StringComparer.OrdinalIgnoreCase);
 
-        internal static IEnumerable<Region> ExtractRegions(string clustersPath, string definitionsPath)
+        internal static void ExtractRegions(string clustersPath, string definitionsPath)
         {
             // Collect all clusters
             var xdoc = XDocument.Load(clustersPath);
@@ -159,14 +159,14 @@ namespace DevConsole.Extractors
                 }
             }
 
+            Console.WriteLine($"Exported {clusters.Values.SelectMany(a => a.Sectors).SelectMany(a => a.Regions).Count()} regions.");
+
             // Store region extraction file
-            var clusterCollection = new ClusterCollection { Clusters = clusters.Values.ToList() };
+            var clusterCollection = new ClusterCollection { Clusters = [.. clusters.Values] };
             var xml = JsonSerializer.Serialize(clusterCollection, ConfigSerializer.JsonSerializerOptions);
             if (!Directory.Exists(Path.GetDirectoryName(Path.Combine("Extractions", "ExtractedRegions.xml"))))
                 Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine("Extractions", "ExtractedRegions.xml")));
             File.WriteAllText(Path.Combine("Extractions", "ExtractedRegions.xml"), xml);
-
-            return [];
         }
 
         private static RegionDefinition CreateRegionDefinition(string regionRef)
@@ -179,7 +179,7 @@ namespace DevConsole.Extractors
             return regionDefinition;
         }
 
-        private static IEnumerable<Macro> ReadClusterMacros(XDocument doc)
+        public static IEnumerable<Macro> ReadClusterMacros(XDocument doc)
         {
             var macroElements = doc.Element("macros").Elements("macro");
             foreach (var macroElement in macroElements)

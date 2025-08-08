@@ -194,27 +194,38 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
+        private static readonly Dictionary<string, string> _factionNameMapping = new(StringComparer.OrdinalIgnoreCase)
+        {
+            { "vigor", "loanshark" },
+            { "riptide", "scavenger" },
+            { "quettanauts", "kaori" },
+            { "zyarth", "split" },
+            { "segaris", "pioneers" },
+        };
+        private static readonly Dictionary<string, string> _reverseFactionNameMapping = 
+            _factionNameMapping.ToDictionary(a => a.Value, a => a.Key);
+
+        /// <summary>
+        /// Corrects readable factions names to the X4 names.
+        /// </summary>
+        /// <param name="faction"></param>
+        /// <returns></returns>
         public static string CorrectFactionName(string faction)
         {
-            switch (faction.ToLower())
-            {
-                case "vigor":
-                    faction = "loanshark";
-                    break;
-                case "riptide":
-                    faction = "scavenger";
-                    break;
-                case "quettanauts":
-                    faction = "kaori";
-                    break;
-                case "zyarth":
-                    faction = "split";
-                    break;
-                case "segaris":
-                    faction = "pioneers";
-                    break;
-            }
+            if (_factionNameMapping.TryGetValue(faction, out var correctFactionName))
+                return correctFactionName;
+            return faction;
+        }
 
+        /// <summary>
+        /// Corrects X4 names to readable faction names.
+        /// </summary>
+        /// <param name="faction"></param>
+        /// <returns></returns>
+        public static string CorrectFactionNameReversed(string faction)
+        {
+            if (_reverseFactionNameMapping.TryGetValue(faction, out var correctFactionName))
+                return correctFactionName;
             return faction;
         }
 

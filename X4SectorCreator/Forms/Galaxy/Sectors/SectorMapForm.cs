@@ -1226,6 +1226,9 @@ namespace X4SectorCreator
 
                     foreach (Zone zone in sector.Zones)
                     {
+                        if (!IsMapOptionChecked(MapOption.Show_Vanilla_Stations) && zone.IsBaseGame) continue;
+                        if (!IsMapOptionChecked(MapOption.Show_Custom_Stations) && !zone.IsBaseGame) continue;
+
                         foreach (Station station in zone.Stations)
                         {
                             var stationIcon = GetIconFromStore(station.Type.ToLower());
@@ -1313,7 +1316,7 @@ namespace X4SectorCreator
             using Pen mainPen = new(nonExistantHexColor, 4);
             foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
             {
-                RenderNonSectorGrid(e, mainBrush, mainPen, nonExistantHexColor, hex);
+                RenderNonSectorGrid(e, mainBrush, mainPen, hex);
             }
 
             // Next step render the game clusters on top
@@ -1372,7 +1375,7 @@ namespace X4SectorCreator
             }
         }
 
-        private void RenderNonSectorGrid(PaintEventArgs e, SolidBrush mainBrush, Pen mainPen, Color nonExistantHexColor, KeyValuePair<(int, int), Hexagon> hex)
+        private void RenderNonSectorGrid(PaintEventArgs e, SolidBrush mainBrush, Pen mainPen, KeyValuePair<(int, int), Hexagon> hex)
         {
             // Render each non-existant hex first
             if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out Cluster cluster) ||
@@ -1633,7 +1636,9 @@ namespace X4SectorCreator
             {
                 if (sector == null) return MainForm.Instance.FactionColorMapping["None"];
 
-                HashSet<string> factions = sector.Zones.SelectMany(a => a.Stations)
+                HashSet<string> factions = sector.Zones
+                    .Where(a => !a.IsBaseGame)
+                    .SelectMany(a => a.Stations)
                     .Select(a => a.Owner)
                     .Where(a => !string.IsNullOrWhiteSpace(a))
                     .ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -1675,7 +1680,9 @@ namespace X4SectorCreator
         {
             if (sector == null) return MainForm.Instance.FactionColorMapping["None"];
 
-            HashSet<string> factions = sector.Zones.SelectMany(a => a.Stations)
+            HashSet<string> factions = sector.Zones
+                .Where(a => !a.IsBaseGame)
+                .SelectMany(a => a.Stations)
                 .Select(a => a.Faction)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 

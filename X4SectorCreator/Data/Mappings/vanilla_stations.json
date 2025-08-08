@@ -1,0 +1,5373 @@
+﻿{
+  "Clusters": [
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_01",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector003",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_02",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "80650d17-87c2-4606-a154-b2045b9b8657",
+              "Position": {
+                "IsEmpty": false,
+                "X": -44800,
+                "Y": -24300
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_ministry_01",
+                  "Type": "shipyard",
+                  "Faction": "ministry",
+                  "Owner": "ministry",
+                  "Race": "teladi",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -44800,
+                    "Y": -24300
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "1f5c76ed-dd13-4d8a-8223-74fadd2750c1",
+              "Position": {
+                "IsEmpty": false,
+                "X": 30200,
+                "Y": 16500
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_ministry_01",
+                  "Type": "wharf",
+                  "Faction": "ministry",
+                  "Owner": "ministry",
+                  "Race": "teladi",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 30200,
+                    "Y": 16500
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_03",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_04",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_05",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_06",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "e8658add-94d7-4c8c-8e49-476d51d5cc64",
+              "Position": {
+                "IsEmpty": false,
+                "X": 165479,
+                "Y": -6451
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_argon_01",
+                  "Type": "equipmentdock",
+                  "Faction": "argon",
+                  "Owner": "argon",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "b0ec5612-7de7-4106-a186-851a6046a126",
+              "Position": {
+                "IsEmpty": false,
+                "X": -48800,
+                "Y": 27800
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "tradestation_argon_01",
+                  "Type": "tradestation",
+                  "Faction": "argon",
+                  "Owner": "argon",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -48800,
+                    "Y": 27800
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_07",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_08",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_09",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "fcf1ffb3-0873-465c-89d4-a593f4a10e32",
+              "Position": {
+                "IsEmpty": false,
+                "X": 13600,
+                "Y": -24000
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_ministry_01",
+                  "Type": "equipmentdock",
+                  "Faction": "ministry",
+                  "Owner": "ministry",
+                  "Race": "teladi",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 13600,
+                    "Y": -24000
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_10",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_11",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_12",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_13",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_14",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "ed45ac4a-af05-494c-ab1c-3b601b092798",
+              "Position": {
+                "IsEmpty": false,
+                "X": -57062,
+                "Y": 61363
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_argon_01",
+                  "Type": "shipyard",
+                  "Faction": "argon",
+                  "Owner": "argon",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -13617,
+                    "Y": 19778
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "15633843-a6c8-44d9-b596-ae54e2200e40",
+              "Position": {
+                "IsEmpty": false,
+                "X": 75500,
+                "Y": 43800
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_argon_01",
+                  "Type": "wharf",
+                  "Faction": "argon",
+                  "Owner": "argon",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 75500,
+                    "Y": 43800
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_15",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_16",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_17",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "c2aa8098-0487-4e49-a07d-c70825f4b900",
+              "Position": {
+                "IsEmpty": false,
+                "X": -102000,
+                "Y": 305000
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_xenon_cluster_17",
+                  "Type": "shipyard",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -102000,
+                    "Y": 305000
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "432be838-b333-49bc-8413-5ebc8ed639cf",
+              "Position": {
+                "IsEmpty": false,
+                "X": -110507,
+                "Y": -6090
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_xenon_cluster_17",
+                  "Type": "wharf",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_18",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "1b60545b-b9ba-4844-a2b4-a1a96f12e8a5",
+              "Position": {
+                "IsEmpty": false,
+                "X": 74300,
+                "Y": -24500
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_paranid",
+                  "Type": "shipyard",
+                  "Faction": "paranid",
+                  "Owner": "paranid",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 74300,
+                    "Y": -24500
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "7e5b6cbe-f9ad-45f1-89d5-326993d5f4ee",
+              "Position": {
+                "IsEmpty": false,
+                "X": -27200,
+                "Y": -37600
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_paranid",
+                  "Type": "wharf",
+                  "Faction": "paranid",
+                  "Owner": "paranid",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -27200,
+                    "Y": -37600
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_19",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_20",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "522db814-d2a0-4b8e-b82a-30fac94053f7",
+              "Position": {
+                "IsEmpty": false,
+                "X": 3879,
+                "Y": -155906
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_teladi_01",
+                  "Type": "equipmentdock",
+                  "Faction": "teladi",
+                  "Owner": "teladi",
+                  "Race": "teladi",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 8200,
+                    "Y": 20000
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_21",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "653e7cd5-15ae-4049-a978-3f214cf9370d",
+              "Position": {
+                "IsEmpty": false,
+                "X": 35000,
+                "Y": -44500
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_xenon_cluster_21",
+                  "Type": "shipyard",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 35000,
+                    "Y": -44500
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "bcc463cd-a85f-4ceb-97b3-d34c7510f1c4",
+              "Position": {
+                "IsEmpty": false,
+                "X": 167700,
+                "Y": -22700
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_xenon_cluster_21",
+                  "Type": "wharf",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 167700,
+                    "Y": -22700
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_22",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "42997b00-77ea-40d6-9add-03679bb65f4b",
+              "Position": {
+                "IsEmpty": false,
+                "X": 87200,
+                "Y": -46500
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_paranid",
+                  "Type": "equipmentdock",
+                  "Faction": "paranid",
+                  "Owner": "paranid",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 87200,
+                    "Y": -46500
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "a06dbf5b-aeda-494c-a171-789d111443f0",
+              "Position": {
+                "IsEmpty": false,
+                "X": -38500,
+                "Y": 41000
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "tradestation_paranid",
+                  "Type": "tradestation",
+                  "Faction": "paranid",
+                  "Owner": "paranid",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -38500,
+                    "Y": 41000
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_23",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "edf9a409-d22d-49a5-b717-d8e09590e18a",
+              "Position": {
+                "IsEmpty": false,
+                "X": -114153,
+                "Y": 116119
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_alliance",
+                  "Type": "shipyard",
+                  "Faction": "alliance",
+                  "Owner": "alliance",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_24",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "a3b1d446-0eb2-433f-a598-216dbf1bc601",
+              "Position": {
+                "IsEmpty": false,
+                "X": 142300,
+                "Y": 19700
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_holyorder",
+                  "Type": "shipyard",
+                  "Faction": "holyorder",
+                  "Owner": "holyorder",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 142300,
+                    "Y": 19700
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "8c2ec270-e66b-48ae-9165-e8044d350539",
+              "Position": {
+                "IsEmpty": false,
+                "X": 0,
+                "Y": -72000
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_holyorder",
+                  "Type": "wharf",
+                  "Faction": "holyorder",
+                  "Owner": "holyorder",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 0,
+                    "Y": -72000
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "9c5e000e-0074-4833-a8eb-56c7ded31809",
+              "Position": {
+                "IsEmpty": false,
+                "X": 72500,
+                "Y": 23700
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "tradestation_holyorder",
+                  "Type": "tradestation",
+                  "Faction": "holyorder",
+                  "Owner": "holyorder",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 72500,
+                    "Y": 23700
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_25",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_26",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "5c8e0297-89dd-4e5c-b125-2a146e3a6ce5",
+              "Position": {
+                "IsEmpty": false,
+                "X": -75651,
+                "Y": 47144
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_xenon_cluster_26",
+                  "Type": "shipyard",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "f746503c-5bfb-48e2-b916-edb4786248ac",
+              "Position": {
+                "IsEmpty": false,
+                "X": 167700,
+                "Y": -22700
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_xenon_cluster_26",
+                  "Type": "wharf",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 167700,
+                    "Y": -22700
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_27",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "97cd4fce-045d-44f3-a6de-7acd766afe1a",
+              "Position": {
+                "IsEmpty": false,
+                "X": 103700,
+                "Y": 122700
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "tradestation_antigone",
+                  "Type": "tradestation",
+                  "Faction": "antigone",
+                  "Owner": "antigone",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 103700,
+                    "Y": 122700
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_28",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "5d0a57bc-3cb6-4638-9f22-f92b08857f9a",
+              "Position": {
+                "IsEmpty": false,
+                "X": -33600,
+                "Y": -27500
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_antigone",
+                  "Type": "shipyard",
+                  "Faction": "antigone",
+                  "Owner": "antigone",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -33600,
+                    "Y": -27500
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "eed4f06a-c88d-4f2a-be98-e59abee3e26b",
+              "Position": {
+                "IsEmpty": false,
+                "X": 105000,
+                "Y": 12300
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_antigone",
+                  "Type": "wharf",
+                  "Faction": "antigone",
+                  "Owner": "antigone",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 105000,
+                    "Y": 12300
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_29",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "393866bf-436f-415e-b875-863834bc7e19",
+              "Position": {
+                "IsEmpty": false,
+                "X": 2506,
+                "Y": 25444
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "tradestation_hatikvah_01",
+                  "Type": "tradestation",
+                  "Faction": "hatikvah",
+                  "Owner": "hatikvah",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 11200,
+                    "Y": 8300
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "1ed33a14-0a79-4af5-8c0b-1b2be7955b73",
+              "Position": {
+                "IsEmpty": false,
+                "X": 95609,
+                "Y": -43547
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_argon_02",
+                  "Type": "equipmentdock",
+                  "Faction": "argon",
+                  "Owner": "argon",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_30",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_31",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_32",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_33",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "1570dde3-7f23-4e5b-910c-e37143f8843f",
+              "Position": {
+                "IsEmpty": false,
+                "X": -91471,
+                "Y": -13531
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_xenon_cluster_33",
+                  "Type": "shipyard",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "cdfe32e5-8fa5-431f-87ae-0f93ade45952",
+              "Position": {
+                "IsEmpty": false,
+                "X": 111385,
+                "Y": -132799
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_xenon_cluster_33",
+                  "Type": "wharf",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_34",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "9b4d1558-877b-4ab8-a523-8de4575b09b1",
+              "Position": {
+                "IsEmpty": false,
+                "X": -49600,
+                "Y": -59300
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_teladi_01",
+                  "Type": "shipyard",
+                  "Faction": "teladi",
+                  "Owner": "teladi",
+                  "Race": "teladi",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -49600,
+                    "Y": -59300
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "290cbf95-cb30-431d-9b69-86146409356a",
+              "Position": {
+                "IsEmpty": false,
+                "X": -10700,
+                "Y": 11600
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_teladi_01",
+                  "Type": "wharf",
+                  "Faction": "teladi",
+                  "Owner": "teladi",
+                  "Race": "teladi",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -10700,
+                    "Y": 11600
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_35",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "df0af6f3-030a-4243-96dd-17889e817ef5",
+              "Position": {
+                "IsEmpty": false,
+                "X": 0,
+                "Y": -100000
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_holyorder",
+                  "Type": "equipmentdock",
+                  "Faction": "holyorder",
+                  "Owner": "holyorder",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 0,
+                    "Y": -100000
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_36",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_37",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_38",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_39",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_40",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_41",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "9c5f31d6-2a9e-44a1-b7d9-6de4bb1b3eed",
+              "Position": {
+                "IsEmpty": false,
+                "X": 0,
+                "Y": 70200
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_antigone",
+                  "Type": "equipmentdock",
+                  "Faction": "antigone",
+                  "Owner": "antigone",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 0,
+                    "Y": 70200
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_42",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_43",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_44",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_45",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_46",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_47",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "b7b01d15-11e7-402d-a453-30855c922cfe",
+              "Position": {
+                "IsEmpty": false,
+                "X": -27500,
+                "Y": -29300
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_alliance",
+                  "Type": "wharf",
+                  "Faction": "alliance",
+                  "Owner": "alliance",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -27500,
+                    "Y": -29300
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_49",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_48",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_50",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_709",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_710",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_711",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_712",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_713",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_714",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_715",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_720",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_721",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_722",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_723",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_724",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_725",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_401",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "7ece7f3f-0854-439d-960c-6242f9aa90ee",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_split_02",
+                  "Type": "equipmentdock",
+                  "Faction": "split",
+                  "Owner": "split",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_402",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_403",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "844a3bff-8f64-480b-905a-998db6b962f9",
+              "Position": {
+                "IsEmpty": false,
+                "X": -107418,
+                "Y": -33813
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_split_02",
+                  "Type": "wharf",
+                  "Faction": "split",
+                  "Owner": "split",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -107418,
+                    "Y": -33813
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_400",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_408",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_407",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "0b1dc826-c777-4a10-a0bd-7e0a60d47f80",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_freesplit_02",
+                  "Type": "equipmentdock",
+                  "Faction": "freesplit",
+                  "Owner": "freesplit",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_409",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_410",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "7b60105c-bbb1-4f02-ad31-afc0c33de382",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "tradestation_freesplit_01",
+                  "Type": "tradestation",
+                  "Faction": "freesplit",
+                  "Owner": "freesplit",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_411",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "f1890b9d-28f9-47d9-aaef-46ede423a24e",
+              "Position": {
+                "IsEmpty": false,
+                "X": -162274,
+                "Y": -93189
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_freesplit_01",
+                  "Type": "shipyard",
+                  "Faction": "freesplit",
+                  "Owner": "freesplit",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -162274,
+                    "Y": -93189
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "5c7792d2-008b-4c2b-9dc5-7afff5bb69cd",
+              "Position": {
+                "IsEmpty": false,
+                "X": -31493,
+                "Y": 23098
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_freesplit_01",
+                  "Type": "wharf",
+                  "Faction": "freesplit",
+                  "Owner": "freesplit",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -31493,
+                    "Y": 23098
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_405",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "b24c1ae9-f3ba-4a26-867f-b75b977a8da5",
+              "Position": {
+                "IsEmpty": false,
+                "X": 188010,
+                "Y": 36057
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_split_01",
+                  "Type": "shipyard",
+                  "Faction": "split",
+                  "Owner": "split",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 188010,
+                    "Y": 36057
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "9847bb96-4b5a-44c7-9801-d9b4f15c1452",
+              "Position": {
+                "IsEmpty": false,
+                "X": 183900,
+                "Y": -123400
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_split_warforge_01",
+                  "Type": "shipyard",
+                  "Faction": "split",
+                  "Owner": "split",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 183900,
+                    "Y": -123400
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "42c5b9ad-7fb4-432b-b63e-5162176cb9d8",
+              "Position": {
+                "IsEmpty": false,
+                "X": -107418,
+                "Y": -33813
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_split_01",
+                  "Type": "wharf",
+                  "Faction": "split",
+                  "Owner": "split",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -107418,
+                    "Y": -33813
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_406",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "51677b4c-391c-43b8-8203-6e685b868d39",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "tradestation_split_01",
+                  "Type": "tradestation",
+                  "Faction": "split",
+                  "Owner": "split",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_404",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "42932da6-f376-4361-bced-9229c0bea474",
+              "Position": {
+                "IsEmpty": false,
+                "X": 48012,
+                "Y": 12045
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_split_01",
+                  "Type": "equipmentdock",
+                  "Faction": "split",
+                  "Owner": "split",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 48012,
+                    "Y": 12045
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_418",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_419",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_420",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_416",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "920753fc-701d-4e70-99ae-10c6774308ff",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "arg_wharf_cluster_416_sector002",
+                  "Type": "wharf",
+                  "Faction": "argon",
+                  "Owner": "argon",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_417",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_421",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_422",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "85134bc0-7d8b-4b26-abc3-151be6e67a9c",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "par_wharf_cluster_422_sector001",
+                  "Type": "wharf",
+                  "Faction": "paranid",
+                  "Owner": "paranid",
+                  "Race": "paranid",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_423",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_412",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "37e081eb-45d8-4120-b4c6-33f6f861eda6",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "equipmentdock_freesplit_01",
+                  "Type": "equipmentdock",
+                  "Faction": "freesplit",
+                  "Owner": "freesplit",
+                  "Race": "split",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_413",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_414",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_415",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "56730f11-f2d0-43f5-80e8-92aedfba6feb",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_xenon_cluster_415",
+                  "Type": "shipyard",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "6d76c1d3-8ab7-46dc-af6c-b82e2e7a9dce",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_xenon_cluster_415",
+                  "Type": "wharf",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_424",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "580de801-4959-4e46-8c6d-15160e5eb14d",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_xenon_cluster_424",
+                  "Type": "shipyard",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "a3379939-833b-4617-ba7c-466464feb188",
+              "Position": {
+                "IsEmpty": true,
+                "X": 0,
+                "Y": 0
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_xenon_cluster_424",
+                  "Type": "wharf",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_425",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_500",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "15872fe9-63c2-4ca2-8762-ba78b0281d9a",
+              "Position": {
+                "IsEmpty": false,
+                "X": 103164,
+                "Y": -32492
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "scavenger_shipyard_01",
+                  "Type": "shipyard",
+                  "Faction": "scavenger",
+                  "Owner": "scavenger",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 38718,
+                    "Y": -39043
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "123b21ba-5eba-421a-bc3f-a9f9e1ad06f5",
+              "Position": {
+                "IsEmpty": false,
+                "X": -114265,
+                "Y": -82680
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "scavenger_wharf_01",
+                  "Type": "wharf",
+                  "Faction": "scavenger",
+                  "Owner": "scavenger",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -114265,
+                    "Y": -82680
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector003",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_501",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "134e40c6-d990-4920-aeb6-a02632082930",
+              "Position": {
+                "IsEmpty": false,
+                "X": -102337,
+                "Y": 57284
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "loanshark_shipyard_01",
+                  "Type": "shipyard",
+                  "Faction": "loanshark",
+                  "Owner": "loanshark",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -102337,
+                    "Y": 57284
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "a34b0c16-55c4-4a24-a1c6-24e0b76efad0",
+              "Position": {
+                "IsEmpty": false,
+                "X": -29810,
+                "Y": 30543
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "loanshark_wharf_01",
+                  "Type": "wharf",
+                  "Faction": "loanshark",
+                  "Owner": "loanshark",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -29810,
+                    "Y": 30543
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_502",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_503",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_504",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_100",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_101",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "32f8a26c-111c-4f98-a0eb-617c9a2011ce",
+              "Position": {
+                "IsEmpty": false,
+                "X": 38168,
+                "Y": 12295
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "ter_wharf_cluster_101_sector001",
+                  "Type": "wharf",
+                  "Faction": "terran",
+                  "Owner": "terran",
+                  "Race": "terran",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 38168,
+                    "Y": 12295
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_102",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_104",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "19d7ea47-0acc-46da-a5d3-b6ca5e988e01",
+              "Position": {
+                "IsEmpty": false,
+                "X": 76577,
+                "Y": 35236
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "ter_shipyard_cluster_104_sector002",
+                  "Type": "shipyard",
+                  "Faction": "terran",
+                  "Owner": "terran",
+                  "Race": "terran",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 76577,
+                    "Y": 35236
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_106",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_107",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "0c56cc73-7876-46f6-823b-1cd66ae34da7",
+              "Position": {
+                "IsEmpty": false,
+                "X": 89031,
+                "Y": -37895
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "ter_equipmentdock_cluster_107_sector001",
+                  "Type": "equipmentdock",
+                  "Faction": "terran",
+                  "Owner": "terran",
+                  "Race": "terran",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 89031,
+                    "Y": -37895
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_108",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector003",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_109",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_110",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_111",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_112",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "c44fed2e-9056-41e4-91b3-f7dbd198687a",
+              "Position": {
+                "IsEmpty": false,
+                "X": -71305,
+                "Y": -99018
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "shipyard_xenon_cluster_112",
+                  "Type": "shipyard",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "a09f7494-a18b-435c-80aa-a6633731254f",
+              "Position": {
+                "IsEmpty": false,
+                "X": 75408,
+                "Y": -122438
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "wharf_xenon_cluster_112",
+                  "Type": "wharf",
+                  "Faction": "xenon",
+                  "Owner": "xenon",
+                  "Race": "xenon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "057fcb66-5782-4c44-aa14-9652c3c7b1e2",
+              "Position": {
+                "IsEmpty": false,
+                "X": -114153,
+                "Y": 119766
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "yaki_pirate_cluster_112_sector001",
+                  "Type": "wharf",
+                  "Faction": "yaki",
+                  "Owner": "yaki",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": true,
+                    "X": 0,
+                    "Y": 0
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_113",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "c8801709-5fc4-412d-a339-9acfc5576277",
+              "Position": {
+                "IsEmpty": false,
+                "X": -85829,
+                "Y": 52478
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "pio_equipmentdock_zone001_cluster_113_sector001",
+                  "Type": "equipmentdock",
+                  "Faction": "pioneers",
+                  "Owner": "pioneers",
+                  "Race": "terran",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -18560,
+                    "Y": -5043
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_114",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_115",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "f56f39bf-c22e-4a12-82af-f42585323457",
+              "Position": {
+                "IsEmpty": false,
+                "X": 54808,
+                "Y": -149169
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "pio_shipyard_cluster_115_sector001",
+                  "Type": "shipyard",
+                  "Faction": "pioneers",
+                  "Owner": "pioneers",
+                  "Race": "terran",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 54808,
+                    "Y": -149169
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "ef425eee-0bf0-4830-ad1f-96c1f0b8f326",
+              "Position": {
+                "IsEmpty": false,
+                "X": -47264,
+                "Y": -34716
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "pio_wharf_cluster_115_sector001",
+                  "Type": "wharf",
+                  "Faction": "pioneers",
+                  "Owner": "pioneers",
+                  "Race": "terran",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -47264,
+                    "Y": -34716
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_116",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_602",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "6741e9f0-6f2c-46fd-b151-65a0ed140229",
+              "Position": {
+                "IsEmpty": false,
+                "X": -45000,
+                "Y": 50500
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "boron_trade_602_001",
+                  "Type": "tradestation",
+                  "Faction": "boron",
+                  "Owner": "boron",
+                  "Race": "boron",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -45000,
+                    "Y": 50500
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_603",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "f2aa4f88-4b64-4c7c-b282-b63dff9bd837",
+              "Position": {
+                "IsEmpty": false,
+                "X": -55700,
+                "Y": 12700
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "boron_wharf_603_001",
+                  "Type": "wharf",
+                  "Faction": "boron",
+                  "Owner": "boron",
+                  "Race": "boron",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -55700,
+                    "Y": 12700
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_605",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_606",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "8d80ff49-e622-4dff-88eb-c6a7a9d869dd",
+              "Position": {
+                "IsEmpty": false,
+                "X": 54300,
+                "Y": -81500
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "boron_wharf_606_001",
+                  "Type": "wharf",
+                  "Faction": "boron",
+                  "Owner": "boron",
+                  "Race": "boron",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 54300,
+                    "Y": -81500
+                  }
+                }
+              ]
+            },
+            {
+              "Id": 0,
+              "Name": "0609840c-d4b8-4cf5-9a89-1ae5bb19b678",
+              "Position": {
+                "IsEmpty": false,
+                "X": 51992,
+                "Y": -1061
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "boron_shipyard_606_001",
+                  "Type": "shipyard",
+                  "Faction": "boron",
+                  "Owner": "boron",
+                  "Race": "boron",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -26450,
+                    "Y": 16700
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector002",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        },
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector003",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_604",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "233f0d04-5cd7-4a7f-bf4c-7840b3225899",
+              "Position": {
+                "IsEmpty": false,
+                "X": 2000,
+                "Y": -43100
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "boron_trade_604_001",
+                  "Type": "tradestation",
+                  "Faction": "boron",
+                  "Owner": "boron",
+                  "Race": "boron",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 2000,
+                    "Y": -43100
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_607",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_601",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_608",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_609",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "6adf78ce-7fd9-4e8c-9628-631937e649dd",
+              "Position": {
+                "IsEmpty": false,
+                "X": -60807,
+                "Y": -32171
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "boron_equipment_609_001",
+                  "Type": "equipmentdock",
+                  "Faction": "boron",
+                  "Owner": "boron",
+                  "Race": "boron",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 16400,
+                    "Y": 2300
+                  }
+                }
+              ]
+            }
+          ],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_701",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_702",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_703",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_705",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_706",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_704",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_708",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_730",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    }
+  ]
+}

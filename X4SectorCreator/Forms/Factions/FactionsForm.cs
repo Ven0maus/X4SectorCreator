@@ -1,5 +1,6 @@
 ﻿using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
+using X4SectorCreator.XmlGeneration;
 
 namespace X4SectorCreator.Forms
 {
@@ -38,6 +39,11 @@ namespace X4SectorCreator.Forms
 
             // Then for vanilla faction
             if (MainForm.Instance.FactionColorMapping.TryGetValue(faction, out Color value))
+                return value;
+
+            // Attempt to reverse some X4 faction names to readable names for lookup
+            faction = GodGeneration.CorrectFactionNameReversed(faction);
+            if (MainForm.Instance.FactionColorMapping.TryGetValue(faction, out value))
                 return value;
 
             // If not found, then "ownerless"
