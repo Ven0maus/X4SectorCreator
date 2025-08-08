@@ -14,6 +14,7 @@ namespace DevConsole
 
         private static void Main()
         {
+            /*
             Console.WriteLine("Enter clusters.xml directory path: ");
             var path = Console.ReadLine();
             var clustersPath = Path.Combine(path, "clusters.xml");
@@ -22,6 +23,7 @@ namespace DevConsole
             {
                 RegionExtractor.ExtractRegions(clustersPath, regionDefinitionsPath);
             }
+            */
             
             //MapPatcher.Patch();
 
