@@ -855,60 +855,69 @@ namespace X4SectorCreator
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
                     float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
 
-                    foreach (var region in sector.Regions)
+                    // Ordered by desc, so biggest regions are drawn first and smaller ones on top
+                    // This improves visibility
+                    foreach (var obj in sector.Regions
+                        .Select(a =>
+                        {
+                            if (string.IsNullOrWhiteSpace(a.BoundaryRadius) || !int.TryParse(a.BoundaryRadius, out var radius))
+                            {
+#if DEBUG
+                                throw new Exception("No boundary radius defined: " + sector.Name + " | " + a.Name + " | " + a.BoundaryRadius);
+#else
+                                return null;
+#endif
+                            }
+                            return new { Boundary = radius, Region = a };
+                        })
+                        .Where(a => a != null)
+                        .OrderByDescending(a => a.Boundary))
                     {
+                        var region = obj.Region;
+                        var radius = obj.Boundary;
                         if (!showVanilla && region.IsBaseGame) continue;
                         if (!showCustom && !region.IsBaseGame) continue;
 
-                        if (!string.IsNullOrWhiteSpace(region.BoundaryRadius) && int.TryParse(region.BoundaryRadius, out var radius))
+                        // Offset the region with the base position
+                        var basePos = region.IsBaseGame ? new PointF(region.Position.X - sector.SectorRealOffset.X, region.Position.Y - sector.SectorRealOffset.Y) : region.Position;
+                        if (radius == 0 || radius >= 1000000)
                         {
-                            // Offset the region with the base position
-                            var basePos = region.IsBaseGame ? new PointF(region.Position.X - sector.SectorRealOffset.X, region.Position.Y - sector.SectorRealOffset.Y) : region.Position;
-                            if (radius == 0 || radius >= 1000000)
-                            {
-                                // Center it, this is a sector wide region
-                                basePos = new(0, 0);
-                            }
+                            // Center it, this is a sector wide region
+                            basePos = new(0, 0);
+                        }
 
-                            float screenRadius = radius >= 1000000 || radius == 0 ? correctHexRadius * 1.6f : Math.Max(20, Math.Min(ConvertFromWorldRadius(radius, hexRadius, sector.DiameterRadius), correctHexRadius * 1.6f));
-                            PointF regionScreenPosition = ConvertFromWorldCoordinate(basePos, sector.DiameterRadius, correctHexRadius);
+                        float screenRadius = radius >= 1000000 || radius == 0 ? correctHexRadius * 1.6f : Math.Max(20, Math.Min(ConvertFromWorldRadius(radius, hexRadius, sector.DiameterRadius), correctHexRadius * 1.6f));
+                        PointF regionScreenPosition = ConvertFromWorldCoordinate(basePos, sector.DiameterRadius, correctHexRadius);
 
-                            regionScreenPosition.X += hexCenter.X;
-                            regionScreenPosition.Y += hexCenter.Y;
+                        regionScreenPosition.X += hexCenter.X;
+                        regionScreenPosition.Y += hexCenter.Y;
 
-                            // Determine region color
-                            var regionColors = colorMappings[region.Definition];
+                        // Determine region color
+                        var regionColors = colorMappings[region.Definition];
 
-                            // Visualize outside of hex bounds
-                            if (!IsPointInPolygon(childHexagon.Points, regionScreenPosition))
-                            {
-                                DrawRegionCircle(e.Graphics, screenRadius, regionScreenPosition, regionColors);
-                                e.Graphics.DrawLine(Pens.Fuchsia, hexCenter.X, hexCenter.Y, regionScreenPosition.X, regionScreenPosition.Y);
-                                continue;
-                            }
-
-                            using GraphicsPath hexPath = new();
-                            hexPath.AddPolygon(childHexagon.Points);
-                            using var hexClipRegion = new System.Drawing.Region(hexPath);
-
-                            // Save current clipping region
-                            using var oldClip = e.Graphics.Clip.Clone();
-
-                            // Set clip to hex shape
-                            e.Graphics.SetClip(hexClipRegion, CombineMode.Intersect);
-
-                            // Draw the pie circle
+                        // Visualize outside of hex bounds
+                        if (!IsPointInPolygon(childHexagon.Points, regionScreenPosition))
+                        {
                             DrawRegionCircle(e.Graphics, screenRadius, regionScreenPosition, regionColors);
+                            e.Graphics.DrawLine(Pens.Fuchsia, hexCenter.X, hexCenter.Y, regionScreenPosition.X, regionScreenPosition.Y);
+                            continue;
+                        }
 
-                            // Restore the original clipping region
-                            e.Graphics.SetClip(oldClip, CombineMode.Replace);
-                        }
-#if DEBUG
-                        else
-                        {
-                            throw new Exception("No boundary radius defined: " + sector.Name);
-                        }
-#endif
+                        using GraphicsPath hexPath = new();
+                        hexPath.AddPolygon(childHexagon.Points);
+                        using var hexClipRegion = new System.Drawing.Region(hexPath);
+
+                        // Save current clipping region
+                        using var oldClip = e.Graphics.Clip.Clone();
+
+                        // Set clip to hex shape
+                        e.Graphics.SetClip(hexClipRegion, CombineMode.Intersect);
+
+                        // Draw the pie circle
+                        DrawRegionCircle(e.Graphics, screenRadius, regionScreenPosition, regionColors);
+
+                        // Restore the original clipping region
+                        e.Graphics.SetClip(oldClip, CombineMode.Replace);
                     }
 
                     sectorIndex++;
