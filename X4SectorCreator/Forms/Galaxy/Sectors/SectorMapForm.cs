@@ -686,7 +686,9 @@ namespace X4SectorCreator
             {SectorPlacement.BottomRight, (float width, float childHeight) => (width * 0.375f, childHeight * 0.5f) },
             {SectorPlacement.BottomLeft, (float width, float childHeight) => (width * 0.125f, childHeight * 0.5f) },
             {SectorPlacement.MiddleRight, (float width, float childHeight) => (width * 0.5f, 0) },
-            {SectorPlacement.MiddleLeft, (float width, float childHeight) => (width * 0, 0) }
+            {SectorPlacement.MiddleLeft, (float width, float childHeight) => (width * 0, 0) },
+            {SectorPlacement.MiddleTop, (float width, float childHeight) => (width * 0.25f, -(childHeight * 0.5f)) },
+            {SectorPlacement.MiddleBottom, (float width, float childHeight) => (width * 0.25f, childHeight * 0.5f) }
         };
 
         private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, List<Sector> sectors, (int x, int y) translatedCoordinate, float zoom = 1.0f)
@@ -729,13 +731,44 @@ namespace X4SectorCreator
             // Child hex positions (equally spaced inside parent)
             int children = sectors?.Count ?? 0;
 
+            // 4 sector shenanigans
+            if (children == 4)
+            {
+                childWidth /= 1.25f;
+                childHeight /= 1.25f;
+            }
+
             List<PointF> childHexPositions = [];
-            if (children is 2 or 3)
+            if (children > 1)
             {
                 // Child hex centers for top-left, bottom-right
                 for (int i = 0; i < children; i++)
                 {
                     (float x, float y) = _childPlacementMappings[sectors[i].Placement](hexDrawWidth, childHeight);
+
+                    // More 4 sector shenanigans
+                    if (children == 4)
+                    {
+                        var placement = sectors[i].Placement;
+                        if (placement == SectorPlacement.MiddleRight)
+                        {
+                            x = hexDrawWidth * 0.6f;
+                        }
+                        else if (placement == SectorPlacement.MiddleTop ||
+                            placement == SectorPlacement.MiddleBottom)
+                        {
+                            x = hexDrawWidth * 0.3f;
+                            if (placement == SectorPlacement.MiddleTop)
+                            {
+                                y = -(childHeight * 0.75f);
+                            }
+                            else if (placement == SectorPlacement.MiddleBottom)
+                            {
+                                y = childHeight * 0.75f;
+                            }
+                        }
+                    }
+
                     childHexPositions.Add(new PointF(xOffset + x, yOffset + y));
                 }
             }

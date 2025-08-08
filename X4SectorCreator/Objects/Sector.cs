@@ -43,6 +43,8 @@ namespace X4SectorCreator.Objects
                 SectorPlacement.BottomRight => new Point(1, -1),
                 SectorPlacement.MiddleLeft => new Point(-1, 0),
                 SectorPlacement.MiddleRight => new Point(1, 0),
+                SectorPlacement.MiddleTop => new Point(0, 1),
+                SectorPlacement.MiddleBottom => new Point(0, -1),
                 _ => throw new NotImplementedException($"\"{Placement}\" not implemented."),
             };
         }
@@ -157,6 +159,8 @@ namespace X4SectorCreator.Objects
         BottomLeft,
         BottomRight,
         MiddleLeft,
-        MiddleRight
+        MiddleRight,
+        MiddleTop,
+        MiddleBottom,
     }
 }
