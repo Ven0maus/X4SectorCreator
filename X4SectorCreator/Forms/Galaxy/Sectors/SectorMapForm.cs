@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
@@ -147,12 +146,14 @@ namespace X4SectorCreator
         {
             Show_Vanilla_Sectors,
             Show_Custom_Sectors,
-            Show_Connections,
+            Show_Vanilla_Gates,
+            Show_Custom_Gates,
             Show_Coordinates,
             Show_Vanilla_Regions,
             Show_Custom_Regions,
             Visualize_Regions,
-            Show_Stations,
+            Show_Vanilla_Stations,
+            Show_Custom_Stations
         }
 
         public SectorMapForm()
@@ -1184,7 +1185,8 @@ namespace X4SectorCreator
 
         private void RenderStationIcons(PaintEventArgs e, Point sizeSmall, Point sizeLarge)
         {
-            if (!IsMapOptionChecked(MapOption.Show_Stations)) return;
+            if (!IsMapOptionChecked(MapOption.Show_Vanilla_Stations) &&
+                !IsMapOptionChecked(MapOption.Show_Custom_Stations)) return;
 
             List<Cluster> relevantClusters = _baseGameClusters.Values
                 .Concat(_customClusters)
@@ -1433,7 +1435,8 @@ namespace X4SectorCreator
 
         private void RenderGateConnections(PaintEventArgs e)
         {
-            if (!IsMapOptionChecked(MapOption.Show_Connections))
+            if (!IsMapOptionChecked(MapOption.Show_Vanilla_Gates) &&
+                !IsMapOptionChecked(MapOption.Show_Custom_Gates))
             {
                 return;
             }
@@ -1441,7 +1444,7 @@ namespace X4SectorCreator
             List<GateData> gatesData = [];
 
             // Render custom cluster gates
-            if (IsMapOptionChecked(MapOption.Show_Custom_Sectors))
+            if (IsMapOptionChecked(MapOption.Show_Custom_Sectors) && IsMapOptionChecked(MapOption.Show_Custom_Gates))
             {
                 foreach (Cluster cluster in _customClusters)
                 {
@@ -1576,11 +1579,14 @@ namespace X4SectorCreator
             }
         }
 
-        private static IEnumerable<GateData> CollectGateDataFromCluster(Cluster cluster)
+        private IEnumerable<GateData> CollectGateDataFromCluster(Cluster cluster)
         {
             // Calculate hex size and radius based on zoom and sector size
             float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+
+            var collectVanillaGates = IsMapOptionChecked(MapOption.Show_Vanilla_Gates);
+            var collectCustomGates = IsMapOptionChecked(MapOption.Show_Custom_Gates);
 
             int sectorIndex = 0;
             foreach (Sector sector in cluster.Sectors)
@@ -1595,6 +1601,9 @@ namespace X4SectorCreator
                 {
                     foreach (Gate gate in zone.Gates)
                     {
+                        if (gate.IsBaseGame && !collectVanillaGates) continue;
+                        if (!gate.IsBaseGame && !collectCustomGates) continue;
+
                         // Convert the zone position from world to screen space
                         Point realGatePos = new(zone.Position.X + gate.Position.X, zone.Position.Y + gate.Position.Y);
                         PointF gateScreenPosition = ConvertFromWorldCoordinate(realGatePos, sector.DiameterRadius, correctHexRadius);
