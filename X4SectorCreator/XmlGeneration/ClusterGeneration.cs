@@ -117,9 +117,9 @@ namespace X4SectorCreator.XmlGeneration
                         new XAttribute("ref", "regions"),
                         new XElement("offset",
                             new XElement("position",
-                                new XAttribute("x", sector.Offset.X + region.Position.X),
+                                new XAttribute("x", (sector.IsBaseGame ? sector.SectorRealOffset.X : sector.Offset.X) + region.Position.X),
                                 new XAttribute("y", 0),
-                                new XAttribute("z", sector.Offset.Y + region.Position.Y)
+                                new XAttribute("z", (sector.IsBaseGame ? sector.SectorRealOffset.Y : sector.Offset.Y) + region.Position.Y)
                             )
                         ),
                         new XElement("macro",

@@ -14,7 +14,7 @@ namespace X4SectorCreator.Configuration
             WriteIndented = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             PropertyNameCaseInsensitive = true,
-            Converters = { new JsonStringEnumConverter(), new ColorJsonConverter() }
+            Converters = { new JsonStringEnumConverter(), new ColorJsonConverter(), new LongTupleConverter() }
         };
 
         public static string Serialize(List<Cluster> clusters, VanillaChanges vanillaChanges)
@@ -176,6 +176,53 @@ namespace X4SectorCreator.Configuration
             }
 
             return (clusters, configObj.VanillaChanges);
+        }
+
+        public class LongTupleConverter : JsonConverter<(long, long)>
+        {
+            public override void Write(Utf8JsonWriter writer, (long, long) value, JsonSerializerOptions options)
+            {
+                writer.WriteStartObject();
+                writer.WriteNumber("X", value.Item1);
+                writer.WriteNumber("Y", value.Item2);
+                writer.WriteEndObject();
+            }
+
+            public override (long, long) Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                if (reader.TokenType != JsonTokenType.StartObject)
+                    throw new JsonException();
+
+                long x = 0;
+                long y = 0;
+
+                while (reader.Read())
+                {
+                    if (reader.TokenType == JsonTokenType.EndObject)
+                        return (x, y);
+
+                    if (reader.TokenType != JsonTokenType.PropertyName)
+                        throw new JsonException();
+
+                    string propertyName = reader.GetString();
+                    reader.Read();
+
+                    switch (propertyName)
+                    {
+                        case "X":
+                            x = reader.GetInt64();
+                            break;
+                        case "Y":
+                            y = reader.GetInt64();
+                            break;
+                        default:
+                            reader.Skip(); // ignore unknown properties
+                            break;
+                    }
+                }
+
+                throw new JsonException("Invalid JSON for tuple (long, long)");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace X4SectorCreator.Objects
 {
@@ -26,6 +27,9 @@ namespace X4SectorCreator.Objects
         [JsonIgnore]
         public (long X, long Y) Offset { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public (long X, long Y) SectorRealOffset { get; set; }
+
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);
 
@@ -39,6 +43,8 @@ namespace X4SectorCreator.Objects
                 SectorPlacement.BottomRight => new Point(1, -1),
                 SectorPlacement.MiddleLeft => new Point(-1, 0),
                 SectorPlacement.MiddleRight => new Point(1, 0),
+                SectorPlacement.MiddleTop => new Point(0, 1),
+                SectorPlacement.MiddleBottom => new Point(0, -1),
                 _ => throw new NotImplementedException($"\"{Placement}\" not implemented."),
             };
         }
@@ -153,6 +159,8 @@ namespace X4SectorCreator.Objects
         BottomLeft,
         BottomRight,
         MiddleLeft,
-        MiddleRight
+        MiddleRight,
+        MiddleTop,
+        MiddleBottom,
     }
 }

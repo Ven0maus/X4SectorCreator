@@ -1,4 +1,6 @@
-﻿namespace X4SectorCreator.Objects
+﻿using System.Text.Json.Serialization;
+
+namespace X4SectorCreator.Objects
 {
     public class Station : ICloneable
     {
@@ -10,6 +12,12 @@
         public string Race { get; set; }
         public string CustomConstructionPlan { get; set; }
         public Point Position { get; set; }
+
+        [JsonIgnore]
+        public string LocationType { get; set; }
+
+        [JsonIgnore]
+        public string Location { get; set; }
 
         public object Clone()
         {

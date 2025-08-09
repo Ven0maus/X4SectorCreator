@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using System.Text.Json;
 using System.Xml.Linq;
 using X4SectorCreator.Configuration;
@@ -11,7 +12,7 @@ namespace DevConsole.Extractors
     {
         private static readonly Dictionary<string, RegionDefinition> _regionDefintions = new(StringComparer.OrdinalIgnoreCase);
 
-        internal static IEnumerable<Region> ExtractRegions(string clustersPath, string definitionsPath)
+        internal static void ExtractRegions(string clustersPath, string definitionsPath)
         {
             // Collect all clusters
             var xdoc = XDocument.Load(clustersPath);
@@ -58,7 +59,9 @@ namespace DevConsole.Extractors
                             // Find offset
                             var offset = connection.Offset;
                             if (offset != null)
-                                sector.Offset = ((long)offset.X, (long)offset.Z);
+                            {
+                                sector.SectorRealOffset = ((long)offset.X, (long)offset.Z);
+                            }
                         }
                         else if (group.Key.Equals("regions", StringComparison.OrdinalIgnoreCase))
                         {
@@ -75,8 +78,8 @@ namespace DevConsole.Extractors
 
                             foreach (var sector in cluster.Sectors)
                             {
-                                long dx = X - sector.Offset.X;
-                                long dz = Z - sector.Offset.Y;
+                                long dx = X - sector.SectorRealOffset.X;
+                                long dz = Z - sector.SectorRealOffset.Y;
                                 long distanceSquared = dx * dx + dz * dz;
 
                                 if (distanceSquared < minDistanceSquared)
@@ -123,12 +126,6 @@ namespace DevConsole.Extractors
                     continue;
                 }
 
-                if (regionObj.Resources.Count == 0)
-                {
-                    invalid.Add(definition);
-                    continue;
-                }
-
                 definition.Resources = regionObj.Resources;
             }
 
@@ -139,24 +136,37 @@ namespace DevConsole.Extractors
                 {
                     foreach (var sector in cluster.Sectors)
                     {
-                        var matchingRegion = sector.Regions.FirstOrDefault(a => a.Definition == invalidDefinition);
-                        if (matchingRegion != null)
-                        {
-                            sector.Regions.Remove(matchingRegion);
-                        }
+                        var matchingRegions = sector.Regions.Where(a => a.Definition == invalidDefinition).ToArray();
+                        foreach (var region in matchingRegions)
+                            sector.Regions.Remove(region);
                     }
                 }
                 _regionDefintions.Remove(invalidDefinition.Name);
             }
 
+            // Set region boundary radius
+            foreach (var cluster in clusters.Values)
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    foreach (var region in sector.Regions)
+                    {
+                        if (definitions.TryGetValue(region.Definition.Name, out var def))
+                        {
+                            region.BoundaryRadius = def.BoundaryRadius;
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine($"Exported {clusters.Values.SelectMany(a => a.Sectors).SelectMany(a => a.Regions).Count()} regions.");
+
             // Store region extraction file
-            var clusterCollection = new ClusterCollection { Clusters = clusters.Values.ToList() };
+            var clusterCollection = new ClusterCollection { Clusters = [.. clusters.Values] };
             var xml = JsonSerializer.Serialize(clusterCollection, ConfigSerializer.JsonSerializerOptions);
             if (!Directory.Exists(Path.GetDirectoryName(Path.Combine("Extractions", "ExtractedRegions.xml"))))
                 Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine("Extractions", "ExtractedRegions.xml")));
             File.WriteAllText(Path.Combine("Extractions", "ExtractedRegions.xml"), xml);
-
-            return [];
         }
 
         private static RegionDefinition CreateRegionDefinition(string regionRef)
@@ -169,7 +179,7 @@ namespace DevConsole.Extractors
             return regionDefinition;
         }
 
-        private static IEnumerable<Macro> ReadClusterMacros(XDocument doc)
+        public static IEnumerable<Macro> ReadClusterMacros(XDocument doc)
         {
             var macroElements = doc.Element("macros").Elements("macro");
             foreach (var macroElement in macroElements)
@@ -200,28 +210,72 @@ namespace DevConsole.Extractors
             }
         }
 
+        private static string ExtractBoundaryRadius(XElement region)
+        {
+            var sizeElement = region.Element("boundary")?.Element("size");
+            var boundary = sizeElement?.Attribute("r")?.Value;
+            if (boundary == null)
+            {
+                // Try multiple variant
+                boundary = region.Element("boundaries")?
+                    .Elements("boundary")?
+                    .Select(a => a.Element("size")?.Attribute("r")?.Value)?
+                    .Where(a => !string.IsNullOrWhiteSpace(a))?
+                    .FirstOrDefault();
+
+                if (boundary == null && sizeElement != null)
+                {
+                    // Try box type variant
+                    var widthStr = sizeElement.Attribute("x")?.Value;
+                    var heightStr = sizeElement.Attribute("z")?.Value;
+                    if (widthStr != null && heightStr != null && 
+                        float.TryParse(widthStr, out var width) && 
+                        float.TryParse(heightStr, out var height))
+                    {
+                        float radius = (float)Math.Sqrt((width * width + height * height)) / 2f;
+                        boundary = ((int)Math.Round(radius, 0)).ToString(CultureInfo.InvariantCulture);
+                    }
+                }
+
+                if (boundary == null)
+                {
+                    Debug.WriteLine($"No boundary \"{region.Name}\".");
+                }
+            }
+            return boundary;
+        }
+
         private static IEnumerable<RegionObj> ReadRegionDefintions(XDocument doc)
         {
             var regions = doc.Element("regions").Elements("region");
             foreach (var region in regions)
             {
-                yield return new RegionObj
+                var regionObj = new RegionObj
                 {
                     Name = region.Attribute("name")?.Value,
-                    Resources = (region.Element("resources")?.Elements("resource") ?? [])
+                    Resources = [.. (region.Element("resources")?.Elements("resource") ?? [])
                         .Select(a => new Resource
                         {
                             Ware = a.Attribute("ware")?.Value,
                             Yield = a.Attribute("yield")?.Value
-                        })
-                        .ToList()
+                        })]
                 };
+
+                // Skip resource less regions
+                if (regionObj.Resources.Count == 0)
+                    continue;
+
+                // Extract also radius
+                regionObj.BoundaryRadius = ExtractBoundaryRadius(region);
+
+                yield return regionObj;
             }
         }
 
         public class RegionObj
         {
             public string Name { get; set; }
+            public string BoundaryRadius { get; set; }
             public List<Resource> Resources { get; set; }
         }
 

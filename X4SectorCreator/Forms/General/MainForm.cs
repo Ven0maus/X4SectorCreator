@@ -251,7 +251,7 @@ namespace X4SectorCreator
                 }
             }
 
-            InitializeVanillaRegions(clusterLookup);
+            InitializeVanillaRegionsAndStations(clusterLookup);
 
             // Create also the required connections for vanilla
             VanillaGateConnectionParser.CreateVanillaGateConnections(clusterLookup);
@@ -259,12 +259,11 @@ namespace X4SectorCreator
             return clusterCollection;
         }
 
-        private static void InitializeVanillaRegions(Dictionary<(int x, int y), Cluster> allClusters)
+        private static void InitializeVanillaRegionsAndStations(Dictionary<(int x, int y), Cluster> allClusters)
         {
-            string json = File.ReadAllText(Constants.DataPaths.VanillaRegionsMappingFilePath);
-            ClusterCollection clusterCollection = JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.JsonSerializerOptions);
-
-            foreach (var refCluster in clusterCollection.Clusters)
+            string regionsJson = File.ReadAllText(Constants.DataPaths.VanillaRegionsMappingFilePath);
+            ClusterCollection regionCollection = JsonSerializer.Deserialize<ClusterCollection>(regionsJson, ConfigSerializer.JsonSerializerOptions);
+            foreach (var refCluster in regionCollection.Clusters)
             {
                 // Find matching cluster
                 var cluster = allClusters.Values
@@ -279,9 +278,38 @@ namespace X4SectorCreator
                             a.BaseGameMapping.Equals(refSector.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
                         if (sector != null)
                         {
+                            sector.SectorRealOffset = refSector.SectorRealOffset;
                             foreach (var region in refSector.Regions)
                             {
+                                region.IsBaseGame = true;
                                 sector.Regions.Add(region);
+                            }
+                        }
+                    }
+                }
+            }
+
+            string stationsJson = File.ReadAllText(Constants.DataPaths.VanillaStationsMappingFilePath);
+            ClusterCollection stationsCollection = JsonSerializer.Deserialize<ClusterCollection>(stationsJson, ConfigSerializer.JsonSerializerOptions);
+            foreach (var refCluster in stationsCollection.Clusters)
+            {
+                // Find matching cluster
+                var cluster = allClusters.Values
+                    .FirstOrDefault(a => a.IsBaseGame &&
+                        a.BaseGameMapping.Equals(refCluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
+                if (cluster != null)
+                {
+                    foreach (var refSector in refCluster.Sectors)
+                    {
+                        // Find matching sector
+                        var sector = cluster.Sectors.FirstOrDefault(a => a.IsBaseGame &&
+                            a.BaseGameMapping.Equals(refSector.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
+                        if (sector != null)
+                        {
+                            foreach (var zone in refSector.Zones)
+                            {
+                                sector.Zones ??= [];
+                                sector.Zones.Add(zone);
                             }
                         }
                     }
@@ -1464,7 +1492,7 @@ namespace X4SectorCreator
             }
 
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
-            if (cluster.Value.Sectors.Count >= 3)
+            if (cluster.Value.Sectors.Count >= 4)
             {
                 _ = MessageBox.Show("You've already reached the maximum allowed sectors in this sector.");
                 return;
@@ -1605,7 +1633,6 @@ namespace X4SectorCreator
         private void BtnShowSectorMap_Click(object sender, EventArgs e)
         {
             SectorMapForm.Value.DlcListBox.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
-            SectorMapForm.Value.chkShowX4Sectors.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
             SectorMapForm.Value.GateSectorSelection = false;
             SectorMapForm.Value.BtnSelectLocation.Enabled = false;
             SectorMapForm.Value.ControlPanel.Size = new Size(176, 311);
@@ -1791,7 +1818,7 @@ namespace X4SectorCreator
         private void GatesListBox_DoubleClick(object sender, EventArgs e)
         {
             // Collect target gate data
-            Gate targetGate = GatesListBox.SelectedItem as Gate;
+            if (GatesListBox.SelectedItem is not Gate targetGate) return;
             if (targetGate.IsBaseGame)
             {
                 _ = MessageBox.Show("Editing vanilla gates is not supported, they can only be deleted.");

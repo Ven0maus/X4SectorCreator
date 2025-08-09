@@ -333,7 +333,6 @@ namespace X4SectorCreator.Forms.Galaxy
         {
             var sectorMapForm = MainForm.Instance.SectorMapForm;
             sectorMapForm.Value.DlcListBox.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
-            sectorMapForm.Value.chkShowX4Sectors.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
             sectorMapForm.Value.GateSectorSelection = false;
             sectorMapForm.Value.BtnSelectLocation.Enabled = false;
             sectorMapForm.Value.ControlPanel.Size = new Size(176, 311);
