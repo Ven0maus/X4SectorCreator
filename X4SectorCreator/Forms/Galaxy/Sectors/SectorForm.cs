@@ -49,6 +49,7 @@ namespace X4SectorCreator.Forms
             [SectorPlacement.TopRight, SectorPlacement.BottomRight, SectorPlacement.MiddleLeft],
             [SectorPlacement.TopLeft, SectorPlacement.BottomRight],
             [SectorPlacement.TopRight, SectorPlacement.BottomLeft],
+            [SectorPlacement.MiddleLeft, SectorPlacement.MiddleTop, SectorPlacement.MiddleRight, SectorPlacement.MiddleBottom, ]
         ];
 
         public SectorForm()
@@ -105,6 +106,8 @@ namespace X4SectorCreator.Forms
                 SectorPlacement.BottomRight => new(amount, -amount),
                 SectorPlacement.MiddleLeft => new(-amount, 0),
                 SectorPlacement.MiddleRight => new(amount, 0),
+                SectorPlacement.MiddleTop => new(0, amount),
+                SectorPlacement.MiddleBottom => new(0, -amount),
                 _ => new(0, 0) // Default case
             };
         }
@@ -211,7 +214,7 @@ namespace X4SectorCreator.Forms
             switch (BtnCreate.Text)
             {
                 case "Create":
-                    if (_selectedCluster.Sectors.Count == 3)
+                    if (_selectedCluster.Sectors.Count == 4)
                     {
                         _ = MessageBox.Show($"Reached maximum allowed sectors for cluster \"{_selectedCluster.Name}\".");
                         return;

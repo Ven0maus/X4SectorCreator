@@ -1492,7 +1492,7 @@ namespace X4SectorCreator
             }
 
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
-            if (cluster.Value.Sectors.Count >= 3)
+            if (cluster.Value.Sectors.Count >= 4)
             {
                 _ = MessageBox.Show("You've already reached the maximum allowed sectors in this sector.");
                 return;

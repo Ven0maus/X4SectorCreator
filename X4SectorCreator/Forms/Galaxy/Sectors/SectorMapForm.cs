@@ -686,7 +686,9 @@ namespace X4SectorCreator
             {SectorPlacement.BottomRight, (float width, float childHeight) => (width * 0.375f, childHeight * 0.5f) },
             {SectorPlacement.BottomLeft, (float width, float childHeight) => (width * 0.125f, childHeight * 0.5f) },
             {SectorPlacement.MiddleRight, (float width, float childHeight) => (width * 0.5f, 0) },
-            {SectorPlacement.MiddleLeft, (float width, float childHeight) => (width * 0, 0) }
+            {SectorPlacement.MiddleLeft, (float width, float childHeight) => (width * 0, 0) },
+            {SectorPlacement.MiddleTop, (float width, float childHeight) => (width * 0.25f, -(childHeight * 0.5f)) },
+            {SectorPlacement.MiddleBottom, (float width, float childHeight) => (width * 0.25f, childHeight * 0.5f) }
         };
 
         private static Hexagon GenerateHexagonWithChildren(float height, int row, int col, float centerX, float centerY, List<Sector> sectors, (int x, int y) translatedCoordinate, float zoom = 1.0f)
@@ -729,13 +731,44 @@ namespace X4SectorCreator
             // Child hex positions (equally spaced inside parent)
             int children = sectors?.Count ?? 0;
 
+            // 4 sector shenanigans
+            if (children == 4)
+            {
+                childWidth /= 1.25f;
+                childHeight /= 1.25f;
+            }
+
             List<PointF> childHexPositions = [];
-            if (children is 2 or 3)
+            if (children > 1)
             {
                 // Child hex centers for top-left, bottom-right
                 for (int i = 0; i < children; i++)
                 {
                     (float x, float y) = _childPlacementMappings[sectors[i].Placement](hexDrawWidth, childHeight);
+
+                    // More 4 sector shenanigans
+                    if (children == 4)
+                    {
+                        var placement = sectors[i].Placement;
+                        if (placement == SectorPlacement.MiddleRight)
+                        {
+                            x = hexDrawWidth * 0.6f;
+                        }
+                        else if (placement == SectorPlacement.MiddleTop ||
+                            placement == SectorPlacement.MiddleBottom)
+                        {
+                            x = hexDrawWidth * 0.3f;
+                            if (placement == SectorPlacement.MiddleTop)
+                            {
+                                y = -(childHeight * 0.75f);
+                            }
+                            else if (placement == SectorPlacement.MiddleBottom)
+                            {
+                                y = childHeight * 0.75f;
+                            }
+                        }
+                    }
+
                     childHexPositions.Add(new PointF(xOffset + x, yOffset + y));
                 }
             }
@@ -854,7 +887,7 @@ namespace X4SectorCreator
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
-                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
+                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : cluster.Sectors.Count == 4 ? hexRadius / 2f / 1.25f : hexRadius / 2f;
 
                     // Ordered by desc, so biggest regions are drawn first and smaller ones on top
                     // This improves visibility
@@ -1031,7 +1064,7 @@ namespace X4SectorCreator
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
-                    float correctHexHeight = cluster.Sectors.Count == 1 ? hexHeight : hexHeight / 2;
+                    float correctHexHeight = cluster.Sectors.Count == 1 ? hexHeight : cluster.Sectors.Count == 4 ? hexHeight / 2f / 1.25f : hexHeight / 2f;
 
                     // Bottom left corner
                     float startX = hexCenter.X - correctHexHeight / 4 - (cluster.Sectors.Count == 1 ? 10 : 5);
@@ -1222,7 +1255,7 @@ namespace X4SectorCreator
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
-                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2;
+                    float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : cluster.Sectors.Count == 4 ? hexRadius / 2f / 1.25f : hexRadius / 2f;
 
                     foreach (Zone zone in sector.Zones)
                     {
@@ -1248,11 +1281,17 @@ namespace X4SectorCreator
                             width /= 2;
                             height /= 2;
 
-                            // Reduce icon size of 1 sector clusters
                             if (cluster.Sectors.Count == 1)
                             {
+                                // Reduce icon size of 1 sector clusters
                                 width = (int)(width * 0.8f);
                                 height = (int)(height * 0.8f);
+                            }
+                            else if (cluster.Sectors.Count == 4)
+                            {
+                                // Reduce icon size of 4 sector clusters even more
+                                width = (int)(width * 0.75f);
+                                height = (int)(height * 0.75f);
                             }
 
                             Image resizedIcon;
