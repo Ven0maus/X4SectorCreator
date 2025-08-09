@@ -1,5 +1,5 @@
 @echo off
-set Runtimes=win-x64 win-x86 win-arm64
+set Runtimes=win-x64
 
 for %%r in (%Runtimes%) do (
     echo Publishing for %%r...
