@@ -1281,11 +1281,17 @@ namespace X4SectorCreator
                             width /= 2;
                             height /= 2;
 
-                            // Reduce icon size of 1 sector clusters
                             if (cluster.Sectors.Count == 1)
                             {
+                                // Reduce icon size of 1 sector clusters
                                 width = (int)(width * 0.8f);
                                 height = (int)(height * 0.8f);
+                            }
+                            else if (cluster.Sectors.Count == 4)
+                            {
+                                // Reduce icon size of 4 sector clusters even more
+                                width = (int)(width * 0.75f);
+                                height = (int)(height * 0.75f);
                             }
 
                             Image resizedIcon;
