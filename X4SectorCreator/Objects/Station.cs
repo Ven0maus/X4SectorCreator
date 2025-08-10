@@ -30,6 +30,8 @@ namespace X4SectorCreator.Objects
                 Owner = Owner,
                 Race = Race,
                 Position = Position,
+                LocationType = LocationType,
+                Location = Location,
                 CustomConstructionPlan = CustomConstructionPlan
             };
         }

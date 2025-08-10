@@ -458,6 +458,7 @@ namespace X4SectorCreator.Forms
             foreach (Station station in MainForm.Instance.AllClusters.Values
                 .SelectMany(a => a.Sectors)
                 .SelectMany(a => a.Zones)
+                .Where(a => !a.IsBaseGame)
                 .SelectMany(a => a.Stations))
             {
                 if (station.Faction.Equals(old, StringComparison.OrdinalIgnoreCase))

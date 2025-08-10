@@ -108,7 +108,7 @@ namespace X4SectorCreator.XmlGeneration
             {
                 foreach (Sector sector in cluster.Sectors)
                 {
-                    foreach (Zone zone in sector.Zones)
+                    foreach (Zone zone in sector.Zones.Where(a => !a.IsBaseGame))
                     {
                         foreach (Station station in zone.Stations)
                         {
