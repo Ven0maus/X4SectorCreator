@@ -1621,7 +1621,10 @@ namespace X4SectorCreator
             }
 
             // Show all stations
-            foreach (Station station in sector.Zones.SelectMany(a => a.Stations).OrderBy(a => a.Name))
+            foreach (Station station in sector.Zones
+                .Where(a => !a.IsBaseGame)
+                .SelectMany(a => a.Stations)
+                .OrderBy(a => a.Name))
             {
                 _ = ListStations.Items.Add(station);
             }

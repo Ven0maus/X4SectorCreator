@@ -153,7 +153,10 @@ namespace X4SectorCreator.Forms
                 case "Create":
                     Station station = new()
                     {
-                        Id = Sector.Zones.SelectMany(a => a.Stations).DefaultIfEmpty(new Station()).Max(a => a.Id) + 1,
+                        Id = Sector.Zones
+                        .Where(a => !a.IsBaseGame)
+                            .SelectMany(a => a.Stations)
+                            .DefaultIfEmpty(new Station()).Max(a => a.Id) + 1,
                         Name = txtName.Text,
                         Faction = cmbFaction.SelectedItem as string,
                         Owner = cmbOwner.SelectedItem as string,
