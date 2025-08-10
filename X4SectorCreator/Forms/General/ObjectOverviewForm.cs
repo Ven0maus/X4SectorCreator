@@ -60,9 +60,12 @@ namespace X4SectorCreator.Forms
                             _dataObjects.Add(new DataObject(gate));
                         }
 
-                        foreach (var station in zone.Stations)
+                        if (!zone.IsBaseGame)
                         {
-                            _dataObjects.Add(new DataObject(cluster, sector, station));
+                            foreach (var station in zone.Stations)
+                            {
+                                _dataObjects.Add(new DataObject(cluster, sector, station));
+                            }
                         }
                     }
                 }
