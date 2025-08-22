@@ -79,6 +79,7 @@ namespace X4SectorCreator.XmlGeneration
         {
             return stationType.ToLower() switch
             {
+                "factory" => "{local:Factory}",
                 "defence" => "{local:Defence Platform}",
                 "tradestation" => "{local:Trading Station}",
                 "equipmentdock" => "{local:Equipment Dock}",

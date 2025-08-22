@@ -82,6 +82,20 @@ namespace X4SectorCreator
                 }
             },
             {
+                "Stations", new List<object>
+                {
+                    "Factory",
+                    "Defence",
+                    "Wharf",
+                    "Shipyard",
+                    "Equipmentdock",
+                    "Tradestation",
+                    "Piratebase",
+                    "Piratedock",
+                    "Freeport"
+                }
+            },
+            {
                 "Others", new List<object>
                 {
                     "Faction Logic Disabled"
@@ -266,6 +280,11 @@ namespace X4SectorCreator
                 _legend.Remove("Custom Factions");
             }
 
+            foreach (var station in _legend["stations"])
+            {
+                LegendTree.ImageList.Images.Add(station.ToString(), GetIconFromStore(station.ToString().ToLower()));
+            }
+
             // Don't show vanilla, if no sector contains vanilla factions
             if (MainForm.Instance.AllClusters.Values.SelectMany(a => a.Sectors).All(a => string.IsNullOrWhiteSpace(a.Owner)))
                 _legend.Remove("factions");
@@ -320,6 +339,14 @@ namespace X4SectorCreator
                             ImageKey = faction.Id
                         };
                     }
+                    else if (legendEntry.Key == "Stations")
+                    {
+                        var entryStr = entry as string;
+                        childNode = new TreeNode(entryStr)
+                        {
+                            ImageKey = entryStr
+                        };
+                    }
                     else
                     {
                         var (name, _) = ((string name, Color color))entry;
@@ -368,7 +395,7 @@ namespace X4SectorCreator
                 }
                 else
                 {
-                    _imageMap[iconName] = image = null;
+                    throw new Exception($"Cannot find icon \"{iconName}.png\".");
                 }
             }
             return image;
