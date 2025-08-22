@@ -11,6 +11,7 @@
 	<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
 	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 	<DebugType>embedded</DebugType>
+	<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
   </PropertyGroup>
 
   <ItemGroup>
