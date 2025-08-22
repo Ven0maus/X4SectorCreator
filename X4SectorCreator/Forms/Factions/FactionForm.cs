@@ -3,6 +3,8 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using X4SectorCreator.Forms.Factions;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAlgorithms;
+using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.NameAlgorithms;
 using X4SectorCreator.Forms.General;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -342,7 +344,7 @@ namespace X4SectorCreator.Forms
                     }
 
                     // Update factions
-                    if (ship.PilotObj?.Select?.Faction != null && 
+                    if (ship.PilotObj?.Select?.Faction != null &&
                         ship.PilotObj.Select.Faction.Equals(old, StringComparison.OrdinalIgnoreCase))
                     {
                         ship.PilotObj.Select.Faction = @new;
@@ -708,7 +710,7 @@ namespace X4SectorCreator.Forms
                 {
                     _ = MessageBox.Show("\"custom\" tag cannot be removed.");
                     return;
-                }    
+                }
 
                 int index = TagsListBox.Items.IndexOf(TagsListBox.SelectedItem);
                 TagsListBox.Items.Remove(TagsListBox.SelectedItem);
@@ -757,6 +759,9 @@ namespace X4SectorCreator.Forms
                     _ = MessageBox.Show("Image size must be 256x256 please try upload another image.");
                     return;
                 }
+
+                // Clean up previous data
+                IconBox.Image?.Dispose();
 
                 // Display the image
                 IconBox.Image = image;
@@ -808,6 +813,25 @@ namespace X4SectorCreator.Forms
             MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
             MainForm.Instance.SectorMapForm.Value.Reset();
             MainForm.Instance.SectorMapForm.Value.Show();
+        }
+
+        private void BtnGenRandomIcon_Click(object sender, EventArgs e)
+        {
+            var enumValues = Enum.GetValues<FactionNameGen.FactionNameStyle>();
+            var icon = FactionIconGen.GenerateFactionIcon(Random.Shared.Next(), enumValues[Random.Shared.Next(enumValues.Length)]);
+
+            // Clean up previous data
+            IconBox.Image?.Dispose();
+
+            // Display the image
+            IconBox.Image = icon;
+
+            // Convert to Base64
+            string base64String = ImageHelper.ImageToBase64(icon, ImageFormat.Png);
+            IconData = base64String;
+
+            // Hide size label
+            LblIconSize.Visible = false;
         }
     }
 }

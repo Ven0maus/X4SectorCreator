@@ -63,6 +63,7 @@
             label10 = new Label();
             label11 = new Label();
             TxtLawfulness = new TextBox();
+            BtnGenRandomIcon = new Button();
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -257,7 +258,7 @@
             // 
             BtnSetIcon.Location = new Point(324, 259);
             BtnSetIcon.Name = "BtnSetIcon";
-            BtnSetIcon.Size = new Size(100, 33);
+            BtnSetIcon.Size = new Size(80, 33);
             BtnSetIcon.TabIndex = 27;
             BtnSetIcon.Text = "Upload Icon";
             BtnSetIcon.UseVisualStyleBackColor = true;
@@ -394,11 +395,23 @@
             TxtLawfulness.Size = new Size(177, 23);
             TxtLawfulness.TabIndex = 44;
             // 
+            // BtnGenRandomIcon
+            // 
+            BtnGenRandomIcon.Font = new Font("Segoe UI", 10F);
+            BtnGenRandomIcon.Location = new Point(404, 259);
+            BtnGenRandomIcon.Name = "BtnGenRandomIcon";
+            BtnGenRandomIcon.Size = new Size(22, 33);
+            BtnGenRandomIcon.TabIndex = 45;
+            BtnGenRandomIcon.Text = "🎲";
+            BtnGenRandomIcon.UseVisualStyleBackColor = true;
+            BtnGenRandomIcon.Click += BtnGenRandomIcon_Click;
+            // 
             // FactionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(632, 427);
+            Controls.Add(BtnGenRandomIcon);
             Controls.Add(TxtLawfulness);
             Controls.Add(label11);
             Controls.Add(CmbAvarice);
@@ -481,5 +494,6 @@
         private Label label10;
         private Label label11;
         private TextBox TxtLawfulness;
+        private Button BtnGenRandomIcon;
     }
 }
