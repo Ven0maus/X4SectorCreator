@@ -280,9 +280,16 @@ namespace X4SectorCreator
                 _legend.Remove("Custom Factions");
             }
 
+            var stationsOnMap = MainForm.Instance.AllClusters.Values
+                .SelectMany(a => a.Sectors)
+                .SelectMany(a => a.Zones)
+                .SelectMany(a => a.Stations)
+                .Select(a => a.Type)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
             foreach (var station in _legend["stations"])
             {
-                LegendTree.ImageList.Images.Add(station.ToString(), GetIconFromStore(station.ToString().ToLower()));
+                if (stationsOnMap.Contains(station.ToString()))
+                    LegendTree.ImageList.Images.Add(station.ToString(), GetIconFromStore(station.ToString().ToLower()));
             }
 
             // Don't show vanilla, if no sector contains vanilla factions
@@ -341,6 +348,8 @@ namespace X4SectorCreator
                     }
                     else if (legendEntry.Key == "Stations")
                     {
+                        if (!stationsOnMap.Contains(entry.ToString()))
+                            continue;
                         var entryStr = entry as string;
                         childNode = new TreeNode(entryStr)
                         {
