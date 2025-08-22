@@ -193,6 +193,8 @@ namespace X4SectorCreator.Forms.Stations
             // Show all modules in the selected construction plan
             if (ConstructionPlansListBox.SelectedItem is Constructionplan selectedConstructionPlan)
             {
+                ModulesListBox.Items.Clear();
+
                 // Display all constructionplan modules and their count
                 var moduleGroups = selectedConstructionPlan.EntryObj
                     .OrderBy(a => int.TryParse(a.Index, out var index) ? index : 0)
