@@ -26,6 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
+	<Content Include="Data\**\*.*">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+	</Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\Icons\defence.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
