@@ -68,7 +68,7 @@
             // cmbStationType
             // 
             cmbStationType.FormattingEnabled = true;
-            cmbStationType.Items.AddRange(new object[] { "defence", "equipmentdock", "shipyard", "tradestation", "wharf", "piratebase", "piratedock", "freeport" });
+            cmbStationType.Items.AddRange(new object[] { "factory", "defence", "equipmentdock", "shipyard", "tradestation", "wharf", "piratebase", "piratedock", "freeport" });
             cmbStationType.Location = new Point(112, 67);
             cmbStationType.Name = "cmbStationType";
             cmbStationType.Size = new Size(158, 23);
