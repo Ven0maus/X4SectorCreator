@@ -328,6 +328,11 @@ namespace X4SectorCreator.Forms
                     break;
             }
 
+            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
+            {
+                MainForm.Instance.SectorMap.Value.Reset(false);
+            }
+
             Close();
         }
 

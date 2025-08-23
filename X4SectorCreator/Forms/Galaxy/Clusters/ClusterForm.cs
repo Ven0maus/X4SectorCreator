@@ -153,6 +153,11 @@ namespace X4SectorCreator.Forms
                     Cluster.AutoPositionSectors();
                 }
 
+                if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
+                {
+                    MainForm.Instance.SectorMap.Value.Reset(false);
+                }
+
                 ResetAndHide();
             }
         }
@@ -187,14 +192,14 @@ namespace X4SectorCreator.Forms
 
         private void TxtLocation_MouseClick(object sender, MouseEventArgs e)
         {
-            MainForm.Instance.SectorMapForm.Value.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
-            MainForm.Instance.SectorMapForm.Value.GateSectorSelection = false;
-            MainForm.Instance.SectorMapForm.Value.ClusterSectorSelection = true;
-            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Enabled = false;
-            MainForm.Instance.SectorMapForm.Value.ControlPanel.Size = new Size(176, 347);
-            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
-            MainForm.Instance.SectorMapForm.Value.Reset();
-            MainForm.Instance.SectorMapForm.Value.Show();
+            MainForm.Instance.SectorMap.Value.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            MainForm.Instance.SectorMap.Value.GateSectorSelection = false;
+            MainForm.Instance.SectorMap.Value.ClusterSectorSelection = true;
+            MainForm.Instance.SectorMap.Value.BtnSelectLocation.Enabled = false;
+            MainForm.Instance.SectorMap.Value.ControlPanel.Size = new Size(176, 347);
+            MainForm.Instance.SectorMap.Value.BtnSelectLocation.Show();
+            MainForm.Instance.SectorMap.Value.Reset();
+            MainForm.Instance.SectorMap.Value.Show();
         }
 
         private void BtnEditClusterXml_Click(object sender, EventArgs e)
