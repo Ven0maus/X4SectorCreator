@@ -9,6 +9,7 @@ namespace X4SectorCreator.Forms
         public static readonly Dictionary<string, Faction> AllCustomFactions = new(StringComparer.OrdinalIgnoreCase);
         private readonly LazyEvaluated<FactionForm> _factionForm = new(() => new FactionForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<Factions.FactionCreationHelpForm> _factionCreationHelpForm = new(() => new Factions.FactionCreationHelpForm(), a => !a.IsDisposed);
+        
         public FactionsForm()
         {
             InitializeComponent();
@@ -77,6 +78,7 @@ namespace X4SectorCreator.Forms
         {
             if (CustomFactionsListBox.SelectedItem is Faction selectedFaction)
             {
+                FactionRelationsForm.DeleteFaction(selectedFaction);
                 AllCustomFactions.Remove(selectedFaction.Id);
 
                 int index = CustomFactionsListBox.Items.IndexOf(CustomFactionsListBox.SelectedItem);
@@ -109,6 +111,17 @@ namespace X4SectorCreator.Forms
         private void BtnFactionCreationHelp_Click(object sender, EventArgs e)
         {
             _factionCreationHelpForm.Value.Show();
+        }
+
+        private void CustomFactionsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BtnEditRelations.Enabled = CustomFactionsListBox.SelectedItem != null;
+        }
+
+        private void BtnEditRelations_Click(object sender, EventArgs e)
+        {
+            MainForm.Instance.FactionRelationsForm.Value.Faction = (Faction)CustomFactionsListBox.SelectedItem;
+            MainForm.Instance.FactionRelationsForm.Value.Show();
         }
     }
 }

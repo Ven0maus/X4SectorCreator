@@ -30,13 +30,10 @@
         {
             BtnUpdate = new Button();
             BtnCancel = new Button();
-            FactionRelationsDataGrid = new DataGridView();
-            FactionName = new DataGridViewTextBoxColumn();
-            RelationValue = new DataGridViewTextBoxColumn();
             label1 = new Label();
             ChkLockRelations = new CheckBox();
-            BtnRelationValueHelper = new Button();
-            ((System.ComponentModel.ISupportInitialize)FactionRelationsDataGrid).BeginInit();
+            CmbSelectedFaction = new ComboBox();
+            RelationsPanel = new FlowLayoutPanel();
             SuspendLayout();
             // 
             // BtnUpdate
@@ -51,83 +48,62 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 368);
+            BtnCancel.Location = new Point(6, 368);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(166, 32);
+            BtnCancel.Size = new Size(172, 32);
             BtnCancel.TabIndex = 1;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
             // 
-            // FactionRelationsDataGrid
-            // 
-            FactionRelationsDataGrid.AllowUserToAddRows = false;
-            FactionRelationsDataGrid.AllowUserToDeleteRows = false;
-            FactionRelationsDataGrid.AllowUserToResizeColumns = false;
-            FactionRelationsDataGrid.AllowUserToResizeRows = false;
-            FactionRelationsDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            FactionRelationsDataGrid.Columns.AddRange(new DataGridViewColumn[] { FactionName, RelationValue });
-            FactionRelationsDataGrid.Location = new Point(12, 33);
-            FactionRelationsDataGrid.Name = "FactionRelationsDataGrid";
-            FactionRelationsDataGrid.ScrollBars = ScrollBars.Vertical;
-            FactionRelationsDataGrid.Size = new Size(446, 329);
-            FactionRelationsDataGrid.TabIndex = 2;
-            // 
-            // FactionName
-            // 
-            FactionName.FillWeight = 250F;
-            FactionName.HeaderText = "Faction";
-            FactionName.Name = "FactionName";
-            FactionName.ReadOnly = true;
-            FactionName.Resizable = DataGridViewTriState.False;
-            FactionName.Width = 250;
-            // 
-            // RelationValue
-            // 
-            RelationValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            RelationValue.HeaderText = "Value";
-            RelationValue.Name = "RelationValue";
-            RelationValue.Resizable = DataGridViewTriState.False;
-            // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(6, 10);
             label1.Name = "label1";
-            label1.Size = new Size(127, 21);
+            label1.Size = new Size(124, 21);
             label1.TabIndex = 3;
-            label1.Text = "Faction Relations";
+            label1.Text = "Selected Faction:";
             // 
             // ChkLockRelations
             // 
             ChkLockRelations.AutoSize = true;
-            ChkLockRelations.Location = new Point(356, 8);
+            ChkLockRelations.Location = new Point(356, 13);
             ChkLockRelations.Name = "ChkLockRelations";
             ChkLockRelations.Size = new Size(102, 19);
             ChkLockRelations.TabIndex = 4;
             ChkLockRelations.Text = "Lock Relations";
             ChkLockRelations.UseVisualStyleBackColor = true;
             // 
-            // BtnRelationValueHelper
+            // CmbSelectedFaction
             // 
-            BtnRelationValueHelper.Location = new Point(166, 4);
-            BtnRelationValueHelper.Name = "BtnRelationValueHelper";
-            BtnRelationValueHelper.Size = new Size(144, 23);
-            BtnRelationValueHelper.TabIndex = 5;
-            BtnRelationValueHelper.Text = "Relation Value Helper";
-            BtnRelationValueHelper.UseVisualStyleBackColor = true;
-            BtnRelationValueHelper.Click += BtnRelationValueHelper_Click;
+            CmbSelectedFaction.FormattingEnabled = true;
+            CmbSelectedFaction.Location = new Point(135, 11);
+            CmbSelectedFaction.Name = "CmbSelectedFaction";
+            CmbSelectedFaction.Size = new Size(215, 23);
+            CmbSelectedFaction.TabIndex = 5;
+            CmbSelectedFaction.SelectedIndexChanged += CmbSelectedFaction_SelectedIndexChanged;
+            // 
+            // RelationsPanel
+            // 
+            RelationsPanel.AutoScroll = true;
+            RelationsPanel.FlowDirection = FlowDirection.TopDown;
+            RelationsPanel.Location = new Point(6, 40);
+            RelationsPanel.Name = "RelationsPanel";
+            RelationsPanel.Size = new Size(452, 322);
+            RelationsPanel.TabIndex = 6;
+            RelationsPanel.WrapContents = false;
             // 
             // FactionRelationsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(465, 405);
-            Controls.Add(BtnRelationValueHelper);
+            Controls.Add(RelationsPanel);
+            Controls.Add(CmbSelectedFaction);
             Controls.Add(ChkLockRelations);
             Controls.Add(label1);
-            Controls.Add(FactionRelationsDataGrid);
             Controls.Add(BtnCancel);
             Controls.Add(BtnUpdate);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -135,7 +111,7 @@
             MinimizeBox = false;
             Name = "FactionRelationsForm";
             Text = "Faction Relations Editor";
-            ((System.ComponentModel.ISupportInitialize)FactionRelationsDataGrid).EndInit();
+            Load += FactionRelationsForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -144,11 +120,9 @@
 
         private Button BtnUpdate;
         private Button BtnCancel;
-        private DataGridView FactionRelationsDataGrid;
         private Label label1;
-        private DataGridViewTextBoxColumn FactionName;
-        private DataGridViewTextBoxColumn RelationValue;
         private CheckBox ChkLockRelations;
-        private Button BtnRelationValueHelper;
+        private ComboBox CmbSelectedFaction;
+        private FlowLayoutPanel RelationsPanel;
     }
 }

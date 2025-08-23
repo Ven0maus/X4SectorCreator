@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
-using X4SectorCreator.Forms.Factions;
-using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 using X4SectorCreator.XmlGeneration;
 
@@ -17,73 +15,132 @@ namespace X4SectorCreator.Forms
             set
             {
                 _faction = value;
-                InitFactions();
+                CmbSelectedFaction.Enabled = true;
+                FactionRelationsForm_Load(null, null);
+
+                if (_faction == null) return;
+
+                if (!CmbSelectedFaction.Items.Contains(_faction.Name))
+                    CmbSelectedFaction.Items.Add(_faction.Name);
+
+                CmbSelectedFaction.SelectedItem = _faction.Name;
+                CmbSelectedFaction.Enabled = false;
             }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public FactionForm FactionForm { get; set; }
-
-        private readonly Dictionary<string, int> _indexMapping = new(StringComparer.OrdinalIgnoreCase);
-        private readonly LazyEvaluated<FactionRelationValueHelperForm> _factionRelationValueHelperForm = new(() => new FactionRelationValueHelperForm(), a => !a.IsDisposed);
+        private static Dictionary<string, Dictionary<string, int>> _factionRelations = [];
+        private readonly Dictionary<string, TrackBar> _factionPanels = []; // Shown panels for the selected faction
 
         public FactionRelationsForm()
         {
             InitializeComponent();
         }
 
-        private void InitFactions()
+        static FactionRelationsForm()
         {
-            _indexMapping.Clear();
-            FactionRelationsDataGrid.Rows.Clear();
-
-            // All factions except itself
-            var factions = FactionsForm.GetAllFactions(true)
-                .Append("criminal")
-                .Append("smuggler")
-                .Select(GodGeneration.CorrectFactionName)
-                .Where(a => !a.Equals(Faction.Id, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            // If (old) faction name was modified, then don't include the old name
-            if (FactionForm.Faction != null && Faction.Id != FactionForm.Faction.Id)
-                factions.Remove(FactionForm.Faction.Id);
-
-            int index = 0;
+            // Init the initial relations
+            var factions = GetFactions();
             foreach (var faction in factions)
             {
-                FactionRelationsDataGrid.Rows.Add(faction, (double)0);
-                _indexMapping[faction] = index;
-                index++;
-            }
-
-            // Overwrite values for each faction that already has a mapping
-            if (Faction.Relations?.Relation != null)
-            {
-                ChkLockRelations.Checked = Faction.Relations.Locked != null;
-                foreach (var relation in Faction.Relations.Relation)
+                var dict = new Dictionary<string, int>();
+                _factionRelations[faction] = dict;
+                foreach (var otherFaction in factions)
                 {
-                    if (!_indexMapping.TryGetValue(relation.Faction, out index))
-                    {
-                        index = FactionRelationsDataGrid.Rows.Count;
-                        FactionRelationsDataGrid.Rows.Add(relation.Faction.ToLower(), 0);
-                        _indexMapping[relation.Faction] = index;
-                    }
-                    else
-                    {
-                        _ = double.TryParse(relation.RelationValue, CultureInfo.InvariantCulture, out double result);
-                        FactionRelationsDataGrid.Rows[index].Cells[1].Value = result;
-                    }
+                    if (otherFaction == faction) continue;
+                    dict[otherFaction] = 0;
                 }
             }
         }
 
-        private void BtnCancel_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Returns all faction relations for XML generation.
+        /// </summary>
+        /// <returns></returns>
+        public static IReadOnlyDictionary<string, Dictionary<string, int>> GetFactionRelations()
         {
-            Close();
+            return _factionRelations;
+        }
+
+        /// <summary>
+        /// Used to init faction relations from a save file.
+        /// </summary>
+        /// <param name="factionRelations"></param>
+        public static void LoadFactionRelations(Dictionary<string, Dictionary<string, int>> factionRelations)
+        {
+            _factionRelations = factionRelations;
+        }
+
+        public static void InsertFaction(Faction faction)
+        {
+            Dictionary<string, int> relations = GetFactions()
+                .Where(a => a != faction.Id)
+                .ToDictionary(a => a, a => 0);
+            _factionRelations[faction.Id] = relations;
+
+            // Overwrite existing values
+            if (faction.Relations?.Relation != null)
+            {
+                foreach (var rel in faction.Relations.Relation)
+                {
+                    var factionName = GodGeneration.CorrectFactionNameReversed(rel.Faction);
+                    if (relations.ContainsKey(factionName)) 
+                    {
+                        var relValue = ConvertRelationToUIValue(rel.RelationValue, out bool isNegative);
+                        relations[factionName] = isNegative ? -relValue : relValue;
+                    }
+                }
+            }
+
+            // Insert in other factions
+            
+            // Update relation values based on the new factions relation values
+        }
+
+        public static void DeleteFaction(Faction faction)
+        {
+            _factionRelations.Remove(faction.Id);
+        }
+
+        private static int ConvertRelationToUIValue(string value, out bool isNegative)
+        {
+            isNegative = false;
+            if (!double.TryParse(value, CultureInfo.InvariantCulture, out var result)) return 0;
+            isNegative = result < 0;
+            return (int)Math.Round((10 * Math.Log10(Math.Abs(result) * 1000)), 0);
+        }
+
+        private static double ConvertUIToRelationValue(int value, out bool isNegative)
+        {
+            isNegative = value < 0;
+            double relation = Math.Pow(10, Math.Abs(value) / 10.0) / 1000.0;
+            double delta = relation * (Math.Pow(10, 1.0 / 10.0) - 1.0); // relation step to next UI
+            int decimalPlaces = (int)Math.Ceiling(-Math.Log10(delta));
+            return Math.Round(relation, decimalPlaces);
+        }
+
+        private static HashSet<string> GetFactions()
+        {
+            return [.. FactionsForm.GetAllFactions(true)
+                .Append("criminal")
+                .Append("smuggler")
+                .Select(GodGeneration.CorrectFactionNameReversed)];
         }
 
         private void BtnUpdate_Click(object sender, EventArgs e)
+        {
+            if (Faction != null)
+            {
+                HandleCustomFactionFormsRelations();
+            }
+            else
+            {
+                // TODO: Handle vanilla factions
+            }
+
+            Close();
+        }
+
+        private void HandleCustomFactionFormsRelations()
         {
             // Init
             if (Faction.Relations == null)
@@ -94,51 +151,134 @@ namespace X4SectorCreator.Forms
             // Set locked state
             Faction.Relations.Locked = ChkLockRelations.Checked ? "1" : null;
 
-            foreach (DataGridViewRow row in FactionRelationsDataGrid.Rows)
+            // Set all relations for this faction properly
+            var factionRelations = _factionRelations[Faction.Name];
+            foreach (var relation in factionRelations)
             {
-                var factionName = row.Cells[0].Value as string;
-                if (string.IsNullOrWhiteSpace(factionName)) continue;
-
-                factionName = GodGeneration.CorrectFactionName(factionName);
-                double factionValue;
-
-                var factionDataValue = row.Cells[1].Value;
-                if (factionDataValue is double strD)
-                    factionValue = strD;
-                else
-                    _ = double.TryParse(row.Cells[1].Value as string, CultureInfo.InvariantCulture, out factionValue);
-
-                // Find match index
+                var factionName = GodGeneration.CorrectFactionName(relation.Key);
                 var faction = Faction.Relations.Relation
                     .FirstOrDefault(a => a.Faction.Equals(factionName, StringComparison.OrdinalIgnoreCase));
                 if (faction == null)
                 {
-                    if (factionValue == 0) continue;
-                    Faction.Relations.Relation.Add(new Faction.Relation
+                    if (relation.Value == 0)
                     {
-                        Faction = factionName,
-                        RelationValue = factionValue.ToString()
-                    });
+                        var oldRelation = Faction.Relations.Relation.FirstOrDefault(a => a.Faction.Equals(factionName));
+                        if (oldRelation != null)
+                            Faction.Relations.Relation.Remove(oldRelation);
+                    }
+                    else
+                    {
+                        var relValue = ConvertUIToRelationValue(relation.Value, out bool isNegative);
+                        Faction.Relations.Relation.Add(new Faction.Relation
+                        {
+                            Faction = factionName,
+                            RelationValue = isNegative ? 
+                                (-relValue).ToString(CultureInfo.InvariantCulture) : 
+                                relValue.ToString(CultureInfo.InvariantCulture)
+                        });
+                    }
                 }
                 else
                 {
-                    if (factionValue == 0)
+                    if (relation.Value == 0)
                     {
                         Faction.Relations.Relation.Remove(faction);
                         continue;
                     }
-                    faction.RelationValue = factionValue.ToString();
+                    var relValue = ConvertUIToRelationValue(relation.Value, out bool isNegative);
+                    faction.RelationValue = isNegative ?
+                                (-relValue).ToString(CultureInfo.InvariantCulture) :
+                                relValue.ToString(CultureInfo.InvariantCulture);
                 }
             }
-
-            // This will re-apply the setter of the property to properly serialize the value in the other form
-            FactionForm.SetFactionXml(Faction);
-            Close();
         }
 
-        private void BtnRelationValueHelper_Click(object sender, EventArgs e)
+        private void CmbSelectedFaction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _factionRelationValueHelperForm.Value.Show();
+            var selectedFaction = (string)CmbSelectedFaction.SelectedItem;
+
+            RelationsPanel.SuspendLayout();  // improves redraw performance
+            RelationsPanel.Controls.Clear();
+            _factionPanels.Clear();
+
+            // Gzt relations of selected faction
+            if (!_factionRelations.TryGetValue(selectedFaction, out var factionRelations))
+            {
+                RelationsPanel.ResumeLayout();
+                // This cannot happen naturally
+                _ = MessageBox.Show("Something went wrong with faction relations for this faction.");
+                return;
+            }
+
+            foreach (var kvp in factionRelations.OrderBy(a => a.Key))
+            {
+                if (kvp.Key == selectedFaction) continue;
+
+                var panel = new Panel
+                {
+                    Width = RelationsPanel.ClientSize.Width - 25,
+                    Height = 30,
+                    Margin = new Padding(2)
+                };
+
+                var lbl = new Label { Text = kvp.Key, Width = 100, Left = 5, Top = 7 };
+                var track = new TrackBar
+                {
+                    Minimum = -30,
+                    Maximum = 30,
+                    TickStyle = TickStyle.None,
+                    Value = factionRelations[kvp.Key],
+                    Width = 250,
+                    Left = 110,
+                    Top = 3,
+                    Height = 25
+                };
+                track.MouseWheel += (s, e) => ((HandledMouseEventArgs)e).Handled = true;
+                track.BackColor = track.Value < 0 ? Color.LightCoral : Color.LightGreen;
+                track.ValueChanged += (s, e) => 
+                {
+                    if (track.Value < 0)
+                        track.BackColor = Color.LightCoral;   // reddish
+                    else
+                        track.BackColor = Color.LightGreen;   // greenish
+                };
+                var lblValue = new Label { Text = track.Value.ToString(), Left = 370, Top = 7, Width = 30 };
+
+                track.Scroll += (s, ev) =>
+                {
+                    lblValue.Text = track.Value.ToString();
+                    factionRelations[kvp.Key] = track.Value;
+                };
+
+                panel.Controls.Add(lbl);
+                panel.Controls.Add(track);
+                panel.Controls.Add(lblValue);
+
+                _factionPanels[kvp.Key] = track;
+
+                RelationsPanel.Controls.Add(panel);
+            }
+
+            RelationsPanel.ResumeLayout();
+        }
+
+        private void FactionRelationsForm_Load(object sender, EventArgs e)
+        {
+            if (CmbSelectedFaction.Enabled == false) return;
+            var prevSelected = (string)CmbSelectedFaction.SelectedItem;
+
+            // Reset
+            CmbSelectedFaction.Items.Clear();
+            foreach (var faction in _factionRelations.Keys.OrderBy(a => a))
+                CmbSelectedFaction.Items.Add(faction);
+
+            if (prevSelected != null && CmbSelectedFaction.Items.Contains(prevSelected))
+                CmbSelectedFaction.SelectedItem = prevSelected;
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

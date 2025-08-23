@@ -77,7 +77,6 @@ namespace X4SectorCreator.Forms
         };
 
         private readonly LazyEvaluated<FactionXmlForm> _factionXmlForm = new(() => new FactionXmlForm(), a => !a.IsDisposed);
-        private readonly LazyEvaluated<FactionRelationsForm> _factionRelationsForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<FactionShipsForm> _factionShipsForm = new(() => new FactionShipsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<FactionStationForm> _factionStationForm = new(() => new FactionStationForm(), a => !a.IsDisposed);
 
@@ -292,6 +291,9 @@ namespace X4SectorCreator.Forms
                         return;
                     }
                     FactionsForm.AllCustomFactions.Add(faction.Id, faction);
+
+                    // Add relations
+                    FactionRelationsForm.InsertFaction(faction);
                     break;
                 case "Update":
                     if (faction.Id != Faction.Id)
@@ -674,13 +676,6 @@ namespace X4SectorCreator.Forms
             _factionXml = faction.Serialize();
 
             return true;
-        }
-
-        private void BtnFactionRelations_Click(object sender, EventArgs e)
-        {
-            _factionRelationsForm.Value.FactionForm = this;
-            _factionRelationsForm.Value.Faction = Faction.Deserialize(_factionXml);
-            _factionRelationsForm.Value.Show();
         }
 
         private void BtnAddTag_Click(object sender, EventArgs e)
