@@ -20,8 +20,8 @@ namespace X4SectorCreator.Forms
 
                 if (_faction == null) return;
 
-                if (!CmbSelectedFaction.Items.Contains(_faction.Name))
-                    CmbSelectedFaction.Items.Add(_faction.Name);
+                if (!CmbSelectedFaction.Items.Contains(_faction.Id))
+                    CmbSelectedFaction.Items.Add(_faction.Id);
 
                 CmbSelectedFaction.SelectedItem = _faction.Name;
                 CmbSelectedFaction.Enabled = false;
@@ -29,7 +29,7 @@ namespace X4SectorCreator.Forms
         }
 
         private static Dictionary<string, Dictionary<string, int>> _factionRelations = [];
-        private readonly Dictionary<string, TrackBar> _factionPanels = []; // Shown panels for the selected faction
+        private readonly Dictionary<string, Dictionary<string, int>> _unsavedChanges = [];
 
         public FactionRelationsForm()
         {
@@ -92,8 +92,12 @@ namespace X4SectorCreator.Forms
             }
 
             // Insert in other factions
-            
-            // Update relation values based on the new factions relation values
+            foreach (var kvp in _factionRelations)
+            {
+                if (kvp.Key == faction.Id) continue;
+
+                kvp.Value[faction.Id] = _factionRelations[faction.Id][kvp.Key];
+            }
         }
 
         public static void DeleteFaction(Faction faction)
@@ -128,14 +132,24 @@ namespace X4SectorCreator.Forms
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
+            // Apply unsaved changes
+            foreach (var kvp in _unsavedChanges)
+            {
+                var relations = _factionRelations[kvp.Key];
+                foreach (var change in kvp.Value)
+                {
+                    relations[change.Key] = change.Value;
+                }
+            }
+
+            // TODO: Apply them also in reverse (eg, A -> B and B -> A)
+
+            // Clear after changes are processed
+            _unsavedChanges.Clear();
+
+            // TODO: Make sure Faction objects (custom factions) get their relations updated correctly
             if (Faction != null)
-            {
-                HandleCustomFactionFormsRelations();
-            }
-            else
-            {
-                // TODO: Handle vanilla factions
-            }
+                HandleCustomFactionFormsRelations(); // This is only for the current faction, we need to do also other custom factions
 
             Close();
         }
@@ -199,7 +213,6 @@ namespace X4SectorCreator.Forms
 
             RelationsPanel.SuspendLayout();  // improves redraw performance
             RelationsPanel.Controls.Clear();
-            _factionPanels.Clear();
 
             // Gzt relations of selected faction
             if (!_factionRelations.TryGetValue(selectedFaction, out var factionRelations))
@@ -247,14 +260,15 @@ namespace X4SectorCreator.Forms
                 track.Scroll += (s, ev) =>
                 {
                     lblValue.Text = track.Value.ToString();
-                    factionRelations[kvp.Key] = track.Value;
+
+                    if (!_unsavedChanges.TryGetValue(selectedFaction, out var relations))
+                        _unsavedChanges[selectedFaction] = relations = [];
+                    relations[kvp.Key] = track.Value;
                 };
 
                 panel.Controls.Add(lbl);
                 panel.Controls.Add(track);
                 panel.Controls.Add(lblValue);
-
-                _factionPanels[kvp.Key] = track;
 
                 RelationsPanel.Controls.Add(panel);
             }
