@@ -107,17 +107,29 @@ namespace X4SectorCreator.Forms
                             Sectors = []
                         });
 
-                        // Create also a sector and one zone with the same name
-                        var sector = new Sector
-                        {
-                            Id = 1,
-                            Name = name,
-                            Owner = "None"
-                        };
-                        Cluster.Sectors.Add(sector);
+                        // Create also sector(s) with the same name, and init the zones based on sector radius
+                        int amountOfSectors = BtnSector1.Checked ? 1 :
+                            BtnSector2.Checked ? 2 :
+                            BtnSector3.Checked ? 3 :
+                            BtnSector4.Checked ? 4 :
+                            1; // Fall-back 1
 
-                        // Create initial zones based on the sector range
-                        sector.InitializeOrUpdateZones();
+                        for (int i = 0; i < amountOfSectors; i++)
+                        {
+                            var sector = new Sector
+                            {
+                                Id = i + 1,
+                                Name = amountOfSectors == 1 ? name : $"{name} {ToRomanNumeral(i + 1)}",
+                                Owner = "None"
+                            };
+                            Cluster.Sectors.Add(sector);
+
+                            // Create initial zones based on the sector range
+                            sector.InitializeOrUpdateZones();
+                        }
+
+                        // The initial placement is automatically positioned, even if auto determine is disabled!
+                        Cluster.AutoPositionSectors();
 
                         // Add to listbox and select it
                         _ = MainForm.Instance.ClustersListBox.Items.Add(name);
@@ -160,6 +172,11 @@ namespace X4SectorCreator.Forms
 
                 ResetAndHide();
             }
+        }
+
+        private static string ToRomanNumeral(int i)
+        {
+            return i == 1 ? "I" : i == 2 ? "II" : i == 3 ? "III" : i == 4 ? "IV" : "I";
         }
 
         public static string FindBackgroundVisualMappingByCode(string mappingCode)

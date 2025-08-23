@@ -275,6 +275,10 @@ namespace X4SectorCreator.Forms
                     sectorValue.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
                     sectorValue.Placement = sectorPlacement;
 
+                    // Update zones based on the sector range if modified
+                    if (!sectorValue.IsBaseGame)
+                        sectorValue.InitializeOrUpdateZones();
+
                     int index = MainForm.Instance.SectorsListBox.SelectedIndex;
                     MainForm.Instance.SectorsListBox.Items[index] = name;
                     MainForm.Instance.SectorsListBox.SelectedItem = name;

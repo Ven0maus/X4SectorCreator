@@ -1368,6 +1368,13 @@ namespace X4SectorCreator
             ClusterForm.Value.txtDescription.Text = string.Empty;
             ClusterForm.Value.cmbBackgroundVisual.SelectedItem = ClusterForm.Value.cmbBackgroundVisual.Items[0];
             ClusterForm.Value.TxtLocation.Text = string.Empty;
+
+            // Make sure these buttons are enabled for creation
+            ClusterForm.Value.BtnSector1.Enabled = true;
+            ClusterForm.Value.BtnSector2.Enabled = true;
+            ClusterForm.Value.BtnSector3.Enabled = true;
+            ClusterForm.Value.BtnSector4.Enabled = true;
+
             ClusterForm.Value.Show();
         }
 
@@ -1480,6 +1487,24 @@ namespace X4SectorCreator
             ClusterForm.Value.cmbBackgroundVisual.SelectedItem = Forms.ClusterForm.FindBackgroundVisualMappingByCode(cluster.Value.BackgroundVisualMapping ?? cluster.Value.BaseGameMapping);
             ClusterForm.Value.TxtLocation.Text = cluster.Key.ToString();
             ClusterForm.Value.ChkAutoPlacement.Checked = !cluster.Value.CustomSectorPositioning;
+
+            // Disable these buttons, they cannot be modified anymore
+            ClusterForm.Value.BtnSector1.Enabled = false;
+            ClusterForm.Value.BtnSector2.Enabled = false;
+            ClusterForm.Value.BtnSector3.Enabled = false;
+            ClusterForm.Value.BtnSector4.Enabled = false;
+
+            // Select the correct button based on sectors in cluster
+            var amountOfSectors = cluster.Value.Sectors.Count;
+            if (amountOfSectors == 1)
+                ClusterForm.Value.BtnSector1.Checked = true;
+            else if (amountOfSectors == 2)
+                ClusterForm.Value.BtnSector2.Checked = true;
+            else if(amountOfSectors == 3)
+                ClusterForm.Value.BtnSector3.Checked = true;
+            else if(amountOfSectors == 4)
+                ClusterForm.Value.BtnSector4.Checked = true;
+
             if (!string.IsNullOrWhiteSpace(cluster.Value.Soundtrack))
                 ClusterForm.Value.TxtSoundtrack.Text = cluster.Value.Soundtrack;
             ClusterForm.Value.Show();
@@ -1558,6 +1583,9 @@ namespace X4SectorCreator
 
             // Set details
             SetDetailsText(cluster.Value, sector);
+
+            if (!cluster.Value.CustomSectorPositioning)
+                cluster.Value.AutoPositionSectors();
 
             if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
             {
