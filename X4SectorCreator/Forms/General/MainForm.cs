@@ -1428,7 +1428,8 @@ namespace X4SectorCreator
             GatesListBox.Items.Clear();
             RegionsListBox.Items.Clear();
 
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
+            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
+                (SectorMap.IsInitialized && SectorMap.Value.Visible))
             {
                 SectorMap.Value.Reset(false);
             }
@@ -1589,7 +1590,8 @@ namespace X4SectorCreator
             if (!cluster.Value.CustomSectorPositioning)
                 cluster.Value.AutoPositionSectors();
 
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
+            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
+                (SectorMap.IsInitialized && SectorMap.Value.Visible))
             {
                 SectorMap.Value.Reset(false);
             }
@@ -1857,7 +1859,8 @@ namespace X4SectorCreator
             index = Math.Max(0, index);
             GatesListBox.SelectedItem = index >= 0 && GatesListBox.Items.Count > 0 ? GatesListBox.Items[index] : null;
 
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
+            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
+                (SectorMap.IsInitialized && SectorMap.Value.Visible))
             {
                 SectorMap.Value.Reset(false);
             }
@@ -1955,7 +1958,8 @@ namespace X4SectorCreator
             index = Math.Max(0, index);
             RegionsListBox.SelectedItem = index >= 0 && RegionsListBox.Items.Count > 0 ? RegionsListBox.Items[index] : null;
 
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
+            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
+                (SectorMap.IsInitialized && SectorMap.Value.Visible))
             {
                 SectorMap.Value.Reset(false);
             }
@@ -2034,7 +2038,8 @@ namespace X4SectorCreator
             // Set details
             SetDetailsText(cluster, sector);
 
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
+            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
+                (SectorMap.IsInitialized && SectorMap.Value.Visible))
             {
                 SectorMap.Value.Reset(false);
             }

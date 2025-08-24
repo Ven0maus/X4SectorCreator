@@ -172,7 +172,8 @@ namespace X4SectorCreator.Forms
                         SectorForm.DetermineSectorOffset(Cluster, sector);
                 }
 
-                if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
+                if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
+                    (MainForm.Instance.SectorMap.IsInitialized && MainForm.Instance.SectorMap.Value.Visible))
                 {
                     MainForm.Instance.SectorMap.Value.Reset(false);
                 }

@@ -297,7 +297,8 @@ namespace X4SectorCreator.Forms
             // Determines the position inside the cluster based on the selected placement
             DetermineSectorOffset(_selectedCluster, sectorValue);
 
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
+            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
+                (MainForm.Instance.SectorMap.IsInitialized && MainForm.Instance.SectorMap.Value.Visible))
             {
                 MainForm.Instance.SectorMap.Value.Reset(false);
             }
@@ -307,6 +308,7 @@ namespace X4SectorCreator.Forms
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
+
             ResetAndHide();
         }
 
