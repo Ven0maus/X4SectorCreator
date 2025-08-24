@@ -176,6 +176,8 @@ namespace X4SectorCreator.Forms
                         string.Join("\n- ", invalidClusters.Select(a => a.Name)));
                     return false;
                 }
+
+                FactionRelationsForm.Reset();
             }
 
             // Validate if there are any gate connections with basegame clusters existing if we're going to custom galaxy
@@ -204,6 +206,9 @@ namespace X4SectorCreator.Forms
                 _baseGameClusters ??= MainForm.Instance.AllClusters
                         .Where(a => a.Value.IsBaseGame)
                         .ToDictionary(a => a.Key, a => a.Value);
+
+                // Completely clear
+                FactionRelationsForm.Clear();
             }
 
             // Apply change

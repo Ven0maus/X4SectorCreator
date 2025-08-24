@@ -396,7 +396,7 @@ namespace X4SectorCreator.Forms
             if (prevSelected != null && CmbSelectedFaction.Items.Contains(prevSelected))
                 CmbSelectedFaction.SelectedItem = prevSelected;
             else
-                CmbSelectedFaction.SelectedIndex = 0;
+                CmbSelectedFaction.SelectedIndex = CmbSelectedFaction.Items.Count > 0 ? 0 : -1;
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -423,14 +423,16 @@ namespace X4SectorCreator.Forms
 
         internal static void Reset()
         {
-            // Reset to the defaults
+            Clear();
+            InitDefaults();
+        }
 
+        internal static void Clear()
+        {
             FactionRelations.Clear();
             FactionsLocked.Clear();
             _unsavedFactionsLocked.Clear();
             _unsavedFactionsLocked.Clear();
-
-            InitDefaults();
         }
 
         private static void InitDefaults()
