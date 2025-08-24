@@ -8,7 +8,7 @@ using Region = X4SectorCreator.Objects.Region;
 
 namespace DevConsole.Extractors
 {
-    internal class RegionExtractor
+    internal static class RegionExtractor
     {
         private static readonly Dictionary<string, RegionDefinition> _regionDefintions = new(StringComparer.OrdinalIgnoreCase);
 

@@ -90,6 +90,8 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
 
+            // TODO: Handle vanilla factions
+
             foreach (var mapping in data)
             {
                 var addElement = new XElement("add",

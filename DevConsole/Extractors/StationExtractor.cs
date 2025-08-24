@@ -7,7 +7,7 @@ using X4SectorCreator.Objects;
 
 namespace DevConsole.Extractors
 {
-    internal class StationExtractor
+    internal static class StationExtractor
     {
         internal static void ExtractStations(string clustersPath, string sectorsPath, string godPath)
         {

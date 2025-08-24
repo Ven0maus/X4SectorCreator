@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
+using System.Text.Json;
+using X4SectorCreator.Configuration;
 using X4SectorCreator.Objects;
 using X4SectorCreator.XmlGeneration;
 
@@ -39,15 +41,25 @@ namespace X4SectorCreator.Forms
         static FactionRelationsForm()
         {
             // Init the initial relations
-            var factions = GetFactions();
-            foreach (var faction in factions)
+            var defaultRelations = GetDefaultRelations();
+
+            foreach (var kvp in defaultRelations)
             {
                 var dict = new Dictionary<string, int>();
-                _factionRelations[faction] = dict;
-                foreach (var otherFaction in factions)
+                _factionRelations[kvp.Key] = dict;
+                foreach (var otherFaction in defaultRelations)
                 {
-                    if (otherFaction == faction) continue;
-                    dict[otherFaction] = 0;
+                    if (otherFaction.Key == kvp.Key) continue;
+
+                    var value = otherFaction.Value.FirstOrDefault(a => a.Faction == kvp.Key);
+                    if (value == null)
+                    {
+                        dict[otherFaction.Key] = 0;
+                        continue;
+                    }
+
+                    var convertedValue = ConvertRelationToUIValue(value.RelationValue, out bool isNegative);
+                    dict[otherFaction.Key] = isNegative ? -convertedValue : convertedValue;
                 }
             }
         }
@@ -72,17 +84,26 @@ namespace X4SectorCreator.Forms
 
         public static void InsertFaction(Faction faction)
         {
-            Dictionary<string, int> relations = GetFactions()
-                .Where(a => a != faction.Id)
-                .ToDictionary(a => a, a => 0);
+            var relations = new Dictionary<string, int>();
             _factionRelations[faction.Id] = relations;
 
-            // Overwrite existing values
+            // Init default relations all to 0
+            var defaultRelations = GetDefaultRelations()
+                .Keys
+                .Concat(FactionsForm.AllCustomFactions.Keys)
+                .Where(a => a != faction.Id)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            foreach (var defaultRelation in defaultRelations)
+            {
+                relations[defaultRelation] = 0;
+            }
+
+            // Overwrite existing default values from custom faction
             if (faction.Relations?.Relation != null)
             {
                 foreach (var rel in faction.Relations.Relation)
                 {
-                    var factionName = GodGeneration.CorrectFactionNameReversed(rel.Faction);
+                    var factionName = GodGeneration.CorrectFactionName(rel.Faction);
                     if (relations.ContainsKey(factionName)) 
                     {
                         var relValue = ConvertRelationToUIValue(rel.RelationValue, out bool isNegative);
@@ -133,12 +154,12 @@ namespace X4SectorCreator.Forms
             return Math.Round(relation, decimalPlaces);
         }
 
-        private static HashSet<string> GetFactions()
+        private static Dictionary<string, List<Faction.Relation>> _vanillaRelationsCached;
+        private static Dictionary<string, List<Faction.Relation>> GetDefaultRelations()
         {
-            return [.. FactionsForm.GetAllFactions(true)
-                .Append("criminal")
-                .Append("smuggler")
-                .Select(GodGeneration.CorrectFactionNameReversed)];
+            if (_vanillaRelationsCached != null) return _vanillaRelationsCached;
+            string relationsJson = File.ReadAllText(Constants.DataPaths.VanillaRelationsMappingFilePath);
+            return _vanillaRelationsCached ??= JsonSerializer.Deserialize<Dictionary<string, List<Faction.Relation>>>(relationsJson, ConfigSerializer.JsonSerializerOptions);
         }
 
         private void BtnUpdate_Click(object sender, EventArgs e)

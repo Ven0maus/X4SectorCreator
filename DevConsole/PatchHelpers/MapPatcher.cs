@@ -55,6 +55,7 @@ namespace DevConsole.PatchHelpers
             // Also include others
             PatchFile(directories, vanillaFilesPath, "libraries", "region_definitions.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "god.xml");
+            PatchFile(directories, vanillaFilesPath, "libraries", "factions.xml");
         }
 
         private static void PatchFile(
