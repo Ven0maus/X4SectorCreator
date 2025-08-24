@@ -61,37 +61,94 @@ namespace X4SectorCreator.Forms
                         continue;
                     }
 
-                    var convertedValue = ConvertRelationToUIValue(value.RelationValue, out bool isNegative);
-                    dict[otherFaction.Key] = isNegative ? -convertedValue : convertedValue;
+                    dict[otherFaction.Key] = ConvertRelationToUIValue(value.RelationValue);
                 }
             }
         }
 
         /// <summary>
-        /// Returns all faction relations for XML generation.
+        /// Returns only the modified faction relations for XML Generation compared to the default relations.
         /// </summary>
         /// <returns></returns>
-        public static IReadOnlyDictionary<string, Dictionary<string, int>> GetFactionRelations()
+        public static IReadOnlyDictionary<string, Dictionary<string, double>> GetModifiedFactionRelations()
         {
-            return _factionRelations;
+            var relations = new Dictionary<string, Dictionary<string, double>>();
+            // Same as relations but contains the original values
+            var originalRelations = GetDefaultRelations()
+                .ToDictionary(a => a.Key, a => 
+                    new Dictionary<string, double>(a.Value.Relation
+                        .Select(b => new KeyValuePair<string, double>(b.Faction, 
+                        ConvertUIToRelationValue(ConvertRelationToUIValue(b.RelationValue))))));
+
+            foreach (var relation in _factionRelations)
+            {
+                var dict = new Dictionary<string, double>();
+                foreach (var innerRelation in relation.Value)
+                {
+                    dict[innerRelation.Key] = ConvertUIToRelationValue(innerRelation.Value);
+                }
+                relations[relation.Key] = dict;
+            }
+
+            // Keep only modified relations
+            var modified = new Dictionary<string, Dictionary<string, double>>();
+            foreach (var faction in relations)
+            {
+                if (!originalRelations.TryGetValue(faction.Key, out var originalFactionRelations))
+                    continue;
+
+                Dictionary<string, double> diffs = null;
+                foreach (var inner in faction.Value)
+                {
+                    if ((!originalFactionRelations.TryGetValue(inner.Key, out var origValue)
+                        || !inner.Value.Equals(origValue)) && inner.Value != 0) // different or missing
+                    {
+                        diffs ??= [];
+                        diffs[inner.Key] = inner.Value;
+                    }
+                }
+
+                if (diffs != null && diffs.Count > 0)
+                {
+                    modified[faction.Key] = diffs;
+                }
+            }
+
+            return modified;
+        }
+
+        /// <summary>
+        /// Returns if the relations locked checkbox is true for the specified faction.
+        /// </summary>
+        /// <param name="factionA"></param>
+        /// <returns></returns>
+        public static bool IsFactionRelationsLocked(string factionA)
+        {
+            return _factionsLocked[factionA];
         }
 
         /// <summary>
         /// Used to init faction relations from a save file.
         /// </summary>
         /// <param name="factionRelations"></param>
-        public static void LoadFactionRelations(Dictionary<string, Dictionary<string, int>> factionRelations)
+        /// <param name="_factionLockedRelations"></param>
+        public static void LoadFactionRelations(Dictionary<string, Dictionary<string, int>> factionRelations, Dictionary<string, bool> _factionLockedRelations)
         {
             _factionRelations = factionRelations;
+            _factionsLocked = _factionLockedRelations;
         }
 
+        /// <summary>
+        /// Call when a new custom faction is created.
+        /// </summary>
+        /// <param name="faction"></param>
         public static void InsertFaction(Faction faction)
         {
             var relations = new Dictionary<string, int>();
             _factionRelations[faction.Id] = relations;
             _factionsLocked[faction.Id] = false;
 
-            // Init default relations all to 0
+            // Init default relations all to 0 include all custom factions except itself
             var defaultRelations = GetDefaultRelations()
                 .Keys
                 .Concat(FactionsForm.AllCustomFactions.Keys)
@@ -110,8 +167,7 @@ namespace X4SectorCreator.Forms
                     var factionName = GodGeneration.CorrectFactionName(rel.Faction);
                     if (relations.ContainsKey(factionName)) 
                     {
-                        var relValue = ConvertRelationToUIValue(rel.RelationValue, out bool isNegative);
-                        relations[factionName] = isNegative ? -relValue : relValue;
+                        relations[factionName] = ConvertRelationToUIValue(rel.RelationValue);
                     }
                 }
             }
@@ -125,6 +181,10 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        /// <summary>
+        /// Call when a custom faction is deleted.
+        /// </summary>
+        /// <param name="faction"></param>
         public static void DeleteFaction(Faction faction)
         {
             foreach (var kvp in _factionRelations)
@@ -142,21 +202,23 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private static int ConvertRelationToUIValue(string value, out bool isNegative)
+        private static int ConvertRelationToUIValue(string value)
         {
-            isNegative = false;
-            if (!double.TryParse(value, CultureInfo.InvariantCulture, out var result)) return 0;
-            isNegative = result < 0;
-            return (int)Math.Round((10 * Math.Log10(Math.Abs(result) * 1000)), 0);
+            if (!double.TryParse(value, CultureInfo.InvariantCulture, out var result) || result == 0) return 0;
+            bool isNegative = result < 0;
+            var final = (int)Math.Round((10 * Math.Log10(Math.Abs(result) * 1000)), 0);
+            return isNegative ? -final : final;
         }
 
-        private static double ConvertUIToRelationValue(int value, out bool isNegative)
+        private static double ConvertUIToRelationValue(int value)
         {
-            isNegative = value < 0;
+            if (value == 0) return 0;
+            bool isNegative = value < 0;
             double relation = Math.Pow(10, Math.Abs(value) / 10.0) / 1000.0;
             double delta = relation * (Math.Pow(10, 1.0 / 10.0) - 1.0); // relation step to next UI
             int decimalPlaces = (int)Math.Ceiling(-Math.Log10(delta));
-            return Math.Round(relation, decimalPlaces);
+            var roundedValue = Math.Round(relation, decimalPlaces);
+            return isNegative ? -roundedValue : roundedValue;
         }
 
         private static Dictionary<string, Faction.RelationsObj> _vanillaRelationsCached;
@@ -216,13 +278,10 @@ namespace X4SectorCreator.Forms
                     }
                     else
                     {
-                        var relValue = ConvertUIToRelationValue(relation.Value, out bool isNegative);
                         target.Relations.Relation.Add(new Faction.Relation
                         {
                             Faction = factionName,
-                            RelationValue = isNegative ? 
-                                (-relValue).ToString(CultureInfo.InvariantCulture) : 
-                                relValue.ToString(CultureInfo.InvariantCulture)
+                            RelationValue = ConvertUIToRelationValue(relation.Value).ToString(CultureInfo.InvariantCulture)
                         });
                     }
                 }
@@ -233,10 +292,7 @@ namespace X4SectorCreator.Forms
                         target.Relations.Relation.Remove(faction);
                         continue;
                     }
-                    var relValue = ConvertUIToRelationValue(relation.Value, out bool isNegative);
-                    faction.RelationValue = isNegative ?
-                                (-relValue).ToString(CultureInfo.InvariantCulture) :
-                                relValue.ToString(CultureInfo.InvariantCulture);
+                    faction.RelationValue = ConvertUIToRelationValue(relation.Value).ToString(CultureInfo.InvariantCulture);
                 }
             }
         }

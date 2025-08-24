@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Globalization;
+using System.Xml.Linq;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -9,23 +10,29 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder)
         {
+            var relationChanges = CollectRelationChanges().ToArray();
             var factionsContent = CollectFactionsContent();
-            if (factionsContent.Length > 0)
+            if (relationChanges.Length > 0 || factionsContent.Length > 0)
             {
                 var createPlayerLicenseElement = CollectPlayerLicenses();
-                var relationChanges = CollectRelationChanges().ToArray();
+
+                if (factionsContent.Length == 0)
+                {
+                    factionsContent = null;
+                    createPlayerLicenseElement = null;
+                }
                 if (relationChanges.Length == 0)
                     relationChanges = null;
 
-                XElement factionsDiff = new("diff", 
-                    new XComment("Custom Factions"),
-                    new XElement("add",
+                XElement factionsDiff = new("diff",
+                    factionsContent != null ? new XComment("Custom Factions") : null,
+                    factionsContent != null ? new XElement("add",
                         new XAttribute("sel", "/factions"),
                         factionsContent
-                    ),
+                    ) : null,
                     relationChanges != null ? new XComment("Relation Changes") : null,
                     relationChanges,
-                    new XComment("Player Licenses"),
+                    createPlayerLicenseElement != null ? new XComment("Player Licenses") : null,
                     createPlayerLicenseElement
                 );
 
@@ -39,10 +46,9 @@ namespace X4SectorCreator.XmlGeneration
 
         private static XElement[] CollectFactionsContent()
         {
-            return FactionsForm.AllCustomFactions
+            return [.. FactionsForm.AllCustomFactions
                 .Select(a => AddLocalisations(a.Value.Clone()))
-                .Select(a => XElement.Parse(a.Serialize()))
-                .ToArray();
+                .Select(a => XElement.Parse(a.Serialize()))];
         }
 
         /// <summary>
@@ -69,6 +75,10 @@ namespace X4SectorCreator.XmlGeneration
         private static IEnumerable<XElement> CollectRelationChanges()
         {
             var data = new Dictionary<string, List<Objects.Faction.Relation>>(StringComparer.OrdinalIgnoreCase);
+
+            /*
+            // TODO: Remove the faction relations data from custom factions,
+            // but then we still need to be able to support update relations through xml directly
             foreach (var faction in FactionsForm.AllCustomFactions.Values)
             {
                 if (faction.Relations?.Relation != null)
@@ -89,8 +99,28 @@ namespace X4SectorCreator.XmlGeneration
                     }
                 }
             }
+            */
 
-            // TODO: Handle vanilla factions
+            // TODO: Handle faction relations from FactionRelationsForm
+            // TODO: Only export real "changes" not data that wasn't modified compared to the original
+            var factionRelations = FactionRelationsForm.GetModifiedFactionRelations();
+            foreach (var kvp in factionRelations)
+            {
+                if (!data.TryGetValue(kvp.Key, out var changes))
+                {
+                    changes = [];
+                    data[kvp.Key] = changes;
+                }
+
+                foreach (var relation in kvp.Value)
+                {
+                    changes.Add(new Objects.Faction.Relation
+                    {
+                        Faction = relation.Key,
+                        RelationValue = relation.Value.ToString(CultureInfo.InvariantCulture)
+                    });
+                }
+            }
 
             foreach (var mapping in data)
             {
