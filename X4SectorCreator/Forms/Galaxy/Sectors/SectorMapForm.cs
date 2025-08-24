@@ -158,6 +158,7 @@ namespace X4SectorCreator
 
         public enum MapOption
         {
+            Keep_Window_Open,
             Show_Vanilla_Sectors,
             Show_Custom_Sectors,
             Show_Vanilla_Gates,
@@ -206,7 +207,8 @@ namespace X4SectorCreator
                     // If not yet initialized, it will be by default selected except "show coordinates"
                     _mapOptionsSelected[mapOption] = selected = 
                         !mapOption.Equals("Show Coordinates", StringComparison.OrdinalIgnoreCase) &&
-                        !mapOption.Equals("Visualize Regions", StringComparison.OrdinalIgnoreCase);
+                        !mapOption.Equals("Visualize Regions", StringComparison.OrdinalIgnoreCase) &&
+                        !mapOption.Equals("Keep Window Open", StringComparison.OrdinalIgnoreCase);
                 }
 
                 MapOptionsListBox.SetItemChecked(mapOptionIndex, selected);
@@ -226,10 +228,11 @@ namespace X4SectorCreator
             KeyDown += SectorMapForm_KeyDown;
         }
 
-        public bool IsMapOptionChecked(MapOption mapOption)
+        public static bool IsMapOptionChecked(MapOption mapOption)
         {
             var index = (int)mapOption;
-            return MapOptionsListBox.GetItemCheckState(index) == CheckState.Checked;
+            _mapOptionsSelected.TryGetValue(mapOption.ToString().Replace("_", " "), out var value);
+            return value;
         }
 
         private void SectorMapForm_Disposed(object sender, EventArgs e)
@@ -2058,7 +2061,21 @@ namespace X4SectorCreator
             }
 
             DeselectHex();
-            Close();
+
+            // Close or keep open behaviour
+            if (!IsMapOptionChecked(MapOption.Keep_Window_Open))
+            {
+                Close();
+            }
+            else
+            {
+                // Keep map open: exit selection mode and update UI
+                GateSectorSelection = false;
+                ClusterSectorSelection = false;
+                BtnSelectLocation.Enabled = false;
+                BtnSelectLocation.Hide();
+                Invalidate();
+            }
         }
 
         private static string GetClusterMacro(Cluster cluster)

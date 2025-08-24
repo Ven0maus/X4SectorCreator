@@ -178,6 +178,40 @@ namespace X4SectorCreator.XmlGeneration
                         ));
                 }
             }
+            foreach (ModifiedSector modification in vanillaChanges.ModifiedSectors)
+            {
+                // Handle placement change
+                if (modification.Old.Offset != modification.New.Offset)
+                {
+                    var cluster = modification.VanillaCluster;
+                    string clusterCode = modification.VanillaCluster.BaseGameMapping.CapitalizeFirstLetter();
+                    string sectorCode = $"{clusterCode}_{modification.Old.BaseGameMapping.CapitalizeFirstLetter()}";
+
+                    if (modification.Old.BaseGameMapping.Equals("Sector001", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // These don't have offset position element
+                        yield return (cluster.Dlc, new XElement("add",
+                            new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{sectorCode}_connection']"),
+                                new XElement("offset", 
+                                    new XElement("position", 
+                                        new XAttribute("x", modification.New.Offset.X), 
+                                        new XAttribute("y", 0), 
+                                        new XAttribute("z", modification.New.Offset.Y)))
+                            ));
+                    }
+                    else
+                    {
+                        yield return (cluster.Dlc, new XElement("replace",
+                            new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{sectorCode}_connection']/offset/position/@x"),
+                            modification.New.Offset.X
+                            ));
+                        yield return (cluster.Dlc, new XElement("replace",
+                            new XAttribute("sel", $"/macros/macro[@name='{clusterCode}_macro']/connections/connection[@name='{sectorCode}_connection']/offset/position/@z"),
+                            modification.New.Offset.Y
+                            ));
+                    }
+                }
+            }
             foreach (RemovedSector sector in vanillaChanges.RemovedSectors)
             {
                 // Check if the cluster was removed, then skip this sector as its already part of the cluster deletion in galaxy.xml

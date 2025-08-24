@@ -400,5 +400,11 @@ namespace X4SectorCreator.Forms
         {
             EnableSaveButtons(_originalHeadQuartersSector != CmbPlayerHq.SelectedItem);
         }
+
+        private void BtnSetFactionRelations_Click(object sender, EventArgs e)
+        {
+            MainForm.Instance.FactionRelationsDataForm.Value.Faction = null;
+            MainForm.Instance.FactionRelationsDataForm.Value.Show();
+        }
     }
 }

@@ -43,11 +43,18 @@
             label6 = new Label();
             TxtSoundtrack = new TextBox();
             BtnEditClusterXml = new Button();
+            label7 = new Label();
+            panel1 = new Panel();
+            BtnSector4 = new RadioButton();
+            BtnSector3 = new RadioButton();
+            BtnSector2 = new RadioButton();
+            BtnSector1 = new RadioButton();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(167, 351);
+            BtnCreate.Location = new Point(166, 388);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(236, 30);
             BtnCreate.TabIndex = 0;
@@ -57,7 +64,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(12, 351);
+            BtnCancel.Location = new Point(11, 388);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(149, 30);
             BtnCancel.TabIndex = 1;
@@ -163,7 +170,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(69, 290);
+            label6.Location = new Point(69, 291);
             label6.Name = "label6";
             label6.Size = new Size(92, 21);
             label6.TabIndex = 34;
@@ -171,7 +178,7 @@
             // 
             // TxtSoundtrack
             // 
-            TxtSoundtrack.Location = new Point(167, 290);
+            TxtSoundtrack.Location = new Point(167, 291);
             TxtSoundtrack.Name = "TxtSoundtrack";
             TxtSoundtrack.PlaceholderText = "Select..";
             TxtSoundtrack.ReadOnly = true;
@@ -181,7 +188,7 @@
             // 
             // BtnEditClusterXml
             // 
-            BtnEditClusterXml.Location = new Point(167, 319);
+            BtnEditClusterXml.Location = new Point(166, 356);
             BtnEditClusterXml.Name = "BtnEditClusterXml";
             BtnEditClusterXml.Size = new Size(236, 30);
             BtnEditClusterXml.TabIndex = 38;
@@ -189,11 +196,76 @@
             BtnEditClusterXml.UseVisualStyleBackColor = true;
             BtnEditClusterXml.Click += BtnEditClusterXml_Click;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 12F);
+            label7.Location = new Point(19, 324);
+            label7.Name = "label7";
+            label7.Size = new Size(142, 21);
+            label7.TabIndex = 39;
+            label7.Text = "Amount of Sectors:";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(BtnSector4);
+            panel1.Controls.Add(BtnSector3);
+            panel1.Controls.Add(BtnSector2);
+            panel1.Controls.Add(BtnSector1);
+            panel1.Location = new Point(167, 320);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(227, 30);
+            panel1.TabIndex = 40;
+            // 
+            // BtnSector4
+            // 
+            BtnSector4.AutoSize = true;
+            BtnSector4.Location = new Point(115, 6);
+            BtnSector4.Name = "BtnSector4";
+            BtnSector4.Size = new Size(31, 19);
+            BtnSector4.TabIndex = 3;
+            BtnSector4.Text = "4";
+            BtnSector4.UseVisualStyleBackColor = true;
+            // 
+            // BtnSector3
+            // 
+            BtnSector3.AutoSize = true;
+            BtnSector3.Location = new Point(80, 6);
+            BtnSector3.Name = "BtnSector3";
+            BtnSector3.Size = new Size(31, 19);
+            BtnSector3.TabIndex = 2;
+            BtnSector3.Text = "3";
+            BtnSector3.UseVisualStyleBackColor = true;
+            // 
+            // BtnSector2
+            // 
+            BtnSector2.AutoSize = true;
+            BtnSector2.Location = new Point(44, 6);
+            BtnSector2.Name = "BtnSector2";
+            BtnSector2.Size = new Size(31, 19);
+            BtnSector2.TabIndex = 1;
+            BtnSector2.Text = "2";
+            BtnSector2.UseVisualStyleBackColor = true;
+            // 
+            // BtnSector1
+            // 
+            BtnSector1.AutoSize = true;
+            BtnSector1.Checked = true;
+            BtnSector1.Location = new Point(8, 6);
+            BtnSector1.Name = "BtnSector1";
+            BtnSector1.Size = new Size(31, 19);
+            BtnSector1.TabIndex = 0;
+            BtnSector1.TabStop = true;
+            BtnSector1.Text = "1";
+            BtnSector1.UseVisualStyleBackColor = true;
+            // 
             // ClusterForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(415, 385);
+            ClientSize = new Size(415, 422);
+            Controls.Add(panel1);
+            Controls.Add(label7);
             Controls.Add(BtnEditClusterXml);
             Controls.Add(TxtSoundtrack);
             Controls.Add(label6);
@@ -214,6 +286,8 @@
             MinimizeBox = false;
             Name = "ClusterForm";
             Text = "Cluster Editor";
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -234,5 +308,11 @@
         private Label label6;
         internal TextBox TxtSoundtrack;
         internal Button BtnEditClusterXml;
+        private Label label7;
+        private Panel panel1;
+        internal RadioButton BtnSector4;
+        internal RadioButton BtnSector3;
+        internal RadioButton BtnSector2;
+        internal RadioButton BtnSector1;
     }
 }
