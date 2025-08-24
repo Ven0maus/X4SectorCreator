@@ -42,16 +42,16 @@
         "RelationValue": "-0.032"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.0032"
-      },
-      {
         "Faction": "terran",
         "RelationValue": "-0.032"
       },
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.0032"
       }
     ]
   },
@@ -110,10 +110,6 @@
         "RelationValue": "0.011"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "0.1"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "0.1"
       },
@@ -124,6 +120,10 @@
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "0.1"
       },
       {
         "Faction": "boron",
@@ -194,16 +194,16 @@
         "RelationValue": "-0.1"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.032"
-      },
-      {
         "Faction": "terran",
         "RelationValue": "-0.011"
       },
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
       },
       {
         "Faction": "boron",
@@ -278,16 +278,16 @@
         "RelationValue": "-0.1"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.032"
-      },
-      {
         "Faction": "terran",
         "RelationValue": "-0.011"
       },
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
       },
       {
         "Faction": "boron",
@@ -375,14 +375,6 @@
         "RelationValue": "-0.032"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "scavenger",
-        "RelationValue": "-0.032"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "-0.032"
       },
@@ -393,6 +385,14 @@
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.032"
       },
       {
         "Faction": "boron",
@@ -509,14 +509,6 @@
         "RelationValue": "-0.5"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.5"
-      },
-      {
-        "Faction": "scavenger",
-        "RelationValue": "-0.5"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "-0.5"
       },
@@ -526,6 +518,14 @@
       },
       {
         "Faction": "yaki",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "scavenger",
         "RelationValue": "-0.5"
       },
       {
@@ -637,16 +637,16 @@
         "RelationValue": "-0.32"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.032"
-      },
-      {
         "Faction": "terran",
         "RelationValue": "-0.011"
       },
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
       },
       {
         "Faction": "boron",
@@ -698,14 +698,6 @@
         "RelationValue": "-0.1"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-1"
-      },
-      {
-        "Faction": "scavenger",
-        "RelationValue": "-1"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "-1"
       },
@@ -715,6 +707,14 @@
       },
       {
         "Faction": "yaki",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "scavenger",
         "RelationValue": "-1"
       },
       {
@@ -819,14 +819,6 @@
         "RelationValue": "-1"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-1"
-      },
-      {
-        "Faction": "scavenger",
-        "RelationValue": "-1"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "-1"
       },
@@ -836,6 +828,14 @@
       },
       {
         "Faction": "yaki",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "scavenger",
         "RelationValue": "-1"
       },
       {
@@ -895,16 +895,16 @@
         "RelationValue": "-0.32"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.1"
-      },
-      {
         "Faction": "terran",
         "RelationValue": "-0.011"
       },
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.1"
       },
       {
         "Faction": "boron",
@@ -1000,14 +1000,6 @@
         "RelationValue": "-0.032"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "scavenger",
-        "RelationValue": "-0.032"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "-0.032"
       },
@@ -1017,6 +1009,14 @@
       },
       {
         "Faction": "yaki",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scavenger",
         "RelationValue": "-0.032"
       },
       {
@@ -1080,16 +1080,16 @@
         "RelationValue": "-0.32"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.032"
-      },
-      {
         "Faction": "terran",
         "RelationValue": "-0.011"
       },
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
       }
     ]
   },
@@ -1165,14 +1165,6 @@
         "RelationValue": "-0.32"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "scavenger",
-        "RelationValue": "-0.32"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "-0.32"
       },
@@ -1182,6 +1174,14 @@
       },
       {
         "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scavenger",
         "RelationValue": "-0.32"
       },
       {
@@ -1266,14 +1266,6 @@
         "RelationValue": "-0.06"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.06"
-      },
-      {
-        "Faction": "scavenger",
-        "RelationValue": "-0.06"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "-0.06"
       },
@@ -1283,6 +1275,14 @@
       },
       {
         "Faction": "yaki",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "scavenger",
         "RelationValue": "-0.06"
       },
       {
@@ -1398,16 +1398,16 @@
         "RelationValue": "-0.32"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.032"
-      },
-      {
         "Faction": "terran",
         "RelationValue": "-0.011"
       },
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
       }
     ]
   },
@@ -1519,14 +1519,6 @@
         "RelationValue": "-1"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-1"
-      },
-      {
-        "Faction": "scavenger",
-        "RelationValue": "-1"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "-1"
       },
@@ -1537,6 +1529,14 @@
       {
         "Faction": "yaki",
         "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-1"
       },
       {
         "Faction": "boron",
@@ -1595,16 +1595,16 @@
         "RelationValue": "-1"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.032"
-      },
-      {
         "Faction": "terran",
         "RelationValue": "-0.011"
       },
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
       },
       {
         "Faction": "boron",
@@ -1699,14 +1699,6 @@
         "RelationValue": "-1"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "scavenger",
-        "RelationValue": "-0.32"
-      },
-      {
         "Faction": "pioneers",
         "RelationValue": "-0.32"
       },
@@ -1716,6 +1708,14 @@
       },
       {
         "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scavenger",
         "RelationValue": "-0.32"
       },
       {
@@ -1767,16 +1767,16 @@
         "RelationValue": "-1"
       },
       {
-        "Faction": "loanshark",
-        "RelationValue": "-0.032"
-      },
-      {
         "Faction": "terran",
         "RelationValue": "-0.011"
       },
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
       },
       {
         "Faction": "boron",
@@ -1831,176 +1831,20 @@
         "RelationValue": "-1"
       },
       {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
         "Faction": "loanshark",
         "RelationValue": "-0.032"
       },
       {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
-      },
-      {
-        "Faction": "yaki",
-        "RelationValue": "-0.32"
-      },
-      {
         "Faction": "boron",
         "RelationValue": "-0.32"
-      }
-    ]
-  },
-  "loanshark": {
-    "Relation": [
-      {
-        "Faction": "alliance",
-        "RelationValue": "0.1"
-      },
-      {
-        "Faction": "antigone",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "argon",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "buccaneers",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "civilian",
-        "RelationValue": "0.032"
-      },
-      {
-        "Faction": "court",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "criminal",
-        "RelationValue": "-0.5"
-      },
-      {
-        "Faction": "fallensplit",
-        "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "freesplit",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "holyorder",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "holyorderfanatic",
-        "RelationValue": "-1"
-      },
-      {
-        "Faction": "khaak",
-        "RelationValue": "-1"
-      },
-      {
-        "Faction": "ministry",
-        "RelationValue": "-0.1"
-      },
-      {
-        "Faction": "outlaw",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "paranid",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "pioneers",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "player",
-        "RelationValue": "-0.0032"
-      },
-      {
-        "Faction": "scaleplate",
-        "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "smuggler",
-        "RelationValue": "-0.06"
-      },
-      {
-        "Faction": "split",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
-      },
-      {
-        "Faction": "trinity",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "xenon",
-        "RelationValue": "-1"
-      },
-      {
-        "Faction": "yaki",
-        "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "boron",
-        "RelationValue": "-0.032"
-      }
-    ]
-  },
-  "scavenger": {
-    "Relation": [
-      {
-        "Faction": "buccaneers",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "criminal",
-        "RelationValue": "-0.5"
-      },
-      {
-        "Faction": "fallensplit",
-        "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "holyorderfanatic",
-        "RelationValue": "-1"
-      },
-      {
-        "Faction": "khaak",
-        "RelationValue": "-1"
-      },
-      {
-        "Faction": "outlaw",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "scaleplate",
-        "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "smuggler",
-        "RelationValue": "-0.06"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
-      },
-      {
-        "Faction": "xenon",
-        "RelationValue": "-1"
-      },
-      {
-        "Faction": "yaki",
-        "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "boron",
-        "RelationValue": "0.032"
       }
     ]
   },
@@ -2053,6 +1897,10 @@
       {
         "Faction": "yaki",
         "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
       },
       {
         "Faction": "boron",
@@ -2263,12 +2111,176 @@
         "RelationValue": "-0.011"
       },
       {
+        "Faction": "loanshark",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.32"
+      },
+      {
         "Faction": "boron",
         "RelationValue": "-0.32"
       },
       {
         "Faction": "kaori",
         "RelationValue": "-0.32"
+      }
+    ]
+  },
+  "loanshark": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "civilian",
+        "RelationValue": "0.032"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.0032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.032"
+      }
+    ]
+  },
+  "scavenger": {
+    "Relation": [
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "0.032"
       }
     ]
   },

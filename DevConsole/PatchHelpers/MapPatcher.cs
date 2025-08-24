@@ -15,10 +15,11 @@ namespace DevConsole.PatchHelpers
 
             (string prefix, string path)[] directories =
             [
+                // ORDER IS VERY IMPORTANT (Release Date)!!!!!
                 (null, GetDirectory(path, null)),
                 ("dlc4_", GetDirectory(path, SectorMapForm.DlcMapping["Split Vendetta"])),
-                ("dlc_pirate_", GetDirectory(path, SectorMapForm.DlcMapping["Tides Of Avarice"])),
                 ("dlc_terran_", GetDirectory(path, SectorMapForm.DlcMapping["Cradle Of Humanity"])),
+                ("dlc_pirate_", GetDirectory(path, SectorMapForm.DlcMapping["Tides Of Avarice"])),
                 ("dlc_boron_", GetDirectory(path, SectorMapForm.DlcMapping["Kingdom End"])),
                 ("dlc7_", GetDirectory(path, SectorMapForm.DlcMapping["Timelines"])),
                 ("dlc_mini_01_", GetDirectory(path, SectorMapForm.DlcMapping["Hyperion Pack"])),
@@ -53,9 +54,9 @@ namespace DevConsole.PatchHelpers
             }
 
             // Also include others
+            PatchFile(directories, vanillaFilesPath, "libraries", "factions.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "region_definitions.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "god.xml");
-            PatchFile(directories, vanillaFilesPath, "libraries", "factions.xml");
         }
 
         private static void PatchFile(
