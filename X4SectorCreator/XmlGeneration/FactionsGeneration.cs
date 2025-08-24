@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Globalization;
+using System.Xml.Linq;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -9,23 +10,29 @@ namespace X4SectorCreator.XmlGeneration
     {
         public static void Generate(string folder)
         {
+            var relationChanges = CollectRelationChanges().ToArray();
             var factionsContent = CollectFactionsContent();
-            if (factionsContent.Length > 0)
+            if (relationChanges.Length > 0 || factionsContent.Length > 0)
             {
                 var createPlayerLicenseElement = CollectPlayerLicenses();
-                var relationChanges = CollectRelationChanges().ToArray();
+
+                if (factionsContent.Length == 0)
+                {
+                    factionsContent = null;
+                    createPlayerLicenseElement = null;
+                }
                 if (relationChanges.Length == 0)
                     relationChanges = null;
 
-                XElement factionsDiff = new("diff", 
-                    new XComment("Custom Factions"),
-                    new XElement("add",
+                XElement factionsDiff = new("diff",
+                    factionsContent != null ? new XComment("Custom Factions") : null,
+                    factionsContent != null ? new XElement("add",
                         new XAttribute("sel", "/factions"),
                         factionsContent
-                    ),
+                    ) : null,
                     relationChanges != null ? new XComment("Relation Changes") : null,
                     relationChanges,
-                    new XComment("Player Licenses"),
+                    createPlayerLicenseElement != null ? new XComment("Player Licenses") : null,
                     createPlayerLicenseElement
                 );
 
@@ -39,10 +46,9 @@ namespace X4SectorCreator.XmlGeneration
 
         private static XElement[] CollectFactionsContent()
         {
-            return FactionsForm.AllCustomFactions
+            return [.. FactionsForm.AllCustomFactions
                 .Select(a => AddLocalisations(a.Value.Clone()))
-                .Select(a => XElement.Parse(a.Serialize()))
-                .ToArray();
+                .Select(a => XElement.Parse(a.Serialize()))];
         }
 
         /// <summary>
@@ -68,39 +74,99 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> CollectRelationChanges()
         {
-            var data = new Dictionary<string, List<Objects.Faction.Relation>>(StringComparer.OrdinalIgnoreCase);
-            foreach (var faction in FactionsForm.AllCustomFactions.Values)
-            {
-                if (faction.Relations?.Relation != null)
-                {
-                    foreach (var relation in faction.Relations.Relation)
-                    {
-                        if (!data.TryGetValue(relation.Faction, out var changes))
-                        {
-                            changes = [];
-                            data[relation.Faction] = changes;
-                        }
+            var data = new Dictionary<string, List<Faction.Relation>>(StringComparer.OrdinalIgnoreCase);
+            var locks = FactionRelationsForm.GetModifiedRelationLockStates();
 
-                        changes.Add(new Objects.Faction.Relation 
-                        { 
-                            Faction = faction.Id, 
-                            RelationValue = relation.RelationValue 
-                        });
-                    }
+            // Handle faction relations from FactionRelationsForm
+            // Only export real "changes" not data that wasn't modified compared to the original
+            var defaultRelations = FactionRelationsForm.GetDefaultRelations();
+            var factionRelations = FactionRelationsForm.GetModifiedFactionRelations();
+            foreach (var kvp in factionRelations)
+            {
+                if (!data.TryGetValue(kvp.Key, out var changes))
+                {
+                    changes = [];
+                    data[kvp.Key] = changes;
+                }
+
+                foreach (var relation in kvp.Value)
+                {
+                    changes.Add(new Faction.Relation
+                    {
+                        Faction = relation.Key,
+                        RelationValue = relation.Value.ToString(CultureInfo.InvariantCulture)
+                    });
                 }
             }
 
             foreach (var mapping in data)
             {
-                var addElement = new XElement("add",
-                    new XAttribute("sel", $"//factions/faction[@id='{mapping.Key}']/relations"));
+                if (!defaultRelations.TryGetValue(mapping.Key, out var oldRels))
+                    oldRels = new Faction.RelationsObj { Relation = [] };
+
+                var addElements = new List<XElement>();
+                var replaceElements = new List<XElement>();
+
                 foreach (var obj in mapping.Value)
                 {
-                    addElement.Add(new XElement("relation",
-                        new XAttribute("faction", obj.Faction),
-                        new XAttribute("relation", obj.RelationValue)));
+                    var element = new XElement("relation",
+                            new XAttribute("faction", obj.Faction),
+                            new XAttribute("relation", obj.RelationValue));
+
+                    if (oldRels.Relation.Any(a => a.Faction.Equals(obj.Faction, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        replaceElements.Add(element);
+                    }
+                    else
+                    {
+                        addElements.Add(element);
+                    }
                 }
-                yield return addElement;
+
+                if (addElements.Count > 0)
+                {
+                    var addElement = new XElement("add",
+                        new XAttribute("sel", $"//factions/faction[@id='{mapping.Key}']/relations"));
+                    foreach (var element in addElements)
+                        addElement.Add(element);
+                    yield return addElement;
+                }
+
+                if (replaceElements.Count > 0)
+                {
+                    foreach (var element in replaceElements)
+                    {
+                        var replaceElement = new XElement("replace",
+                            new XAttribute("sel", $"//factions/faction[@id='{mapping.Key}']/relations[@faction='{element.Attribute("faction").Value}']"));
+                        replaceElement.Add(element);
+                        yield return replaceElement;
+                    }
+                }
+            }
+
+            // Handle locks
+            foreach (var lockobj in locks)
+            {
+                if (!defaultRelations.TryGetValue(lockobj.Key, out var dr))
+                    continue; // If not part of default, it means its a custom faction so its automatically part of faction object
+
+                // Remove entry because locked was 1 and now not anymore
+                if (dr.Locked != null && dr.Locked == "1" && !lockobj.Value)
+                {
+                    yield return new XElement("remove",
+                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations/@locked"));
+                }
+                else if (dr.Locked != null && dr.Locked == "0" && lockobj.Value) // probably never happens, but just incase
+                {
+                    yield return new XElement("replace",
+                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations/@locked"), 1);
+                }
+                else if (dr.Locked == null && lockobj.Value)
+                {
+                    yield return new XElement("add",
+                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations"),
+                        new XAttribute("type", "@locked"), 1);
+                }
             }
         }
 

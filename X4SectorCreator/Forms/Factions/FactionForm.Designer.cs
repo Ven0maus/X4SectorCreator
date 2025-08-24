@@ -39,7 +39,6 @@
             label4 = new Label();
             label5 = new Label();
             CmbPoliceFaction = new ComboBox();
-            BtnFactionRelations = new Button();
             BtnCreate = new Button();
             TagsListBox = new ListBox();
             label6 = new Label();
@@ -164,16 +163,6 @@
             CmbPoliceFaction.Name = "CmbPoliceFaction";
             CmbPoliceFaction.Size = new Size(199, 23);
             CmbPoliceFaction.TabIndex = 12;
-            // 
-            // BtnFactionRelations
-            // 
-            BtnFactionRelations.Location = new Point(323, 310);
-            BtnFactionRelations.Name = "BtnFactionRelations";
-            BtnFactionRelations.Size = new Size(306, 33);
-            BtnFactionRelations.TabIndex = 14;
-            BtnFactionRelations.Text = "Setup Faction Relations";
-            BtnFactionRelations.UseVisualStyleBackColor = true;
-            BtnFactionRelations.Click += BtnFactionRelations_Click;
             // 
             // BtnCreate
             // 
@@ -435,7 +424,6 @@
             Controls.Add(label6);
             Controls.Add(TagsListBox);
             Controls.Add(BtnCreate);
-            Controls.Add(BtnFactionRelations);
             Controls.Add(label5);
             Controls.Add(CmbPoliceFaction);
             Controls.Add(label4);
@@ -470,7 +458,6 @@
         private Label label4;
         private Label label5;
         private ComboBox CmbPoliceFaction;
-        private Button BtnFactionRelations;
         private ListBox TagsListBox;
         private Label label6;
         private Button BtnAddTag;

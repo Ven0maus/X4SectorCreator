@@ -23,14 +23,29 @@ namespace X4SectorCreator.Forms
             try
             {
                 var faction = Faction.Deserialize(TxtFactionXml.Text);
-                faction.Color = FactionForm.FactionColor.Value;
+                if (FactionForm.FactionColor != null)
+                    faction.Color = FactionForm.FactionColor.Value;
                 faction.Icon = FactionForm.IconData;
                 var dataEntryName = $"faction_{faction.Id}";
                 faction.ColorData = new Faction.ColorDataObj { Ref = dataEntryName };
                 faction.IconData = new Faction.IconObj { Active = dataEntryName, Inactive = dataEntryName };
+                faction.ShipGroups = FactionForm.Faction?.ShipGroups;
+                faction.Ships = FactionForm.Faction?.Ships;
+                faction.StationTypes = FactionForm.Faction?.StationTypes;
+                faction.PrefferedHqStationTypes = FactionForm.Faction?.PrefferedHqStationTypes;
+                faction.PrefferedHqSpace = FactionForm.Faction?.PrefferedHqSpace;
+                faction.DesiredWharfs = FactionForm.Faction?.DesiredWharfs;
+                faction.DesiredShipyards = FactionForm.Faction?.DesiredShipyards;
+                faction.DesiredEquipmentDocks = FactionForm.Faction?.DesiredEquipmentDocks;
+                faction.DesiredTradeStations = FactionForm.Faction?.DesiredTradeStations;
+                faction.Lawfulness = FactionForm.Faction?.Lawfulness;
+                faction.AvariceLevel = FactionForm.Faction?.AvariceLevel;
+                faction.AggressionLevel = FactionForm.Faction?.AggressionLevel;
 
                 if (!ValidateFactionFields(faction)) return;
+                var original = FactionForm.Faction;
                 FactionForm.Faction = faction;
+
                 Close();
             }
             catch (Exception ex)

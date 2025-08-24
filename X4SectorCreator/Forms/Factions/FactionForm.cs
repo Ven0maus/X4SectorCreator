@@ -77,7 +77,6 @@ namespace X4SectorCreator.Forms
         };
 
         private readonly LazyEvaluated<FactionXmlForm> _factionXmlForm = new(() => new FactionXmlForm(), a => !a.IsDisposed);
-        private readonly LazyEvaluated<FactionRelationsForm> _factionRelationsForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<FactionShipsForm> _factionShipsForm = new(() => new FactionShipsForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<FactionStationForm> _factionStationForm = new(() => new FactionStationForm(), a => !a.IsDisposed);
 
@@ -123,6 +122,9 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool FromUpdate { get; set; }
+
         private Faction _faction;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Faction Faction
@@ -136,7 +138,8 @@ namespace X4SectorCreator.Forms
                     _factionXml = _faction.Serialize();
                     FactionColor = _faction.Color;
                     IconData = _faction.Icon;
-                    IconBox.Image = ImageHelper.Base64ToImage(IconData);
+                    if (IconData != null)
+                        IconBox.Image = ImageHelper.Base64ToImage(IconData);
                     Ships = _faction.Ships;
                     ShipGroups = _faction.ShipGroups;
                     StationTypes = _faction.StationTypes;
@@ -292,6 +295,9 @@ namespace X4SectorCreator.Forms
                         return;
                     }
                     FactionsForm.AllCustomFactions.Add(faction.Id, faction);
+
+                    // Add relations
+                    FactionRelationsForm.InsertFaction(faction);
                     break;
                 case "Update":
                     if (faction.Id != Faction.Id)
@@ -314,13 +320,18 @@ namespace X4SectorCreator.Forms
                     }
 
                     FactionsForm.AllCustomFactions.Remove(Faction.Id);
+                    FactionRelationsForm.DeleteFaction(Faction);
                     FactionsForm.AllCustomFactions.Add(faction.Id, faction);
+                    FactionRelationsForm.InsertFaction(faction);
+
                     Faction = faction;
                     break;
             }
 
             // Update values
             FactionsForm.InitFactionValues();
+            FactionsForm.CustomFactionsListBox.SelectedItem = faction;
+
             Close();
         }
 
@@ -674,13 +685,6 @@ namespace X4SectorCreator.Forms
             _factionXml = faction.Serialize();
 
             return true;
-        }
-
-        private void BtnFactionRelations_Click(object sender, EventArgs e)
-        {
-            _factionRelationsForm.Value.FactionForm = this;
-            _factionRelationsForm.Value.Faction = Faction.Deserialize(_factionXml);
-            _factionRelationsForm.Value.Show();
         }
 
         private void BtnAddTag_Click(object sender, EventArgs e)

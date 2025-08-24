@@ -1,0 +1,2415 @@
+﻿{
+  "player": {
+    "Relation": [
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.0032"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.0032"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.0032"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.0032"
+      }
+    ]
+  },
+  "alliance": {
+    "Relation": [
+      {
+        "Faction": "antigone",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "hatikvah",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "0.67"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "0.67"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "0.011"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "0.1"
+      }
+    ]
+  },
+  "antigone": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "0.67"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "0.032"
+      }
+    ]
+  },
+  "argon": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "0.67"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "0.5"
+      }
+    ]
+  },
+  "buccaneers": {
+    "Locked": "1",
+    "Relation": [
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "hatikvah",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.032"
+      }
+    ]
+  },
+  "civilian": {
+    "Locked": "1",
+    "Relation": [
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "0.032"
+      }
+    ]
+  },
+  "criminal": {
+    "Locked": "1",
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "civilian",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "hatikvah",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "kaori",
+        "RelationValue": "-0.5"
+      }
+    ]
+  },
+  "hatikvah": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      }
+    ]
+  },
+  "holyorder": {
+    "Relation": [
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "1"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.1"
+      }
+    ]
+  },
+  "holyorderfanatic": {
+    "Locked": "1",
+    "Relation": [
+      {
+        "Faction": "antigone",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.1"
+      }
+    ]
+  },
+  "khaak": {
+    "Locked": "1",
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "civilian",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "hatikvah",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "visitor",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "kaori",
+        "RelationValue": "-1"
+      }
+    ]
+  },
+  "ministry": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "0.67"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "0.032"
+      }
+    ]
+  },
+  "outlaw": {
+    "Locked": "1",
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "hatikvah",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "kaori",
+        "RelationValue": "-0.032"
+      }
+    ]
+  },
+  "paranid": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.67"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "1"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      }
+    ]
+  },
+  "scaleplate": {
+    "Locked": "1",
+    "Relation": [
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.0032"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "0.011"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "kaori",
+        "RelationValue": "-0.32"
+      }
+    ]
+  },
+  "smuggler": {
+    "Locked": "1",
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "civilian",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "hatikvah",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "kaori",
+        "RelationValue": "-0.06"
+      }
+    ]
+  },
+  "teladi": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "0.67"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "0.032"
+      }
+    ]
+  },
+  "trinity": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.67"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "1"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "1"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      }
+    ]
+  },
+  "visitor": {
+    "Relation": [
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      }
+    ]
+  },
+  "xenon": {
+    "Locked": "1",
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "civilian",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "hatikvah",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "visitor",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "kaori",
+        "RelationValue": "-1"
+      }
+    ]
+  },
+  "court": {
+    "Relation": [
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.032"
+      }
+    ]
+  },
+  "fallensplit": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.011"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "hatikvah",
+        "RelationValue": "0.011"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.0032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "0.011"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.32"
+      }
+    ]
+  },
+  "freesplit": {
+    "Relation": [
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.0032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.1"
+      }
+    ]
+  },
+  "split": {
+    "Relation": [
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.32"
+      }
+    ]
+  },
+  "pioneers": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "0.032"
+      }
+    ]
+  },
+  "terran": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-1"
+      }
+    ]
+  },
+  "yaki": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "hatikvah",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "kaori",
+        "RelationValue": "-0.32"
+      }
+    ]
+  },
+  "loanshark": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "civilian",
+        "RelationValue": "0.032"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "paranid",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "player",
+        "RelationValue": "-0.0032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "trinity",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "-0.032"
+      }
+    ]
+  },
+  "scavenger": {
+    "Relation": [
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.011"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "boron",
+        "RelationValue": "0.032"
+      }
+    ]
+  },
+  "boron": {
+    "Relation": [
+      {
+        "Faction": "alliance",
+        "RelationValue": "0.1"
+      },
+      {
+        "Faction": "antigone",
+        "RelationValue": "0.032"
+      },
+      {
+        "Faction": "argon",
+        "RelationValue": "0.5"
+      },
+      {
+        "Faction": "buccaneers",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "court",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "fallensplit",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "freesplit",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "holyorder",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "holyorderfanatic",
+        "RelationValue": "-0.1"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "loanshark",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "ministry",
+        "RelationValue": "0.032"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "pioneers",
+        "RelationValue": "0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "scavenger",
+        "RelationValue": "0.032"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "split",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "teladi",
+        "RelationValue": "0.032"
+      },
+      {
+        "Faction": "terran",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      }
+    ]
+  },
+  "kaori": {
+    "Relation": [
+      {
+        "Faction": "criminal",
+        "RelationValue": "-0.5"
+      },
+      {
+        "Faction": "khaak",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "outlaw",
+        "RelationValue": "-0.032"
+      },
+      {
+        "Faction": "scaleplate",
+        "RelationValue": "-0.32"
+      },
+      {
+        "Faction": "smuggler",
+        "RelationValue": "-0.06"
+      },
+      {
+        "Faction": "xenon",
+        "RelationValue": "-1"
+      },
+      {
+        "Faction": "yaki",
+        "RelationValue": "-0.32"
+      }
+    ]
+  }
+}
