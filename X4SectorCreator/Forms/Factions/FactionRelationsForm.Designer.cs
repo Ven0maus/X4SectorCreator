@@ -33,7 +33,7 @@
             label1 = new Label();
             ChkLockRelations = new CheckBox();
             CmbSelectedFaction = new ComboBox();
-            RelationsPanel = new FlowLayoutPanel();
+            RelationsPanel = new CustomFlowLayoutPanel();
             label2 = new Label();
             SuspendLayout();
             // 
@@ -136,7 +136,7 @@
         private Label label1;
         private CheckBox ChkLockRelations;
         private ComboBox CmbSelectedFaction;
-        private FlowLayoutPanel RelationsPanel;
+        private CustomFlowLayoutPanel RelationsPanel;
         private Label label2;
     }
 }

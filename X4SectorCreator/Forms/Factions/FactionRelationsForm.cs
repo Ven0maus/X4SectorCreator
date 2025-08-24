@@ -313,6 +313,14 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        class CustomFlowLayoutPanel : FlowLayoutPanel
+        {
+            public void ForwardMousewheel(MouseEventArgs e)
+            {
+                OnMouseWheel(e);
+            }
+        }
+
         private void CmbSelectedFaction_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedFaction = (string)CmbSelectedFaction.SelectedItem;
@@ -368,7 +376,11 @@ namespace X4SectorCreator.Forms
                     Top = 3,
                     Height = 25
                 };
-                track.MouseWheel += (s, e) => ((HandledMouseEventArgs)e).Handled = true;
+                track.MouseWheel += (s, e) =>
+                {
+                    ((HandledMouseEventArgs)e).Handled = true;
+                    RelationsPanel.ForwardMousewheel(e); // forward event to FlowLayoutPanel
+                };
                 track.BackColor = track.Value < 0 ? Color.LightCoral : Color.LightGreen;
                 track.ValueChanged += (s, e) =>
                 {
