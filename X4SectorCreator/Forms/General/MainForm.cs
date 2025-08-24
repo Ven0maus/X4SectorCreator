@@ -1326,7 +1326,8 @@ namespace X4SectorCreator
                         nonModifiedSector.Economy != modifiedSector.Economy ||
                         nonModifiedSector.Security != modifiedSector.Security ||
                         nonModifiedSector.Tags != modifiedSector.Tags ||
-                        nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies)
+                        nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies ||
+                        nonModifiedSector.Placement != modifiedSector.Placement)
                     {
                         // Add to modified clusters
                         vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = (Sector)modifiedSector.Clone() });
