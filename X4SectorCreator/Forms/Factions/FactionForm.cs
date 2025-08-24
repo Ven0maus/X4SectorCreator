@@ -122,6 +122,9 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool FromUpdate { get; set; }
+
         private Faction _faction;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Faction Faction
@@ -135,7 +138,8 @@ namespace X4SectorCreator.Forms
                     _factionXml = _faction.Serialize();
                     FactionColor = _faction.Color;
                     IconData = _faction.Icon;
-                    IconBox.Image = ImageHelper.Base64ToImage(IconData);
+                    if (IconData != null)
+                        IconBox.Image = ImageHelper.Base64ToImage(IconData);
                     Ships = _faction.Ships;
                     ShipGroups = _faction.ShipGroups;
                     StationTypes = _faction.StationTypes;
@@ -316,7 +320,10 @@ namespace X4SectorCreator.Forms
                     }
 
                     FactionsForm.AllCustomFactions.Remove(Faction.Id);
+                    FactionRelationsForm.DeleteFaction(Faction);
                     FactionsForm.AllCustomFactions.Add(faction.Id, faction);
+                    FactionRelationsForm.InsertFaction(faction);
+
                     Faction = faction;
                     break;
             }

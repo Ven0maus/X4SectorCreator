@@ -69,6 +69,8 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
+            _factionForm.Value.FromUpdate = false;
+            _factionForm.Value.Faction = null;
             _factionForm.Value.FactionsForm = this;
             _factionForm.Value.BtnCreate.Text = "Create";
             _factionForm.Value.Show();
@@ -103,6 +105,7 @@ namespace X4SectorCreator.Forms
             {
                 _factionForm.Value.FactionsForm = this;
                 _factionForm.Value.Faction = faction;
+                _factionForm.Value.FromUpdate = true;
                 _factionForm.Value.BtnCreate.Text = "Update";
                 _factionForm.Value.Show();
             }
