@@ -107,17 +107,33 @@ namespace X4SectorCreator.Forms
                             Sectors = []
                         });
 
-                        // Create also a sector and one zone with the same name
-                        var sector = new Sector
-                        {
-                            Id = 1,
-                            Name = name,
-                            Owner = "None"
-                        };
-                        Cluster.Sectors.Add(sector);
+                        // Create also sector(s) with the same name, and init the zones based on sector radius
+                        int amountOfSectors = BtnSector1.Checked ? 1 :
+                            BtnSector2.Checked ? 2 :
+                            BtnSector3.Checked ? 3 :
+                            BtnSector4.Checked ? 4 :
+                            1; // Fall-back 1
 
-                        // Create initial zones based on the sector range
-                        sector.InitializeOrUpdateZones();
+                        for (int i = 0; i < amountOfSectors; i++)
+                        {
+                            var sector = new Sector
+                            {
+                                Id = i + 1,
+                                Name = amountOfSectors == 1 ? name : $"{name} {ToRomanNumeral(i + 1)}",
+                                Owner = "None"
+                            };
+                            Cluster.Sectors.Add(sector);
+
+                            // Create initial zones based on the sector range
+                            sector.InitializeOrUpdateZones();
+                        }
+
+                        // The initial placement is automatically positioned, even if auto determine is disabled!
+                        Cluster.AutoPositionSectors();
+
+                        // Determines the position inside the cluster based on the selected placement
+                        foreach (var sector in Cluster.Sectors)
+                            SectorForm.DetermineSectorOffset(Cluster, sector);
 
                         // Add to listbox and select it
                         _ = MainForm.Instance.ClustersListBox.Items.Add(name);
@@ -151,10 +167,24 @@ namespace X4SectorCreator.Forms
                 if (beforeAutoPos != Cluster.CustomSectorPositioning && !Cluster.CustomSectorPositioning)
                 {
                     Cluster.AutoPositionSectors();
+                    // Determines the position inside the cluster based on the selected placement
+                    foreach (var sector in Cluster.Sectors)
+                        SectorForm.DetermineSectorOffset(Cluster, sector);
+                }
+
+                if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
+                    (MainForm.Instance.SectorMap.IsInitialized && MainForm.Instance.SectorMap.Value.Visible))
+                {
+                    MainForm.Instance.SectorMap.Value.Reset(false);
                 }
 
                 ResetAndHide();
             }
+        }
+
+        private static string ToRomanNumeral(int i)
+        {
+            return i == 1 ? "I" : i == 2 ? "II" : i == 3 ? "III" : i == 4 ? "IV" : "I";
         }
 
         public static string FindBackgroundVisualMappingByCode(string mappingCode)
@@ -187,14 +217,14 @@ namespace X4SectorCreator.Forms
 
         private void TxtLocation_MouseClick(object sender, MouseEventArgs e)
         {
-            MainForm.Instance.SectorMapForm.Value.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
-            MainForm.Instance.SectorMapForm.Value.GateSectorSelection = false;
-            MainForm.Instance.SectorMapForm.Value.ClusterSectorSelection = true;
-            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Enabled = false;
-            MainForm.Instance.SectorMapForm.Value.ControlPanel.Size = new Size(176, 347);
-            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
-            MainForm.Instance.SectorMapForm.Value.Reset();
-            MainForm.Instance.SectorMapForm.Value.Show();
+            MainForm.Instance.SectorMap.Value.DlcListBox.Enabled = !GalaxySettingsForm.IsCustomGalaxy;
+            MainForm.Instance.SectorMap.Value.GateSectorSelection = false;
+            MainForm.Instance.SectorMap.Value.ClusterSectorSelection = true;
+            MainForm.Instance.SectorMap.Value.BtnSelectLocation.Enabled = false;
+            MainForm.Instance.SectorMap.Value.ControlPanel.Size = new Size(176, 347);
+            MainForm.Instance.SectorMap.Value.BtnSelectLocation.Show();
+            MainForm.Instance.SectorMap.Value.Reset();
+            MainForm.Instance.SectorMap.Value.Show();
         }
 
         private void BtnEditClusterXml_Click(object sender, EventArgs e)

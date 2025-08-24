@@ -275,6 +275,10 @@ namespace X4SectorCreator.Forms
                     sectorValue.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
                     sectorValue.Placement = sectorPlacement;
 
+                    // Update zones based on the sector range if modified
+                    if (!sectorValue.IsBaseGame)
+                        sectorValue.InitializeOrUpdateZones();
+
                     int index = MainForm.Instance.SectorsListBox.SelectedIndex;
                     MainForm.Instance.SectorsListBox.Items[index] = name;
                     MainForm.Instance.SectorsListBox.SelectedItem = name;
@@ -292,11 +296,19 @@ namespace X4SectorCreator.Forms
 
             // Determines the position inside the cluster based on the selected placement
             DetermineSectorOffset(_selectedCluster, sectorValue);
+
+            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
+                (MainForm.Instance.SectorMap.IsInitialized && MainForm.Instance.SectorMap.Value.Visible))
+            {
+                MainForm.Instance.SectorMap.Value.Reset(false);
+            }
+
             ResetAndHide();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
+
             ResetAndHide();
         }
 

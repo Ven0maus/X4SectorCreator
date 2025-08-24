@@ -38,6 +38,7 @@
             BtnSaveAndClose = new Button();
             label2 = new Label();
             CmbPlayerHq = new ComboBox();
+            BtnSetFactionRelations = new Button();
             SuspendLayout();
             // 
             // label1
@@ -74,7 +75,7 @@
             // 
             // BtnSave
             // 
-            BtnSave.Location = new Point(88, 98);
+            BtnSave.Location = new Point(88, 136);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(88, 33);
             BtnSave.TabIndex = 3;
@@ -84,7 +85,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(11, 99);
+            BtnCancel.Location = new Point(11, 137);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(71, 33);
             BtnCancel.TabIndex = 4;
@@ -105,7 +106,7 @@
             // 
             // BtnGenerateProceduralGalaxy
             // 
-            BtnGenerateProceduralGalaxy.Location = new Point(11, 135);
+            BtnGenerateProceduralGalaxy.Location = new Point(11, 173);
             BtnGenerateProceduralGalaxy.Name = "BtnGenerateProceduralGalaxy";
             BtnGenerateProceduralGalaxy.Size = new Size(348, 33);
             BtnGenerateProceduralGalaxy.TabIndex = 9;
@@ -115,7 +116,7 @@
             // 
             // BtnSaveAndClose
             // 
-            BtnSaveAndClose.Location = new Point(182, 99);
+            BtnSaveAndClose.Location = new Point(182, 137);
             BtnSaveAndClose.Name = "BtnSaveAndClose";
             BtnSaveAndClose.Size = new Size(177, 33);
             BtnSaveAndClose.TabIndex = 10;
@@ -142,11 +143,22 @@
             CmbPlayerHq.TabIndex = 12;
             CmbPlayerHq.SelectedIndexChanged += CmbPlayerHq_SelectedIndexChanged;
             // 
+            // BtnSetFactionRelations
+            // 
+            BtnSetFactionRelations.Location = new Point(12, 101);
+            BtnSetFactionRelations.Name = "BtnSetFactionRelations";
+            BtnSetFactionRelations.Size = new Size(348, 33);
+            BtnSetFactionRelations.TabIndex = 13;
+            BtnSetFactionRelations.Text = "Set Faction Relations";
+            BtnSetFactionRelations.UseVisualStyleBackColor = true;
+            BtnSetFactionRelations.Click += BtnSetFactionRelations_Click;
+            // 
             // GalaxySettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(366, 173);
+            ClientSize = new Size(366, 210);
+            Controls.Add(BtnSetFactionRelations);
             Controls.Add(CmbPlayerHq);
             Controls.Add(label2);
             Controls.Add(BtnSaveAndClose);
@@ -178,5 +190,6 @@
         private Button BtnSaveAndClose;
         private Label label2;
         private ComboBox CmbPlayerHq;
+        private Button BtnSetFactionRelations;
     }
 }

@@ -207,7 +207,7 @@ namespace X4SectorCreator.XmlGeneration
                         )
                     ),
                     new XElement("macro",
-                        new XAttribute("ref", "props_gates_anc_gate_macro"),
+                        new XAttribute("ref", gate.Type.ToString()),
                         new XAttribute("connection", "space")
                     )
                 );
