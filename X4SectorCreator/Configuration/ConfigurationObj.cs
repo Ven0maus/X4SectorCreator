@@ -12,8 +12,6 @@ namespace X4SectorCreator.Configuration
         public List<Basket> Baskets { get; set; }
         public List<Faction> CustomFactions { get; set; }
         public List<Constructionplan> ConstructionPlans { get; set; }
-        public Dictionary<string, bool> FactionsLocked { get; set; }
-        public Dictionary<string, Dictionary<string, int>> FactionRelations { get; set; }
         public VanillaChanges VanillaChanges { get; set; }
         public string GalaxyName { get; set; }
         public string PlayerHQSector { get; set; }

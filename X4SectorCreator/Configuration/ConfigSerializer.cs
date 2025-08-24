@@ -74,8 +74,6 @@ namespace X4SectorCreator.Configuration
                 Baskets = JobsForm.AllBaskets.Select(a => a.Value).ToList(),
                 ConstructionPlans = ConstructionPlanViewForm.AllCustomConstructionPlans.Select(a => a.Value).ToList(),
                 CustomFactions = FactionsForm.AllCustomFactions.Select(a => a.Value).ToList(),
-                FactionsLocked = FactionRelationsForm.FactionsLocked,
-                FactionRelations = FactionRelationsForm.FactionRelations,
                 Version = new VersionChecker().CurrentVersion
             };
 
@@ -157,20 +155,6 @@ namespace X4SectorCreator.Configuration
                 {
                     ConstructionPlanViewForm.AllCustomConstructionPlans.Add(constructionPlan.Id, constructionPlan);
                 }
-            }
-
-            FactionRelationsForm.Reset();
-            if (configObj.FactionsLocked != null && configObj.FactionsLocked.Count > 0)
-            {
-                FactionRelationsForm.FactionsLocked.Clear();
-                foreach (var value in configObj.FactionsLocked)
-                    FactionRelationsForm.FactionsLocked[value.Key] = value.Value;
-            }
-            if (configObj.FactionRelations != null && configObj.FactionRelations.Count > 0)
-            {
-                FactionRelationsForm.FactionRelations.Clear();
-                foreach (var value in configObj.FactionRelations)
-                    FactionRelationsForm.FactionRelations[value.Key] = value.Value;
             }
             #endregion
 

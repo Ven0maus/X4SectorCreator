@@ -29,22 +29,11 @@ namespace DevConsole
             }
 
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Patching all dlcs map files to cloned files.");
+            Console.WriteLine("Started extracting regions");
             Console.ForegroundColor = originalColor;
 
             // First run map patcher
             MapPatcher.Patch(x4Path);
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Started extracting relations");
-            Console.ForegroundColor = originalColor;
-
-            var factionsPath = Path.Combine(_vanillaFilesPath, "factions.xml");
-            RelationsExtractor.ExtractRelations(factionsPath);
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Started extracting regions");
-            Console.ForegroundColor = originalColor;
 
             // Base files
             var clustersPath = Path.Combine(_vanillaFilesPath, "clusters.xml");
@@ -65,7 +54,7 @@ namespace DevConsole
             Console.WriteLine("Started extracting stations");
             Console.ForegroundColor = originalColor;
 
-            if (File.Exists(godPath))
+            if (File.Exists(godPath)) 
             {
                 StationExtractor.ExtractStations(clustersPath, sectorsPath, godPath);
             }

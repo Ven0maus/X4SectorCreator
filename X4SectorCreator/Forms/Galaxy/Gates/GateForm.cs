@@ -703,12 +703,6 @@ namespace X4SectorCreator.Forms
             MainForm.Instance.GatesListBox.SelectedItem = targetGate;
 
             Close();
-
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
-                (MainForm.Instance.SectorMap.IsInitialized && MainForm.Instance.SectorMap.Value.Visible))
-            {
-                MainForm.Instance.SectorMap.Value.Reset(false);
-            }
         }
 
         private static string ConvertToPath(Cluster cluster, Sector sector, Zone zone)
@@ -739,12 +733,12 @@ namespace X4SectorCreator.Forms
 
         private void BtnSelectSector_Click(object sender, EventArgs e)
         {
-            MainForm.Instance.SectorMap.Value.GateSectorSelection = true;
-            MainForm.Instance.SectorMap.Value.BtnSelectLocation.Enabled = false;
-            MainForm.Instance.SectorMap.Value.ControlPanel.Size = new Size(176, 347);
-            MainForm.Instance.SectorMap.Value.BtnSelectLocation.Show();
-            MainForm.Instance.SectorMap.Value.Reset();
-            MainForm.Instance.SectorMap.Value.Show();
+            MainForm.Instance.SectorMapForm.Value.GateSectorSelection = true;
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Enabled = false;
+            MainForm.Instance.SectorMapForm.Value.ControlPanel.Size = new Size(176, 347);
+            MainForm.Instance.SectorMapForm.Value.BtnSelectLocation.Show();
+            MainForm.Instance.SectorMapForm.Value.Reset();
+            MainForm.Instance.SectorMapForm.Value.Show();
         }
     }
 }

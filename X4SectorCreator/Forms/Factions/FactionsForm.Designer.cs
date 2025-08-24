@@ -34,7 +34,6 @@
             BtnDelete = new Button();
             BtnExit = new Button();
             BtnFactionCreationHelp = new Button();
-            BtnEditRelations = new Button();
             SuspendLayout();
             // 
             // label1
@@ -55,7 +54,6 @@
             CustomFactionsListBox.Name = "CustomFactionsListBox";
             CustomFactionsListBox.Size = new Size(228, 244);
             CustomFactionsListBox.TabIndex = 1;
-            CustomFactionsListBox.SelectedIndexChanged += CustomFactionsListBox_SelectedIndexChanged;
             CustomFactionsListBox.DoubleClick += CustomFactionsListBox_DoubleClick;
             // 
             // BtnCreate
@@ -90,7 +88,7 @@
             // 
             // BtnFactionCreationHelp
             // 
-            BtnFactionCreationHelp.Location = new Point(246, 150);
+            BtnFactionCreationHelp.Location = new Point(246, 111);
             BtnFactionCreationHelp.Name = "BtnFactionCreationHelp";
             BtnFactionCreationHelp.Size = new Size(169, 33);
             BtnFactionCreationHelp.TabIndex = 5;
@@ -98,23 +96,11 @@
             BtnFactionCreationHelp.UseVisualStyleBackColor = true;
             BtnFactionCreationHelp.Click += BtnFactionCreationHelp_Click;
             // 
-            // BtnEditRelations
-            // 
-            BtnEditRelations.Enabled = false;
-            BtnEditRelations.Location = new Point(246, 111);
-            BtnEditRelations.Name = "BtnEditRelations";
-            BtnEditRelations.Size = new Size(169, 33);
-            BtnEditRelations.TabIndex = 6;
-            BtnEditRelations.Text = "Edit Faction Relations";
-            BtnEditRelations.UseVisualStyleBackColor = true;
-            BtnEditRelations.Click += BtnEditRelations_Click;
-            // 
             // FactionsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(420, 282);
-            Controls.Add(BtnEditRelations);
             Controls.Add(BtnFactionCreationHelp);
             Controls.Add(BtnExit);
             Controls.Add(BtnDelete);
@@ -133,11 +119,10 @@
         #endregion
 
         private Label label1;
+        private ListBox CustomFactionsListBox;
         private Button BtnCreate;
         private Button BtnDelete;
         private Button BtnExit;
         private Button BtnFactionCreationHelp;
-        private Button BtnEditRelations;
-        internal ListBox CustomFactionsListBox;
     }
 }

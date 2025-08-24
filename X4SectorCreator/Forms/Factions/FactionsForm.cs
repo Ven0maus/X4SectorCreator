@@ -9,7 +9,6 @@ namespace X4SectorCreator.Forms
         public static readonly Dictionary<string, Faction> AllCustomFactions = new(StringComparer.OrdinalIgnoreCase);
         private readonly LazyEvaluated<FactionForm> _factionForm = new(() => new FactionForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<Factions.FactionCreationHelpForm> _factionCreationHelpForm = new(() => new Factions.FactionCreationHelpForm(), a => !a.IsDisposed);
-        
         public FactionsForm()
         {
             InitializeComponent();
@@ -69,8 +68,6 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
-            _factionForm.Value.FromUpdate = false;
-            _factionForm.Value.Faction = null;
             _factionForm.Value.FactionsForm = this;
             _factionForm.Value.BtnCreate.Text = "Create";
             _factionForm.Value.Show();
@@ -81,7 +78,6 @@ namespace X4SectorCreator.Forms
             if (CustomFactionsListBox.SelectedItem is Faction selectedFaction)
             {
                 AllCustomFactions.Remove(selectedFaction.Id);
-                FactionRelationsForm.DeleteFaction(selectedFaction);
 
                 int index = CustomFactionsListBox.Items.IndexOf(CustomFactionsListBox.SelectedItem);
                 CustomFactionsListBox.Items.Remove(CustomFactionsListBox.SelectedItem);
@@ -105,7 +101,6 @@ namespace X4SectorCreator.Forms
             {
                 _factionForm.Value.FactionsForm = this;
                 _factionForm.Value.Faction = faction;
-                _factionForm.Value.FromUpdate = true;
                 _factionForm.Value.BtnCreate.Text = "Update";
                 _factionForm.Value.Show();
             }
@@ -114,17 +109,6 @@ namespace X4SectorCreator.Forms
         private void BtnFactionCreationHelp_Click(object sender, EventArgs e)
         {
             _factionCreationHelpForm.Value.Show();
-        }
-
-        private void CustomFactionsListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            BtnEditRelations.Enabled = CustomFactionsListBox.SelectedItem != null;
-        }
-
-        private void BtnEditRelations_Click(object sender, EventArgs e)
-        {
-            MainForm.Instance.FactionRelationsDataForm.Value.Faction = (Faction)CustomFactionsListBox.SelectedItem;
-            MainForm.Instance.FactionRelationsDataForm.Value.Show();
         }
     }
 }

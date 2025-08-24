@@ -117,10 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="FactionName.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="RelationValue.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Faction Relation Ranges: 
+  self:          1.0  to  1.0
+  ally:          0.5  to  1.0
+  member:        0.1  to  1.0
+  friend:        0.01 to  1.0
+  neutral:      -0.01 to  0.01
+  enemy:        -1.0  to -0.01
+  killmilitary: -1.0  to -0.1
+  kill:         -1.0  to -0.32
+  nemesis:      -1.0  to -1.0
+
+UI value mapping (analogously for negative values):
+  1.0       = 30
+  0.5       = 27
+  0.32      = 25
+  0.1       = 20
+  0.032     = 15
+  0.01      = 10
+  0.0032    = 5</value>
+  </data>
 </root>

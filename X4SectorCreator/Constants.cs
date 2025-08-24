@@ -7,7 +7,6 @@
             public static readonly string SectorMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/sector_mappings.json");
             public static readonly string DlcMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/dlc_mappings.json");
             public static readonly string VanillaRegionsMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/vanilla_regions.json");
-            public static readonly string VanillaRelationsMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/vanilla_relations.json");
             public static readonly string VanillaStationsMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/vanilla_stations.json");
             public static readonly string VanillaConnectionMappingFilePath = Path.Combine(Application.StartupPath, "Data/Mappings/vanilla_connection_mappings.json");
             public static readonly string VanillaBasketsPath = Path.Combine(Application.StartupPath, "Data/Mappings/vanilla_baskets.xml");

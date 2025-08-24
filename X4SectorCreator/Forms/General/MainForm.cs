@@ -24,14 +24,13 @@ namespace X4SectorCreator
 
         /* FORMS */
         public readonly LazyEvaluated<RegionForm> RegionForm = new(() => new RegionForm(), a => !a.IsDisposed);
-        public readonly LazyEvaluated<SectorMapForm> SectorMap = new(() => new SectorMapForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<SectorMapForm> SectorMapForm = new(() => new SectorMapForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<ClusterForm> ClusterForm = new(() => new ClusterForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<GateForm> GateForm = new(() => new GateForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<JobsForm> JobsForm = new(() => new JobsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactoriesForm> FactoriesForm = new(() => new FactoriesForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactionsForm> FactionsForm = new(() => new FactionsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<GalaxySettingsForm> GalaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
-        public readonly LazyEvaluated<FactionRelationsForm> FactionRelationsDataForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
 
         private readonly LazyEvaluated<SectorForm> _sectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
@@ -691,7 +690,6 @@ namespace X4SectorCreator
                     Forms.FactoriesForm.AllFactories.Clear();
                     Forms.JobsForm.AllJobs.Clear();
                     Forms.FactionsForm.AllCustomFactions.Clear();
-                    FactionRelationsForm.Reset();
                 }
                 Forms.JobsForm.AllBaskets.Clear();
             }
@@ -1327,8 +1325,7 @@ namespace X4SectorCreator
                         nonModifiedSector.Economy != modifiedSector.Economy ||
                         nonModifiedSector.Security != modifiedSector.Security ||
                         nonModifiedSector.Tags != modifiedSector.Tags ||
-                        nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies ||
-                        nonModifiedSector.Placement != modifiedSector.Placement)
+                        nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies)
                     {
                         // Add to modified clusters
                         vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = (Sector)modifiedSector.Clone() });
@@ -1371,13 +1368,6 @@ namespace X4SectorCreator
             ClusterForm.Value.txtDescription.Text = string.Empty;
             ClusterForm.Value.cmbBackgroundVisual.SelectedItem = ClusterForm.Value.cmbBackgroundVisual.Items[0];
             ClusterForm.Value.TxtLocation.Text = string.Empty;
-
-            // Make sure these buttons are enabled for creation
-            ClusterForm.Value.BtnSector1.Enabled = true;
-            ClusterForm.Value.BtnSector2.Enabled = true;
-            ClusterForm.Value.BtnSector3.Enabled = true;
-            ClusterForm.Value.BtnSector4.Enabled = true;
-
             ClusterForm.Value.Show();
         }
 
@@ -1428,12 +1418,6 @@ namespace X4SectorCreator
 
             GatesListBox.Items.Clear();
             RegionsListBox.Items.Clear();
-
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
-                (SectorMap.IsInitialized && SectorMap.Value.Visible))
-            {
-                SectorMap.Value.Reset(false);
-            }
         }
 
         private void ClustersListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1491,24 +1475,6 @@ namespace X4SectorCreator
             ClusterForm.Value.cmbBackgroundVisual.SelectedItem = Forms.ClusterForm.FindBackgroundVisualMappingByCode(cluster.Value.BackgroundVisualMapping ?? cluster.Value.BaseGameMapping);
             ClusterForm.Value.TxtLocation.Text = cluster.Key.ToString();
             ClusterForm.Value.ChkAutoPlacement.Checked = !cluster.Value.CustomSectorPositioning;
-
-            // Disable these buttons, they cannot be modified anymore
-            ClusterForm.Value.BtnSector1.Enabled = false;
-            ClusterForm.Value.BtnSector2.Enabled = false;
-            ClusterForm.Value.BtnSector3.Enabled = false;
-            ClusterForm.Value.BtnSector4.Enabled = false;
-
-            // Select the correct button based on sectors in cluster
-            var amountOfSectors = cluster.Value.Sectors.Count;
-            if (amountOfSectors == 1)
-                ClusterForm.Value.BtnSector1.Checked = true;
-            else if (amountOfSectors == 2)
-                ClusterForm.Value.BtnSector2.Checked = true;
-            else if(amountOfSectors == 3)
-                ClusterForm.Value.BtnSector3.Checked = true;
-            else if(amountOfSectors == 4)
-                ClusterForm.Value.BtnSector4.Checked = true;
-
             if (!string.IsNullOrWhiteSpace(cluster.Value.Soundtrack))
                 ClusterForm.Value.TxtSoundtrack.Text = cluster.Value.Soundtrack;
             ClusterForm.Value.Show();
@@ -1587,15 +1553,6 @@ namespace X4SectorCreator
 
             // Set details
             SetDetailsText(cluster.Value, sector);
-
-            if (!cluster.Value.CustomSectorPositioning)
-                cluster.Value.AutoPositionSectors();
-
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
-                (SectorMap.IsInitialized && SectorMap.Value.Visible))
-            {
-                SectorMap.Value.Reset(false);
-            }
         }
 
         private void SectorsListBox_DoubleClick(object sender, EventArgs e)
@@ -1678,13 +1635,13 @@ namespace X4SectorCreator
 
         private void BtnShowSectorMap_Click(object sender, EventArgs e)
         {
-            SectorMap.Value.DlcListBox.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
-            SectorMap.Value.GateSectorSelection = false;
-            SectorMap.Value.BtnSelectLocation.Enabled = false;
-            SectorMap.Value.ControlPanel.Size = new Size(176, 311);
-            SectorMap.Value.BtnSelectLocation.Hide();
-            SectorMap.Value.Reset();
-            SectorMap.Value.Show();
+            SectorMapForm.Value.DlcListBox.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
+            SectorMapForm.Value.GateSectorSelection = false;
+            SectorMapForm.Value.BtnSelectLocation.Enabled = false;
+            SectorMapForm.Value.ControlPanel.Size = new Size(176, 311);
+            SectorMapForm.Value.BtnSelectLocation.Hide();
+            SectorMapForm.Value.Reset();
+            SectorMapForm.Value.Show();
         }
 
         private static void SetOwnershipInDetails(Sector sector, StringBuilder sb)
@@ -1859,12 +1816,6 @@ namespace X4SectorCreator
             index--;
             index = Math.Max(0, index);
             GatesListBox.SelectedItem = index >= 0 && GatesListBox.Items.Count > 0 ? GatesListBox.Items[index] : null;
-
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
-                (SectorMap.IsInitialized && SectorMap.Value.Visible))
-            {
-                SectorMap.Value.Reset(false);
-            }
         }
 
         private void GatesListBox_DoubleClick(object sender, EventArgs e)
@@ -1958,12 +1909,6 @@ namespace X4SectorCreator
             index--;
             index = Math.Max(0, index);
             RegionsListBox.SelectedItem = index >= 0 && RegionsListBox.Items.Count > 0 ? RegionsListBox.Items[index] : null;
-
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
-                (SectorMap.IsInitialized && SectorMap.Value.Visible))
-            {
-                SectorMap.Value.Reset(false);
-            }
         }
 
         private void RegionsListBox_DoubleClick(object sender, EventArgs e)
@@ -2038,12 +1983,6 @@ namespace X4SectorCreator
 
             // Set details
             SetDetailsText(cluster, sector);
-
-            if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open) ||
-                (SectorMap.IsInitialized && SectorMap.Value.Visible))
-            {
-                SectorMap.Value.Reset(false);
-            }
         }
 
         private void ListStations_DoubleClick(object sender, EventArgs e)

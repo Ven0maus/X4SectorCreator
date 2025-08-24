@@ -284,8 +284,8 @@ namespace X4SectorCreator.Forms.Galaxy
             MainForm.Instance.SetProceduralGalaxy(clusters);
 
             // Visual update the sector map if opened
-            if (MainForm.Instance.SectorMap.IsInitialized)
-                MainForm.Instance.SectorMap.Value.Reset();
+            if (MainForm.Instance.SectorMapForm.IsInitialized)
+                MainForm.Instance.SectorMapForm.Value.Reset();
 
             // Update cluster options
             MainForm.Instance.UpdateClusterOptions();
@@ -331,7 +331,7 @@ namespace X4SectorCreator.Forms.Galaxy
 
         private void BtnOpenSectorMap_Click(object sender, EventArgs e)
         {
-            var sectorMapForm = MainForm.Instance.SectorMap;
+            var sectorMapForm = MainForm.Instance.SectorMapForm;
             sectorMapForm.Value.DlcListBox.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
             sectorMapForm.Value.GateSectorSelection = false;
             sectorMapForm.Value.BtnSelectLocation.Enabled = false;
