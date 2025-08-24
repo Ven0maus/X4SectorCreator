@@ -78,6 +78,7 @@ namespace X4SectorCreator.XmlGeneration
 
             // Handle faction relations from FactionRelationsForm
             // Only export real "changes" not data that wasn't modified compared to the original
+            var defaultRelations = FactionRelationsForm.GetDefaultRelations();
             var factionRelations = FactionRelationsForm.GetModifiedFactionRelations();
             foreach (var kvp in factionRelations)
             {
@@ -99,15 +100,47 @@ namespace X4SectorCreator.XmlGeneration
 
             foreach (var mapping in data)
             {
-                var addElement = new XElement("add",
-                    new XAttribute("sel", $"//factions/faction[@id='{mapping.Key}']/relations"));
+                if (!defaultRelations.TryGetValue(mapping.Key, out var oldRels))
+                    oldRels = new Faction.RelationsObj { Relation = [] };
+
+                var addElements = new List<XElement>();
+                var replaceElements = new List<XElement>();
+
                 foreach (var obj in mapping.Value)
                 {
-                    addElement.Add(new XElement("relation",
-                        new XAttribute("faction", obj.Faction),
-                        new XAttribute("relation", obj.RelationValue)));
+                    var element = new XElement("relation",
+                            new XAttribute("faction", obj.Faction),
+                            new XAttribute("relation", obj.RelationValue));
+
+                    if (oldRels.Relation.Any(a => a.Faction.Equals(obj.Faction, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        replaceElements.Add(element);
+                    }
+                    else
+                    {
+                        addElements.Add(element);
+                    }
                 }
-                yield return addElement;
+
+                if (addElements.Count > 0)
+                {
+                    var addElement = new XElement("add",
+                        new XAttribute("sel", $"//factions/faction[@id='{mapping.Key}']/relations"));
+                    foreach (var element in addElements)
+                        addElement.Add(element);
+                    yield return addElement;
+                }
+
+                if (replaceElements.Count > 0)
+                {
+                    foreach (var element in replaceElements)
+                    {
+                        var replaceElement = new XElement("replace",
+                            new XAttribute("sel", $"//factions/faction[@id='{mapping.Key}']/relations[@faction='{element.Attribute("faction").Value}']"));
+                        replaceElement.Add(element);
+                        yield return replaceElement;
+                    }
+                }
             }
         }
 

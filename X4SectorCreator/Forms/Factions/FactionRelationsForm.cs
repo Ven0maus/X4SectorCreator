@@ -222,7 +222,7 @@ namespace X4SectorCreator.Forms
         }
 
         private static Dictionary<string, Faction.RelationsObj> _vanillaRelationsCached;
-        private static Dictionary<string, Faction.RelationsObj> GetDefaultRelations()
+        public static Dictionary<string, Faction.RelationsObj> GetDefaultRelations()
         {
             if (_vanillaRelationsCached != null) return _vanillaRelationsCached;
             string relationsJson = File.ReadAllText(Constants.DataPaths.VanillaRelationsMappingFilePath);
