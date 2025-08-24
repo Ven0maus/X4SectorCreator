@@ -130,7 +130,9 @@ namespace X4SectorCreator.Forms
             var modified = new Dictionary<string, bool>();
             foreach (var value in _factionsLocked)
             {
-                if (original[value.Key] != value.Value)
+                if (!original.TryGetValue(value.Key, out var originalValue) && value.Value)
+                    modified[value.Key] = value.Value;
+                else if (originalValue != value.Value)
                     modified[value.Key] = value.Value;
             }
             return modified;

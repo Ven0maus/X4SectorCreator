@@ -99,30 +99,6 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
 
-            // First handle locks
-            foreach (var lockobj in locks) 
-            {
-                var dr = defaultRelations[lockobj.Key];
-
-                // Remove entry because locked was 1 and now not anymore
-                if (dr.Locked != null && dr.Locked == "1" && !lockobj.Value)
-                {
-                    yield return new XElement("remove",
-                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations/@locked"));
-                }
-                else if (dr.Locked != null && dr.Locked == "0" && lockobj.Value) // probably never happens, but just incase
-                {
-                    yield return new XElement("replace",
-                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations/@locked"), 1);
-                }
-                else if (dr.Locked == null && lockobj.Value)
-                {
-                    yield return new XElement("add",
-                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations"), 
-                        new XAttribute("type", "@locked"), 1);
-                }
-            }
-
             foreach (var mapping in data)
             {
                 if (!defaultRelations.TryGetValue(mapping.Key, out var oldRels))
@@ -165,6 +141,31 @@ namespace X4SectorCreator.XmlGeneration
                         replaceElement.Add(element);
                         yield return replaceElement;
                     }
+                }
+            }
+
+            // Handle locks
+            foreach (var lockobj in locks)
+            {
+                if (!defaultRelations.TryGetValue(lockobj.Key, out var dr))
+                    continue; // If not part of default, it means its a custom faction so its automatically part of faction object
+
+                // Remove entry because locked was 1 and now not anymore
+                if (dr.Locked != null && dr.Locked == "1" && !lockobj.Value)
+                {
+                    yield return new XElement("remove",
+                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations/@locked"));
+                }
+                else if (dr.Locked != null && dr.Locked == "0" && lockobj.Value) // probably never happens, but just incase
+                {
+                    yield return new XElement("replace",
+                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations/@locked"), 1);
+                }
+                else if (dr.Locked == null && lockobj.Value)
+                {
+                    yield return new XElement("add",
+                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations"),
+                        new XAttribute("type", "@locked"), 1);
                 }
             }
         }
