@@ -103,7 +103,7 @@ namespace DevConsole.Extractors
                                 {
                                     _regionDefintions[connection.RegionRef] = regionDefinition = CreateRegionDefinition(connection.RegionRef);
                                 }
-   
+
                                 region.Definition = regionDefinition;
                                 closestSector.Regions.Add(region);
                             }
@@ -228,8 +228,8 @@ namespace DevConsole.Extractors
                     // Try box type variant
                     var widthStr = sizeElement.Attribute("x")?.Value;
                     var heightStr = sizeElement.Attribute("z")?.Value;
-                    if (widthStr != null && heightStr != null && 
-                        float.TryParse(widthStr, out var width) && 
+                    if (widthStr != null && heightStr != null &&
+                        float.TryParse(widthStr, out var width) &&
                         float.TryParse(heightStr, out var height))
                     {
                         float radius = (float)Math.Sqrt((width * width + height * height)) / 2f;

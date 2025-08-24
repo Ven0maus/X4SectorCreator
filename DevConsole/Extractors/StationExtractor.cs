@@ -37,7 +37,7 @@ namespace DevConsole.Extractors
                                 if (zonePositions.TryGetValue(station.Location, out var zonePosition))
                                 {
                                     zone.Position = new Point(
-                                        (int)Math.Round(zonePosition.X, 0), 
+                                        (int)Math.Round(zonePosition.X, 0),
                                         (int)Math.Round(zonePosition.Y, 0));
                                 }
                             }
@@ -96,7 +96,7 @@ namespace DevConsole.Extractors
                 {
                     var xStr = positionElement.Attribute("x").Value;
                     var zStr = positionElement.Attribute("z").Value;
-                    if (float.TryParse(xStr, CultureInfo.InvariantCulture, out var x) && 
+                    if (float.TryParse(xStr, CultureInfo.InvariantCulture, out var x) &&
                         float.TryParse(zStr, CultureInfo.InvariantCulture, out var z))
                     {
                         position = new Point((int)Math.Round(x, 0), (int)Math.Round(z, 0));

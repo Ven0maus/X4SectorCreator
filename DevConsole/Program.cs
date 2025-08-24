@@ -65,7 +65,7 @@ namespace DevConsole
             Console.WriteLine("Started extracting stations");
             Console.ForegroundColor = originalColor;
 
-            if (File.Exists(godPath)) 
+            if (File.Exists(godPath))
             {
                 StationExtractor.ExtractStations(clustersPath, sectorsPath, godPath);
             }
