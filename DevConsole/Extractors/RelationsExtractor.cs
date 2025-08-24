@@ -19,12 +19,12 @@ namespace DevConsole.Extractors
             File.WriteAllText(Path.Combine("Extractions", "ExtractedRelations.xml"), xml);
         }
 
-        private static Dictionary<string, List<Faction.Relation>> CollectRelations(string factionsPath)
+        private static Dictionary<string, Faction.RelationsObj> CollectRelations(string factionsPath)
         {
             var xdoc = XDocument.Load(factionsPath);
             var factions = xdoc.Element("factions").Elements("faction");
 
-            var factionRelationObjects = new Dictionary<string, List<Faction.Relation>>();
+            var factionRelationObjects = new Dictionary<string, Faction.RelationsObj>();
             foreach (var faction in factions)
             {
                 if (faction.Attribute("id").Value.Equals("Ownerless", StringComparison.OrdinalIgnoreCase)) continue;
@@ -36,7 +36,12 @@ namespace DevConsole.Extractors
                         RelationValue = a.Attribute("relation").Value
                     })
                     .ToList();
-                factionRelationObjects[faction.Attribute("id").Value] = relations;
+                var relationObj = new Faction.RelationsObj
+                {
+                    Locked = faction.Element("relations").Attribute("locked")?.Value,
+                    Relation = relations
+                };
+                factionRelationObjects[faction.Attribute("id").Value] = relationObj;
             }
 
             return factionRelationObjects;

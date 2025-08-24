@@ -30,6 +30,7 @@ namespace X4SectorCreator.Forms
             }
         }
 
+        private static Dictionary<string, bool> _factionsLocked = [];
         private static Dictionary<string, Dictionary<string, int>> _factionRelations = [];
         private readonly Dictionary<string, Dictionary<string, int>> _unsavedChanges = [];
 
@@ -47,11 +48,13 @@ namespace X4SectorCreator.Forms
             {
                 var dict = new Dictionary<string, int>();
                 _factionRelations[kvp.Key] = dict;
+                _factionsLocked[kvp.Key] = kvp.Value.Locked != null && kvp.Value.Locked == "1";
+
                 foreach (var otherFaction in defaultRelations)
                 {
                     if (otherFaction.Key == kvp.Key) continue;
 
-                    var value = otherFaction.Value.FirstOrDefault(a => a.Faction == kvp.Key);
+                    var value = otherFaction.Value.Relation.FirstOrDefault(a => a.Faction == kvp.Key);
                     if (value == null)
                     {
                         dict[otherFaction.Key] = 0;
@@ -86,6 +89,7 @@ namespace X4SectorCreator.Forms
         {
             var relations = new Dictionary<string, int>();
             _factionRelations[faction.Id] = relations;
+            _factionsLocked[faction.Id] = false;
 
             // Init default relations all to 0
             var defaultRelations = GetDefaultRelations()
@@ -129,6 +133,7 @@ namespace X4SectorCreator.Forms
                 relations.Remove(faction.Id);
             }
             _factionRelations.Remove(faction.Id);
+            _factionsLocked.Remove(faction.Id);
 
             // Apply also to custom faction relation objects
             foreach (var customFaction in FactionsForm.AllCustomFactions.Values)
@@ -154,12 +159,12 @@ namespace X4SectorCreator.Forms
             return Math.Round(relation, decimalPlaces);
         }
 
-        private static Dictionary<string, List<Faction.Relation>> _vanillaRelationsCached;
-        private static Dictionary<string, List<Faction.Relation>> GetDefaultRelations()
+        private static Dictionary<string, Faction.RelationsObj> _vanillaRelationsCached;
+        private static Dictionary<string, Faction.RelationsObj> GetDefaultRelations()
         {
             if (_vanillaRelationsCached != null) return _vanillaRelationsCached;
             string relationsJson = File.ReadAllText(Constants.DataPaths.VanillaRelationsMappingFilePath);
-            return _vanillaRelationsCached ??= JsonSerializer.Deserialize<Dictionary<string, List<Faction.Relation>>>(relationsJson, ConfigSerializer.JsonSerializerOptions);
+            return _vanillaRelationsCached ??= JsonSerializer.Deserialize<Dictionary<string, Faction.RelationsObj>>(relationsJson, ConfigSerializer.JsonSerializerOptions);
         }
 
         private void BtnUpdate_Click(object sender, EventArgs e)
@@ -251,6 +256,8 @@ namespace X4SectorCreator.Forms
                 _ = MessageBox.Show($"Faction \"{selectedFaction}\" no longer exists.");
                 return;
             }
+
+            ChkLockRelations.Checked = _factionsLocked[selectedFaction];
 
             // Apply unsaved changes if present
             if (_unsavedChanges.TryGetValue(selectedFaction, out var unsavedChanges))
