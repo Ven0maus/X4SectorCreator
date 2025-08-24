@@ -35,6 +35,7 @@ namespace DevConsole.Extractors
                         Faction = a.Attribute("faction").Value,
                         RelationValue = a.Attribute("relation").Value
                     })
+                    .DistinctBy(a => a.Faction, StringComparer.OrdinalIgnoreCase)
                     .ToList();
                 var relationObj = new Faction.RelationsObj
                 {

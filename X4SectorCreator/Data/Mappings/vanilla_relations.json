@@ -52,10 +52,6 @@
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.032"
       }
     ]
   },
@@ -131,10 +127,6 @@
       },
       {
         "Faction": "boron",
-        "RelationValue": "0.1"
-      },
-      {
-        "Faction": "terran",
         "RelationValue": "0.1"
       }
     ]
@@ -216,10 +208,6 @@
       {
         "Faction": "boron",
         "RelationValue": "0.032"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -304,10 +292,6 @@
       {
         "Faction": "boron",
         "RelationValue": "0.5"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -412,10 +396,6 @@
       },
       {
         "Faction": "boron",
-        "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "terran",
         "RelationValue": "-0.032"
       }
     ]
@@ -555,10 +535,6 @@
       {
         "Faction": "kaori",
         "RelationValue": "-0.5"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.5"
       }
     ]
   },
@@ -675,10 +651,6 @@
       {
         "Faction": "boron",
         "RelationValue": "-0.1"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -748,10 +720,6 @@
       {
         "Faction": "boron",
         "RelationValue": "-0.1"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-1"
       }
     ]
   },
@@ -877,10 +845,6 @@
       {
         "Faction": "kaori",
         "RelationValue": "-1"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-1"
       }
     ]
   },
@@ -945,10 +909,6 @@
       {
         "Faction": "boron",
         "RelationValue": "0.032"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -1066,10 +1026,6 @@
       {
         "Faction": "kaori",
         "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.032"
       }
     ]
   },
@@ -1134,10 +1090,6 @@
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -1239,10 +1191,6 @@
       {
         "Faction": "kaori",
         "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.32"
       }
     ]
   },
@@ -1343,10 +1291,6 @@
       },
       {
         "Faction": "kaori",
-        "RelationValue": "-0.06"
-      },
-      {
-        "Faction": "terran",
         "RelationValue": "-0.06"
       }
     ]
@@ -1464,10 +1408,6 @@
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -1605,10 +1545,6 @@
       {
         "Faction": "kaori",
         "RelationValue": "-1"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-1"
       }
     ]
   },
@@ -1673,10 +1609,6 @@
       {
         "Faction": "boron",
         "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -1789,10 +1721,6 @@
       {
         "Faction": "boron",
         "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.32"
       }
     ]
   },
@@ -1853,10 +1781,6 @@
       {
         "Faction": "boron",
         "RelationValue": "-0.1"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -1921,10 +1845,6 @@
       {
         "Faction": "boron",
         "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -2029,10 +1949,6 @@
       {
         "Faction": "boron",
         "RelationValue": "-0.032"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -2085,10 +2001,6 @@
       {
         "Faction": "boron",
         "RelationValue": "0.032"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.011"
       }
     ]
   },
@@ -2145,10 +2057,6 @@
       {
         "Faction": "boron",
         "RelationValue": "0.032"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "0.1"
       }
     ]
   },
@@ -2361,10 +2269,6 @@
       {
         "Faction": "kaori",
         "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-1"
       }
     ]
   },
@@ -2461,10 +2365,6 @@
       {
         "Faction": "yaki",
         "RelationValue": "-0.32"
-      },
-      {
-        "Faction": "terran",
-        "RelationValue": "-0.032"
       }
     ]
   },
