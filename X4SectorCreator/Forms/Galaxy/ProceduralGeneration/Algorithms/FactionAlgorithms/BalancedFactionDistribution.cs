@@ -33,6 +33,12 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             DefineFactionRelations(mainFactionObjects, FactionsForm.AllCustomFactions.Values.Except(mainFactionObjects).ToList());
             GenerateStations(clusters);
             GenerateQuotas(clusters);
+
+            // Insert into faction relations, after relations are defined
+            foreach (var faction in FactionsForm.AllCustomFactions.Values)
+            {
+                FactionRelationsForm.InsertFaction(faction);
+            }
         }
 
         private void DefineFactionRelations(List<Faction> mainFactions, List<Faction> pirateFactions)
