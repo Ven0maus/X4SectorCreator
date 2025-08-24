@@ -33,8 +33,8 @@ namespace X4SectorCreator.Forms
             }
         }
 
-        private static Dictionary<string, bool> _factionsLocked = [];
-        private static Dictionary<string, Dictionary<string, int>> _factionRelations = [];
+        public static Dictionary<string, bool> FactionsLocked { get; set; } = [];
+        public static Dictionary<string, Dictionary<string, int>> FactionRelations { get; set; } = [];
 
         private readonly Dictionary<string, Dictionary<string, int>> _unsavedChanges = [];
         private readonly static Dictionary<string, bool> _unsavedFactionsLocked = [];
@@ -46,29 +46,7 @@ namespace X4SectorCreator.Forms
 
         static FactionRelationsForm()
         {
-            // Init the initial relations
-            var defaultRelations = GetDefaultRelations();
-
-            foreach (var kvp in defaultRelations)
-            {
-                var dict = new Dictionary<string, int>();
-                _factionRelations[kvp.Key] = dict;
-                _factionsLocked[kvp.Key] = kvp.Value.Locked != null && kvp.Value.Locked == "1";
-
-                foreach (var otherFaction in defaultRelations)
-                {
-                    if (otherFaction.Key == kvp.Key) continue;
-
-                    var value = otherFaction.Value.Relation.FirstOrDefault(a => a.Faction == kvp.Key);
-                    if (value == null)
-                    {
-                        dict[otherFaction.Key] = 0;
-                        continue;
-                    }
-
-                    dict[otherFaction.Key] = ConvertRelationToUIValue(value.RelationValue);
-                }
-            }
+            InitDefaults();
         }
 
         /// <summary>
@@ -85,7 +63,7 @@ namespace X4SectorCreator.Forms
                         .Select(b => new KeyValuePair<string, double>(b.Faction,
                         ConvertUIToRelationValue(ConvertRelationToUIValue(b.RelationValue))))));
 
-            foreach (var relation in _factionRelations)
+            foreach (var relation in FactionRelations)
             {
                 var dict = new Dictionary<string, double>();
                 foreach (var innerRelation in relation.Value)
@@ -131,7 +109,7 @@ namespace X4SectorCreator.Forms
         {
             var original = GetDefaultRelations().ToDictionary(a => a.Key, a => a.Value.Locked != null && a.Value.Locked == "1");
             var modified = new Dictionary<string, bool>();
-            foreach (var value in _factionsLocked)
+            foreach (var value in FactionsLocked)
             {
                 if (!original.TryGetValue(value.Key, out var originalValue) && value.Value)
                     modified[value.Key] = value.Value;
@@ -142,25 +120,14 @@ namespace X4SectorCreator.Forms
         }
 
         /// <summary>
-        /// Used to init faction relations from a save file.
-        /// </summary>
-        /// <param name="factionRelations"></param>
-        /// <param name="_factionLockedRelations"></param>
-        public static void LoadFactionRelations(Dictionary<string, Dictionary<string, int>> factionRelations, Dictionary<string, bool> _factionLockedRelations)
-        {
-            _factionRelations = factionRelations;
-            _factionsLocked = _factionLockedRelations;
-        }
-
-        /// <summary>
         /// Call when a new custom faction is created.
         /// </summary>
         /// <param name="faction"></param>
         public static void InsertFaction(Faction faction)
         {
             var relations = new Dictionary<string, int>();
-            _factionRelations[faction.Id] = relations;
-            _factionsLocked[faction.Id] = false;
+            FactionRelations[faction.Id] = relations;
+            FactionsLocked[faction.Id] = false;
 
             // Init default relations all to 0 include all custom factions except itself
             var defaultRelations = GetDefaultRelations()
@@ -187,11 +154,11 @@ namespace X4SectorCreator.Forms
             }
 
             // Insert in other factions
-            foreach (var kvp in _factionRelations)
+            foreach (var kvp in FactionRelations)
             {
                 if (kvp.Key == faction.Id) continue;
 
-                kvp.Value[faction.Id] = _factionRelations[faction.Id][kvp.Key];
+                kvp.Value[faction.Id] = FactionRelations[faction.Id][kvp.Key];
             }
         }
 
@@ -201,17 +168,17 @@ namespace X4SectorCreator.Forms
         /// <param name="faction"></param>
         public static void DeleteFaction(Faction faction)
         {
-            foreach (var kvp in _factionRelations)
+            foreach (var kvp in FactionRelations)
             {
                 var relations = kvp.Value;
                 relations.Remove(faction.Id);
             }
-            _factionRelations.Remove(faction.Id);
-            _factionsLocked.Remove(faction.Id);
+            FactionRelations.Remove(faction.Id);
+            FactionsLocked.Remove(faction.Id);
 
             // Apply also to custom faction relation objects
             foreach (var customFaction in FactionsForm.AllCustomFactions.Values)
-                HandleCustomFactionFormsRelations(customFaction, _factionRelations[customFaction.Id], _factionsLocked[customFaction.Id]);
+                HandleCustomFactionFormsRelations(customFaction, FactionRelations[customFaction.Id], FactionsLocked[customFaction.Id]);
         }
 
         private static int ConvertRelationToUIValue(string value)
@@ -246,7 +213,7 @@ namespace X4SectorCreator.Forms
             // Apply unsaved changes
             foreach (var kvp in _unsavedChanges)
             {
-                var relations = _factionRelations[kvp.Key];
+                var relations = FactionRelations[kvp.Key];
                 foreach (var change in kvp.Value)
                 {
                     relations[change.Key] = change.Value;
@@ -255,11 +222,11 @@ namespace X4SectorCreator.Forms
 
             // Apply unsaved locked state changes
             foreach (var kvp in _unsavedFactionsLocked)
-                _factionsLocked[kvp.Key] = kvp.Value;
+                FactionsLocked[kvp.Key] = kvp.Value;
 
             // Apply also to custom faction relation objects
             foreach (var customFaction in FactionsForm.AllCustomFactions.Values)
-                HandleCustomFactionFormsRelations(customFaction, _factionRelations[customFaction.Id], _factionsLocked[customFaction.Id]);
+                HandleCustomFactionFormsRelations(customFaction, FactionRelations[customFaction.Id], FactionsLocked[customFaction.Id]);
 
             // Clear after changes are processed
             _unsavedChanges.Clear();
@@ -329,7 +296,7 @@ namespace X4SectorCreator.Forms
             RelationsPanel.Controls.Clear();
 
             // Get relations of selected faction
-            if (!_factionRelations.TryGetValue(selectedFaction, out var factionRelations))
+            if (!FactionRelations.TryGetValue(selectedFaction, out var factionRelations))
             {
                 RelationsPanel.ResumeLayout();
                 // This cannot happen naturally
@@ -340,7 +307,7 @@ namespace X4SectorCreator.Forms
             if (_unsavedFactionsLocked.TryGetValue(selectedFaction, out var value))
                 ChkLockRelations.Checked = value;
             else 
-                ChkLockRelations.Checked = _factionsLocked[selectedFaction];
+                ChkLockRelations.Checked = FactionsLocked[selectedFaction];
 
             // Apply unsaved changes if present
             if (_unsavedChanges.TryGetValue(selectedFaction, out var unsavedChanges))
@@ -423,7 +390,7 @@ namespace X4SectorCreator.Forms
 
             // Reset
             CmbSelectedFaction.Items.Clear();
-            foreach (var faction in _factionRelations.Keys.OrderBy(a => a))
+            foreach (var faction in FactionRelations.Keys.OrderBy(a => a))
                 CmbSelectedFaction.Items.Add(faction);
 
             if (prevSelected != null && CmbSelectedFaction.Items.Contains(prevSelected))
@@ -443,23 +410,54 @@ namespace X4SectorCreator.Forms
             if (_unsavedFactionsLocked.ContainsKey(selectedFaction))
             {
                 // The value exists already, check if its the same as the default value, then remove it
-                if (_factionsLocked[selectedFaction] == ChkLockRelations.Checked)
+                if (FactionsLocked[selectedFaction] == ChkLockRelations.Checked)
                     _unsavedFactionsLocked.Remove(selectedFaction);
                 else
                     _unsavedFactionsLocked[selectedFaction] = ChkLockRelations.Checked;
             }
-            else if (_factionsLocked[selectedFaction] != ChkLockRelations.Checked)
+            else if (FactionsLocked[selectedFaction] != ChkLockRelations.Checked)
             {
                 _unsavedFactionsLocked[selectedFaction] = ChkLockRelations.Checked;
             }
         }
 
-        internal static void Clear()
+        internal static void Reset()
         {
-            _factionRelations.Clear();
-            _factionsLocked.Clear();
+            // Reset to the defaults
+
+            FactionRelations.Clear();
+            FactionsLocked.Clear();
             _unsavedFactionsLocked.Clear();
             _unsavedFactionsLocked.Clear();
+
+            InitDefaults();
+        }
+
+        private static void InitDefaults()
+        {
+            // Init the initial relations
+            var defaultRelations = GetDefaultRelations();
+
+            foreach (var kvp in defaultRelations)
+            {
+                var dict = new Dictionary<string, int>();
+                FactionRelations[kvp.Key] = dict;
+                FactionsLocked[kvp.Key] = kvp.Value.Locked != null && kvp.Value.Locked == "1";
+
+                foreach (var otherFaction in defaultRelations)
+                {
+                    if (otherFaction.Key == kvp.Key) continue;
+
+                    var value = otherFaction.Value.Relation.FirstOrDefault(a => a.Faction == kvp.Key);
+                    if (value == null)
+                    {
+                        dict[otherFaction.Key] = 0;
+                        continue;
+                    }
+
+                    dict[otherFaction.Key] = ConvertRelationToUIValue(value.RelationValue);
+                }
+            }
         }
     }
 }

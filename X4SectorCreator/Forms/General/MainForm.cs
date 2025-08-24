@@ -691,7 +691,7 @@ namespace X4SectorCreator
                     Forms.FactoriesForm.AllFactories.Clear();
                     Forms.JobsForm.AllJobs.Clear();
                     Forms.FactionsForm.AllCustomFactions.Clear();
-                    FactionRelationsForm.Clear();
+                    FactionRelationsForm.Reset();
                 }
                 Forms.JobsForm.AllBaskets.Clear();
             }
