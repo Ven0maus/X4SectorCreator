@@ -108,6 +108,12 @@ namespace X4SectorCreator.Forms
                 relations.Remove(faction.Id);
             }
             _factionRelations.Remove(faction.Id);
+
+            // Apply also to custom faction relation objects
+            foreach (var customFaction in FactionsForm.AllCustomFactions.Values)
+            {
+                HandleCustomFactionFormsRelations(customFaction, _factionRelations[customFaction.Id]);
+            }
         }
 
         private static int ConvertRelationToUIValue(string value, out bool isNegative)
@@ -147,46 +153,45 @@ namespace X4SectorCreator.Forms
                 }
             }
 
+            // Apply also to custom faction relation objects
+            foreach (var customFaction in FactionsForm.AllCustomFactions.Values)
+            {
+                HandleCustomFactionFormsRelations(customFaction, _factionRelations[customFaction.Id]);
+            }
+
             // Clear after changes are processed
             _unsavedChanges.Clear();
-
-            // TODO: Make sure Faction objects (custom factions) get their relations updated correctly
-            //if (Faction != null)
-                //HandleCustomFactionFormsRelations(); // This is only for the current faction, we need to do also other custom factions
 
             Close();
         }
 
-        private void HandleCustomFactionFormsRelations()
+        private static void HandleCustomFactionFormsRelations(Faction target, Dictionary<string, int> relations)
         {
-            // Init
-            if (Faction.Relations == null)
-                Faction.Relations = new Faction.RelationsObj();
-            if (Faction.Relations.Relation == null)
-                Faction.Relations.Relation = [];
+            target.Relations ??= new Faction.RelationsObj();
+            if (target.Relations.Relation == null)
+                target.Relations.Relation = [];
 
-            // Set locked state
-            Faction.Relations.Locked = ChkLockRelations.Checked ? "1" : null;
+            // Remove relations that were removed
+            target.Relations.Relation.RemoveAll(a => !relations.ContainsKey(a.Faction));
 
             // Set all relations for this faction properly
-            var factionRelations = _factionRelations[Faction.Name];
-            foreach (var relation in factionRelations)
+            foreach (var relation in relations)
             {
                 var factionName = GodGeneration.CorrectFactionName(relation.Key);
-                var faction = Faction.Relations.Relation
+                var faction = target.Relations.Relation
                     .FirstOrDefault(a => a.Faction.Equals(factionName, StringComparison.OrdinalIgnoreCase));
                 if (faction == null)
                 {
                     if (relation.Value == 0)
                     {
-                        var oldRelation = Faction.Relations.Relation.FirstOrDefault(a => a.Faction.Equals(factionName));
+                        var oldRelation = target.Relations.Relation.FirstOrDefault(a => a.Faction.Equals(factionName));
                         if (oldRelation != null)
-                            Faction.Relations.Relation.Remove(oldRelation);
+                            target.Relations.Relation.Remove(oldRelation);
                     }
                     else
                     {
                         var relValue = ConvertUIToRelationValue(relation.Value, out bool isNegative);
-                        Faction.Relations.Relation.Add(new Faction.Relation
+                        target.Relations.Relation.Add(new Faction.Relation
                         {
                             Faction = factionName,
                             RelationValue = isNegative ? 
@@ -199,7 +204,7 @@ namespace X4SectorCreator.Forms
                 {
                     if (relation.Value == 0)
                     {
-                        Faction.Relations.Relation.Remove(faction);
+                        target.Relations.Relation.Remove(faction);
                         continue;
                     }
                     var relValue = ConvertUIToRelationValue(relation.Value, out bool isNegative);

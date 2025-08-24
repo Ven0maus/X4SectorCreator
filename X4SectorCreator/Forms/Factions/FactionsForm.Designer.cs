@@ -133,11 +133,11 @@
         #endregion
 
         private Label label1;
-        private ListBox CustomFactionsListBox;
         private Button BtnCreate;
         private Button BtnDelete;
         private Button BtnExit;
         private Button BtnFactionCreationHelp;
         private Button BtnEditRelations;
+        internal ListBox CustomFactionsListBox;
     }
 }

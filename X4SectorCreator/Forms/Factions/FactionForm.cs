@@ -323,6 +323,8 @@ namespace X4SectorCreator.Forms
 
             // Update values
             FactionsForm.InitFactionValues();
+            FactionsForm.CustomFactionsListBox.SelectedItem = faction;
+
             Close();
         }
 

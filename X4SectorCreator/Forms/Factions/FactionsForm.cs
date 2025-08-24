@@ -78,8 +78,8 @@ namespace X4SectorCreator.Forms
         {
             if (CustomFactionsListBox.SelectedItem is Faction selectedFaction)
             {
-                FactionRelationsForm.DeleteFaction(selectedFaction);
                 AllCustomFactions.Remove(selectedFaction.Id);
+                FactionRelationsForm.DeleteFaction(selectedFaction);
 
                 int index = CustomFactionsListBox.Items.IndexOf(CustomFactionsListBox.SelectedItem);
                 CustomFactionsListBox.Items.Remove(CustomFactionsListBox.SelectedItem);
