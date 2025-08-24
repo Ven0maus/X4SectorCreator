@@ -74,6 +74,10 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> CollectRelationChanges()
         {
+            // There are no relation changes in a custom galaxy, only new factions with unique relations
+            if (GalaxySettingsForm.IsCustomGalaxy) 
+                yield break;
+
             var data = new Dictionary<string, List<Faction.Relation>>(StringComparer.OrdinalIgnoreCase);
             var locks = FactionRelationsForm.GetModifiedRelationLockStates();
 
