@@ -20,6 +20,9 @@ namespace X4SectorCreator.Forms
                 CmbSelectedFaction.Enabled = true;
                 FactionRelationsForm_Load(null, null);
 
+                RelationsPanel.VerticalScroll.Value = 0;
+                RelationsPanel.PerformLayout(); // ensures the panel refreshes
+
                 if (_faction == null) return;
 
                 if (!CmbSelectedFaction.Items.Contains(_faction.Id))
