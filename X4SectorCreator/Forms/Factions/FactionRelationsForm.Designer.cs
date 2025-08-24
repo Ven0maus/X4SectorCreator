@@ -34,6 +34,7 @@
             ChkLockRelations = new CheckBox();
             CmbSelectedFaction = new ComboBox();
             RelationsPanel = new FlowLayoutPanel();
+            label2 = new Label();
             SuspendLayout();
             // 
             // BtnUpdate
@@ -96,11 +97,22 @@
             RelationsPanel.TabIndex = 6;
             RelationsPanel.WrapContents = false;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 11F);
+            label2.Location = new Point(6, 403);
+            label2.Name = "label2";
+            label2.Size = new Size(450, 20);
+            label2.TabIndex = 7;
+            label2.Text = "Note: A new gamestart is required for these changes to take effect.";
+            // 
             // FactionRelationsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(465, 405);
+            ClientSize = new Size(465, 428);
+            Controls.Add(label2);
             Controls.Add(RelationsPanel);
             Controls.Add(CmbSelectedFaction);
             Controls.Add(ChkLockRelations);
@@ -125,5 +137,6 @@
         private CheckBox ChkLockRelations;
         private ComboBox CmbSelectedFaction;
         private FlowLayoutPanel RelationsPanel;
+        private Label label2;
     }
 }
