@@ -75,6 +75,7 @@ namespace X4SectorCreator.XmlGeneration
         private static IEnumerable<XElement> CollectRelationChanges()
         {
             var data = new Dictionary<string, List<Faction.Relation>>(StringComparer.OrdinalIgnoreCase);
+            var locks = FactionRelationsForm.GetModifiedRelationLockStates();
 
             // Handle faction relations from FactionRelationsForm
             // Only export real "changes" not data that wasn't modified compared to the original
@@ -95,6 +96,30 @@ namespace X4SectorCreator.XmlGeneration
                         Faction = relation.Key,
                         RelationValue = relation.Value.ToString(CultureInfo.InvariantCulture)
                     });
+                }
+            }
+
+            // First handle locks
+            foreach (var lockobj in locks) 
+            {
+                var dr = defaultRelations[lockobj.Key];
+
+                // Remove entry because locked was 1 and now not anymore
+                if (dr.Locked != null && dr.Locked == "1" && !lockobj.Value)
+                {
+                    yield return new XElement("remove",
+                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations/@locked"));
+                }
+                else if (dr.Locked != null && dr.Locked == "0" && lockobj.Value) // probably never happens, but just incase
+                {
+                    yield return new XElement("replace",
+                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations/@locked"), 1);
+                }
+                else if (dr.Locked == null && lockobj.Value)
+                {
+                    yield return new XElement("add",
+                        new XAttribute("sel", $"//factions/faction[@id='{lockobj.Key}']/relations"), 
+                        new XAttribute("type", "@locked"), 1);
                 }
             }
 

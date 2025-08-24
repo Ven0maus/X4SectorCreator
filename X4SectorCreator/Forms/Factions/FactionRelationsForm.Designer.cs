@@ -75,6 +75,7 @@
             ChkLockRelations.TabIndex = 4;
             ChkLockRelations.Text = "Lock Relations";
             ChkLockRelations.UseVisualStyleBackColor = true;
+            ChkLockRelations.CheckedChanged += ChkLockRelations_CheckedChanged;
             // 
             // CmbSelectedFaction
             // 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text.Json;
 using X4SectorCreator.Configuration;
@@ -32,7 +33,9 @@ namespace X4SectorCreator.Forms
 
         private static Dictionary<string, bool> _factionsLocked = [];
         private static Dictionary<string, Dictionary<string, int>> _factionRelations = [];
+
         private readonly Dictionary<string, Dictionary<string, int>> _unsavedChanges = [];
+        private readonly static Dictionary<string, bool> _unsavedFactionsLocked = [];
 
         public FactionRelationsForm()
         {
@@ -75,9 +78,9 @@ namespace X4SectorCreator.Forms
             var relations = new Dictionary<string, Dictionary<string, double>>();
             // Same as relations but contains the original values
             var originalRelations = GetDefaultRelations()
-                .ToDictionary(a => a.Key, a => 
+                .ToDictionary(a => a.Key, a =>
                     new Dictionary<string, double>(a.Value.Relation
-                        .Select(b => new KeyValuePair<string, double>(b.Faction, 
+                        .Select(b => new KeyValuePair<string, double>(b.Faction,
                         ConvertUIToRelationValue(ConvertRelationToUIValue(b.RelationValue))))));
 
             foreach (var relation in _factionRelations)
@@ -118,13 +121,20 @@ namespace X4SectorCreator.Forms
         }
 
         /// <summary>
-        /// Returns if the relations locked checkbox is true for the specified faction.
+        /// Returns all locked states.
         /// </summary>
         /// <param name="factionA"></param>
         /// <returns></returns>
-        public static bool IsFactionRelationsLocked(string factionA)
+        public static Dictionary<string, bool> GetModifiedRelationLockStates()
         {
-            return _factionsLocked[factionA];
+            var original = GetDefaultRelations().ToDictionary(a => a.Key, a => a.Value.Locked != null && a.Value.Locked == "1");
+            var modified = new Dictionary<string, bool>();
+            foreach (var value in _factionsLocked)
+            {
+                if (original[value.Key] != value.Value)
+                    modified[value.Key] = value.Value;
+            }
+            return modified;
         }
 
         /// <summary>
@@ -165,7 +175,7 @@ namespace X4SectorCreator.Forms
                 foreach (var rel in faction.Relations.Relation)
                 {
                     var factionName = GodGeneration.CorrectFactionName(rel.Faction);
-                    if (relations.ContainsKey(factionName)) 
+                    if (relations.ContainsKey(factionName))
                     {
                         relations[factionName] = ConvertRelationToUIValue(rel.RelationValue);
                     }
@@ -197,9 +207,7 @@ namespace X4SectorCreator.Forms
 
             // Apply also to custom faction relation objects
             foreach (var customFaction in FactionsForm.AllCustomFactions.Values)
-            {
-                HandleCustomFactionFormsRelations(customFaction, _factionRelations[customFaction.Id]);
-            }
+                HandleCustomFactionFormsRelations(customFaction, _factionRelations[customFaction.Id], _factionsLocked[customFaction.Id]);
         }
 
         private static int ConvertRelationToUIValue(string value)
@@ -241,19 +249,22 @@ namespace X4SectorCreator.Forms
                 }
             }
 
+            // Apply unsaved locked state changes
+            foreach (var kvp in _unsavedFactionsLocked)
+                _factionsLocked[kvp.Key] = kvp.Value;
+
             // Apply also to custom faction relation objects
             foreach (var customFaction in FactionsForm.AllCustomFactions.Values)
-            {
-                HandleCustomFactionFormsRelations(customFaction, _factionRelations[customFaction.Id]);
-            }
+                HandleCustomFactionFormsRelations(customFaction, _factionRelations[customFaction.Id], _factionsLocked[customFaction.Id]);
 
             // Clear after changes are processed
             _unsavedChanges.Clear();
+            _unsavedFactionsLocked.Clear();
 
             Close();
         }
 
-        private static void HandleCustomFactionFormsRelations(Faction target, Dictionary<string, int> relations)
+        private static void HandleCustomFactionFormsRelations(Faction target, Dictionary<string, int> relations, bool locked)
         {
             target.Relations ??= new Faction.RelationsObj();
             if (target.Relations.Relation == null)
@@ -261,6 +272,7 @@ namespace X4SectorCreator.Forms
 
             // Remove relations that were removed
             target.Relations.Relation.RemoveAll(a => !relations.ContainsKey(a.Faction));
+            target.Relations.Locked = locked ? "1" : null;
 
             // Set all relations for this faction properly
             foreach (var relation in relations)
@@ -313,7 +325,10 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
-            ChkLockRelations.Checked = _factionsLocked[selectedFaction];
+            if (_unsavedFactionsLocked.TryGetValue(selectedFaction, out var value))
+                ChkLockRelations.Checked = value;
+            else 
+                ChkLockRelations.Checked = _factionsLocked[selectedFaction];
 
             // Apply unsaved changes if present
             if (_unsavedChanges.TryGetValue(selectedFaction, out var unsavedChanges))
@@ -351,7 +366,7 @@ namespace X4SectorCreator.Forms
                 };
                 track.MouseWheel += (s, e) => ((HandledMouseEventArgs)e).Handled = true;
                 track.BackColor = track.Value < 0 ? Color.LightCoral : Color.LightGreen;
-                track.ValueChanged += (s, e) => 
+                track.ValueChanged += (s, e) =>
                 {
                     if (track.Value < 0)
                         track.BackColor = Color.LightCoral;   // reddish
@@ -397,11 +412,30 @@ namespace X4SectorCreator.Forms
 
             if (prevSelected != null && CmbSelectedFaction.Items.Contains(prevSelected))
                 CmbSelectedFaction.SelectedItem = prevSelected;
+            else
+                CmbSelectedFaction.SelectedIndex = 0;
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void ChkLockRelations_CheckedChanged(object sender, EventArgs e)
+        {
+            var selectedFaction = (string)CmbSelectedFaction.SelectedItem;
+            if (_unsavedFactionsLocked.ContainsKey(selectedFaction))
+            {
+                // The value exists already, check if its the same as the default value, then remove it
+                if (_factionsLocked[selectedFaction] == ChkLockRelations.Checked)
+                    _unsavedFactionsLocked.Remove(selectedFaction);
+                else
+                    _unsavedFactionsLocked[selectedFaction] = ChkLockRelations.Checked;
+            }
+            else if (_factionsLocked[selectedFaction] != ChkLockRelations.Checked)
+            {
+                _unsavedFactionsLocked[selectedFaction] = ChkLockRelations.Checked;
+            }
         }
     }
 }
