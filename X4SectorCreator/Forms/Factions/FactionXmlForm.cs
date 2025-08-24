@@ -22,6 +22,8 @@ namespace X4SectorCreator.Forms
         {
             try
             {
+                // TODO: Update relations correctly in FactionRelationsForm
+
                 var faction = Faction.Deserialize(TxtFactionXml.Text);
                 faction.Color = FactionForm.FactionColor.Value;
                 faction.Icon = FactionForm.IconData;
