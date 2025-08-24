@@ -74,35 +74,10 @@ namespace X4SectorCreator.XmlGeneration
 
         private static IEnumerable<XElement> CollectRelationChanges()
         {
-            var data = new Dictionary<string, List<Objects.Faction.Relation>>(StringComparer.OrdinalIgnoreCase);
+            var data = new Dictionary<string, List<Faction.Relation>>(StringComparer.OrdinalIgnoreCase);
 
-            /*
-            // TODO: Remove the faction relations data from custom factions,
-            // but then we still need to be able to support update relations through xml directly
-            foreach (var faction in FactionsForm.AllCustomFactions.Values)
-            {
-                if (faction.Relations?.Relation != null)
-                {
-                    foreach (var relation in faction.Relations.Relation)
-                    {
-                        if (!data.TryGetValue(relation.Faction, out var changes))
-                        {
-                            changes = [];
-                            data[relation.Faction] = changes;
-                        }
-
-                        changes.Add(new Objects.Faction.Relation 
-                        { 
-                            Faction = faction.Id, 
-                            RelationValue = relation.RelationValue 
-                        });
-                    }
-                }
-            }
-            */
-
-            // TODO: Handle faction relations from FactionRelationsForm
-            // TODO: Only export real "changes" not data that wasn't modified compared to the original
+            // Handle faction relations from FactionRelationsForm
+            // Only export real "changes" not data that wasn't modified compared to the original
             var factionRelations = FactionRelationsForm.GetModifiedFactionRelations();
             foreach (var kvp in factionRelations)
             {
@@ -114,7 +89,7 @@ namespace X4SectorCreator.XmlGeneration
 
                 foreach (var relation in kvp.Value)
                 {
-                    changes.Add(new Objects.Faction.Relation
+                    changes.Add(new Faction.Relation
                     {
                         Faction = relation.Key,
                         RelationValue = relation.Value.ToString(CultureInfo.InvariantCulture)
