@@ -28,7 +28,7 @@ namespace X4SectorCreator.Forms
                 if (!CmbSelectedFaction.Items.Contains(_faction.Id))
                     CmbSelectedFaction.Items.Add(_faction.Id);
 
-                CmbSelectedFaction.SelectedItem = _faction.Name;
+                CmbSelectedFaction.SelectedItem = _faction.Id;
                 CmbSelectedFaction.Enabled = false;
             }
         }
@@ -452,6 +452,14 @@ namespace X4SectorCreator.Forms
             {
                 _unsavedFactionsLocked[selectedFaction] = ChkLockRelations.Checked;
             }
+        }
+
+        internal static void Clear()
+        {
+            _factionRelations.Clear();
+            _factionsLocked.Clear();
+            _unsavedFactionsLocked.Clear();
+            _unsavedFactionsLocked.Clear();
         }
     }
 }

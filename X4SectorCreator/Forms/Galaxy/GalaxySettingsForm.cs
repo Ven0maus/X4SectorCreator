@@ -403,8 +403,8 @@ namespace X4SectorCreator.Forms
 
         private void BtnSetFactionRelations_Click(object sender, EventArgs e)
         {
-            MainForm.Instance.FactionRelationsForm.Value.Faction = null;
-            MainForm.Instance.FactionRelationsForm.Value.Show();
+            MainForm.Instance.FactionRelationsDataForm.Value.Faction = null;
+            MainForm.Instance.FactionRelationsDataForm.Value.Show();
         }
     }
 }

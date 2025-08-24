@@ -123,8 +123,8 @@ namespace X4SectorCreator.Forms
 
         private void BtnEditRelations_Click(object sender, EventArgs e)
         {
-            MainForm.Instance.FactionRelationsForm.Value.Faction = (Faction)CustomFactionsListBox.SelectedItem;
-            MainForm.Instance.FactionRelationsForm.Value.Show();
+            MainForm.Instance.FactionRelationsDataForm.Value.Faction = (Faction)CustomFactionsListBox.SelectedItem;
+            MainForm.Instance.FactionRelationsDataForm.Value.Show();
         }
     }
 }
