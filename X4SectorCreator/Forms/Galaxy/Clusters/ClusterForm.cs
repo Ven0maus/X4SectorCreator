@@ -131,6 +131,10 @@ namespace X4SectorCreator.Forms
                         // The initial placement is automatically positioned, even if auto determine is disabled!
                         Cluster.AutoPositionSectors();
 
+                        // Determines the position inside the cluster based on the selected placement
+                        foreach (var sector in Cluster.Sectors)
+                            SectorForm.DetermineSectorOffset(Cluster, sector);
+
                         // Add to listbox and select it
                         _ = MainForm.Instance.ClustersListBox.Items.Add(name);
                         MainForm.Instance.ClustersListBox.SelectedItem = name;
@@ -163,6 +167,9 @@ namespace X4SectorCreator.Forms
                 if (beforeAutoPos != Cluster.CustomSectorPositioning && !Cluster.CustomSectorPositioning)
                 {
                     Cluster.AutoPositionSectors();
+                    // Determines the position inside the cluster based on the selected placement
+                    foreach (var sector in Cluster.Sectors)
+                        SectorForm.DetermineSectorOffset(Cluster, sector);
                 }
 
                 if (SectorMapForm.IsMapOptionChecked(SectorMapForm.MapOption.Keep_Window_Open))
