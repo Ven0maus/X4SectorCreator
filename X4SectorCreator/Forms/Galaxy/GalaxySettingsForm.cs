@@ -176,8 +176,6 @@ namespace X4SectorCreator.Forms
                         string.Join("\n- ", invalidClusters.Select(a => a.Name)));
                     return false;
                 }
-
-                FactionRelationsForm.Reset();
             }
 
             // Validate if there are any gate connections with basegame clusters existing if we're going to custom galaxy
@@ -194,6 +192,11 @@ namespace X4SectorCreator.Forms
                 RemoveBaseGameGateConnections(clusters);
             }
 
+            if (MessageBox.Show("Faction relations will be reset when changing galaxy type, are you sure you want to do this?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return false;
+            }
+
             if (!chkCustomGalaxy.Checked)
             {
                 GalaxyName = "xu_ep2_universe";
@@ -206,9 +209,6 @@ namespace X4SectorCreator.Forms
                 _baseGameClusters ??= MainForm.Instance.AllClusters
                         .Where(a => a.Value.IsBaseGame)
                         .ToDictionary(a => a.Key, a => a.Value);
-
-                // Completely clear
-                FactionRelationsForm.Clear();
             }
 
             // Apply change
@@ -216,6 +216,9 @@ namespace X4SectorCreator.Forms
             DisableAllStorylines = chkDisableAllStorylines.Checked;
             BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
             SetHQ();
+
+            // Completely reset relations
+            FactionRelationsForm.Reset();
 
             if (CmbPlayerHq.Enabled != IsCustomGalaxy)
             {
