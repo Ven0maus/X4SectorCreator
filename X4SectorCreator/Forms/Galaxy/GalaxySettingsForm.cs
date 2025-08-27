@@ -192,7 +192,9 @@ namespace X4SectorCreator.Forms
                 RemoveBaseGameGateConnections(clusters);
             }
 
-            if (MessageBox.Show("Faction relations will be reset when changing galaxy type, are you sure you want to do this?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
+            // Warn if relations are modified
+            if (FactionRelationsForm.GetModifiedFactionRelations().Count > 0 && 
+                MessageBox.Show("Faction relations will be reset when changing galaxy type, are you sure you want to do this?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
             {
                 return false;
             }

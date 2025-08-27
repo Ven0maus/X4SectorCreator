@@ -237,8 +237,14 @@ namespace X4SectorCreator.Forms.Galaxy
             preferredCluster ??= validClusters.FirstOrDefault(c => c.Sectors.Count == 1);
 
             // Fallback to first valid cluster if no preferred one is found
-            var selectedCluster = preferredCluster ?? validClusters.FirstOrDefault() ?? clusters.First();
-            var selectedSector = selectedCluster.Sectors.First();
+            var selectedCluster = preferredCluster ?? validClusters.FirstOrDefault() ?? clusters.FirstOrDefault();
+            var selectedSector = selectedCluster?.Sectors.FirstOrDefault();
+
+            if (selectedSector == null)
+            {
+                MessageBox.Show("Unable to find a valid sector for PHQ, please make sure atleast one sector exists.");
+                return;
+            }
 
             // Disable faction logic if sector is ownerless
             if (IsOwnerless(selectedSector, claimSpaceFactions))
