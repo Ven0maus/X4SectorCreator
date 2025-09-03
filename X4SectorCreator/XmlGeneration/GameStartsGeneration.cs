@@ -41,6 +41,19 @@ namespace X4SectorCreator.XmlGeneration
             }
         }
 
+        private static XElement GenerateDefaults()
+        {
+            return new XElement("defaults",
+                new XElement("player",
+                    new XElement("featureunlocks",
+                        new XElement("entry", new XAttribute("feature", "x4ep1_map"), new XAttribute("unlock", "true")),
+                        new XElement("entry", new XAttribute("feature", "x4ep1_missionmanagement"), new XAttribute("unlock", "true")),
+                        new XElement("entry", new XAttribute("feature", "x4ep1_guidance"), new XAttribute("unlock", "true"))
+                    )
+                )
+            );
+        }
+
         private static XElement GenerateCustomGameStart(string modPrefix, List<Cluster> clusters)
         {
             if (clusters.Count == 0 || !clusters.SelectMany(a => a.Sectors).Any())
@@ -82,6 +95,7 @@ namespace X4SectorCreator.XmlGeneration
             XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
             return new XElement("gamestarts", new XAttribute(XNamespace.Xmlns + "xsi", xsi),
                 new XAttribute(xsi + "noNamespaceSchemaLocation", "gamestarts.xsd"),
+                GenerateDefaults(),
                 gameStartElement);
         }
 

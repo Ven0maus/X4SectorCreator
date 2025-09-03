@@ -38,6 +38,7 @@ namespace X4SectorCreator.Forms
         public void Initialize()
         {
             chkCustomGalaxy.Checked = IsCustomGalaxy;
+            chkDisableAllStorylines.Checked = DisableAllStorylines;
             txtGalaxyName.Text = GalaxyName;
 
             // Init sector values
@@ -141,6 +142,7 @@ namespace X4SectorCreator.Forms
             if (IsCustomGalaxy == chkCustomGalaxy.Checked)
             {
                 GalaxyName = txtGalaxyName.Text.ToLower();
+                DisableAllStorylines = chkDisableAllStorylines.Checked;
                 SetHQ();
                 UpdateOriginals();
                 EnableSaveButtons(false);
@@ -176,8 +178,6 @@ namespace X4SectorCreator.Forms
                         string.Join("\n- ", invalidClusters.Select(a => a.Name)));
                     return false;
                 }
-
-                FactionRelationsForm.Reset();
             }
 
             // Validate if there are any gate connections with basegame clusters existing if we're going to custom galaxy
@@ -194,6 +194,13 @@ namespace X4SectorCreator.Forms
                 RemoveBaseGameGateConnections(clusters);
             }
 
+            // Warn if relations are modified
+            if (FactionRelationsForm.GetModifiedFactionRelations().Count > 0 && 
+                MessageBox.Show("Faction relations will be reset when changing galaxy type, are you sure you want to do this?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return false;
+            }
+
             if (!chkCustomGalaxy.Checked)
             {
                 GalaxyName = "xu_ep2_universe";
@@ -206,9 +213,6 @@ namespace X4SectorCreator.Forms
                 _baseGameClusters ??= MainForm.Instance.AllClusters
                         .Where(a => a.Value.IsBaseGame)
                         .ToDictionary(a => a.Key, a => a.Value);
-
-                // Completely clear
-                FactionRelationsForm.Clear();
             }
 
             // Apply change
@@ -216,6 +220,9 @@ namespace X4SectorCreator.Forms
             DisableAllStorylines = chkDisableAllStorylines.Checked;
             BtnGenerateProceduralGalaxy.Enabled = IsCustomGalaxy;
             SetHQ();
+
+            // Completely reset relations
+            FactionRelationsForm.Reset();
 
             if (CmbPlayerHq.Enabled != IsCustomGalaxy)
             {

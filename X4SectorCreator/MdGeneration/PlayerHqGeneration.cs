@@ -8,7 +8,7 @@ namespace X4SectorCreator.MdGeneration
     {
         public static void Generate(string folder, string modPrefix)
         {
-            if (GalaxySettingsForm.IsCustomGalaxy)
+            if (GalaxySettingsForm.IsCustomGalaxy && MainForm.Instance.AllClusters.Count > 0)
             {
                 XDocument xmlDocument = new(
                     new XDeclaration("1.0", "utf-8", null),
