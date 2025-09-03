@@ -19,7 +19,6 @@ namespace X4SectorCreator.XmlGeneration
                         new XElement("diff",
                             new XElement("replace",
                             new XAttribute("sel", "//gamestarts"),
-                            GenerateDefaults(),
                             customGameStart)
                         )
                     );
@@ -96,6 +95,7 @@ namespace X4SectorCreator.XmlGeneration
             XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
             return new XElement("gamestarts", new XAttribute(XNamespace.Xmlns + "xsi", xsi),
                 new XAttribute(xsi + "noNamespaceSchemaLocation", "gamestarts.xsd"),
+                GenerateDefaults(),
                 gameStartElement);
         }
 
