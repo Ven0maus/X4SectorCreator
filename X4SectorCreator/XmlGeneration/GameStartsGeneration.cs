@@ -19,6 +19,7 @@ namespace X4SectorCreator.XmlGeneration
                         new XElement("diff",
                             new XElement("replace",
                             new XAttribute("sel", "//gamestarts"),
+                            GenerateDefaults(),
                             customGameStart)
                         )
                     );
@@ -39,6 +40,19 @@ namespace X4SectorCreator.XmlGeneration
                 );
                 xmlDocument.Save(EnsureDirectoryExists(Path.Combine(folder, $"libraries/gamestarts.xml")));
             }
+        }
+
+        private static XElement GenerateDefaults()
+        {
+            return new XElement("defaults",
+                new XElement("player",
+                    new XElement("featureunlocks",
+                        new XElement("entry", new XAttribute("feature", "x4ep1_map"), new XAttribute("unlock", "true")),
+                        new XElement("entry", new XAttribute("feature", "x4ep1_missionmanagement"), new XAttribute("unlock", "true")),
+                        new XElement("entry", new XAttribute("feature", "x4ep1_guidance"), new XAttribute("unlock", "true"))
+                    )
+                )
+            );
         }
 
         private static XElement GenerateCustomGameStart(string modPrefix, List<Cluster> clusters)

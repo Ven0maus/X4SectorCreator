@@ -38,6 +38,7 @@ namespace X4SectorCreator.Forms
         public void Initialize()
         {
             chkCustomGalaxy.Checked = IsCustomGalaxy;
+            chkDisableAllStorylines.Checked = DisableAllStorylines;
             txtGalaxyName.Text = GalaxyName;
 
             // Init sector values
@@ -141,6 +142,7 @@ namespace X4SectorCreator.Forms
             if (IsCustomGalaxy == chkCustomGalaxy.Checked)
             {
                 GalaxyName = txtGalaxyName.Text.ToLower();
+                DisableAllStorylines = chkDisableAllStorylines.Checked;
                 SetHQ();
                 UpdateOriginals();
                 EnableSaveButtons(false);
