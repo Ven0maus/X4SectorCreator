@@ -102,7 +102,7 @@ namespace X4SectorCreator
             {
                 DialogResult result = MessageBox.Show("Are you sure you want to exit without exporting your configuration?", "Exit with unsaved changes?",
                                       MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.No)
+                if (result != DialogResult.Yes)
                 {
                     e.Cancel = true; // Cancel the closing event
                 }
@@ -704,6 +704,12 @@ namespace X4SectorCreator
         }
         private void BtnReset_Click(object sender, EventArgs e)
         {
+            var newConfig = ExportJsonConfig();
+            if (_currentConfiguration.Equals(newConfig)) return;
+
+            if (MessageBox.Show("This will completely reset all the unsaved changes, this cannot be undone. Are you sure?", "Are you sure?", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                return;
+
             Reset(false);
             _currentConfiguration = ExportJsonConfig();
         }
@@ -958,11 +964,6 @@ namespace X4SectorCreator
                 cluster.CustomSectorPositioning = New.CustomSectorPositioning;
                 cluster.CustomClusterXml = New.CustomClusterXml;
                 cluster.Soundtrack = New.Soundtrack;
-
-                if (cluster.Name.Equals("Mitsuno's Sacrifice", StringComparison.OrdinalIgnoreCase))
-                {
-                    Console.WriteLine();
-                }
 
                 // Re-adjust position in all clusters
                 if (Old.Position != New.Position)
