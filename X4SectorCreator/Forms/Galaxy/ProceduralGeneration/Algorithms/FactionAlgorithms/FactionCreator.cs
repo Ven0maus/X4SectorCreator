@@ -89,8 +89,15 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
             foreach (var ship in ships.Ship)
             {
                 var newShip = ship.Clone();
-                newShip.Id = $"{faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(1))}";
-                if (ship.Group != null)
+
+                // Small change for masstraffic ships
+                if (newShip.Id.StartsWith("masstraffic_", StringComparison.OrdinalIgnoreCase))
+                    newShip.Id = $"masstraffic_{faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(2))}";
+                else
+                    newShip.Id = $"{faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(1))}";
+
+                // Tugs use a common group shared between factions
+                if (ship.Group != null && !ship.Group.StartsWith("common_tug_m"))
                     newShip.Group = $"{faction.Id}_{string.Join("_", ship.Group.Split('_').Skip(1))}";
 
                 if (newShip.CategoryObj != null)

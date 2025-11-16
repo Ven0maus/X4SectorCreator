@@ -119,13 +119,20 @@ namespace X4SectorCreator.Forms
                 ShipGroupsListBox.Items.Add(newGroup);
             }
             exists.Clear();
+
             // 2. Load Ships preset
             var ships = ShipPresets[faction];
             foreach (var ship in ships.Ship)
             {
                 var newShip = ship.Clone();
-                newShip.Id = $"{Faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(1))}";
-                if (ship.Group != null)
+
+                // Small change for masstraffic ships
+                if (newShip.Id.StartsWith("masstraffic_", StringComparison.OrdinalIgnoreCase))
+                    newShip.Id = $"masstraffic_{Faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(2))}";
+                else
+                    newShip.Id = $"{Faction.Id}_{string.Join("_", ship.Id.Split('_').Skip(1))}";
+
+                if (ship.Group != null && !ship.Group.StartsWith("common_tug_m"))
                     newShip.Group = $"{Faction.Id}_{string.Join("_", ship.Group.Split('_').Skip(1))}";
 
                 if (newShip.CategoryObj != null)

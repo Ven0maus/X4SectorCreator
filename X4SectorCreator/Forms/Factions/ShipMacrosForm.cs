@@ -1,7 +1,6 @@
 ﻿using X4SectorCreator.Helpers;
 using System.ComponentModel;
 using X4SectorCreator.Objects;
-using System.Text.Json;
 
 namespace X4SectorCreator.Forms
 {
@@ -31,9 +30,11 @@ namespace X4SectorCreator.Forms
 
         private void InitShipMacros()
         {
-            _shipMacros = FactionShipsForm.ShipGroupPresets
-                .SelectMany(a => a.Value.Group.Select(b => new ShipMacro(b.Name, a.Key)))
-                .ToList();
+            _shipMacros = [.. FactionShipsForm.ShipGroupPresets
+                .SelectMany(faction => faction.Value.Group      // List<ShipGroup>
+                    .SelectMany(group => group.SelectObj       // List<SelectObj>  (your name may differ)
+                        .Select(obj => new ShipMacro(obj.Macro, faction.Key))))
+                        .DistinctBy(a => a.Name)];
 
             ApplyFilter();
         }
