@@ -176,14 +176,16 @@ namespace X4SectorCreator.Forms.Factories
             {
                 // All jobs where class is galaxy
                 var templateJobs = GetTemplateJobs()
-                    .Where(a => a.Location != null && !string.IsNullOrWhiteSpace(a.Location.Class) &&
-                        a.Location.Class.Equals("Galaxy", StringComparison.OrdinalIgnoreCase))
+                    .Where(a => (a.Location != null && !string.IsNullOrWhiteSpace(a.Location.Class) &&
+                        a.Location.Class.Equals("Galaxy", StringComparison.OrdinalIgnoreCase)) || 
+                        a.Id.StartsWith("masstraffic_", StringComparison.OrdinalIgnoreCase))
                     .ToArray();
 
                 foreach (var job in templateJobs)
                 {
                     // Jobs have the full race, not just the 3 initials
-                    if (job.Id.StartsWith(faction, StringComparison.OrdinalIgnoreCase))
+                    if (job.Id.StartsWith(faction, StringComparison.OrdinalIgnoreCase) ||
+                        (job.Id.StartsWith("masstraffic_", StringComparison.OrdinalIgnoreCase) && job.Id.Contains(faction)))
                     {
                         if (ContainsTag(job.Location.Tags, "anarchy")) continue;
 
@@ -191,8 +193,9 @@ namespace X4SectorCreator.Forms.Factories
                         job.Location.Tags = null;
 
                         EditJobData(job, owner, faction);
-                        if (adjustQuotas)
+                        if (adjustQuotas && !job.Id.StartsWith("masstraffic_", StringComparison.OrdinalIgnoreCase))
                             ApplyQuotaAdjustment(coverage, ownership, jobQuota: job.Quota);
+
                         JobsForm.AllJobs[job.Id] = job;
                     }
                 }

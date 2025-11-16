@@ -102,7 +102,7 @@ namespace X4SectorCreator.Objects
         public TimeObject Time { get; set; }
 
         [XmlElement(ElementName = "task")]
-        public Task Task { get; set; }
+        public TaskObj Task { get; set; }
 
         [XmlElement(ElementName = "masstraffic")]
         public MasstrafficObject Masstraffic { get; set; }
