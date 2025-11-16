@@ -423,16 +423,12 @@ namespace X4SectorCreator.Forms
 
         internal static void Reset()
         {
-            Clear();
-            InitDefaults();
-        }
-
-        internal static void Clear()
-        {
             FactionRelations.Clear();
             FactionsLocked.Clear();
             _unsavedFactionsLocked.Clear();
             _unsavedFactionsLocked.Clear();
+
+            InitDefaults();
         }
 
         private static void InitDefaults()

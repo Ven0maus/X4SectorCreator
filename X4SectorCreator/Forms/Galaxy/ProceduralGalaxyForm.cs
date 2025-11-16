@@ -142,7 +142,7 @@ namespace X4SectorCreator.Forms.Galaxy
             JobsForm.AllJobs.Clear();
             FactionsForm.AllCustomFactions.Clear();
             RegionDefinitionForm.RegionDefinitions.Clear();
-            FactionRelationsForm.Clear();
+            FactionRelationsForm.Reset();
 
             ProcGenProcess.Minimum = 0;
             ProcGenProcess.Maximum = 7;
