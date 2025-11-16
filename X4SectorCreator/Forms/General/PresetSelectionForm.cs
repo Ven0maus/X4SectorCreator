@@ -183,16 +183,18 @@ namespace X4SectorCreator.Forms.Factories
 
                 foreach (var job in templateJobs)
                 {
+                    var isMasstraffic = job.Id.StartsWith("masstraffic_", StringComparison.OrdinalIgnoreCase);
+
                     // Jobs have the full race, not just the 3 initials
                     if (job.Id.StartsWith(faction, StringComparison.OrdinalIgnoreCase) ||
-                        (job.Id.StartsWith("masstraffic_", StringComparison.OrdinalIgnoreCase) && job.Id.Contains(faction)))
+                        (isMasstraffic && job.Id.Contains(faction)))
                     {
                         if (ContainsTag(job.Location.Tags, "anarchy")) continue;
 
                         job.Location.Excludedtags = null;
                         job.Location.Tags = null;
 
-                        EditJobData(job, owner, faction);
+                        EditJobData(job, owner, faction, isMasstraffic);
                         if (adjustQuotas && !job.Id.StartsWith("masstraffic_", StringComparison.OrdinalIgnoreCase))
                             ApplyQuotaAdjustment(coverage, ownership, jobQuota: job.Quota);
 
@@ -342,7 +344,7 @@ namespace X4SectorCreator.Forms.Factories
             }
         }
 
-        private void EditJobData(Job job, string ownerId, string raceKey)
+        private void EditJobData(Job job, string ownerId, string raceKey, bool isMasstraffic)
         {
             var owner = GodGeneration.CorrectFactionName(CmbOwner.SelectedItem as string);
 
@@ -361,6 +363,16 @@ namespace X4SectorCreator.Forms.Factories
                 if (job.Location.Faction != null && !job.Location.Faction.Contains("ownerless", StringComparison.OrdinalIgnoreCase))
                 {
                     job.Location.Faction = "[" + string.Join(",", _mscFactions.SelectedItems.Cast<string>().Select(GodGeneration.CorrectFactionName)) + "]";
+                }
+
+                // Adjustment for mass-traffic is a bit different than usual
+                if (isMasstraffic && job.Masstraffic?.Ref != null)
+                {
+                    var rIndex = job.Masstraffic.Ref.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
+                    if (rIndex >= 0)
+                    {
+                        job.Masstraffic.Ref = string.Concat(job.Masstraffic.Ref.AsSpan(0, rIndex), ownerId, job.Masstraffic.Ref.AsSpan(rIndex + raceKey.Length)).Replace(" ", "_");
+                    }
                 }
             }
 
@@ -395,7 +407,7 @@ namespace X4SectorCreator.Forms.Factories
                 }
             }
 
-            if (GalaxySettingsForm.IsCustomGalaxy)
+            if (GalaxySettingsForm.IsCustomGalaxy && !isMasstraffic)
             {
                 job.Location.Macro = $"{GalaxySettingsForm.GalaxyName}_macro";
             }
