@@ -704,9 +704,6 @@ namespace X4SectorCreator
         }
         private void BtnReset_Click(object sender, EventArgs e)
         {
-            var newConfig = ExportJsonConfig();
-            if (_currentConfiguration.Equals(newConfig)) return;
-
             if (MessageBox.Show("This will completely reset all the unsaved changes, this cannot be undone. Are you sure?", "Are you sure?", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
 
