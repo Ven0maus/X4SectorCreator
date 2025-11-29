@@ -35,14 +35,14 @@ namespace X4SectorCreator.Forms.Factions
             TxtGroup = new TextBox();
             label2 = new Label();
             label3 = new Label();
-            CmbCatTags = new MultiSelectCombo.NoDropDownComboBox();
-            CmbCatFactions = new MultiSelectCombo.NoDropDownComboBox();
+            CmbCatTags = new X4SectorCreator.CustomComponents.MultiSelectCombo.NoDropDownComboBox();
+            CmbCatFactions = new X4SectorCreator.CustomComponents.MultiSelectCombo.NoDropDownComboBox();
             label4 = new Label();
             CmbCatSize = new ComboBox();
             label5 = new Label();
             CmbPilotFaction = new ComboBox();
             label6 = new Label();
-            CmbPilotTags = new MultiSelectCombo.NoDropDownComboBox();
+            CmbPilotTags = new X4SectorCreator.CustomComponents.MultiSelectCombo.NoDropDownComboBox();
             label7 = new Label();
             CmbBasket = new ComboBox();
             label8 = new Label();
@@ -53,6 +53,8 @@ namespace X4SectorCreator.Forms.Factions
             BtnCreate = new Button();
             BtnCancel = new Button();
             BtnSelectCustomGroup = new Button();
+            CmbOwnerExact = new ComboBox();
+            label11 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -263,11 +265,31 @@ namespace X4SectorCreator.Forms.Factions
             BtnSelectCustomGroup.UseVisualStyleBackColor = true;
             BtnSelectCustomGroup.Click += BtnSelectCustomGroup_Click;
             // 
+            // CmbOwnerExact
+            // 
+            CmbOwnerExact.FormattingEnabled = true;
+            CmbOwnerExact.Location = new Point(422, 130);
+            CmbOwnerExact.Name = "CmbOwnerExact";
+            CmbOwnerExact.Size = new Size(197, 23);
+            CmbOwnerExact.TabIndex = 24;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 11F);
+            label11.Location = new Point(422, 107);
+            label11.Name = "label11";
+            label11.Size = new Size(94, 20);
+            label11.TabIndex = 23;
+            label11.Text = "Owner Exact:";
+            // 
             // ShipForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(631, 256);
+            Controls.Add(CmbOwnerExact);
+            Controls.Add(label11);
             Controls.Add(BtnSelectCustomGroup);
             Controls.Add(BtnCancel);
             Controls.Add(BtnCreate);
@@ -326,5 +348,7 @@ namespace X4SectorCreator.Forms.Factions
         private Button BtnCreate;
         private Button BtnCancel;
         private Button BtnSelectCustomGroup;
+        private ComboBox CmbOwnerExact;
+        private Label label11;
     }
 }

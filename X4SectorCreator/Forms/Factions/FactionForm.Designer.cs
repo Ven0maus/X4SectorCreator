@@ -88,7 +88,7 @@
             BtnPickColor.Location = new Point(430, 154);
             BtnPickColor.Name = "BtnPickColor";
             BtnPickColor.Size = new Size(197, 34);
-            BtnPickColor.TabIndex = 4;
+            BtnPickColor.TabIndex = 17;
             BtnPickColor.Text = "Set Faction Color";
             BtnPickColor.UseVisualStyleBackColor = true;
             BtnPickColor.Click += BtnPickColor_Click;
@@ -109,7 +109,7 @@
             TxtDescription.Multiline = true;
             TxtDescription.Name = "TxtDescription";
             TxtDescription.Size = new Size(199, 90);
-            TxtDescription.TabIndex = 7;
+            TxtDescription.TabIndex = 2;
             // 
             // label2
             // 
@@ -126,7 +126,7 @@
             TxtShortName.Location = new Point(119, 139);
             TxtShortName.Name = "TxtShortName";
             TxtShortName.Size = new Size(199, 23);
-            TxtShortName.TabIndex = 9;
+            TxtShortName.TabIndex = 3;
             // 
             // CmbRace
             // 
@@ -134,7 +134,7 @@
             CmbRace.Location = new Point(119, 199);
             CmbRace.Name = "CmbRace";
             CmbRace.Size = new Size(199, 23);
-            CmbRace.TabIndex = 10;
+            CmbRace.TabIndex = 5;
             // 
             // label4
             // 
@@ -162,14 +162,14 @@
             CmbPoliceFaction.Location = new Point(119, 228);
             CmbPoliceFaction.Name = "CmbPoliceFaction";
             CmbPoliceFaction.Size = new Size(199, 23);
-            CmbPoliceFaction.TabIndex = 12;
+            CmbPoliceFaction.TabIndex = 6;
             // 
             // BtnCreate
             // 
             BtnCreate.Location = new Point(323, 390);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(303, 33);
-            BtnCreate.TabIndex = 15;
+            BtnCreate.TabIndex = 20;
             BtnCreate.Text = "Create";
             BtnCreate.UseVisualStyleBackColor = true;
             BtnCreate.Click += BtnCreate_Click;
@@ -181,7 +181,7 @@
             TagsListBox.Location = new Point(324, 39);
             TagsListBox.Name = "TagsListBox";
             TagsListBox.Size = new Size(194, 109);
-            TagsListBox.TabIndex = 16;
+            TagsListBox.TabIndex = 13;
             // 
             // label6
             // 
@@ -198,7 +198,7 @@
             BtnAddTag.Location = new Point(524, 39);
             BtnAddTag.Name = "BtnAddTag";
             BtnAddTag.Size = new Size(103, 33);
-            BtnAddTag.TabIndex = 18;
+            BtnAddTag.TabIndex = 14;
             BtnAddTag.Text = "Add Tag";
             BtnAddTag.UseVisualStyleBackColor = true;
             BtnAddTag.Click += BtnAddTag_Click;
@@ -208,7 +208,7 @@
             BtnDeleteTag.Location = new Point(524, 78);
             BtnDeleteTag.Name = "BtnDeleteTag";
             BtnDeleteTag.Size = new Size(103, 33);
-            BtnDeleteTag.TabIndex = 19;
+            BtnDeleteTag.TabIndex = 15;
             BtnDeleteTag.Text = "Delete Tag";
             BtnDeleteTag.UseVisualStyleBackColor = true;
             BtnDeleteTag.Click += BtnDeleteTag_Click;
@@ -218,7 +218,7 @@
             BtnUseTagsPreset.Location = new Point(524, 117);
             BtnUseTagsPreset.Name = "BtnUseTagsPreset";
             BtnUseTagsPreset.Size = new Size(103, 33);
-            BtnUseTagsPreset.TabIndex = 20;
+            BtnUseTagsPreset.TabIndex = 16;
             BtnUseTagsPreset.Text = "Use Preset";
             BtnUseTagsPreset.UseVisualStyleBackColor = true;
             BtnUseTagsPreset.Click += BtnUseTagsPreset_Click;
@@ -228,7 +228,7 @@
             BtnCancel.Location = new Point(11, 390);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(306, 33);
-            BtnCancel.TabIndex = 25;
+            BtnCancel.TabIndex = 12;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
@@ -258,7 +258,7 @@
             BtnEditXml.Location = new Point(324, 351);
             BtnEditXml.Name = "BtnEditXml";
             BtnEditXml.Size = new Size(302, 33);
-            BtnEditXml.TabIndex = 28;
+            BtnEditXml.TabIndex = 19;
             BtnEditXml.Text = "Edit XML (Advanced)";
             BtnEditXml.UseVisualStyleBackColor = true;
             BtnEditXml.Click += BtnEditXml_Click;
@@ -268,7 +268,7 @@
             TxtPrefix.Location = new Point(119, 168);
             TxtPrefix.Name = "TxtPrefix";
             TxtPrefix.Size = new Size(199, 23);
-            TxtPrefix.TabIndex = 30;
+            TxtPrefix.TabIndex = 4;
             // 
             // label7
             // 
@@ -285,7 +285,7 @@
             BtnEditFactionShips.Location = new Point(162, 351);
             BtnEditFactionShips.Name = "BtnEditFactionShips";
             BtnEditFactionShips.Size = new Size(155, 33);
-            BtnEditFactionShips.TabIndex = 31;
+            BtnEditFactionShips.TabIndex = 11;
             BtnEditFactionShips.Text = "Setup Faction Ships";
             BtnEditFactionShips.UseVisualStyleBackColor = true;
             BtnEditFactionShips.Click += BtnEditFactionShips_Click;
@@ -305,7 +305,7 @@
             BtnFactionStations.Location = new Point(11, 351);
             BtnFactionStations.Name = "BtnFactionStations";
             BtnFactionStations.Size = new Size(145, 33);
-            BtnFactionStations.TabIndex = 34;
+            BtnFactionStations.TabIndex = 10;
             BtnFactionStations.Text = "Setup Faction Stations";
             BtnFactionStations.UseVisualStyleBackColor = true;
             BtnFactionStations.Click += BtnFactionStations_Click;
@@ -317,7 +317,7 @@
             TxtPreferredHqSpace.PlaceholderText = "Select Preferred HeadQuaters";
             TxtPreferredHqSpace.ReadOnly = true;
             TxtPreferredHqSpace.Size = new Size(197, 23);
-            TxtPreferredHqSpace.TabIndex = 36;
+            TxtPreferredHqSpace.TabIndex = 18;
             TxtPreferredHqSpace.MouseClick += TxtPreferredHqSpace_MouseClick;
             // 
             // label8
@@ -346,7 +346,7 @@
             CmbAggression.Location = new Point(141, 262);
             CmbAggression.Name = "CmbAggression";
             CmbAggression.Size = new Size(177, 23);
-            CmbAggression.TabIndex = 40;
+            CmbAggression.TabIndex = 7;
             // 
             // CmbAvarice
             // 
@@ -354,7 +354,7 @@
             CmbAvarice.Location = new Point(141, 292);
             CmbAvarice.Name = "CmbAvarice";
             CmbAvarice.Size = new Size(177, 23);
-            CmbAvarice.TabIndex = 42;
+            CmbAvarice.TabIndex = 8;
             // 
             // label10
             // 
@@ -382,7 +382,7 @@
             TxtLawfulness.Name = "TxtLawfulness";
             TxtLawfulness.PlaceholderText = "(Between 0-1)";
             TxtLawfulness.Size = new Size(177, 23);
-            TxtLawfulness.TabIndex = 44;
+            TxtLawfulness.TabIndex = 9;
             // 
             // BtnGenRandomIcon
             // 

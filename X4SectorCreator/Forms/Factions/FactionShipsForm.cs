@@ -139,6 +139,11 @@ namespace X4SectorCreator.Forms
                     newShip.CategoryObj.Faction = Faction.Id;
                 if (newShip.PilotObj != null && newShip.PilotObj.Select != null)
                     newShip.PilotObj.Select.Faction = Faction.Id;
+
+                // Mass traffic police needs the owner overwritten to correct faction
+                if (newShip.OwnerObj != null && newShip.OwnerObj.Exact != null && newShip.Id.EndsWith("police", StringComparison.OrdinalIgnoreCase))
+                    newShip.OwnerObj.Exact = Faction.PoliceFaction ?? Faction.Id;
+
                 ShipsListBox.Items.Add(newShip);
 
                 if (exists.Contains(newShip.Id))
