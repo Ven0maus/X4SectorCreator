@@ -33,7 +33,7 @@
             label2 = new Label();
             TxtSectorCoverage = new TextBox();
             label3 = new Label();
-            CmbFactions = new CustomComponents.MultiSelectCombo.NoDropDownComboBox();
+            CmbFactions = new X4SectorCreator.CustomComponents.MultiSelectCombo.NoDropDownComboBox();
             label4 = new Label();
             label5 = new Label();
             CmbOwner = new ComboBox();
@@ -41,6 +41,9 @@
             BtnConfirm = new Button();
             BtnCancel = new Button();
             label7 = new Label();
+            label8 = new Label();
+            TxtObjectPrefix = new TextBox();
+            label9 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -83,7 +86,7 @@
             label3.Font = new Font("Segoe UI", 8F);
             label3.Location = new Point(10, 223);
             label3.Name = "label3";
-            label3.Size = new Size(180, 28);
+            label3.Size = new Size(155, 28);
             label3.TabIndex = 4;
             label3.Text = "(The total expected sector ownership for the faction)";
             // 
@@ -135,7 +138,7 @@
             // 
             // BtnConfirm
             // 
-            BtnConfirm.Location = new Point(99, 283);
+            BtnConfirm.Location = new Point(99, 362);
             BtnConfirm.Name = "BtnConfirm";
             BtnConfirm.Size = new Size(160, 38);
             BtnConfirm.TabIndex = 10;
@@ -145,7 +148,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(10, 283);
+            BtnCancel.Location = new Point(10, 362);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(83, 38);
             BtnCancel.TabIndex = 11;
@@ -162,11 +165,40 @@
             label7.TabIndex = 12;
             label7.Text = "(Selects all templates with location class \"galaxy\")";
             // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 11F);
+            label8.Location = new Point(12, 282);
+            label8.Name = "label8";
+            label8.Size = new Size(103, 20);
+            label8.TabIndex = 13;
+            label8.Text = "Custom name:";
+            // 
+            // TxtObjectPrefix
+            // 
+            TxtObjectPrefix.Location = new Point(10, 333);
+            TxtObjectPrefix.Name = "TxtObjectPrefix";
+            TxtObjectPrefix.Size = new Size(249, 23);
+            TxtObjectPrefix.TabIndex = 14;
+            // 
+            // label9
+            // 
+            label9.Font = new Font("Segoe UI", 8F);
+            label9.Location = new Point(10, 302);
+            label9.Name = "label9";
+            label9.Size = new Size(249, 28);
+            label9.TabIndex = 15;
+            label9.Text = "(Preset faction name will be replaced with this value, if empty the owner faction name is used)\r\n";
+            // 
             // PresetSelectionForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(271, 326);
+            ClientSize = new Size(271, 409);
+            Controls.Add(label9);
+            Controls.Add(TxtObjectPrefix);
+            Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(BtnCancel);
             Controls.Add(BtnConfirm);
@@ -204,5 +236,8 @@
         private Button BtnConfirm;
         private Button BtnCancel;
         private Label label7;
+        private Label label8;
+        private TextBox TxtObjectPrefix;
+        private Label label9;
     }
 }

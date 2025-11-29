@@ -64,7 +64,17 @@ namespace X4SectorCreator.Forms.Factions
             var pilotTags = shipPresets.SelectMany(a => ParseMultiField(a.PilotObj?.Select?.Tags))
                 .Where(a => a != null).ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-            // Add custom factions and current faction to the faction comboboxes
+            // Add all factions in the game
+            var ownerExactFactions = FactionsForm.GetAllFactions(false, false);
+
+            // Add any we missed like criminal, civilian, smuggler, etc..
+            foreach (var faction in shipPresets.SelectMany(a => ParseMultiField(a.OwnerObj?.Exact))
+                .Where(a => a != null).ToHashSet(StringComparer.OrdinalIgnoreCase))
+            {
+                ownerExactFactions.Add(faction);
+            }
+
+            // Add custom factions and some additional like civ, criminal and current faction.
             var customFactions = FactionsForm.AllCustomFactions.Select(a => a.Key)
                 .Append(FactionShipsForm.Faction.Id)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -72,6 +82,7 @@ namespace X4SectorCreator.Forms.Factions
             {
                 catFactions.Add(faction);
                 pilotFactions.Add(faction);
+                ownerExactFactions.Add(faction);
             }
 
             AddValues(CmbCatSize, catSizes);
@@ -82,6 +93,7 @@ namespace X4SectorCreator.Forms.Factions
             AddValues(CmbPilotTags, pilotTags);
             AddValues(CmbCatFactions, catFactions);
             AddValues(CmbPilotFaction, pilotFactions);
+            AddValues(CmbOwnerExact, ownerExactFactions);
 
             _mscCatFactions.ReInit();
             _mscCatTags.ReInit();
@@ -103,6 +115,7 @@ namespace X4SectorCreator.Forms.Factions
             CmbBasket.SelectedItem = ship.BasketObj?.BasketValue ?? "None";
             CmbDrop.SelectedItem = ship.DropObj?.Ref ?? "None";
             CmbPeople.SelectedItem = ship.PeopleObj?.Ref ?? "None";
+            CmbOwnerExact.SelectedItem = ship.OwnerObj?.Exact ?? "None";
 
             // Select multi's
             foreach (var value in ParseMultiField(ship.CategoryObj?.Tags).Where(a => a != null))
@@ -190,6 +203,11 @@ namespace X4SectorCreator.Forms.Factions
                 ship.PilotObj ??= new Ship.Pilot();
                 ship.PilotObj.Select ??= new Ship.Select();
                 ship.PilotObj.Select.Faction = value;
+            }
+            if (SetValue(CmbOwnerExact, out value))
+            {
+                ship.OwnerObj ??= new Ship.Owner();
+                ship.OwnerObj.Exact = value;
             }
             if (_mscCatTags.SelectedItems.Count > 0)
             {

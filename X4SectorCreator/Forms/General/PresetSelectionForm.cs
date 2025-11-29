@@ -257,24 +257,6 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     factoryQuota.Galaxy = Math.Max(1, Math.Ceiling((double)galaxyQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
-
-                /*
-                if (factoryQuota.Cluster != null && 
-                    int.TryParse(factoryQuota.Cluster, CultureInfo.InvariantCulture, out var clusterQuota))
-                {
-                    factoryQuota.Cluster = Math.Max(1, Math.Ceiling((double)clusterQuota / defaultOwnership * sectorCoverage)).ToString();
-                }
-                if (factoryQuota.Sector != null &&
-                    int.TryParse(factoryQuota.Sector, CultureInfo.InvariantCulture, out var sectorQuota))
-                {
-                    factoryQuota.Sector = Math.Max(1, Math.Ceiling((double)sectorQuota / defaultOwnership * sectorCoverage)).ToString();
-                }
-                if (factoryQuota.Zone != null &&
-                    int.TryParse(factoryQuota.Zone, CultureInfo.InvariantCulture, out var zoneQuota))
-                {
-                    factoryQuota.Zone = Math.Max(1, Math.Ceiling((double)zoneQuota / defaultOwnership * sectorCoverage)).ToString();
-                }
-                */
             }
 
             if (jobQuota != null)
@@ -284,24 +266,6 @@ namespace X4SectorCreator.Forms.Factories
                 {
                     jobQuota.Galaxy = Math.Max(1, Math.Ceiling((double)galaxyQuota / defaultOwnership * sectorCoverage)).ToString();
                 }
-
-                /*
-                if (jobQuota.Cluster != null &&
-                    int.TryParse(jobQuota.Cluster, CultureInfo.InvariantCulture, out var clusterQuota))
-                {
-                    jobQuota.Cluster = Math.Max(1, Math.Ceiling((double)clusterQuota / defaultOwnership * sectorCoverage)).ToString();
-                }
-                if (jobQuota.Sector != null &&
-                    int.TryParse(jobQuota.Sector, CultureInfo.InvariantCulture, out var sectorQuota))
-                {
-                    jobQuota.Sector = Math.Max(1, Math.Ceiling((double)sectorQuota / defaultOwnership * sectorCoverage)).ToString();
-                }
-                if (jobQuota.Zone != null &&
-                    int.TryParse(jobQuota.Zone, CultureInfo.InvariantCulture, out var zoneQuota))
-                {
-                    jobQuota.Zone = Math.Max(1, Math.Ceiling((double)zoneQuota / defaultOwnership * sectorCoverage)).ToString();
-                }
-                */
             }
         }
 
@@ -312,17 +276,21 @@ namespace X4SectorCreator.Forms.Factories
 
         private void EditFactoryData(Factory factory, string ownerId, string raceKey)
         {
+            var customName = TxtObjectPrefix.Text;
+            if (string.IsNullOrWhiteSpace(customName))
+                customName = ownerId;
+
             // Replace the first instance of the raceKey
             if (factory.Id.StartsWith("pir_", StringComparison.OrdinalIgnoreCase))
             {
-                factory.Id = string.Concat(ownerId, factory.Id.AsSpan("pir".Length)).Replace(" ", "_");
+                factory.Id = string.Concat(customName, factory.Id.AsSpan("pir".Length)).Replace(" ", "_");
             }
             else
             {
                 int index = factory.Id.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
                 if (index >= 0)
                 {
-                    factory.Id = string.Concat(factory.Id.AsSpan(0, index), ownerId, factory.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
+                    factory.Id = string.Concat(factory.Id.AsSpan(0, index), customName, factory.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
                 }
             }
             
@@ -348,6 +316,10 @@ namespace X4SectorCreator.Forms.Factories
         {
             var owner = GodGeneration.CorrectFactionName(CmbOwner.SelectedItem as string);
 
+            var customName = TxtObjectPrefix.Text;
+            if (string.IsNullOrWhiteSpace(customName))
+                customName = ownerId;
+
             // Set faction on various objects
             if (job.Category != null)
             {
@@ -356,8 +328,24 @@ namespace X4SectorCreator.Forms.Factories
 
             if (job.Location != null)
             {
+                FactionsForm.AllCustomFactions.TryGetValue(owner, out var customFaction);
+
+                // Set police faction properly
                 if (job.Location?.Policefaction != null)
-                    job.Location.Policefaction = owner;
+                {
+                    if (customFaction != null)
+                    {
+                        job.Location.Policefaction = customFaction.PoliceFaction ?? owner;
+                    }
+                    else if (owner.Equals("teladi", StringComparison.OrdinalIgnoreCase))
+                    {
+                        job.Location.Policefaction = "ministry";
+                    }
+                    else
+                    {
+                        job.Location.Policefaction = owner;
+                    }
+                }
 
                 // Only replace faction location if its not ownerless (pirate stations and jobs spawn in unowned sectors)
                 if (job.Location.Faction != null && !job.Location.Faction.Contains("ownerless", StringComparison.OrdinalIgnoreCase))
@@ -368,10 +356,27 @@ namespace X4SectorCreator.Forms.Factories
                 // Adjustment for mass-traffic is a bit different than usual
                 if (isMasstraffic && job.Masstraffic?.Ref != null)
                 {
+                    // Don't enforce the job over the entire factionrace, but only the faction (if the owner is a custom faction).
+                    if (customFaction != null && job.Location.Factionrace != null)
+                    {
+                        job.Location.Factionrace = null;
+                        job.Location.Faction = owner;
+                    }
+
+                    var isForPolice = job.Masstraffic.Ref.EndsWith("police");
                     var rIndex = job.Masstraffic.Ref.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
                     if (rIndex >= 0)
                     {
-                        job.Masstraffic.Ref = string.Concat(job.Masstraffic.Ref.AsSpan(0, rIndex), ownerId, job.Masstraffic.Ref.AsSpan(rIndex + raceKey.Length)).Replace(" ", "_");
+                        if (customFaction != null)
+                        {
+                            var realOwner = isForPolice ? customFaction.PoliceFaction ?? owner : owner;
+                            job.Masstraffic.Ref = string.Concat(job.Masstraffic.Ref.AsSpan(0, rIndex), realOwner, job.Masstraffic.Ref.AsSpan(rIndex + raceKey.Length)).Replace(" ", "_");
+                        }
+                        else
+                        {
+                            var realOwner = isForPolice ? (owner == "teladi" ? "ministry" : owner) : owner;
+                            job.Masstraffic.Ref = string.Concat(job.Masstraffic.Ref.AsSpan(0, rIndex), realOwner, job.Masstraffic.Ref.AsSpan(rIndex + raceKey.Length)).Replace(" ", "_");
+                        }
                     }
                 }
             }
@@ -390,7 +395,7 @@ namespace X4SectorCreator.Forms.Factories
             int index = job.Id.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
             if (index >= 0)
             {
-                job.Id = string.Concat(job.Id.AsSpan(0, index), ownerId, job.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
+                job.Id = string.Concat(job.Id.AsSpan(0, index), customName, job.Id.AsSpan(index + raceKey.Length)).Replace(" ", "_");
 
                 // Do the same with subordinates
                 if (job.Subordinates?.Subordinate != null)
@@ -401,7 +406,7 @@ namespace X4SectorCreator.Forms.Factories
                         index = subordinate.Job.IndexOf(raceKey, StringComparison.OrdinalIgnoreCase);
                         if (index >= 0)
                         {
-                            subordinate.Job = string.Concat(subordinate.Job.AsSpan(0, index), ownerId, subordinate.Job.AsSpan(index + raceKey.Length)).Replace(" ", "_");
+                            subordinate.Job = string.Concat(subordinate.Job.AsSpan(0, index), customName, subordinate.Job.AsSpan(index + raceKey.Length)).Replace(" ", "_");
                         }
                     }
                 }
