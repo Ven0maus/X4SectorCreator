@@ -74,7 +74,7 @@ namespace X4SectorCreator.Forms.Factions
                 ownerExactFactions.Add(faction);
             }
 
-            // Add custom factions and some additional like civ, criminal and current faction.
+            // Add custom factions and current faction.
             var customFactions = FactionsForm.AllCustomFactions.Select(a => a.Key)
                 .Append(FactionShipsForm.Faction.Id)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
