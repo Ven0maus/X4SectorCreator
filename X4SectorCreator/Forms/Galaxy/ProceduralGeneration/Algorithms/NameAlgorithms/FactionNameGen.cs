@@ -214,7 +214,7 @@
 
             return template
                 .Replace("{prefix}", prefix1)
-                .Replace("{prefixé}", prefix2)
+                .Replace("{prefix2}", prefix2)
                 .Replace("{core}", core)
                 .Replace("{suffix}", suffix)
                 .Replace("{title}", title);
