@@ -269,7 +269,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 if (neighbors.Count == 0)
                     continue;
 
-                var selected = WeightedRandomChoice(neighbors);
+                var selected = neighbors.WeightedRandom(a => a.Score).Sector;
                 if (selected != null)
                 {
                     sectors.Remove(selected);
@@ -328,24 +328,6 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 score += 1;
 
             return score;
-        }
-
-        private Sector WeightedRandomChoice(List<(Sector Sector, int Score)> scoredSectors)
-        {
-            int totalScore = scoredSectors.Sum(x => x.Score);
-            if (totalScore == 0) return scoredSectors.Select(a => a.Sector).RandomOrDefault(_random);
-
-            int roll = _random.Next(totalScore);
-            int cumulative = 0;
-
-            foreach (var entry in scoredSectors)
-            {
-                cumulative += entry.Score;
-                if (roll < cumulative)
-                    return entry.Sector;
-            }
-
-            return scoredSectors.Select(a => a.Sector).RandomOrDefault(_random); // fallback
         }
     }
 }
