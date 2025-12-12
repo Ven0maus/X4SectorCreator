@@ -16,7 +16,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private readonly Dictionary<FactionNameGen.FactionNameStyle, int> _weightedFactionTypes = new()
         {
             { FactionNameGen.FactionNameStyle.Alien, 100 },
-            { FactionNameGen.FactionNameStyle.Human, 50 }
+            { FactionNameGen.FactionNameStyle.Human, 100 }
         };
 
         private readonly Dictionary<FactionNameGen.FactionNameStyle, string[]> _pirateRaces = new()
