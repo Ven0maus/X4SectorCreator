@@ -15,7 +15,6 @@
                 {
                     FactionNameStyle.Human => GenerateHumanFactionName(),
                     FactionNameStyle.Alien => GenerateAlienFactionName(),
-                    FactionNameStyle.Robot => GenerateRobotFactionName(),
                     _ => GenerateHumanFactionName()
                 };
             } while (_usedNames.Contains(name));
@@ -161,70 +160,10 @@
                 .Replace("{suffix}", suffix);
         }
 
-        private string GenerateRobotFactionName()
-        {
-            var codePrefixes = new[]
-            {
-                "SOVR", "EXOD", "VNTR", "CORE", "DRM", "SYS", "NEX", "IOM", "ZRA", "MNX", "NSR", "LUXR", "VCTR", "CTRL",
-                "AXIOM", "SIGMA", "V3X", "PRTCL", "ALPHA", "BETA", "QNTM", "OBLX", "MNDX", "ARCA", "SUBL", "OMNIX", "CYBR"
-            };
-
-            var cores = new[]
-            {
-                "Protocol", "Collective", "Directive", "Assembly", "Override", "Core", "Process", "Subroutine", "Node", "Nexus",
-                "Mainframe", "Circuit", "Daemon", "Shell", "Loop", "Archive", "Cluster", "Matrix", "Fabric", "Routine"
-            };
-
-            var suffixes = new[]
-            {
-                "Prime", "Unit", "Array", "Zero", "Seed", "Link", "Echo", "Hub", "Core", "Bridge", "Arc", "Forge", "Vault", "Beacon"
-            };
-
-            var titles = new[]
-            {
-                "The Singularity", "System Prime", "Machine Ascendancy", "Logic Path", "Artificial Accord", "Signal Unity",
-                "The Calculation", "Prime Directive", "The Infinite Process", "Neural Convergence", "The Sync", "Core Awakening"
-            };
-
-            string[] robotTemplates =
-            [
-                "{prefix}-{core}",                    // SYS-Protocol
-                "{prefix}-{core} {suffix}",          // NEX-Node Vault
-                "{core} of {prefix}",                // Directive of LUXR
-                "{prefix}-{core}-{suffix}",          // VCTR-Protocol-Prime
-                "{prefix}-{prefix2} {core}",          // AXIOM-EXOD Assembly
-                "The {core} {suffix}",               // The Subroutine Arc
-                "{core} {suffix} of {prefix}",       // Loop Unit of MNX
-                "{title}",                           // The Singularity
-                "{core} of the {title}",             // Node of the Sync
-                "{prefix} {core} Assembly"           // CTRL Process Assembly
-            ];
-
-            string Get(string[] arr) => arr[_random.Next(arr.Length)];
-
-            string prefix1 = Get(codePrefixes);
-            string prefix2 = Get(codePrefixes);
-            while (prefix2 == prefix1) prefix2 = Get(codePrefixes);
-
-            string core = Get(cores);
-            string suffix = Get(suffixes);
-            string title = Get(titles);
-
-            string template = robotTemplates[_random.Next(robotTemplates.Length)];
-
-            return template
-                .Replace("{prefix}", prefix1)
-                .Replace("{prefix2}", prefix2)
-                .Replace("{core}", core)
-                .Replace("{suffix}", suffix)
-                .Replace("{title}", title);
-        }
-
         public enum FactionNameStyle
         {
             Human,
-            Alien,
-            Robot,
+            Alien
         }
     }
 }

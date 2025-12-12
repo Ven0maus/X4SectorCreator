@@ -13,11 +13,10 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private readonly FactionNameGen _nameGen = new(seed);
         private readonly FactionDescriptionGen _descGen = new(seed);
         private readonly FactionColorGen _factionColorGen = new(seed);
-        private readonly new Dictionary<FactionNameGen.FactionNameStyle, int> _weightedFactionTypes = new()
+        private readonly Dictionary<FactionNameGen.FactionNameStyle, int> _weightedFactionTypes = new()
         {
             { FactionNameGen.FactionNameStyle.Alien, 100 },
-            { FactionNameGen.FactionNameStyle.Human, 75 },
-            { FactionNameGen.FactionNameStyle.Robot, 10 }
+            { FactionNameGen.FactionNameStyle.Human, 50 }
         };
 
         private readonly Dictionary<FactionNameGen.FactionNameStyle, string[]> _pirateRaces = new()
@@ -30,15 +29,12 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         {
             { FactionNameGen.FactionNameStyle.Human, ["argon", "terran"] },
             { FactionNameGen.FactionNameStyle.Alien, ["teladi", "paranid", "boron", "split"]},
-            { FactionNameGen.FactionNameStyle.Robot, ["xenon"]}
         };
         private readonly string[] _levels = ["verylow", "low", "normal", "high", "veryhigh"];
 
         public Faction Generate(bool isPirateFaction)
         {
             var factionTypes = _weightedFactionTypes.ToDictionary();
-            if (isPirateFaction)
-                factionTypes.Remove(FactionNameGen.FactionNameStyle.Robot);
 
             var factionType = factionTypes.WeightedRandom(a => a.Value).Key;
             var faction = new Faction
@@ -81,6 +77,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 faction.Tags = "economic pirate plunder privateloadout privateship protective watchdoguser custom";
                 faction.PrefferedHqStationTypes = ["any"];
                 faction.StationTypes = ["piratedock", "piratebase", "freeport"];
+
+                // Attack police
+                faction.Signals ??= new Faction.SignalsObj();
+                faction.Signals.Response ??= new List<Faction.ResponseObj>();
+                faction.Signals.Response.Add(new Faction.ResponseObj { Signal = "policehalt", Response = "attack" });
             }
 
             DefineLicenses(faction);

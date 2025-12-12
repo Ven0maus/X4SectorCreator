@@ -175,7 +175,7 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             CmbRace.Items.Clear();
-            foreach (var race in StationForm.Races.OrderBy(a => a))
+            foreach (var race in StationForm.Races.Where(a => a != "xenon").OrderBy(a => a))
                 CmbRace.Items.Add(race);
             CmbRace.SelectedItem = CmbRace.Items.Cast<string>().First();
 
@@ -284,6 +284,19 @@ namespace X4SectorCreator.Forms
 
             if (!faction.Tags.Contains("custom"))
                 faction.Tags = (faction.Tags + " custom").Trim();
+
+            // Some specific plunderer things
+            if (faction.Tags.Contains("plunder", StringComparison.OrdinalIgnoreCase))
+            {
+                faction.Signals ??= new Faction.SignalsObj();
+                faction.Signals.Response ??= new List<Faction.ResponseObj>();
+                if (!faction.Signals.Response.Any(a => a.Signal == "policehalt"))
+                    faction.Signals.Response.Add(new Faction.ResponseObj { Signal = "policehalt", Response = "attack" });
+            }
+            else
+            {
+                faction.Signals = null;
+            }
 
             switch (BtnCreate.Text)
             {
@@ -503,6 +516,7 @@ namespace X4SectorCreator.Forms
         }
 
         private void BtnEditXml_Click(object sender, EventArgs e)
+        
         {
             // Apply all field data to the XML
             if (!ApplyFieldsContentToFactionXml())
@@ -680,6 +694,20 @@ namespace X4SectorCreator.Forms
             var dataEntryName = $"faction_{faction.Id}";
             faction.ColorData = new Faction.ColorDataObj { Ref = dataEntryName };
             faction.IconData = new Faction.IconObj { Active = dataEntryName, Inactive = dataEntryName };
+
+            // Add policehalt signal if plunderer
+            if (faction.Tags.Contains("plunder", StringComparison.OrdinalIgnoreCase))
+            {
+                // Attack police
+                faction.Signals ??= new Faction.SignalsObj();
+                faction.Signals.Response ??= new List<Faction.ResponseObj>();
+                if (!faction.Signals.Response.Any(a => a.Signal == "policehalt"))
+                    faction.Signals.Response.Add(new Faction.ResponseObj { Signal = "policehalt", Response = "attack" });
+            }
+            else
+            {
+                faction.Signals = null;
+            }
 
             // Re-serialize into xml string
             _factionXml = faction.Serialize();
