@@ -24,7 +24,6 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.NameAlgor
             {
                 FactionNameGen.FactionNameStyle.Human => GenerateHumanDescription(),
                 FactionNameGen.FactionNameStyle.Alien => GenerateAlienDescription(),
-                FactionNameGen.FactionNameStyle.Robot => GenerateRobotDescription(),
                 _ => "An enigmatic presence in the stars."
             };
         }
@@ -61,27 +60,6 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.NameAlgor
         };
 
             return $"An {behaviors.Pick(_random)} alien species from {origins.Pick(_random)}, seeking {motivations.Pick(_random)}.";
-        }
-
-        private string GenerateRobotDescription()
-        {
-            var purposes = new[] 
-            {
-                "total optimization", "perfect order", "self-replication", "containment of biological chaos", "the preservation of logic"
-            };
-
-            var traits = new[] 
-            {
-                "coldly calculating", "networked", "relentlessly efficient", "detached from emotion", "recursive"
-            };
-
-            var origins = new[] 
-            {
-                "a forgotten research array", "the last machine world", "an ancient AI conclave", "an abandoned orbital station", "the data-cradle of an extinct race"
-            };
-
-
-            return $"A {traits.Pick(_random)} machine collective originating from {origins.Pick(_random)}, pursuing {purposes.Pick(_random)}.";
         }
     }
 }

@@ -58,8 +58,10 @@ namespace X4SectorCreator.XmlGeneration
                 string originalMacro = job.Value.Location?.Macro;
 
                 // Fix galaxy macro (can happen when switching galaxy name after job is defined)
-                if (originalMacro != null && GalaxySettingsForm.IsCustomGalaxy && originalMacro != $"{GalaxySettingsForm.GalaxyName}_macro")
+                if (originalMacro != null && GalaxySettingsForm.IsCustomGalaxy && originalMacro != $"{GalaxySettingsForm.GalaxyName}_macro" && job.Value.Location.Class == "galaxy")
+                {
                     job.Value.Location.Macro = originalMacro = $"{GalaxySettingsForm.GalaxyName}_macro";
+                }
 
                 // Prepend prefix & replace subordinate job prefix
                 job.Value.Id = $"{modPrefix}_{job.Value.Id}";

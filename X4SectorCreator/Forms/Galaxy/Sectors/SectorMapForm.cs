@@ -830,7 +830,15 @@ namespace X4SectorCreator
                 e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
                 // Renders all the hexagons in the screen
-                RenderAllHexes(e);
+                RenderAllHexes(e, out bool invalid);
+
+                // Early exit if needed
+                if (invalid)
+                {
+                    // Do a full-reset of the grid because data became invalid.
+                    Reset();
+                    return;
+                }
 
                 // Highlight selected hex
                 RenderHexSelection(e);
@@ -1377,8 +1385,9 @@ namespace X4SectorCreator
             }
         }
 
-        private void RenderAllHexes(PaintEventArgs e)
+        private void RenderAllHexes(PaintEventArgs e, out bool invalid)
         {
+            invalid = false;
             // First step render non existant hexagons
             Color nonExistantHexColor = "#121212".HexToColor();
             using SolidBrush mainBrush = new(Color.Black);
@@ -1402,7 +1411,8 @@ namespace X4SectorCreator
                     continue;
                 }
 
-                RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon), out invalid);
+                if (invalid) return;
             }
 
             if (IsMapOptionChecked(MapOption.Show_Custom_Sectors))
@@ -1412,7 +1422,8 @@ namespace X4SectorCreator
                 {
                     // Always overwrite the hexagon as it can change between sessions
                     cluster.Hexagon = _hexagons[(cluster.Position.X, cluster.Position.Y)];
-                    RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                    RenderClusters(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon), out invalid);
+                    if (invalid) return;
                 }
             }
         }
@@ -1782,9 +1793,15 @@ namespace X4SectorCreator
             return color;
         }
 
-        private void RenderClusters(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex)
+        private void RenderClusters(PaintEventArgs e, KeyValuePair<(int, int), Hexagon> hex, out bool invalid)
         {
-            Cluster cluster = MainForm.Instance.AllClusters[hex.Key];
+            invalid = false;
+            if (!MainForm.Instance.AllClusters.TryGetValue(hex.Key, out var cluster))
+            {
+                invalid = true;
+                return;
+            }
+
             if (cluster.Sectors.Count == 0)
             {
                 return;
@@ -1827,6 +1844,12 @@ namespace X4SectorCreator
                 // Draw child hex outlines
                 foreach (Hexagon child in hex.Value.Children)
                 {
+                    if (cluster.Sectors.Count <= index)
+                    {
+                        invalid = true;
+                        return;
+                    }
+
                     Sector sector = cluster.Sectors[index];
                     bool renderChild = true;
                     if ((!IsMapOptionChecked(MapOption.Show_Custom_Sectors) && !sector.IsBaseGame) || (!IsMapOptionChecked(MapOption.Show_Vanilla_Sectors) && sector.IsBaseGame))

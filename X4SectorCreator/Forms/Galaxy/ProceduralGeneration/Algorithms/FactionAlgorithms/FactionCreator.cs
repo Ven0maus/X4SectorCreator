@@ -13,22 +13,38 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private readonly FactionNameGen _nameGen = new(seed);
         private readonly FactionDescriptionGen _descGen = new(seed);
         private readonly FactionColorGen _factionColorGen = new(seed);
-        private readonly FactionNameGen.FactionNameStyle[] _factionTypes = Enum.GetValues<FactionNameGen.FactionNameStyle>();
+        private readonly Dictionary<FactionNameGen.FactionNameStyle, int> _weightedFactionTypes = new()
+        {
+            { FactionNameGen.FactionNameStyle.Alien, 100 },
+            { FactionNameGen.FactionNameStyle.Human, 100 }
+        };
 
-        private readonly string[] _pirateRaces = ["argon", "teladi", "paranid"];
-        private readonly string[] _races = ["argon", "terran", "teladi", "paranid", "boron", "split"];
+        private readonly Dictionary<FactionNameGen.FactionNameStyle, string[]> _pirateRaces = new()
+        {
+            { FactionNameGen.FactionNameStyle.Human, ["argon"] },
+            { FactionNameGen.FactionNameStyle.Alien, ["teladi", "paranid"]}
+        };
+
+        private readonly Dictionary<FactionNameGen.FactionNameStyle, string[]> _races = new() 
+        {
+            { FactionNameGen.FactionNameStyle.Human, ["argon", "terran"] },
+            { FactionNameGen.FactionNameStyle.Alien, ["teladi", "paranid", "boron", "split"]},
+        };
         private readonly string[] _levels = ["verylow", "low", "normal", "high", "veryhigh"];
 
         public Faction Generate(bool isPirateFaction)
         {
-            var factionType = _factionTypes[_random.Next(_factionTypes.Length)];
+            var factionTypes = _weightedFactionTypes.ToDictionary();
+
+            var factionType = factionTypes.WeightedRandom(a => a.Value).Key;
             var faction = new Faction
             {
                 Name = _nameGen.Generate(factionType),
                 Description = _descGen.Generate(factionType)
             };
 
-            var race = isPirateFaction ? _pirateRaces.RandomOrDefault(_random) : _races.RandomOrDefault(_random);
+            var race = isPirateFaction ? _pirateRaces[factionType].RandomOrDefault(_random) : 
+                _races[factionType].RandomOrDefault(_random);
 
             faction.Id = SanitizeNameForId(faction.Name);
             faction.Shortname = GetShortName(faction.Name);
@@ -61,6 +77,11 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 faction.Tags = "economic pirate plunder privateloadout privateship protective watchdoguser custom";
                 faction.PrefferedHqStationTypes = ["any"];
                 faction.StationTypes = ["piratedock", "piratebase", "freeport"];
+
+                // Attack police
+                faction.Signals ??= new Faction.SignalsObj();
+                faction.Signals.Response ??= new List<Faction.ResponseObj>();
+                faction.Signals.Response.Add(new Faction.ResponseObj { Signal = "policehalt", Response = "attack" });
             }
 
             DefineLicenses(faction);

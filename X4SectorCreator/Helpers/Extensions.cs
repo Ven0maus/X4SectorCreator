@@ -5,7 +5,6 @@ using System.Numerics;
 using System.Text;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.CustomComponents;
-using static X4SectorCreator.Objects.Ware;
 
 namespace X4SectorCreator.Helpers
 {
@@ -36,6 +35,43 @@ namespace X4SectorCreator.Helpers
             if (_textSearchComponents.TryGetValue(textBox, out var component))
                 return component;
             return null;
+        }
+
+        /// <summary>
+        /// Selects a random based on weights.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="items"></param>
+        /// <param name="weightSelector"></param>
+        /// <param name="rng"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public static T WeightedRandom<T>(
+            this IEnumerable<T> items,
+            Func<T, int> weightSelector,
+            Random rng = null)
+        {
+            rng ??= new Random();
+
+            int totalWeight = 0;
+            T selected = default;
+
+            foreach (var item in items)
+            {
+                int w = weightSelector(item);
+                if (w <= 0)
+                    continue; // ignore zero or negative weights
+
+                totalWeight += w;
+
+                // choose the current item with probability w / totalWeight
+                if (rng.Next(totalWeight) < w)
+                {
+                    selected = item;
+                }
+            }
+
+            return selected;
         }
 
         public static Image Resize(this Image source, int width, int height, InterpolationMode mode, Color? tintColor = null)

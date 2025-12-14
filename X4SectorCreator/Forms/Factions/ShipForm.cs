@@ -58,7 +58,8 @@ namespace X4SectorCreator.Forms.Factions
             var peoples = shipPresets.Select(a => a.PeopleObj?.Ref)
                 .Where(a => a != null).ToHashSet(StringComparer.OrdinalIgnoreCase);
             var catTags = shipPresets.SelectMany(a => ParseMultiField(a.CategoryObj?.Tags))
-                .Where(a => a != null).Append("plunder").ToHashSet(StringComparer.OrdinalIgnoreCase);
+                .Where(a => a != null).Append("plunder").Append("smuggler")
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
             var catFactions = shipPresets.SelectMany(a => ParseMultiField(a.CategoryObj?.Faction))
                 .Where(a => a != null).ToHashSet(StringComparer.OrdinalIgnoreCase);
             var pilotTags = shipPresets.SelectMany(a => ParseMultiField(a.PilotObj?.Select?.Tags))
@@ -189,44 +190,86 @@ namespace X4SectorCreator.Forms.Factions
             // Set other properties
             if (SetValue(CmbBasket, out var value))
                 ship.BasketObj = new Ship.Basket { BasketValue = value };
+            else
+                ship.BasketObj = null;
+
             if (SetValue(CmbDrop, out value))
                 ship.DropObj = new Ship.Drop { Ref = value };
+            else
+                ship.DropObj = null;
+
             if (SetValue(CmbPeople, out value))
                 ship.PeopleObj = new Ship.People { Ref = value };
+            else
+                ship.PeopleObj = null;
+
             if (SetValue(CmbCatSize, out value))
             {
                 ship.CategoryObj ??= new Ship.Category();
                 ship.CategoryObj.Size = value;
             }
+            else
+            {
+                if (ship.CategoryObj != null)
+                    ship.CategoryObj.Size = null;
+            }
+
             if (SetValue(CmbPilotFaction, out value))
             {
                 ship.PilotObj ??= new Ship.Pilot();
                 ship.PilotObj.Select ??= new Ship.Select();
                 ship.PilotObj.Select.Faction = value;
             }
+            else
+            {
+                ship.PilotObj = null;
+            }
+
             if (SetValue(CmbOwnerExact, out value))
             {
                 ship.OwnerObj ??= new Ship.Owner();
                 ship.OwnerObj.Exact = value;
             }
+            else
+            {
+                ship.OwnerObj = null;
+            }
+
             if (_mscCatTags.SelectedItems.Count > 0)
             {
                 var values = _mscCatTags.SelectedItems.Cast<string>().ToArray();
                 ship.CategoryObj ??= new Ship.Category();
                 ship.CategoryObj.Tags = values.Length > 1 ? $"[{string.Join(", ", values)}]" : values.First();
             }
+            else
+            {
+                if (ship.CategoryObj != null)
+                    ship.CategoryObj.Tags = null;
+            }
+
             if (_mscCatFactions.SelectedItems.Count > 0)
             {
                 var values = _mscCatFactions.SelectedItems.Cast<string>().ToArray();
                 ship.CategoryObj ??= new Ship.Category();
                 ship.CategoryObj.Faction = values.Length > 1 ? $"[{string.Join(", ", values)}]" : values.First();
             }
+            else
+            {
+                if (ship.CategoryObj != null)
+                    ship.CategoryObj.Faction = null;
+            }
+
             if (_mscPilotTags.SelectedItems.Count > 0)
             {
                 var values = _mscPilotTags.SelectedItems.Cast<string>().ToArray();
                 ship.PilotObj ??= new Ship.Pilot();
                 ship.PilotObj.Select ??= new Ship.Select();
                 ship.PilotObj.Select.Tags = values.Length > 1 ? $"[{string.Join(", ", values)}]" : values.First();
+            }
+            else
+            {
+                if (ship.PilotObj != null)
+                    ship.PilotObj = null;
             }
         }
 

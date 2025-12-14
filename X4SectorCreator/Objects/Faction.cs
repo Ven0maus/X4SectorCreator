@@ -18,6 +18,9 @@ namespace X4SectorCreator.Objects
         [XmlElement(ElementName = "relations")]
         public RelationsObj Relations { get; set; }
 
+        [XmlElement(ElementName = "signals")]
+        public SignalsObj Signals { get; set; }
+
         [XmlAttribute(AttributeName = "id")]
         public string Id { get; set; }
 
@@ -200,6 +203,23 @@ namespace X4SectorCreator.Objects
 
             [XmlElement(ElementName = "relation")]
             public List<Relation> Relation { get; set; }
+        }
+
+        [XmlRoot(ElementName = "signals")]
+        public class SignalsObj
+        {
+            [XmlElement(ElementName = "response")]
+            public List<ResponseObj> Response { get; set; }
+        }
+
+        [XmlRoot(ElementName = "response")]
+        public class ResponseObj
+        {
+            [XmlAttribute(AttributeName = "signal")]
+            public string Signal { get; set; }
+
+            [XmlAttribute(AttributeName = "response")]
+            public string Response { get; set; }
         }
     }
 }
