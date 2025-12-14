@@ -58,7 +58,8 @@ namespace X4SectorCreator.Forms.Factions
             var peoples = shipPresets.Select(a => a.PeopleObj?.Ref)
                 .Where(a => a != null).ToHashSet(StringComparer.OrdinalIgnoreCase);
             var catTags = shipPresets.SelectMany(a => ParseMultiField(a.CategoryObj?.Tags))
-                .Where(a => a != null).Append("plunder").ToHashSet(StringComparer.OrdinalIgnoreCase);
+                .Where(a => a != null).Append("plunder").Append("smuggler")
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
             var catFactions = shipPresets.SelectMany(a => ParseMultiField(a.CategoryObj?.Faction))
                 .Where(a => a != null).ToHashSet(StringComparer.OrdinalIgnoreCase);
             var pilotTags = shipPresets.SelectMany(a => ParseMultiField(a.PilotObj?.Select?.Tags))

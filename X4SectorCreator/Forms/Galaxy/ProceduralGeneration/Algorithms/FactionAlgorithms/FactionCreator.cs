@@ -22,7 +22,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private readonly Dictionary<FactionNameGen.FactionNameStyle, string[]> _pirateRaces = new()
         {
             { FactionNameGen.FactionNameStyle.Human, ["argon"] },
-            { FactionNameGen.FactionNameStyle.Alien, ["teladi"]}
+            { FactionNameGen.FactionNameStyle.Alien, ["teladi", "paranid"]}
         };
 
         private readonly Dictionary<FactionNameGen.FactionNameStyle, string[]> _races = new() 
