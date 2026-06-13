@@ -68,7 +68,7 @@
             // cmbYield
             // 
             cmbYield.FormattingEnabled = true;
-            cmbYield.Items.AddRange(new object[] { "lowest", "verylow", "lowminus", "low", "lowplus", "medlow", "medium", "medplus", "medhigh", "highlow", "high", "highplus", "veryhigh", "highest" });
+            cmbYield.Items.AddRange(new object[] { "verylow", "low", "medium", "high", "veryhigh" });
             cmbYield.Location = new Point(68, 44);
             cmbYield.Name = "cmbYield";
             cmbYield.Size = new Size(174, 23);
