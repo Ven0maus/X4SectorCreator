@@ -1016,6 +1016,7 @@ namespace X4SectorCreator
                 sector.Tags = New.Tags;
                 sector.AllowRandomAnomalies = New.AllowRandomAnomalies;
                 sector.Placement = New.Placement;
+                sector.ResourceAreas = New.ResourceAreas.ToList();
             }
         }
 
@@ -1326,7 +1327,8 @@ namespace X4SectorCreator
                         nonModifiedSector.Security != modifiedSector.Security ||
                         nonModifiedSector.Tags != modifiedSector.Tags ||
                         nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies ||
-                        nonModifiedSector.Placement != modifiedSector.Placement)
+                        nonModifiedSector.Placement != modifiedSector.Placement ||
+                        IsResourceAreasModified(nonModifiedSector.ResourceAreas, modifiedSector.ResourceAreas))
                     {
                         // Add to modified clusters
                         vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = (Sector)modifiedSector.Clone() });
@@ -1357,6 +1359,29 @@ namespace X4SectorCreator
             }
 
             return vanillaChanges;
+        }
+
+        private static bool IsResourceAreasModified(List<Resource> old, List<Resource> @new)
+        {
+            static string Key(Resource r)
+                    => $"{r.Ware}|{r.Yield}|{r.Size}";
+
+            var oldMap = old.ToDictionary(Key, x => x.Amount);
+
+            foreach (var n in @new)
+            {
+                var key = Key(n);
+
+                if (!oldMap.TryGetValue(key, out var oldAmount))
+                    return true; // added
+
+                if (oldAmount != n.Amount)
+                    return true; // modified
+
+                oldMap.Remove(key);
+            }
+
+            return oldMap.Count > 0; // removed
         }
         #endregion
 

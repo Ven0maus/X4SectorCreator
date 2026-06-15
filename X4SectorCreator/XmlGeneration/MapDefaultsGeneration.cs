@@ -299,7 +299,7 @@ namespace X4SectorCreator.XmlGeneration
                             new XAttribute("sel",
                                 $"//dataset[@macro='{macro}_macro']/properties/resourceareas"),
                             new XElement("resourcearea",
-                                new XAttribute("ref", ra.Ware),
+                                new XAttribute("ref", $"sphere_{ra.Size}_{ra.Ware}_{ra.Yield}"),
                                 new XAttribute("amount", ra.Amount)
                             )
                         )
@@ -316,7 +316,7 @@ namespace X4SectorCreator.XmlGeneration
                         cluster.Dlc,
                         new XElement("remove",
                             new XAttribute("sel",
-                                $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='{ra.Ware}']")
+                                $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='sphere_{ra.Size}_{ra.Ware}_{ra.Yield}']")
                         )
                     ));
                 }
@@ -333,7 +333,7 @@ namespace X4SectorCreator.XmlGeneration
                             cluster.Dlc,
                             new XElement("replace",
                                 new XAttribute("sel",
-                                    $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='{ra.Ware}']/@amount"),
+                                    $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='sphere_{ra.Size}_{ra.Ware}_{ra.Yield}']/@amount"),
                                 ra.Amount.ToString()
                             )
                         ));

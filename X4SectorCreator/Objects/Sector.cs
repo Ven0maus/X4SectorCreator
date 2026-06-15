@@ -143,6 +143,7 @@ namespace X4SectorCreator.Objects
                 Tags = Tags,
                 Zones = Zones.Select(a => (Zone)a.Clone()).ToList(),
                 Regions = Regions.Select(a => (Region)a.Clone()).ToList(),
+                ResourceAreas = ResourceAreas.Select(a => (Resource)a.Clone()).ToList()
             };
         }
 
