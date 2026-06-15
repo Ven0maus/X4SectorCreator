@@ -27,6 +27,10 @@ namespace X4SectorCreator.Forms
                     chkAllowRandomAnomalies.Checked = _sector.AllowRandomAnomalies;
                     chkDisableFactionLogic.Checked = _sector.DisableFactionLogic;
 
+                    RAListBox.Items.Clear();
+                    foreach (var ra in _sector.ResourceAreas)
+                        RAListBox.Items.Add(ra);
+
                     Init();
                 }
                 else
@@ -39,6 +43,7 @@ namespace X4SectorCreator.Forms
                     txtSectorRadius.Text = "250";
                     chkAllowRandomAnomalies.Checked = true;
                     chkDisableFactionLogic.Checked = false;
+                    RAListBox.Items.Clear();
                 }
             }
         }
@@ -235,7 +240,8 @@ namespace X4SectorCreator.Forms
                         Security = (float)Math.Round(security / 100f, 2),
                         AllowRandomAnomalies = chkAllowRandomAnomalies.Checked,
                         DisableFactionLogic = chkDisableFactionLogic.Checked,
-                        Placement = sectorPlacement
+                        Placement = sectorPlacement,
+                        ResourceAreas = RAListBox.Items.Cast<Resource>().ToList()
                     };
 
                     // Create new sector in selected cluster
@@ -277,6 +283,7 @@ namespace X4SectorCreator.Forms
                     sectorValue.DisableFactionLogic = chkDisableFactionLogic.Checked;
                     sectorValue.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
                     sectorValue.Placement = sectorPlacement;
+                    sectorValue.ResourceAreas = RAListBox.Items.Cast<Resource>().ToList();
 
                     // Update zones based on the sector range if modified
                     if (!sectorValue.IsBaseGame)
