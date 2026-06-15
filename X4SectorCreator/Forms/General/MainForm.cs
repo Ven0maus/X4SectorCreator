@@ -689,7 +689,8 @@ namespace X4SectorCreator
             catch (Exception ex)
             {
                 // Clear up corrupted xml
-                Directory.Delete(mainFolder, true);
+                if (Directory.Exists(mainFolder))
+                    Directory.Delete(mainFolder, true);
 #if DEBUG
                 throw;
 #else

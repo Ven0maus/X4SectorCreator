@@ -280,18 +280,30 @@ namespace X4SectorCreator.XmlGeneration
             return elements.Where(a => a.element != null);
         }
 
-        private static void HandleResourceAreas(Sector old, Sector @new, Cluster cluster, List<(string dlc, XElement element)> elements, string macro)
+        private static void HandleResourceAreas(
+            Sector old,
+            Sector @new,
+            Cluster cluster,
+            List<(string dlc, XElement element)> elements,
+            string macro)
         {
-            var oldResourceAreas = old.ResourceAreas;
-            var newResourceAreas = @new.ResourceAreas;
+            static string Key(Resource r)
+                => $"{r.Ware}|{r.Yield}|{r.Size}|{r.Amount}";
 
-            var oldMap = oldResourceAreas.ToDictionary(x => x.Ware);
-            var newMap = newResourceAreas.ToDictionary(x => x.Ware);
+            var oldCounts = old.ResourceAreas
+                .GroupBy(Key)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            var newCounts = @new.ResourceAreas
+                .GroupBy(Key)
+                .ToDictionary(g => g.Key, g => g.Count());
 
             // ADDED
-            foreach (var ra in newMap.Values)
+            foreach (var ra in @new.ResourceAreas)
             {
-                if (!oldMap.ContainsKey(ra.Ware))
+                var key = Key(ra);
+
+                if (!oldCounts.TryGetValue(key, out var count) || count == 0)
                 {
                     elements.Add((
                         cluster.Dlc,
@@ -299,45 +311,37 @@ namespace X4SectorCreator.XmlGeneration
                             new XAttribute("sel",
                                 $"//dataset[@macro='{macro}_macro']/properties/resourceareas"),
                             new XElement("resourcearea",
-                                new XAttribute("ref", $"sphere_{ra.Size}_{ra.Ware}_{ra.Yield}"),
+                                new XAttribute("ref",
+                                    $"sphere_{ra.Size}_{ra.Ware}_{ra.Yield}"),
                                 new XAttribute("amount", ra.Amount)
                             )
                         )
                     ));
                 }
+                else
+                {
+                    oldCounts[key]--;
+                }
             }
 
             // REMOVED
-            foreach (var ra in oldMap.Values)
+            foreach (var ra in old.ResourceAreas)
             {
-                if (!newMap.ContainsKey(ra.Ware))
+                var key = Key(ra);
+
+                if (!newCounts.TryGetValue(key, out var count) || count == 0)
                 {
                     elements.Add((
                         cluster.Dlc,
                         new XElement("remove",
                             new XAttribute("sel",
-                                $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='sphere_{ra.Size}_{ra.Ware}_{ra.Yield}']")
+                                $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='sphere_{ra.Size}_{ra.Ware}_{ra.Yield}' and @amount='{ra.Amount}']")
                         )
                     ));
                 }
-            }
-
-            // MODIFIED
-            foreach (var ra in newMap.Values)
-            {
-                if (oldMap.TryGetValue(ra.Ware, out var oldRa))
+                else
                 {
-                    if (oldRa.Amount != ra.Amount)
-                    {
-                        elements.Add((
-                            cluster.Dlc,
-                            new XElement("replace",
-                                new XAttribute("sel",
-                                    $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='sphere_{ra.Size}_{ra.Ware}_{ra.Yield}']/@amount"),
-                                ra.Amount.ToString()
-                            )
-                        ));
-                    }
+                    newCounts[key]--;
                 }
             }
         }
