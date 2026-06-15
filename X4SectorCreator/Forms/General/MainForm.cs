@@ -355,17 +355,19 @@ namespace X4SectorCreator
                             if (!string.IsNullOrEmpty(@ref) && !string.IsNullOrEmpty(amount))
                             {
                                 var parts = @ref.Split('_');
-                                if (parts.Length != 4) continue;
+                                if (parts.Length != 5) continue;
 
                                 var size = parts[1];
                                 var ware = parts[2];
                                 var yield = parts[3];
+                                var speed = parts[4];
 
                                 var resource = new Resource
                                 {
                                     Size = size,
                                     Ware = ware,
                                     Yield = yield,
+                                    Speed = speed,
                                     Amount = int.TryParse(amount, out var amountValue) ? amountValue : 0
                                 };
 
@@ -1424,7 +1426,7 @@ namespace X4SectorCreator
         private static bool IsResourceAreasModified(List<Resource> old, List<Resource> @new)
         {
             static string Key(Resource r)
-                => $"{r.Ware}|{r.Yield}|{r.Size}|{r.Amount}";
+                => $"{r.Ware}|{r.Yield}|{r.Size}|{r.Speed}|{r.Amount}";
 
             var oldGroups = old
                 .GroupBy(Key)

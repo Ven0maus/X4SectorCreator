@@ -34,6 +34,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
         };
 
         private static readonly string[] _sizes = new[] { "tiny", "small", "medium", "large" };
+        private static readonly string[] _speeds = new[] { "veryslow", "slow", "average", "fast", "veryfast" };
 
         private readonly Dictionary<string, List<RegionDefinition>> _regionDefinitions = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<FieldObj>> _regionDefinitionFieldsCache;
@@ -123,7 +124,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
 
                 // Add resource area
                 var size = _sizes[_random.Next(0, _sizes.Length)];
-                var ra = sector.ResourceAreas.FirstOrDefault(a => a.Ware == resource && a.Size == size);
+                var speed = _speeds[_random.Next(0, _speeds.Length)];
+                var ra = sector.ResourceAreas.FirstOrDefault(a => a.Ware == resource && a.Size == size && a.Speed == speed);
                 if (ra != null)
                 {
                     ra.Amount += 1;
@@ -135,7 +137,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                         Amount = _random.Next(1, 8),
                         Size = size,
                         Ware = resource,
-                        Yield = yield
+                        Yield = yield,
+                        Speed = speed
                     };
                     sector.ResourceAreas.Add(ra);
                 }
@@ -363,7 +366,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
 
                             // Add resource area
                             var size = _sizes[_random.Next(0, _sizes.Length)];
-                            var ra = sector.ResourceAreas.FirstOrDefault(a => a.Ware == resource && a.Size == size);
+                            var speed = _speeds[_random.Next(0, _speeds.Length)];
+                            var ra = sector.ResourceAreas.FirstOrDefault(a => a.Ware == resource && a.Size == size && a.Speed == speed);
                             if (ra != null)
                             {
                                 ra.Amount += 1;
@@ -375,7 +379,8 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                                     Amount = _random.Next(1, 8),
                                     Size = size,
                                     Ware = resource,
-                                    Yield = yield
+                                    Yield = yield,
+                                    Speed = speed
                                 };
                                 sector.ResourceAreas.Add(ra);
                             }

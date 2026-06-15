@@ -38,6 +38,8 @@
             label3 = new Label();
             label4 = new Label();
             nrAmount = new NumericUpDown();
+            cmbSpeed = new ComboBox();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)nrAmount).BeginInit();
             SuspendLayout();
             // 
@@ -81,7 +83,7 @@
             // 
             // BtnAdd
             // 
-            BtnAdd.Location = new Point(119, 134);
+            BtnAdd.Location = new Point(119, 160);
             BtnAdd.Name = "BtnAdd";
             BtnAdd.Size = new Size(136, 31);
             BtnAdd.TabIndex = 4;
@@ -91,7 +93,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(25, 134);
+            BtnCancel.Location = new Point(25, 160);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(88, 31);
             BtnCancel.TabIndex = 5;
@@ -122,7 +124,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(14, 105);
+            label4.Location = new Point(14, 131);
             label4.Name = "label4";
             label4.Size = new Size(69, 21);
             label4.TabIndex = 8;
@@ -130,16 +132,37 @@
             // 
             // nrAmount
             // 
-            nrAmount.Location = new Point(91, 105);
+            nrAmount.Location = new Point(91, 131);
             nrAmount.Name = "nrAmount";
             nrAmount.Size = new Size(174, 23);
             nrAmount.TabIndex = 9;
+            // 
+            // cmbSpeed
+            // 
+            cmbSpeed.FormattingEnabled = true;
+            cmbSpeed.Items.AddRange(new object[] { "veryslow", "slow", "average", "fast", "veryfast" });
+            cmbSpeed.Location = new Point(91, 102);
+            cmbSpeed.Name = "cmbSpeed";
+            cmbSpeed.Size = new Size(174, 23);
+            cmbSpeed.TabIndex = 11;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 12F);
+            label5.Location = new Point(14, 104);
+            label5.Name = "label5";
+            label5.Size = new Size(56, 21);
+            label5.TabIndex = 10;
+            label5.Text = "Speed:";
             // 
             // ResourceAreaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(280, 175);
+            ClientSize = new Size(280, 199);
+            Controls.Add(cmbSpeed);
+            Controls.Add(label5);
             Controls.Add(nrAmount);
             Controls.Add(label4);
             Controls.Add(cmbSize);
@@ -172,5 +195,7 @@
         private Label label3;
         private Label label4;
         private NumericUpDown nrAmount;
+        private ComboBox cmbSpeed;
+        private Label label5;
     }
 }

@@ -18,6 +18,7 @@ namespace X4SectorCreator.Forms
                     cmbWare.SelectedItem = _resource.Ware;
                     cmbYield.SelectedItem = _resource.Yield;
                     cmbSize.SelectedItem = _resource.Size;
+                    cmbSpeed.SelectedItem = _resource.Speed;
                     nrAmount.Value = _resource.Amount;
                     BtnAdd.Text = "Update";
                 }
@@ -49,6 +50,12 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            if (cmbSpeed.SelectedItem == null)
+            {
+                _ = MessageBox.Show("Please select a valid speed.");
+                return;
+            }
+
             if (nrAmount.Value == 0)
             {
                 _ = MessageBox.Show("Amount must be higher than 0.");
@@ -63,6 +70,7 @@ namespace X4SectorCreator.Forms
                         Ware = cmbWare.Text,
                         Yield = cmbYield.Text,
                         Size = cmbSize.Text,
+                        Speed = cmbSpeed.Text,
                         Amount = (int)nrAmount.Value
                     };
                     _ = MainForm.Instance.SectorForm.Value.RAListBox.Items.Add(resource);
@@ -73,6 +81,7 @@ namespace X4SectorCreator.Forms
                     Resource.Ware = cmbWare.Text;
                     Resource.Yield = cmbYield.Text;
                     Resource.Size = cmbSize.Text;
+                    Resource.Speed = cmbSpeed.Text;
                     Resource.Amount = (int)nrAmount.Value;
                     MainForm.Instance.SectorForm.Value.RAListBox.Items.Insert(index, Resource);
                     MainForm.Instance.SectorForm.Value.RAListBox.SelectedItem = Resource;

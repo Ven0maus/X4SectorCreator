@@ -101,7 +101,7 @@ namespace X4SectorCreator.XmlGeneration
                         {
                             resourceAreasElement.Add(new XElement("resourcearea",
                                 new XAttribute("amount", ra.Amount),
-                                new XAttribute("ref", $"sphere_{ra.Size}_{ra.Ware}_{ra.Yield}")));
+                                new XAttribute("ref", $"sphere_{ra.Size}_{ra.Ware}_{ra.Yield}_{ra.Speed}")));
                         }
                     }
 
@@ -288,7 +288,7 @@ namespace X4SectorCreator.XmlGeneration
             string macro)
         {
             static string Key(Resource r)
-                => $"{r.Ware}|{r.Yield}|{r.Size}|{r.Amount}";
+                => $"{r.Ware}|{r.Yield}|{r.Size}|{r.Speed}|{r.Amount}";
 
             var oldCounts = old.ResourceAreas
                 .GroupBy(Key)
@@ -312,7 +312,7 @@ namespace X4SectorCreator.XmlGeneration
                                 $"//dataset[@macro='{macro}_macro']/properties/resourceareas"),
                             new XElement("resourcearea",
                                 new XAttribute("ref",
-                                    $"sphere_{ra.Size}_{ra.Ware}_{ra.Yield}"),
+                                    $"sphere_{ra.Size}_{ra.Ware}_{ra.Yield}_{ra.Speed}"),
                                 new XAttribute("amount", ra.Amount)
                             )
                         )
@@ -335,7 +335,7 @@ namespace X4SectorCreator.XmlGeneration
                         cluster.Dlc,
                         new XElement("remove",
                             new XAttribute("sel",
-                                $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='sphere_{ra.Size}_{ra.Ware}_{ra.Yield}' and @amount='{ra.Amount}']")
+                                $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='sphere_{ra.Size}_{ra.Ware}_{ra.Yield}_{ra.Speed}' and @amount='{ra.Amount}']")
                         )
                     ));
                 }
