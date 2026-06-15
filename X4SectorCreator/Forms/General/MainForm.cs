@@ -242,6 +242,7 @@ namespace X4SectorCreator
 
                     sector.Regions ??= [];
                     sector.Zones ??= [];
+                    sector.ResourceAreas ??= [];
                     foreach (Zone zone in sector.Zones)
                     {
                         zone.Gates ??= [];
@@ -253,6 +254,7 @@ namespace X4SectorCreator
             }
 
             InitializeVanillaRegionsAndStations(clusterLookup);
+            InitializeVanillaResourceAreas(clusterLookup);
 
             // Create also the required connections for vanilla
             VanillaGateConnectionParser.CreateVanillaGateConnections(clusterLookup);
@@ -316,6 +318,11 @@ namespace X4SectorCreator
                     }
                 }
             }
+        }
+
+        private static void InitializeVanillaResourceAreas(Dictionary<(int x, int y), Cluster> allClusters)
+        {
+            // TODO: Init resource areas on vanilla sectors
         }
 
         private void CmbClusterOption_SelectedIndexChanged(object sender, EventArgs e)
