@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 #endif
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Forms.General;
@@ -323,6 +324,57 @@ namespace X4SectorCreator
         private static void InitializeVanillaResourceAreas(Dictionary<(int x, int y), Cluster> allClusters)
         {
             // TODO: Init resource areas on vanilla sectors
+            var doc = XDocument.Load(Constants.DataPaths.VanillaMapDefaultsFilePath);
+            var datasets = doc.Element("defaults").Elements("dataset");
+
+            var clustersByMapping = allClusters.Values
+                .SelectMany(a => a.Sectors, (a, b) => (Cluster: a, Sector: b))
+                .ToDictionary(a => $"{a.Cluster.BaseGameMapping}_{a.Sector.BaseGameMapping.CapitalizeFirstLetter()}");
+
+            foreach (var dataset in datasets)
+            {
+                var macro = dataset.Attribute("macro")?.Value;
+                if (string.IsNullOrEmpty(macro)) continue;
+
+                macro = macro.Replace("_macro", string.Empty);
+
+                if (!clustersByMapping.TryGetValue(macro, out var clusterSectorMap))
+                    continue;
+
+                var properties = dataset.Element("properties");
+                if (properties != null)
+                {
+                    var resourceAreasElement = properties.Element("resourceareas");
+                    if (resourceAreasElement != null)
+                    {
+                        var resourceAreas = resourceAreasElement.Elements("resourcearea");
+                        foreach (var resourceArea in resourceAreas)
+                        {
+                            var @ref = resourceArea.Attribute("ref")?.Value;
+                            var amount = resourceArea.Attribute("amount")?.Value;
+                            if (!string.IsNullOrEmpty(@ref) && !string.IsNullOrEmpty(amount))
+                            {
+                                var parts = @ref.Split('_');
+                                if (parts.Length != 4) continue;
+
+                                var size = parts[1];
+                                var ware = parts[2];
+                                var yield = parts[3];
+
+                                var resource = new Resource
+                                {
+                                    Size = size,
+                                    Ware = ware,
+                                    Yield = yield,
+                                    Amount = int.TryParse(amount, out var amountValue) ? amountValue : 0
+                                };
+
+                                clusterSectorMap.Sector.ResourceAreas.Add(resource);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void CmbClusterOption_SelectedIndexChanged(object sender, EventArgs e)
@@ -1371,24 +1423,26 @@ namespace X4SectorCreator
         private static bool IsResourceAreasModified(List<Resource> old, List<Resource> @new)
         {
             static string Key(Resource r)
-                    => $"{r.Ware}|{r.Yield}|{r.Size}";
+                => $"{r.Ware}|{r.Yield}|{r.Size}|{r.Amount}";
 
-            var oldMap = old.ToDictionary(Key, x => x.Amount);
+            var oldGroups = old
+                .GroupBy(Key)
+                .ToDictionary(g => g.Key, g => g.Count());
 
-            foreach (var n in @new)
+            foreach (var resource in @new)
             {
-                var key = Key(n);
+                var key = Key(resource);
 
-                if (!oldMap.TryGetValue(key, out var oldAmount))
-                    return true; // added
+                if (!oldGroups.TryGetValue(key, out var count))
+                    return true;
 
-                if (oldAmount != n.Amount)
-                    return true; // modified
-
-                oldMap.Remove(key);
+                if (count == 1)
+                    oldGroups.Remove(key);
+                else
+                    oldGroups[key] = count - 1;
             }
 
-            return oldMap.Count > 0; // removed
+            return oldGroups.Count > 0;
         }
         #endregion
 

@@ -102,7 +102,7 @@
             // cmbSize
             // 
             cmbSize.FormattingEnabled = true;
-            cmbSize.Items.AddRange(new object[] { "verylow", "low", "medium", "high", "veryhigh" });
+            cmbSize.Items.AddRange(new object[] { "tiny", "small", "medium", "large" });
             cmbSize.Location = new Point(91, 73);
             cmbSize.Name = "cmbSize";
             cmbSize.Size = new Size(174, 23);
@@ -135,7 +135,7 @@
             nrAmount.Size = new Size(174, 23);
             nrAmount.TabIndex = 9;
             // 
-            // RegionResourcesForm
+            // ResourceAreaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -153,7 +153,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "RegionResourcesForm";
+            Name = "ResourceAreaForm";
             Text = "Resource Area Editor";
             ((System.ComponentModel.ISupportInitialize)nrAmount).EndInit();
             ResumeLayout(false);

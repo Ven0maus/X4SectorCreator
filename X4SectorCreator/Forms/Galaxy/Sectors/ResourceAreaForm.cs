@@ -17,6 +17,8 @@ namespace X4SectorCreator.Forms
                 {
                     cmbWare.SelectedItem = _resource.Ware;
                     cmbYield.SelectedItem = _resource.Yield;
+                    cmbSize.SelectedItem = _resource.Size;
+                    nrAmount.Value = _resource.Amount;
                     BtnAdd.Text = "Update";
                 }
             }
