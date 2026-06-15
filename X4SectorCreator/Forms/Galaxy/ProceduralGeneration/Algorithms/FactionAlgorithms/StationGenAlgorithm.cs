@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using X4SectorCreator.Helpers;
+﻿using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAlgorithms
@@ -85,7 +84,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
                 foreach (var zone in sector.Zones.ToList())
                 {
                     if (stations > 0) break;
-                    
+
                     foreach (var gate in zone.Gates)
                     {
                         if (stations > 0) break;
@@ -239,8 +238,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
 
         private static int ScoreCluster(Sector sector)
         {
-            int resourceScore = sector.Regions
-                .SelectMany(a => a.Definition.Resources)
+            int resourceScore = sector.ResourceAreas
                 .Select(a => a.Ware)
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .Count();
@@ -312,14 +310,12 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.FactionAl
         private static int GetResourceScore(Sector sector, HashSet<Sector> ownedSectors, bool isNearbyOtherFaction)
         {
             var ownedResources = ownedSectors
-                .SelectMany(s => s.Regions)
-                .SelectMany(a => a.Definition.Resources)
+                .SelectMany(s => s.ResourceAreas)
                 .Select(a => a.Ware)
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToHashSet();
 
-            var score = sector.Regions
-                .SelectMany(a => a.Definition.Resources)
+            var score = sector.ResourceAreas
                 .Select(a => a.Ware)
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .Count(r => !ownedResources.Contains(r));

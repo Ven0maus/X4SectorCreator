@@ -133,20 +133,11 @@ namespace X4SectorCreator
 
         private static readonly Dictionary<string, double> _yieldDensities = new(StringComparer.OrdinalIgnoreCase)
         {
-            ["lowest"] = 0.026,
             ["verylow"] = 0.06,
-            ["lowminus"] = 0.2,
             ["low"] = 0.6,
-            ["lowplus"] = 1.8,
-            ["medlow"] = 4,
             ["medium"] = 6,
-            ["medplus"] = 16,
-            ["medhigh"] = 32,
-            ["highlow"] = 48,
             ["high"] = 60,
-            ["highplus"] = 120,
-            ["veryhigh"] = 3600,
-            ["highest"] = 60000
+            ["veryhigh"] = 3600
         };
 
         private static readonly Dictionary<string, Image> _imageMap = new(StringComparer.OrdinalIgnoreCase);
@@ -205,7 +196,7 @@ namespace X4SectorCreator
                 if (!_mapOptionsSelected.TryGetValue(mapOption, out var selected))
                 {
                     // If not yet initialized, it will be by default selected except "show coordinates"
-                    _mapOptionsSelected[mapOption] = selected = 
+                    _mapOptionsSelected[mapOption] = selected =
                         !mapOption.Equals("Show Coordinates", StringComparison.OrdinalIgnoreCase) &&
                         !mapOption.Equals("Visualize Regions", StringComparison.OrdinalIgnoreCase) &&
                         !mapOption.Equals("Keep Window Open", StringComparison.OrdinalIgnoreCase);
@@ -903,14 +894,21 @@ namespace X4SectorCreator
 
             // Setup color mapping based on resources of region definitions
             var colorMappings = clusters
-                .SelectMany(a => a.Sectors)
-                .SelectMany(a => a.Regions)
-                .Select(a => a.Definition)
-                .Distinct()
-                .ToDictionary(a => a, a => a.Resources
-                .GroupBy(a => a.Ware)
-                .Select(a => resourceColors[a.Key])
-                .ToArray());
+                .SelectMany(c => c.Sectors)
+                .SelectMany(
+                    sector => sector.Regions,
+                    (sector, region) => new
+                    {
+                        Definition = region.Definition,
+                        Sector = sector
+                    })
+                .GroupBy(x => x.Definition)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.SelectMany(x => x.Sector.ResourceAreas)
+                          .GroupBy(x => x.Ware)
+                          .Select(x => resourceColors[x.Key])
+                          .ToArray());
 
             foreach (var cluster in clusters)
             {
@@ -1167,16 +1165,7 @@ namespace X4SectorCreator
             {
                 foreach (Sector sector in cluster.Sectors.Where(a => a.Regions.Count > 0))
                 {
-                    var resources = sector.Regions
-                        .Where(a =>
-                        {
-                            if (!showVanilla && a.IsBaseGame)
-                                return false;
-                            if (!showCustom && !a.IsBaseGame)
-                                return false;
-                            return true;
-                        })
-                        .SelectMany(a => a.Definition.Resources);
+                    var resources = sector.ResourceAreas;
                     foreach (var resource in resources)
                     {
                         if (!resourceColors.TryGetValue(resource.Ware, out var resourceColor))

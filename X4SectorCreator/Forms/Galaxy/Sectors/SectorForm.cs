@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
     public partial class SectorForm : Form
     {
+        public readonly LazyEvaluated<ResourceAreaForm> ResourceAreaForm = new(() => new ResourceAreaForm(), a => !a.IsDisposed);
+
         private Sector _sector;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Sector Sector
@@ -336,6 +339,38 @@ namespace X4SectorCreator.Forms
                 lblRadiusUnderText.Text = $"From the center, {radius}km in every direction. {radius * 2}km diameter.";
                 lblRadiusUnderText.ForeColor = _controlColor;
             }
+        }
+
+        private void BtnAddRA_Click(object sender, EventArgs e)
+        {
+            ResourceAreaForm.Value.Show();
+        }
+
+        private void BtnDeleteRA_Click(object sender, EventArgs e)
+        {
+            if (RAListBox.SelectedItem is not Resource selectedResource)
+            {
+                return;
+            }
+
+            int index = RAListBox.Items.IndexOf(selectedResource);
+            RAListBox.Items.Remove(selectedResource);
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            RAListBox.SelectedItem = index >= 0 && RAListBox.Items.Count > 0 ? RAListBox.Items[index] : null;
+        }
+
+        private void RAListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (RAListBox.SelectedItem is not Resource selectedResource)
+            {
+                return;
+            }
+
+            ResourceAreaForm.Value.Resource = selectedResource;
+            ResourceAreaForm.Value.Show();
         }
     }
 }

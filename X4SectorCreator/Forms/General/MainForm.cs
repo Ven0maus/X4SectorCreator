@@ -32,8 +32,8 @@ namespace X4SectorCreator
         public readonly LazyEvaluated<FactionsForm> FactionsForm = new(() => new FactionsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<GalaxySettingsForm> GalaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactionRelationsForm> FactionRelationsDataForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<SectorForm> SectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
 
-        private readonly LazyEvaluated<SectorForm> _sectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<StationForm> _stationForm = new(() => new StationForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ObjectOverviewForm> _objectOverviewForm = new(() => new ObjectOverviewForm(), a => !a.IsDisposed);
@@ -1502,9 +1502,9 @@ namespace X4SectorCreator
                 ClusterForm.Value.BtnSector1.Checked = true;
             else if (amountOfSectors == 2)
                 ClusterForm.Value.BtnSector2.Checked = true;
-            else if(amountOfSectors == 3)
+            else if (amountOfSectors == 3)
                 ClusterForm.Value.BtnSector3.Checked = true;
-            else if(amountOfSectors == 4)
+            else if (amountOfSectors == 4)
                 ClusterForm.Value.BtnSector4.Checked = true;
 
             if (!string.IsNullOrWhiteSpace(cluster.Value.Soundtrack))
@@ -1530,10 +1530,10 @@ namespace X4SectorCreator
                 return;
             }
 
-            _sectorForm.Value.Sector = null;
-            _sectorForm.Value.BtnCreate.Text = "Create";
-            _sectorForm.Value.Init();
-            _sectorForm.Value.Show();
+            SectorForm.Value.Sector = null;
+            SectorForm.Value.BtnCreate.Text = "Create";
+            SectorForm.Value.Init();
+            SectorForm.Value.Show();
         }
 
         private void BtnRemoveSector_Click(object sender, EventArgs e)
@@ -1613,9 +1613,9 @@ namespace X4SectorCreator
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
-            _sectorForm.Value.Sector = sector;
-            _sectorForm.Value.BtnCreate.Text = "Update";
-            _sectorForm.Value.Show();
+            SectorForm.Value.Sector = sector;
+            SectorForm.Value.BtnCreate.Text = "Update";
+            SectorForm.Value.Show();
         }
 
         private void SectorsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1770,11 +1770,10 @@ namespace X4SectorCreator
                     _ = sb.AppendLine($"FactionLogic Disabled");
                 }
 
-                if (sector.Regions.Count > 0)
+                if (sector.ResourceAreas.Count > 0)
                 {
                     // Show minerals in sector
-                    HashSet<string> resources = sector.Regions
-                        .SelectMany(a => a.Definition.Resources)
+                    HashSet<string> resources = sector.ResourceAreas
                         .Select(a => a.Ware)
                         .ToHashSet(StringComparer.OrdinalIgnoreCase);
 

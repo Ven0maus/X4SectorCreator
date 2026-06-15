@@ -60,6 +60,7 @@ namespace DevConsole.PatchHelpers
             PatchFile(directories, vanillaFilesPath, "libraries", "wares.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "baskets.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "modules.xml");
+            PatchFile(directories, vanillaFilesPath, "libraries", "mapdefaults.xml");
         }
 
         private static void PatchFile(
