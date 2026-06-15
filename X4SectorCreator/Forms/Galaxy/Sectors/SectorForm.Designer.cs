@@ -88,7 +88,7 @@
             // 
             BtnCreate.Location = new Point(116, 400);
             BtnCreate.Name = "BtnCreate";
-            BtnCreate.Size = new Size(438, 30);
+            BtnCreate.Size = new Size(535, 30);
             BtnCreate.TabIndex = 7;
             BtnCreate.Text = "Create";
             BtnCreate.UseVisualStyleBackColor = true;
@@ -271,7 +271,7 @@
             RAListBox.FormattingEnabled = true;
             RAListBox.Location = new Point(333, 42);
             RAListBox.Name = "RAListBox";
-            RAListBox.Size = new Size(221, 229);
+            RAListBox.Size = new Size(318, 229);
             RAListBox.TabIndex = 31;
             RAListBox.DoubleClick += RAListBox_DoubleClick;
             // 
@@ -287,9 +287,9 @@
             // 
             // BtnAddRA
             // 
-            BtnAddRA.Location = new Point(397, 273);
+            BtnAddRA.Location = new Point(446, 273);
             BtnAddRA.Name = "BtnAddRA";
-            BtnAddRA.Size = new Size(157, 30);
+            BtnAddRA.Size = new Size(205, 30);
             BtnAddRA.TabIndex = 33;
             BtnAddRA.Text = "Add";
             BtnAddRA.UseVisualStyleBackColor = true;
@@ -299,7 +299,7 @@
             // 
             BtnDeleteRA.Location = new Point(333, 274);
             BtnDeleteRA.Name = "BtnDeleteRA";
-            BtnDeleteRA.Size = new Size(58, 30);
+            BtnDeleteRA.Size = new Size(107, 30);
             BtnDeleteRA.TabIndex = 34;
             BtnDeleteRA.Text = "Delete";
             BtnDeleteRA.UseVisualStyleBackColor = true;
@@ -309,17 +309,17 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 9F);
-            label12.Location = new Point(333, 306);
+            label12.Location = new Point(343, 306);
             label12.Name = "label12";
-            label12.Size = new Size(211, 45);
+            label12.Size = new Size(297, 30);
             label12.TabIndex = 35;
-            label12.Text = "Note: For each resource type\r\na matching region needs to be defined\r\nwith the correct mineral/gas fields.";
+            label12.Text = "Note: For each resource type a matching region \r\nneeds to be defined with the correct mineral/gas fields.";
             // 
             // SectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(566, 434);
+            ClientSize = new Size(663, 434);
             Controls.Add(label12);
             Controls.Add(BtnDeleteRA);
             Controls.Add(BtnAddRA);
