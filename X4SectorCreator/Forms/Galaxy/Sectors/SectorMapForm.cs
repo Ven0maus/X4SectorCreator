@@ -78,7 +78,8 @@ namespace X4SectorCreator
                     ("Helium", Color.LightCoral),
                     ("Hydrogen", Color.DarkCyan),
                     ("Nividium", Color.Fuchsia),
-                    ("RawScrap", Color.Red)
+                    ("RawScrap", Color.Red),
+                    ("RawKhaakScrap", Color.DarkRed)
                 }
             },
             {
