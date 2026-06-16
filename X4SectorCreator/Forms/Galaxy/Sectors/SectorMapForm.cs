@@ -503,14 +503,9 @@ namespace X4SectorCreator
             if (_movingSector == null || _movingSectorCluster == null)
                 return;
 
-            PointF clamped = ClampPointInsideHex(_movingSectorCluster.Hexagon.Points, mousePos);
-            PointF clusterCenter = GetHexCenter(_movingSectorCluster.Hexagon.Points);
-            float clusterHexRadius = GetHexRadius(_movingSectorCluster.Hexagon.Points);
+            PointF clamped = ClampChildHexCenterInsideParent(_movingSectorCluster, _movingSectorChildIndex.Value, mousePos);
 
-            Point offset = ConvertToWorldCoordinate(
-                new PointF(clamped.X - clusterCenter.X, clamped.Y - clusterCenter.Y),
-                2000000,
-                clusterHexRadius);
+            Point offset = ConvertPointInClusterHexToCustomOffset(_movingSectorCluster, clamped);
 
             _movingSector.CustomOffset = offset;
             SectorForm.DetermineSectorOffset(_movingSectorCluster, _movingSector);
@@ -535,6 +530,46 @@ namespace X4SectorCreator
             }
 
             return low;
+        }
+
+        private PointF ClampChildHexCenterInsideParent(Cluster cluster, int childIndex, PointF desiredCenter)
+        {
+            PointF[] parentPolygon = cluster.Hexagon.Points;
+            PointF[] childPolygon = cluster.Hexagon.Children[childIndex].Points;
+            PointF childCenter = GetHexCenter(childPolygon);
+
+            PointF[] relativePoints = childPolygon
+                .Select(a => new PointF(a.X - childCenter.X, a.Y - childCenter.Y))
+                .ToArray();
+
+            if (IsTranslatedChildInsideParent(parentPolygon, relativePoints, desiredCenter))
+                return desiredCenter;
+
+            PointF low = childCenter;
+            PointF high = desiredCenter;
+
+            for (int i = 0; i < 24; i++)
+            {
+                PointF mid = new((low.X + high.X) / 2f, (low.Y + high.Y) / 2f);
+                if (IsTranslatedChildInsideParent(parentPolygon, relativePoints, mid))
+                    low = mid;
+                else
+                    high = mid;
+            }
+
+            return low;
+        }
+
+        private static bool IsTranslatedChildInsideParent(PointF[] parentPolygon, PointF[] childRelativePoints, PointF center)
+        {
+            foreach (PointF point in childRelativePoints)
+            {
+                PointF translated = new(center.X + point.X, center.Y + point.Y);
+                if (!IsPointInPolygon(parentPolygon, translated))
+                    return false;
+            }
+
+            return true;
         }
 
         private int? GetNearestSectorIndexInCluster(PointF mousePos, Cluster cluster, int? excludeIndex = null)
