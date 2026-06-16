@@ -1932,9 +1932,6 @@ namespace X4SectorCreator
 
             foreach (var item in GetVisibleGateConnections())
             {
-                if (!item.Source.Gate.IsHighwayGate && !item.Target.Gate.IsHighwayGate)
-                    continue;
-
                 PointF source = new((item.Source.ScreenX * _zoom) + _offset.X, (item.Source.ScreenY * _zoom) + _offset.Y);
                 PointF target = new((item.Target.ScreenX * _zoom) + _offset.X, (item.Target.ScreenY * _zoom) + _offset.Y);
 
