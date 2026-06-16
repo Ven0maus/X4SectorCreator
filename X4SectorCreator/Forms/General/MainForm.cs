@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 #endif
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Forms.General;
@@ -32,8 +33,8 @@ namespace X4SectorCreator
         public readonly LazyEvaluated<FactionsForm> FactionsForm = new(() => new FactionsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<GalaxySettingsForm> GalaxySettingsForm = new(() => new GalaxySettingsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<FactionRelationsForm> FactionRelationsDataForm = new(() => new FactionRelationsForm(), a => !a.IsDisposed);
+        public readonly LazyEvaluated<SectorForm> SectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
 
-        private readonly LazyEvaluated<SectorForm> _sectorForm = new(() => new SectorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<StationForm> _stationForm = new(() => new StationForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ObjectOverviewForm> _objectOverviewForm = new(() => new ObjectOverviewForm(), a => !a.IsDisposed);
@@ -242,6 +243,7 @@ namespace X4SectorCreator
 
                     sector.Regions ??= [];
                     sector.Zones ??= [];
+                    sector.ResourceAreas ??= [];
                     foreach (Zone zone in sector.Zones)
                     {
                         zone.Gates ??= [];
@@ -253,6 +255,7 @@ namespace X4SectorCreator
             }
 
             InitializeVanillaRegionsAndStations(clusterLookup);
+            InitializeVanillaResourceAreas(clusterLookup);
 
             // Create also the required connections for vanilla
             VanillaGateConnectionParser.CreateVanillaGateConnections(clusterLookup);
@@ -311,6 +314,63 @@ namespace X4SectorCreator
                             {
                                 sector.Zones ??= [];
                                 sector.Zones.Add(zone);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void InitializeVanillaResourceAreas(Dictionary<(int x, int y), Cluster> allClusters)
+        {
+            var doc = XDocument.Load(Constants.DataPaths.VanillaMapDefaultsFilePath);
+            var datasets = doc.Element("defaults").Elements("dataset");
+
+            var clustersByMapping = allClusters.Values
+                .SelectMany(a => a.Sectors, (a, b) => (Cluster: a, Sector: b))
+                .ToDictionary(a => $"{a.Cluster.BaseGameMapping}_{a.Sector.BaseGameMapping.CapitalizeFirstLetter()}");
+
+            foreach (var dataset in datasets)
+            {
+                var macro = dataset.Attribute("macro")?.Value;
+                if (string.IsNullOrEmpty(macro)) continue;
+
+                macro = macro.Replace("_macro", string.Empty);
+
+                if (!clustersByMapping.TryGetValue(macro, out var clusterSectorMap))
+                    continue;
+
+                var properties = dataset.Element("properties");
+                if (properties != null)
+                {
+                    var resourceAreasElement = properties.Element("resourceareas");
+                    if (resourceAreasElement != null)
+                    {
+                        var resourceAreas = resourceAreasElement.Elements("resourcearea");
+                        foreach (var resourceArea in resourceAreas)
+                        {
+                            var @ref = resourceArea.Attribute("ref")?.Value;
+                            var amount = resourceArea.Attribute("amount")?.Value;
+                            if (!string.IsNullOrEmpty(@ref) && !string.IsNullOrEmpty(amount))
+                            {
+                                var parts = @ref.Split('_');
+                                if (parts.Length != 5) continue;
+
+                                var size = parts[1];
+                                var ware = parts[2];
+                                var yield = parts[3];
+                                var speed = parts[4];
+
+                                var resource = new Resource
+                                {
+                                    Size = size,
+                                    Ware = ware,
+                                    Yield = yield,
+                                    Speed = speed,
+                                    Amount = int.TryParse(amount, out var amountValue) ? amountValue : 0
+                                };
+
+                                clusterSectorMap.Sector.ResourceAreas.Add(resource);
                             }
                         }
                     }
@@ -630,7 +690,8 @@ namespace X4SectorCreator
             catch (Exception ex)
             {
                 // Clear up corrupted xml
-                Directory.Delete(mainFolder, true);
+                if (Directory.Exists(mainFolder))
+                    Directory.Delete(mainFolder, true);
 #if DEBUG
                 throw;
 #else
@@ -838,49 +899,76 @@ namespace X4SectorCreator
                 (List<Cluster> clusters, VanillaChanges vanillaChanges) configuration = ConfigSerializer.Deserialize(jsonContent);
                 if (configuration.clusters != null)
                 {
-                    List<Cluster> clusters = configuration.clusters;
-                    // Reset configuration
-                    Reset(true);
-
-                    if (Forms.GalaxySettingsForm.IsCustomGalaxy)
-                    {
-                        ToggleGalaxyMode(null);
-                    }
-
-                    // Apply vanilla changes to AllClusters
-                    if (configuration.vanillaChanges != null)
-                    {
-                        SupportVanillaChangesInConfigImport(configuration);
-                    }
-
-                    Lazy<Cluster[]> vanillaClustersLazy = new(() => InitAllVanillaClusters(false).Clusters.Where(a => a.IsBaseGame).ToArray());
-
-                    // Import new configuration
-                    foreach (Cluster cluster in clusters)
-                    {
-                        // Apply support additions for new versions
-                        Import_Support_NewVersions(cluster, vanillaClustersLazy);
-
-                        // Adjust the cluster
-                        ReplaceClusterByImport(cluster);
-
-                        // Setup listboxes
-                        if (!cluster.IsBaseGame)
-                        {
-                            _ = ClustersListBox.Items.Add(cluster.Name);
-                        }
-                    }
-
-                    // No longer needed
-                    _clusterDlcLookup = null;
-
-                    // Select first one so sector and zones populate automatically
-                    ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
-
-                    _currentConfiguration = ExportJsonConfig();
-                    _ = MessageBox.Show($"Configuration imported succesfully.", "Success");
+                    ApplyImportedConfiguration(configuration.clusters, configuration.vanillaChanges, "Configuration imported succesfully.");
                 }
             }
+        }
+
+        private void BtnImportMod_Click(object sender, EventArgs e)
+        {
+            using FolderBrowserDialog folderBrowserDialog = new();
+            folderBrowserDialog.Description = "Select an X4 extension folder to import";
+            folderBrowserDialog.UseDescriptionForTitle = true;
+
+            var defaultExtensionsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Steam/steamapps/common/X4 Foundations/extensions");
+            if (Directory.Exists(defaultExtensionsPath))
+            {
+                folderBrowserDialog.SelectedPath = defaultExtensionsPath;
+            }
+
+            if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            try
+            {
+                var importedMod = ModImportService.Import(folderBrowserDialog.SelectedPath, InitAllVanillaClusters(false));
+                ApplyImportedConfiguration(importedMod.Clusters, null, $"Imported mod \"{importedMod.ModName}\" succesfully.");
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                throw;
+#else
+                _ = MessageBox.Show(ex.Message, "Unable to import mod", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
+            }
+        }
+
+        private void ApplyImportedConfiguration(List<Cluster> clusters, VanillaChanges vanillaChanges, string successMessage)
+        {
+            // Reset configuration
+            Reset(true);
+
+            if (Forms.GalaxySettingsForm.IsCustomGalaxy)
+            {
+                ToggleGalaxyMode(null);
+            }
+
+            // Apply vanilla changes to AllClusters
+            if (vanillaChanges != null)
+            {
+                SupportVanillaChangesInConfigImport((clusters, vanillaChanges));
+            }
+
+            Lazy<Cluster[]> vanillaClustersLazy = new(() => InitAllVanillaClusters(false).Clusters.Where(a => a.IsBaseGame).ToArray());
+
+            foreach (Cluster cluster in clusters)
+            {
+                Import_Support_NewVersions(cluster, vanillaClustersLazy);
+                ReplaceClusterByImport(cluster);
+
+                if (!cluster.IsBaseGame)
+                {
+                    _ = ClustersListBox.Items.Add(cluster.Name);
+                }
+            }
+
+            _clusterDlcLookup = null;
+            ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
+            _currentConfiguration = ExportJsonConfig();
+            _ = MessageBox.Show(successMessage, "Success");
         }
 
         private void SupportVanillaChangesInConfigImport((List<Cluster> clusters, VanillaChanges vanillaChanges) configuration)
@@ -1016,6 +1104,7 @@ namespace X4SectorCreator
                 sector.Tags = New.Tags;
                 sector.AllowRandomAnomalies = New.AllowRandomAnomalies;
                 sector.Placement = New.Placement;
+                sector.ResourceAreas = New.ResourceAreas.ToList();
             }
         }
 
@@ -1326,7 +1415,8 @@ namespace X4SectorCreator
                         nonModifiedSector.Security != modifiedSector.Security ||
                         nonModifiedSector.Tags != modifiedSector.Tags ||
                         nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies ||
-                        nonModifiedSector.Placement != modifiedSector.Placement)
+                        nonModifiedSector.Placement != modifiedSector.Placement ||
+                        IsResourceAreasModified(nonModifiedSector.ResourceAreas, modifiedSector.ResourceAreas))
                     {
                         // Add to modified clusters
                         vanillaChanges.ModifiedSectors.Add(new ModifiedSector { VanillaCluster = nonModifiedCluster, Old = nonModifiedSector, New = (Sector)modifiedSector.Clone() });
@@ -1357,6 +1447,31 @@ namespace X4SectorCreator
             }
 
             return vanillaChanges;
+        }
+
+        private static bool IsResourceAreasModified(List<Resource> old, List<Resource> @new)
+        {
+            static string Key(Resource r)
+                => $"{r.Ware}|{r.Yield}|{r.Size}|{r.Speed}|{r.Amount}";
+
+            var oldGroups = old
+                .GroupBy(Key)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            foreach (var resource in @new)
+            {
+                var key = Key(resource);
+
+                if (!oldGroups.TryGetValue(key, out var count))
+                    return true;
+
+                if (count == 1)
+                    oldGroups.Remove(key);
+                else
+                    oldGroups[key] = count - 1;
+            }
+
+            return oldGroups.Count > 0;
         }
         #endregion
 
@@ -1502,9 +1617,9 @@ namespace X4SectorCreator
                 ClusterForm.Value.BtnSector1.Checked = true;
             else if (amountOfSectors == 2)
                 ClusterForm.Value.BtnSector2.Checked = true;
-            else if(amountOfSectors == 3)
+            else if (amountOfSectors == 3)
                 ClusterForm.Value.BtnSector3.Checked = true;
-            else if(amountOfSectors == 4)
+            else if (amountOfSectors == 4)
                 ClusterForm.Value.BtnSector4.Checked = true;
 
             if (!string.IsNullOrWhiteSpace(cluster.Value.Soundtrack))
@@ -1530,10 +1645,10 @@ namespace X4SectorCreator
                 return;
             }
 
-            _sectorForm.Value.Sector = null;
-            _sectorForm.Value.BtnCreate.Text = "Create";
-            _sectorForm.Value.Init();
-            _sectorForm.Value.Show();
+            SectorForm.Value.Sector = null;
+            SectorForm.Value.BtnCreate.Text = "Create";
+            SectorForm.Value.Init();
+            SectorForm.Value.Show();
         }
 
         private void BtnRemoveSector_Click(object sender, EventArgs e)
@@ -1613,9 +1728,9 @@ namespace X4SectorCreator
             KeyValuePair<(int, int), Cluster> cluster = AllClusters.First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase));
             Sector sector = cluster.Value.Sectors.First(a => a.Name.Equals(selectedSectorName, StringComparison.OrdinalIgnoreCase));
 
-            _sectorForm.Value.Sector = sector;
-            _sectorForm.Value.BtnCreate.Text = "Update";
-            _sectorForm.Value.Show();
+            SectorForm.Value.Sector = sector;
+            SectorForm.Value.BtnCreate.Text = "Update";
+            SectorForm.Value.Show();
         }
 
         private void SectorsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1770,11 +1885,10 @@ namespace X4SectorCreator
                     _ = sb.AppendLine($"FactionLogic Disabled");
                 }
 
-                if (sector.Regions.Count > 0)
+                if (sector.ResourceAreas.Count > 0)
                 {
                     // Show minerals in sector
-                    HashSet<string> resources = sector.Regions
-                        .SelectMany(a => a.Definition.Resources)
+                    HashSet<string> resources = sector.ResourceAreas
                         .Select(a => a.Ware)
                         .ToHashSet(StringComparer.OrdinalIgnoreCase);
 

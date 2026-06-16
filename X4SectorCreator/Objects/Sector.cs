@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace X4SectorCreator.Objects
 {
@@ -19,6 +18,7 @@ namespace X4SectorCreator.Objects
         public string Tags { get; set; }
         public List<Zone> Zones { get; set; } = [];
         public List<Region> Regions { get; set; } = [];
+        public List<Resource> ResourceAreas { get; set; } = [];
         public SectorPlacement Placement { get; set; }
 
         [JsonIgnore]
@@ -143,6 +143,7 @@ namespace X4SectorCreator.Objects
                 Tags = Tags,
                 Zones = Zones.Select(a => (Zone)a.Clone()).ToList(),
                 Regions = Regions.Select(a => (Region)a.Clone()).ToList(),
+                ResourceAreas = ResourceAreas.Select(a => (Resource)a.Clone()).ToList()
             };
         }
 

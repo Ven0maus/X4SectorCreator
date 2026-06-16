@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Text.Json;
-using System.Xml.Linq;
 using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Helpers;
 using X4SectorCreator.Helpers;
@@ -27,17 +26,15 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
 
         private static readonly Dictionary<string, double> _yieldDensities = new(StringComparer.OrdinalIgnoreCase)
         {
-            ["lowest"] = 0.026,
             ["verylow"] = 0.06,
-            ["lowminus"] = 0.2,
             ["low"] = 0.6,
-            ["lowplus"] = 1.8,
-            ["medlow"] = 4,
             ["medium"] = 6,
-            ["medplus"] = 16,
-            ["medhigh"] = 32,
-            ["highlow"] = 48
+            ["high"] = 60,
+            ["veryhigh"] = 3600
         };
+
+        private static readonly string[] _sizes = new[] { "tiny", "small", "medium", "large" };
+        private static readonly string[] _speeds = new[] { "veryslow", "slow", "average", "fast", "veryfast" };
 
         private readonly Dictionary<string, List<RegionDefinition>> _regionDefinitions = new(StringComparer.OrdinalIgnoreCase);
         private readonly Dictionary<string, List<FieldObj>> _regionDefinitionFieldsCache;
@@ -56,7 +53,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
 
                 foreach (var field in fields)
                 {
-                    if (resource.Equals("rawscrap", StringComparison.OrdinalIgnoreCase) && field.Type != null && 
+                    if (resource.Equals("rawscrap", StringComparison.OrdinalIgnoreCase) && field.Type != null &&
                         field.Type.Equals("debris", StringComparison.OrdinalIgnoreCase) && !field.GroupRef.Contains("station"))
                         fieldList.Add(field);
                     else if (field.GroupRef != null && field.GroupRef.Contains(resource, StringComparison.OrdinalIgnoreCase) && !field.GroupRef.Contains("nores"))
@@ -89,8 +86,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             if (nodeCount == 0) return;
 
             var nearbyResources = GetNeighbors(sector, sectorMap, 3)
-                .SelectMany(a => a.Regions)
-                .SelectMany(a => a.Definition.Resources)
+                .SelectMany(a => a.ResourceAreas)
                 .Select(a => a.Ware)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
@@ -125,6 +121,28 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                 };
                 region.Name = $"{resource}_{yield}_{region.Id}";
                 sector.Regions.Add(region);
+
+                // Add resource area
+                var size = _sizes[_random.Next(0, _sizes.Length)];
+                var speed = _speeds[_random.Next(0, _speeds.Length)];
+                var ra = sector.ResourceAreas.FirstOrDefault(a => a.Ware == resource && a.Size == size && a.Speed == speed);
+                if (ra != null)
+                {
+                    ra.Amount += 1;
+                }
+                else
+                {
+                    ra = new Resource
+                    {
+                        Amount = _random.Next(1, 8),
+                        Size = size,
+                        Ware = resource,
+                        Yield = yield,
+                        Speed = speed
+                    };
+                    sector.ResourceAreas.Add(ra);
+                }
+
                 nearbyResources.Add(resource);
             }
         }
@@ -163,17 +181,9 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                         MinNoiseValue = "0.0",
                         MaxNoiseValue = "1",
                         Seed = _settings.Seed.ToString(),
-                        Resources =
-                        [
-                            new()
-                            {
-                                Ware = resource,
-                                Yield = yield
-                            }
-                        ]
                     };
 
-                    SetupRegionDefinitionFields(definition);
+                    SetupRegionDefinitionFields(definition, resource);
 
                     // Create a unique signature for the set of fields (e.g., sorted field names/IDs)
                     string fieldKey = string.Join(",", definition.Fields
@@ -199,7 +209,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                 return _yieldDensities.Where(a => a.Value >= 0.2 && a.Value <= 1.8).Select(a => a.Key).RandomOrDefault(_random);
             else if (richness < 0.75f)
                 return _yieldDensities.Where(a => a.Value >= 1.8 && a.Value <= 6).Select(a => a.Key).RandomOrDefault(_random);
-            else 
+            else
                 return _yieldDensities.Where(a => a.Value >= 6 && a.Value <= 48).Select(a => a.Key).RandomOrDefault(_random);
         }
 
@@ -214,7 +224,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                     // Continue searching until range exceeds
                     if (range > 1)
                     {
-                        foreach (var neighbor in GetNeighbors(destSector, sectorMap, range -1))
+                        foreach (var neighbor in GetNeighbors(destSector, sectorMap, range - 1))
                             yield return neighbor;
                     }
                 }
@@ -261,11 +271,9 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
             return adjustedResources.Last().Resource;
         }
 
-        private void SetupRegionDefinitionFields(RegionDefinition regionDefinition)
+        private void SetupRegionDefinitionFields(RegionDefinition regionDefinition, string ware)
         {
-            var resources = regionDefinition.Resources
-                .Select(a => a.Ware)
-                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            var resources = new HashSet<string> { ware };
 
             var gases = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "methane", "helium", "hydrogen" };
             var fields = new List<FieldObj>();
@@ -289,7 +297,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                         amount = _random.Next(1, fieldObjects.Count / 2);
                     }
 
-                    for (int i=0; i < amount; i++)
+                    for (int i = 0; i < amount; i++)
                     {
                         var selected = values.RandomOrDefault(_random);
                         if (selected != null)
@@ -316,8 +324,7 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                 foreach (var sector in cluster.Sectors)
                 {
                     var nearbyResources = GetNeighbors(sector, sectorMap, 3)
-                        .SelectMany(a => a.Regions)
-                        .SelectMany(a => a.Definition.Resources)
+                        .SelectMany(a => a.ResourceAreas)
                         .Select(a => a.Ware)
                         .ToHashSet(StringComparer.OrdinalIgnoreCase);
                     if (nearbyResources.Count <= 5)
@@ -356,6 +363,28 @@ namespace X4SectorCreator.Forms.Galaxy.ProceduralGeneration.Algorithms.RegionAlg
                             region.Name = $"{resource}_{yield}_{region.Id}";
                             nearbyResources.Add(resource);
                             sector.Regions.Add(region);
+
+                            // Add resource area
+                            var size = _sizes[_random.Next(0, _sizes.Length)];
+                            var speed = _speeds[_random.Next(0, _speeds.Length)];
+                            var ra = sector.ResourceAreas.FirstOrDefault(a => a.Ware == resource && a.Size == size && a.Speed == speed);
+                            if (ra != null)
+                            {
+                                ra.Amount += 1;
+                            }
+                            else
+                            {
+                                ra = new Resource
+                                {
+                                    Amount = _random.Next(1, 8),
+                                    Size = size,
+                                    Ware = resource,
+                                    Yield = yield,
+                                    Speed = speed
+                                };
+                                sector.ResourceAreas.Add(ra);
+                            }
+
                             count++;
                         }
                     }

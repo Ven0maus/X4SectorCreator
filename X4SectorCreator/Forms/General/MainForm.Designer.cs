@@ -45,6 +45,7 @@
             LblDetails = new Label();
             BtnExportConfig = new Button();
             BtnImportConfig = new Button();
+            BtnImportMod = new Button();
             BtnGalaxySettings = new Button();
             BtnReset = new Button();
             BtnShowSectorMap = new Button();
@@ -53,7 +54,7 @@
             RegionsListBox = new ListBox();
             label1 = new Label();
             BtnRemoveRegion = new Button();
-            cmbClusterOption = new ComboBox();
+            cmbClusterOption = new CustomComponents.NoScrollComboBox();
             BtnNewStation = new Button();
             ListStations = new ListBox();
             label2 = new Label();
@@ -239,6 +240,16 @@
             BtnImportConfig.Text = "Import Config";
             BtnImportConfig.UseVisualStyleBackColor = true;
             BtnImportConfig.Click += BtnImportConfig_Click;
+            // 
+            // BtnImportMod
+            // 
+            BtnImportMod.Location = new Point(660, 10);
+            BtnImportMod.Name = "BtnImportMod";
+            BtnImportMod.Size = new Size(156, 31);
+            BtnImportMod.TabIndex = 62;
+            BtnImportMod.Text = "Import Mod";
+            BtnImportMod.UseVisualStyleBackColor = true;
+            BtnImportMod.Click += BtnImportMod_Click;
             // 
             // BtnGalaxySettings
             // 
@@ -453,7 +464,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(661, 596);
+            ClientSize = new Size(828, 596);
             Controls.Add(BtnGuide);
             Controls.Add(BtnSaveSectorMapping);
             Controls.Add(GenerateModProgressBar);
@@ -476,6 +487,7 @@
             Controls.Add(BtnReset);
             Controls.Add(BtnGalaxySettings);
             Controls.Add(BtnImportConfig);
+            Controls.Add(BtnImportMod);
             Controls.Add(BtnExportConfig);
             Controls.Add(LblDetails);
             Controls.Add(lblSelectionInfo);
@@ -517,6 +529,7 @@
         private Label LblDetails;
         private Button BtnExportConfig;
         private Button BtnImportConfig;
+        private Button BtnImportMod;
         private Button BtnGalaxySettings;
         private Button BtnReset;
         private Button BtnShowSectorMap;
@@ -528,7 +541,7 @@
         internal ListBox RegionsListBox;
         private Label label1;
         private Button BtnRemoveRegion;
-        private ComboBox cmbClusterOption;
+        private CustomComponents.NoScrollComboBox cmbClusterOption;
         private Button BtnNewStation;
         internal ListBox ListStations;
         private Label label2;

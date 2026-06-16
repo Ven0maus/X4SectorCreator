@@ -125,8 +125,6 @@ namespace DevConsole.Extractors
                     invalid.Add(definition);
                     continue;
                 }
-
-                definition.Resources = regionObj.Resources;
             }
 
             // Remove all regions that are invalid
@@ -253,20 +251,8 @@ namespace DevConsole.Extractors
                 var regionObj = new RegionObj
                 {
                     Name = region.Attribute("name")?.Value,
-                    Resources = [.. (region.Element("resources")?.Elements("resource") ?? [])
-                        .Select(a => new Resource
-                        {
-                            Ware = a.Attribute("ware")?.Value,
-                            Yield = a.Attribute("yield")?.Value
-                        })]
+                    BoundaryRadius = ExtractBoundaryRadius(region)
                 };
-
-                // Skip resource less regions
-                if (regionObj.Resources.Count == 0)
-                    continue;
-
-                // Extract also radius
-                regionObj.BoundaryRadius = ExtractBoundaryRadius(region);
 
                 yield return regionObj;
             }
@@ -276,7 +262,6 @@ namespace DevConsole.Extractors
         {
             public string Name { get; set; }
             public string BoundaryRadius { get; set; }
-            public List<Resource> Resources { get; set; }
         }
 
         public class Position

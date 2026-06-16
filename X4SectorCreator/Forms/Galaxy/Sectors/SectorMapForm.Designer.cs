@@ -41,6 +41,7 @@
             label2 = new Label();
             TxtSearch = new TextBox();
             label4 = new Label();
+            BtnSaveHdImage = new Button();
             ControlPanel.SuspendLayout();
             LegendPanel.SuspendLayout();
             SuspendLayout();
@@ -220,9 +221,22 @@
             label4.Text = "Search by name:";
             label4.TextAlign = ContentAlignment.TopCenter;
             // 
+            // BtnSaveHdImage
+            // 
+            BtnSaveHdImage.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnSaveHdImage.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            BtnSaveHdImage.Location = new Point(678, 8);
+            BtnSaveHdImage.Name = "BtnSaveHdImage";
+            BtnSaveHdImage.Size = new Size(111, 27);
+            BtnSaveHdImage.TabIndex = 10;
+            BtnSaveHdImage.Text = "HD Photo";
+            BtnSaveHdImage.UseVisualStyleBackColor = true;
+            BtnSaveHdImage.Click += BtnSaveHdImage_Click;
+            // 
             // SectorMapForm
             // 
             ClientSize = new Size(983, 782);
+            Controls.Add(BtnSaveHdImage);
             Controls.Add(label4);
             Controls.Add(TxtSearch);
             Controls.Add(LegendPanel);
@@ -252,6 +266,7 @@
         internal Button BtnHideOptions;
         private TextBox TxtSearch;
         private Label label4;
+        private Button BtnSaveHdImage;
         internal CheckedListBox MapOptionsListBox;
     }
 }

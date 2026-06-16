@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.Drawing.Text;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -58,6 +60,7 @@ namespace X4SectorCreator
 
         private static bool _sectorMapFirstTimeOpen = true;
         private int _originalLegendPanelHeight, _originalControlPanelHeight;
+        private bool _isHdExportRendering;
 
         private Image _factionLogicImageLarge;
         private Image _factionLogicImageSmall;
@@ -78,7 +81,8 @@ namespace X4SectorCreator
                     ("Helium", Color.LightCoral),
                     ("Hydrogen", Color.DarkCyan),
                     ("Nividium", Color.Fuchsia),
-                    ("RawScrap", Color.Red)
+                    ("RawScrap", Color.Red),
+                    ("RawKhaakScrap", Color.DarkRed)
                 }
             },
             {
@@ -133,20 +137,11 @@ namespace X4SectorCreator
 
         private static readonly Dictionary<string, double> _yieldDensities = new(StringComparer.OrdinalIgnoreCase)
         {
-            ["lowest"] = 0.026,
             ["verylow"] = 0.06,
-            ["lowminus"] = 0.2,
             ["low"] = 0.6,
-            ["lowplus"] = 1.8,
-            ["medlow"] = 4,
             ["medium"] = 6,
-            ["medplus"] = 16,
-            ["medhigh"] = 32,
-            ["highlow"] = 48,
             ["high"] = 60,
-            ["highplus"] = 120,
-            ["veryhigh"] = 3600,
-            ["highest"] = 60000
+            ["veryhigh"] = 3600
         };
 
         private static readonly Dictionary<string, Image> _imageMap = new(StringComparer.OrdinalIgnoreCase);
@@ -205,7 +200,7 @@ namespace X4SectorCreator
                 if (!_mapOptionsSelected.TryGetValue(mapOption, out var selected))
                 {
                     // If not yet initialized, it will be by default selected except "show coordinates"
-                    _mapOptionsSelected[mapOption] = selected = 
+                    _mapOptionsSelected[mapOption] = selected =
                         !mapOption.Equals("Show Coordinates", StringComparison.OrdinalIgnoreCase) &&
                         !mapOption.Equals("Visualize Regions", StringComparison.OrdinalIgnoreCase) &&
                         !mapOption.Equals("Keep Window Open", StringComparison.OrdinalIgnoreCase);
@@ -823,40 +818,7 @@ namespace X4SectorCreator
         {
             try
             {
-                // Init graphics properly with offset and scaling
-                e.Graphics.Clear(Color.Black);
-                e.Graphics.TranslateTransform(_offset.X, _offset.Y);
-                e.Graphics.ScaleTransform(_zoom, _zoom);
-                e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-                // Renders all the hexagons in the screen
-                RenderAllHexes(e, out bool invalid);
-
-                // Early exit if needed
-                if (invalid)
-                {
-                    // Do a full-reset of the grid because data became invalid.
-                    Reset();
-                    return;
-                }
-
-                // Highlight selected hex
-                RenderHexSelection(e);
-
-                // Render region circles within hexes
-                RenderRegionCircles(e);
-
-                // Render gate connections above hexes + selected hex
-                RenderGateConnections(e);
-
-                // Render station icons
-                RenderHexIcons(e);
-
-                // Hex names draw on top of everything
-                RenderAllHexNames(e);
-
-                // Draw tip label
-                RenderTipLabel(e);
+                RenderMap(e.Graphics, allowReset: true, includeTipLabel: true);
             }
             catch (Exception ex)
             {
@@ -866,6 +828,44 @@ namespace X4SectorCreator
                 _ = MessageBox.Show("An error occured when trying to render the map view: \"" + ex.Message + "\".\nPlease create a bug report. (Be sure to provide the export xml or exact reproduction steps).");
                 Close();
 #endif
+            }
+        }
+
+        private void RenderMap(Graphics graphics, bool allowReset, bool includeTipLabel)
+        {
+            graphics.Clear(Color.Black);
+            graphics.TranslateTransform(_offset.X, _offset.Y);
+            graphics.ScaleTransform(_zoom, _zoom);
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            PaintEventArgs paintArgs = new(graphics, Rectangle.Round(graphics.VisibleClipBounds));
+
+            RenderAllHexes(paintArgs, out bool invalid);
+            if (invalid)
+            {
+                if (allowReset)
+                {
+                    Reset();
+                    return;
+                }
+
+                throw new InvalidOperationException("Unable to render the map because the sector layout is invalid.");
+            }
+
+            if (_isHdExportRendering)
+            {
+                RenderExportHexGridOverlay(paintArgs);
+            }
+
+            RenderHexSelection(paintArgs);
+            RenderRegionCircles(paintArgs);
+            RenderGateConnections(paintArgs);
+            RenderHexIcons(paintArgs);
+            RenderAllHexNames(paintArgs);
+
+            if (includeTipLabel)
+            {
+                RenderTipLabel(paintArgs);
             }
         }
 
@@ -903,14 +903,21 @@ namespace X4SectorCreator
 
             // Setup color mapping based on resources of region definitions
             var colorMappings = clusters
-                .SelectMany(a => a.Sectors)
-                .SelectMany(a => a.Regions)
-                .Select(a => a.Definition)
-                .Distinct()
-                .ToDictionary(a => a, a => a.Resources
-                .GroupBy(a => a.Ware)
-                .Select(a => resourceColors[a.Key])
-                .ToArray());
+                .SelectMany(c => c.Sectors)
+                .SelectMany(
+                    sector => sector.Regions,
+                    (sector, region) => new
+                    {
+                        Definition = region.Definition,
+                        Sector = sector
+                    })
+                .GroupBy(x => x.Definition)
+                .ToDictionary(
+                    g => g.Key,
+                    g => g.SelectMany(x => x.Sector.ResourceAreas)
+                          .GroupBy(x => x.Ware)
+                          .Select(x => resourceColors[x.Key])
+                          .ToArray());
 
             foreach (var cluster in clusters)
             {
@@ -1167,16 +1174,7 @@ namespace X4SectorCreator
             {
                 foreach (Sector sector in cluster.Sectors.Where(a => a.Regions.Count > 0))
                 {
-                    var resources = sector.Regions
-                        .Where(a =>
-                        {
-                            if (!showVanilla && a.IsBaseGame)
-                                return false;
-                            if (!showCustom && !a.IsBaseGame)
-                                return false;
-                            return true;
-                        })
-                        .SelectMany(a => a.Definition.Resources);
+                    var resources = sector.ResourceAreas;
                     foreach (var resource in resources)
                     {
                         if (!resourceColors.TryGetValue(resource.Ware, out var resourceColor))
@@ -1932,7 +1930,8 @@ namespace X4SectorCreator
             }
 
             // Scaled text font
-            using Font fBoldAndUnderlined = new(Font.FontFamily, Font.Size * (_hexSize / 100), FontStyle.Bold | FontStyle.Underline);
+            float mainFontSize = Font.Size * (_hexSize / 100);
+            float childFontSize = mainFontSize / 2f;
 
             // Draw child names
             int index = 0; // reset for name rendering
@@ -1953,10 +1952,12 @@ namespace X4SectorCreator
 
                 PointF childHexCenter = GetHexCenter(child.Points);
                 SizeF childHexSize = GetHexSize(child.Points);
-                SizeF childTextSize = e.Graphics.MeasureString(sector.Name, fBoldAndUnderlined);
-                e.Graphics.DrawString(sector.Name, fBoldAndUnderlined, Brushes.White,
-                    childHexCenter.X - (childTextSize.Width / 2),  // Center horizontally
-                    childHexCenter.Y - (childHexSize.Height * 0.3f) - childTextSize.Height); // Place above the hex
+                RectangleF childBounds = new(
+                    childHexCenter.X - (childHexSize.Width * 0.37f),
+                    childHexCenter.Y - (childHexSize.Height * 0.20f),
+                    childHexSize.Width * 0.74f,
+                    childHexSize.Height * 0.40f);
+                DrawCenteredFittedLabel(e.Graphics, sector.Name, childBounds, childFontSize, 1.5f, FontStyle.Bold, Brushes.White);
                 index++;
             }
 
@@ -1969,11 +1970,37 @@ namespace X4SectorCreator
                     return;
                 }
 
-                SizeF textSize = e.Graphics.MeasureString(cluster.Sectors[index].Name, fBoldAndUnderlined);
-                e.Graphics.DrawString(cluster.Sectors[index].Name, fBoldAndUnderlined, Brushes.White,
-                    hexCenter.X - (textSize.Width / 2),  // Center horizontally
-                    hexCenter.Y - (hexSize.Height * 0.37f) - textSize.Height); // Place above the hex
+                RectangleF mainBounds = new(
+                    hexCenter.X - (hexSize.Width * 0.39f),
+                    hexCenter.Y - (hexSize.Height * 0.25f),
+                    hexSize.Width * 0.78f,
+                    hexSize.Height * 0.50f);
+                DrawCenteredFittedLabel(e.Graphics, cluster.Sectors[index].Name, mainBounds, mainFontSize, 2.5f, FontStyle.Bold, Brushes.White);
             }
+        }
+
+        private static void DrawCenteredFittedLabel(Graphics graphics, string text, RectangleF bounds, float maxFontSize, float minFontSize, FontStyle style, Brush brush)
+        {
+            using StringFormat format = new()
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center,
+                Trimming = StringTrimming.None
+            };
+
+            for (float fontSize = maxFontSize; fontSize >= minFontSize; fontSize -= 0.5f)
+            {
+                using Font font = new("Segoe UI", fontSize, style);
+                SizeF measured = graphics.MeasureString(text, font, new SizeF(bounds.Width, bounds.Height), format);
+                if (measured.Width <= bounds.Width && measured.Height <= bounds.Height)
+                {
+                    graphics.DrawString(text, font, brush, bounds, format);
+                    return;
+                }
+            }
+
+            using Font fallbackFont = new("Segoe UI", minFontSize, style);
+            graphics.DrawString(text, fallbackFont, brush, bounds, format);
         }
 
         private static PointF GetHexCenter(PointF[] hex)
@@ -2054,6 +2081,162 @@ namespace X4SectorCreator
             int a = (int)(color1.A + ((color2.A - color1.A) * t));
 
             return Color.FromArgb(a, r, g, b);
+        }
+
+        private void BtnSaveHdImage_Click(object sender, EventArgs e)
+        {
+            using SaveFileDialog saveFileDialog = new();
+            saveFileDialog.Filter = "PNG image (*.png)|*.png";
+            saveFileDialog.DefaultExt = "png";
+            saveFileDialog.AddExtension = true;
+            saveFileDialog.Title = "Save high-definition sector map image";
+            saveFileDialog.FileName = $"sector-map-{DateTime.Now:yyyyMMdd-HHmmss}.png";
+
+            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            try
+            {
+                const int exportSize = 20000;
+                int imageWidth = exportSize;
+                int imageHeight = exportSize;
+
+                using Bitmap bitmap = new(imageWidth, imageHeight);
+                bitmap.SetResolution(300, 300);
+                using Graphics graphics = Graphics.FromImage(bitmap);
+                graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+
+                float previousZoom = _zoom;
+                PointF previousOffset = _offset;
+
+                try
+                {
+                    var bounds = GetMapBounds();
+                    const float padding = 400f;
+                    float availableWidth = imageWidth - (padding * 2);
+                    float availableHeight = imageHeight - (padding * 2);
+                    float scale = Math.Min(availableWidth / bounds.Width, availableHeight / bounds.Height);
+
+                    _isHdExportRendering = true;
+                    _zoom = scale;
+                    _offset = new PointF(
+                        padding + ((availableWidth - (bounds.Width * scale)) / 2f) - (bounds.Left * scale),
+                        padding + ((availableHeight - (bounds.Height * scale)) / 2f) - (bounds.Top * scale));
+
+                    RenderMap(graphics, allowReset: false, includeTipLabel: false);
+                    graphics.ResetTransform();
+                    DrawHdScaleKey(graphics, imageWidth, imageHeight);
+                }
+                finally
+                {
+                    _isHdExportRendering = false;
+                    _zoom = previousZoom;
+                    _offset = previousOffset;
+                }
+
+                bitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
+
+                _ = MessageBox.Show($"High-definition sector map saved succesfully.\nResolution: {imageWidth}x{imageHeight}", "Sector map saved");
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                throw;
+#else
+                _ = MessageBox.Show("Unable to save the sector map image: " + ex.Message, "Export failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
+            }
+        }
+
+        private void RenderExportHexGridOverlay(PaintEventArgs e)
+        {
+            using Pen gridPen = new(Color.FromArgb(140, 80, 80, 80), 2f / Math.Max(_zoom, 0.0001f));
+
+            foreach (var hex in _hexagons.Values)
+            {
+                e.Graphics.DrawPolygon(gridPen, hex.Points);
+
+                foreach (var child in hex.Children)
+                {
+                    e.Graphics.DrawPolygon(gridPen, child.Points);
+                }
+            }
+        }
+
+        private void DrawHdScaleKey(Graphics graphics, int imageWidth, int imageHeight)
+        {
+            const int boxWidth = 900;
+            const int boxHeight = 250;
+            const int margin = 70;
+            Rectangle box = new(margin, imageHeight - boxHeight - margin, boxWidth, boxHeight);
+
+            using SolidBrush backgroundBrush = new(Color.FromArgb(210, 0, 0, 0));
+            using Pen borderPen = new(Color.White, 3f);
+            using Font titleFont = new("Segoe UI", 22, FontStyle.Bold);
+            using Font bodyFont = new("Segoe UI", 16, FontStyle.Regular);
+            const int leftPadding = 24;
+            const int topPadding = 18;
+            const int lineSpacing = 14;
+
+            graphics.FillRectangle(backgroundBrush, box);
+            graphics.DrawRectangle(borderPen, box);
+
+            var originCluster = MainForm.Instance.AllClusters.Values
+                .FirstOrDefault(a => a.Name.Equals("Getsu Fune", StringComparison.OrdinalIgnoreCase));
+            var originText = originCluster != null
+                ? $"Grid origin: Getsu Fune ({originCluster.Position.X}, {originCluster.Position.Y})"
+                : "Grid origin: Getsu Fune";
+
+            float y = box.Top + topPadding;
+            graphics.DrawString("Hex Grid Scale", titleFont, Brushes.White, box.Left + leftPadding, y);
+            y += titleFont.GetHeight(graphics) + lineSpacing;
+            graphics.DrawString(originText, bodyFont, Brushes.White, box.Left + leftPadding, y);
+            y += bodyFont.GetHeight(graphics) + lineSpacing;
+            graphics.DrawString("1 horizontal hex step = 15000000 m", bodyFont, Brushes.White, box.Left + leftPadding, y);
+            y += bodyFont.GetHeight(graphics) + lineSpacing;
+            graphics.DrawString("1 vertical half-step = 8660000 m", bodyFont, Brushes.White, box.Left + leftPadding, y);
+        }
+
+        private RectangleF GetMapBounds()
+        {
+            float minX = float.MaxValue;
+            float minY = float.MaxValue;
+            float maxX = float.MinValue;
+            float maxY = float.MinValue;
+
+            foreach (var hex in _hexagons.Values)
+            {
+                foreach (var point in hex.Points)
+                {
+                    minX = Math.Min(minX, point.X);
+                    minY = Math.Min(minY, point.Y);
+                    maxX = Math.Max(maxX, point.X);
+                    maxY = Math.Max(maxY, point.Y);
+                }
+
+                foreach (var child in hex.Children)
+                {
+                    foreach (var point in child.Points)
+                    {
+                        minX = Math.Min(minX, point.X);
+                        minY = Math.Min(minY, point.Y);
+                        maxX = Math.Max(maxX, point.X);
+                        maxY = Math.Max(maxY, point.Y);
+                    }
+                }
+            }
+
+            if (minX == float.MaxValue || minY == float.MaxValue)
+            {
+                return new RectangleF(0, 0, 1, 1);
+            }
+
+            return RectangleF.FromLTRB(minX, minY, maxX, maxY);
         }
 
         private void BtnSelectLocation_Click(object sender, EventArgs e)
