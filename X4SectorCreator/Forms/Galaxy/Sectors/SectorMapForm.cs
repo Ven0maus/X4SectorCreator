@@ -407,14 +407,6 @@ namespace X4SectorCreator
                 Invalidate();
             }
 
-            if (e.KeyCode == Keys.Escape && _movingSector != null)
-            {
-                _movingSector = null;
-                _movingSectorCluster = null;
-                _movingSectorChildIndex = null;
-                Invalidate();
-            }
-
             if (e.KeyCode == Keys.Escape && _movingHighway != null)
             {
                 _movingHighway.SourceZone.Position = _movingHighway.OriginalSourceZonePosition;
@@ -426,58 +418,9 @@ namespace X4SectorCreator
 
         private Cluster _movingCluster = null;
         private bool _draggingClusterMove = false;
-        private Cluster _movingSectorCluster = null;
-        private Sector _movingSector = null;
-        private int? _movingSectorChildIndex = null;
-        private bool _draggingSectorMove = false;
         private HighwayDragState _movingHighway = null;
         private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
         {
-        }
-
-        private void CompleteSectorMove(PointF adjustedMousePos)
-        {
-            if (_movingSector == null || _movingSectorCluster == null)
-            {
-                return;
-            }
-
-            if (!TryGetSectorAtMousePos(adjustedMousePos, out Cluster cluster, out Sector sector, out int sectorIndex))
-            {
-                _movingSector = null;
-                _movingSectorCluster = null;
-                _movingSectorChildIndex = null;
-                Invalidate();
-                return;
-            }
-
-            if (_movingSector == sector)
-            {
-                _movingSector = null;
-                _movingSectorCluster = null;
-                _movingSectorChildIndex = null;
-                Invalidate();
-                return;
-            }
-
-            if (_movingSectorCluster != cluster)
-            {
-                _ = MessageBox.Show("Sectors can only be rearranged within the same cluster.");
-                _movingSector = null;
-                _movingSectorCluster = null;
-                _movingSectorChildIndex = null;
-                Invalidate();
-                return;
-            }
-
-            (_movingSector.Placement, sector.Placement) = (sector.Placement, _movingSector.Placement);
-            SectorForm.DetermineSectorOffset(cluster, _movingSector);
-            SectorForm.DetermineSectorOffset(cluster, sector);
-
-            _movingSector = null;
-            _movingSectorCluster = null;
-            _movingSectorChildIndex = null;
-            Reset(false);
         }
 
         private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
@@ -499,45 +442,10 @@ namespace X4SectorCreator
             return null;
         }
 
-        private bool TryGetSectorAtMousePos(PointF mousePos, out Cluster cluster, out Sector sector, out int sectorIndex)
-        {
-            foreach (var hex in _hexagons.Values)
-            {
-                if (!MainForm.Instance.AllClusters.TryGetValue(hex.Position, out cluster))
-                {
-                    continue;
-                }
-
-                if (cluster.Sectors.Count <= 1 || hex.Children.Count == 0)
-                {
-                    continue;
-                }
-
-                for (int index = 0; index < hex.Children.Count && index < cluster.Sectors.Count; index++)
-                {
-                    if (IsPointInPolygon(hex.Children[index].Points, mousePos))
-                    {
-                        sector = cluster.Sectors[index];
-                        sectorIndex = index;
-                        return true;
-                    }
-                }
-            }
-
-            cluster = null;
-            sector = null;
-            sectorIndex = -1;
-            return false;
-        }
-
         public void Reset(bool resetLegendTree = true)
         {
             _movingCluster = null;
             _draggingClusterMove = false;
-            _movingSector = null;
-            _movingSectorCluster = null;
-            _movingSectorChildIndex = null;
-            _draggingSectorMove = false;
             _movingHighway = null;
             _baseGameClusters = MainForm.Instance.AllClusters
                 .Where(a => a.Value.IsBaseGame)
@@ -656,16 +564,6 @@ namespace X4SectorCreator
                     return;
                 }
 
-                if (TryGetSectorAtMousePos(adjustedMousePos, out Cluster sectorCluster, out Sector sector, out int sectorIndex) && sectorCluster.Sectors.Count > 1)
-                {
-                    _movingSector = sector;
-                    _movingSectorCluster = sectorCluster;
-                    _movingSectorChildIndex = sectorIndex;
-                    _draggingSectorMove = true;
-                    Invalidate();
-                    return;
-                }
-
                 Cluster cluster = GetClusterAtMousePos(adjustedMousePos, out _);
                 if (cluster != null)
                 {
@@ -695,12 +593,6 @@ namespace X4SectorCreator
                 return;
             }
 
-            if (_draggingSectorMove)
-            {
-                Invalidate();
-                return;
-            }
-
             if (_draggingClusterMove)
             {
                 Invalidate();
@@ -722,18 +614,6 @@ namespace X4SectorCreator
             {
                 _movingHighway = null;
                 Invalidate();
-                return;
-            }
-
-            if (_draggingSectorMove)
-            {
-                _draggingSectorMove = false;
-
-                PointF adjustedMousePos = new(
-                    (e.Location.X - _offset.X) / _zoom,
-                    (e.Location.Y - _offset.Y) / _zoom
-                );
-                CompleteSectorMove(adjustedMousePos);
                 return;
             }
 
@@ -1231,7 +1111,7 @@ namespace X4SectorCreator
             GraphicsState state = e.Graphics.Save();
             e.Graphics.ResetTransform();
 
-            string labelText = "Tip: Right drag moves clusters, subsectors, and highways.";
+            string labelText = "Tip: Right drag moves clusters and highways.";
             using (Font font = new("Segoe UI", 12f, FontStyle.Bold))
             using (Brush brush = new SolidBrush(Color.Yellow))
             {
@@ -1565,13 +1445,6 @@ namespace X4SectorCreator
 
         private void RenderHexSelection(PaintEventArgs e)
         {
-            if (_movingSectorCluster != null && _movingSectorChildIndex != null)
-            {
-                using SolidBrush movingBrush = new(Color.Gold);
-                Hexagon movingHex = _hexagons[(_movingSectorCluster.Position.X, _movingSectorCluster.Position.Y)].Children[_movingSectorChildIndex.Value];
-                e.Graphics.FillPolygon(movingBrush, movingHex.Points);
-            }
-
             if (_selectedHex != null)
             {
                 using SolidBrush brush = new(Color.Cyan);
