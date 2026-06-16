@@ -412,6 +412,7 @@ namespace X4SectorCreator
                 _movingSector = null;
                 _movingSectorCluster = null;
                 _movingSectorChildIndex = null;
+                _movingSectorTargetChildIndex = null;
                 Invalidate();
             }
 
@@ -429,6 +430,7 @@ namespace X4SectorCreator
         private Cluster _movingSectorCluster = null;
         private Sector _movingSector = null;
         private int? _movingSectorChildIndex = null;
+        private int? _movingSectorTargetChildIndex = null;
         private bool _draggingSectorMove = false;
         private HighwayDragState _movingHighway = null;
         private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
@@ -445,6 +447,7 @@ namespace X4SectorCreator
                 _movingSector = null;
                 _movingSectorCluster = null;
                 _movingSectorChildIndex = null;
+                _movingSectorTargetChildIndex = null;
                 Invalidate();
                 return;
             }
@@ -454,15 +457,17 @@ namespace X4SectorCreator
                 _movingSector = null;
                 _movingSectorCluster = null;
                 _movingSectorChildIndex = null;
+                _movingSectorTargetChildIndex = null;
                 Invalidate();
                 return;
             }
 
-            if (_movingSector == sector)
+            if (_movingSector == sector || _movingSectorTargetChildIndex == null)
             {
                 _movingSector = null;
                 _movingSectorCluster = null;
                 _movingSectorChildIndex = null;
+                _movingSectorTargetChildIndex = null;
                 Invalidate();
                 return;
             }
@@ -474,6 +479,7 @@ namespace X4SectorCreator
             _movingSector = null;
             _movingSectorCluster = null;
             _movingSectorChildIndex = null;
+            _movingSectorTargetChildIndex = null;
             Reset(false);
         }
 
@@ -530,6 +536,7 @@ namespace X4SectorCreator
             _movingSector = null;
             _movingSectorCluster = null;
             _movingSectorChildIndex = null;
+            _movingSectorTargetChildIndex = null;
             _draggingSectorMove = false;
             _movingHighway = null;
             _baseGameClusters = MainForm.Instance.AllClusters
@@ -654,6 +661,7 @@ namespace X4SectorCreator
                     _movingSector = sector;
                     _movingSectorCluster = sectorCluster;
                     _movingSectorChildIndex = sectorIndex;
+                    _movingSectorTargetChildIndex = null;
                     _draggingSectorMove = true;
                     Invalidate();
                     return;
@@ -690,6 +698,18 @@ namespace X4SectorCreator
 
             if (_draggingSectorMove)
             {
+                PointF adjustedMousePos = new(
+                    (e.Location.X - _offset.X) / _zoom,
+                    (e.Location.Y - _offset.Y) / _zoom
+                );
+
+                _movingSectorTargetChildIndex = null;
+                if (TryGetSectorAtMousePos(adjustedMousePos, out Cluster sectorCluster, out Sector sector, out int sectorIndex) &&
+                    sectorCluster == _movingSectorCluster && sector != _movingSector)
+                {
+                    _movingSectorTargetChildIndex = sectorIndex;
+                }
+
                 Invalidate();
                 return;
             }
@@ -1563,6 +1583,13 @@ namespace X4SectorCreator
                 using SolidBrush movingBrush = new(Color.Gold);
                 Hexagon movingHex = _hexagons[(_movingSectorCluster.Position.X, _movingSectorCluster.Position.Y)].Children[_movingSectorChildIndex.Value];
                 e.Graphics.FillPolygon(movingBrush, movingHex.Points);
+
+                if (_movingSectorTargetChildIndex != null)
+                {
+                    using SolidBrush targetBrush = new(Color.FromArgb(180, Color.Orange));
+                    Hexagon targetHex = _hexagons[(_movingSectorCluster.Position.X, _movingSectorCluster.Position.Y)].Children[_movingSectorTargetChildIndex.Value];
+                    e.Graphics.FillPolygon(targetBrush, targetHex.Points);
+                }
             }
 
             if (_selectedHex != null)
