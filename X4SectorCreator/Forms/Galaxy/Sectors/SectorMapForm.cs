@@ -671,7 +671,7 @@ namespace X4SectorCreator
                     (e.Location.Y - _offset.Y) / _zoom
                 );
 
-                if (TryGetHighwayAtMousePos(adjustedMousePos, out GateConnection highwayConnection))
+                if (TryGetHighwayAtMousePos(e.Location, out GateConnection highwayConnection))
                 {
                     _movingHighway = new HighwayDragState
                     {
@@ -1887,22 +1887,24 @@ namespace X4SectorCreator
             e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);
         }
 
-        private bool TryGetHighwayAtMousePos(PointF mousePos, out GateConnection connection)
+        private bool TryGetHighwayAtMousePos(Point mousePos, out GateConnection connection)
         {
-            const float nodeHitRadius = 24f;
-            const float lineHitRadius = 28f;
+            float renderedNodeRadius = Math.Max(_gateSizeRadius * _zoom, 8f);
+            float nodeHitRadius = renderedNodeRadius + 6f;
+            float lineHitRadius = renderedNodeRadius + 10f;
 
             foreach (var item in GetVisibleGateConnections())
             {
                 if (!item.Source.Gate.IsHighwayGate && !item.Target.Gate.IsHighwayGate)
                     continue;
 
-                PointF source = new(item.Source.ScreenX, item.Source.ScreenY);
-                PointF target = new(item.Target.ScreenX, item.Target.ScreenY);
+                PointF source = new((item.Source.ScreenX * _zoom) + _offset.X, (item.Source.ScreenY * _zoom) + _offset.Y);
+                PointF target = new((item.Target.ScreenX * _zoom) + _offset.X, (item.Target.ScreenY * _zoom) + _offset.Y);
+                PointF mouse = new(mousePos.X, mousePos.Y);
 
-                if (Distance(mousePos, source) <= nodeHitRadius ||
-                    Distance(mousePos, target) <= nodeHitRadius ||
-                    DistanceToSegment(mousePos, source, target) <= lineHitRadius)
+                if (Distance(mouse, source) <= nodeHitRadius ||
+                    Distance(mouse, target) <= nodeHitRadius ||
+                    DistanceToSegment(mouse, source, target) <= lineHitRadius)
                 {
                     connection = item;
                     return true;
