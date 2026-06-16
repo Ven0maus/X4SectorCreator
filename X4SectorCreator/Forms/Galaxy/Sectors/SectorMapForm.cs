@@ -727,30 +727,80 @@ namespace X4SectorCreator
             {
                 foreach (var sector in cluster.Sectors)
                 {
+                    PointF sectorHexCenter = GetSectorHexCenter(cluster, sector);
+                    float sectorHexRadius = GetSectorHexRadius(cluster);
+                    PointF[] snapPoints = GetTravelNodeSnapPoints(cluster, sector).ToArray();
+                    HashSet<int> usedIndices = [];
+
                     foreach (var zone in sector.Zones)
                     {
                         foreach (var gate in zone.Gates)
                         {
-                            if (!gate.IsHighwayGate)
+                            if (!gate.IsAcceleratorNode && !gate.IsInterSectorGate)
                                 continue;
 
-                            PointF sectorHexCenter = GetSectorHexCenter(cluster, sector);
-                            float sectorHexRadius = GetSectorHexRadius(cluster);
                             Point realGatePos = new(zone.Position.X + gate.Position.X, zone.Position.Y + gate.Position.Y);
                             PointF gateScreenPosition = ConvertFromWorldCoordinate(realGatePos, sector.DiameterRadius, sectorHexRadius);
                             gateScreenPosition.X += sectorHexCenter.X;
                             gateScreenPosition.Y += sectorHexCenter.Y;
 
-                            PointF clamped = ClampPointInsideSectorHex(gateScreenPosition, cluster, sector);
-                            if (Math.Abs(clamped.X - gateScreenPosition.X) < 0.01f && Math.Abs(clamped.Y - gateScreenPosition.Y) < 0.01f)
-                                continue;
+                            int snapIndex = GetSnapIndex(gateScreenPosition, snapPoints);
+                            while (usedIndices.Contains(snapIndex))
+                            {
+                                snapIndex = (snapIndex + 1) % snapPoints.Length;
+                            }
+                            usedIndices.Add(snapIndex);
 
-                            Point worldPoint = ConvertToWorldCoordinate(new PointF(clamped.X - sectorHexCenter.X, clamped.Y - sectorHexCenter.Y), sector.DiameterRadius, sectorHexRadius);
+                            PointF snapped = snapPoints[snapIndex];
+                            Point worldPoint = ConvertToWorldCoordinate(new PointF(snapped.X - sectorHexCenter.X, snapped.Y - sectorHexCenter.Y), sector.DiameterRadius, sectorHexRadius);
                             gate.Position = new Point(worldPoint.X - zone.Position.X, worldPoint.Y - zone.Position.Y);
                         }
                     }
                 }
             }
+        }
+
+        private static int GetSnapIndex(PointF point, PointF[] snapPoints)
+        {
+            int bestIndex = 0;
+            float bestDistance = float.MaxValue;
+            for (int i = 0; i < snapPoints.Length; i++)
+            {
+                float distance = Distance(point, snapPoints[i]);
+                if (distance < bestDistance)
+                {
+                    bestDistance = distance;
+                    bestIndex = i;
+                }
+            }
+
+            return bestIndex;
+        }
+
+        private IEnumerable<PointF> GetTravelNodeSnapPoints(Cluster cluster, Sector sector)
+        {
+            PointF[] polygon = cluster.Sectors.Count == 1
+                ? cluster.Hexagon.Points
+                : cluster.Hexagon.Children[cluster.Sectors.IndexOf(sector)].Points;
+
+            PointF center = GetHexCenter(polygon);
+            for (int i = 0; i < polygon.Length; i++)
+            {
+                PointF vertex = polygon[i];
+                PointF midpoint = new(
+                    (polygon[i].X + polygon[(i + 1) % polygon.Length].X) / 2f,
+                    (polygon[i].Y + polygon[(i + 1) % polygon.Length].Y) / 2f);
+
+                yield return LerpPoint(center, vertex, 0.75f);
+                yield return LerpPoint(center, midpoint, 0.75f);
+            }
+        }
+
+        private static PointF LerpPoint(PointF from, PointF to, float amount)
+        {
+            return new PointF(
+                from.X + ((to.X - from.X) * amount),
+                from.Y + ((to.Y - from.Y) * amount));
         }
 
         private void SnapChildSectorsToParentBounds()
