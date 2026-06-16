@@ -29,6 +29,7 @@ namespace X4SectorCreator.Configuration
                 cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];
                 foreach (Sector sector in cluster.Sectors)
                 {
+                    sector.ResourceAreas ??= []; // Support older config saves
                     sector.Regions ??= []; // Support older config saves
                     sector.Regions = [.. sector.Regions.Where(a => !a.IsBaseGame)];
 
@@ -181,6 +182,7 @@ namespace X4SectorCreator.Configuration
                 cluster.Sectors = [.. cluster.Sectors.OrderBy(a => a.Id)];
                 foreach (Sector sector in cluster.Sectors)
                 {
+                    sector.ResourceAreas ??= []; // Support older config saves
                     sector.Regions ??= []; // Support older config saves
                     sector.Regions = [.. sector.Regions.OrderBy(a => a.Id)];
                     sector.Zones = [.. sector.Zones.OrderBy(a => a.Id)];
