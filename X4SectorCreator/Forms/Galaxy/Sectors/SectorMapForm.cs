@@ -1283,6 +1283,10 @@ namespace X4SectorCreator
                                 }
                             }
                         }
+
+                        // The legacy placement mappings were authored against a left-edge child origin.
+                        // Child hexes are now rendered around their true center, so shift by half a child width.
+                        x += childWidth * 0.5f;
                     }
 
                     childHexPositions.Add(new PointF(xOffset + x, yOffset + y));
