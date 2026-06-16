@@ -1193,12 +1193,12 @@ namespace X4SectorCreator
             {
                 childHexes.Add(
                 [
-                    new PointF(childCenter.X, childCenter.Y),
+                    new PointF(childCenter.X - (childWidth * 0.5f), childCenter.Y),
+                    new PointF(childCenter.X - (childWidth * 0.25f), childCenter.Y - (childHeight / 2)),
                     new PointF(childCenter.X + (childWidth * 0.25f), childCenter.Y - (childHeight / 2)),
-                    new PointF(childCenter.X + (childWidth * 0.75f), childCenter.Y - (childHeight / 2)),
-                    new PointF(childCenter.X + childWidth, childCenter.Y),
-                    new PointF(childCenter.X + (childWidth * 0.75f), childCenter.Y + (childHeight / 2)),
+                    new PointF(childCenter.X + (childWidth * 0.5f), childCenter.Y),
                     new PointF(childCenter.X + (childWidth * 0.25f), childCenter.Y + (childHeight / 2)),
+                    new PointF(childCenter.X - (childWidth * 0.25f), childCenter.Y + (childHeight / 2)),
                 ]);
             }
 
