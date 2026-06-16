@@ -537,7 +537,7 @@ namespace X4SectorCreator
             PointF[] parentPolygon = cluster.Hexagon.Points;
             PointF[] childPolygon = cluster.Hexagon.Children[childIndex].Points;
             PointF childCenter = GetHexCenter(childPolygon);
-            const float insetMargin = 6f;
+            const float insetMargin = 0f;
 
             PointF[] relativePoints = childPolygon
                 .Select(a => new PointF(a.X - childCenter.X, a.Y - childCenter.Y))
