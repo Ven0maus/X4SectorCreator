@@ -602,6 +602,9 @@ namespace X4SectorCreator
 
             GenerateHexagons();
             AssignClusterHexagons();
+            SnapChildSectorsToParentBounds();
+            GenerateHexagons();
+            AssignClusterHexagons();
             SnapHighwayNodesToParentBounds();
             Invalidate();
         }
@@ -645,6 +648,34 @@ namespace X4SectorCreator
                             gate.Position = new Point(worldPoint.X - zone.Position.X, worldPoint.Y - zone.Position.Y);
                         }
                     }
+                }
+            }
+        }
+
+        private void SnapChildSectorsToParentBounds()
+        {
+            foreach (var cluster in MainForm.Instance.AllClusters.Values)
+            {
+                if (cluster.Sectors.Count <= 1 || cluster.Hexagon == null)
+                    continue;
+
+                PointF clusterCenter = GetHexCenter(cluster.Hexagon.Points);
+                float clusterHexRadius = GetHexRadius(cluster.Hexagon.Points);
+
+                foreach (var sector in cluster.Sectors)
+                {
+                    if (!sector.CustomOffset.HasValue)
+                        continue;
+
+                    (float x, float y) = ConvertCustomOffsetToChildCenter(sector.CustomOffset.Value, clusterHexRadius);
+                    PointF childCenter = new(clusterCenter.X + x, clusterCenter.Y + y);
+                    PointF clamped = ClampPointInsideHex(cluster.Hexagon.Points, childCenter);
+
+                    if (Math.Abs(clamped.X - childCenter.X) < 0.01f && Math.Abs(clamped.Y - childCenter.Y) < 0.01f)
+                        continue;
+
+                    sector.CustomOffset = ConvertPointInClusterHexToCustomOffset(cluster, clamped);
+                    SectorForm.DetermineSectorOffset(cluster, sector);
                 }
             }
         }
@@ -1127,6 +1158,13 @@ namespace X4SectorCreator
         {
             PointF screenOffset = ConvertFromWorldCoordinate(customOffset, 2000000, parentHexRadius);
             return (screenOffset.X, screenOffset.Y);
+        }
+
+        private static Point ConvertPointInClusterHexToCustomOffset(Cluster cluster, PointF point)
+        {
+            PointF clusterCenter = GetHexCenter(cluster.Hexagon.Points);
+            float clusterHexRadius = GetHexRadius(cluster.Hexagon.Points);
+            return ConvertToWorldCoordinate(new PointF(point.X - clusterCenter.X, point.Y - clusterCenter.Y), 2000000, clusterHexRadius);
         }
 
         private void DrawHexGrid(object sender, PaintEventArgs e)
