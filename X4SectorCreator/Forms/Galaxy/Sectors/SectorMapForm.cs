@@ -505,16 +505,14 @@ namespace X4SectorCreator
 
             PointF clamped = ClampPointInsideHex(_movingSectorCluster.Hexagon.Points, mousePos);
             PointF clusterCenter = GetHexCenter(_movingSectorCluster.Hexagon.Points);
-            SizeF clusterSize = GetHexSize(_movingSectorCluster.Hexagon.Points);
+            float clusterHexRadius = GetHexRadius(_movingSectorCluster.Hexagon.Points);
 
-            float normalizedX = (clamped.X - clusterCenter.X) / (clusterSize.Width * 0.25f);
-            float normalizedY = -(clamped.Y - clusterCenter.Y) / (clusterSize.Height * 0.5f);
+            Point offset = ConvertToWorldCoordinate(
+                new PointF(clamped.X - clusterCenter.X, clamped.Y - clusterCenter.Y),
+                2000000,
+                clusterHexRadius);
 
-            const int amount = 1000000;
-            int offsetX = (int)Math.Round(Math.Clamp(normalizedX, -1f, 1f) * amount);
-            int offsetY = (int)Math.Round(Math.Clamp(normalizedY, -1f, 1f) * amount);
-
-            _movingSector.CustomOffset = new Point(offsetX, offsetY);
+            _movingSector.CustomOffset = offset;
             SectorForm.DetermineSectorOffset(_movingSectorCluster, _movingSector);
         }
 
@@ -1046,6 +1044,9 @@ namespace X4SectorCreator
                 new PointF(xOffset + (hexDrawWidth * 0.25f), yOffset + (hexDrawHeight / 2)),
             ];
 
+            PointF parentHexCenter = GetHexCenter(parentHex);
+            float parentHexRadius = GetHexRadius(parentHex);
+
             // Child hexes are 50% of parent size
             float childHeight = hexDrawHeight / 2;
             float childWidth = hexDrawWidth / 2;
@@ -1070,7 +1071,9 @@ namespace X4SectorCreator
                     float x, y;
                     if (sectors[i].CustomOffset.HasValue)
                     {
-                        (x, y) = ConvertCustomOffsetToChildCenter(sectors[i].CustomOffset.Value, hexDrawWidth, hexDrawHeight);
+                        (x, y) = ConvertCustomOffsetToChildCenter(sectors[i].CustomOffset.Value, parentHexRadius);
+                        childHexPositions.Add(new PointF(parentHexCenter.X + x, parentHexCenter.Y + y));
+                        continue;
                     }
                     else
                     {
@@ -1120,15 +1123,10 @@ namespace X4SectorCreator
             return new Hexagon(translatedCoordinate, parentHex, childHexes.Select(a => new Hexagon(translatedCoordinate, a, null)).ToList());
         }
 
-        private static (float x, float y) ConvertCustomOffsetToChildCenter(Point customOffset, float hexDrawWidth, float hexDrawHeight)
+        private static (float x, float y) ConvertCustomOffsetToChildCenter(Point customOffset, float parentHexRadius)
         {
-            const float amount = 1000000f;
-            float normalizedX = Math.Clamp(customOffset.X / amount, -1f, 1f);
-            float normalizedY = Math.Clamp(customOffset.Y / amount, -1f, 1f);
-
-            float x = (hexDrawWidth * 0.25f) + (normalizedX * hexDrawWidth * 0.22f);
-            float y = -(normalizedY * hexDrawHeight * 0.22f);
-            return (x, y);
+            PointF screenOffset = ConvertFromWorldCoordinate(customOffset, 2000000, parentHexRadius);
+            return (screenOffset.X, screenOffset.Y);
         }
 
         private void DrawHexGrid(object sender, PaintEventArgs e)
@@ -2499,6 +2497,18 @@ namespace X4SectorCreator
                 centerY += point.Y;
             }
             return new PointF(centerX / hex.Length, centerY / hex.Length);
+        }
+
+        private static float GetHexRadius(PointF[] hex)
+        {
+            PointF center = GetHexCenter(hex);
+            float maxDistance = 0;
+            foreach (PointF point in hex)
+            {
+                maxDistance = Math.Max(maxDistance, Distance(center, point));
+            }
+
+            return maxDistance;
         }
 
         private static SizeF GetHexSize(PointF[] hex)
