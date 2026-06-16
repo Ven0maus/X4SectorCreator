@@ -442,7 +442,7 @@ namespace X4SectorCreator
             if (_movingSector == null || _movingSectorCluster == null)
                 return;
 
-            if (!TryGetSectorAtMousePos(adjustedMousePos, out Cluster cluster, out Sector sector, out int sectorIndex))
+            if (_movingSectorTargetChildIndex == null)
             {
                 _movingSector = null;
                 _movingSectorCluster = null;
@@ -452,29 +452,11 @@ namespace X4SectorCreator
                 return;
             }
 
-            if (_movingSectorCluster != cluster)
-            {
-                _movingSector = null;
-                _movingSectorCluster = null;
-                _movingSectorChildIndex = null;
-                _movingSectorTargetChildIndex = null;
-                Invalidate();
-                return;
-            }
-
-            if (_movingSector == sector || _movingSectorTargetChildIndex == null)
-            {
-                _movingSector = null;
-                _movingSectorCluster = null;
-                _movingSectorChildIndex = null;
-                _movingSectorTargetChildIndex = null;
-                Invalidate();
-                return;
-            }
+            Sector sector = _movingSectorCluster.Sectors[_movingSectorTargetChildIndex.Value];
 
             (_movingSector.Placement, sector.Placement) = (sector.Placement, _movingSector.Placement);
-            SectorForm.DetermineSectorOffset(cluster, _movingSector);
-            SectorForm.DetermineSectorOffset(cluster, sector);
+            SectorForm.DetermineSectorOffset(_movingSectorCluster, _movingSector);
+            SectorForm.DetermineSectorOffset(_movingSectorCluster, sector);
 
             _movingSector = null;
             _movingSectorCluster = null;
@@ -527,6 +509,34 @@ namespace X4SectorCreator
             sector = null;
             sectorIndex = -1;
             return false;
+        }
+
+        private int? GetNearestSectorIndexInCluster(PointF mousePos, Cluster cluster, int? excludeIndex = null)
+        {
+            if (cluster?.Hexagon?.Children == null || cluster.Hexagon.Children.Count == 0)
+                return null;
+
+            if (!IsPointInPolygon(cluster.Hexagon.Points, mousePos))
+                return null;
+
+            int? bestIndex = null;
+            float bestDistance = float.MaxValue;
+
+            for (int index = 0; index < cluster.Hexagon.Children.Count && index < cluster.Sectors.Count; index++)
+            {
+                if (excludeIndex != null && index == excludeIndex.Value)
+                    continue;
+
+                PointF center = GetHexCenter(cluster.Hexagon.Children[index].Points);
+                float distance = Distance(mousePos, center);
+                if (distance < bestDistance)
+                {
+                    bestDistance = distance;
+                    bestIndex = index;
+                }
+            }
+
+            return bestIndex;
         }
 
         public void Reset(bool resetLegendTree = true)
@@ -703,12 +713,7 @@ namespace X4SectorCreator
                     (e.Location.Y - _offset.Y) / _zoom
                 );
 
-                _movingSectorTargetChildIndex = null;
-                if (TryGetSectorAtMousePos(adjustedMousePos, out Cluster sectorCluster, out Sector sector, out int sectorIndex) &&
-                    sectorCluster == _movingSectorCluster && sector != _movingSector)
-                {
-                    _movingSectorTargetChildIndex = sectorIndex;
-                }
+                _movingSectorTargetChildIndex = GetNearestSectorIndexInCluster(adjustedMousePos, _movingSectorCluster, _movingSectorChildIndex);
 
                 Invalidate();
                 return;
