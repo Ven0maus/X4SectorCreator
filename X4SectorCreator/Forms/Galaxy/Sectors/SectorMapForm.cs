@@ -1893,7 +1893,7 @@ namespace X4SectorCreator
             float targetY = connection.Target.ScreenY - _gateSizeRadius;
 
             Color color = Color.LightGray;
-            if (connection.Source.Gate.IsHighwayGate)
+            if (connection.Source.Gate.IsAcceleratorNode || connection.Target.Gate.IsAcceleratorNode)
             {
                 color = Color.SlateGray;
             }
@@ -1910,7 +1910,9 @@ namespace X4SectorCreator
 
             using Pen linePen = new(color, _gateSizeRadius / 2f);
 
-            linePen.DashStyle = connection.Source.Gate.IsHighwayGate ? DashStyle.Dash : DashStyle.Dot;
+            linePen.DashStyle = (connection.Source.Gate.IsAcceleratorNode || connection.Target.Gate.IsAcceleratorNode)
+                ? DashStyle.Dash
+                : DashStyle.Dot;
 
             // Draw connection line between source and target
             e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);

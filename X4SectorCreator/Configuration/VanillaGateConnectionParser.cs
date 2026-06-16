@@ -214,12 +214,20 @@ namespace X4SectorCreator.Configuration
                 ConnectionName = sourceInfo.Name,
                 SourcePath = sourceInfo.Path,
                 DestinationPath = targetInfo.Path,
+                Type = ParseGateType(zoneGateInfo.GateType),
                 Position = new Point(zoneGateInfo.GatePosition?.X ?? 0, zoneGateInfo.GatePosition?.Y ?? 0),
                 Roll = zoneGateInfo.Rotation?.X ?? 0,
                 Pitch = zoneGateInfo.Rotation?.Y ?? 0,
                 Yaw = zoneGateInfo.Rotation?.Z ?? 0,
                 IsHighwayGate = isHighwayGate
             });
+        }
+
+        private static Gate.GateType ParseGateType(string gateType)
+        {
+            return Enum.TryParse<Gate.GateType>(gateType ?? string.Empty, out var parsed)
+                ? parsed
+                : Gate.GateType.props_gates_anc_gate_macro;
         }
 
         private static string GetFile(string dlc)

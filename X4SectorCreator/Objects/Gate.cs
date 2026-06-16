@@ -88,9 +88,22 @@ namespace X4SectorCreator.Objects
         {
             // Gate
             props_gates_anc_gate_macro,
-            // Accelerator
-            props_gates_orb_accelerator_01_macro
+            props_gates_anc_gate_anim_macro,
+            props_ter_gate_01_macro,
+            // Accelerator / travel nodes
+            props_gates_orb_accelerator_01_macro,
+            props_gates_orb_accelerator_02_macro
         }
+
+        [JsonIgnore]
+        public bool IsAcceleratorNode =>
+            Type == GateType.props_gates_orb_accelerator_01_macro ||
+            Type == GateType.props_gates_orb_accelerator_02_macro ||
+            ParentSectorName != null && DestinationSectorName != null &&
+            ParentSectorName.Equals(DestinationSectorName, StringComparison.OrdinalIgnoreCase);
+
+        [JsonIgnore]
+        public bool IsInterSectorGate => !IsAcceleratorNode;
 
         public override string ToString()
         {
