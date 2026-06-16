@@ -41,6 +41,7 @@
             label2 = new Label();
             TxtSearch = new TextBox();
             label4 = new Label();
+            BtnAutoCorrectLayout = new Button();
             BtnSaveHdImage = new Button();
             ControlPanel.SuspendLayout();
             LegendPanel.SuspendLayout();
@@ -221,6 +222,18 @@
             label4.Text = "Search by name:";
             label4.TextAlign = ContentAlignment.TopCenter;
             // 
+            // BtnAutoCorrectLayout
+            // 
+            BtnAutoCorrectLayout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnAutoCorrectLayout.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            BtnAutoCorrectLayout.Location = new Point(561, 8);
+            BtnAutoCorrectLayout.Name = "BtnAutoCorrectLayout";
+            BtnAutoCorrectLayout.Size = new Size(111, 27);
+            BtnAutoCorrectLayout.TabIndex = 10;
+            BtnAutoCorrectLayout.Text = "Auto Correct";
+            BtnAutoCorrectLayout.UseVisualStyleBackColor = true;
+            BtnAutoCorrectLayout.Click += BtnAutoCorrectLayout_Click;
+            // 
             // BtnSaveHdImage
             // 
             BtnSaveHdImage.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -228,7 +241,7 @@
             BtnSaveHdImage.Location = new Point(678, 8);
             BtnSaveHdImage.Name = "BtnSaveHdImage";
             BtnSaveHdImage.Size = new Size(111, 27);
-            BtnSaveHdImage.TabIndex = 10;
+            BtnSaveHdImage.TabIndex = 11;
             BtnSaveHdImage.Text = "HD Photo";
             BtnSaveHdImage.UseVisualStyleBackColor = true;
             BtnSaveHdImage.Click += BtnSaveHdImage_Click;
@@ -236,6 +249,7 @@
             // SectorMapForm
             // 
             ClientSize = new Size(983, 782);
+            Controls.Add(BtnAutoCorrectLayout);
             Controls.Add(BtnSaveHdImage);
             Controls.Add(label4);
             Controls.Add(TxtSearch);
@@ -266,6 +280,7 @@
         internal Button BtnHideOptions;
         private TextBox TxtSearch;
         private Label label4;
+        private Button BtnAutoCorrectLayout;
         private Button BtnSaveHdImage;
         internal CheckedListBox MapOptionsListBox;
     }

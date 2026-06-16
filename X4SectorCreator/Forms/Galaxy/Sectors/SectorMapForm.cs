@@ -452,6 +452,25 @@ namespace X4SectorCreator
             Reset(false);
         }
 
+        private void BtnAutoCorrectLayout_Click(object sender, EventArgs e)
+        {
+            ApplyAutoCorrection();
+        }
+
+        private void ApplyAutoCorrection()
+        {
+            _movingCluster = null;
+            _draggingClusterMove = false;
+            _movingSector = null;
+            _movingSectorCluster = null;
+            _movingSectorChildIndex = null;
+            _movingSectorOriginalOffset = null;
+            _draggingSectorMove = false;
+            _movingHighway = null;
+
+            RebuildMapGeometry(snapChildSectors: true, avoidChildCollisions: true, snapTravelNodes: true);
+        }
+
         private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
         {
             pos = null;
@@ -682,6 +701,7 @@ namespace X4SectorCreator
             _customClusters = [.. MainForm.Instance.AllClusters.Values.Where(a => !a.IsBaseGame)];
 
             // Setup all data
+            _availableSearchSectors.Clear();
             _availableSearchSectors.AddRange(_baseGameClusters.Values.Concat(_customClusters).SelectMany(a => a.Sectors));
 
             Dictionary<(int, int), Cluster>.ValueCollection allClusters = MainForm.Instance.AllClusters.Values;
@@ -701,12 +721,24 @@ namespace X4SectorCreator
             if (resetLegendTree)
                 SetupLegendTree();
 
+            RebuildMapGeometry(snapChildSectors: true, avoidChildCollisions: false, snapTravelNodes: true);
+        }
+
+        private void RebuildMapGeometry(bool snapChildSectors, bool avoidChildCollisions, bool snapTravelNodes)
+        {
             GenerateHexagons();
             AssignClusterHexagons();
-            SnapChildSectorsToParentBounds();
-            GenerateHexagons();
-            AssignClusterHexagons();
-            SnapHighwayNodesToParentBounds();
+
+            if (snapChildSectors)
+            {
+                SnapChildSectorsToParentBounds(avoidChildCollisions);
+                GenerateHexagons();
+                AssignClusterHexagons();
+            }
+
+            if (snapTravelNodes)
+                SnapHighwayNodesToParentBounds();
+
             Invalidate();
         }
 
@@ -803,7 +835,7 @@ namespace X4SectorCreator
                 from.Y + ((to.Y - from.Y) * amount));
         }
 
-        private void SnapChildSectorsToParentBounds()
+        private void SnapChildSectorsToParentBounds(bool avoidCollisions)
         {
             foreach (var cluster in MainForm.Instance.AllClusters.Values)
             {
@@ -811,19 +843,19 @@ namespace X4SectorCreator
                     continue;
 
                 PointF[] snapPoints = GetChildSectorSnapCenters(cluster).ToArray();
-                HashSet<int> usedIndices = [];
+                HashSet<int> usedIndices = avoidCollisions ? [] : null;
 
                 foreach (var sector in cluster.Sectors)
                 {
                     PointF currentCenter = GetCurrentSectorCenter(cluster, sector);
                     int snapIndex = GetSnapIndex(currentCenter, snapPoints);
 
-                    while (usedIndices.Contains(snapIndex))
+                    while (avoidCollisions && usedIndices.Contains(snapIndex))
                     {
                         snapIndex = (snapIndex + 1) % snapPoints.Length;
                     }
 
-                    usedIndices.Add(snapIndex);
+                    usedIndices?.Add(snapIndex);
                     sector.CustomOffset = ConvertPointInClusterHexToCustomOffset(cluster, snapPoints[snapIndex]);
                     SectorForm.DetermineSectorOffset(cluster, sector);
                 }
