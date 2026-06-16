@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace X4SectorCreator.Objects
+﻿namespace X4SectorCreator.Objects
 {
     public class Resource : ICloneable
     {
@@ -9,8 +7,6 @@ namespace X4SectorCreator.Objects
         public string Size { get; set; }
         public string Speed { get; set; }
         public int Amount { get; set; }
-
-        [JsonIgnore]
         public bool IsBaseGame { get; set; } = false;
 
         public object Clone()
