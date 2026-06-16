@@ -513,7 +513,7 @@ namespace X4SectorCreator
         private PointF GetNearestChildSectorSnapCenter(Cluster cluster, int movingSectorIndex, PointF mousePos)
         {
             PointF[] candidates = GetChildSectorSnapCenters(cluster).ToArray();
-            float hoverRadius = 18f / Math.Max(_zoom, 0.0001f);
+            float hoverRadius = 42f / Math.Max(_zoom, 0.0001f);
 
             int selectedIndex = -1;
             float selectedDistance = float.MaxValue;
