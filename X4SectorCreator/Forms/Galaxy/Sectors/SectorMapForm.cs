@@ -434,6 +434,7 @@ namespace X4SectorCreator
         private int? _movingSectorChildIndex = null;
         private bool _draggingSectorMove = false;
         private Point? _movingSectorOriginalOffset = null;
+        private DateTime _lastSectorDragPreviewUpdate = DateTime.MinValue;
         private HighwayDragState _movingHighway = null;
         private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
         {
@@ -700,6 +701,7 @@ namespace X4SectorCreator
                     _movingSectorChildIndex = sectorIndex;
                     _movingSectorOriginalOffset = sector.CustomOffset;
                     _draggingSectorMove = true;
+                    _lastSectorDragPreviewUpdate = DateTime.MinValue;
                     Invalidate();
                     return;
                 }
@@ -741,6 +743,12 @@ namespace X4SectorCreator
                 );
 
                 UpdateSectorDrag(adjustedMousePos);
+
+                if ((DateTime.UtcNow - _lastSectorDragPreviewUpdate).TotalMilliseconds >= 100)
+                {
+                    UpdateClusterHexagon(_movingSectorCluster);
+                    _lastSectorDragPreviewUpdate = DateTime.UtcNow;
+                }
 
                 Invalidate();
                 return;
@@ -938,6 +946,28 @@ namespace X4SectorCreator
                     _hexagons[(translatedCoordinate.X, translatedCoordinate.Y)] = hex;
                 }
             }
+        }
+
+        private void UpdateClusterHexagon(Cluster cluster)
+        {
+            if (cluster == null)
+                return;
+
+            Point squareCoordinate = new Point(cluster.Position.X, cluster.Position.Y).HexToSquareGridCoordinate();
+            float hexHeight = (float)(Math.Sqrt(3) * _hexSize);
+
+            Hexagon hex = GenerateHexagonWithChildren(
+                hexHeight,
+                squareCoordinate.Y,
+                squareCoordinate.X,
+                0,
+                0,
+                cluster.Sectors,
+                (cluster.Position.X, cluster.Position.Y),
+                _defaultZoom);
+
+            _hexagons[(cluster.Position.X, cluster.Position.Y)] = hex;
+            cluster.Hexagon = hex;
         }
 
         /// <summary>
