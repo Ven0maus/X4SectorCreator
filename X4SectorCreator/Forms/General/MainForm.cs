@@ -368,7 +368,8 @@ namespace X4SectorCreator
                                     Ware = ware,
                                     Yield = yield,
                                     Speed = speed,
-                                    Amount = int.TryParse(amount, out var amountValue) ? amountValue : 0
+                                    Amount = int.TryParse(amount, out var amountValue) ? amountValue : 0,
+                                    IsBaseGame = true
                                 };
 
                                 clusterSectorMap.Sector.ResourceAreas.Add(resource);
