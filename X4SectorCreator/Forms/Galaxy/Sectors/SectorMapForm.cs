@@ -513,38 +513,12 @@ namespace X4SectorCreator
         private PointF GetNearestChildSectorSnapCenter(Cluster cluster, int movingSectorIndex, PointF mousePos)
         {
             PointF[] candidates = GetChildSectorSnapCenters(cluster).ToArray();
-            HashSet<int> occupied = [];
             float hoverRadius = 18f / Math.Max(_zoom, 0.0001f);
-
-            for (int i = 0; i < cluster.Sectors.Count; i++)
-            {
-                if (i == movingSectorIndex)
-                    continue;
-
-                PointF currentCenter = GetCurrentSectorCenter(cluster, cluster.Sectors[i]);
-                int bestIndex = -1;
-                float bestDistance = float.MaxValue;
-                for (int c = 0; c < candidates.Length; c++)
-                {
-                    float distance = Distance(currentCenter, candidates[c]);
-                    if (distance < bestDistance)
-                    {
-                        bestDistance = distance;
-                        bestIndex = c;
-                    }
-                }
-
-                if (bestIndex >= 0)
-                    occupied.Add(bestIndex);
-            }
 
             int selectedIndex = -1;
             float selectedDistance = float.MaxValue;
             for (int i = 0; i < candidates.Length; i++)
             {
-                if (occupied.Contains(i))
-                    continue;
-
                 float distance = Distance(mousePos, candidates[i]);
                 if (distance <= hoverRadius && distance < selectedDistance)
                 {
@@ -2108,15 +2082,10 @@ namespace X4SectorCreator
         {
             float renderedNodeRadius = Math.Max(_gateSizeRadius * _zoom, 8f);
             float nodeHitRadius = Math.Max(renderedNodeRadius * 4f, 42f);
-            float lineHitRadius = Math.Max(renderedNodeRadius * 2f, 20f);
             PointF mouse = new(mousePos.X, mousePos.Y);
             float bestNodeScore = float.MaxValue;
             HighwayEndpointDragState bestNodeState = null;
             bool foundNode = false;
-
-            float bestLineScore = float.MaxValue;
-            HighwayEndpointDragState bestLineState = null;
-            bool foundLine = false;
 
             foreach (var item in GetVisibleGateConnections())
             {
@@ -2125,7 +2094,6 @@ namespace X4SectorCreator
 
                 float sourceDistance = Distance(mouse, source);
                 float targetDistance = Distance(mouse, target);
-                float segmentDistance = DistanceToSegment(mouse, source, target);
 
                 if (sourceDistance <= nodeHitRadius && sourceDistance < bestNodeScore)
                 {
@@ -2140,24 +2108,10 @@ namespace X4SectorCreator
                     bestNodeState = CreateHighwayEndpointState(item, isSource: false);
                     foundNode = true;
                 }
-
-                if (segmentDistance <= lineHitRadius && segmentDistance < bestLineScore)
-                {
-                    bestLineScore = segmentDistance;
-                    bool useSource = sourceDistance <= targetDistance;
-                    bestLineState = CreateHighwayEndpointState(item, useSource);
-                    foundLine = true;
-                }
             }
 
-            if (foundNode)
-            {
-                state = bestNodeState;
-                return true;
-            }
-
-            state = bestLineState;
-            return foundLine;
+            state = bestNodeState;
+            return foundNode;
         }
 
         private void UpdateHighwayDrag(PointF mousePos)
