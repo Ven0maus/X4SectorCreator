@@ -503,12 +503,110 @@ namespace X4SectorCreator
             if (_movingSector == null || _movingSectorCluster == null)
                 return;
 
-            PointF clamped = ClampChildHexCenterInsideParent(_movingSectorCluster, _movingSectorChildIndex.Value, mousePos);
-
-            Point offset = ConvertPointInClusterHexToCustomOffset(_movingSectorCluster, clamped);
+            PointF snappedCenter = GetNearestChildSectorSnapCenter(_movingSectorCluster, _movingSectorChildIndex.Value, mousePos);
+            Point offset = ConvertPointInClusterHexToCustomOffset(_movingSectorCluster, snappedCenter);
 
             _movingSector.CustomOffset = offset;
             SectorForm.DetermineSectorOffset(_movingSectorCluster, _movingSector);
+        }
+
+        private PointF GetNearestChildSectorSnapCenter(Cluster cluster, int movingSectorIndex, PointF mousePos)
+        {
+            PointF[] candidates = GetChildSectorSnapCenters(cluster).ToArray();
+            HashSet<int> occupied = [];
+
+            for (int i = 0; i < cluster.Sectors.Count; i++)
+            {
+                if (i == movingSectorIndex)
+                    continue;
+
+                PointF currentCenter = GetCurrentSectorCenter(cluster, cluster.Sectors[i]);
+                int bestIndex = -1;
+                float bestDistance = float.MaxValue;
+                for (int c = 0; c < candidates.Length; c++)
+                {
+                    float distance = Distance(currentCenter, candidates[c]);
+                    if (distance < bestDistance)
+                    {
+                        bestDistance = distance;
+                        bestIndex = c;
+                    }
+                }
+
+                if (bestIndex >= 0)
+                    occupied.Add(bestIndex);
+            }
+
+            int selectedIndex = -1;
+            float selectedDistance = float.MaxValue;
+            for (int i = 0; i < candidates.Length; i++)
+            {
+                if (occupied.Contains(i))
+                    continue;
+
+                float distance = Distance(mousePos, candidates[i]);
+                if (distance < selectedDistance)
+                {
+                    selectedDistance = distance;
+                    selectedIndex = i;
+                }
+            }
+
+            if (selectedIndex == -1)
+                return GetCurrentSectorCenter(cluster, _movingSector);
+
+            return candidates[selectedIndex];
+        }
+
+        private IEnumerable<PointF> GetChildSectorSnapCenters(Cluster cluster)
+        {
+            PointF[] parentHex = cluster.Hexagon.Points;
+            SizeF parentSize = GetHexSize(parentHex);
+            float childHeight = parentSize.Height / 2f;
+            float childWidth = parentSize.Width / 2f;
+            PointF[] childOffsets =
+            [
+                new PointF(-(childWidth * 0.5f), 0),
+                new PointF(-(childWidth * 0.25f), -(childHeight / 2)),
+                new PointF((childWidth * 0.25f), -(childHeight / 2)),
+                new PointF((childWidth * 0.5f), 0),
+                new PointF((childWidth * 0.25f), childHeight / 2),
+                new PointF(-(childWidth * 0.25f), childHeight / 2),
+            ];
+
+            for (int i = 0; i < parentHex.Length; i++)
+            {
+                PointF vertex = parentHex[i];
+                PointF childOffset = childOffsets[i];
+                PointF center = new(vertex.X - childOffset.X, vertex.Y - childOffset.Y);
+                if (IsTranslatedChildInsideParent(parentHex, childOffsets, center, 0f))
+                    yield return center;
+
+                PointF nextVertex = parentHex[(i + 1) % parentHex.Length];
+                PointF midpoint = new((vertex.X + nextVertex.X) / 2f, (vertex.Y + nextVertex.Y) / 2f);
+                PointF childMidpointOffset = new(
+                    (childOffsets[i].X + childOffsets[(i + 1) % childOffsets.Length].X) / 2f,
+                    (childOffsets[i].Y + childOffsets[(i + 1) % childOffsets.Length].Y) / 2f);
+                center = new(midpoint.X - childMidpointOffset.X, midpoint.Y - childMidpointOffset.Y);
+                if (IsTranslatedChildInsideParent(parentHex, childOffsets, center, 0f))
+                    yield return center;
+            }
+        }
+
+        private PointF GetCurrentSectorCenter(Cluster cluster, Sector sector)
+        {
+            PointF[] parentHex = cluster.Hexagon.Points;
+            PointF parentCenter = GetHexCenter(parentHex);
+            float parentRadius = GetHexRadius(parentHex);
+
+            if (sector.CustomOffset.HasValue)
+            {
+                (float x, float y) = ConvertCustomOffsetToChildCenter(sector.CustomOffset.Value, parentRadius);
+                return new PointF(parentCenter.X + x, parentCenter.Y + y);
+            }
+
+            int index = cluster.Sectors.IndexOf(sector);
+            return GetHexCenter(cluster.Hexagon.Children[index].Points);
         }
 
         private static PointF ClampPointInsideHex(PointF[] polygon, PointF point)
