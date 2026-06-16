@@ -513,14 +513,13 @@ namespace X4SectorCreator
         private PointF GetNearestChildSectorSnapCenter(Cluster cluster, int movingSectorIndex, PointF mousePos)
         {
             PointF[] candidates = GetChildSectorSnapCenters(cluster).ToArray();
-            float hoverRadius = 42f / Math.Max(_zoom, 0.0001f);
 
             int selectedIndex = -1;
             float selectedDistance = float.MaxValue;
             for (int i = 0; i < candidates.Length; i++)
             {
                 float distance = Distance(mousePos, candidates[i]);
-                if (distance <= hoverRadius && distance < selectedDistance)
+                if (distance < selectedDistance)
                 {
                     selectedDistance = distance;
                     selectedIndex = i;
@@ -536,35 +535,13 @@ namespace X4SectorCreator
         private IEnumerable<PointF> GetChildSectorSnapCenters(Cluster cluster)
         {
             PointF[] parentHex = cluster.Hexagon.Points;
-            SizeF parentSize = GetHexSize(parentHex);
-            float childHeight = parentSize.Height / 2f;
-            float childWidth = parentSize.Width / 2f;
-            PointF[] childOffsets =
-            [
-                new PointF(-(childWidth * 0.5f), 0),
-                new PointF(-(childWidth * 0.25f), -(childHeight / 2)),
-                new PointF((childWidth * 0.25f), -(childHeight / 2)),
-                new PointF((childWidth * 0.5f), 0),
-                new PointF((childWidth * 0.25f), childHeight / 2),
-                new PointF(-(childWidth * 0.25f), childHeight / 2),
-            ];
+            PointF parentCenter = GetHexCenter(parentHex);
 
-            for (int i = 0; i < parentHex.Length; i++)
+            foreach (PointF vertex in parentHex)
             {
-                PointF vertex = parentHex[i];
-                PointF childOffset = childOffsets[i];
-                PointF center = new(vertex.X - childOffset.X, vertex.Y - childOffset.Y);
-                if (IsTranslatedChildInsideParent(parentHex, childOffsets, center, 0f))
-                    yield return center;
-
-                PointF nextVertex = parentHex[(i + 1) % parentHex.Length];
-                PointF midpoint = new((vertex.X + nextVertex.X) / 2f, (vertex.Y + nextVertex.Y) / 2f);
-                PointF childMidpointOffset = new(
-                    (childOffsets[i].X + childOffsets[(i + 1) % childOffsets.Length].X) / 2f,
-                    (childOffsets[i].Y + childOffsets[(i + 1) % childOffsets.Length].Y) / 2f);
-                center = new(midpoint.X - childMidpointOffset.X, midpoint.Y - childMidpointOffset.Y);
-                if (IsTranslatedChildInsideParent(parentHex, childOffsets, center, 0f))
-                    yield return center;
+                yield return new PointF(
+                    (parentCenter.X + vertex.X) / 2f,
+                    (parentCenter.Y + vertex.Y) / 2f);
             }
         }
 
