@@ -514,6 +514,7 @@ namespace X4SectorCreator
         {
             PointF[] candidates = GetChildSectorSnapCenters(cluster).ToArray();
             HashSet<int> occupied = [];
+            float hoverRadius = 18f / Math.Max(_zoom, 0.0001f);
 
             for (int i = 0; i < cluster.Sectors.Count; i++)
             {
@@ -545,7 +546,7 @@ namespace X4SectorCreator
                     continue;
 
                 float distance = Distance(mousePos, candidates[i]);
-                if (distance < selectedDistance)
+                if (distance <= hoverRadius && distance < selectedDistance)
                 {
                     selectedDistance = distance;
                     selectedIndex = i;
