@@ -1008,27 +1008,35 @@ namespace X4SectorCreator
                 // Child hex centers for top-left, bottom-right
                 for (int i = 0; i < children; i++)
                 {
-                    (float x, float y) = _childPlacementMappings[sectors[i].Placement](hexDrawWidth, childHeight);
-
-                    // More 4 sector shenanigans
-                    if (children == 4)
+                    float x, y;
+                    if (sectors[i].CustomOffset.HasValue)
                     {
-                        var placement = sectors[i].Placement;
-                        if (placement == SectorPlacement.MiddleRight)
+                        (x, y) = ConvertCustomOffsetToChildCenter(sectors[i].CustomOffset.Value, hexDrawWidth, hexDrawHeight);
+                    }
+                    else
+                    {
+                        (x, y) = _childPlacementMappings[sectors[i].Placement](hexDrawWidth, childHeight);
+
+                        // More 4 sector shenanigans
+                        if (children == 4)
                         {
-                            x = hexDrawWidth * 0.6f;
-                        }
-                        else if (placement == SectorPlacement.MiddleTop ||
-                            placement == SectorPlacement.MiddleBottom)
-                        {
-                            x = hexDrawWidth * 0.3f;
-                            if (placement == SectorPlacement.MiddleTop)
+                            var placement = sectors[i].Placement;
+                            if (placement == SectorPlacement.MiddleRight)
                             {
-                                y = -(childHeight * 0.75f);
+                                x = hexDrawWidth * 0.6f;
                             }
-                            else if (placement == SectorPlacement.MiddleBottom)
+                            else if (placement == SectorPlacement.MiddleTop ||
+                                placement == SectorPlacement.MiddleBottom)
                             {
-                                y = childHeight * 0.75f;
+                                x = hexDrawWidth * 0.3f;
+                                if (placement == SectorPlacement.MiddleTop)
+                                {
+                                    y = -(childHeight * 0.75f);
+                                }
+                                else if (placement == SectorPlacement.MiddleBottom)
+                                {
+                                    y = childHeight * 0.75f;
+                                }
                             }
                         }
                     }
@@ -1051,6 +1059,17 @@ namespace X4SectorCreator
             }
 
             return new Hexagon(translatedCoordinate, parentHex, childHexes.Select(a => new Hexagon(translatedCoordinate, a, null)).ToList());
+        }
+
+        private static (float x, float y) ConvertCustomOffsetToChildCenter(Point customOffset, float hexDrawWidth, float hexDrawHeight)
+        {
+            const float amount = 1000000f;
+            float normalizedX = Math.Clamp(customOffset.X / amount, -1f, 1f);
+            float normalizedY = Math.Clamp(customOffset.Y / amount, -1f, 1f);
+
+            float x = (hexDrawWidth * 0.25f) + (normalizedX * hexDrawWidth * 0.22f);
+            float y = -(normalizedY * hexDrawHeight * 0.22f);
+            return (x, y);
         }
 
         private void DrawHexGrid(object sender, PaintEventArgs e)
