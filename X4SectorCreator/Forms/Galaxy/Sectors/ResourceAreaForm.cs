@@ -3,7 +3,7 @@ using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
-    public partial class RegionResourcesForm : Form
+    public partial class ResourceAreaForm : Form
     {
         private Resource _resource;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -17,12 +17,15 @@ namespace X4SectorCreator.Forms
                 {
                     cmbWare.SelectedItem = _resource.Ware;
                     cmbYield.SelectedItem = _resource.Yield;
+                    cmbSize.SelectedItem = _resource.Size;
+                    cmbSpeed.SelectedItem = _resource.Speed;
+                    nrAmount.Value = _resource.Amount;
                     BtnAdd.Text = "Update";
                 }
             }
         }
 
-        public RegionResourcesForm()
+        public ResourceAreaForm()
         {
             InitializeComponent();
         }
@@ -41,6 +44,24 @@ namespace X4SectorCreator.Forms
                 return;
             }
 
+            if (cmbSize.SelectedItem == null)
+            {
+                _ = MessageBox.Show("Please select a valid size.");
+                return;
+            }
+
+            if (cmbSpeed.SelectedItem == null)
+            {
+                _ = MessageBox.Show("Please select a valid speed.");
+                return;
+            }
+
+            if (nrAmount.Value == 0)
+            {
+                _ = MessageBox.Show("Amount must be higher than 0.");
+                return;
+            }
+
             switch (BtnAdd.Text)
             {
                 case "Add":
@@ -48,16 +69,22 @@ namespace X4SectorCreator.Forms
                     {
                         Ware = cmbWare.Text,
                         Yield = cmbYield.Text,
+                        Size = cmbSize.Text,
+                        Speed = cmbSpeed.Text,
+                        Amount = (int)nrAmount.Value
                     };
-                    _ = MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.Items.Add(resource);
+                    _ = MainForm.Instance.SectorForm.Value.RAListBox.Items.Add(resource);
                     break;
                 case "Update":
-                    int index = MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.SelectedIndex;
-                    MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.Items.Remove(Resource);
+                    int index = MainForm.Instance.SectorForm.Value.RAListBox.SelectedIndex;
+                    MainForm.Instance.SectorForm.Value.RAListBox.Items.Remove(Resource);
                     Resource.Ware = cmbWare.Text;
                     Resource.Yield = cmbYield.Text;
-                    MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.Items.Insert(index, Resource);
-                    MainForm.Instance.RegionForm.Value.RegionDefinitionsForm.Value.RegionDefinitionForm.Value.ListBoxResources.SelectedItem = Resource;
+                    Resource.Size = cmbSize.Text;
+                    Resource.Speed = cmbSpeed.Text;
+                    Resource.Amount = (int)nrAmount.Value;
+                    MainForm.Instance.SectorForm.Value.RAListBox.Items.Insert(index, Resource);
+                    MainForm.Instance.SectorForm.Value.RAListBox.SelectedItem = Resource;
                     break;
             }
 

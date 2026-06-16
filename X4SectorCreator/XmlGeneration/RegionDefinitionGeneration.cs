@@ -84,9 +84,6 @@ namespace X4SectorCreator.XmlGeneration
                                 ),
                                 new XElement("fields",
                                     GenerateFields(region)
-                                ),
-                                new XElement("resources",
-                                    GenerateResources(region)
                                 )
                             );
                         }
@@ -157,17 +154,6 @@ namespace X4SectorCreator.XmlGeneration
                     field.SoundId != null ? new XAttribute("soundid", field.SoundId) : null,
                     field.Playtime != null ? new XAttribute("playtime", field.Playtime) : null
                 );
-            }
-        }
-
-        private static IEnumerable<XElement> GenerateResources(Region region)
-        {
-            foreach (Resource resource in region.Definition.Resources)
-            {
-                yield return new XElement("resource",
-                                    new XAttribute("ware", $"{resource.Ware}"),
-                                    new XAttribute("yield", $"{resource.Yield}")
-                                );
             }
         }
 
