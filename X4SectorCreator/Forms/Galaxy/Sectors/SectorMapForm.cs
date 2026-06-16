@@ -1889,12 +1889,20 @@ namespace X4SectorCreator
 
         private bool TryGetHighwayAtMousePos(PointF mousePos, out GateConnection connection)
         {
+            const float nodeHitRadius = 24f;
+            const float lineHitRadius = 28f;
+
             foreach (var item in GetVisibleGateConnections())
             {
                 if (!item.Source.Gate.IsHighwayGate && !item.Target.Gate.IsHighwayGate)
                     continue;
 
-                if (DistanceToSegment(mousePos, new PointF(item.Source.ScreenX, item.Source.ScreenY), new PointF(item.Target.ScreenX, item.Target.ScreenY)) <= 20f)
+                PointF source = new(item.Source.ScreenX, item.Source.ScreenY);
+                PointF target = new(item.Target.ScreenX, item.Target.ScreenY);
+
+                if (Distance(mousePos, source) <= nodeHitRadius ||
+                    Distance(mousePos, target) <= nodeHitRadius ||
+                    DistanceToSegment(mousePos, source, target) <= lineHitRadius)
                 {
                     connection = item;
                     return true;
