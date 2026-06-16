@@ -427,7 +427,7 @@ namespace X4SectorCreator
                 (e.Location.Y - _offset.Y) / _zoom
             );
 
-            if (e.Button == MouseButtons.Middle)
+            if (e.Button == MouseButtons.Left && !BtnSelectLocation.Visible)
             {
                 HandleSectorMoveClick(adjustedMousePos);
                 return;
@@ -1137,7 +1137,7 @@ namespace X4SectorCreator
             GraphicsState state = e.Graphics.Save();
             e.Graphics.ResetTransform();
 
-            string labelText = "Tip: Right click moves clusters, middle click swaps subsectors.";
+            string labelText = "Tip: Right click moves clusters, left click swaps subsectors.";
             using (Font font = new("Segoe UI", 12f, FontStyle.Bold))
             using (Brush brush = new SolidBrush(Color.Yellow))
             {
