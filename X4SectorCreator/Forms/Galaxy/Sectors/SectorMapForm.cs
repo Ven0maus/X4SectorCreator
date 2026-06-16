@@ -420,8 +420,7 @@ namespace X4SectorCreator
 
             if (e.KeyCode == Keys.Escape && _movingHighway != null)
             {
-                _movingHighway.SourceZone.Position = _movingHighway.OriginalSourceZonePosition;
-                _movingHighway.TargetZone.Position = _movingHighway.OriginalTargetZonePosition;
+                _movingHighway.Gate.Position = _movingHighway.OriginalGatePosition;
                 _movingHighway = null;
                 Invalidate();
             }
@@ -435,7 +434,7 @@ namespace X4SectorCreator
         private bool _draggingSectorMove = false;
         private Point? _movingSectorOriginalOffset = null;
         private DateTime _lastSectorDragPreviewUpdate = DateTime.MinValue;
-        private HighwayDragState _movingHighway = null;
+        private HighwayEndpointDragState _movingHighway = null;
         private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
         {
         }
@@ -671,25 +670,10 @@ namespace X4SectorCreator
                     (e.Location.Y - _offset.Y) / _zoom
                 );
 
-                if (TryGetHighwayAtMousePos(e.Location, out GateConnection highwayConnection))
+                if (TryGetHighwayAtMousePos(e.Location, out HighwayEndpointDragState highwayNode))
                 {
-                    _movingHighway = new HighwayDragState
-                    {
-                        Connection = highwayConnection,
-                        StartMouseScreen = adjustedMousePos,
-                        OriginalSourceScreen = new PointF(highwayConnection.Source.ScreenX, highwayConnection.Source.ScreenY),
-                        OriginalTargetScreen = new PointF(highwayConnection.Target.ScreenX, highwayConnection.Target.ScreenY),
-                        OriginalSourceZonePosition = highwayConnection.Source.Zone.Position,
-                        OriginalTargetZonePosition = highwayConnection.Target.Zone.Position,
-                        SourceZone = highwayConnection.Source.Zone,
-                        TargetZone = highwayConnection.Target.Zone,
-                        SourceGate = highwayConnection.Source.Gate,
-                        TargetGate = highwayConnection.Target.Gate,
-                        SourceSector = highwayConnection.Source.Sector,
-                        TargetSector = highwayConnection.Target.Sector,
-                        SourceCluster = highwayConnection.Source.Cluster,
-                        TargetCluster = highwayConnection.Target.Cluster
-                    };
+                    _movingHighway = highwayNode;
+                    _movingHighway.StartMouseScreen = adjustedMousePos;
                     Invalidate();
                     return;
                 }
@@ -1887,18 +1871,18 @@ namespace X4SectorCreator
             e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);
         }
 
-        private bool TryGetHighwayAtMousePos(Point mousePos, out GateConnection connection)
+        private bool TryGetHighwayAtMousePos(Point mousePos, out HighwayEndpointDragState state)
         {
             float renderedNodeRadius = Math.Max(_gateSizeRadius * _zoom, 8f);
             float nodeHitRadius = Math.Max(renderedNodeRadius * 4f, 42f);
             float lineHitRadius = Math.Max(renderedNodeRadius * 2f, 20f);
             PointF mouse = new(mousePos.X, mousePos.Y);
             float bestNodeScore = float.MaxValue;
-            GateConnection bestNodeConnection = default;
+            HighwayEndpointDragState bestNodeState = null;
             bool foundNode = false;
 
             float bestLineScore = float.MaxValue;
-            GateConnection bestConnection = default;
+            HighwayEndpointDragState bestLineState = null;
             bool foundLine = false;
 
             foreach (var item in GetVisibleGateConnections())
@@ -1913,29 +1897,36 @@ namespace X4SectorCreator
                 float targetDistance = Distance(mouse, target);
                 float segmentDistance = DistanceToSegment(mouse, source, target);
 
-                float nodeScore = Math.Min(sourceDistance, targetDistance);
-                if (nodeScore <= nodeHitRadius && nodeScore < bestNodeScore)
+                if (sourceDistance <= nodeHitRadius && sourceDistance < bestNodeScore)
                 {
-                    bestNodeScore = nodeScore;
-                    bestNodeConnection = item;
+                    bestNodeScore = sourceDistance;
+                    bestNodeState = CreateHighwayEndpointState(item, isSource: true);
+                    foundNode = true;
+                }
+
+                if (targetDistance <= nodeHitRadius && targetDistance < bestNodeScore)
+                {
+                    bestNodeScore = targetDistance;
+                    bestNodeState = CreateHighwayEndpointState(item, isSource: false);
                     foundNode = true;
                 }
 
                 if (segmentDistance <= lineHitRadius && segmentDistance < bestLineScore)
                 {
                     bestLineScore = segmentDistance;
-                    bestConnection = item;
+                    bool useSource = sourceDistance <= targetDistance;
+                    bestLineState = CreateHighwayEndpointState(item, useSource);
                     foundLine = true;
                 }
             }
 
             if (foundNode)
             {
-                connection = bestNodeConnection;
+                state = bestNodeState;
                 return true;
             }
 
-            connection = bestConnection;
+            state = bestLineState;
             return foundLine;
         }
 
@@ -1946,21 +1937,34 @@ namespace X4SectorCreator
 
             PointF delta = new(mousePos.X - _movingHighway.StartMouseScreen.X, mousePos.Y - _movingHighway.StartMouseScreen.Y);
 
-            PointF desiredSource = new(_movingHighway.OriginalSourceScreen.X + delta.X, _movingHighway.OriginalSourceScreen.Y + delta.Y);
-            PointF desiredTarget = new(_movingHighway.OriginalTargetScreen.X + delta.X, _movingHighway.OriginalTargetScreen.Y + delta.Y);
-
-            _movingHighway.SourceZone.Position = ConvertDraggedHighwayPosition(_movingHighway.SourceCluster, _movingHighway.SourceSector, _movingHighway.SourceZone, _movingHighway.SourceGate, desiredSource);
-            _movingHighway.TargetZone.Position = ConvertDraggedHighwayPosition(_movingHighway.TargetCluster, _movingHighway.TargetSector, _movingHighway.TargetZone, _movingHighway.TargetGate, desiredTarget);
+            PointF desired = new(_movingHighway.OriginalScreen.X + delta.X, _movingHighway.OriginalScreen.Y + delta.Y);
+            _movingHighway.Gate.Position = ConvertDraggedHighwayPosition(_movingHighway.Cluster, _movingHighway.Sector, _movingHighway.Zone, desired);
         }
 
-        private Point ConvertDraggedHighwayPosition(Cluster cluster, Sector sector, Zone zone, Gate gate, PointF desiredScreenPosition)
+        private Point ConvertDraggedHighwayPosition(Cluster cluster, Sector sector, Zone zone, PointF desiredScreenPosition)
         {
             PointF sectorHexCenter = GetSectorHexCenter(cluster, sector);
             float sectorHexRadius = GetSectorHexRadius(cluster);
             PointF clamped = ClampPointInsideSectorHex(desiredScreenPosition, cluster, sector);
 
             Point worldPoint = ConvertToWorldCoordinate(new PointF(clamped.X - sectorHexCenter.X, clamped.Y - sectorHexCenter.Y), sector.DiameterRadius, sectorHexRadius);
-            return new Point(worldPoint.X - gate.Position.X, worldPoint.Y - gate.Position.Y);
+            return new Point(worldPoint.X - zone.Position.X, worldPoint.Y - zone.Position.Y);
+        }
+
+        private HighwayEndpointDragState CreateHighwayEndpointState(GateConnection connection, bool isSource)
+        {
+            GateData endpoint = isSource ? connection.Source : connection.Target;
+
+            return new HighwayEndpointDragState
+            {
+                Connection = connection,
+                Cluster = endpoint.Cluster,
+                Sector = endpoint.Sector,
+                Zone = endpoint.Zone,
+                Gate = endpoint.Gate,
+                OriginalGatePosition = endpoint.Gate.Position,
+                OriginalScreen = new PointF(endpoint.ScreenX, endpoint.ScreenY)
+            };
         }
 
         private PointF GetSectorHexCenter(Cluster cluster, Sector sector)
@@ -2846,22 +2850,16 @@ namespace X4SectorCreator
             public GateData Target { get; set; }
         }
 
-        private class HighwayDragState
+        private class HighwayEndpointDragState
         {
             public GateConnection Connection { get; set; }
+            public Cluster Cluster { get; set; }
+            public Sector Sector { get; set; }
+            public Zone Zone { get; set; }
+            public Gate Gate { get; set; }
             public PointF StartMouseScreen { get; set; }
-            public PointF OriginalSourceScreen { get; set; }
-            public PointF OriginalTargetScreen { get; set; }
-            public Point OriginalSourceZonePosition { get; set; }
-            public Point OriginalTargetZonePosition { get; set; }
-            public Zone SourceZone { get; set; }
-            public Zone TargetZone { get; set; }
-            public Gate SourceGate { get; set; }
-            public Gate TargetGate { get; set; }
-            public Sector SourceSector { get; set; }
-            public Sector TargetSector { get; set; }
-            public Cluster SourceCluster { get; set; }
-            public Cluster TargetCluster { get; set; }
+            public PointF OriginalScreen { get; set; }
+            public Point OriginalGatePosition { get; set; }
         }
 
         internal struct GateData
