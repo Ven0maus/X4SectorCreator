@@ -42,10 +42,6 @@
             BtnFalloffUp = new Button();
             label3 = new Label();
             cmbBoundaryType = new ComboBox();
-            ListBoxResources = new ListBox();
-            label4 = new Label();
-            BtnResourcesDel = new Button();
-            BtnResourcesAdd = new Button();
             label2 = new Label();
             ListBoxFields = new ListBox();
             label6 = new Label();
@@ -210,46 +206,6 @@
             cmbBoundaryType.TabIndex = 52;
             cmbBoundaryType.Text = "Cylinder";
             // 
-            // ListBoxResources
-            // 
-            ListBoxResources.FormattingEnabled = true;
-            ListBoxResources.HorizontalScrollbar = true;
-            ListBoxResources.Location = new Point(248, 92);
-            ListBoxResources.Name = "ListBoxResources";
-            ListBoxResources.Size = new Size(204, 214);
-            ListBoxResources.TabIndex = 53;
-            ListBoxResources.DoubleClick += ListBoxResources_DoubleClick;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 15F);
-            label4.Location = new Point(248, 61);
-            label4.Name = "label4";
-            label4.Size = new Size(160, 28);
-            label4.TabIndex = 54;
-            label4.Text = "Region resources";
-            // 
-            // BtnResourcesDel
-            // 
-            BtnResourcesDel.Location = new Point(248, 312);
-            BtnResourcesDel.Name = "BtnResourcesDel";
-            BtnResourcesDel.Size = new Size(99, 31);
-            BtnResourcesDel.TabIndex = 56;
-            BtnResourcesDel.Text = "Delete resource";
-            BtnResourcesDel.UseVisualStyleBackColor = true;
-            BtnResourcesDel.Click += BtnResourcesDel_Click;
-            // 
-            // BtnResourcesAdd
-            // 
-            BtnResourcesAdd.Location = new Point(353, 312);
-            BtnResourcesAdd.Name = "BtnResourcesAdd";
-            BtnResourcesAdd.Size = new Size(99, 31);
-            BtnResourcesAdd.TabIndex = 55;
-            BtnResourcesAdd.Text = "Add resource";
-            BtnResourcesAdd.UseVisualStyleBackColor = true;
-            BtnResourcesAdd.Click += BtnResourcesAdd_Click;
-            // 
             // label2
             // 
             label2.AutoSize = true;
@@ -264,16 +220,16 @@
             // 
             ListBoxFields.FormattingEnabled = true;
             ListBoxFields.HorizontalScrollbar = true;
-            ListBoxFields.Location = new Point(12, 377);
+            ListBoxFields.Location = new Point(12, 257);
             ListBoxFields.Name = "ListBoxFields";
-            ListBoxFields.Size = new Size(436, 199);
+            ListBoxFields.Size = new Size(436, 319);
             ListBoxFields.TabIndex = 59;
             ListBoxFields.DoubleClick += ListBoxFields_DoubleClick;
             // 
             // label6
             // 
             label6.Font = new Font("Segoe UI", 15F);
-            label6.Location = new Point(246, 346);
+            label6.Location = new Point(246, 226);
             label6.Name = "label6";
             label6.Size = new Size(202, 28);
             label6.TabIndex = 60;
@@ -314,7 +270,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 59);
+            label1.Location = new Point(10, 66);
             label1.Name = "label1";
             label1.Size = new Size(116, 21);
             label1.TabIndex = 69;
@@ -322,7 +278,7 @@
             // 
             // txtDensity
             // 
-            txtDensity.Location = new Point(12, 83);
+            txtDensity.Location = new Point(10, 90);
             txtDensity.Name = "txtDensity";
             txtDensity.Size = new Size(230, 23);
             txtDensity.TabIndex = 68;
@@ -332,7 +288,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(12, 109);
+            label9.Location = new Point(10, 116);
             label9.Name = "label9";
             label9.Size = new Size(121, 21);
             label9.TabIndex = 71;
@@ -340,7 +296,7 @@
             // 
             // txtRotation
             // 
-            txtRotation.Location = new Point(12, 133);
+            txtRotation.Location = new Point(10, 140);
             txtRotation.Name = "txtRotation";
             txtRotation.Size = new Size(230, 23);
             txtRotation.TabIndex = 70;
@@ -350,7 +306,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 12F);
-            label10.Location = new Point(12, 159);
+            label10.Location = new Point(246, 66);
             label10.Name = "label10";
             label10.Size = new Size(98, 21);
             label10.TabIndex = 73;
@@ -358,9 +314,9 @@
             // 
             // txtSeed
             // 
-            txtSeed.Location = new Point(12, 183);
+            txtSeed.Location = new Point(246, 90);
             txtSeed.Name = "txtSeed";
-            txtSeed.Size = new Size(230, 23);
+            txtSeed.Size = new Size(206, 23);
             txtSeed.TabIndex = 72;
             txtSeed.Text = "1337";
             // 
@@ -368,7 +324,7 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 12F);
-            label11.Location = new Point(12, 209);
+            label11.Location = new Point(246, 116);
             label11.Name = "label11";
             label11.Size = new Size(137, 21);
             label11.TabIndex = 75;
@@ -376,9 +332,9 @@
             // 
             // txtNoiseScale
             // 
-            txtNoiseScale.Location = new Point(12, 233);
+            txtNoiseScale.Location = new Point(246, 140);
             txtNoiseScale.Name = "txtNoiseScale";
-            txtNoiseScale.Size = new Size(230, 23);
+            txtNoiseScale.Size = new Size(206, 23);
             txtNoiseScale.TabIndex = 74;
             txtNoiseScale.Text = "10000";
             // 
@@ -386,7 +342,7 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 12F);
-            label12.Location = new Point(12, 259);
+            label12.Location = new Point(12, 169);
             label12.Name = "label12";
             label12.Size = new Size(167, 21);
             label12.TabIndex = 77;
@@ -394,7 +350,7 @@
             // 
             // txtMinNoiseValue
             // 
-            txtMinNoiseValue.Location = new Point(12, 283);
+            txtMinNoiseValue.Location = new Point(12, 193);
             txtMinNoiseValue.Name = "txtMinNoiseValue";
             txtMinNoiseValue.Size = new Size(230, 23);
             txtMinNoiseValue.TabIndex = 76;
@@ -404,7 +360,7 @@
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Segoe UI", 12F);
-            label13.Location = new Point(12, 309);
+            label13.Location = new Point(246, 169);
             label13.Name = "label13";
             label13.Size = new Size(169, 21);
             label13.TabIndex = 79;
@@ -412,9 +368,9 @@
             // 
             // txtMaxNoiseValue
             // 
-            txtMaxNoiseValue.Location = new Point(12, 333);
+            txtMaxNoiseValue.Location = new Point(246, 193);
             txtMaxNoiseValue.Name = "txtMaxNoiseValue";
-            txtMaxNoiseValue.Size = new Size(230, 23);
+            txtMaxNoiseValue.Size = new Size(206, 23);
             txtMaxNoiseValue.TabIndex = 78;
             txtMaxNoiseValue.Text = "1";
             // 
@@ -492,10 +448,6 @@
             Controls.Add(label6);
             Controls.Add(ListBoxFields);
             Controls.Add(label2);
-            Controls.Add(BtnResourcesDel);
-            Controls.Add(BtnResourcesAdd);
-            Controls.Add(label4);
-            Controls.Add(ListBoxResources);
             Controls.Add(cmbBoundaryType);
             Controls.Add(label3);
             Controls.Add(BtnFalloffUp);
@@ -528,9 +480,6 @@
         private Button BtnFalloffUp;
         private Label label3;
         private ComboBox cmbBoundaryType;
-        private Label label4;
-        private Button BtnResourcesDel;
-        private Button BtnResourcesAdd;
         private Label label2;
         private Label label6;
         private Button BtnFieldsDel;
@@ -548,7 +497,6 @@
         private TextBox txtMinNoiseValue;
         private Label label13;
         private TextBox txtMaxNoiseValue;
-        internal ListBox ListBoxResources;
         internal TabControl TabControlFalloff;
         internal ListBox ListBoxLateral;
         internal ListBox ListBoxRadial;

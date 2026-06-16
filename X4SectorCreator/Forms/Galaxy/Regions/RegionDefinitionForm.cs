@@ -6,7 +6,6 @@ namespace X4SectorCreator.Forms
 {
     public partial class RegionDefinitionForm : Form
     {
-        public readonly LazyEvaluated<RegionResourcesForm> RegionResourcesForm = new(() => new RegionResourcesForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<RegionFalloffForm> RegionFalloffForm = new(() => new RegionFalloffForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<RegionFieldsForm> RegionFieldsForm = new(() => new RegionFieldsForm(), a => !a.IsDisposed);
         public readonly LazyEvaluated<RegionPredefinedFieldsForm> RegionPredefinedFieldsForm = new(() => new RegionPredefinedFieldsForm(), a => !a.IsDisposed);
@@ -42,10 +41,6 @@ namespace X4SectorCreator.Forms
                         _ = fallOff.Type.Equals("Lateral", StringComparison.OrdinalIgnoreCase)
                             ? ListBoxLateral.Items.Add(fallOff)
                             : ListBoxRadial.Items.Add(fallOff);
-                    }
-                    foreach (Resource resource in _regionDefinition.Resources)
-                    {
-                        _ = ListBoxResources.Items.Add(resource);
                     }
 
                     BtnCreateRegionDefinition.Text = "Update Region Definition";
@@ -157,9 +152,6 @@ namespace X4SectorCreator.Forms
                     regionDefinition.Falloff.AddRange(ListBoxLateral.Items.Cast<StepObj>());
                     regionDefinition.Falloff.AddRange(ListBoxRadial.Items.Cast<StepObj>());
 
-                    // Resources
-                    regionDefinition.Resources.AddRange(ListBoxResources.Items.Cast<Resource>());
-
                     RegionDefinitions.Add(regionDefinition);
 
                     // Add to combobox
@@ -184,7 +176,6 @@ namespace X4SectorCreator.Forms
                     RegionDefinition.Falloff = ListBoxLateral.Items.Cast<StepObj>()
                         .Concat(ListBoxRadial.Items.Cast<StepObj>())
                         .ToList();
-                    RegionDefinition.Resources = ListBoxResources.Items.Cast<Resource>().ToList();
 
                     // Adjust in combobox
                     var selectedIndex = MainForm.Instance.RegionForm.Value.CmbRegionDefinition.SelectedIndex;
@@ -224,27 +215,6 @@ namespace X4SectorCreator.Forms
             {
                 messages.Add($"{textBox.Name.Replace("txt", string.Empty)} must be a valid numeric integer value.");
             }
-        }
-
-        private void BtnResourcesAdd_Click(object sender, EventArgs e)
-        {
-            RegionResourcesForm.Value.Show();
-        }
-
-        private void BtnResourcesDel_Click(object sender, EventArgs e)
-        {
-            if (ListBoxResources.SelectedItem is not Resource selectedResource)
-            {
-                return;
-            }
-
-            int index = ListBoxResources.Items.IndexOf(selectedResource);
-            ListBoxResources.Items.Remove(selectedResource);
-
-            // Ensure index is within valid range
-            index--;
-            index = Math.Max(0, index);
-            ListBoxResources.SelectedItem = index >= 0 && ListBoxResources.Items.Count > 0 ? ListBoxResources.Items[index] : null;
         }
 
         private void BtnFalloffAdd_Click(object sender, EventArgs e)
@@ -344,17 +314,6 @@ namespace X4SectorCreator.Forms
 
             RegionFieldsForm.Value.FieldObj = selectedField;
             RegionFieldsForm.Value.Show();
-        }
-
-        private void ListBoxResources_DoubleClick(object sender, EventArgs e)
-        {
-            if (ListBoxResources.SelectedItem is not Resource selectedResource)
-            {
-                return;
-            }
-
-            RegionResourcesForm.Value.Resource = selectedResource;
-            RegionResourcesForm.Value.Show();
         }
 
         private void ListBoxLateral_DoubleClick(object sender, EventArgs e)

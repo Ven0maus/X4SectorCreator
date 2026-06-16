@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
 namespace X4SectorCreator.Forms
 {
     public partial class SectorForm : Form
     {
+        public readonly LazyEvaluated<ResourceAreaForm> ResourceAreaForm = new(() => new ResourceAreaForm(), a => !a.IsDisposed);
+
         private Sector _sector;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Sector Sector
@@ -24,6 +27,12 @@ namespace X4SectorCreator.Forms
                     chkAllowRandomAnomalies.Checked = _sector.AllowRandomAnomalies;
                     chkDisableFactionLogic.Checked = _sector.DisableFactionLogic;
 
+                    RAListBox.Items.Clear();
+                    foreach (var ra in _sector.ResourceAreas)
+                    {
+                        RAListBox.Items.Add(ra);
+                    }
+
                     Init();
                 }
                 else
@@ -36,6 +45,7 @@ namespace X4SectorCreator.Forms
                     txtSectorRadius.Text = "250";
                     chkAllowRandomAnomalies.Checked = true;
                     chkDisableFactionLogic.Checked = false;
+                    RAListBox.Items.Clear();
                 }
             }
         }
@@ -232,7 +242,8 @@ namespace X4SectorCreator.Forms
                         Security = (float)Math.Round(security / 100f, 2),
                         AllowRandomAnomalies = chkAllowRandomAnomalies.Checked,
                         DisableFactionLogic = chkDisableFactionLogic.Checked,
-                        Placement = sectorPlacement
+                        Placement = sectorPlacement,
+                        ResourceAreas = RAListBox.Items.Cast<Resource>().ToList()
                     };
 
                     // Create new sector in selected cluster
@@ -274,6 +285,7 @@ namespace X4SectorCreator.Forms
                     sectorValue.DisableFactionLogic = chkDisableFactionLogic.Checked;
                     sectorValue.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
                     sectorValue.Placement = sectorPlacement;
+                    sectorValue.ResourceAreas = RAListBox.Items.Cast<Resource>().ToList();
 
                     // Update zones based on the sector range if modified
                     if (!sectorValue.IsBaseGame)
@@ -336,6 +348,67 @@ namespace X4SectorCreator.Forms
                 lblRadiusUnderText.Text = $"From the center, {radius}km in every direction. {radius * 2}km diameter.";
                 lblRadiusUnderText.ForeColor = _controlColor;
             }
+        }
+
+        private void BtnAddRA_Click(object sender, EventArgs e)
+        {
+            ResourceAreaForm.Value.Show();
+        }
+
+        private void BtnDeleteRA_Click(object sender, EventArgs e)
+        {
+            if (RAListBox.SelectedItem is not Resource selectedResource)
+            {
+                return;
+            }
+
+            int index = RAListBox.Items.IndexOf(selectedResource);
+            RAListBox.Items.Remove(selectedResource);
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            RAListBox.SelectedItem = index >= 0 && RAListBox.Items.Count > 0 ? RAListBox.Items[index] : null;
+        }
+
+        private void RAListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (RAListBox.SelectedItem is not Resource selectedResource)
+            {
+                return;
+            }
+
+            ResourceAreaForm.Value.Resource = selectedResource;
+            ResourceAreaForm.Value.Show();
+        }
+
+        private void RAListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            e.DrawBackground();
+
+            var item = (Resource)RAListBox.Items[e.Index];
+            string text = item.ToString();
+
+            Color textColor;
+
+            if (item.IsBaseGame)
+                textColor = Color.DarkCyan;
+            else
+                textColor = Color.Black;
+
+            using (var brush = new SolidBrush(textColor))
+            {
+                e.Graphics.DrawString(
+                    text,
+                    e.Font,
+                    brush,
+                    e.Bounds);
+            }
+
+            e.DrawFocusRectangle();
         }
     }
 }

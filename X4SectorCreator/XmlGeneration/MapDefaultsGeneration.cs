@@ -64,7 +64,7 @@ namespace X4SectorCreator.XmlGeneration
                                     new XAttribute("description", $"{{local:{cluster.Description ?? string.Empty}}}"),
                                     new XAttribute("image", "enc_cluster01") // By default point to img of cluster01
                                 ),
-                                !string.IsNullOrWhiteSpace(cluster.Soundtrack) ? 
+                                !string.IsNullOrWhiteSpace(cluster.Soundtrack) ?
                                     new XElement("sounds", new XElement("music", new XAttribute("ref", cluster.Soundtrack))) : null,
                                 clusterFactionLogicTag,
                                 new XElement("system")
@@ -93,6 +93,18 @@ namespace X4SectorCreator.XmlGeneration
                         }
                     }
 
+                    XElement resourceAreasElement = null;
+                    if (sector.ResourceAreas.Count > 0)
+                    {
+                        resourceAreasElement = new("resourceareas");
+                        foreach (var ra in sector.ResourceAreas)
+                        {
+                            resourceAreasElement.Add(new XElement("resourcearea",
+                                new XAttribute("amount", ra.Amount),
+                                new XAttribute("ref", $"sphere_{ra.Size}_{ra.Ware}_{ra.Yield}_{ra.Speed}")));
+                        }
+                    }
+
                     XElement areaElement = new("area",
                         new XAttribute("sunlight", sector.Sunlight.ToString("0.0", CultureInfo.InvariantCulture)),
                         new XAttribute("economy", sector.Economy.ToString("0.0", CultureInfo.InvariantCulture)),
@@ -113,6 +125,7 @@ namespace X4SectorCreator.XmlGeneration
                                     new XAttribute("description", $"{{local:{cluster.Description ?? string.Empty}}}"),
                                     new XAttribute("image", "enc_cluster01") // By default point to img of cluster01
                                 ),
+                                resourceAreasElement,
                                 areaElement,
                                 new XElement("system")
                             )
@@ -187,6 +200,9 @@ namespace X4SectorCreator.XmlGeneration
                 elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Sunlight.ToString("0.##"), New.Sunlight.ToString("0.##"), macro, "area", "sunlight", New.Sunlight.ToString("0.##"))));
                 elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Economy.ToString("0.##"), New.Economy.ToString("0.##"), macro, "area", "economy", New.Economy.ToString("0.##"))));
                 elements.Add((VanillaCluster.Dlc, CreateReplaceElement(Old.Security.ToString("0.##"), New.Security.ToString("0.##"), macro, "area", "security", New.Security.ToString("0.##"))));
+
+                // Resource areas
+                HandleResourceAreas(Old, New, VanillaCluster, elements, macro);
 
                 // Adjust tags for random anomalies
                 if (Old.AllowRandomAnomalies != New.AllowRandomAnomalies)
@@ -264,6 +280,72 @@ namespace X4SectorCreator.XmlGeneration
             return elements.Where(a => a.element != null);
         }
 
+        private static void HandleResourceAreas(
+            Sector old,
+            Sector @new,
+            Cluster cluster,
+            List<(string dlc, XElement element)> elements,
+            string macro)
+        {
+            static string Key(Resource r)
+                => $"{r.Ware}|{r.Yield}|{r.Size}|{r.Speed}|{r.Amount}";
+
+            var oldCounts = old.ResourceAreas
+                .GroupBy(Key)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            var newCounts = @new.ResourceAreas
+                .GroupBy(Key)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            // ADDED
+            foreach (var ra in @new.ResourceAreas)
+            {
+                var key = Key(ra);
+
+                if (!oldCounts.TryGetValue(key, out var count) || count == 0)
+                {
+                    elements.Add((
+                        cluster.Dlc,
+                        new XElement("add",
+                            new XAttribute("sel",
+                                $"//dataset[@macro='{macro}_macro']/properties/resourceareas"),
+                            new XElement("resourcearea",
+                                new XAttribute("ref",
+                                    $"sphere_{ra.Size}_{ra.Ware}_{ra.Yield}_{ra.Speed}"),
+                                new XAttribute("amount", ra.Amount)
+                            )
+                        )
+                    ));
+                }
+                else
+                {
+                    oldCounts[key]--;
+                }
+            }
+
+            // REMOVED
+            foreach (var ra in old.ResourceAreas)
+            {
+                var key = Key(ra);
+
+                if (!newCounts.TryGetValue(key, out var count) || count == 0)
+                {
+                    elements.Add((
+                        cluster.Dlc,
+                        new XElement("remove",
+                            new XAttribute("sel",
+                                $"//dataset[@macro='{macro}_macro']/properties/resourceareas/resourcearea[@ref='sphere_{ra.Size}_{ra.Ware}_{ra.Yield}_{ra.Speed}' and @amount='{ra.Amount}']")
+                        )
+                    ));
+                }
+                else
+                {
+                    newCounts[key]--;
+                }
+            }
+        }
+
         private static XElement HandleElementSoundtrack(string old, string @new, string macro)
         {
             // Nothing changed, skip
@@ -273,7 +355,7 @@ namespace X4SectorCreator.XmlGeneration
             if (string.IsNullOrWhiteSpace(old) && !string.IsNullOrWhiteSpace(@new))
             {
                 // Add
-                return new XElement("add", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties"), 
+                return new XElement("add", new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties"),
                     new XElement("sounds", new XElement("music", new XAttribute("ref", @new))));
             }
 
@@ -306,10 +388,10 @@ namespace X4SectorCreator.XmlGeneration
         private static XElement CreateRemoveOrReplaceElement(string checkOne, string checkTwo, string macro, string property, string field, string value)
         {
             return Extensions.HasStringChanged(checkOne, checkTwo)
-                ? !string.IsNullOrWhiteSpace(value) ? 
+                ? !string.IsNullOrWhiteSpace(value) ?
                     new XElement("replace",
-                        new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/{property}/@{field}"), value) 
-                : 
+                        new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/{property}/@{field}"), value)
+                :
                     new XElement("remove",
                         new XAttribute("sel", $"//dataset[@macro='{macro}_macro']/properties/{property}/@{field}"))
                 : null;

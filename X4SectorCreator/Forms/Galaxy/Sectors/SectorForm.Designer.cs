@@ -50,13 +50,18 @@
             lblRadiusUnderText = new Label();
             cmbPlacement = new ComboBox();
             label11 = new Label();
+            RAListBox = new ListBox();
+            label5 = new Label();
+            BtnAddRA = new Button();
+            BtnDeleteRA = new Button();
+            label12 = new Label();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(57, 17);
+            label1.Location = new Point(51, 17);
             label1.Name = "label1";
             label1.Size = new Size(55, 21);
             label1.TabIndex = 10;
@@ -64,7 +69,7 @@
             // 
             // TxtName
             // 
-            TxtName.Location = new Point(118, 17);
+            TxtName.Location = new Point(112, 17);
             TxtName.Name = "TxtName";
             TxtName.Size = new Size(196, 23);
             TxtName.TabIndex = 9;
@@ -83,7 +88,7 @@
             // 
             BtnCreate.Location = new Point(116, 400);
             BtnCreate.Name = "BtnCreate";
-            BtnCreate.Size = new Size(196, 30);
+            BtnCreate.Size = new Size(535, 30);
             BtnCreate.TabIndex = 7;
             BtnCreate.Text = "Create";
             BtnCreate.UseVisualStyleBackColor = true;
@@ -93,7 +98,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(40, 269);
+            label2.Location = new Point(34, 269);
             label2.Name = "label2";
             label2.Size = new Size(71, 21);
             label2.TabIndex = 11;
@@ -103,7 +108,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(34, 297);
+            label3.Location = new Point(28, 297);
             label3.Name = "label3";
             label3.Size = new Size(77, 21);
             label3.TabIndex = 12;
@@ -113,7 +118,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(42, 326);
+            label4.Location = new Point(36, 326);
             label4.Name = "label4";
             label4.Size = new Size(69, 21);
             label4.TabIndex = 13;
@@ -124,7 +129,7 @@
             chkAllowRandomAnomalies.AutoSize = true;
             chkAllowRandomAnomalies.Checked = true;
             chkAllowRandomAnomalies.CheckState = CheckState.Checked;
-            chkAllowRandomAnomalies.Location = new Point(13, 354);
+            chkAllowRandomAnomalies.Location = new Point(122, 354);
             chkAllowRandomAnomalies.Name = "chkAllowRandomAnomalies";
             chkAllowRandomAnomalies.Size = new Size(199, 19);
             chkAllowRandomAnomalies.TabIndex = 14;
@@ -133,7 +138,7 @@
             // 
             // txtSunlight
             // 
-            txtSunlight.Location = new Point(117, 269);
+            txtSunlight.Location = new Point(111, 269);
             txtSunlight.Name = "txtSunlight";
             txtSunlight.Size = new Size(196, 23);
             txtSunlight.TabIndex = 15;
@@ -141,7 +146,7 @@
             // 
             // txtSecurity
             // 
-            txtSecurity.Location = new Point(117, 326);
+            txtSecurity.Location = new Point(111, 326);
             txtSecurity.Name = "txtSecurity";
             txtSecurity.Size = new Size(196, 23);
             txtSecurity.TabIndex = 17;
@@ -149,7 +154,7 @@
             // 
             // txtEconomy
             // 
-            txtEconomy.Location = new Point(117, 297);
+            txtEconomy.Location = new Point(111, 297);
             txtEconomy.Name = "txtEconomy";
             txtEconomy.Size = new Size(196, 23);
             txtEconomy.TabIndex = 16;
@@ -159,7 +164,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(20, 46);
+            label6.Location = new Point(14, 46);
             label6.Name = "label6";
             label6.Size = new Size(92, 21);
             label6.TabIndex = 21;
@@ -167,7 +172,7 @@
             // 
             // txtDescription
             // 
-            txtDescription.Location = new Point(117, 46);
+            txtDescription.Location = new Point(111, 46);
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(196, 129);
@@ -177,7 +182,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(309, 270);
+            label7.Location = new Point(303, 270);
             label7.Name = "label7";
             label7.Size = new Size(23, 21);
             label7.TabIndex = 22;
@@ -187,7 +192,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(309, 298);
+            label8.Location = new Point(303, 298);
             label8.Name = "label8";
             label8.Size = new Size(23, 21);
             label8.TabIndex = 23;
@@ -197,7 +202,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(309, 327);
+            label9.Location = new Point(303, 327);
             label9.Name = "label9";
             label9.Size = new Size(23, 21);
             label9.TabIndex = 24;
@@ -206,7 +211,7 @@
             // chkDisableFactionLogic
             // 
             chkDisableFactionLogic.AutoSize = true;
-            chkDisableFactionLogic.Location = new Point(13, 375);
+            chkDisableFactionLogic.Location = new Point(122, 375);
             chkDisableFactionLogic.Name = "chkDisableFactionLogic";
             chkDisableFactionLogic.Size = new Size(303, 19);
             chkDisableFactionLogic.TabIndex = 25;
@@ -215,7 +220,7 @@
             // 
             // txtSectorRadius
             // 
-            txtSectorRadius.Location = new Point(117, 212);
+            txtSectorRadius.Location = new Point(111, 212);
             txtSectorRadius.Name = "txtSectorRadius";
             txtSectorRadius.Size = new Size(196, 23);
             txtSectorRadius.TabIndex = 27;
@@ -226,7 +231,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 12F);
-            label10.Location = new Point(51, 212);
+            label10.Location = new Point(45, 212);
             label10.Name = "label10";
             label10.Size = new Size(60, 21);
             label10.TabIndex = 26;
@@ -235,7 +240,7 @@
             // lblRadiusUnderText
             // 
             lblRadiusUnderText.Font = new Font("Segoe UI", 8F);
-            lblRadiusUnderText.Location = new Point(116, 238);
+            lblRadiusUnderText.Location = new Point(110, 238);
             lblRadiusUnderText.Name = "lblRadiusUnderText";
             lblRadiusUnderText.Size = new Size(201, 32);
             lblRadiusUnderText.TabIndex = 28;
@@ -246,7 +251,7 @@
             cmbPlacement.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPlacement.Enabled = false;
             cmbPlacement.FormattingEnabled = true;
-            cmbPlacement.Location = new Point(117, 181);
+            cmbPlacement.Location = new Point(111, 181);
             cmbPlacement.Name = "cmbPlacement";
             cmbPlacement.Size = new Size(196, 23);
             cmbPlacement.TabIndex = 29;
@@ -255,17 +260,73 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 12F);
-            label11.Location = new Point(26, 181);
+            label11.Location = new Point(20, 181);
             label11.Name = "label11";
             label11.Size = new Size(85, 21);
             label11.TabIndex = 30;
             label11.Text = "Placement:";
             // 
+            // RAListBox
+            // 
+            RAListBox.DrawMode = DrawMode.OwnerDrawFixed;
+            RAListBox.FormattingEnabled = true;
+            RAListBox.Location = new Point(333, 42);
+            RAListBox.Name = "RAListBox";
+            RAListBox.Size = new Size(318, 228);
+            RAListBox.TabIndex = 31;
+            RAListBox.DrawItem += RAListBox_DrawItem;
+            RAListBox.DoubleClick += RAListBox_DoubleClick;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 12F);
+            label5.Location = new Point(333, 17);
+            label5.Name = "label5";
+            label5.Size = new Size(120, 21);
+            label5.TabIndex = 32;
+            label5.Text = "Resource Areas:";
+            // 
+            // BtnAddRA
+            // 
+            BtnAddRA.Location = new Point(446, 273);
+            BtnAddRA.Name = "BtnAddRA";
+            BtnAddRA.Size = new Size(205, 30);
+            BtnAddRA.TabIndex = 33;
+            BtnAddRA.Text = "Add";
+            BtnAddRA.UseVisualStyleBackColor = true;
+            BtnAddRA.Click += BtnAddRA_Click;
+            // 
+            // BtnDeleteRA
+            // 
+            BtnDeleteRA.Location = new Point(333, 274);
+            BtnDeleteRA.Name = "BtnDeleteRA";
+            BtnDeleteRA.Size = new Size(107, 30);
+            BtnDeleteRA.TabIndex = 34;
+            BtnDeleteRA.Text = "Delete";
+            BtnDeleteRA.UseVisualStyleBackColor = true;
+            BtnDeleteRA.Click += BtnDeleteRA_Click;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 9F);
+            label12.Location = new Point(343, 306);
+            label12.Name = "label12";
+            label12.Size = new Size(297, 45);
+            label12.TabIndex = 35;
+            label12.Text = "Note: For each resource type a matching region \r\nneeds to be defined with the correct mineral/gas fields.\r\nVanilla resource areas are colored cyan.";
+            // 
             // SectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(333, 434);
+            ClientSize = new Size(663, 434);
+            Controls.Add(label12);
+            Controls.Add(BtnDeleteRA);
+            Controls.Add(BtnAddRA);
+            Controls.Add(label5);
+            Controls.Add(RAListBox);
             Controls.Add(label11);
             Controls.Add(cmbPlacement);
             Controls.Add(lblRadiusUnderText);
@@ -321,5 +382,10 @@
         private Label lblRadiusUnderText;
         private ComboBox cmbPlacement;
         private Label label11;
+        private Label label5;
+        internal Button BtnAddRA;
+        internal Button BtnDeleteRA;
+        public ListBox RAListBox;
+        private Label label12;
     }
 }

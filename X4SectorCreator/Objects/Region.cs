@@ -24,7 +24,8 @@ namespace X4SectorCreator.Objects
                 Definition = Definition,
                 Id = Id,
                 Name = Name,
-                Position = Position
+                Position = Position,
+                IsBaseGame = IsBaseGame
             };
         }
 
