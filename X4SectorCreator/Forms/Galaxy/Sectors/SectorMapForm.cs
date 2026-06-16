@@ -537,12 +537,13 @@ namespace X4SectorCreator
             PointF[] parentPolygon = cluster.Hexagon.Points;
             PointF[] childPolygon = cluster.Hexagon.Children[childIndex].Points;
             PointF childCenter = GetHexCenter(childPolygon);
+            const float insetMargin = 6f;
 
             PointF[] relativePoints = childPolygon
                 .Select(a => new PointF(a.X - childCenter.X, a.Y - childCenter.Y))
                 .ToArray();
 
-            if (IsTranslatedChildInsideParent(parentPolygon, relativePoints, desiredCenter))
+            if (IsTranslatedChildInsideParent(parentPolygon, relativePoints, desiredCenter, insetMargin))
                 return desiredCenter;
 
             PointF low = childCenter;
@@ -551,7 +552,7 @@ namespace X4SectorCreator
             for (int i = 0; i < 24; i++)
             {
                 PointF mid = new((low.X + high.X) / 2f, (low.Y + high.Y) / 2f);
-                if (IsTranslatedChildInsideParent(parentPolygon, relativePoints, mid))
+                if (IsTranslatedChildInsideParent(parentPolygon, relativePoints, mid, insetMargin))
                     low = mid;
                 else
                     high = mid;
@@ -560,16 +561,31 @@ namespace X4SectorCreator
             return low;
         }
 
-        private static bool IsTranslatedChildInsideParent(PointF[] parentPolygon, PointF[] childRelativePoints, PointF center)
+        private static bool IsTranslatedChildInsideParent(PointF[] parentPolygon, PointF[] childRelativePoints, PointF center, float insetMargin)
         {
             foreach (PointF point in childRelativePoints)
             {
                 PointF translated = new(center.X + point.X, center.Y + point.Y);
-                if (!IsPointInPolygon(parentPolygon, translated))
+                if (!IsPointInPolygon(parentPolygon, translated) ||
+                    DistanceToPolygonEdges(parentPolygon, translated) < insetMargin)
                     return false;
             }
 
             return true;
+        }
+
+        private static float DistanceToPolygonEdges(PointF[] polygon, PointF point)
+        {
+            float bestDistance = float.MaxValue;
+
+            for (int i = 0; i < polygon.Length; i++)
+            {
+                PointF a = polygon[i];
+                PointF b = polygon[(i + 1) % polygon.Length];
+                bestDistance = Math.Min(bestDistance, DistanceToSegment(point, a, b));
+            }
+
+            return bestDistance;
         }
 
         private int? GetNearestSectorIndexInCluster(PointF mousePos, Cluster cluster, int? excludeIndex = null)
