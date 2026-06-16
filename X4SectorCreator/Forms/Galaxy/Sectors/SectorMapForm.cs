@@ -409,10 +409,12 @@ namespace X4SectorCreator
 
             if (e.KeyCode == Keys.Escape && _movingSector != null)
             {
+                _movingSector.CustomOffset = _movingSectorOriginalOffset;
+                SectorForm.DetermineSectorOffset(_movingSectorCluster, _movingSector);
                 _movingSector = null;
                 _movingSectorCluster = null;
                 _movingSectorChildIndex = null;
-                _movingSectorTargetChildIndex = null;
+                _movingSectorOriginalOffset = null;
                 Invalidate();
             }
 
@@ -430,8 +432,8 @@ namespace X4SectorCreator
         private Cluster _movingSectorCluster = null;
         private Sector _movingSector = null;
         private int? _movingSectorChildIndex = null;
-        private int? _movingSectorTargetChildIndex = null;
         private bool _draggingSectorMove = false;
+        private Point? _movingSectorOriginalOffset = null;
         private HighwayDragState _movingHighway = null;
         private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
         {
@@ -442,26 +444,11 @@ namespace X4SectorCreator
             if (_movingSector == null || _movingSectorCluster == null)
                 return;
 
-            if (_movingSectorTargetChildIndex == null)
-            {
-                _movingSector = null;
-                _movingSectorCluster = null;
-                _movingSectorChildIndex = null;
-                _movingSectorTargetChildIndex = null;
-                Invalidate();
-                return;
-            }
-
-            Sector sector = _movingSectorCluster.Sectors[_movingSectorTargetChildIndex.Value];
-
-            (_movingSector.Placement, sector.Placement) = (sector.Placement, _movingSector.Placement);
-            SectorForm.DetermineSectorOffset(_movingSectorCluster, _movingSector);
-            SectorForm.DetermineSectorOffset(_movingSectorCluster, sector);
-
             _movingSector = null;
             _movingSectorCluster = null;
             _movingSectorChildIndex = null;
-            _movingSectorTargetChildIndex = null;
+            _movingSectorOriginalOffset = null;
+
             Reset(false);
         }
 
@@ -511,6 +498,47 @@ namespace X4SectorCreator
             return false;
         }
 
+        private void UpdateSectorDrag(PointF mousePos)
+        {
+            if (_movingSector == null || _movingSectorCluster == null)
+                return;
+
+            PointF clamped = ClampPointInsideHex(_movingSectorCluster.Hexagon.Points, mousePos);
+            PointF clusterCenter = GetHexCenter(_movingSectorCluster.Hexagon.Points);
+            SizeF clusterSize = GetHexSize(_movingSectorCluster.Hexagon.Points);
+
+            float normalizedX = (clamped.X - clusterCenter.X) / (clusterSize.Width * 0.25f);
+            float normalizedY = -(clamped.Y - clusterCenter.Y) / (clusterSize.Height * 0.5f);
+
+            const int amount = 1000000;
+            int offsetX = (int)Math.Round(Math.Clamp(normalizedX, -1f, 1f) * amount);
+            int offsetY = (int)Math.Round(Math.Clamp(normalizedY, -1f, 1f) * amount);
+
+            _movingSector.CustomOffset = new Point(offsetX, offsetY);
+            SectorForm.DetermineSectorOffset(_movingSectorCluster, _movingSector);
+        }
+
+        private static PointF ClampPointInsideHex(PointF[] polygon, PointF point)
+        {
+            if (IsPointInPolygon(polygon, point))
+                return point;
+
+            PointF center = GetHexCenter(polygon);
+            PointF low = center;
+            PointF high = point;
+
+            for (int i = 0; i < 20; i++)
+            {
+                PointF mid = new((low.X + high.X) / 2f, (low.Y + high.Y) / 2f);
+                if (IsPointInPolygon(polygon, mid))
+                    low = mid;
+                else
+                    high = mid;
+            }
+
+            return low;
+        }
+
         private int? GetNearestSectorIndexInCluster(PointF mousePos, Cluster cluster, int? excludeIndex = null)
         {
             if (cluster?.Hexagon?.Children == null || cluster.Hexagon.Children.Count == 0)
@@ -546,7 +574,6 @@ namespace X4SectorCreator
             _movingSector = null;
             _movingSectorCluster = null;
             _movingSectorChildIndex = null;
-            _movingSectorTargetChildIndex = null;
             _draggingSectorMove = false;
             _movingHighway = null;
             _baseGameClusters = MainForm.Instance.AllClusters
@@ -671,7 +698,7 @@ namespace X4SectorCreator
                     _movingSector = sector;
                     _movingSectorCluster = sectorCluster;
                     _movingSectorChildIndex = sectorIndex;
-                    _movingSectorTargetChildIndex = null;
+                    _movingSectorOriginalOffset = sector.CustomOffset;
                     _draggingSectorMove = true;
                     Invalidate();
                     return;
@@ -713,7 +740,7 @@ namespace X4SectorCreator
                     (e.Location.Y - _offset.Y) / _zoom
                 );
 
-                _movingSectorTargetChildIndex = GetNearestSectorIndexInCluster(adjustedMousePos, _movingSectorCluster, _movingSectorChildIndex);
+                UpdateSectorDrag(adjustedMousePos);
 
                 Invalidate();
                 return;
@@ -1588,13 +1615,6 @@ namespace X4SectorCreator
                 using SolidBrush movingBrush = new(Color.Gold);
                 Hexagon movingHex = _hexagons[(_movingSectorCluster.Position.X, _movingSectorCluster.Position.Y)].Children[_movingSectorChildIndex.Value];
                 e.Graphics.FillPolygon(movingBrush, movingHex.Points);
-
-                if (_movingSectorTargetChildIndex != null)
-                {
-                    using SolidBrush targetBrush = new(Color.FromArgb(180, Color.Orange));
-                    Hexagon targetHex = _hexagons[(_movingSectorCluster.Position.X, _movingSectorCluster.Position.Y)].Children[_movingSectorTargetChildIndex.Value];
-                    e.Graphics.FillPolygon(targetBrush, targetHex.Points);
-                }
             }
 
             if (_selectedHex != null)

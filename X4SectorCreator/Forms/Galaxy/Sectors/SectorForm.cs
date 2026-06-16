@@ -94,6 +94,12 @@ namespace X4SectorCreator.Forms
         /// <param name="sector"></param>
         public static void DetermineSectorOffset(Cluster cluster, Sector sector)
         {
+            if (cluster.Sectors.Count > 1 && sector.CustomOffset.HasValue)
+            {
+                sector.Offset = new(sector.CustomOffset.Value.X, sector.CustomOffset.Value.Y);
+                return;
+            }
+
             // If the sector is the only one in the cluster, use center (0, 0)
             if (cluster.Sectors.Count <= 1)
             {
@@ -136,6 +142,11 @@ namespace X4SectorCreator.Forms
 
         public static bool IsClusterPlacementValid(Cluster cluster)
         {
+            if (cluster.Sectors.Any(a => a.CustomOffset.HasValue))
+            {
+                return true;
+            }
+
             if (cluster.Sectors.Count == 1)
             {
                 return true;

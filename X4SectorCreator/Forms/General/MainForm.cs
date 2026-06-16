@@ -1157,6 +1157,7 @@ namespace X4SectorCreator
                 currentSector.AllowRandomAnomalies = newSector.AllowRandomAnomalies;
                 currentSector.DisableFactionLogic = newSector.DisableFactionLogic;
                 currentSector.Placement = newSector.Placement;
+                currentSector.CustomOffset = newSector.CustomOffset;
 
                 foreach (Zone newZone in newSector.Zones)
                 {
@@ -1416,6 +1417,7 @@ namespace X4SectorCreator
                         nonModifiedSector.Tags != modifiedSector.Tags ||
                         nonModifiedSector.AllowRandomAnomalies != modifiedSector.AllowRandomAnomalies ||
                         nonModifiedSector.Placement != modifiedSector.Placement ||
+                        nonModifiedSector.CustomOffset != modifiedSector.CustomOffset ||
                         IsResourceAreasModified(nonModifiedSector.ResourceAreas, modifiedSector.ResourceAreas))
                     {
                         // Add to modified clusters

@@ -20,6 +20,7 @@ namespace X4SectorCreator.Objects
         public List<Region> Regions { get; set; } = [];
         public List<Resource> ResourceAreas { get; set; } = [];
         public SectorPlacement Placement { get; set; }
+        public Point? CustomOffset { get; set; }
 
         [JsonIgnore]
         public Point PlacementDirection => DeterminePlacementDirection();
@@ -138,6 +139,7 @@ namespace X4SectorCreator.Objects
                 Offset = Offset,
                 Owner = Owner,
                 Placement = Placement,
+                CustomOffset = CustomOffset,
                 Security = Security,
                 Sunlight = Sunlight,
                 Tags = Tags,

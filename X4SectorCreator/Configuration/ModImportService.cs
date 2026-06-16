@@ -209,6 +209,7 @@ namespace X4SectorCreator.Configuration
                 {
                     Name = sectorMacroName.Replace("_macro", string.Empty, StringComparison.OrdinalIgnoreCase),
                     Placement = InferPlacement(sectorOffset),
+                    CustomOffset = sectorOffset == null ? null : new Point((int)Math.Round(sectorOffset.X), (int)Math.Round(sectorOffset.Z)),
                     Zones = [],
                     Regions = [],
                     ResourceAreas = []
