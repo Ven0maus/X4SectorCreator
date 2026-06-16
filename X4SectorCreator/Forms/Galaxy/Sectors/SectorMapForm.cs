@@ -810,22 +810,21 @@ namespace X4SectorCreator
                 if (cluster.Sectors.Count <= 1 || cluster.Hexagon == null)
                     continue;
 
-                PointF clusterCenter = GetHexCenter(cluster.Hexagon.Points);
-                float clusterHexRadius = GetHexRadius(cluster.Hexagon.Points);
+                PointF[] snapPoints = GetChildSectorSnapCenters(cluster).ToArray();
+                HashSet<int> usedIndices = [];
 
                 foreach (var sector in cluster.Sectors)
                 {
-                    if (!sector.CustomOffset.HasValue)
-                        continue;
+                    PointF currentCenter = GetCurrentSectorCenter(cluster, sector);
+                    int snapIndex = GetSnapIndex(currentCenter, snapPoints);
 
-                    (float x, float y) = ConvertCustomOffsetToChildCenter(sector.CustomOffset.Value, clusterHexRadius);
-                    PointF childCenter = new(clusterCenter.X + x, clusterCenter.Y + y);
-                    PointF clamped = ClampPointInsideHex(cluster.Hexagon.Points, childCenter);
+                    while (usedIndices.Contains(snapIndex))
+                    {
+                        snapIndex = (snapIndex + 1) % snapPoints.Length;
+                    }
 
-                    if (Math.Abs(clamped.X - childCenter.X) < 0.01f && Math.Abs(clamped.Y - childCenter.Y) < 0.01f)
-                        continue;
-
-                    sector.CustomOffset = ConvertPointInClusterHexToCustomOffset(cluster, clamped);
+                    usedIndices.Add(snapIndex);
+                    sector.CustomOffset = ConvertPointInClusterHexToCustomOffset(cluster, snapPoints[snapIndex]);
                     SectorForm.DetermineSectorOffset(cluster, sector);
                 }
             }
