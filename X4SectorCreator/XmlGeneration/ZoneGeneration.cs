@@ -118,9 +118,9 @@ namespace X4SectorCreator.XmlGeneration
                     new XAttribute("ref", "gates"),
                     new XElement("offset",
                         new XElement("position",
-                            new XAttribute("x", 0),
+                            new XAttribute("x", gate.Position.X),
                             new XAttribute("y", 1000), // 1000 to avoid bugs at (0,0,0)
-                            new XAttribute("z", 0)
+                            new XAttribute("z", gate.Position.Y)
                         ),
                         new XElement("rotation",
                             new XAttribute("yaw", gate.Yaw),
@@ -196,9 +196,9 @@ namespace X4SectorCreator.XmlGeneration
                     new XAttribute("ref", "gates"),
                     new XElement("offset",
                         new XElement("position",
-                            new XAttribute("x", 0),
+                            new XAttribute("x", gate.Position.X),
                             new XAttribute("y", 1000),
-                            new XAttribute("z", 0)
+                            new XAttribute("z", gate.Position.Y)
                         ),
                         new XElement("rotation",
                             new XAttribute("yaw", gate.Yaw),
