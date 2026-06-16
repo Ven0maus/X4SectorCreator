@@ -406,18 +406,35 @@ namespace X4SectorCreator
                 _movingCluster = null;
                 Invalidate();
             }
+
+            if (e.KeyCode == Keys.Escape && _movingSector != null)
+            {
+                _movingSector = null;
+                _movingSectorCluster = null;
+                _movingSectorChildIndex = null;
+                Invalidate();
+            }
         }
 
         private Cluster _movingCluster = null;
+        private Cluster _movingSectorCluster = null;
+        private Sector _movingSector = null;
+        private int? _movingSectorChildIndex = null;
         private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
         {
+            PointF adjustedMousePos = new(
+                (e.Location.X - _offset.X) / _zoom,
+                (e.Location.Y - _offset.Y) / _zoom
+            );
+
+            if (e.Button == MouseButtons.Middle)
+            {
+                HandleSectorMoveClick(adjustedMousePos);
+                return;
+            }
+
             if (e.Button == MouseButtons.Right)
             {
-                PointF adjustedMousePos = new(
-                    (e.Location.X - _offset.X) / _zoom,
-                    (e.Location.Y - _offset.Y) / _zoom
-                );
-
                 // Don't allow cluster movement when searching
                 if (_visibleSectorsFromSearch.Count > 0)
                 {
@@ -465,6 +482,58 @@ namespace X4SectorCreator
             }
         }
 
+        private void HandleSectorMoveClick(PointF adjustedMousePos)
+        {
+            if (_visibleSectorsFromSearch.Count > 0)
+            {
+                _ = MessageBox.Show("Cannot move sectors while a search filter is set.");
+                return;
+            }
+
+            if (!TryGetSectorAtMousePos(adjustedMousePos, out Cluster cluster, out Sector sector, out int sectorIndex))
+            {
+                return;
+            }
+
+            if (cluster.Sectors.Count <= 1)
+            {
+                return;
+            }
+
+            if (_movingSector == null)
+            {
+                _movingSector = sector;
+                _movingSectorCluster = cluster;
+                _movingSectorChildIndex = sectorIndex;
+                Invalidate();
+                return;
+            }
+
+            if (_movingSector == sector)
+            {
+                _movingSector = null;
+                _movingSectorCluster = null;
+                _movingSectorChildIndex = null;
+                Invalidate();
+                return;
+            }
+
+            if (_movingSectorCluster != cluster)
+            {
+                _ = MessageBox.Show("Sectors can only be rearranged within the same cluster.");
+                return;
+            }
+
+            (_movingSector.Placement, sector.Placement) = (sector.Placement, _movingSector.Placement);
+            SectorForm.DetermineSectorOffset(cluster, _movingSector);
+            SectorForm.DetermineSectorOffset(cluster, sector);
+
+            _movingSector = null;
+            _movingSectorCluster = null;
+            _movingSectorChildIndex = null;
+            Reset(false);
+        }
+
         private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
         {
             pos = null;
@@ -482,6 +551,37 @@ namespace X4SectorCreator
                 }
             }
             return null;
+        }
+
+        private bool TryGetSectorAtMousePos(PointF mousePos, out Cluster cluster, out Sector sector, out int sectorIndex)
+        {
+            foreach (var hex in _hexagons.Values)
+            {
+                if (!MainForm.Instance.AllClusters.TryGetValue(hex.Position, out cluster))
+                {
+                    continue;
+                }
+
+                if (cluster.Sectors.Count <= 1 || hex.Children.Count == 0)
+                {
+                    continue;
+                }
+
+                for (int index = 0; index < hex.Children.Count && index < cluster.Sectors.Count; index++)
+                {
+                    if (IsPointInPolygon(hex.Children[index].Points, mousePos))
+                    {
+                        sector = cluster.Sectors[index];
+                        sectorIndex = index;
+                        return true;
+                    }
+                }
+            }
+
+            cluster = null;
+            sector = null;
+            sectorIndex = -1;
+            return false;
         }
 
         public void Reset(bool resetLegendTree = true)
@@ -1037,7 +1137,7 @@ namespace X4SectorCreator
             GraphicsState state = e.Graphics.Save();
             e.Graphics.ResetTransform();
 
-            string labelText = "Tip: You can right click on clusters to move them around.";
+            string labelText = "Tip: Right click moves clusters, middle click swaps subsectors.";
             using (Font font = new("Segoe UI", 12f, FontStyle.Bold))
             using (Brush brush = new SolidBrush(Color.Yellow))
             {
@@ -1371,6 +1471,13 @@ namespace X4SectorCreator
 
         private void RenderHexSelection(PaintEventArgs e)
         {
+            if (_movingSectorCluster != null && _movingSectorChildIndex != null)
+            {
+                using SolidBrush movingBrush = new(Color.Gold);
+                Hexagon movingHex = _hexagons[(_movingSectorCluster.Position.X, _movingSectorCluster.Position.Y)].Children[_movingSectorChildIndex.Value];
+                e.Graphics.FillPolygon(movingBrush, movingHex.Points);
+            }
+
             if (_selectedHex != null)
             {
                 using SolidBrush brush = new(Color.Cyan);
