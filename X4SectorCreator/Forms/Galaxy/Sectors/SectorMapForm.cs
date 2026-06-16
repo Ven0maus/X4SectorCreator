@@ -1890,8 +1890,12 @@ namespace X4SectorCreator
         private bool TryGetHighwayAtMousePos(Point mousePos, out GateConnection connection)
         {
             float renderedNodeRadius = Math.Max(_gateSizeRadius * _zoom, 8f);
-            float nodeHitRadius = renderedNodeRadius + 6f;
-            float lineHitRadius = renderedNodeRadius + 10f;
+            float nodeHitRadius = Math.Max(renderedNodeRadius * 2.5f, 22f);
+            float lineHitRadius = Math.Max(renderedNodeRadius * 1.75f, 18f);
+            PointF mouse = new(mousePos.X, mousePos.Y);
+            float bestScore = float.MaxValue;
+            GateConnection bestConnection = default;
+            bool found = false;
 
             foreach (var item in GetVisibleGateConnections())
             {
@@ -1900,19 +1904,26 @@ namespace X4SectorCreator
 
                 PointF source = new((item.Source.ScreenX * _zoom) + _offset.X, (item.Source.ScreenY * _zoom) + _offset.Y);
                 PointF target = new((item.Target.ScreenX * _zoom) + _offset.X, (item.Target.ScreenY * _zoom) + _offset.Y);
-                PointF mouse = new(mousePos.X, mousePos.Y);
 
-                if (Distance(mouse, source) <= nodeHitRadius ||
-                    Distance(mouse, target) <= nodeHitRadius ||
-                    DistanceToSegment(mouse, source, target) <= lineHitRadius)
+                float sourceDistance = Distance(mouse, source);
+                float targetDistance = Distance(mouse, target);
+                float segmentDistance = DistanceToSegment(mouse, source, target);
+                float score = Math.Min(Math.Min(sourceDistance, targetDistance), segmentDistance);
+
+                bool hit = sourceDistance <= nodeHitRadius ||
+                           targetDistance <= nodeHitRadius ||
+                           segmentDistance <= lineHitRadius;
+
+                if (hit && score < bestScore)
                 {
-                    connection = item;
-                    return true;
+                    bestScore = score;
+                    bestConnection = item;
+                    found = true;
                 }
             }
 
-            connection = default;
-            return false;
+            connection = bestConnection;
+            return found;
         }
 
         private void UpdateHighwayDrag(PointF mousePos)
