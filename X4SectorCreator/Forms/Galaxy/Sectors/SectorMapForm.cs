@@ -414,6 +414,14 @@ namespace X4SectorCreator
                 _movingSectorChildIndex = null;
                 Invalidate();
             }
+
+            if (e.KeyCode == Keys.Escape && _movingHighway != null)
+            {
+                _movingHighway.SourceZone.Position = _movingHighway.OriginalSourceZonePosition;
+                _movingHighway.TargetZone.Position = _movingHighway.OriginalTargetZonePosition;
+                _movingHighway = null;
+                Invalidate();
+            }
         }
 
         private Cluster _movingCluster = null;
@@ -422,6 +430,7 @@ namespace X4SectorCreator
         private Sector _movingSector = null;
         private int? _movingSectorChildIndex = null;
         private bool _draggingSectorMove = false;
+        private HighwayDragState _movingHighway = null;
         private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
         {
         }
@@ -529,6 +538,7 @@ namespace X4SectorCreator
             _movingSectorCluster = null;
             _movingSectorChildIndex = null;
             _draggingSectorMove = false;
+            _movingHighway = null;
             _baseGameClusters = MainForm.Instance.AllClusters
                 .Where(a => a.Value.IsBaseGame)
                 .ToDictionary(a => a.Key, a => a.Value);
@@ -614,7 +624,7 @@ namespace X4SectorCreator
             {
                 if (_visibleSectorsFromSearch.Count > 0)
                 {
-                    _ = MessageBox.Show("Cannot move clusters or sectors while a search filter is set.");
+                    _ = MessageBox.Show("Cannot move clusters, sectors, or highways while a search filter is set.");
                     return;
                 }
 
@@ -622,6 +632,29 @@ namespace X4SectorCreator
                     (e.Location.X - _offset.X) / _zoom,
                     (e.Location.Y - _offset.Y) / _zoom
                 );
+
+                if (TryGetHighwayAtMousePos(adjustedMousePos, out GateConnection highwayConnection))
+                {
+                    _movingHighway = new HighwayDragState
+                    {
+                        Connection = highwayConnection,
+                        StartMouseScreen = adjustedMousePos,
+                        OriginalSourceScreen = new PointF(highwayConnection.Source.ScreenX, highwayConnection.Source.ScreenY),
+                        OriginalTargetScreen = new PointF(highwayConnection.Target.ScreenX, highwayConnection.Target.ScreenY),
+                        OriginalSourceZonePosition = highwayConnection.Source.Zone.Position,
+                        OriginalTargetZonePosition = highwayConnection.Target.Zone.Position,
+                        SourceZone = highwayConnection.Source.Zone,
+                        TargetZone = highwayConnection.Target.Zone,
+                        SourceGate = highwayConnection.Source.Gate,
+                        TargetGate = highwayConnection.Target.Gate,
+                        SourceSector = highwayConnection.Source.Sector,
+                        TargetSector = highwayConnection.Target.Sector,
+                        SourceCluster = highwayConnection.Source.Cluster,
+                        TargetCluster = highwayConnection.Target.Cluster
+                    };
+                    Invalidate();
+                    return;
+                }
 
                 if (TryGetSectorAtMousePos(adjustedMousePos, out Cluster sectorCluster, out Sector sector, out int sectorIndex) && sectorCluster.Sectors.Count > 1)
                 {
@@ -651,6 +684,17 @@ namespace X4SectorCreator
 
         private void HandleMouseMove(object sender, MouseEventArgs e)
         {
+            if (_movingHighway != null)
+            {
+                PointF adjustedMousePos = new(
+                    (e.Location.X - _offset.X) / _zoom,
+                    (e.Location.Y - _offset.Y) / _zoom
+                );
+                UpdateHighwayDrag(adjustedMousePos);
+                Invalidate();
+                return;
+            }
+
             if (_draggingSectorMove)
             {
                 Invalidate();
@@ -674,6 +718,13 @@ namespace X4SectorCreator
 
         private void HandleMouseUp(object sender, MouseEventArgs e)
         {
+            if (_movingHighway != null)
+            {
+                _movingHighway = null;
+                Invalidate();
+                return;
+            }
+
             if (_draggingSectorMove)
             {
                 _draggingSectorMove = false;
@@ -1180,7 +1231,7 @@ namespace X4SectorCreator
             GraphicsState state = e.Graphics.Save();
             e.Graphics.ResetTransform();
 
-            string labelText = "Tip: Right click moves clusters, left click swaps subsectors.";
+            string labelText = "Tip: Right drag moves clusters, subsectors, and highways.";
             using (Font font = new("Segoe UI", 12f, FontStyle.Bold))
             using (Brush brush = new SolidBrush(Color.Yellow))
             {
@@ -1666,15 +1717,24 @@ namespace X4SectorCreator
 
         private void RenderGateConnections(PaintEventArgs e)
         {
+            GateConnection[] connections = GetVisibleGateConnections();
+
+            foreach (GateConnection connection in connections)
+            {
+                PaintConnection(connection, e);
+            }
+        }
+
+        private GateConnection[] GetVisibleGateConnections()
+        {
             if (!IsMapOptionChecked(MapOption.Show_Vanilla_Gates) &&
                 !IsMapOptionChecked(MapOption.Show_Custom_Gates))
             {
-                return;
+                return [];
             }
 
             List<GateData> gatesData = [];
 
-            // Render custom cluster gates
             if (IsMapOptionChecked(MapOption.Show_Custom_Sectors) && IsMapOptionChecked(MapOption.Show_Custom_Gates))
             {
                 foreach (Cluster cluster in _customClusters)
@@ -1688,26 +1748,13 @@ namespace X4SectorCreator
                 if (cluster.Value.Sectors.All(a => a.IsBaseGame) && !IsMapOptionChecked(MapOption.Show_Vanilla_Sectors))
                     continue;
 
-                // Check if the dlc is selected
                 if (!IsDlcClusterEnabled(cluster.Value))
-                {
                     continue;
-                }
 
                 gatesData.AddRange(CollectGateDataFromCluster(cluster.Value));
             }
 
-            // Collect the source / target for each gate data in one connection
-            // Filter out highway connections they are always duped but they have different paths
-            // It's kinda difficult to filter them out properly, we do it for now based on sector name but its not the ideal solution.
-            // Because as a side effect this can cause multiple highways with the same from/to sector to be filtered out unintentionally
-            // But as far as I have seen, these type of connections don't exist in the base game.
-            GateConnection[] connections = [.. CollectConnectionsFromGateData(gatesData).FilterDuplicateHighwayConnections()];
-
-            foreach (GateConnection connection in connections)
-            {
-                PaintConnection(connection, e);
-            }
+            return [.. CollectConnectionsFromGateData(gatesData).FilterDuplicateHighwayConnections()];
         }
 
         private static void PaintConnection(GateConnection connection, PaintEventArgs e)
@@ -1744,6 +1791,120 @@ namespace X4SectorCreator
 
             // Draw connection line between source and target
             e.Graphics.DrawLine(linePen, connection.Source.ScreenX, connection.Source.ScreenY, connection.Target.ScreenX, connection.Target.ScreenY);
+        }
+
+        private bool TryGetHighwayAtMousePos(PointF mousePos, out GateConnection connection)
+        {
+            foreach (var item in GetVisibleGateConnections())
+            {
+                if (!item.Source.Gate.IsHighwayGate && !item.Target.Gate.IsHighwayGate)
+                    continue;
+
+                if (DistanceToSegment(mousePos, new PointF(item.Source.ScreenX, item.Source.ScreenY), new PointF(item.Target.ScreenX, item.Target.ScreenY)) <= 20f)
+                {
+                    connection = item;
+                    return true;
+                }
+            }
+
+            connection = default;
+            return false;
+        }
+
+        private void UpdateHighwayDrag(PointF mousePos)
+        {
+            if (_movingHighway == null)
+                return;
+
+            PointF delta = new(mousePos.X - _movingHighway.StartMouseScreen.X, mousePos.Y - _movingHighway.StartMouseScreen.Y);
+
+            PointF desiredSource = new(_movingHighway.OriginalSourceScreen.X + delta.X, _movingHighway.OriginalSourceScreen.Y + delta.Y);
+            PointF desiredTarget = new(_movingHighway.OriginalTargetScreen.X + delta.X, _movingHighway.OriginalTargetScreen.Y + delta.Y);
+
+            _movingHighway.SourceZone.Position = ConvertDraggedHighwayPosition(_movingHighway.SourceCluster, _movingHighway.SourceSector, _movingHighway.SourceZone, _movingHighway.SourceGate, desiredSource);
+            _movingHighway.TargetZone.Position = ConvertDraggedHighwayPosition(_movingHighway.TargetCluster, _movingHighway.TargetSector, _movingHighway.TargetZone, _movingHighway.TargetGate, desiredTarget);
+        }
+
+        private Point ConvertDraggedHighwayPosition(Cluster cluster, Sector sector, Zone zone, Gate gate, PointF desiredScreenPosition)
+        {
+            PointF sectorHexCenter = GetSectorHexCenter(cluster, sector);
+            float sectorHexRadius = GetSectorHexRadius(cluster);
+            PointF clamped = ClampPointInsideSectorHex(desiredScreenPosition, cluster, sector);
+
+            Point worldPoint = ConvertToWorldCoordinate(new PointF(clamped.X - sectorHexCenter.X, clamped.Y - sectorHexCenter.Y), sector.DiameterRadius, sectorHexRadius);
+            return new Point(worldPoint.X - gate.Position.X, worldPoint.Y - gate.Position.Y);
+        }
+
+        private PointF GetSectorHexCenter(Cluster cluster, Sector sector)
+        {
+            if (cluster.Sectors.Count == 1)
+                return GetHexCenter(cluster.Hexagon.Points);
+
+            int index = cluster.Sectors.IndexOf(sector);
+            return GetHexCenter(cluster.Hexagon.Children[index].Points);
+        }
+
+        private float GetSectorHexRadius(Cluster cluster)
+        {
+            float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom;
+            float hexRadius = (float)(hexHeight / Math.Sqrt(3));
+            return cluster.Sectors.Count == 1 ? hexRadius : hexRadius / 2f;
+        }
+
+        private PointF ClampPointInsideSectorHex(PointF point, Cluster cluster, Sector sector)
+        {
+            PointF[] polygon = cluster.Sectors.Count == 1
+                ? cluster.Hexagon.Points
+                : cluster.Hexagon.Children[cluster.Sectors.IndexOf(sector)].Points;
+
+            if (IsPointInPolygon(polygon, point))
+                return point;
+
+            PointF center = GetHexCenter(polygon);
+            PointF low = center;
+            PointF high = point;
+
+            for (int i = 0; i < 20; i++)
+            {
+                PointF mid = new((low.X + high.X) / 2f, (low.Y + high.Y) / 2f);
+                if (IsPointInPolygon(polygon, mid))
+                    low = mid;
+                else
+                    high = mid;
+            }
+
+            return low;
+        }
+
+        private static Point ConvertToWorldCoordinate(PointF localScreenPos, int sectorDiameterRadius, float hexRadius)
+        {
+            float normalizedX = localScreenPos.X / hexRadius;
+            float normalizedY = -localScreenPos.Y / hexRadius;
+
+            float worldX = normalizedX * sectorDiameterRadius / 2f;
+            float worldY = normalizedY * sectorDiameterRadius / 2f;
+
+            return new Point((int)Math.Round(worldX), (int)Math.Round(worldY));
+        }
+
+        private static float DistanceToSegment(PointF point, PointF a, PointF b)
+        {
+            float dx = b.X - a.X;
+            float dy = b.Y - a.Y;
+            if (dx == 0 && dy == 0)
+                return Distance(point, a);
+
+            float t = ((point.X - a.X) * dx + (point.Y - a.Y) * dy) / ((dx * dx) + (dy * dy));
+            t = Math.Clamp(t, 0f, 1f);
+            PointF projection = new(a.X + (t * dx), a.Y + (t * dy));
+            return Distance(point, projection);
+        }
+
+        private static float Distance(PointF a, PointF b)
+        {
+            float dx = a.X - b.X;
+            float dy = a.Y - b.Y;
+            return (float)Math.Sqrt((dx * dx) + (dy * dy));
         }
 
         private IEnumerable<GateConnection> CollectConnectionsFromGateData(List<GateData> gatesData)
@@ -2555,6 +2716,24 @@ namespace X4SectorCreator
         {
             public GateData Source { get; set; }
             public GateData Target { get; set; }
+        }
+
+        private class HighwayDragState
+        {
+            public GateConnection Connection { get; set; }
+            public PointF StartMouseScreen { get; set; }
+            public PointF OriginalSourceScreen { get; set; }
+            public PointF OriginalTargetScreen { get; set; }
+            public Point OriginalSourceZonePosition { get; set; }
+            public Point OriginalTargetZonePosition { get; set; }
+            public Zone SourceZone { get; set; }
+            public Zone TargetZone { get; set; }
+            public Gate SourceGate { get; set; }
+            public Gate TargetGate { get; set; }
+            public Sector SourceSector { get; set; }
+            public Sector TargetSector { get; set; }
+            public Cluster SourceCluster { get; set; }
+            public Cluster TargetCluster { get; set; }
         }
 
         internal struct GateData
