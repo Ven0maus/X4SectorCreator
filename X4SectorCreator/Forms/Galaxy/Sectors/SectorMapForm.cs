@@ -1890,12 +1890,16 @@ namespace X4SectorCreator
         private bool TryGetHighwayAtMousePos(Point mousePos, out GateConnection connection)
         {
             float renderedNodeRadius = Math.Max(_gateSizeRadius * _zoom, 8f);
-            float nodeHitRadius = Math.Max(renderedNodeRadius * 2.5f, 22f);
-            float lineHitRadius = Math.Max(renderedNodeRadius * 1.75f, 18f);
+            float nodeHitRadius = Math.Max(renderedNodeRadius * 4f, 42f);
+            float lineHitRadius = Math.Max(renderedNodeRadius * 2f, 20f);
             PointF mouse = new(mousePos.X, mousePos.Y);
-            float bestScore = float.MaxValue;
+            float bestNodeScore = float.MaxValue;
+            GateConnection bestNodeConnection = default;
+            bool foundNode = false;
+
+            float bestLineScore = float.MaxValue;
             GateConnection bestConnection = default;
-            bool found = false;
+            bool foundLine = false;
 
             foreach (var item in GetVisibleGateConnections())
             {
@@ -1908,22 +1912,31 @@ namespace X4SectorCreator
                 float sourceDistance = Distance(mouse, source);
                 float targetDistance = Distance(mouse, target);
                 float segmentDistance = DistanceToSegment(mouse, source, target);
-                float score = Math.Min(Math.Min(sourceDistance, targetDistance), segmentDistance);
 
-                bool hit = sourceDistance <= nodeHitRadius ||
-                           targetDistance <= nodeHitRadius ||
-                           segmentDistance <= lineHitRadius;
-
-                if (hit && score < bestScore)
+                float nodeScore = Math.Min(sourceDistance, targetDistance);
+                if (nodeScore <= nodeHitRadius && nodeScore < bestNodeScore)
                 {
-                    bestScore = score;
+                    bestNodeScore = nodeScore;
+                    bestNodeConnection = item;
+                    foundNode = true;
+                }
+
+                if (segmentDistance <= lineHitRadius && segmentDistance < bestLineScore)
+                {
+                    bestLineScore = segmentDistance;
                     bestConnection = item;
-                    found = true;
+                    foundLine = true;
                 }
             }
 
+            if (foundNode)
+            {
+                connection = bestNodeConnection;
+                return true;
+            }
+
             connection = bestConnection;
-            return found;
+            return foundLine;
         }
 
         private void UpdateHighwayDrag(PointF mousePos)
