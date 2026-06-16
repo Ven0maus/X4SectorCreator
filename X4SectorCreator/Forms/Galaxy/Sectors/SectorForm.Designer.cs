@@ -268,11 +268,13 @@
             // 
             // RAListBox
             // 
+            RAListBox.DrawMode = DrawMode.OwnerDrawFixed;
             RAListBox.FormattingEnabled = true;
             RAListBox.Location = new Point(333, 42);
             RAListBox.Name = "RAListBox";
-            RAListBox.Size = new Size(318, 229);
+            RAListBox.Size = new Size(318, 228);
             RAListBox.TabIndex = 31;
+            RAListBox.DrawItem += RAListBox_DrawItem;
             RAListBox.DoubleClick += RAListBox_DoubleClick;
             // 
             // label5
@@ -311,9 +313,9 @@
             label12.Font = new Font("Segoe UI", 9F);
             label12.Location = new Point(343, 306);
             label12.Name = "label12";
-            label12.Size = new Size(297, 30);
+            label12.Size = new Size(297, 45);
             label12.TabIndex = 35;
-            label12.Text = "Note: For each resource type a matching region \r\nneeds to be defined with the correct mineral/gas fields.";
+            label12.Text = "Note: For each resource type a matching region \r\nneeds to be defined with the correct mineral/gas fields.\r\nVanilla resource areas are colored cyan.";
             // 
             // SectorForm
             // 

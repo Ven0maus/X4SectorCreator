@@ -390,5 +390,34 @@ namespace X4SectorCreator.Forms
             ResourceAreaForm.Value.Resource = selectedResource;
             ResourceAreaForm.Value.Show();
         }
+
+        private void RAListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            e.DrawBackground();
+
+            var item = (Resource)RAListBox.Items[e.Index];
+            string text = item.ToString();
+
+            Color textColor;
+
+            if (item.IsBaseGame)
+                textColor = Color.DarkCyan;
+            else
+                textColor = Color.Black;
+
+            using (var brush = new SolidBrush(textColor))
+            {
+                e.Graphics.DrawString(
+                    text,
+                    e.Font,
+                    brush,
+                    e.Bounds);
+            }
+
+            e.DrawFocusRectangle();
+        }
     }
 }
