@@ -417,94 +417,27 @@ namespace X4SectorCreator
         }
 
         private Cluster _movingCluster = null;
+        private bool _draggingClusterMove = false;
         private Cluster _movingSectorCluster = null;
         private Sector _movingSector = null;
         private int? _movingSectorChildIndex = null;
+        private bool _draggingSectorMove = false;
         private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
         {
-            PointF adjustedMousePos = new(
-                (e.Location.X - _offset.X) / _zoom,
-                (e.Location.Y - _offset.Y) / _zoom
-            );
-
-            if (e.Button == MouseButtons.Left && !BtnSelectLocation.Visible)
-            {
-                HandleSectorMoveClick(adjustedMousePos);
-                return;
-            }
-
-            if (e.Button == MouseButtons.Right)
-            {
-                // Don't allow cluster movement when searching
-                if (_visibleSectorsFromSearch.Count > 0)
-                {
-                    _ = MessageBox.Show("Cannot move clusters while a search filter is set.");
-                    return;
-                }
-
-                if (_movingCluster == null)
-                {
-                    Cluster cluster = GetClusterAtMousePos(adjustedMousePos, out _);
-                    if (cluster != null)
-                    {
-                        _movingCluster = cluster;
-                        Invalidate();
-                    }
-                }
-                else
-                {
-                    // Verify for valid position
-                    Cluster clusterAtPos = GetClusterAtMousePos(adjustedMousePos, out (int x, int y)? coordinate);
-                    if (clusterAtPos != null)
-                    {
-                        // Cancel because we're moving to the same position
-                        if (clusterAtPos == _movingCluster)
-                        {
-                            _movingCluster = null;
-                            Invalidate();
-                            return;
-                        }
-
-                        _ = MessageBox.Show("Cannot place cluster at the target location because another cluster already exists here.");
-                        return;
-                    }
-
-                    if (coordinate == null)
-                        return;
-
-                    // Place cluster down at the new position if it is valid
-                    _ = MainForm.Instance.AllClusters.Remove((_movingCluster.Position.X, _movingCluster.Position.Y));
-                    _movingCluster.Position = new Point(coordinate.Value.x, coordinate.Value.y);
-                    MainForm.Instance.AllClusters[coordinate.Value] = _movingCluster;
-                    _movingCluster = null;
-                    Reset(false);
-                }
-            }
         }
 
-        private void HandleSectorMoveClick(PointF adjustedMousePos)
+        private void CompleteSectorMove(PointF adjustedMousePos)
         {
-            if (_visibleSectorsFromSearch.Count > 0)
+            if (_movingSector == null || _movingSectorCluster == null)
             {
-                _ = MessageBox.Show("Cannot move sectors while a search filter is set.");
                 return;
             }
 
             if (!TryGetSectorAtMousePos(adjustedMousePos, out Cluster cluster, out Sector sector, out int sectorIndex))
             {
-                return;
-            }
-
-            if (cluster.Sectors.Count <= 1)
-            {
-                return;
-            }
-
-            if (_movingSector == null)
-            {
-                _movingSector = sector;
-                _movingSectorCluster = cluster;
-                _movingSectorChildIndex = sectorIndex;
+                _movingSector = null;
+                _movingSectorCluster = null;
+                _movingSectorChildIndex = null;
                 Invalidate();
                 return;
             }
@@ -521,6 +454,10 @@ namespace X4SectorCreator
             if (_movingSectorCluster != cluster)
             {
                 _ = MessageBox.Show("Sectors can only be rearranged within the same cluster.");
+                _movingSector = null;
+                _movingSectorCluster = null;
+                _movingSectorChildIndex = null;
+                Invalidate();
                 return;
             }
 
@@ -587,6 +524,11 @@ namespace X4SectorCreator
         public void Reset(bool resetLegendTree = true)
         {
             _movingCluster = null;
+            _draggingClusterMove = false;
+            _movingSector = null;
+            _movingSectorCluster = null;
+            _movingSectorChildIndex = null;
+            _draggingSectorMove = false;
             _baseGameClusters = MainForm.Instance.AllClusters
                 .Where(a => a.Value.IsBaseGame)
                 .ToDictionary(a => a.Key, a => a.Value);
@@ -668,6 +610,40 @@ namespace X4SectorCreator
 
         private void HandleMouseDown(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (_visibleSectorsFromSearch.Count > 0)
+                {
+                    _ = MessageBox.Show("Cannot move clusters or sectors while a search filter is set.");
+                    return;
+                }
+
+                PointF adjustedMousePos = new(
+                    (e.Location.X - _offset.X) / _zoom,
+                    (e.Location.Y - _offset.Y) / _zoom
+                );
+
+                if (TryGetSectorAtMousePos(adjustedMousePos, out Cluster sectorCluster, out Sector sector, out int sectorIndex) && sectorCluster.Sectors.Count > 1)
+                {
+                    _movingSector = sector;
+                    _movingSectorCluster = sectorCluster;
+                    _movingSectorChildIndex = sectorIndex;
+                    _draggingSectorMove = true;
+                    Invalidate();
+                    return;
+                }
+
+                Cluster cluster = GetClusterAtMousePos(adjustedMousePos, out _);
+                if (cluster != null)
+                {
+                    _movingCluster = cluster;
+                    _draggingClusterMove = true;
+                    Invalidate();
+                }
+
+                return;
+            }
+
             _dragging = true;
             _mouseDownPos = e.Location; // Store initial position
             _lastMousePos = e.Location;
@@ -675,6 +651,18 @@ namespace X4SectorCreator
 
         private void HandleMouseMove(object sender, MouseEventArgs e)
         {
+            if (_draggingSectorMove)
+            {
+                Invalidate();
+                return;
+            }
+
+            if (_draggingClusterMove)
+            {
+                Invalidate();
+                return;
+            }
+
             if (_dragging && e.Button == MouseButtons.Left)
             {
                 _offset.X += e.X - _lastMousePos.X;
@@ -686,6 +674,61 @@ namespace X4SectorCreator
 
         private void HandleMouseUp(object sender, MouseEventArgs e)
         {
+            if (_draggingSectorMove)
+            {
+                _draggingSectorMove = false;
+
+                PointF adjustedMousePos = new(
+                    (e.Location.X - _offset.X) / _zoom,
+                    (e.Location.Y - _offset.Y) / _zoom
+                );
+                CompleteSectorMove(adjustedMousePos);
+                return;
+            }
+
+            if (_draggingClusterMove)
+            {
+                _draggingClusterMove = false;
+
+                if (_movingCluster != null)
+                {
+                    PointF adjustedMousePos = new(
+                        (e.Location.X - _offset.X) / _zoom,
+                        (e.Location.Y - _offset.Y) / _zoom
+                    );
+
+                    Cluster clusterAtPos = GetClusterAtMousePos(adjustedMousePos, out (int x, int y)? coordinate);
+                    if (clusterAtPos == _movingCluster)
+                    {
+                        _movingCluster = null;
+                        Invalidate();
+                        return;
+                    }
+
+                    if (clusterAtPos != null)
+                    {
+                        _ = MessageBox.Show("Cannot place cluster at the target location because another cluster already exists here.");
+                        _movingCluster = null;
+                        Invalidate();
+                        return;
+                    }
+
+                    if (coordinate != null)
+                    {
+                        _ = MainForm.Instance.AllClusters.Remove((_movingCluster.Position.X, _movingCluster.Position.Y));
+                        _movingCluster.Position = new Point(coordinate.Value.x, coordinate.Value.y);
+                        MainForm.Instance.AllClusters[coordinate.Value] = _movingCluster;
+                        _movingCluster = null;
+                        Reset(false);
+                        return;
+                    }
+
+                    _movingCluster = null;
+                    Invalidate();
+                    return;
+                }
+            }
+
             _dragging = false;
 
             // Calculate total movement distance
