@@ -603,7 +603,52 @@ namespace X4SectorCreator
                 SetupLegendTree();
 
             GenerateHexagons();
+            AssignClusterHexagons();
+            SnapHighwayNodesToParentBounds();
             Invalidate();
+        }
+
+        private void AssignClusterHexagons()
+        {
+            foreach (var cluster in MainForm.Instance.AllClusters.Values)
+            {
+                if (_hexagons.TryGetValue((cluster.Position.X, cluster.Position.Y), out var hex))
+                {
+                    cluster.Hexagon = hex;
+                }
+            }
+        }
+
+        private void SnapHighwayNodesToParentBounds()
+        {
+            foreach (var cluster in MainForm.Instance.AllClusters.Values)
+            {
+                foreach (var sector in cluster.Sectors)
+                {
+                    foreach (var zone in sector.Zones)
+                    {
+                        foreach (var gate in zone.Gates)
+                        {
+                            if (!gate.IsHighwayGate)
+                                continue;
+
+                            PointF sectorHexCenter = GetSectorHexCenter(cluster, sector);
+                            float sectorHexRadius = GetSectorHexRadius(cluster);
+                            Point realGatePos = new(zone.Position.X + gate.Position.X, zone.Position.Y + gate.Position.Y);
+                            PointF gateScreenPosition = ConvertFromWorldCoordinate(realGatePos, sector.DiameterRadius, sectorHexRadius);
+                            gateScreenPosition.X += sectorHexCenter.X;
+                            gateScreenPosition.Y += sectorHexCenter.Y;
+
+                            PointF clamped = ClampPointInsideSectorHex(gateScreenPosition, cluster, sector);
+                            if (Math.Abs(clamped.X - gateScreenPosition.X) < 0.01f && Math.Abs(clamped.Y - gateScreenPosition.Y) < 0.01f)
+                                continue;
+
+                            Point worldPoint = ConvertToWorldCoordinate(new PointF(clamped.X - sectorHexCenter.X, clamped.Y - sectorHexCenter.Y), sector.DiameterRadius, sectorHexRadius);
+                            gate.Position = new Point(worldPoint.X - zone.Position.X, worldPoint.Y - zone.Position.Y);
+                        }
+                    }
+                }
+            }
         }
 
         private void HandleMouseWheel(object sender, MouseEventArgs e)

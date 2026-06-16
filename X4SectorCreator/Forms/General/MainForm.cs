@@ -52,10 +52,13 @@ namespace X4SectorCreator
         private string _currentModTargetVersion;
 
         private string _currentConfiguration;
+        private readonly StartupOptions _startupOptions;
 
-        public MainForm()
+        public MainForm(StartupOptions startupOptions = null)
         {
             InitializeComponent();
+
+            _startupOptions = startupOptions ?? new StartupOptions();
 
             if (Instance != null)
             {
@@ -517,6 +520,8 @@ namespace X4SectorCreator
                     "Some UI controls may not be aligned properly, this is very noticable on the sector map.\n" +
                     "Please change your screen scale setting to 100% to be able to properly use this tool.", "Incompatible DPI warning", MessageBoxButtons.OK);
             }
+
+            ProcessStartupOptions();
         }
         #endregion
 
@@ -921,10 +926,16 @@ namespace X4SectorCreator
                 return;
             }
 
+            _ = TryImportModFromPath(folderBrowserDialog.SelectedPath, showSuccessMessage: true);
+        }
+
+        private bool TryImportModFromPath(string modPath, bool showSuccessMessage)
+        {
             try
             {
-                var importedMod = ModImportService.Import(folderBrowserDialog.SelectedPath, InitAllVanillaClusters(false));
-                ApplyImportedConfiguration(importedMod.Clusters, null, $"Imported mod \"{importedMod.ModName}\" succesfully.");
+                var importedMod = ModImportService.Import(modPath, InitAllVanillaClusters(false));
+                ApplyImportedConfiguration(importedMod.Clusters, null, $"Imported mod \"{importedMod.ModName}\" succesfully.", showSuccessMessage);
+                return true;
             }
             catch (Exception ex)
             {
@@ -932,11 +943,12 @@ namespace X4SectorCreator
                 throw;
 #else
                 _ = MessageBox.Show(ex.Message, "Unable to import mod", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
 #endif
             }
         }
 
-        private void ApplyImportedConfiguration(List<Cluster> clusters, VanillaChanges vanillaChanges, string successMessage)
+        private void ApplyImportedConfiguration(List<Cluster> clusters, VanillaChanges vanillaChanges, string successMessage, bool showSuccessMessage = true)
         {
             // Reset configuration
             Reset(true);
@@ -968,7 +980,21 @@ namespace X4SectorCreator
             _clusterDlcLookup = null;
             ClustersListBox.SelectedItem = clusters.FirstOrDefault(a => !a.IsBaseGame)?.Name ?? null;
             _currentConfiguration = ExportJsonConfig();
-            _ = MessageBox.Show(successMessage, "Success");
+            if (showSuccessMessage)
+                _ = MessageBox.Show(successMessage, "Success");
+        }
+
+        private void ProcessStartupOptions()
+        {
+            if (!string.IsNullOrWhiteSpace(_startupOptions.ImportModPath))
+            {
+                _ = TryImportModFromPath(_startupOptions.ImportModPath, showSuccessMessage: false);
+            }
+
+            if (_startupOptions.OpenGalaxyView)
+            {
+                OpenSectorMap();
+            }
         }
 
         private void SupportVanillaChangesInConfigImport((List<Cluster> clusters, VanillaChanges vanillaChanges) configuration)
@@ -1792,6 +1818,11 @@ namespace X4SectorCreator
         }
 
         private void BtnShowSectorMap_Click(object sender, EventArgs e)
+        {
+            OpenSectorMap();
+        }
+
+        private void OpenSectorMap()
         {
             SectorMap.Value.DlcListBox.Enabled = !Forms.GalaxySettingsForm.IsCustomGalaxy;
             SectorMap.Value.GateSectorSelection = false;
