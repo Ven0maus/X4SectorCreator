@@ -9,6 +9,7 @@
 	<PublishSingleFile>true</PublishSingleFile>
 	<SelfContained>true</SelfContained>
 	<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+	<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 	<DebugType>embedded</DebugType>
 	<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>

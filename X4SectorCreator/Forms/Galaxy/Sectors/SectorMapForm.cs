@@ -2,6 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.Text;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -150,6 +151,7 @@ namespace X4SectorCreator
 
         private readonly List<Sector> _availableSearchSectors = [];
         private readonly HashSet<Sector> _visibleSectorsFromSearch = [];
+        private const int _invalidGatePreviewLimit = 15;
 
         public enum MapOption
         {
@@ -404,6 +406,7 @@ namespace X4SectorCreator
             if (e.KeyCode == Keys.Escape && _movingCluster != null)
             {
                 _movingCluster = null;
+                ResetInteractionCursor();
                 Invalidate();
             }
 
@@ -415,6 +418,7 @@ namespace X4SectorCreator
                 _movingSectorCluster = null;
                 _movingSectorChildIndex = null;
                 _movingSectorOriginalOffset = null;
+                ResetInteractionCursor();
                 Invalidate();
             }
 
@@ -422,6 +426,7 @@ namespace X4SectorCreator
             {
                 _movingHighway.Gate.Position = _movingHighway.OriginalGatePosition;
                 _movingHighway = null;
+                ResetInteractionCursor();
                 Invalidate();
             }
         }
@@ -435,6 +440,17 @@ namespace X4SectorCreator
         private Point? _movingSectorOriginalOffset = null;
         private DateTime _lastSectorDragPreviewUpdate = DateTime.MinValue;
         private HighwayEndpointDragState _movingHighway = null;
+
+        private void ResetInteractionCursor()
+        {
+            Cursor = Cursors.Default;
+        }
+
+        private void SetDragCursor()
+        {
+            Cursor = Cursors.SizeAll;
+        }
+
         private void SectorMapForm_MouseClick(object sender, MouseEventArgs e)
         {
         }
@@ -448,6 +464,7 @@ namespace X4SectorCreator
             _movingSectorCluster = null;
             _movingSectorChildIndex = null;
             _movingSectorOriginalOffset = null;
+            ResetInteractionCursor();
 
             RebuildMapGeometry(snapChildSectors: false, avoidChildCollisions: false, snapTravelNodes: true);
         }
@@ -467,6 +484,7 @@ namespace X4SectorCreator
             _movingSectorOriginalOffset = null;
             _draggingSectorMove = false;
             _movingHighway = null;
+            ResetInteractionCursor();
 
             RebuildMapGeometry(snapChildSectors: false, avoidChildCollisions: false, snapTravelNodes: false);
         }
@@ -531,7 +549,10 @@ namespace X4SectorCreator
 
         private PointF GetNearestChildSectorSnapCenter(Cluster cluster, int movingSectorIndex, PointF mousePos)
         {
-            PointF[] candidates = GetChildSectorSnapCenters(cluster, includeOuterAnchors: true).ToArray();
+            bool includeOuterAnchors = cluster.Sectors.Count == 4;
+            PointF[] candidates = SectorMapInteractionRules.UseCanonicalSectorDragLayout(cluster.Sectors.Count)
+                ? GetAutocorrectChildSectorSnapCenters(cluster, includeOuterAnchors).ToArray()
+                : GetChildSectorSnapCenters(cluster, includeOuterAnchors: true).ToArray();
             List<PointF> occupiedCenters = cluster.Sectors
                 .Where((_, index) => index != movingSectorIndex)
                 .Select(a => GetCurrentSectorCenter(cluster, a))
@@ -1238,6 +1259,7 @@ namespace X4SectorCreator
                 {
                     _movingHighway = highwayNode;
                     _movingHighway.StartMouseScreen = adjustedMousePos;
+                    SetDragCursor();
                     Invalidate();
                     return;
                 }
@@ -1250,6 +1272,7 @@ namespace X4SectorCreator
                     _movingSectorOriginalOffset = sector.CustomOffset;
                     _draggingSectorMove = true;
                     _lastSectorDragPreviewUpdate = DateTime.MinValue;
+                    SetDragCursor();
                     Invalidate();
                     return;
                 }
@@ -1259,6 +1282,7 @@ namespace X4SectorCreator
                 {
                     _movingCluster = cluster;
                     _draggingClusterMove = true;
+                    SetDragCursor();
                     Invalidate();
                 }
 
@@ -1322,6 +1346,7 @@ namespace X4SectorCreator
             if (_movingHighway != null)
             {
                 _movingHighway = null;
+                ResetInteractionCursor();
                 Invalidate();
                 return;
             }
@@ -1353,6 +1378,7 @@ namespace X4SectorCreator
                     if (clusterAtPos == _movingCluster)
                     {
                         _movingCluster = null;
+                        ResetInteractionCursor();
                         Invalidate();
                         return;
                     }
@@ -1361,6 +1387,7 @@ namespace X4SectorCreator
                     {
                         _ = MessageBox.Show("Cannot place cluster at the target location because another cluster already exists here.");
                         _movingCluster = null;
+                        ResetInteractionCursor();
                         Invalidate();
                         return;
                     }
@@ -1371,11 +1398,21 @@ namespace X4SectorCreator
                         _movingCluster.Position = new Point(coordinate.Value.x, coordinate.Value.y);
                         MainForm.Instance.AllClusters[coordinate.Value] = _movingCluster;
                         _movingCluster = null;
-                        Reset(false);
+                        if (SectorMapInteractionRules.PreserveChildSectorLayoutAfterClusterMove())
+                        {
+                            ResetInteractionCursor();
+                            RebuildMapGeometry(snapChildSectors: false, avoidChildCollisions: false, snapTravelNodes: false);
+                        }
+                        else
+                        {
+                            ResetInteractionCursor();
+                            Reset(false);
+                        }
                         return;
                     }
 
                     _movingCluster = null;
+                    ResetInteractionCursor();
                     Invalidate();
                     return;
                 }
@@ -1884,7 +1921,7 @@ namespace X4SectorCreator
             GraphicsState state = e.Graphics.Save();
             e.Graphics.ResetTransform();
 
-            string labelText = "Tip: Right drag moves clusters and highways.";
+            string labelText = GetInteractionStatusText();
             using (Font font = new("Segoe UI", 12f, FontStyle.Bold))
             using (Brush brush = new SolidBrush(Color.Yellow))
             {
@@ -1900,6 +1937,20 @@ namespace X4SectorCreator
             }
 
             e.Graphics.Restore(state);
+        }
+
+        private string GetInteractionStatusText()
+        {
+            if (_movingHighway != null)
+                return "Dragging gate node: release to keep the new gate position, ESC to cancel.";
+
+            if (_draggingSectorMove && _movingSector != null)
+                return $"Dragging sector \"{_movingSector.Name}\": snapping to safe in-game multi-sector positions, ESC to cancel.";
+
+            if (_draggingClusterMove && _movingCluster != null)
+                return $"Dragging cluster \"{_movingCluster.Name}\": release over an empty hex to move it, ESC to cancel.";
+
+            return "Tip: Right drag moves clusters, sectors, and gate nodes.";
         }
 
         private void RenderHexIcons(PaintEventArgs e)
@@ -2450,8 +2501,7 @@ namespace X4SectorCreator
 
         private bool TryGetHighwayAtMousePos(Point mousePos, out HighwayEndpointDragState state)
         {
-            float renderedNodeRadius = Math.Max(_gateSizeRadius * _zoom, 8f);
-            float nodeHitRadius = Math.Max(renderedNodeRadius * 4f, 42f);
+            float nodeHitRadius = SectorMapInteractionRules.GetGateNodeHitRadius(_zoom, _gateSizeRadius);
             PointF mouse = new(mousePos.X, mousePos.Y);
             float bestNodeScore = float.MaxValue;
             HighwayEndpointDragState bestNodeState = null;
@@ -2652,9 +2702,67 @@ namespace X4SectorCreator
 
             if (invalidConnections.Count > 0)
             {
-                _ = MessageBox.Show("Some of your gate connections are invalid, please double check them:\n- " +
-                    string.Join("\n- ", invalidConnections.Select(a => a.Gate.ParentSectorName + " -> " + a.Gate.DestinationSectorName)));
+                _ = MessageBox.Show(
+                    BuildInvalidGateMessage(invalidConnections),
+                    $"Invalid gate connections ({invalidConnections.Count})",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
+        }
+
+        private static string BuildInvalidGateMessage(IEnumerable<GateData> invalidConnections)
+        {
+            GateData[] invalidConnectionsArray = invalidConnections
+                .GroupBy(a => a.Gate.SourcePath, StringComparer.OrdinalIgnoreCase)
+                .Select(a => a.First())
+                .OrderBy(a => a.Gate.ParentSectorName, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(a => a.Gate.DestinationSectorName, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(a => a.Gate.ConnectionName, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+
+            var builder = new StringBuilder();
+            _ = builder.AppendLine("Some gate connections could not be resolved when opening Galaxy View.");
+            _ = builder.AppendLine();
+            _ = builder.AppendLine("Each item shows the gate, its source, its intended destination, and the reverse path that could not be found.");
+            _ = builder.AppendLine();
+
+            foreach (GateData gateData in invalidConnectionsArray.Take(_invalidGatePreviewLimit))
+            {
+                Gate gate = gateData.Gate;
+                string sourceZone = ExtractZoneToken(gate.Source);
+                string destinationZone = ExtractZoneToken(gate.Destination);
+                string gateName = !string.IsNullOrWhiteSpace(gate.ConnectionName)
+                    ? gate.ConnectionName
+                    : gate.SourcePath?.Split('/').LastOrDefault() ?? "<unknown gate>";
+
+                _ = builder.AppendLine($"- Gate: {gateName}");
+                _ = builder.AppendLine($"  Source: {gate.ParentSectorName} ({sourceZone})");
+                _ = builder.AppendLine($"  Destination: {gate.DestinationSectorName} ({destinationZone})");
+                _ = builder.AppendLine($"  Reverse path not found: {gate.DestinationPath}");
+                _ = builder.AppendLine();
+            }
+
+            if (invalidConnectionsArray.Length > _invalidGatePreviewLimit)
+            {
+                int remaining = invalidConnectionsArray.Length - _invalidGatePreviewLimit;
+                _ = builder.AppendLine($"...and {remaining} more invalid gate connection(s).");
+                _ = builder.AppendLine();
+            }
+
+            _ = builder.AppendLine("Tip: search the gate connection name in your generated XML or imported config to find the exact source gate object.");
+            return builder.ToString().TrimEnd();
+        }
+
+        private static string ExtractZoneToken(string gateEndpoint)
+        {
+            if (string.IsNullOrWhiteSpace(gateEndpoint))
+                return "unknown zone";
+
+            string zoneToken = gateEndpoint
+                .Split('_', StringSplitOptions.RemoveEmptyEntries)
+                .LastOrDefault(a => a.StartsWith("z", StringComparison.OrdinalIgnoreCase));
+
+            return string.IsNullOrWhiteSpace(zoneToken) ? gateEndpoint : zoneToken;
         }
 
         private IEnumerable<GateData> CollectGateDataFromCluster(Cluster cluster)
