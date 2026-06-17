@@ -449,7 +449,7 @@ namespace X4SectorCreator
             _movingSectorChildIndex = null;
             _movingSectorOriginalOffset = null;
 
-            Reset(false);
+            RebuildMapGeometry(snapChildSectors: false, avoidChildCollisions: false, snapTravelNodes: true);
         }
 
         private void BtnAutoCorrectLayout_Click(object sender, EventArgs e)
@@ -468,7 +468,7 @@ namespace X4SectorCreator
             _draggingSectorMove = false;
             _movingHighway = null;
 
-            RebuildMapGeometry(snapChildSectors: true, avoidChildCollisions: true, snapTravelNodes: true);
+            RebuildMapGeometry(snapChildSectors: false, avoidChildCollisions: false, snapTravelNodes: false);
         }
 
         private Cluster GetClusterAtMousePos(PointF mousePos, out (int x, int y)? pos)
@@ -531,12 +531,19 @@ namespace X4SectorCreator
 
         private PointF GetNearestChildSectorSnapCenter(Cluster cluster, int movingSectorIndex, PointF mousePos)
         {
-            PointF[] candidates = GetChildSectorSnapCenters(cluster).ToArray();
+            PointF[] candidates = GetChildSectorSnapCenters(cluster, includeOuterAnchors: true).ToArray();
+            List<PointF> occupiedCenters = cluster.Sectors
+                .Where((_, index) => index != movingSectorIndex)
+                .Select(a => GetCurrentSectorCenter(cluster, a))
+                .ToList();
 
             int selectedIndex = -1;
             float selectedDistance = float.MaxValue;
             for (int i = 0; i < candidates.Length; i++)
             {
+                if (occupiedCenters.Any(a => Distance(a, candidates[i]) < 0.01f))
+                    continue;
+
                 float distance = Distance(mousePos, candidates[i]);
                 if (distance < selectedDistance)
                 {
@@ -551,17 +558,121 @@ namespace X4SectorCreator
             return candidates[selectedIndex];
         }
 
-        private IEnumerable<PointF> GetChildSectorSnapCenters(Cluster cluster)
+        private IEnumerable<PointF> GetChildSectorSnapCenters(Cluster cluster, bool includeOuterAnchors)
         {
             PointF[] parentHex = cluster.Hexagon.Points;
             PointF parentCenter = GetHexCenter(parentHex);
 
-            foreach (PointF vertex in parentHex)
+            if (cluster.Sectors.Count <= 3)
             {
-                yield return new PointF(
-                    (parentCenter.X + vertex.X) / 2f,
-                    (parentCenter.Y + vertex.Y) / 2f);
+                for (int index = 0; index < parentHex.Length; index++)
+                {
+                    PointF vertex = parentHex[index];
+                    PointF nextVertex = parentHex[(index + 1) % parentHex.Length];
+                    PointF sideMidpoint = new(
+                        (vertex.X + nextVertex.X) / 2f,
+                        (vertex.Y + nextVertex.Y) / 2f);
+
+                    yield return LerpPoint(parentCenter, vertex, 0.5f);
+                    yield return LerpPoint(parentCenter, sideMidpoint, 0.5f);
+                }
+
+                yield break;
             }
+
+            if (cluster.Sectors.Count == 4 && includeOuterAnchors)
+            {
+                const float vertexRatio = 3f / 5f;
+                const float sideRatio = 3f / 5f;
+
+                for (int index = 0; index < parentHex.Length; index++)
+                {
+                    PointF vertex = parentHex[index];
+                    PointF nextVertex = parentHex[(index + 1) % parentHex.Length];
+                    PointF sideMidpoint = new(
+                        (vertex.X + nextVertex.X) / 2f,
+                        (vertex.Y + nextVertex.Y) / 2f);
+
+                    yield return LerpPoint(parentCenter, vertex, vertexRatio);
+                    yield return LerpPoint(parentCenter, sideMidpoint, sideRatio);
+                }
+
+                yield break;
+            }
+
+            float[] ratios = includeOuterAnchors
+                ? [0.5f, 3f / 5f, 2f / 3f]
+                : [0.5f];
+
+            foreach (float ratio in ratios)
+            {
+                for (int index = 0; index < parentHex.Length; index++)
+                {
+                    PointF vertex = parentHex[index];
+                    PointF nextVertex = parentHex[(index + 1) % parentHex.Length];
+                    PointF sideMidpoint = new(
+                        (vertex.X + nextVertex.X) / 2f,
+                        (vertex.Y + nextVertex.Y) / 2f);
+
+                    yield return LerpPoint(parentCenter, vertex, ratio);
+                    yield return LerpPoint(parentCenter, sideMidpoint, ratio);
+                }
+            }
+        }
+
+        private IEnumerable<PointF> GetAutocorrectChildSectorSnapCenters(Cluster cluster, bool includeOuterAnchors)
+        {
+            PointF[] parentHex = cluster.Hexagon.Points;
+            PointF parentCenter = GetHexCenter(parentHex);
+
+            if (cluster.Sectors.Count == 2)
+            {
+                PointF topLeft = parentHex.OrderBy(a => a.Y).ThenBy(a => a.X).First();
+                PointF topRight = parentHex.OrderBy(a => a.Y).ThenByDescending(a => a.X).First();
+                PointF bottomLeft = parentHex.OrderByDescending(a => a.Y).ThenBy(a => a.X).First();
+                PointF bottomRight = parentHex.OrderByDescending(a => a.Y).ThenByDescending(a => a.X).First();
+
+                PointF up = new((topLeft.X + topRight.X) / 2f, (topLeft.Y + topRight.Y) / 2f);
+                PointF down = new((bottomLeft.X + bottomRight.X) / 2f, (bottomLeft.Y + bottomRight.Y) / 2f);
+
+                yield return LerpPoint(parentCenter, up, 0.5f);
+                yield return LerpPoint(parentCenter, down, 0.5f);
+                yield break;
+            }
+
+            if (cluster.Sectors.Count == 3)
+            {
+                PointF bottomLeft = parentHex.OrderByDescending(a => a.Y).ThenBy(a => a.X).First();
+                PointF right = parentHex.OrderByDescending(a => a.X).First();
+                PointF topLeft = parentHex.OrderBy(a => a.Y).ThenBy(a => a.X).First();
+
+                yield return LerpPoint(parentCenter, topLeft, 0.5f);
+                yield return LerpPoint(parentCenter, right, 0.5f);
+                yield return LerpPoint(parentCenter, bottomLeft, 0.5f);
+                yield break;
+            }
+
+            if (cluster.Sectors.Count == 4 && includeOuterAnchors)
+            {
+                PointF left = parentHex.OrderBy(a => a.X).First();
+                PointF right = parentHex.OrderByDescending(a => a.X).First();
+                PointF topLeft = parentHex.OrderBy(a => a.Y).ThenBy(a => a.X).First();
+                PointF topRight = parentHex.OrderBy(a => a.Y).ThenByDescending(a => a.X).First();
+                PointF bottomLeft = parentHex.OrderByDescending(a => a.Y).ThenBy(a => a.X).First();
+                PointF bottomRight = parentHex.OrderByDescending(a => a.Y).ThenByDescending(a => a.X).First();
+
+                PointF up = new((topLeft.X + topRight.X) / 2f, (topLeft.Y + topRight.Y) / 2f);
+                PointF down = new((bottomLeft.X + bottomRight.X) / 2f, (bottomLeft.Y + bottomRight.Y) / 2f);
+
+                yield return LerpPoint(parentCenter, up, 3f / 5f);
+                yield return LerpPoint(parentCenter, down, 3f / 5f);
+                yield return LerpPoint(parentCenter, right, 3f / 5f);
+                yield return LerpPoint(parentCenter, left, 3f / 5f);
+                yield break;
+            }
+
+            foreach (PointF point in GetChildSectorSnapCenters(cluster, includeOuterAnchors))
+                yield return point;
         }
 
         private PointF GetCurrentSectorCenter(Cluster cluster, Sector sector)
@@ -721,7 +832,7 @@ namespace X4SectorCreator
             if (resetLegendTree)
                 SetupLegendTree();
 
-            RebuildMapGeometry(snapChildSectors: true, avoidChildCollisions: false, snapTravelNodes: true);
+            RebuildMapGeometry(snapChildSectors: true, avoidChildCollisions: true, snapTravelNodes: true);
         }
 
         private void RebuildMapGeometry(bool snapChildSectors, bool avoidChildCollisions, bool snapTravelNodes)
@@ -755,40 +866,62 @@ namespace X4SectorCreator
 
         private void SnapHighwayNodesToParentBounds()
         {
-            foreach (var cluster in MainForm.Instance.AllClusters.Values)
+            foreach (GateConnection connection in GetVisibleGateConnections())
             {
-                foreach (var sector in cluster.Sectors)
+                if (!connection.Source.Gate.IsAcceleratorNode && !connection.Source.Gate.IsInterSectorGate &&
+                    !connection.Target.Gate.IsAcceleratorNode && !connection.Target.Gate.IsInterSectorGate)
                 {
-                    PointF sectorHexCenter = GetSectorHexCenter(cluster, sector);
-                    float sectorHexRadius = GetSectorHexRadius(cluster);
-                    PointF[] snapPoints = GetTravelNodeSnapPoints(cluster, sector).ToArray();
-                    HashSet<int> usedIndices = [];
+                    continue;
+                }
 
-                    foreach (var zone in sector.Zones)
+                PointF[] sourceSnapPoints = GetTravelNodeSnapPoints(connection.Source.Cluster, connection.Source.Sector).ToArray();
+                PointF[] targetSnapPoints = GetTravelNodeSnapPoints(connection.Target.Cluster, connection.Target.Sector).ToArray();
+
+                Point sourceRealGatePos = new(connection.Source.Zone.Position.X + connection.Source.Gate.Position.X, connection.Source.Zone.Position.Y + connection.Source.Gate.Position.Y);
+                Point targetRealGatePos = new(connection.Target.Zone.Position.X + connection.Target.Gate.Position.X, connection.Target.Zone.Position.Y + connection.Target.Gate.Position.Y);
+
+                PointF sourceSectorHexCenter = GetSectorHexCenter(connection.Source.Cluster, connection.Source.Sector);
+                float sourceSectorHexRadius = GetSectorHexRadius(connection.Source.Cluster);
+                PointF targetSectorHexCenter = GetSectorHexCenter(connection.Target.Cluster, connection.Target.Sector);
+                float targetSectorHexRadius = GetSectorHexRadius(connection.Target.Cluster);
+
+                PointF sourceCurrentScreen = ConvertFromWorldCoordinate(sourceRealGatePos, connection.Source.Sector.DiameterRadius, sourceSectorHexRadius);
+                sourceCurrentScreen.X += sourceSectorHexCenter.X;
+                sourceCurrentScreen.Y += sourceSectorHexCenter.Y;
+
+                PointF targetCurrentScreen = ConvertFromWorldCoordinate(targetRealGatePos, connection.Target.Sector.DiameterRadius, targetSectorHexRadius);
+                targetCurrentScreen.X += targetSectorHexCenter.X;
+                targetCurrentScreen.Y += targetSectorHexCenter.Y;
+
+                PointF selectedSource = sourceCurrentScreen;
+                PointF selectedTarget = targetCurrentScreen;
+                float bestScore = float.MaxValue;
+
+                foreach (PointF sourceCandidate in sourceSnapPoints)
+                {
+                    foreach (PointF targetCandidate in targetSnapPoints)
                     {
-                        foreach (var gate in zone.Gates)
+                        float score = Distance(sourceCandidate, targetCandidate);
+                        if (score < bestScore)
                         {
-                            if (!gate.IsAcceleratorNode && !gate.IsInterSectorGate)
-                                continue;
-
-                            Point realGatePos = new(zone.Position.X + gate.Position.X, zone.Position.Y + gate.Position.Y);
-                            PointF gateScreenPosition = ConvertFromWorldCoordinate(realGatePos, sector.DiameterRadius, sectorHexRadius);
-                            gateScreenPosition.X += sectorHexCenter.X;
-                            gateScreenPosition.Y += sectorHexCenter.Y;
-
-                            int snapIndex = GetSnapIndex(gateScreenPosition, snapPoints);
-                            while (usedIndices.Contains(snapIndex))
-                            {
-                                snapIndex = (snapIndex + 1) % snapPoints.Length;
-                            }
-                            usedIndices.Add(snapIndex);
-
-                            PointF snapped = snapPoints[snapIndex];
-                            Point worldPoint = ConvertToWorldCoordinate(new PointF(snapped.X - sectorHexCenter.X, snapped.Y - sectorHexCenter.Y), sector.DiameterRadius, sectorHexRadius);
-                            gate.Position = new Point(worldPoint.X - zone.Position.X, worldPoint.Y - zone.Position.Y);
+                            bestScore = score;
+                            selectedSource = sourceCandidate;
+                            selectedTarget = targetCandidate;
                         }
                     }
                 }
+
+                Point sourceWorldPoint = ConvertToWorldCoordinate(
+                    new PointF(selectedSource.X - sourceSectorHexCenter.X, selectedSource.Y - sourceSectorHexCenter.Y),
+                    connection.Source.Sector.DiameterRadius,
+                    sourceSectorHexRadius);
+                connection.Source.Gate.Position = new Point(sourceWorldPoint.X - connection.Source.Zone.Position.X, sourceWorldPoint.Y - connection.Source.Zone.Position.Y);
+
+                Point targetWorldPoint = ConvertToWorldCoordinate(
+                    new PointF(selectedTarget.X - targetSectorHexCenter.X, selectedTarget.Y - targetSectorHexCenter.Y),
+                    connection.Target.Sector.DiameterRadius,
+                    targetSectorHexRadius);
+                connection.Target.Gate.Position = new Point(targetWorldPoint.X - connection.Target.Zone.Position.X, targetWorldPoint.Y - connection.Target.Zone.Position.Y);
             }
         }
 
@@ -842,24 +975,199 @@ namespace X4SectorCreator
                 if (cluster.Sectors.Count <= 1 || cluster.Hexagon == null)
                     continue;
 
-                PointF[] snapPoints = GetChildSectorSnapCenters(cluster).ToArray();
+                bool includeOuterAnchors = cluster.Sectors.Count == 4;
+                const int preferredSnapStep = 1;
+                PointF[] snapPoints = GetAutocorrectChildSectorSnapCenters(cluster, includeOuterAnchors).ToArray();
+                PointF[] fallbackSnapPoints = includeOuterAnchors
+                    ? GetAutocorrectChildSectorSnapCenters(cluster, includeOuterAnchors: false).ToArray()
+                    : snapPoints;
                 HashSet<int> usedIndices = avoidCollisions ? [] : null;
-
-                foreach (var sector in cluster.Sectors)
-                {
-                    PointF currentCenter = GetCurrentSectorCenter(cluster, sector);
-                    int snapIndex = GetSnapIndex(currentCenter, snapPoints);
-
-                    while (avoidCollisions && usedIndices.Contains(snapIndex))
+                PointF[] parentPolygon = cluster.Hexagon.Points;
+                PointF parentCenter = GetHexCenter(parentPolygon);
+                PointF[][] childRelativePolygons = cluster.Hexagon.Children
+                    .Take(cluster.Sectors.Count)
+                    .Select(a =>
                     {
-                        snapIndex = (snapIndex + 1) % snapPoints.Length;
+                        PointF center = GetHexCenter(a.Points);
+                        return a.Points.Select(b => new PointF(b.X - center.X, b.Y - center.Y)).ToArray();
+                    })
+                    .ToArray();
+                List<PointF[]> placedPolygons = [];
+                List<PointF> placedCenters = [];
+                List<int> sectorOrder = Enumerable.Range(0, cluster.Sectors.Count)
+                    .OrderBy(a => Distance(GetCurrentSectorCenter(cluster, cluster.Sectors[a]), parentCenter))
+                    .ThenBy(a => a)
+                    .ToList();
+
+                for (int orderIndex = 0; orderIndex < sectorOrder.Count; orderIndex++)
+                {
+                    int sectorIndex = sectorOrder[orderIndex];
+                    Sector sector = cluster.Sectors[sectorIndex];
+                    PointF currentCenter = GetCurrentSectorCenter(cluster, sector);
+                    int startIndex = orderIndex % snapPoints.Length;
+                    PointF selectedCenter = snapPoints[startIndex];
+                    PointF[] selectedPolygon = TranslatePolygon(childRelativePolygons[sectorIndex], selectedCenter);
+                    if (!TryFindChildSectorPlacement(
+                        snapPoints,
+                        startIndex,
+                        childRelativePolygons[sectorIndex],
+                        parentPolygon,
+                        placedCenters,
+                        placedPolygons,
+                        usedIndices,
+                        avoidCollisions,
+                        preferredSnapStep,
+                        out selectedCenter,
+                        out selectedPolygon,
+                        out int selectedIndex))
+                    {
+                        int fallbackStartIndex = orderIndex % fallbackSnapPoints.Length;
+                        if (TryFindChildSectorPlacement(
+                            fallbackSnapPoints,
+                            fallbackStartIndex,
+                            childRelativePolygons[sectorIndex],
+                            parentPolygon,
+                            placedCenters,
+                            placedPolygons,
+                            usedIndices: null,
+                            avoidCollisions,
+                            preferredSnapStep,
+                            out PointF fallbackCenter,
+                            out PointF[] fallbackPolygon,
+                            out _))
+                        {
+                            selectedCenter = fallbackCenter;
+                            selectedPolygon = fallbackPolygon;
+                        }
                     }
 
-                    usedIndices?.Add(snapIndex);
-                    sector.CustomOffset = ConvertPointInClusterHexToCustomOffset(cluster, snapPoints[snapIndex]);
+                    int selectedPrimaryIndex = Array.FindIndex(snapPoints, a => Distance(a, selectedCenter) < 0.01f);
+                    if (selectedPrimaryIndex >= 0)
+                        usedIndices?.Add(selectedPrimaryIndex);
+
+                    placedCenters.Add(selectedCenter);
+                    placedPolygons.Add(selectedPolygon);
+                    sector.CustomOffset = ConvertPointInClusterHexToCustomOffset(cluster, selectedCenter);
                     SectorForm.DetermineSectorOffset(cluster, sector);
                 }
             }
+        }
+
+        private static bool TryFindChildSectorPlacement(
+            PointF[] snapPoints,
+            int startIndex,
+            PointF[] childRelativePolygon,
+            PointF[] parentPolygon,
+            List<PointF> placedCenters,
+            List<PointF[]> placedPolygons,
+            HashSet<int> usedIndices,
+            bool avoidCollisions,
+            int preferredSnapStep,
+            out PointF selectedCenter,
+            out PointF[] selectedPolygon,
+            out int selectedIndex)
+        {
+            selectedIndex = startIndex;
+            selectedCenter = snapPoints[startIndex];
+            selectedPolygon = TranslatePolygon(childRelativePolygon, selectedCenter);
+
+            foreach (int candidateIndex in GetAutocorrectCandidateOrder(snapPoints.Length, startIndex, preferredSnapStep))
+            {
+                PointF candidateCenter = snapPoints[candidateIndex];
+                PointF[] candidatePolygon = TranslatePolygon(childRelativePolygon, candidateCenter);
+
+                bool indexOccupied = avoidCollisions && usedIndices != null && usedIndices.Contains(candidateIndex);
+                bool centerOccupied = avoidCollisions && placedCenters.Any(a => Distance(a, candidateCenter) < 0.01f);
+                bool outsideParent = !IsTranslatedChildInsideParent(parentPolygon, childRelativePolygon, candidateCenter, 0f);
+                bool overlapsExisting = avoidCollisions && placedPolygons.Any(a => DoPolygonsOverlap(a, candidatePolygon));
+
+                if (!indexOccupied && !centerOccupied && !outsideParent && !overlapsExisting)
+                {
+                    selectedIndex = candidateIndex;
+                    selectedCenter = candidateCenter;
+                    selectedPolygon = candidatePolygon;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static IEnumerable<int> GetAutocorrectCandidateOrder(int snapCount, int startIndex, int preferredStep)
+        {
+            HashSet<int> yielded = [];
+
+            int normalizedStep = preferredStep <= 1 ? 1 : preferredStep;
+            if (normalizedStep > 1)
+            {
+                for (int offset = 0; offset < snapCount; offset += normalizedStep)
+                {
+                    int index = (startIndex + offset) % snapCount;
+                    if (yielded.Add(index))
+                        yield return index;
+                }
+            }
+
+            for (int offset = 0; offset < snapCount; offset++)
+            {
+                int index = (startIndex + offset) % snapCount;
+                if (yielded.Add(index))
+                    yield return index;
+            }
+        }
+
+        private static PointF[] TranslatePolygon(PointF[] relativePolygon, PointF center)
+        {
+            return relativePolygon.Select(a => new PointF(center.X + a.X, center.Y + a.Y)).ToArray();
+        }
+
+        private static bool DoPolygonsOverlap(PointF[] polygonA, PointF[] polygonB)
+        {
+            for (int i = 0; i < polygonA.Length; i++)
+            {
+                PointF a1 = polygonA[i];
+                PointF a2 = polygonA[(i + 1) % polygonA.Length];
+
+                for (int j = 0; j < polygonB.Length; j++)
+                {
+                    PointF b1 = polygonB[j];
+                    PointF b2 = polygonB[(j + 1) % polygonB.Length];
+                    if (DoSegmentsIntersect(a1, a2, b1, b2))
+                        return true;
+                }
+            }
+
+            return IsPointInPolygon(polygonA, polygonB[0]) || IsPointInPolygon(polygonB, polygonA[0]);
+        }
+
+        private static bool DoSegmentsIntersect(PointF a1, PointF a2, PointF b1, PointF b2)
+        {
+            float o1 = CrossProduct(a1, a2, b1);
+            float o2 = CrossProduct(a1, a2, b2);
+            float o3 = CrossProduct(b1, b2, a1);
+            float o4 = CrossProduct(b1, b2, a2);
+
+            if ((o1 > 0f && o2 < 0f || o1 < 0f && o2 > 0f) &&
+                (o3 > 0f && o4 < 0f || o3 < 0f && o4 > 0f))
+                return true;
+
+            return (Math.Abs(o1) < 0.001f && IsPointOnSegment(a1, a2, b1)) ||
+                   (Math.Abs(o2) < 0.001f && IsPointOnSegment(a1, a2, b2)) ||
+                   (Math.Abs(o3) < 0.001f && IsPointOnSegment(b1, b2, a1)) ||
+                   (Math.Abs(o4) < 0.001f && IsPointOnSegment(b1, b2, a2));
+        }
+
+        private static float CrossProduct(PointF a, PointF b, PointF c)
+        {
+            return ((b.X - a.X) * (c.Y - a.Y)) - ((b.Y - a.Y) * (c.X - a.X));
+        }
+
+        private static bool IsPointOnSegment(PointF start, PointF end, PointF point)
+        {
+            return point.X >= Math.Min(start.X, end.X) - 0.001f &&
+                   point.X <= Math.Max(start.X, end.X) + 0.001f &&
+                   point.Y >= Math.Min(start.Y, end.Y) - 0.001f &&
+                   point.Y <= Math.Max(start.Y, end.Y) + 0.001f;
         }
 
         private void HandleMouseWheel(object sender, MouseEventArgs e)

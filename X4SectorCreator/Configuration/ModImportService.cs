@@ -10,6 +10,7 @@ namespace X4SectorCreator.Configuration
     {
         private const int ClusterPositionScaleX = 15000 * 1000;
         private const int ClusterPositionScaleY = 8660 * 1000;
+        private static readonly TextInfo EnglishTextInfo = CultureInfo.InvariantCulture.TextInfo;
 
         public static ModImportResult Import(string modDirectory, ClusterCollection vanillaClusterData)
         {
@@ -39,6 +40,8 @@ namespace X4SectorCreator.Configuration
                 CollectDefinitions(xmlPath, macros, galaxyConnections);
             }
 
+            ApplyMapDefaultDisplayNames(modDirectory, macros);
+
             if (macros.Count == 0 && galaxyConnections.Count == 0)
             {
                 throw new InvalidOperationException("No supported map XML content was found in the selected extension.");
@@ -56,6 +59,7 @@ namespace X4SectorCreator.Configuration
                 throw new InvalidOperationException("The extension did not contain any importable clusters, sectors, or zones.");
             }
 
+            EnsureUniqueSectorNames(importedClusters);
             ResolveCustomClusterPositionCollisions(importedClusters, vanillaLookup);
             PairImportedGates(galaxyConnections, importedClusters);
             AssignImportedIds(importedClusters, vanillaLookup);
@@ -103,7 +107,7 @@ namespace X4SectorCreator.Configuration
                     }
                     : new Cluster
                     {
-                        Name = clusterMacroName.Replace("_macro", string.Empty, StringComparison.OrdinalIgnoreCase),
+                        Name = clusterMacro?.DisplayName ?? NormalizeMacroFallbackName(clusterMacroName),
                         Position = ConvertClusterPosition(customClusterPositions.GetValueOrDefault(clusterMacroName)),
                         Sectors = []
                     };
@@ -207,7 +211,7 @@ namespace X4SectorCreator.Configuration
                 }
                 : new Sector
                 {
-                    Name = sectorMacroName.Replace("_macro", string.Empty, StringComparison.OrdinalIgnoreCase),
+                    Name = sectorMacro?.DisplayName ?? NormalizeMacroFallbackName(sectorMacroName),
                     Placement = InferPlacement(sectorOffset),
                     CustomOffset = sectorOffset == null ? null : new Point((int)Math.Round(sectorOffset.X), (int)Math.Round(sectorOffset.Z)),
                     Zones = [],
@@ -435,6 +439,48 @@ namespace X4SectorCreator.Configuration
             }
         }
 
+        private static void EnsureUniqueSectorNames(List<Cluster> importedClusters)
+        {
+            var usedNames = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var cluster in importedClusters.OrderBy(a => a.Name ?? string.Empty, StringComparer.OrdinalIgnoreCase))
+            {
+                for (int index = 0; index < cluster.Sectors.Count; index++)
+                {
+                    Sector sector = cluster.Sectors[index];
+                    string baseName = NormalizeDisplayName(sector.Name);
+
+                    if (string.IsNullOrWhiteSpace(baseName))
+                    {
+                        string clusterName = NormalizeDisplayName(cluster.Name) ?? "Unnamed Cluster";
+                        baseName = cluster.Sectors.Count == 1
+                            ? clusterName
+                            : $"{clusterName} {ToRomanNumeral(index + 1)}";
+                    }
+
+                    string uniqueName = baseName;
+                    if (usedNames.TryGetValue(baseName, out int count))
+                    {
+                        do
+                        {
+                            count++;
+                            uniqueName = $"{baseName} {ToRomanNumeral(count)}";
+                        }
+                        while (usedNames.ContainsKey(uniqueName));
+
+                        usedNames[baseName] = count;
+                    }
+                    else
+                    {
+                        usedNames[baseName] = 1;
+                    }
+
+                    usedNames[uniqueName] = 1;
+                    sector.Name = uniqueName;
+                }
+            }
+        }
+
         private static (int X, int Y) FindNearestFreePosition((int X, int Y) desired, HashSet<(int X, int Y)> occupiedPositions)
         {
             for (var radius = 1; radius < 512; radius++)
@@ -512,12 +558,12 @@ namespace X4SectorCreator.Configuration
                 return;
             }
 
+            CollectScriptNameHints(document, macros);
+            CollectCommentSelectorNameHints(document, macros);
+
             if (document.Root.Name.LocalName.Equals("macros", StringComparison.OrdinalIgnoreCase))
             {
-                foreach (var macroElement in document.Root.Elements("macro"))
-                {
-                    UpsertMacro(macros, macroElement);
-                }
+                CollectMacroDefinitions(document.Root, macros);
 
                 foreach (var galaxyMacro in document.Root.Elements("macro").Where(IsGalaxyMacro))
                 {
@@ -537,10 +583,7 @@ namespace X4SectorCreator.Configuration
                 var selector = (string)addElement.Attribute("sel") ?? string.Empty;
                 if (IsMacrosSelector(selector))
                 {
-                    foreach (var macroElement in addElement.Elements("macro"))
-                    {
-                        UpsertMacro(macros, macroElement);
-                    }
+                    CollectMacroDefinitions(addElement, macros);
                 }
 
                 if (!selector.Contains("/connections", StringComparison.OrdinalIgnoreCase))
@@ -565,7 +608,189 @@ namespace X4SectorCreator.Configuration
             }
         }
 
-        private static void UpsertMacro(Dictionary<string, MacroDefinition> macros, XElement macroElement)
+        private static void CollectMacroDefinitions(XContainer container, Dictionary<string, MacroDefinition> macros)
+        {
+            string pendingComment = null;
+
+            foreach (var node in container.Nodes())
+            {
+                if (node is XComment comment)
+                {
+                    pendingComment = comment.Value;
+                    continue;
+                }
+
+                if (node is XElement element && element.Name.LocalName.Equals("macro", StringComparison.OrdinalIgnoreCase))
+                {
+                    UpsertMacro(macros, element, pendingComment);
+                    pendingComment = null;
+                    continue;
+                }
+
+                pendingComment = null;
+            }
+        }
+
+        private static void CollectScriptNameHints(XDocument document, Dictionary<string, MacroDefinition> macros)
+        {
+            foreach (var element in document.Descendants().Where(a =>
+                         a.Name.LocalName.Equals("find_sector", StringComparison.OrdinalIgnoreCase) ||
+                         a.Name.LocalName.Equals("find_cluster", StringComparison.OrdinalIgnoreCase)))
+            {
+                string macroRef = (string)element.Attribute("macro");
+                if (string.IsNullOrWhiteSpace(macroRef))
+                    continue;
+
+                macroRef = macroRef.Replace("macro.", string.Empty, StringComparison.OrdinalIgnoreCase);
+                var nameHint = NormalizeDisplayName((element.PreviousNode as XComment)?.Value);
+                if (string.IsNullOrWhiteSpace(nameHint))
+                {
+                    nameHint = NormalizeScriptVariableName((string)element.Attribute("name"));
+                }
+
+                if (string.IsNullOrWhiteSpace(nameHint))
+                    continue;
+
+                var definition = GetOrCreateMacro(macros, macroRef);
+                definition.DisplayName ??= nameHint;
+            }
+        }
+
+        private static void CollectCommentSelectorNameHints(XDocument document, Dictionary<string, MacroDefinition> macros)
+        {
+            string pendingDisplayName = null;
+
+            foreach (XNode node in document.Root?.Nodes() ?? [])
+            {
+                if (node is XComment comment)
+                {
+                    pendingDisplayName = ExtractDisplayNameFromComment(comment.Value) ?? pendingDisplayName;
+                    continue;
+                }
+
+                if (node is XElement element)
+                {
+                    string selector = (string)element.Attribute("sel") ?? string.Empty;
+                    if (!string.IsNullOrWhiteSpace(pendingDisplayName) && selector.Contains("macro[@name='", StringComparison.OrdinalIgnoreCase))
+                    {
+                        string macroName = ExtractMacroName(selector);
+                        if (!string.IsNullOrWhiteSpace(macroName))
+                        {
+                            GetOrCreateMacro(macros, macroName).DisplayName ??= pendingDisplayName;
+                        }
+                    }
+
+                    pendingDisplayName = null;
+                }
+            }
+        }
+
+        private static void ApplyMapDefaultDisplayNames(string modDirectory, Dictionary<string, MacroDefinition> macros)
+        {
+            string mapDefaultsPath = Path.Combine(modDirectory, "libraries", "mapdefaults.xml");
+            if (!File.Exists(mapDefaultsPath))
+                return;
+
+            var translations = LoadTranslations(modDirectory);
+            var document = XDocument.Load(mapDefaultsPath);
+            if (document.Root == null)
+                return;
+
+            foreach (XElement dataset in document.Root.Elements("dataset"))
+            {
+                string macroName = (string)dataset.Attribute("macro");
+                if (string.IsNullOrWhiteSpace(macroName))
+                    continue;
+
+                var definition = GetOrCreateMacro(macros, macroName);
+                XElement identification = dataset.Element("properties")?.Element("identification");
+                if (identification == null)
+                    continue;
+
+                string nameRef = (string)identification.Attribute("name");
+                string descriptionRef = (string)identification.Attribute("description");
+
+                string resolvedName = ResolveTranslationReference(nameRef, translations);
+                if (string.IsNullOrWhiteSpace(resolvedName))
+                {
+                    resolvedName = ResolveTranslationPageTitle(descriptionRef, translations);
+                }
+
+                definition.DisplayName ??= NormalizeDisplayName(resolvedName);
+            }
+        }
+
+        private static TranslationLookup LoadTranslations(string modDirectory)
+        {
+            var titles = new Dictionary<int, string>();
+            var entries = new Dictionary<(int pageId, int textId), string>();
+
+            string tRoot = Path.Combine(modDirectory, "t");
+            if (!Directory.Exists(tRoot))
+                return new TranslationLookup(titles, entries);
+
+            foreach (string file in Directory.GetFiles(tRoot, "*.xml", SearchOption.TopDirectoryOnly))
+            {
+                var document = XDocument.Load(file);
+                if (document.Root == null)
+                    continue;
+
+                foreach (XElement page in document.Root.Elements("page"))
+                {
+                    if (!int.TryParse((string)page.Attribute("id"), NumberStyles.Integer, CultureInfo.InvariantCulture, out int pageId))
+                        continue;
+
+                    string title = NormalizeDisplayName((string)page.Attribute("title"));
+                    if (!string.IsNullOrWhiteSpace(title))
+                        titles[pageId] = title;
+
+                    foreach (XElement text in page.Elements("t"))
+                    {
+                        if (!int.TryParse((string)text.Attribute("id"), NumberStyles.Integer, CultureInfo.InvariantCulture, out int textId))
+                            continue;
+
+                        string value = text.Value;
+                        if (!string.IsNullOrWhiteSpace(value))
+                            entries[(pageId, textId)] = value;
+                    }
+                }
+            }
+
+            return new TranslationLookup(titles, entries);
+        }
+
+        private static string ResolveTranslationReference(string reference, TranslationLookup translations)
+        {
+            if (!TryParseTranslationReference(reference, out int pageId, out int textId))
+                return NormalizeDisplayName(reference);
+
+            return translations.TryResolveEntry(pageId, textId, out string value) ? value : null;
+        }
+
+        private static string ResolveTranslationPageTitle(string reference, TranslationLookup translations)
+        {
+            if (!TryParseTranslationReference(reference, out int pageId, out _))
+                return null;
+
+            return translations.TryGetTitle(pageId, out string title) ? title : null;
+        }
+
+        private static bool TryParseTranslationReference(string reference, out int pageId, out int textId)
+        {
+            pageId = 0;
+            textId = 0;
+            if (string.IsNullOrWhiteSpace(reference))
+                return false;
+
+            var match = TranslationReferenceRegex().Match(reference.Trim());
+            if (!match.Success)
+                return false;
+
+            return int.TryParse(match.Groups[1].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out pageId) &&
+                   int.TryParse(match.Groups[2].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out textId);
+        }
+
+        private static void UpsertMacro(Dictionary<string, MacroDefinition> macros, XElement macroElement, string displayNameHint)
         {
             var name = (string)macroElement.Attribute("name");
             if (string.IsNullOrWhiteSpace(name))
@@ -575,7 +800,170 @@ namespace X4SectorCreator.Configuration
 
             var definition = GetOrCreateMacro(macros, name);
             definition.Class = (string)macroElement.Attribute("class") ?? definition.Class;
+            definition.DisplayName ??= NormalizeDisplayName(displayNameHint);
             definition.Connections.AddRange(ParseConnections(macroElement));
+        }
+
+        private static string NormalizeDisplayName(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
+            string normalized = value.Replace('_', ' ');
+            normalized = Regex.Replace(normalized, "(?<=[a-z0-9])(?=[A-Z])", " ");
+            normalized = Regex.Replace(normalized, @"(?<=[A-Za-z])(?=\d)", " ");
+            normalized = Regex.Replace(normalized, @"(?<=\d)(?=[A-Za-z])", " ");
+            normalized = Regex.Replace(normalized, "\\s+", " ").Trim();
+            normalized = normalized.Trim('-', ' ');
+
+            if (normalized.StartsWith("Sector ", StringComparison.OrdinalIgnoreCase))
+            {
+                normalized = normalized[7..].Trim();
+            }
+
+            var parts = normalized.Split(" - ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            if (parts.Length >= 2 && Regex.IsMatch(parts[0], "^[A-Za-z#]+[A-Za-z0-9#]*$"))
+            {
+                normalized = string.Join(" - ", parts.Skip(1));
+            }
+
+            normalized = Regex.Replace(normalized, "\\bSector\\s*(\\d{3})$", a => $" {ToRomanNumeral(int.Parse(a.Groups[1].Value, CultureInfo.InvariantCulture))}", RegexOptions.IgnoreCase).Trim();
+            normalized = Regex.Replace(normalized, "\\bCluster\\s*(\\d+)\\s+Sector\\s*(\\d{3})$", a => $"Cluster {a.Groups[1].Value} Sector {ToRomanNumeral(int.Parse(a.Groups[2].Value, CultureInfo.InvariantCulture))}", RegexOptions.IgnoreCase).Trim();
+            normalized = Regex.Replace(normalized, "\\s+(Sector|Cluster)$", string.Empty, RegexOptions.IgnoreCase).Trim();
+            normalized = Regex.Replace(normalized, @"\b([A-Za-z]+)\s+#\s*(\d+)\b", "$1 #$2");
+            normalized = normalized.Replace("  ", " ");
+            normalized = ToDisplayCase(normalized);
+
+            return string.IsNullOrWhiteSpace(normalized) || normalized == "#" ? null : normalized;
+        }
+
+        private static string ExtractDisplayNameFromComment(string comment)
+        {
+            if (string.IsNullOrWhiteSpace(comment))
+                return null;
+
+            string normalized = comment.Replace('\t', ' ').Trim();
+            normalized = Regex.Replace(normalized, "\\s+", " ");
+            var match = SectorCommentRegex().Match(normalized);
+            if (match.Success)
+            {
+                string value = NormalizeDisplayName(match.Groups[1].Value);
+                return value == "#" ? null : value;
+            }
+
+            return null;
+        }
+
+        private static string NormalizeMacroFallbackName(string macroName)
+        {
+            if (string.IsNullOrWhiteSpace(macroName))
+                return null;
+
+            string normalized = macroName.Replace("_macro", string.Empty, StringComparison.OrdinalIgnoreCase);
+            normalized = normalized.Replace("sectoe", "sector", StringComparison.OrdinalIgnoreCase);
+            normalized = Regex.Replace(normalized, "^(thedeep_sector_|thedeep_cluster_)", string.Empty, RegexOptions.IgnoreCase);
+            normalized = Regex.Replace(normalized, "^(homebrew_|cluster_|sector_|xpan_cluster)", string.Empty, RegexOptions.IgnoreCase);
+            return NormalizeDisplayName(normalized);
+        }
+
+        private static string ToDisplayCase(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return value;
+
+            var words = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < words.Length; i++)
+            {
+                string word = words[i];
+                if (Regex.IsMatch(word, "^(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI)$", RegexOptions.IgnoreCase) ||
+                    Regex.IsMatch(word, @"^#?\d+$") ||
+                    word.Contains('\''))
+                {
+                    words[i] = CapitalizeWord(word);
+                    continue;
+                }
+
+                words[i] = EnglishTextInfo.ToTitleCase(word.ToLowerInvariant());
+            }
+
+            return string.Join(' ', words);
+        }
+
+        private static string CapitalizeWord(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return value;
+
+            var parts = value.Split('\'', StringSplitOptions.None);
+            for (int i = 0; i < parts.Length; i++)
+            {
+                string part = parts[i];
+                if (string.IsNullOrEmpty(part))
+                    continue;
+
+                if (Regex.IsMatch(part, "^(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI)$", RegexOptions.IgnoreCase) ||
+                    Regex.IsMatch(part, @"^#?\d+$"))
+                {
+                    parts[i] = part.ToUpperInvariant();
+                }
+                else
+                {
+                    parts[i] = EnglishTextInfo.ToTitleCase(part.ToLowerInvariant());
+                }
+            }
+
+            return string.Join("'", parts);
+        }
+
+        private static string NormalizeTranslationText(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
+            string normalized = Regex.Replace(value, @"\{\d+,\d+\}", string.Empty);
+            normalized = normalized.Replace("\t", " ");
+            normalized = Regex.Replace(normalized, "\\s+", " ").Trim();
+            return NormalizeDisplayName(normalized);
+        }
+
+        private static string NormalizeScriptVariableName(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
+            string normalized = value.Trim().TrimStart('$');
+            normalized = Regex.Replace(normalized, "_(Sector|Cluster)$", string.Empty, RegexOptions.IgnoreCase);
+            normalized = Regex.Replace(normalized, "(Sector|Cluster)$", string.Empty, RegexOptions.IgnoreCase);
+            normalized = normalized.Replace('_', ' ');
+            normalized = Regex.Replace(normalized, "(?<=[a-z0-9])(?=[A-Z])", " ");
+            normalized = Regex.Replace(normalized, "\\s+", " ").Trim();
+            return string.IsNullOrWhiteSpace(normalized) ? null : normalized;
+        }
+
+        private static string ToRomanNumeral(int value)
+        {
+            if (value <= 0)
+                return value.ToString(CultureInfo.InvariantCulture);
+
+            var numerals = new (int value, string numeral)[]
+            {
+                (1000, "M"), (900, "CM"), (500, "D"), (400, "CD"),
+                (100, "C"), (90, "XC"), (50, "L"), (40, "XL"),
+                (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")
+            };
+
+            var result = new System.Text.StringBuilder();
+            int remaining = value;
+            foreach (var (numeralValue, numeralText) in numerals)
+            {
+                while (remaining >= numeralValue)
+                {
+                    result.Append(numeralText);
+                    remaining -= numeralValue;
+                }
+            }
+
+            return result.ToString();
         }
 
         private static MacroDefinition GetOrCreateMacro(Dictionary<string, MacroDefinition> macros, string name)
@@ -788,12 +1176,60 @@ namespace X4SectorCreator.Configuration
         [GeneratedRegex("@name='([^']+)'", RegexOptions.IgnoreCase)]
         private static partial Regex SelectorMacroRegex();
 
+        [GeneratedRegex(@"^Sector\s+[^-]+-\s*(.+?)\s*$", RegexOptions.IgnoreCase)]
+        private static partial Regex SectorCommentRegex();
+
+        [GeneratedRegex(@"^\s*\{\s*(\d+)\s*,\s*(\d+)\s*\}\s*$", RegexOptions.IgnoreCase)]
+        private static partial Regex TranslationReferenceRegex();
+
+        [GeneratedRegex(@"\{\s*(\d+)\s*,\s*(\d+)\s*\}", RegexOptions.IgnoreCase)]
+        private static partial Regex TranslationReferenceSearchRegex();
+
         private sealed class MacroDefinition(string name)
         {
             public string Name { get; } = name;
             public string Class { get; set; }
+            public string DisplayName { get; set; }
             public List<ConnectionDefinition> Connections { get; } = [];
             public bool IsCluster => Class != null && Class.Equals("cluster", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private sealed class TranslationLookup(
+            Dictionary<int, string> titles,
+            Dictionary<(int pageId, int textId), string> entries)
+        {
+            public bool TryResolveEntry(int pageId, int textId, out string value)
+            {
+                return TryResolveEntry(pageId, textId, new HashSet<(int pageId, int textId)>(), out value);
+            }
+
+            public bool TryGetTitle(int pageId, out string value) => titles.TryGetValue(pageId, out value);
+
+            private bool TryResolveEntry(int pageId, int textId, HashSet<(int pageId, int textId)> seen, out string value)
+            {
+                value = null;
+                var key = (pageId, textId);
+                if (!entries.TryGetValue(key, out string rawValue) || !seen.Add(key))
+                    return false;
+
+                string resolved = TranslationReferenceSearchRegex().Replace(rawValue, match =>
+                {
+                    if (!int.TryParse(match.Groups[1].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out int nestedPageId) ||
+                        !int.TryParse(match.Groups[2].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out int nestedTextId))
+                    {
+                        return string.Empty;
+                    }
+
+                    return TryResolveEntry(nestedPageId, nestedTextId, seen, out string nestedValue)
+                        ? nestedValue
+                        : TryGetTitle(nestedPageId, out string nestedTitle)
+                            ? nestedTitle
+                            : string.Empty;
+                });
+
+                value = NormalizeTranslationText(resolved);
+                return !string.IsNullOrWhiteSpace(value);
+            }
         }
 
         private sealed class ConnectionDefinition
