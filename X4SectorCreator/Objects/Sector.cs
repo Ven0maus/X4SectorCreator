@@ -155,7 +155,7 @@ namespace X4SectorCreator.Objects
 
         public override string ToString()
         {
-            return Name ?? "Unknown";
+            return Name ?? "§§§§§§§§";
         }
     }
 

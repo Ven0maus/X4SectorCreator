@@ -3,6 +3,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Text;
+using X4SectorCreator.Configuration;
 using X4SectorCreator.Forms;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -38,6 +39,11 @@ namespace X4SectorCreator
 
         private const float _defaultZoom = 1f; // 1.0 means 100% scale
         private static PointF _offset;
+        private const float KeyboardPanStep = 50f;
+        private const int EditModeBorderThickness = 10;
+        private bool _editModeEnabled = false;
+        private string _transientStatusMessage;
+        private DateTime _transientStatusExpiresAtUtc = DateTime.MinValue;
         private static float _zoom = 0.45f;
         private const float _minZoom = 0.075f, _maxZoom = 2.5f;
         private const float _gateSizeRadius = 8f;
@@ -223,6 +229,7 @@ namespace X4SectorCreator
             MouseWheel += HandleMouseWheel;
             MouseClick += SectorMapForm_MouseClick;
             KeyDown += SectorMapForm_KeyDown;
+            KeyPreview = true;
         }
 
         public static bool IsMapOptionChecked(MapOption mapOption)
@@ -403,6 +410,42 @@ namespace X4SectorCreator
 
         private void SectorMapForm_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Space)
+            {
+                _editModeEnabled = !_editModeEnabled;
+                Invalidate();
+                e.Handled = true;
+                return;
+            }
+
+            bool movedViewport = false;
+            switch (e.KeyCode)
+            {
+                case Keys.W:
+                    _offset.Y += KeyboardPanStep;
+                    movedViewport = true;
+                    break;
+                case Keys.S:
+                    _offset.Y -= KeyboardPanStep;
+                    movedViewport = true;
+                    break;
+                case Keys.A:
+                    _offset.X += KeyboardPanStep;
+                    movedViewport = true;
+                    break;
+                case Keys.D:
+                    _offset.X -= KeyboardPanStep;
+                    movedViewport = true;
+                    break;
+            }
+
+            if (movedViewport)
+            {
+                Invalidate();
+                e.Handled = true;
+                return;
+            }
+
             if (e.KeyCode == Keys.Escape && _movingCluster != null)
             {
                 _movingCluster = null;
@@ -1244,6 +1287,12 @@ namespace X4SectorCreator
         {
             if (e.Button == MouseButtons.Right)
             {
+                if (!_editModeEnabled)
+                {
+                    _ = MessageBox.Show("Edit mode is locked. Press Space in Galaxy View to unlock editing.");
+                    return;
+                }
+
                 if (_visibleSectorsFromSearch.Count > 0)
                 {
                     _ = MessageBox.Show("Cannot move clusters, sectors, or highways while a search filter is set.");
@@ -1703,6 +1752,7 @@ namespace X4SectorCreator
             try
             {
                 RenderMap(e.Graphics, allowReset: true, includeTipLabel: true);
+                DrawEditModeBorder(e.Graphics);
             }
             catch (Exception ex)
             {
@@ -1751,6 +1801,29 @@ namespace X4SectorCreator
             {
                 RenderTipLabel(paintArgs);
             }
+        }
+
+        private void DrawEditModeBorder(Graphics graphics)
+        {
+            if (!_editModeEnabled)
+                return;
+
+            GraphicsState state = graphics.Save();
+            graphics.ResetTransform();
+
+            using HatchBrush brush = new(HatchStyle.LargeCheckerBoard, Color.White, Color.Black);
+
+            Rectangle top = new(0, 0, ClientSize.Width, EditModeBorderThickness);
+            Rectangle bottom = new(0, ClientSize.Height - EditModeBorderThickness, ClientSize.Width, EditModeBorderThickness);
+            Rectangle left = new(0, 0, EditModeBorderThickness, ClientSize.Height);
+            Rectangle right = new(ClientSize.Width - EditModeBorderThickness, 0, EditModeBorderThickness, ClientSize.Height);
+
+            graphics.FillRectangle(brush, top);
+            graphics.FillRectangle(brush, bottom);
+            graphics.FillRectangle(brush, left);
+            graphics.FillRectangle(brush, right);
+
+            graphics.Restore(state);
         }
 
         private readonly Dictionary<Color, SolidBrush> _brushColorCache = [];
@@ -1950,7 +2023,12 @@ namespace X4SectorCreator
             if (_draggingClusterMove && _movingCluster != null)
                 return $"Dragging cluster \"{_movingCluster.Name}\": release over an empty hex to move it, ESC to cancel.";
 
-            return "Tip: Right drag moves clusters, sectors, and gate nodes.";
+            if (!string.IsNullOrWhiteSpace(_transientStatusMessage) && _transientStatusExpiresAtUtc > DateTime.UtcNow)
+                return _transientStatusMessage;
+
+            return _editModeEnabled
+                ? "Edit mode unlocked: Right drag moves clusters, sectors, and gate nodes. Press Space to lock editing."
+                : "Edit mode locked: Press Space to unlock editing. WASD pans the map.";
         }
 
         private void RenderHexIcons(PaintEventArgs e)
@@ -2709,18 +2787,20 @@ namespace X4SectorCreator
                 bool copiedToClipboard = TryCopyInvalidGateMessageToClipboard(message);
                 string logPath = TryWriteInvalidGateMessageLog(message);
 
-                if (!string.IsNullOrWhiteSpace(logPath))
+                string statusMessage = $"Invalid gate connections detected: {invalidConnections.Count}.";
+                if (copiedToClipboard)
                 {
-                    message += Environment.NewLine + Environment.NewLine + $"A log file was written to:{Environment.NewLine}{logPath}";
+                    statusMessage += " Details copied to clipboard.";
                 }
 
-                _ = MessageBox.Show(
-                    copiedToClipboard
-                        ? message + Environment.NewLine + Environment.NewLine + "The full error details were copied to your clipboard."
-                        : message,
-                    $"Invalid gate connections ({invalidConnections.Count})",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                if (!string.IsNullOrWhiteSpace(logPath))
+                {
+                    statusMessage += $" Log: {logPath}";
+                }
+
+                _transientStatusMessage = statusMessage;
+                _transientStatusExpiresAtUtc = DateTime.UtcNow.AddSeconds(20);
+                Invalidate();
             }
         }
 
@@ -3113,7 +3193,7 @@ namespace X4SectorCreator
                     childHexCenter.Y - (childHexSize.Height * 0.20f),
                     childHexSize.Width * 0.74f,
                     childHexSize.Height * 0.40f);
-                DrawCenteredFittedLabel(e.Graphics, sector.Name, childBounds, childFontSize, 1.5f, FontStyle.Bold, Brushes.White);
+                DrawCenteredFittedLabel(e.Graphics, sector.Name, sector.ImportedMacroName, childBounds, childFontSize, 1.5f, FontStyle.Bold, Brushes.White);
                 index++;
             }
 
@@ -3131,12 +3211,14 @@ namespace X4SectorCreator
                     hexCenter.Y - (hexSize.Height * 0.25f),
                     hexSize.Width * 0.78f,
                     hexSize.Height * 0.50f);
-                DrawCenteredFittedLabel(e.Graphics, cluster.Sectors[index].Name, mainBounds, mainFontSize, 2.5f, FontStyle.Bold, Brushes.White);
+                DrawCenteredFittedLabel(e.Graphics, cluster.Sectors[index].Name, cluster.Sectors[index].ImportedMacroName, mainBounds, mainFontSize, 2.5f, FontStyle.Bold, Brushes.White);
             }
         }
 
-        private static void DrawCenteredFittedLabel(Graphics graphics, string text, RectangleF bounds, float maxFontSize, float minFontSize, FontStyle style, Brush brush)
+        private static void DrawCenteredFittedLabel(Graphics graphics, string text, string seed, RectangleF bounds, float maxFontSize, float minFontSize, FontStyle style, Brush brush)
         {
+            text = ResolveDisplayLabel(text, seed);
+
             using StringFormat format = new()
             {
                 Alignment = StringAlignment.Center,
@@ -3157,6 +3239,12 @@ namespace X4SectorCreator
 
             using Font fallbackFont = new("Segoe UI", minFontSize, style);
             graphics.DrawString(text, fallbackFont, brush, bounds, format);
+        }
+
+        private static string ResolveDisplayLabel(string text, string seed)
+        {
+            _ = seed;
+            return text ?? string.Empty;
         }
 
         private static PointF GetHexCenter(PointF[] hex)

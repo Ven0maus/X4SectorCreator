@@ -6,12 +6,28 @@ namespace X4SectorCreator.Configuration
 {
     internal static class SectorIslandCheckService
     {
+        private static ModImportResult ImportForCheck(string modDirectory, string attachedBaseModDirectory, ClusterCollection vanillaClusterData)
+        {
+            if (!string.IsNullOrWhiteSpace(attachedBaseModDirectory) &&
+                !string.Equals(Path.GetFullPath(attachedBaseModDirectory), Path.GetFullPath(modDirectory), StringComparison.OrdinalIgnoreCase))
+                return ModImportService.ImportWithMerge(attachedBaseModDirectory, modDirectory, vanillaClusterData);
+
+            return ModImportService.IsImportableModDirectory(modDirectory)
+                ? ModImportService.Import(modDirectory, vanillaClusterData)
+                : ModImportService.ImportMerged(modDirectory, vanillaClusterData);
+        }
+
         public static int Run(string modDirectory)
+        {
+            return Run(modDirectory, null);
+        }
+
+        public static int Run(string modDirectory, string attachedBaseModDirectory)
         {
             try
             {
                 ClusterCollection vanillaClusterData = LoadVanillaClusters();
-                ModImportResult importedMod = ModImportService.Import(modDirectory, vanillaClusterData);
+                ModImportResult importedMod = ImportForCheck(modDirectory, attachedBaseModDirectory, vanillaClusterData);
 
                 var isolatedSectors = SectorIslandAnalyzer.FindIsolatedSectors(
                     BuildConnectivityEntries(importedMod.Clusters),

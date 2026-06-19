@@ -7,12 +7,79 @@ namespace X4SectorCreator.Configuration
 {
     internal static class ImportAuditService
     {
-        public static int Run(string modDirectory)
+        private static ModImportResult ImportForAudit(string modDirectory, string attachedBaseModDirectory, ClusterCollection vanillaClusterData)
+        {
+            if (!string.IsNullOrWhiteSpace(attachedBaseModDirectory) &&
+                !string.Equals(Path.GetFullPath(attachedBaseModDirectory), Path.GetFullPath(modDirectory), StringComparison.OrdinalIgnoreCase))
+                return ModImportService.ImportWithMerge(attachedBaseModDirectory, modDirectory, vanillaClusterData);
+
+            return ModImportService.IsImportableModDirectory(modDirectory)
+                ? ModImportService.Import(modDirectory, vanillaClusterData)
+                : ModImportService.ImportMerged(modDirectory, vanillaClusterData);
+        }
+
+        public static int RunNameResolution(string modDirectory)
+        {
+            return RunNameResolution(modDirectory, null);
+        }
+
+        public static int RunNameResolution(string modDirectory, string attachedBaseModDirectory)
         {
             try
             {
                 ClusterCollection vanillaClusterData = LoadVanillaClusters();
-                ModImportResult importedMod = ModImportService.Import(modDirectory, vanillaClusterData);
+                ModImportResult importedMod = ImportForAudit(modDirectory, attachedBaseModDirectory, vanillaClusterData);
+
+                List<string> unresolvedWarnings = importedMod.Warnings
+                    .Where(a => a.StartsWith("Unresolved sector/cluster name reference", StringComparison.OrdinalIgnoreCase) ||
+                                a.StartsWith("Imported cluster name was null", StringComparison.OrdinalIgnoreCase) ||
+                                a.StartsWith("Imported sector name was null", StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+
+                Console.WriteLine($"Sector/cluster name resolution audit: {importedMod.ModName}");
+                Console.WriteLine($"Path: {modDirectory}");
+                Console.WriteLine();
+
+                int clusterCount = importedMod.Clusters.Count;
+                int sectorCount = importedMod.Clusters.SelectMany(a => a.Sectors).Count();
+                Console.WriteLine($"Imported clusters: {clusterCount}");
+                Console.WriteLine($"Imported sectors: {sectorCount}");
+                Console.WriteLine($"Name warnings: {unresolvedWarnings.Count}");
+                Console.WriteLine();
+
+                if (unresolvedWarnings.Count == 0)
+                {
+                    Console.WriteLine("No sector/cluster name resolution issues detected.");
+                    return 0;
+                }
+
+                Console.WriteLine("Name warnings:");
+                foreach (string warning in unresolvedWarnings)
+                {
+                    Console.WriteLine($"- {warning}");
+                }
+
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("Sector/cluster name resolution audit failed:");
+                Console.Error.WriteLine(ex.Message);
+                return 2;
+            }
+        }
+
+        public static int Run(string modDirectory)
+        {
+            return Run(modDirectory, null);
+        }
+
+        public static int Run(string modDirectory, string attachedBaseModDirectory)
+        {
+            try
+            {
+                ClusterCollection vanillaClusterData = LoadVanillaClusters();
+                ModImportResult importedMod = ImportForAudit(modDirectory, attachedBaseModDirectory, vanillaClusterData);
 
                 SourceAuditSummary sourceSummary = AnalyzeSourceMod(modDirectory);
                 ImportedAuditSummary importedSummary = AnalyzeImportedMod(importedMod);

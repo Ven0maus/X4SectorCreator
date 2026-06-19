@@ -9,9 +9,9 @@ namespace X4SectorCreator.Configuration
 {
     internal static partial class ModImportService
     {
+        internal const string MissingTranslationDisplayName = "§§§§§§§§";
         private const int ClusterPositionScaleX = 15000 * 1000;
         private const int ClusterPositionScaleY = 8660 * 1000;
-        private static readonly TextInfo EnglishTextInfo = CultureInfo.InvariantCulture.TextInfo;
 
         public static ModImportResult Import(string modDirectory, ClusterCollection vanillaClusterData)
         {
@@ -33,11 +33,25 @@ namespace X4SectorCreator.Configuration
             return ImportInternal(modDirectories, vanillaClusterData, mergeDisplayName);
         }
 
+        public static ModImportResult ImportWithMerge(string baseModDirectory, string mergeRootDirectory, ClusterCollection vanillaClusterData)
+        {
+            if (!IsImportableModDirectory(baseModDirectory))
+            {
+                throw new InvalidOperationException("The selected base mod folder is not an importable X4 extension.");
+            }
+
+            List<string> modDirectories = [Path.GetFullPath(baseModDirectory)];
+            modDirectories.AddRange(DiscoverMergeImportDirectories(mergeRootDirectory)
+                .Where(a => !a.Equals(Path.GetFullPath(baseModDirectory), StringComparison.OrdinalIgnoreCase)));
+
+            return ImportInternal(modDirectories, vanillaClusterData, $"Merged import ({modDirectories.Count} mods)");
+        }
+
         public static List<string> DiscoverMergeImportDirectories(string rootDirectory)
         {
             if (string.IsNullOrWhiteSpace(rootDirectory) || !Directory.Exists(rootDirectory))
             {
-                throw new DirectoryNotFoundException("The selected mod directory does not exist.");
+                throw new DirectoryNotFoundException($"The selected mod directory does not exist: {rootDirectory}");
             }
 
             string fullRoot = Path.GetFullPath(rootDirectory);
@@ -47,13 +61,11 @@ namespace X4SectorCreator.Configuration
             }
 
             List<string> candidates = Directory
-                .GetFiles(fullRoot, "content.xml", SearchOption.AllDirectories)
+                .EnumerateFiles(fullRoot, "content.xml", SearchOption.AllDirectories)
                 .Select(Path.GetDirectoryName)
                 .Where(a => !string.IsNullOrWhiteSpace(a) && IsImportableModDirectory(a))
                 .Select(Path.GetFullPath)
                 .Distinct(StringComparer.OrdinalIgnoreCase)
-                .OrderBy(a => a.Length)
-                .ThenBy(a => a, StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
             List<string> selected = [];
@@ -113,6 +125,8 @@ namespace X4SectorCreator.Configuration
             var galaxyConnections = new List<ConnectionDefinition>();
             List<string> importWarnings = [];
 
+            TranslationLookup mergedTranslations = LoadTranslations(modDirectories);
+
             foreach (string modDirectory in modDirectories)
             {
                 string mapsRoot = Path.Combine(modDirectory, "maps");
@@ -121,7 +135,8 @@ namespace X4SectorCreator.Configuration
                     CollectDefinitions(xmlPath, macros, galaxyConnections);
                 }
 
-                ApplyMapDefaultMetadata(modDirectory, macros, importWarnings);
+                TranslationLookup localTranslations = LoadTranslations([modDirectory]);
+                ApplyMapDefaultMetadata(modDirectory, macros, importWarnings, localTranslations, mergedTranslations);
             }
 
             if (macros.Count == 0 && galaxyConnections.Count == 0)
@@ -159,6 +174,7 @@ namespace X4SectorCreator.Configuration
             PairImportedGates(galaxyConnections, importedClusters);
             AssignImportedIds(importedClusters, vanillaLookup);
             RebuildImportedGatePaths(importedClusters);
+            AutoCorrectOneWayGates(importedClusters);
 
             return new ModImportResult(modName, importedClusters, importWarnings.Distinct(StringComparer.OrdinalIgnoreCase).ToList());
         }
@@ -198,109 +214,116 @@ namespace X4SectorCreator.Configuration
 
             foreach (var clusterMacroName in clusterMacroNames.OrderBy(a => a, StringComparer.OrdinalIgnoreCase))
             {
-                var isBaseCluster = vanillaLookup.ClustersByMacroName.TryGetValue(clusterMacroName, out var vanillaCluster);
-                var clusterMacro = macros.GetValueOrDefault(clusterMacroName);
-                var cluster = isBaseCluster
-                    ? new Cluster
-                    {
-                        BaseGameMapping = vanillaCluster.BaseGameMapping,
-                        ImportedMacroName = clusterMacroName,
-                        Name = vanillaCluster.Name,
-                        Description = ImportClusterMetadataResolver.ResolveDescription(clusterMacro?.Description, vanillaCluster.Description),
-                        BackgroundVisualMapping = ImportClusterMetadataResolver.ResolveBackgroundVisualMapping(clusterMacro?.ContentRef, vanillaCluster.BackgroundVisualMapping),
-                        Soundtrack = ImportClusterMetadataResolver.ResolveSoundtrack(clusterMacro?.MusicRef, vanillaCluster.Soundtrack),
-                        Dlc = vanillaCluster.Dlc,
-                        Position = vanillaCluster.Position,
-                        Sectors = []
-                    }
-                    : new Cluster
-                    {
-                        ImportedMacroName = clusterMacroName,
-                        Name = clusterMacro?.DisplayName ?? NormalizeMacroFallbackName(clusterMacroName),
-                        Description = clusterMacro?.Description,
-                        BackgroundVisualMapping = clusterMacro?.ContentRef,
-                        Soundtrack = clusterMacro?.MusicRef,
-                        Position = ConvertClusterPosition(customClusterPositions.GetValueOrDefault(clusterMacroName)),
-                        Sectors = []
-                    };
-
-                var touchedBaseSectors = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-                if (clusterMacro != null)
+                try
                 {
-                    foreach (var connection in clusterMacro.Connections.Where(a => a.IsSectorConnection && !string.IsNullOrWhiteSpace(a.MacroRef)))
-                    {
-                        touchedBaseSectors.Add(connection.MacroRef);
-                    }
-                }
-
-                foreach (var sectorMacroName in macros.Values
-                    .Where(a => vanillaLookup.SectorsByMacroName.TryGetValue(a.Name, out var info) &&
-                                info.Cluster.BaseGameMapping.Equals(cluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
-                                a.Connections.Count > 0)
-                    .Select(a => a.Name))
-                {
-                    touchedBaseSectors.Add(sectorMacroName);
-                }
-
-                foreach (var sectorMacroName in macros.Values
-                    .Where(a => vanillaLookup.ZonesByMacroName.TryGetValue(a.Name, out var zoneInfo) &&
-                                zoneInfo.Cluster.BaseGameMapping.Equals(cluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
-                                a.Connections.Count > 0)
-                    .Select(a => $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{vanillaLookup.ZonesByMacroName[a.Name].Sector.BaseGameMapping.CapitalizeFirstLetter()}_macro"))
-                {
-                    touchedBaseSectors.Add(sectorMacroName);
-                }
-
-                if (isBaseCluster)
-                {
-                    foreach (string sectorMacroName in referencedVanillaEndpoints.SectorMacroNames)
-                    {
-                        if (vanillaLookup.SectorsByMacroName.TryGetValue(sectorMacroName, out var sectorInfo) &&
-                            sectorInfo.Cluster.BaseGameMapping.Equals(cluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase))
+                    var isBaseCluster = vanillaLookup.ClustersByMacroName.TryGetValue(clusterMacroName, out var vanillaCluster);
+                    var clusterMacro = macros.GetValueOrDefault(clusterMacroName);
+                    var cluster = isBaseCluster
+                        ? new Cluster
                         {
-                            touchedBaseSectors.Add(sectorMacroName);
+                            BaseGameMapping = vanillaCluster.BaseGameMapping,
+                            ImportedMacroName = clusterMacroName,
+                            Name = vanillaCluster.Name,
+                            Description = ImportClusterMetadataResolver.ResolveDescription(clusterMacro?.Description, vanillaCluster.Description),
+                            BackgroundVisualMapping = ImportClusterMetadataResolver.ResolveBackgroundVisualMapping(clusterMacro?.ContentRef, vanillaCluster.BackgroundVisualMapping),
+                            Soundtrack = ImportClusterMetadataResolver.ResolveSoundtrack(clusterMacro?.MusicRef, vanillaCluster.Soundtrack),
+                            Dlc = vanillaCluster.Dlc,
+                            Position = vanillaCluster.Position,
+                            Sectors = []
+                        }
+                        : new Cluster
+                        {
+                            ImportedMacroName = clusterMacroName,
+                            Name = clusterMacro?.DisplayName,
+                            Description = clusterMacro?.Description,
+                            BackgroundVisualMapping = clusterMacro?.ContentRef,
+                            Soundtrack = clusterMacro?.MusicRef,
+                            Position = ConvertClusterPosition(customClusterPositions.GetValueOrDefault(clusterMacroName)),
+                            Sectors = []
+                        };
+
+                    var touchedBaseSectors = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                    if (clusterMacro != null)
+                    {
+                        foreach (var connection in clusterMacro.Connections.Where(a => a.IsSectorConnection && !string.IsNullOrWhiteSpace(a.MacroRef)))
+                        {
+                            touchedBaseSectors.Add(connection.MacroRef);
                         }
                     }
-                }
 
-                if (clusterMacro != null)
-                {
-                    foreach (var sectorConnection in clusterMacro.Connections.Where(a => a.IsSectorConnection && !string.IsNullOrWhiteSpace(a.MacroRef)))
+                    foreach (var sectorMacroName in macros.Values
+                        .Where(a => vanillaLookup.SectorsByMacroName.TryGetValue(a.Name, out var info) &&
+                                    info.Cluster.BaseGameMapping.Equals(cluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
+                                    a.Connections.Count > 0)
+                        .Select(a => a.Name))
                     {
-                        var sector = CreateImportedSector(sectorConnection.MacroRef, sectorConnection.Offset, cluster, macros, vanillaLookup, referencedVanillaEndpoints);
-                        if (sector != null)
+                        touchedBaseSectors.Add(sectorMacroName);
+                    }
+
+                    foreach (var sectorMacroName in macros.Values
+                        .Where(a => vanillaLookup.ZonesByMacroName.TryGetValue(a.Name, out var zoneInfo) &&
+                                    zoneInfo.Cluster.BaseGameMapping.Equals(cluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
+                                    a.Connections.Count > 0)
+                        .Select(a => $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{vanillaLookup.ZonesByMacroName[a.Name].Sector.BaseGameMapping.CapitalizeFirstLetter()}_macro"))
+                    {
+                        touchedBaseSectors.Add(sectorMacroName);
+                    }
+
+                    if (isBaseCluster)
+                    {
+                        foreach (string sectorMacroName in referencedVanillaEndpoints.SectorMacroNames)
                         {
-                            cluster.Sectors.Add(sector);
+                            if (vanillaLookup.SectorsByMacroName.TryGetValue(sectorMacroName, out var sectorInfo) &&
+                                sectorInfo.Cluster.BaseGameMapping.Equals(cluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase))
+                            {
+                                touchedBaseSectors.Add(sectorMacroName);
+                            }
                         }
                     }
-                }
 
-                if (isBaseCluster)
-                {
-                    foreach (var sectorMacroName in touchedBaseSectors)
+                    if (clusterMacro != null)
                     {
-                        if (cluster.Sectors.Any(a => a.BaseGameMapping != null &&
-                                vanillaLookup.SectorsByMacroName.TryGetValue(sectorMacroName, out var sectorInfo) &&
-                                a.BaseGameMapping.Equals(sectorInfo.Sector.BaseGameMapping, StringComparison.OrdinalIgnoreCase)))
+                        foreach (var sectorConnection in clusterMacro.Connections.Where(a => a.IsSectorConnection && !string.IsNullOrWhiteSpace(a.MacroRef)))
                         {
-                            continue;
-                        }
-
-                        var sector = CreateImportedSector(sectorMacroName, null, cluster, macros, vanillaLookup, referencedVanillaEndpoints);
-                        if (sector != null)
-                        {
-                            cluster.Sectors.Add(sector);
+                            var sector = CreateImportedSector(sectorConnection.MacroRef, sectorConnection.Offset, cluster, macros, vanillaLookup, referencedVanillaEndpoints);
+                            if (sector != null)
+                            {
+                                cluster.Sectors.Add(sector);
+                            }
                         }
                     }
-                }
 
-                if (cluster.Sectors.Count == 0)
+                    if (isBaseCluster)
+                    {
+                        foreach (var sectorMacroName in touchedBaseSectors)
+                        {
+                            if (cluster.Sectors.Any(a => a.BaseGameMapping != null &&
+                                    vanillaLookup.SectorsByMacroName.TryGetValue(sectorMacroName, out var sectorInfo) &&
+                                    a.BaseGameMapping.Equals(sectorInfo.Sector.BaseGameMapping, StringComparison.OrdinalIgnoreCase)))
+                            {
+                                continue;
+                            }
+
+                            var sector = CreateImportedSector(sectorMacroName, null, cluster, macros, vanillaLookup, referencedVanillaEndpoints);
+                            if (sector != null)
+                            {
+                                cluster.Sectors.Add(sector);
+                            }
+                        }
+                    }
+
+                    if (cluster.Sectors.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    cluster.CustomSectorPositioning = cluster.Sectors.Count > 1;
+                    importedClusters[clusterMacroName] = cluster;
+                }
+                catch (Exception ex)
                 {
-                    continue;
+                    throw new InvalidOperationException($"Error while importing cluster macro '{clusterMacroName}'.", ex);
                 }
-
-                cluster.CustomSectorPositioning = cluster.Sectors.Count > 1;
-                importedClusters[clusterMacroName] = cluster;
             }
 
             return importedClusters.Values.ToList();
@@ -314,50 +337,52 @@ namespace X4SectorCreator.Configuration
             VanillaLookup vanillaLookup,
             ReferencedVanillaEndpoints referencedVanillaEndpoints)
         {
-            var isBaseSector = vanillaLookup.SectorsByMacroName.TryGetValue(sectorMacroName, out var vanillaSectorInfo);
-            var sectorMacro = macros.GetValueOrDefault(sectorMacroName);
-
-            if (!isBaseSector && sectorMacro == null)
+            try
             {
-                return null;
-            }
+                var isBaseSector = vanillaLookup.SectorsByMacroName.TryGetValue(sectorMacroName, out var vanillaSectorInfo);
+                var sectorMacro = macros.GetValueOrDefault(sectorMacroName);
 
-            var sector = isBaseSector
-                ? new Sector
+                if (!isBaseSector && sectorMacro == null)
                 {
-                    BaseGameMapping = vanillaSectorInfo.Sector.BaseGameMapping,
-                    ImportedMacroName = sectorMacroName,
-                    Name = vanillaSectorInfo.Sector.Name,
-                    Description = vanillaSectorInfo.Sector.Description,
-                    DisableFactionLogic = vanillaSectorInfo.Sector.DisableFactionLogic,
-                    Owner = vanillaSectorInfo.Sector.Owner,
-                    Sunlight = vanillaSectorInfo.Sector.Sunlight,
-                    Economy = vanillaSectorInfo.Sector.Economy,
-                    Security = vanillaSectorInfo.Sector.Security,
-                    AllowRandomAnomalies = vanillaSectorInfo.Sector.AllowRandomAnomalies,
-                    Placement = vanillaSectorInfo.Sector.Placement,
-                    SectorRealOffset = vanillaSectorInfo.Sector.SectorRealOffset,
-                    Zones = [],
-                    Regions = [],
-                    ResourceAreas = vanillaSectorInfo.Sector.ResourceAreas.Select(a => (Resource)a.Clone()).ToList()
+                    return null;
                 }
-                : new Sector
-                {
-                    ImportedMacroName = sectorMacroName,
-                    Name = sectorMacro?.DisplayName ?? NormalizeMacroFallbackName(sectorMacroName),
-                    Description = sectorMacro?.Description,
-                    Owner = sectorMacro?.Owner,
-                    DisableFactionLogic = sectorMacro?.DisableFactionLogic ?? false,
-                    Sunlight = sectorMacro?.Sunlight ?? 1.0f,
-                    Economy = sectorMacro?.Economy ?? 1.0f,
-                    Security = sectorMacro?.Security ?? 1.0f,
-                    AllowRandomAnomalies = sectorMacro?.AllowRandomAnomalies ?? true,
-                    Placement = InferPlacement(sectorOffset),
-                    CustomOffset = sectorOffset == null ? null : new Point((int)Math.Round(sectorOffset.X), (int)Math.Round(sectorOffset.Z)),
-                    Zones = [],
-                    Regions = [],
-                    ResourceAreas = sectorMacro?.ResourceAreas.Select(a => (Resource)a.Clone()).ToList() ?? []
-                };
+
+                var sector = isBaseSector
+                    ? new Sector
+                    {
+                        BaseGameMapping = vanillaSectorInfo.Sector.BaseGameMapping,
+                        ImportedMacroName = sectorMacroName,
+                        Name = vanillaSectorInfo.Sector.Name,
+                        Description = vanillaSectorInfo.Sector.Description,
+                        DisableFactionLogic = vanillaSectorInfo.Sector.DisableFactionLogic,
+                        Owner = vanillaSectorInfo.Sector.Owner,
+                        Sunlight = vanillaSectorInfo.Sector.Sunlight,
+                        Economy = vanillaSectorInfo.Sector.Economy,
+                        Security = vanillaSectorInfo.Sector.Security,
+                        AllowRandomAnomalies = vanillaSectorInfo.Sector.AllowRandomAnomalies,
+                        Placement = vanillaSectorInfo.Sector.Placement,
+                        SectorRealOffset = vanillaSectorInfo.Sector.SectorRealOffset,
+                        Zones = [],
+                        Regions = [],
+                        ResourceAreas = vanillaSectorInfo.Sector.ResourceAreas.Select(a => (Resource)a.Clone()).ToList()
+                    }
+                    : new Sector
+                    {
+                        ImportedMacroName = sectorMacroName,
+                        Name = sectorMacro?.DisplayName,
+                        Description = sectorMacro?.Description,
+                        Owner = sectorMacro?.Owner,
+                        DisableFactionLogic = sectorMacro?.DisableFactionLogic ?? false,
+                        Sunlight = sectorMacro?.Sunlight ?? 1.0f,
+                        Economy = sectorMacro?.Economy ?? 1.0f,
+                        Security = sectorMacro?.Security ?? 1.0f,
+                        AllowRandomAnomalies = sectorMacro?.AllowRandomAnomalies ?? true,
+                        Placement = InferPlacement(sectorOffset),
+                        CustomOffset = sectorOffset == null ? null : new Point((int)Math.Round(sectorOffset.X), (int)Math.Round(sectorOffset.Z)),
+                        Zones = [],
+                        Regions = [],
+                        ResourceAreas = sectorMacro?.ResourceAreas.Select(a => (Resource)a.Clone()).ToList() ?? []
+                    };
 
             var zoneCandidates = new List<(string macroName, PositionDefinition offset)>();
             if (sectorMacro != null)
@@ -405,7 +430,12 @@ namespace X4SectorCreator.Configuration
                 }
             }
 
-            return sector;
+                return sector;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Error while importing sector macro '{sectorMacroName}' in cluster '{cluster?.ImportedMacroName ?? cluster?.Name ?? "<unknown>"}'.", ex);
+            }
         }
 
         private static Zone CreateImportedZone(
@@ -416,50 +446,57 @@ namespace X4SectorCreator.Configuration
             Dictionary<string, MacroDefinition> macros,
             VanillaLookup vanillaLookup)
         {
-            var isBaseZone = vanillaLookup.ZonesByMacroName.TryGetValue(zoneMacroName, out var vanillaZoneInfo) &&
-                             MatchesSector(vanillaZoneInfo, cluster, sector);
-            var zoneMacro = macros.GetValueOrDefault(zoneMacroName);
-
-            if (!isBaseZone && zoneMacro == null)
+            try
             {
-                return null;
-            }
+                var isBaseZone = vanillaLookup.ZonesByMacroName.TryGetValue(zoneMacroName, out var vanillaZoneInfo) &&
+                                 MatchesSector(vanillaZoneInfo, cluster, sector);
+                var zoneMacro = macros.GetValueOrDefault(zoneMacroName);
 
-            var zone = new Zone
+                if (!isBaseZone && zoneMacro == null)
                 {
-                    Name = isBaseZone ? vanillaZoneInfo.Zone.Name : null,
-                    ImportedMacroName = zoneMacroName,
-                    Position = zoneOffset == null && isBaseZone ? vanillaZoneInfo.Zone.Position : ConvertZonePosition(zoneOffset),
-                    Gates = isBaseZone ? vanillaZoneInfo.Zone.Gates.Select(a => (Gate)a.Clone()).ToList() : []
-                };
-
-            if (zoneMacro == null)
-            {
-                return zone;
-            }
-
-            foreach (var gateConnection in zoneMacro.Connections.Where(a => a.IsGateConnection))
-            {
-                var gate = zone.Gates.FirstOrDefault(a => a.ConnectionName != null && a.ConnectionName.Equals(gateConnection.Name, StringComparison.OrdinalIgnoreCase));
-                if (gate == null)
-                {
-                    gate = new Gate
-                    {
-                        ConnectionName = gateConnection.Name,
-                    };
-                    zone.Gates.Add(gate);
+                    return null;
                 }
 
-                gate.Type = ParseGateType(gateConnection.MacroRef);
-                gate.Pitch = gateConnection.Rotation?.Pitch ?? gate.Pitch;
-                gate.Roll = gateConnection.Rotation?.Roll ?? gate.Roll;
-                gate.Yaw = gateConnection.Rotation?.Yaw ?? gate.Yaw;
-                gate.Position = gateConnection.Offset == null
-                    ? gate.Position
-                    : new Point((int)Math.Round(gateConnection.Offset.X), (int)Math.Round(gateConnection.Offset.Z));
-            }
+                var zone = new Zone
+                    {
+                        Name = isBaseZone ? vanillaZoneInfo.Zone.Name : null,
+                        ImportedMacroName = zoneMacroName,
+                        Position = zoneOffset == null && isBaseZone ? vanillaZoneInfo.Zone.Position : ConvertZonePosition(zoneOffset),
+                        Gates = isBaseZone ? vanillaZoneInfo.Zone.Gates.Select(a => (Gate)a.Clone()).ToList() : []
+                    };
 
-            return zone;
+                if (zoneMacro == null)
+                {
+                    return zone;
+                }
+
+                foreach (var gateConnection in zoneMacro.Connections.Where(a => a.IsGateConnection))
+                {
+                    var gate = zone.Gates.FirstOrDefault(a => a.ConnectionName != null && a.ConnectionName.Equals(gateConnection.Name, StringComparison.OrdinalIgnoreCase));
+                    if (gate == null)
+                    {
+                        gate = new Gate
+                        {
+                            ConnectionName = gateConnection.Name,
+                        };
+                        zone.Gates.Add(gate);
+                    }
+
+                    gate.Type = ParseGateType(gateConnection.MacroRef);
+                    gate.Pitch = gateConnection.Rotation?.Pitch ?? gate.Pitch;
+                    gate.Roll = gateConnection.Rotation?.Roll ?? gate.Roll;
+                    gate.Yaw = gateConnection.Rotation?.Yaw ?? gate.Yaw;
+                    gate.Position = gateConnection.Offset == null
+                        ? gate.Position
+                        : new Point((int)Math.Round(gateConnection.Offset.X), (int)Math.Round(gateConnection.Offset.Z));
+                }
+
+                return zone;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Error while importing zone macro '{zoneMacroName}' in sector '{sector?.ImportedMacroName ?? sector?.Name ?? "<unknown>"}'.", ex);
+            }
         }
 
         private static void PairImportedGates(List<ConnectionDefinition> galaxyConnections, List<Cluster> importedClusters)
@@ -485,35 +522,42 @@ namespace X4SectorCreator.Configuration
             var pairedKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var connection in galaxyConnections.Where(a => a.IsGatePair))
             {
-                var sourceKey = ExtractConnectionName(connection.Path);
-                var destinationKey = ExtractConnectionName(connection.MacroPath);
-                if (sourceKey == null || destinationKey == null)
+                try
                 {
-                    continue;
-                }
+                    var sourceKey = ExtractConnectionName(connection.Path);
+                    var destinationKey = ExtractConnectionName(connection.MacroPath);
+                    if (sourceKey == null || destinationKey == null)
+                    {
+                        continue;
+                    }
 
-                if (!gateMap.TryGetValue(sourceKey, out var sourceGate) || !gateMap.TryGetValue(destinationKey, out var destinationGate))
+                    if (!gateMap.TryGetValue(sourceKey, out var sourceGate) || !gateMap.TryGetValue(destinationKey, out var destinationGate))
+                    {
+                        continue;
+                    }
+
+                    var pairKey = string.Compare(sourceKey, destinationKey, StringComparison.OrdinalIgnoreCase) < 0
+                        ? $"{sourceKey}|{destinationKey}"
+                        : $"{destinationKey}|{sourceKey}";
+                    if (!pairedKeys.Add(pairKey))
+                    {
+                        continue;
+                    }
+
+                    sourceGate.Gate.ConnectionName = sourceGate.Name;
+                    sourceGate.Gate.ParentSectorName = sourceGate.Sector.Name;
+                    sourceGate.Gate.DestinationSectorName = destinationGate.Sector.Name;
+                    sourceGate.Gate.Destination = destinationGate.Name;
+
+                    destinationGate.Gate.ConnectionName = destinationGate.Name;
+                    destinationGate.Gate.ParentSectorName = destinationGate.Sector.Name;
+                    destinationGate.Gate.DestinationSectorName = sourceGate.Sector.Name;
+                    destinationGate.Gate.Destination = sourceGate.Name;
+                }
+                catch (Exception ex)
                 {
-                    continue;
+                    throw new InvalidOperationException($"Error while pairing gate connection path '{connection.Path}' with reverse '{connection.MacroPath}'.", ex);
                 }
-
-                var pairKey = string.Compare(sourceKey, destinationKey, StringComparison.OrdinalIgnoreCase) < 0
-                    ? $"{sourceKey}|{destinationKey}"
-                    : $"{destinationKey}|{sourceKey}";
-                if (!pairedKeys.Add(pairKey))
-                {
-                    continue;
-                }
-
-                sourceGate.Gate.ConnectionName = sourceGate.Name;
-                sourceGate.Gate.ParentSectorName = sourceGate.Sector.Name;
-                sourceGate.Gate.DestinationSectorName = destinationGate.Sector.Name;
-                sourceGate.Gate.Destination = destinationGate.Name;
-
-                destinationGate.Gate.ConnectionName = destinationGate.Name;
-                destinationGate.Gate.ParentSectorName = destinationGate.Sector.Name;
-                destinationGate.Gate.DestinationSectorName = sourceGate.Sector.Name;
-                destinationGate.Gate.Destination = sourceGate.Name;
             }
 
             foreach (var zone in importedClusters.SelectMany(a => a.Sectors).SelectMany(a => a.Zones))
@@ -657,8 +701,11 @@ namespace X4SectorCreator.Configuration
 
             Zone zone = sector.Zones.FirstOrDefault(a => a.Name != null && a.Name.Equals(zoneName, StringComparison.OrdinalIgnoreCase));
             ZoneGateInfo zoneGateInfo = zoneGateInfos.FirstOrDefault(a =>
-                a.GateName.Equals(gateConnectionName, StringComparison.OrdinalIgnoreCase) ||
-                a.ZoneName.Replace("_connection", string.Empty, StringComparison.OrdinalIgnoreCase).Equals(zoneName, StringComparison.OrdinalIgnoreCase));
+                (!string.IsNullOrWhiteSpace(a.GateName) &&
+                 a.GateName.Equals(gateConnectionName, StringComparison.OrdinalIgnoreCase)) ||
+                (!string.IsNullOrWhiteSpace(a.ZoneName) &&
+                 a.ZoneName.Replace("_connection", string.Empty, StringComparison.OrdinalIgnoreCase)
+                     .Equals(zoneName, StringComparison.OrdinalIgnoreCase)));
 
             if (zone == null)
             {
@@ -978,6 +1025,85 @@ namespace X4SectorCreator.Configuration
             }
         }
 
+        private static void AutoCorrectOneWayGates(List<Cluster> importedClusters)
+        {
+            var zoneLookup = importedClusters
+                .SelectMany(cluster => cluster.Sectors, (cluster, sector) => (cluster, sector))
+                .SelectMany(pair => pair.sector.Zones, (pair, zone) => new
+                {
+                    pair.cluster,
+                    pair.sector,
+                    zone,
+                    ZonePath = BuildZonePath(pair.cluster, pair.sector, zone)
+                })
+                .ToDictionary(a => a.ZonePath, StringComparer.OrdinalIgnoreCase);
+
+            var gateLookup = importedClusters
+                .SelectMany(cluster => cluster.Sectors, (cluster, sector) => (cluster, sector))
+                .SelectMany(pair => pair.sector.Zones, (pair, zone) => (pair.cluster, pair.sector, zone))
+                .SelectMany(pair => pair.zone.Gates, (pair, gate) => (pair.cluster, pair.sector, pair.zone, gate))
+                .Where(a => !string.IsNullOrWhiteSpace(a.gate.SourcePath))
+                .ToDictionary(a => a.gate.SourcePath, StringComparer.OrdinalIgnoreCase);
+
+            foreach (var entry in gateLookup.Values.ToList())
+            {
+                if (string.IsNullOrWhiteSpace(entry.gate.DestinationPath) || gateLookup.ContainsKey(entry.gate.DestinationPath))
+                    continue;
+
+                string destinationPath = NormalizeConnectionPath(entry.gate.DestinationPath);
+                string targetZonePath = destinationPath?.Contains('/') == true
+                    ? destinationPath[..destinationPath.LastIndexOf('/')]
+                    : null;
+                if (string.IsNullOrWhiteSpace(targetZonePath) || !zoneLookup.TryGetValue(targetZonePath, out var target))
+                    continue;
+
+                Gate reverseGate = new()
+                {
+                    Id = target.sector.Zones.SelectMany(a => a.Gates).DefaultIfEmpty(new Gate { Id = 0 }).Max(a => a.Id) + 1,
+                    ConnectionName = ExtractConnectionName(destinationPath),
+                    ParentSectorName = target.sector.Name,
+                    DestinationSectorName = entry.sector.Name,
+                    Source = BuildGateLocation(target.cluster, target.sector, target.zone),
+                    Destination = entry.gate.Source,
+                    SourcePath = destinationPath,
+                    DestinationPath = entry.gate.SourcePath,
+                    Type = entry.gate.Type,
+                    Position = Point.Empty,
+                    Yaw = (entry.gate.Yaw + 180) % 360,
+                    Pitch = entry.gate.Pitch,
+                    Roll = entry.gate.Roll,
+                    IsHighwayGate = entry.gate.IsHighwayGate
+                };
+
+                target.zone.Gates.Add(reverseGate);
+                gateLookup[reverseGate.SourcePath] = (target.cluster, target.sector, target.zone, reverseGate);
+            }
+        }
+
+        private static string BuildZonePath(Cluster cluster, Sector sector, Zone zone)
+        {
+            bool isFullBaseGame = cluster.IsBaseGame && sector.IsBaseGame;
+            bool isHalfBaseGame = cluster.IsBaseGame && !sector.IsBaseGame;
+
+            if (isFullBaseGame)
+            {
+                string clusterConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection";
+                string sectorConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_connection";
+                string zoneConnection = $"PREFIX_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_z{zone.Id:D3}_connection";
+                return $"{clusterConnection}/{sectorConnection}/{zoneConnection}";
+            }
+
+            if (isHalfBaseGame)
+            {
+                string clusterConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection";
+                string sectorConnection = $"PREFIX_SE_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_connection";
+                string zoneConnection = $"PREFIX_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_s{sector.Id:D3}_z{zone.Id:D3}_connection";
+                return $"{clusterConnection}/{sectorConnection}/{zoneConnection}";
+            }
+
+            return $"PREFIX_CL_c{cluster.Id:D3}_connection/PREFIX_SE_c{cluster.Id:D3}_s{sector.Id:D3}_connection/PREFIX_ZO_c{cluster.Id:D3}_s{sector.Id:D3}_z{zone.Id:D3}_connection";
+        }
+
         private static void CollectDefinitions(string xmlPath, Dictionary<string, MacroDefinition> macros, List<ConnectionDefinition> galaxyConnections)
         {
             var document = XDocument.Load(xmlPath);
@@ -985,9 +1111,6 @@ namespace X4SectorCreator.Configuration
             {
                 return;
             }
-
-            CollectScriptNameHints(document, macros);
-            CollectCommentSelectorNameHints(document, macros);
 
             if (document.Root.Name.LocalName.Equals("macros", StringComparison.OrdinalIgnoreCase))
             {
@@ -1050,7 +1173,7 @@ namespace X4SectorCreator.Configuration
 
                 if (node is XElement element && element.Name.LocalName.Equals("macro", StringComparison.OrdinalIgnoreCase))
                 {
-                    UpsertMacro(macros, element, pendingComment);
+                    UpsertMacro(macros, element, null);
                     pendingComment = null;
                     continue;
                 }
@@ -1070,10 +1193,10 @@ namespace X4SectorCreator.Configuration
                     continue;
 
                 macroRef = macroRef.Replace("macro.", string.Empty, StringComparison.OrdinalIgnoreCase);
-                var nameHint = NormalizeDisplayName((element.PreviousNode as XComment)?.Value);
+                var nameHint = TrimToNull((element.PreviousNode as XComment)?.Value);
                 if (string.IsNullOrWhiteSpace(nameHint))
                 {
-                    nameHint = NormalizeScriptVariableName((string)element.Attribute("name"));
+                    nameHint = TrimToNull((string)element.Attribute("name"));
                 }
 
                 if (string.IsNullOrWhiteSpace(nameHint))
@@ -1092,7 +1215,7 @@ namespace X4SectorCreator.Configuration
             {
                 if (node is XComment comment)
                 {
-                    pendingDisplayName = ExtractDisplayNameFromComment(comment.Value) ?? pendingDisplayName;
+                    pendingDisplayName = TrimToNull(comment.Value) ?? pendingDisplayName;
                     continue;
                 }
 
@@ -1113,18 +1236,17 @@ namespace X4SectorCreator.Configuration
             }
         }
 
-        private static void ApplyMapDefaultMetadata(string modDirectory, Dictionary<string, MacroDefinition> macros, List<string> importWarnings)
+        private static void ApplyMapDefaultMetadata(string modDirectory, Dictionary<string, MacroDefinition> macros, List<string> importWarnings, TranslationLookup localTranslations, TranslationLookup mergedTranslations)
         {
             string mapDefaultsPath = Path.Combine(modDirectory, "libraries", "mapdefaults.xml");
             if (!File.Exists(mapDefaultsPath))
                 return;
 
-            var translations = LoadTranslations(modDirectory);
             var document = XDocument.Load(mapDefaultsPath);
             if (document.Root == null)
                 return;
 
-            foreach (XElement dataset in document.Root.Elements("dataset"))
+            foreach (XElement dataset in document.Descendants("dataset"))
             {
                 string macroName = (string)dataset.Attribute("macro");
                 if (string.IsNullOrWhiteSpace(macroName))
@@ -1137,20 +1259,21 @@ namespace X4SectorCreator.Configuration
                     string nameRef = (string)identification.Attribute("name");
                     string descriptionRef = (string)identification.Attribute("description");
 
-                    string resolvedName = ResolveTranslationReference(nameRef, translations);
-                    if (string.IsNullOrWhiteSpace(resolvedName))
+                    string resolvedName = ResolveTranslationReference(nameRef, localTranslations, mergedTranslations);
+                    if (string.IsNullOrWhiteSpace(resolvedName) && !string.IsNullOrWhiteSpace(nameRef))
                     {
-                        resolvedName = nameRef;
-                        if (!string.IsNullOrWhiteSpace(nameRef))
-                        {
-                            importWarnings.Add($"Unresolved sector/cluster name reference for macro '{macroName}': {nameRef}");
-                        }
+                        resolvedName = MissingTranslationDisplayName;
+                        importWarnings.Add($"Unresolved sector/cluster name reference for macro '{macroName}': {nameRef}");
                     }
 
-                    definition.DisplayName ??= NormalizeDisplayName(resolvedName);
+                    string trimmedResolvedName = TrimToNull(resolvedName);
+                    if (!string.IsNullOrWhiteSpace(trimmedResolvedName))
+                    {
+                        definition.DisplayName = trimmedResolvedName;
+                    }
 
-                    string resolvedDescription = ResolveTranslationReference(descriptionRef, translations)
-                        ?? ResolveTranslationPageTitle(descriptionRef, translations);
+                    string resolvedDescription = ResolveTranslationReference(descriptionRef, localTranslations, mergedTranslations)
+                        ?? ResolveTranslationPageTitle(descriptionRef, localTranslations, mergedTranslations);
                     if (IsPlaceholderDescription(descriptionRef, resolvedDescription))
                     {
                         resolvedDescription = ExtractPrecedingDatasetComment(dataset);
@@ -1201,40 +1324,43 @@ namespace X4SectorCreator.Configuration
             return float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result);
         }
 
-        private static TranslationLookup LoadTranslations(string modDirectory)
+        private static TranslationLookup LoadTranslations(IEnumerable<string> modDirectories)
         {
             var titles = new Dictionary<int, string>();
             var entries = new Dictionary<(int pageId, int textId), string>();
 
-            string tRoot = Path.Combine(modDirectory, "t");
-            if (!Directory.Exists(tRoot))
-                return new TranslationLookup(titles, entries);
-
-            foreach (string file in Directory
-                .GetFiles(tRoot, "*.xml", SearchOption.TopDirectoryOnly)
-                .OrderBy(a => a, StringComparer.OrdinalIgnoreCase))
+            foreach (string modDirectory in modDirectories)
             {
-                var document = XDocument.Load(file);
-                if (document.Root == null)
+                string tRoot = Path.Combine(modDirectory, "t");
+                if (!Directory.Exists(tRoot))
                     continue;
 
-                foreach (XElement page in document.Descendants("page"))
+                foreach (string file in Directory
+                    .GetFiles(tRoot, "*.xml", SearchOption.TopDirectoryOnly)
+                    .OrderBy(a => a, StringComparer.OrdinalIgnoreCase))
                 {
-                    if (!int.TryParse((string)page.Attribute("id"), NumberStyles.Integer, CultureInfo.InvariantCulture, out int pageId))
+                    var document = XDocument.Load(file);
+                    if (document.Root == null)
                         continue;
 
-                    string title = NormalizeDisplayName((string)page.Attribute("title"));
-                    if (!string.IsNullOrWhiteSpace(title))
-                        titles[pageId] = title;
-
-                    foreach (XElement text in page.Elements("t"))
+                    foreach (XElement page in document.Descendants("page"))
                     {
-                        if (!int.TryParse((string)text.Attribute("id"), NumberStyles.Integer, CultureInfo.InvariantCulture, out int textId))
+                        if (!int.TryParse((string)page.Attribute("id"), NumberStyles.Integer, CultureInfo.InvariantCulture, out int pageId))
                             continue;
 
-                        string value = text.Value;
-                        if (!string.IsNullOrWhiteSpace(value))
-                            entries[(pageId, textId)] = value;
+                        string title = TrimToNull((string)page.Attribute("title"));
+                        if (!string.IsNullOrWhiteSpace(title))
+                            titles[pageId] = title;
+
+                        foreach (XElement text in page.Elements("t"))
+                        {
+                            if (!int.TryParse((string)text.Attribute("id"), NumberStyles.Integer, CultureInfo.InvariantCulture, out int textId))
+                                continue;
+
+                            string value = ExtractTranslationEntryText(text);
+                            if (!string.IsNullOrWhiteSpace(value))
+                                entries[(pageId, textId)] = value;
+                        }
                     }
                 }
             }
@@ -1242,23 +1368,53 @@ namespace X4SectorCreator.Configuration
             return new TranslationLookup(titles, entries);
         }
 
-        private static string ResolveTranslationReference(string reference, TranslationLookup translations)
+        private static string ExtractTranslationEntryText(XElement textElement)
         {
-            if (!TryParseTranslationReference(reference, out int pageId, out int textId))
-                return NormalizeDisplayName(reference);
+            if (textElement == null)
+                return null;
 
-            return translations.TryResolveEntry(pageId, textId, out string value) ? value : null;
+            string value = textElement.Value;
+
+            XNode nextNode = textElement.NextNode;
+            while (nextNode is XText tailText)
+            {
+                value += tailText.Value;
+                nextNode = nextNode.NextNode;
+            }
+
+            return value;
         }
 
-        private static string ResolveTranslationPageTitle(string reference, TranslationLookup translations)
+        private static string ResolveTranslationReference(string reference, TranslationLookup primaryTranslations, TranslationLookup fallbackTranslations)
+        {
+            if (!TryParseTranslationReference(reference, out int pageId, out int textId))
+                return NormalizeTranslationText(reference);
+
+            if (primaryTranslations != null && primaryTranslations.TryResolveEntry(pageId, textId, out string primaryValue))
+                return primaryValue;
+
+            return fallbackTranslations != null && fallbackTranslations.TryResolveEntry(pageId, textId, out string fallbackValue)
+                ? fallbackValue
+                : null;
+        }
+
+        private static string ResolveTranslationPageTitle(string reference, TranslationLookup primaryTranslations, TranslationLookup fallbackTranslations)
         {
             if (!TryParseTranslationReference(reference, out int pageId, out _))
                 return null;
 
-            if (!translations.TryGetTitle(pageId, out string title))
-                return null;
+            string title = null;
+            if (primaryTranslations != null)
+            {
+                _ = primaryTranslations.TryGetTitle(pageId, out title);
+            }
 
-            return IsPlaceholderTranslationValue(title) ? null : title;
+            if (string.IsNullOrWhiteSpace(title) && fallbackTranslations != null)
+            {
+                _ = fallbackTranslations.TryGetTitle(pageId, out title);
+            }
+
+            return string.IsNullOrWhiteSpace(title) || IsPlaceholderTranslationValue(title) ? null : title;
         }
 
         private static bool TryParseTranslationReference(string reference, out int pageId, out int textId)
@@ -1281,7 +1437,7 @@ namespace X4SectorCreator.Configuration
             for (XNode node = dataset.PreviousNode; node != null; node = node.PreviousNode)
             {
                 if (node is XComment comment)
-                    return NormalizeDisplayName(comment.Value);
+                    return TrimToNull(comment.Value);
 
                 if (node is XText text && string.IsNullOrWhiteSpace(text.Value))
                     continue;
@@ -1294,7 +1450,7 @@ namespace X4SectorCreator.Configuration
 
         private static bool IsPlaceholderDescription(string descriptionRef, string resolvedDescription)
         {
-            if (string.Equals(NormalizeDisplayName(resolvedDescription), "None", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(TrimToNull(resolvedDescription), "None", StringComparison.OrdinalIgnoreCase))
                 return true;
 
             return string.Equals(descriptionRef?.Replace(" ", string.Empty), "{8888892,8004}", StringComparison.OrdinalIgnoreCase);
@@ -1316,7 +1472,7 @@ namespace X4SectorCreator.Configuration
 
             var definition = GetOrCreateMacro(macros, name);
             definition.Class = (string)macroElement.Attribute("class") ?? definition.Class;
-            definition.DisplayName ??= NormalizeDisplayName(displayNameHint);
+            definition.DisplayName ??= TrimToNull(displayNameHint);
             definition.ContentRef ??= macroElement
                 .Elements("connections")
                 .Elements("connection")
@@ -1328,115 +1484,12 @@ namespace X4SectorCreator.Configuration
             definition.Connections.AddRange(ParseConnections(macroElement));
         }
 
-        private static string NormalizeDisplayName(string value)
+        private static string TrimToNull(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return null;
 
-            string normalized = value.Replace('_', ' ');
-            normalized = Regex.Replace(normalized, "(?<=[a-z0-9])(?=[A-Z])", " ");
-            normalized = Regex.Replace(normalized, @"(?<=[A-Za-z])(?=\d)", " ");
-            normalized = Regex.Replace(normalized, @"(?<=\d)(?=[A-Za-z])", " ");
-            normalized = Regex.Replace(normalized, "\\s+", " ").Trim();
-            normalized = normalized.Trim('-', ' ');
-
-            if (normalized.StartsWith("Sector ", StringComparison.OrdinalIgnoreCase))
-            {
-                normalized = normalized[7..].Trim();
-            }
-
-            var parts = normalized.Split(" - ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            if (parts.Length >= 2 && Regex.IsMatch(parts[0], "^[A-Za-z#]+[A-Za-z0-9#]*$"))
-            {
-                normalized = string.Join(" - ", parts.Skip(1));
-            }
-
-            normalized = Regex.Replace(normalized, "\\bSector\\s*(\\d{3})$", a => $" {ToRomanNumeral(int.Parse(a.Groups[1].Value, CultureInfo.InvariantCulture))}", RegexOptions.IgnoreCase).Trim();
-            normalized = Regex.Replace(normalized, "\\bCluster\\s*(\\d+)\\s+Sector\\s*(\\d{3})$", a => $"Cluster {a.Groups[1].Value} Sector {ToRomanNumeral(int.Parse(a.Groups[2].Value, CultureInfo.InvariantCulture))}", RegexOptions.IgnoreCase).Trim();
-            normalized = Regex.Replace(normalized, "\\s+(Sector|Cluster)$", string.Empty, RegexOptions.IgnoreCase).Trim();
-            normalized = Regex.Replace(normalized, @"\b([A-Za-z]+)\s+#\s*(\d+)\b", "$1 #$2");
-            normalized = normalized.Replace("  ", " ");
-            normalized = ToDisplayCase(normalized);
-
-            return string.IsNullOrWhiteSpace(normalized) || normalized == "#" ? null : normalized;
-        }
-
-        private static string ExtractDisplayNameFromComment(string comment)
-        {
-            if (string.IsNullOrWhiteSpace(comment))
-                return null;
-
-            string normalized = comment.Replace('\t', ' ').Trim();
-            normalized = Regex.Replace(normalized, "\\s+", " ");
-            var match = SectorCommentRegex().Match(normalized);
-            if (match.Success)
-            {
-                string value = NormalizeDisplayName(match.Groups[1].Value);
-                return value == "#" ? null : value;
-            }
-
-            return null;
-        }
-
-        private static string NormalizeMacroFallbackName(string macroName)
-        {
-            if (string.IsNullOrWhiteSpace(macroName))
-                return null;
-
-            string normalized = macroName.Replace("_macro", string.Empty, StringComparison.OrdinalIgnoreCase);
-            normalized = normalized.Replace("sectoe", "sector", StringComparison.OrdinalIgnoreCase);
-            normalized = Regex.Replace(normalized, "^(thedeep_sector_|thedeep_cluster_)", string.Empty, RegexOptions.IgnoreCase);
-            normalized = Regex.Replace(normalized, "^(homebrew_|cluster_|sector_|xpan_cluster)", string.Empty, RegexOptions.IgnoreCase);
-            return NormalizeDisplayName(normalized);
-        }
-
-        private static string ToDisplayCase(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return value;
-
-            var words = value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < words.Length; i++)
-            {
-                string word = words[i];
-                if (Regex.IsMatch(word, "^(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI)$", RegexOptions.IgnoreCase) ||
-                    Regex.IsMatch(word, @"^#?\d+$") ||
-                    word.Contains('\''))
-                {
-                    words[i] = CapitalizeWord(word);
-                    continue;
-                }
-
-                words[i] = EnglishTextInfo.ToTitleCase(word.ToLowerInvariant());
-            }
-
-            return string.Join(' ', words);
-        }
-
-        private static string CapitalizeWord(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return value;
-
-            var parts = value.Split('\'', StringSplitOptions.None);
-            for (int i = 0; i < parts.Length; i++)
-            {
-                string part = parts[i];
-                if (string.IsNullOrEmpty(part))
-                    continue;
-
-                if (Regex.IsMatch(part, "^(I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI)$", RegexOptions.IgnoreCase) ||
-                    Regex.IsMatch(part, @"^#?\d+$"))
-                {
-                    parts[i] = part.ToUpperInvariant();
-                }
-                else
-                {
-                    parts[i] = EnglishTextInfo.ToTitleCase(part.ToLowerInvariant());
-                }
-            }
-
-            return string.Join("'", parts);
+            return value.Trim();
         }
 
         private static string NormalizeTranslationText(string value)
@@ -1445,49 +1498,34 @@ namespace X4SectorCreator.Configuration
                 return null;
 
             string normalized = Regex.Replace(value, @"\{\d+,\d+\}", string.Empty);
+            normalized = normalized.Replace("\\(", "(");
+            normalized = normalized.Replace("\\)", ")");
+            normalized = normalized.Replace("()", string.Empty);
             normalized = normalized.Replace("\t", " ");
             normalized = Regex.Replace(normalized, "\\s+", " ").Trim();
-            return NormalizeDisplayName(normalized);
-        }
 
-        private static string NormalizeScriptVariableName(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return null;
-
-            string normalized = value.Trim().TrimStart('$');
-            normalized = Regex.Replace(normalized, "_(Sector|Cluster)$", string.Empty, RegexOptions.IgnoreCase);
-            normalized = Regex.Replace(normalized, "(Sector|Cluster)$", string.Empty, RegexOptions.IgnoreCase);
-            normalized = normalized.Replace('_', ' ');
-            normalized = Regex.Replace(normalized, "(?<=[a-z0-9])(?=[A-Z])", " ");
-            normalized = Regex.Replace(normalized, "\\s+", " ").Trim();
-            return string.IsNullOrWhiteSpace(normalized) ? null : normalized;
-        }
-
-        private static string ToRomanNumeral(int value)
-        {
-            if (value <= 0)
-                return value.ToString(CultureInfo.InvariantCulture);
-
-            var numerals = new (int value, string numeral)[]
+            if (normalized.StartsWith('(') && normalized.EndsWith(')'))
             {
-                (1000, "M"), (900, "CM"), (500, "D"), (400, "CD"),
-                (100, "C"), (90, "XC"), (50, "L"), (40, "XL"),
-                (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")
-            };
-
-            var result = new System.Text.StringBuilder();
-            int remaining = value;
-            foreach (var (numeralValue, numeralText) in numerals)
-            {
-                while (remaining >= numeralValue)
-                {
-                    result.Append(numeralText);
-                    remaining -= numeralValue;
-                }
+                string inner = normalized[1..^1].Trim();
+                if (!string.IsNullOrWhiteSpace(inner) && inner.IndexOf('(') < 0)
+                    normalized = inner;
             }
 
-            return result.ToString();
+            Match suffixDuplicate = Regex.Match(normalized, @"^(?<name>.+?)\((?<dup>.+)\)$");
+            if (suffixDuplicate.Success &&
+                string.Equals(suffixDuplicate.Groups["name"].Value.Trim(), suffixDuplicate.Groups["dup"].Value.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                normalized = suffixDuplicate.Groups["name"].Value.Trim();
+            }
+
+            Match prefixDuplicate = Regex.Match(normalized, @"^\((?<dup>.+)\)(?<name>.+)$");
+            if (prefixDuplicate.Success &&
+                string.Equals(prefixDuplicate.Groups["name"].Value.Trim(), prefixDuplicate.Groups["dup"].Value.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                normalized = prefixDuplicate.Groups["name"].Value.Trim();
+            }
+
+            return TrimToNull(normalized);
         }
 
         private static MacroDefinition GetOrCreateMacro(Dictionary<string, MacroDefinition> macros, string name)
@@ -1738,9 +1776,6 @@ namespace X4SectorCreator.Configuration
 
         [GeneratedRegex("@name='([^']+)'", RegexOptions.IgnoreCase)]
         private static partial Regex SelectorMacroRegex();
-
-        [GeneratedRegex(@"^Sector\s+[^-]+-\s*(.+?)\s*$", RegexOptions.IgnoreCase)]
-        private static partial Regex SectorCommentRegex();
 
         [GeneratedRegex(@"^\s*\{\s*(\d+)\s*,\s*(\d+)\s*\}\s*$", RegexOptions.IgnoreCase)]
         private static partial Regex TranslationReferenceRegex();
