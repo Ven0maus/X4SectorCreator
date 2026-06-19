@@ -34,6 +34,9 @@ namespace X4SectorCreator.Objects
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);
 
+        [JsonIgnore]
+        public string ImportedMacroName { get; set; }
+
         private Point DeterminePlacementDirection()
         {
             return Placement switch
@@ -143,6 +146,7 @@ namespace X4SectorCreator.Objects
                 Security = Security,
                 Sunlight = Sunlight,
                 Tags = Tags,
+                ImportedMacroName = ImportedMacroName,
                 Zones = Zones.Select(a => (Zone)a.Clone()).ToList(),
                 Regions = Regions.Select(a => (Region)a.Clone()).ToList(),
                 ResourceAreas = ResourceAreas.Select(a => (Resource)a.Clone()).ToList()

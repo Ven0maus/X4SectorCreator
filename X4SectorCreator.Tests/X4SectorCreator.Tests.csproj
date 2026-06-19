@@ -21,7 +21,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\X4SectorCreator\Helpers\GateConnectionResolver.cs" Link="Helpers\GateConnectionResolver.cs" />
+    <Compile Include="..\X4SectorCreator\Helpers\ImportClusterMetadataResolver.cs" Link="Helpers\ImportClusterMetadataResolver.cs" />
+    <Compile Include="..\X4SectorCreator\Helpers\ImportIdentityAssigner.cs" Link="Helpers\ImportIdentityAssigner.cs" />
+    <Compile Include="..\X4SectorCreator\Helpers\ImportNameNormalizer.cs" Link="Helpers\ImportNameNormalizer.cs" />
+    <Compile Include="..\X4SectorCreator\Helpers\ImportSectorMetadataResolver.cs" Link="Helpers\ImportSectorMetadataResolver.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\SectorMapInteractionRules.cs" Link="Helpers\SectorMapInteractionRules.cs" />
+    <Compile Include="..\X4SectorCreator\Objects\Resource.cs" Link="Objects\Resource.cs" />
+    <Compile Include="..\X4SectorCreator\Helpers\SectorIslandAnalyzer.cs" Link="Helpers\SectorIslandAnalyzer.cs" />
+    <Compile Include="..\X4SectorCreator\Helpers\SectorIslandFixerRules.cs" Link="Helpers\SectorIslandFixerRules.cs" />
+    <Compile Include="..\X4SectorCreator\XmlGeneration\GalaxyGeneration.cs" Link="XmlGeneration\GalaxyGeneration.cs" />
+    <Compile Include="..\X4SectorCreator\XmlGeneration\SectorGeneration.cs" Link="XmlGeneration\SectorGeneration.cs" />
   </ItemGroup>
 
 </Project>

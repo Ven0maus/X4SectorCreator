@@ -129,13 +129,30 @@ namespace X4SectorCreator.XmlGeneration
                     XElement[] zoneElements = GenerateExistingSectorZoneConnections(modPrefix, cluster, sector, sector.Zones, zoneCache).ToArray();
                     if (zoneElements.Length > 0)
                     {
-                        yield return (cluster.Dlc, new XElement("add",
-                            new XAttribute("sel", $"//macros/macro[@name='{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_macro']/connections"),
-                            zoneElements)
-                        );
+                        foreach (XElement addElement in BuildExistingSectorZoneAddElements(cluster, sector, zoneElements))
+                        {
+                            yield return (cluster.Dlc, addElement);
+                        }
                     }
                 }
             }
+        }
+
+        private static IEnumerable<XElement> BuildExistingSectorZoneAddElements(Cluster cluster, Sector sector, XElement[] zoneElements)
+        {
+            string macroName = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_macro";
+            string connectionsSelector = $"/macros/macro[@name='{macroName}']/connections";
+
+            yield return new XElement("add",
+                new XAttribute("sel", $"{connectionsSelector}/connection[not(@ref='zones')][1]"),
+                new XAttribute("pos", "before"),
+                zoneElements.Select(a => new XElement(a))
+            );
+
+            yield return new XElement("add",
+                new XAttribute("sel", $"{connectionsSelector}[not(connection[not(@ref='zones')])]"),
+                zoneElements.Select(a => new XElement(a))
+            );
         }
 
         private static IEnumerable<XElement> GenerateExistingSectorZoneConnections(string modPrefix, Cluster cluster, Sector sector, List<Zone> zones, HashSet<string> zoneCache)

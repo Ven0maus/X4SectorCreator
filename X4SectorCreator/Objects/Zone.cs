@@ -17,6 +17,9 @@ namespace X4SectorCreator.Objects
         [JsonIgnore]
         public bool IsBaseGame => Name != null;
 
+        [JsonIgnore]
+        public string ImportedMacroName { get; set; }
+
         public object Clone()
         {
             return new Zone
@@ -25,6 +28,7 @@ namespace X4SectorCreator.Objects
                 Name = Name,
                 Position = Position,
                 IsGeneratedZone = IsGeneratedZone,
+                ImportedMacroName = ImportedMacroName,
                 Gates = Gates.Select(a => (Gate)a.Clone()).ToList(),
                 Stations = Stations.Select(a => (Station)a.Clone()).ToList()
             };

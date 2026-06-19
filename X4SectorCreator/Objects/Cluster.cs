@@ -32,6 +32,9 @@ namespace X4SectorCreator.Objects
         [JsonIgnore]
         public bool IsBaseGame => !string.IsNullOrWhiteSpace(BaseGameMapping);
 
+        [JsonIgnore]
+        public string ImportedMacroName { get; set; }
+
         public void AutoPositionSectors(bool randomize = false, Random random = null)
         {
             int sectorCount = Sectors.Count;
@@ -68,6 +71,7 @@ namespace X4SectorCreator.Objects
                 Position = Position,
                 Description = Description,
                 CustomClusterXml = CustomClusterXml,
+                ImportedMacroName = ImportedMacroName,
                 Sectors = Sectors.Select(a => (Sector)a.Clone()).ToList()
             };
         }

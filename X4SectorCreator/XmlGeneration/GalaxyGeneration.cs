@@ -104,6 +104,13 @@ namespace X4SectorCreator.XmlGeneration
                 .Select(a => a.ConnectionName)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
+            var gateLookup = clusters
+                .SelectMany(cluster => cluster.Sectors, (cluster, sector) => (cluster, sector))
+                .SelectMany(pair => pair.sector.Zones, (pair, zone) => (pair.cluster, pair.sector, zone))
+                .SelectMany(pair => pair.zone.Gates, (pair, gate) => new GateReference(pair.cluster, pair.sector, pair.zone, gate))
+                .ToList();
+            var sourcePathLookup = GateConnectionResolver.BuildSourcePathLookup(gateLookup, a => a.Gate.SourcePath);
+
             HashSet<Gate> destinationGatesToBeSkipped = [];
             foreach (Cluster cluster in clusters)
             {
@@ -124,15 +131,14 @@ namespace X4SectorCreator.XmlGeneration
                                 throw new Exception($"Gate \"{cluster.Name}/{sector.Name}/z{zone.Id}/g{gate.Id:D3}\" source/destination path is not set.");
                             }
 
-                            Sector sourceSector = clusters
-                                .SelectMany(a => a.Sectors)
-                                .First(a => a.Name.Equals(gate.DestinationSectorName, StringComparison.OrdinalIgnoreCase));
-                            Zone sourceZone = sourceSector.Zones
-                                .First(a => a.Gates
-                                    .Any(a => a.SourcePath
-                                        .Equals(gate.DestinationPath, StringComparison.OrdinalIgnoreCase)));
-                            Gate sourceGate = sourceZone.Gates.First(a => a.SourcePath.Equals(gate.DestinationPath, StringComparison.OrdinalIgnoreCase));
-                            _ = destinationGatesToBeSkipped.Add(sourceGate);
+                            if (!GateConnectionResolver.TryResolveTarget(sourcePathLookup, gate.DestinationPath, out GateReference sourceReference))
+                            {
+                                throw new Exception(
+                                    $"Gate \"{cluster.Name}/{sector.Name}/z{zone.Id}/g{gate.Id:D3}\" could not resolve a reciprocal gate for destination path " +
+                                    $"\"{gate.DestinationPath}\".");
+                            }
+
+                            _ = destinationGatesToBeSkipped.Add(sourceReference.Gate);
 
                             yield return new XElement("connection",
                                 new XAttribute("name", $"{modPrefix}_GA_g{gate.Id:D3}_{gate.Source}_{gate.Destination}_connection"),
@@ -148,6 +154,8 @@ namespace X4SectorCreator.XmlGeneration
                 }
             }
         }
+
+        private sealed record GateReference(Cluster Cluster, Sector Sector, Zone Zone, Gate Gate);
 
         private static IEnumerable<XElement> GenerateVanillaChanges(VanillaChanges vanillaChanges)
         {

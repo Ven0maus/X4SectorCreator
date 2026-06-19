@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using X4SectorCreator.Helpers;
@@ -14,33 +15,114 @@ namespace X4SectorCreator.Configuration
 
         public static ModImportResult Import(string modDirectory, ClusterCollection vanillaClusterData)
         {
-            if (string.IsNullOrWhiteSpace(modDirectory) || !Directory.Exists(modDirectory))
+            return ImportInternal([Path.GetFullPath(modDirectory)], vanillaClusterData, mergeDisplayName: null);
+        }
+
+        public static ModImportResult ImportMerged(string rootDirectory, ClusterCollection vanillaClusterData)
+        {
+            List<string> modDirectories = DiscoverMergeImportDirectories(rootDirectory);
+            if (modDirectories.Count == 0)
+            {
+                throw new InvalidOperationException("No importable X4 extension folders were found in the selected directory.");
+            }
+
+            string mergeDisplayName = modDirectories.Count == 1
+                ? null
+                : $"Merged import ({modDirectories.Count} mods)";
+
+            return ImportInternal(modDirectories, vanillaClusterData, mergeDisplayName);
+        }
+
+        public static List<string> DiscoverMergeImportDirectories(string rootDirectory)
+        {
+            if (string.IsNullOrWhiteSpace(rootDirectory) || !Directory.Exists(rootDirectory))
             {
                 throw new DirectoryNotFoundException("The selected mod directory does not exist.");
             }
 
-            var contentPath = Path.Combine(modDirectory, "content.xml");
-            if (!File.Exists(contentPath))
+            string fullRoot = Path.GetFullPath(rootDirectory);
+            if (IsImportableModDirectory(fullRoot))
             {
-                throw new FileNotFoundException("The selected folder is not an X4 extension. Missing content.xml.", contentPath);
+                return [fullRoot];
             }
 
-            var mapsRoot = Path.Combine(modDirectory, "maps");
-            if (!Directory.Exists(mapsRoot))
+            List<string> candidates = Directory
+                .GetFiles(fullRoot, "content.xml", SearchOption.AllDirectories)
+                .Select(Path.GetDirectoryName)
+                .Where(a => !string.IsNullOrWhiteSpace(a) && IsImportableModDirectory(a))
+                .Select(Path.GetFullPath)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(a => a.Length)
+                .ThenBy(a => a, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            List<string> selected = [];
+            foreach (string candidate in candidates)
             {
-                throw new DirectoryNotFoundException("The selected extension does not contain a maps folder.");
+                if (selected.Any(parent => IsChildDirectory(candidate, parent)))
+                {
+                    continue;
+                }
+
+                selected.Add(candidate);
             }
 
-            var modName = ReadModName(contentPath) ?? Path.GetFileName(modDirectory);
+            return selected;
+        }
+
+        public static bool IsImportableModDirectory(string directory)
+        {
+            if (string.IsNullOrWhiteSpace(directory) || !Directory.Exists(directory))
+                return false;
+
+            return File.Exists(Path.Combine(directory, "content.xml")) &&
+                   Directory.Exists(Path.Combine(directory, "maps"));
+        }
+
+        private static ModImportResult ImportInternal(IReadOnlyList<string> modDirectories, ClusterCollection vanillaClusterData, string mergeDisplayName)
+        {
+            if (modDirectories == null || modDirectories.Count == 0)
+            {
+                throw new InvalidOperationException("No importable X4 extension folders were provided.");
+            }
+
+            foreach (string modDirectory in modDirectories)
+            {
+                if (!Directory.Exists(modDirectory))
+                {
+                    throw new DirectoryNotFoundException($"The selected mod directory does not exist: {modDirectory}");
+                }
+
+                string contentPath = Path.Combine(modDirectory, "content.xml");
+                if (!File.Exists(contentPath))
+                {
+                    throw new FileNotFoundException("The selected folder is not an X4 extension. Missing content.xml.", contentPath);
+                }
+
+                string mapsRoot = Path.Combine(modDirectory, "maps");
+                if (!Directory.Exists(mapsRoot))
+                {
+                    throw new DirectoryNotFoundException($"The selected extension does not contain a maps folder: {modDirectory}");
+                }
+            }
+
+            string modName = mergeDisplayName ??
+                (ReadModName(Path.Combine(modDirectories[0], "content.xml")) ?? Path.GetFileName(modDirectories[0]));
 
             var macros = new Dictionary<string, MacroDefinition>(StringComparer.OrdinalIgnoreCase);
             var galaxyConnections = new List<ConnectionDefinition>();
-            foreach (var xmlPath in Directory.GetFiles(mapsRoot, "*.xml", SearchOption.AllDirectories))
-            {
-                CollectDefinitions(xmlPath, macros, galaxyConnections);
-            }
+            List<string> importWarnings = [];
 
-            ApplyMapDefaultDisplayNames(modDirectory, macros);
+            foreach (string modDirectory in modDirectories)
+            {
+                string mapsRoot = Path.Combine(modDirectory, "maps");
+                foreach (string xmlPath in Directory.GetFiles(mapsRoot, "*.xml", SearchOption.AllDirectories))
+                {
+                    CollectDefinitions(xmlPath, macros, galaxyConnections);
+                }
+
+                ApplyMapDefaultMetadata(modDirectory, macros, importWarnings);
+            }
 
             if (macros.Count == 0 && galaxyConnections.Count == 0)
             {
@@ -48,30 +130,53 @@ namespace X4SectorCreator.Configuration
             }
 
             var vanillaLookup = VanillaLookup.Create(vanillaClusterData);
+            var referencedVanillaEndpoints = CollectReferencedVanillaEndpoints(galaxyConnections, vanillaLookup);
             var customClusterPositions = galaxyConnections
                 .Where(a => a.IsClusterConnection && !string.IsNullOrWhiteSpace(a.MacroRef))
                 .GroupBy(a => a.MacroRef, StringComparer.OrdinalIgnoreCase)
                 .ToDictionary(a => a.Key, a => a.First().Offset, StringComparer.OrdinalIgnoreCase);
 
-            var importedClusters = BuildImportedClusters(macros, vanillaLookup, customClusterPositions);
+            var importedClusters = BuildImportedClusters(macros, vanillaLookup, customClusterPositions, referencedVanillaEndpoints);
             if (importedClusters.Count == 0)
             {
                 throw new InvalidOperationException("The extension did not contain any importable clusters, sectors, or zones.");
             }
 
-            EnsureUniqueSectorNames(importedClusters);
+            foreach (string modDirectory in modDirectories)
+            {
+                ClusterCollection sidecarMetadata = LoadSidecarClusterMetadata(modDirectory);
+                if (sidecarMetadata?.Clusters?.Count > 0)
+                {
+                    ApplySidecarMetadata(importedClusters, sidecarMetadata.Clusters);
+                }
+
+                ApplyGodOwnership(modDirectory, importedClusters);
+            }
+
+            HydrateReferencedVanillaGates(importedClusters, galaxyConnections, vanillaLookup);
+            ImportNameNormalizer.EnsureImportedSectorNamesPreservingIdentity(importedClusters);
             ResolveCustomClusterPositionCollisions(importedClusters, vanillaLookup);
             PairImportedGates(galaxyConnections, importedClusters);
             AssignImportedIds(importedClusters, vanillaLookup);
             RebuildImportedGatePaths(importedClusters);
 
-            return new ModImportResult(modName, importedClusters);
+            return new ModImportResult(modName, importedClusters, importWarnings.Distinct(StringComparer.OrdinalIgnoreCase).ToList());
+        }
+
+        private static bool IsChildDirectory(string candidate, string parent)
+        {
+            string normalizedParent = Path.TrimEndingDirectorySeparator(Path.GetFullPath(parent));
+            string normalizedCandidate = Path.TrimEndingDirectorySeparator(Path.GetFullPath(candidate));
+
+            return normalizedCandidate.Length > normalizedParent.Length &&
+                   normalizedCandidate.StartsWith(normalizedParent + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase);
         }
 
         private static List<Cluster> BuildImportedClusters(
             Dictionary<string, MacroDefinition> macros,
             VanillaLookup vanillaLookup,
-            Dictionary<string, PositionDefinition> customClusterPositions)
+            Dictionary<string, PositionDefinition> customClusterPositions,
+            ReferencedVanillaEndpoints referencedVanillaEndpoints)
         {
             var importedClusters = new Dictionary<string, Cluster>(StringComparer.OrdinalIgnoreCase);
 
@@ -99,15 +204,22 @@ namespace X4SectorCreator.Configuration
                     ? new Cluster
                     {
                         BaseGameMapping = vanillaCluster.BaseGameMapping,
+                        ImportedMacroName = clusterMacroName,
                         Name = vanillaCluster.Name,
-                        Description = vanillaCluster.Description,
+                        Description = ImportClusterMetadataResolver.ResolveDescription(clusterMacro?.Description, vanillaCluster.Description),
+                        BackgroundVisualMapping = ImportClusterMetadataResolver.ResolveBackgroundVisualMapping(clusterMacro?.ContentRef, vanillaCluster.BackgroundVisualMapping),
+                        Soundtrack = ImportClusterMetadataResolver.ResolveSoundtrack(clusterMacro?.MusicRef, vanillaCluster.Soundtrack),
                         Dlc = vanillaCluster.Dlc,
                         Position = vanillaCluster.Position,
                         Sectors = []
                     }
                     : new Cluster
                     {
+                        ImportedMacroName = clusterMacroName,
                         Name = clusterMacro?.DisplayName ?? NormalizeMacroFallbackName(clusterMacroName),
+                        Description = clusterMacro?.Description,
+                        BackgroundVisualMapping = clusterMacro?.ContentRef,
+                        Soundtrack = clusterMacro?.MusicRef,
                         Position = ConvertClusterPosition(customClusterPositions.GetValueOrDefault(clusterMacroName)),
                         Sectors = []
                     };
@@ -139,11 +251,23 @@ namespace X4SectorCreator.Configuration
                     touchedBaseSectors.Add(sectorMacroName);
                 }
 
+                if (isBaseCluster)
+                {
+                    foreach (string sectorMacroName in referencedVanillaEndpoints.SectorMacroNames)
+                    {
+                        if (vanillaLookup.SectorsByMacroName.TryGetValue(sectorMacroName, out var sectorInfo) &&
+                            sectorInfo.Cluster.BaseGameMapping.Equals(cluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase))
+                        {
+                            touchedBaseSectors.Add(sectorMacroName);
+                        }
+                    }
+                }
+
                 if (clusterMacro != null)
                 {
                     foreach (var sectorConnection in clusterMacro.Connections.Where(a => a.IsSectorConnection && !string.IsNullOrWhiteSpace(a.MacroRef)))
                     {
-                        var sector = CreateImportedSector(sectorConnection.MacroRef, sectorConnection.Offset, cluster, macros, vanillaLookup);
+                        var sector = CreateImportedSector(sectorConnection.MacroRef, sectorConnection.Offset, cluster, macros, vanillaLookup, referencedVanillaEndpoints);
                         if (sector != null)
                         {
                             cluster.Sectors.Add(sector);
@@ -162,7 +286,7 @@ namespace X4SectorCreator.Configuration
                             continue;
                         }
 
-                        var sector = CreateImportedSector(sectorMacroName, null, cluster, macros, vanillaLookup);
+                        var sector = CreateImportedSector(sectorMacroName, null, cluster, macros, vanillaLookup, referencedVanillaEndpoints);
                         if (sector != null)
                         {
                             cluster.Sectors.Add(sector);
@@ -187,7 +311,8 @@ namespace X4SectorCreator.Configuration
             PositionDefinition sectorOffset,
             Cluster cluster,
             Dictionary<string, MacroDefinition> macros,
-            VanillaLookup vanillaLookup)
+            VanillaLookup vanillaLookup,
+            ReferencedVanillaEndpoints referencedVanillaEndpoints)
         {
             var isBaseSector = vanillaLookup.SectorsByMacroName.TryGetValue(sectorMacroName, out var vanillaSectorInfo);
             var sectorMacro = macros.GetValueOrDefault(sectorMacroName);
@@ -201,22 +326,37 @@ namespace X4SectorCreator.Configuration
                 ? new Sector
                 {
                     BaseGameMapping = vanillaSectorInfo.Sector.BaseGameMapping,
+                    ImportedMacroName = sectorMacroName,
                     Name = vanillaSectorInfo.Sector.Name,
                     Description = vanillaSectorInfo.Sector.Description,
+                    DisableFactionLogic = vanillaSectorInfo.Sector.DisableFactionLogic,
+                    Owner = vanillaSectorInfo.Sector.Owner,
+                    Sunlight = vanillaSectorInfo.Sector.Sunlight,
+                    Economy = vanillaSectorInfo.Sector.Economy,
+                    Security = vanillaSectorInfo.Sector.Security,
+                    AllowRandomAnomalies = vanillaSectorInfo.Sector.AllowRandomAnomalies,
                     Placement = vanillaSectorInfo.Sector.Placement,
                     SectorRealOffset = vanillaSectorInfo.Sector.SectorRealOffset,
                     Zones = [],
                     Regions = [],
-                    ResourceAreas = []
+                    ResourceAreas = vanillaSectorInfo.Sector.ResourceAreas.Select(a => (Resource)a.Clone()).ToList()
                 }
                 : new Sector
                 {
+                    ImportedMacroName = sectorMacroName,
                     Name = sectorMacro?.DisplayName ?? NormalizeMacroFallbackName(sectorMacroName),
+                    Description = sectorMacro?.Description,
+                    Owner = sectorMacro?.Owner,
+                    DisableFactionLogic = sectorMacro?.DisableFactionLogic ?? false,
+                    Sunlight = sectorMacro?.Sunlight ?? 1.0f,
+                    Economy = sectorMacro?.Economy ?? 1.0f,
+                    Security = sectorMacro?.Security ?? 1.0f,
+                    AllowRandomAnomalies = sectorMacro?.AllowRandomAnomalies ?? true,
                     Placement = InferPlacement(sectorOffset),
                     CustomOffset = sectorOffset == null ? null : new Point((int)Math.Round(sectorOffset.X), (int)Math.Round(sectorOffset.Z)),
                     Zones = [],
                     Regions = [],
-                    ResourceAreas = []
+                    ResourceAreas = sectorMacro?.ResourceAreas.Select(a => (Resource)a.Clone()).ToList() ?? []
                 };
 
             var zoneCandidates = new List<(string macroName, PositionDefinition offset)>();
@@ -238,6 +378,21 @@ namespace X4SectorCreator.Configuration
                 }
 
                 zoneCandidates.Add((zoneMacroName, null));
+            }
+
+            if (isBaseSector)
+            {
+                foreach (string zoneMacroName in referencedVanillaEndpoints.ZoneMacroNames)
+                {
+                    if (!vanillaLookup.ZonesByMacroName.TryGetValue(zoneMacroName, out var zoneInfo) ||
+                        !MatchesSector(zoneInfo, cluster, sector) ||
+                        zoneCandidates.Any(a => a.macroName.Equals(zoneMacroName, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        continue;
+                    }
+
+                    zoneCandidates.Add((zoneMacroName, null));
+                }
             }
 
             foreach (var (zoneMacroName, zoneOffset) in zoneCandidates
@@ -271,11 +426,12 @@ namespace X4SectorCreator.Configuration
             }
 
             var zone = new Zone
-            {
-                Name = isBaseZone ? vanillaZoneInfo.Zone.Name : null,
-                Position = ConvertZonePosition(zoneOffset),
-                Gates = []
-            };
+                {
+                    Name = isBaseZone ? vanillaZoneInfo.Zone.Name : null,
+                    ImportedMacroName = zoneMacroName,
+                    Position = zoneOffset == null && isBaseZone ? vanillaZoneInfo.Zone.Position : ConvertZonePosition(zoneOffset),
+                    Gates = isBaseZone ? vanillaZoneInfo.Zone.Gates.Select(a => (Gate)a.Clone()).ToList() : []
+                };
 
             if (zoneMacro == null)
             {
@@ -284,17 +440,23 @@ namespace X4SectorCreator.Configuration
 
             foreach (var gateConnection in zoneMacro.Connections.Where(a => a.IsGateConnection))
             {
-                var gate = new Gate
+                var gate = zone.Gates.FirstOrDefault(a => a.ConnectionName != null && a.ConnectionName.Equals(gateConnection.Name, StringComparison.OrdinalIgnoreCase));
+                if (gate == null)
                 {
-                    ConnectionName = gateConnection.Name,
-                    Type = ParseGateType(gateConnection.MacroRef),
-                    Pitch = gateConnection.Rotation?.Pitch ?? 0,
-                    Roll = gateConnection.Rotation?.Roll ?? 0,
-                    Yaw = gateConnection.Rotation?.Yaw ?? 0,
-                    Position = gateConnection.Offset == null ? Point.Empty : new Point((int)Math.Round(gateConnection.Offset.X), (int)Math.Round(gateConnection.Offset.Z))
-                };
+                    gate = new Gate
+                    {
+                        ConnectionName = gateConnection.Name,
+                    };
+                    zone.Gates.Add(gate);
+                }
 
-                zone.Gates.Add(gate);
+                gate.Type = ParseGateType(gateConnection.MacroRef);
+                gate.Pitch = gateConnection.Rotation?.Pitch ?? gate.Pitch;
+                gate.Roll = gateConnection.Rotation?.Roll ?? gate.Roll;
+                gate.Yaw = gateConnection.Rotation?.Yaw ?? gate.Yaw;
+                gate.Position = gateConnection.Offset == null
+                    ? gate.Position
+                    : new Point((int)Math.Round(gateConnection.Offset.X), (int)Math.Round(gateConnection.Offset.Z));
             }
 
             return zone;
@@ -362,56 +524,13 @@ namespace X4SectorCreator.Configuration
 
         private static void AssignImportedIds(List<Cluster> importedClusters, VanillaLookup vanillaLookup)
         {
-            var nextClusterId = vanillaLookup.MaxClusterId + 1;
-            foreach (var cluster in importedClusters.Where(a => !a.IsBaseGame).OrderBy(a => a.Name, StringComparer.OrdinalIgnoreCase))
-            {
-                cluster.Id = nextClusterId++;
-            }
-
-            foreach (var cluster in importedClusters)
-            {
-                var nextSectorId = cluster.IsBaseGame
-                    ? vanillaLookup.GetNextSectorId(cluster.BaseGameMapping)
-                    : 1;
-
-                foreach (var sector in cluster.Sectors.Where(a => !a.IsBaseGame).OrderBy(a => a.Name, StringComparer.OrdinalIgnoreCase))
-                {
-                    sector.Id = nextSectorId++;
-                }
-
-                foreach (var sector in cluster.Sectors.Where(a => a.IsBaseGame))
-                {
-                    sector.Id = vanillaLookup.GetSectorId(cluster.BaseGameMapping, sector.BaseGameMapping);
-                }
-
-                foreach (var sector in cluster.Sectors)
-                {
-                    var nextZoneId = cluster.IsBaseGame && sector.IsBaseGame
-                        ? vanillaLookup.GetNextZoneId(cluster.BaseGameMapping, sector.BaseGameMapping)
-                        : 1;
-
-                    foreach (var zone in sector.Zones.Where(a => !a.IsBaseGame))
-                    {
-                        zone.Id = nextZoneId++;
-                    }
-
-                    foreach (var zone in sector.Zones.Where(a => a.IsBaseGame))
-                    {
-                        zone.Id = vanillaLookup.GetZoneId(cluster.BaseGameMapping, sector.BaseGameMapping, zone.Name);
-                    }
-
-                    var nextGateId = 1;
-                    foreach (var gate in sector.Zones.SelectMany(a => a.Gates))
-                    {
-                        gate.Id = nextGateId++;
-                    }
-                }
-
-                cluster.Sectors = cluster.Sectors
-                    .OrderBy(a => a.IsBaseGame ? 0 : 1)
-                    .ThenBy(a => a.Id)
-                    .ToList();
-            }
+            ImportIdentityAssigner.AssignImportedIdsPreservingOrder(
+                importedClusters,
+                vanillaLookup.MaxClusterId,
+                vanillaLookup.GetNextSectorId,
+                vanillaLookup.GetSectorId,
+                vanillaLookup.GetNextZoneId,
+                vanillaLookup.GetZoneId);
         }
 
         private static void ResolveCustomClusterPositionCollisions(List<Cluster> importedClusters, VanillaLookup vanillaLookup)
@@ -436,48 +555,6 @@ namespace X4SectorCreator.Configuration
                 var resolved = FindNearestFreePosition(desired, occupiedPositions);
                 cluster.Position = new Point(resolved.X, resolved.Y);
                 occupiedPositions.Add(resolved);
-            }
-        }
-
-        private static void EnsureUniqueSectorNames(List<Cluster> importedClusters)
-        {
-            var usedNames = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-
-            foreach (var cluster in importedClusters.OrderBy(a => a.Name ?? string.Empty, StringComparer.OrdinalIgnoreCase))
-            {
-                for (int index = 0; index < cluster.Sectors.Count; index++)
-                {
-                    Sector sector = cluster.Sectors[index];
-                    string baseName = NormalizeDisplayName(sector.Name);
-
-                    if (string.IsNullOrWhiteSpace(baseName))
-                    {
-                        string clusterName = NormalizeDisplayName(cluster.Name) ?? "Unnamed Cluster";
-                        baseName = cluster.Sectors.Count == 1
-                            ? clusterName
-                            : $"{clusterName} {ToRomanNumeral(index + 1)}";
-                    }
-
-                    string uniqueName = baseName;
-                    if (usedNames.TryGetValue(baseName, out int count))
-                    {
-                        do
-                        {
-                            count++;
-                            uniqueName = $"{baseName} {ToRomanNumeral(count)}";
-                        }
-                        while (usedNames.ContainsKey(uniqueName));
-
-                        usedNames[baseName] = count;
-                    }
-                    else
-                    {
-                        usedNames[baseName] = 1;
-                    }
-
-                    usedNames[uniqueName] = 1;
-                    sector.Name = uniqueName;
-                }
             }
         }
 
@@ -518,6 +595,357 @@ namespace X4SectorCreator.Configuration
         private static bool IsValidClusterGridPosition((int X, int Y) position)
         {
             return Math.Abs(position.X % 2) == Math.Abs(position.Y % 2);
+        }
+
+        private static void HydrateReferencedVanillaGates(List<Cluster> importedClusters, List<ConnectionDefinition> galaxyConnections, VanillaLookup vanillaLookup)
+        {
+            if (!File.Exists(Constants.DataPaths.VanillaConnectionMappingFilePath))
+                return;
+
+            VanilaConnectionMapping vanillaMapping = JsonSerializer.Deserialize<VanilaConnectionMapping>(
+                File.ReadAllText(Constants.DataPaths.VanillaConnectionMappingFilePath),
+                ConfigSerializer.JsonSerializerOptions);
+            if (vanillaMapping?.Connections == null || vanillaMapping.ZoneGateInfos == null)
+                return;
+
+            HashSet<string> referencedPaths = galaxyConnections
+                .Where(a => a.IsGatePair)
+                .SelectMany(a => new[] { NormalizeConnectionPath(a.Path), NormalizeConnectionPath(a.MacroPath) })
+                .Where(a => !string.IsNullOrWhiteSpace(a))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            Dictionary<string, Cluster> importedBaseClusters = importedClusters
+                .Where(a => a.IsBaseGame)
+                .ToDictionary(a => a.BaseGameMapping, StringComparer.OrdinalIgnoreCase);
+
+            foreach (Connection connection in vanillaMapping.Connections.Where(a => !a.IsHighway))
+            {
+                TryHydrateVanillaGateEndpoint(connection.Source, connection.Destination, vanillaMapping.ZoneGateInfos, referencedPaths, importedBaseClusters, vanillaLookup);
+                TryHydrateVanillaGateEndpoint(connection.Destination, connection.Source, vanillaMapping.ZoneGateInfos, referencedPaths, importedBaseClusters, vanillaLookup);
+            }
+        }
+
+        private static void TryHydrateVanillaGateEndpoint(
+            ConnectionInfo endpoint,
+            ConnectionInfo opposite,
+            List<ZoneGateInfo> zoneGateInfos,
+            HashSet<string> referencedPaths,
+            Dictionary<string, Cluster> importedBaseClusters,
+            VanillaLookup vanillaLookup)
+        {
+            string endpointPath = NormalizeConnectionPath(endpoint?.Path);
+            if (string.IsNullOrWhiteSpace(endpointPath) || !referencedPaths.Contains(endpointPath))
+                return;
+
+            string clusterBaseGameMapping = endpoint.Cluster?.Replace("_connection", string.Empty, StringComparison.OrdinalIgnoreCase);
+            string sectorConnectionName = endpoint.Sector;
+            string sectorMacroName = sectorConnectionName?.Replace("_connection", "_macro", StringComparison.OrdinalIgnoreCase);
+            string zoneName = endpoint.Zone?.Replace("_connection", string.Empty, StringComparison.OrdinalIgnoreCase);
+            string gateConnectionName = endpointPath.Split('/').LastOrDefault();
+
+            if (string.IsNullOrWhiteSpace(clusterBaseGameMapping) ||
+                string.IsNullOrWhiteSpace(sectorMacroName) ||
+                !importedBaseClusters.TryGetValue(clusterBaseGameMapping, out Cluster cluster) ||
+                !vanillaLookup.SectorsByMacroName.TryGetValue(sectorMacroName, out VanillaSectorInfo vanillaSectorInfo))
+            {
+                return;
+            }
+
+            Sector sector = cluster.Sectors.FirstOrDefault(a => a.IsBaseGame && a.BaseGameMapping.Equals(vanillaSectorInfo.Sector.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
+            if (sector == null)
+                return;
+
+            Zone zone = sector.Zones.FirstOrDefault(a => a.Name != null && a.Name.Equals(zoneName, StringComparison.OrdinalIgnoreCase));
+            ZoneGateInfo zoneGateInfo = zoneGateInfos.FirstOrDefault(a =>
+                a.GateName.Equals(gateConnectionName, StringComparison.OrdinalIgnoreCase) ||
+                a.ZoneName.Replace("_connection", string.Empty, StringComparison.OrdinalIgnoreCase).Equals(zoneName, StringComparison.OrdinalIgnoreCase));
+
+            if (zone == null)
+            {
+                zone = new Zone
+                {
+                    Name = zoneName,
+                    Gates = [],
+                    Position = zoneGateInfo == null ? Point.Empty : new Point(zoneGateInfo.ZonePosition.X, zoneGateInfo.ZonePosition.Y)
+                };
+                sector.Zones.Add(zone);
+            }
+            else if (zoneGateInfo != null)
+            {
+                zone.Position = new Point(zoneGateInfo.ZonePosition.X, zoneGateInfo.ZonePosition.Y);
+            }
+
+            if (zone.Gates.Any(a => !string.IsNullOrWhiteSpace(a.SourcePath) && a.SourcePath.Equals(endpointPath, StringComparison.OrdinalIgnoreCase)))
+                return;
+
+            string oppositeClusterBaseGameMapping = opposite.Cluster?.Replace("_connection", string.Empty, StringComparison.OrdinalIgnoreCase);
+            string oppositeSectorMacroName = opposite.Sector?.Replace("_connection", "_macro", StringComparison.OrdinalIgnoreCase);
+            string destinationSectorName = null;
+            if (!string.IsNullOrWhiteSpace(oppositeClusterBaseGameMapping) &&
+                !string.IsNullOrWhiteSpace(oppositeSectorMacroName) &&
+                vanillaLookup.SectorsByMacroName.TryGetValue(oppositeSectorMacroName, out VanillaSectorInfo oppositeSectorInfo))
+            {
+                destinationSectorName = oppositeSectorInfo.Sector.Name;
+            }
+
+            zone.Gates.Add(new Gate
+            {
+                ConnectionName = gateConnectionName,
+                ParentSectorName = sector.Name,
+                DestinationSectorName = destinationSectorName,
+                SourcePath = endpointPath,
+                DestinationPath = NormalizeConnectionPath(opposite.Path),
+                Type = ParseGateType(zoneGateInfo?.GateType),
+                Position = zoneGateInfo?.GatePosition == null ? Point.Empty : new Point(zoneGateInfo.GatePosition.Value.X, zoneGateInfo.GatePosition.Value.Y),
+                Roll = zoneGateInfo?.Rotation?.X ?? 0,
+                Pitch = zoneGateInfo?.Rotation?.Y ?? 0,
+                Yaw = zoneGateInfo?.Rotation?.Z ?? 0,
+                IsHighwayGate = false
+            });
+        }
+
+        private static ClusterCollection LoadSidecarClusterMetadata(string modDirectory)
+        {
+            foreach (string file in Directory.GetFiles(modDirectory, "*.json", SearchOption.TopDirectoryOnly)
+                .OrderBy(a => a, StringComparer.OrdinalIgnoreCase))
+            {
+                try
+                {
+                    using JsonDocument document = JsonDocument.Parse(File.ReadAllText(file));
+                    if (!document.RootElement.TryGetProperty("Clusters", out JsonElement clustersElement) ||
+                        clustersElement.ValueKind != JsonValueKind.Array)
+                    {
+                        continue;
+                    }
+
+                    ClusterCollection clusters = JsonSerializer.Deserialize<ClusterCollection>(File.ReadAllText(file), ConfigSerializer.JsonSerializerOptions);
+                    if (clusters?.Clusters?.Count > 0)
+                        return clusters;
+                }
+                catch
+                {
+                    // Ignore sidecar files that are not cluster exports.
+                }
+            }
+
+            return null;
+        }
+
+        private static void ApplySidecarMetadata(List<Cluster> importedClusters, List<Cluster> metadataClusters)
+        {
+            foreach (Cluster importedCluster in importedClusters)
+            {
+                Cluster metadataCluster = FindMetadataCluster(importedCluster, metadataClusters);
+                if (metadataCluster == null)
+                    continue;
+
+                importedCluster.Name ??= metadataCluster.Name;
+                importedCluster.Description ??= metadataCluster.Description;
+                importedCluster.BackgroundVisualMapping ??= metadataCluster.BackgroundVisualMapping;
+                importedCluster.Soundtrack ??= metadataCluster.Soundtrack;
+                importedCluster.Dlc ??= metadataCluster.Dlc;
+
+                foreach (Sector importedSector in importedCluster.Sectors)
+                {
+                    Sector metadataSector = FindMetadataSector(importedCluster, importedSector, metadataCluster);
+                    if (metadataSector == null)
+                        continue;
+
+                    importedSector.Name ??= metadataSector.Name;
+                    importedSector.Description ??= metadataSector.Description;
+                    importedSector.Owner ??= metadataSector.Owner;
+                    importedSector.Tags ??= metadataSector.Tags;
+
+                    if (metadataSector.ResourceAreas?.Count > 0)
+                    {
+                        importedSector.ResourceAreas ??= [];
+                        if (importedSector.ResourceAreas.Count == 0)
+                        {
+                            importedSector.ResourceAreas = metadataSector.ResourceAreas.Select(a => (Resource)a.Clone()).ToList();
+                        }
+                    }
+
+                    if (!importedSector.CustomOffset.HasValue && metadataSector.CustomOffset.HasValue)
+                        importedSector.CustomOffset = metadataSector.CustomOffset;
+                }
+            }
+        }
+
+        private static void ApplyGodOwnership(string modDirectory, List<Cluster> importedClusters)
+        {
+            string godPath = Path.Combine(modDirectory, "libraries", "god.xml");
+            if (!File.Exists(godPath))
+                return;
+
+            XDocument document = XDocument.Load(godPath);
+            Dictionary<Sector, Dictionary<string, int>> sectorVotes = new();
+
+            foreach (XElement element in document.Descendants())
+            {
+                string owner = (string)element.Attribute("owner");
+                if (string.IsNullOrWhiteSpace(owner))
+                    continue;
+
+                XElement location = element.Element("location");
+                if (location == null)
+                    continue;
+
+                string locationClass = (string)location.Attribute("class");
+                string macro = (string)location.Attribute("macro");
+                if (string.IsNullOrWhiteSpace(locationClass) || string.IsNullOrWhiteSpace(macro))
+                    continue;
+
+                IEnumerable<Sector> sectors = ResolveSectorsForGodLocation(importedClusters, locationClass, macro);
+                foreach (Sector sector in sectors)
+                {
+                    if (!sectorVotes.TryGetValue(sector, out Dictionary<string, int> counter))
+                    {
+                        counter = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+                        sectorVotes[sector] = counter;
+                    }
+
+                    counter[owner] = counter.TryGetValue(owner, out int current) ? current + 1 : 1;
+                }
+            }
+
+            foreach ((Sector sector, Dictionary<string, int> counter) in sectorVotes)
+            {
+                if (!string.IsNullOrWhiteSpace(sector.Owner))
+                    continue;
+
+                sector.Owner = NormalizeSectorOwner(counter
+                    .OrderByDescending(a => a.Value)
+                    .ThenBy(a => a.Key, StringComparer.OrdinalIgnoreCase)
+                    .Select(a => a.Key)
+                    .FirstOrDefault());
+            }
+        }
+
+        private static IEnumerable<Sector> ResolveSectorsForGodLocation(List<Cluster> importedClusters, string locationClass, string macro)
+        {
+            switch (locationClass.ToLowerInvariant())
+            {
+                case "sector":
+                    return importedClusters
+                        .SelectMany(a => a.Sectors)
+                        .Where(a => string.Equals(a.ImportedMacroName, macro, StringComparison.OrdinalIgnoreCase));
+
+                case "zone":
+                    return importedClusters
+                        .SelectMany(a => a.Sectors)
+                        .Where(sector => sector.Zones.Any(zone => string.Equals(zone.ImportedMacroName, macro, StringComparison.OrdinalIgnoreCase)));
+
+                case "cluster":
+                    return importedClusters
+                        .Where(a => string.Equals(a.ImportedMacroName, macro, StringComparison.OrdinalIgnoreCase))
+                        .SelectMany(a => a.Sectors);
+
+                default:
+                    return [];
+            }
+        }
+
+        private static string NormalizeSectorOwner(string owner)
+        {
+            if (string.IsNullOrWhiteSpace(owner))
+                return owner;
+
+            string normalized = owner.Trim();
+            return normalized.Length == 0
+                ? normalized
+                : char.ToUpperInvariant(normalized[0]) + normalized[1..];
+        }
+
+        private static Cluster FindMetadataCluster(Cluster importedCluster, List<Cluster> metadataClusters)
+        {
+            if (importedCluster.IsBaseGame)
+            {
+                return metadataClusters.FirstOrDefault(a =>
+                    !string.IsNullOrWhiteSpace(a.BaseGameMapping) &&
+                    a.BaseGameMapping.Equals(importedCluster.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return metadataClusters.FirstOrDefault(a =>
+                       string.IsNullOrWhiteSpace(a.BaseGameMapping) &&
+                       !string.IsNullOrWhiteSpace(a.Name) &&
+                       a.Name.Equals(importedCluster.Name, StringComparison.OrdinalIgnoreCase))
+                   ?? metadataClusters.FirstOrDefault(a =>
+                       string.IsNullOrWhiteSpace(a.BaseGameMapping) &&
+                       a.Position == importedCluster.Position &&
+                       a.Sectors.Count == importedCluster.Sectors.Count);
+        }
+
+        private static Sector FindMetadataSector(Cluster importedCluster, Sector importedSector, Cluster metadataCluster)
+        {
+            if (importedSector.IsBaseGame)
+            {
+                return metadataCluster.Sectors.FirstOrDefault(a =>
+                    !string.IsNullOrWhiteSpace(a.BaseGameMapping) &&
+                    a.BaseGameMapping.Equals(importedSector.BaseGameMapping, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (!string.IsNullOrWhiteSpace(importedSector.ImportedMacroName))
+            {
+                Sector macroMatch = metadataCluster.Sectors.FirstOrDefault(a =>
+                    string.IsNullOrWhiteSpace(a.BaseGameMapping) &&
+                    TryExtractCustomSectorSignature(importedSector.ImportedMacroName, out string importedSignature) &&
+                    TryExtractCustomSectorSignature(a.ImportedMacroName, out string metadataSignature) &&
+                    importedSignature.Equals(metadataSignature, StringComparison.OrdinalIgnoreCase));
+                if (macroMatch != null)
+                {
+                    return macroMatch;
+                }
+            }
+
+            string importedLayoutSignature = BuildSectorLayoutSignature(importedSector);
+            if (!string.IsNullOrWhiteSpace(importedLayoutSignature))
+            {
+                Sector[] layoutMatches = metadataCluster.Sectors
+                    .Where(a => string.IsNullOrWhiteSpace(a.BaseGameMapping) &&
+                                BuildSectorLayoutSignature(a).Equals(importedLayoutSignature, StringComparison.OrdinalIgnoreCase))
+                    .ToArray();
+                if (layoutMatches.Length == 1)
+                {
+                    return layoutMatches[0];
+                }
+            }
+
+            return metadataCluster.Sectors.FirstOrDefault(a =>
+                       string.IsNullOrWhiteSpace(a.BaseGameMapping) &&
+                       !string.IsNullOrWhiteSpace(a.Name) &&
+                       a.Name.Equals(importedSector.Name, StringComparison.OrdinalIgnoreCase))
+                   ?? metadataCluster.Sectors
+                       .Where(a => string.IsNullOrWhiteSpace(a.BaseGameMapping))
+                       .ElementAtOrDefault(importedCluster.Sectors
+                           .Where(a => !a.IsBaseGame)
+                           .ToList()
+                           .IndexOf(importedSector));
+        }
+
+        private static string BuildSectorLayoutSignature(Sector sector)
+        {
+            if (sector?.Zones == null || sector.Zones.Count == 0)
+                return string.Empty;
+
+            return string.Join(",",
+                sector.Zones
+                    .OrderBy(a => a.Position.X)
+                    .ThenBy(a => a.Position.Y)
+                    .Select(a => $"{a.Position.X}:{a.Position.Y}"));
+        }
+
+        private static bool TryExtractCustomSectorSignature(string macroName, out string signature)
+        {
+            signature = null;
+            if (string.IsNullOrWhiteSpace(macroName))
+                return false;
+
+            Match match = CustomSectorSignatureRegex().Match(macroName);
+            if (!match.Success)
+                return false;
+
+            signature = $"c{int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture):D3}_s{int.Parse(match.Groups[2].Value, CultureInfo.InvariantCulture):D3}";
+            return true;
         }
 
         private static void RebuildImportedGatePaths(List<Cluster> importedClusters)
@@ -685,7 +1113,7 @@ namespace X4SectorCreator.Configuration
             }
         }
 
-        private static void ApplyMapDefaultDisplayNames(string modDirectory, Dictionary<string, MacroDefinition> macros)
+        private static void ApplyMapDefaultMetadata(string modDirectory, Dictionary<string, MacroDefinition> macros, List<string> importWarnings)
         {
             string mapDefaultsPath = Path.Combine(modDirectory, "libraries", "mapdefaults.xml");
             if (!File.Exists(mapDefaultsPath))
@@ -704,20 +1132,73 @@ namespace X4SectorCreator.Configuration
 
                 var definition = GetOrCreateMacro(macros, macroName);
                 XElement identification = dataset.Element("properties")?.Element("identification");
-                if (identification == null)
-                    continue;
-
-                string nameRef = (string)identification.Attribute("name");
-                string descriptionRef = (string)identification.Attribute("description");
-
-                string resolvedName = ResolveTranslationReference(nameRef, translations);
-                if (string.IsNullOrWhiteSpace(resolvedName))
+                if (identification != null)
                 {
-                    resolvedName = ResolveTranslationPageTitle(descriptionRef, translations);
+                    string nameRef = (string)identification.Attribute("name");
+                    string descriptionRef = (string)identification.Attribute("description");
+
+                    string resolvedName = ResolveTranslationReference(nameRef, translations);
+                    if (string.IsNullOrWhiteSpace(resolvedName))
+                    {
+                        resolvedName = nameRef;
+                        if (!string.IsNullOrWhiteSpace(nameRef))
+                        {
+                            importWarnings.Add($"Unresolved sector/cluster name reference for macro '{macroName}': {nameRef}");
+                        }
+                    }
+
+                    definition.DisplayName ??= NormalizeDisplayName(resolvedName);
+
+                    string resolvedDescription = ResolveTranslationReference(descriptionRef, translations)
+                        ?? ResolveTranslationPageTitle(descriptionRef, translations);
+                    if (IsPlaceholderDescription(descriptionRef, resolvedDescription))
+                    {
+                        resolvedDescription = ExtractPrecedingDatasetComment(dataset);
+                    }
+
+                    definition.Description ??= resolvedDescription;
+                    definition.ImageRef ??= (string)identification.Attribute("image");
                 }
 
-                definition.DisplayName ??= NormalizeDisplayName(resolvedName);
+                XElement properties = dataset.Element("properties");
+                XElement area = properties?.Element("area");
+                XElement music = properties?.Element("music")
+                    ?? properties?.Element("sounds")?.Element("music")
+                    ?? properties?.Element("system")?.Element("music");
+                if (music != null)
+                {
+                    definition.MusicRef ??= (string)music.Attribute("ref");
+                }
+
+                if (area == null)
+                {
+                    definition.ResourceAreas = ImportSectorMetadataResolver.ParseResourceAreas(properties);
+                    continue;
+                }
+
+                if (TryParseFloat((string)area.Attribute("sunlight"), out float sunlight))
+                    definition.Sunlight ??= sunlight;
+                if (TryParseFloat((string)area.Attribute("economy"), out float economy))
+                    definition.Economy ??= economy;
+                if (TryParseFloat((string)area.Attribute("security"), out float security))
+                    definition.Security ??= security;
+
+                string factionLogic = (string)area.Attribute("factionlogic");
+                if (bool.TryParse(factionLogic, out bool factionLogicEnabled))
+                    definition.DisableFactionLogic ??= !factionLogicEnabled;
+
+                string tags = (string)area.Attribute("tags") ?? string.Empty;
+                if (tags.Length > 0)
+                    definition.AllowRandomAnomalies ??= tags.Contains("allowrandomanomaly", StringComparison.OrdinalIgnoreCase);
+
+                definition.Owner ??= ImportSectorMetadataResolver.ResolveOwner(area);
+                definition.ResourceAreas = ImportSectorMetadataResolver.ParseResourceAreas(properties);
             }
+        }
+
+        private static bool TryParseFloat(string value, out float result)
+        {
+            return float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result);
         }
 
         private static TranslationLookup LoadTranslations(string modDirectory)
@@ -729,13 +1210,15 @@ namespace X4SectorCreator.Configuration
             if (!Directory.Exists(tRoot))
                 return new TranslationLookup(titles, entries);
 
-            foreach (string file in Directory.GetFiles(tRoot, "*.xml", SearchOption.TopDirectoryOnly))
+            foreach (string file in Directory
+                .GetFiles(tRoot, "*.xml", SearchOption.TopDirectoryOnly)
+                .OrderBy(a => a, StringComparer.OrdinalIgnoreCase))
             {
                 var document = XDocument.Load(file);
                 if (document.Root == null)
                     continue;
 
-                foreach (XElement page in document.Root.Elements("page"))
+                foreach (XElement page in document.Descendants("page"))
                 {
                     if (!int.TryParse((string)page.Attribute("id"), NumberStyles.Integer, CultureInfo.InvariantCulture, out int pageId))
                         continue;
@@ -772,7 +1255,10 @@ namespace X4SectorCreator.Configuration
             if (!TryParseTranslationReference(reference, out int pageId, out _))
                 return null;
 
-            return translations.TryGetTitle(pageId, out string title) ? title : null;
+            if (!translations.TryGetTitle(pageId, out string title))
+                return null;
+
+            return IsPlaceholderTranslationValue(title) ? null : title;
         }
 
         private static bool TryParseTranslationReference(string reference, out int pageId, out int textId)
@@ -790,6 +1276,36 @@ namespace X4SectorCreator.Configuration
                    int.TryParse(match.Groups[2].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out textId);
         }
 
+        private static string ExtractPrecedingDatasetComment(XElement dataset)
+        {
+            for (XNode node = dataset.PreviousNode; node != null; node = node.PreviousNode)
+            {
+                if (node is XComment comment)
+                    return NormalizeDisplayName(comment.Value);
+
+                if (node is XText text && string.IsNullOrWhiteSpace(text.Value))
+                    continue;
+
+                break;
+            }
+
+            return null;
+        }
+
+        private static bool IsPlaceholderDescription(string descriptionRef, string resolvedDescription)
+        {
+            if (string.Equals(NormalizeDisplayName(resolvedDescription), "None", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            return string.Equals(descriptionRef?.Replace(" ", string.Empty), "{8888892,8004}", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsPlaceholderTranslationValue(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value) &&
+                   value.StartsWith("import_fallback_", StringComparison.OrdinalIgnoreCase);
+        }
+
         private static void UpsertMacro(Dictionary<string, MacroDefinition> macros, XElement macroElement, string displayNameHint)
         {
             var name = (string)macroElement.Attribute("name");
@@ -801,6 +1317,14 @@ namespace X4SectorCreator.Configuration
             var definition = GetOrCreateMacro(macros, name);
             definition.Class = (string)macroElement.Attribute("class") ?? definition.Class;
             definition.DisplayName ??= NormalizeDisplayName(displayNameHint);
+            definition.ContentRef ??= macroElement
+                .Elements("connections")
+                .Elements("connection")
+                .FirstOrDefault(a => string.Equals((string)a.Attribute("ref"), "content", StringComparison.OrdinalIgnoreCase))
+                ?.Element("macro")
+                ?.Element("component")
+                ?.Attribute("ref")
+                ?.Value;
             definition.Connections.AddRange(ParseConnections(macroElement));
         }
 
@@ -1129,6 +1653,45 @@ namespace X4SectorCreator.Configuration
             return NormalizeConnectionPath(path)?.Split('/').LastOrDefault();
         }
 
+        private static ReferencedVanillaEndpoints CollectReferencedVanillaEndpoints(List<ConnectionDefinition> galaxyConnections, VanillaLookup vanillaLookup)
+        {
+            HashSet<string> sectorMacroNames = new(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> zoneMacroNames = new(StringComparer.OrdinalIgnoreCase);
+
+            foreach (ConnectionDefinition connection in galaxyConnections.Where(a => a.IsGatePair))
+            {
+                CollectReferencedVanillaEndpoint(connection.Path, vanillaLookup, sectorMacroNames, zoneMacroNames);
+                CollectReferencedVanillaEndpoint(connection.MacroPath, vanillaLookup, sectorMacroNames, zoneMacroNames);
+            }
+
+            return new ReferencedVanillaEndpoints(sectorMacroNames, zoneMacroNames);
+        }
+
+        private static void CollectReferencedVanillaEndpoint(
+            string path,
+            VanillaLookup vanillaLookup,
+            HashSet<string> sectorMacroNames,
+            HashSet<string> zoneMacroNames)
+        {
+            string normalizedPath = NormalizeConnectionPath(path);
+            if (string.IsNullOrWhiteSpace(normalizedPath))
+                return;
+
+            string[] segments = normalizedPath.Split('/', StringSplitOptions.RemoveEmptyEntries);
+            if (segments.Length < 3)
+                return;
+
+            string sectorConnectionName = segments[1];
+            string zoneConnectionName = segments[2];
+            string sectorMacroName = sectorConnectionName.Replace("_connection", "_macro", StringComparison.OrdinalIgnoreCase);
+            string zoneMacroName = zoneConnectionName.Replace("_connection", "_macro", StringComparison.OrdinalIgnoreCase);
+
+            if (vanillaLookup.SectorsByMacroName.ContainsKey(sectorMacroName))
+                sectorMacroNames.Add(sectorMacroName);
+            if (vanillaLookup.ZonesByMacroName.ContainsKey(zoneMacroName))
+                zoneMacroNames.Add(zoneMacroName);
+        }
+
         private static bool IsMacrosSelector(string selector)
         {
             return selector.Equals("/macros", StringComparison.OrdinalIgnoreCase) ||
@@ -1185,11 +1748,25 @@ namespace X4SectorCreator.Configuration
         [GeneratedRegex(@"\{\s*(\d+)\s*,\s*(\d+)\s*\}", RegexOptions.IgnoreCase)]
         private static partial Regex TranslationReferenceSearchRegex();
 
+        [GeneratedRegex(@"_c(\d+)_s(\d+)", RegexOptions.IgnoreCase)]
+        private static partial Regex CustomSectorSignatureRegex();
+
         private sealed class MacroDefinition(string name)
         {
             public string Name { get; } = name;
             public string Class { get; set; }
             public string DisplayName { get; set; }
+            public string Description { get; set; }
+            public string ImageRef { get; set; }
+            public string ContentRef { get; set; }
+            public string MusicRef { get; set; }
+            public string Owner { get; set; }
+            public float? Sunlight { get; set; }
+            public float? Economy { get; set; }
+            public float? Security { get; set; }
+            public bool? DisableFactionLogic { get; set; }
+            public bool? AllowRandomAnomalies { get; set; }
+            public List<Resource> ResourceAreas { get; set; } = [];
             public List<ConnectionDefinition> Connections { get; } = [];
             public bool IsCluster => Class != null && Class.Equals("cluster", StringComparison.OrdinalIgnoreCase);
         }
@@ -1251,6 +1828,7 @@ namespace X4SectorCreator.Configuration
         private sealed record PositionDefinition(double X, double Y, double Z);
         private sealed record RotationDefinition(int Yaw, int Pitch, int Roll);
         private sealed record PendingGate(Cluster Cluster, Sector Sector, Zone Zone, Gate Gate, string Name);
+        private sealed record ReferencedVanillaEndpoints(HashSet<string> SectorMacroNames, HashSet<string> ZoneMacroNames);
 
         private sealed class VanillaLookup
         {
@@ -1330,5 +1908,5 @@ namespace X4SectorCreator.Configuration
         private sealed record VanillaZoneInfo(Cluster Cluster, Sector Sector, Zone Zone);
     }
 
-    internal sealed record ModImportResult(string ModName, List<Cluster> Clusters);
+    internal sealed record ModImportResult(string ModName, List<Cluster> Clusters, List<string> Warnings);
 }

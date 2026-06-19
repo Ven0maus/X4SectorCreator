@@ -46,6 +46,7 @@
             BtnExportConfig = new Button();
             BtnImportConfig = new Button();
             BtnImportMod = new Button();
+            BtnImportModMerge = new Button();
             BtnGalaxySettings = new Button();
             BtnReset = new Button();
             BtnShowSectorMap = new Button();
@@ -250,6 +251,16 @@
             BtnImportMod.Text = "Import Mod";
             BtnImportMod.UseVisualStyleBackColor = true;
             BtnImportMod.Click += BtnImportMod_Click;
+            // 
+            // BtnImportModMerge
+            // 
+            BtnImportModMerge.Location = new Point(660, 47);
+            BtnImportModMerge.Name = "BtnImportModMerge";
+            BtnImportModMerge.Size = new Size(156, 31);
+            BtnImportModMerge.TabIndex = 63;
+            BtnImportModMerge.Text = "Merge Import Mods";
+            BtnImportModMerge.UseVisualStyleBackColor = true;
+            BtnImportModMerge.Click += BtnImportModMerge_Click;
             // 
             // BtnGalaxySettings
             // 
@@ -487,6 +498,7 @@
             Controls.Add(BtnReset);
             Controls.Add(BtnGalaxySettings);
             Controls.Add(BtnImportConfig);
+            Controls.Add(BtnImportModMerge);
             Controls.Add(BtnImportMod);
             Controls.Add(BtnExportConfig);
             Controls.Add(LblDetails);
@@ -530,6 +542,7 @@
         private Button BtnExportConfig;
         private Button BtnImportConfig;
         private Button BtnImportMod;
+        private Button BtnImportModMerge;
         private Button BtnGalaxySettings;
         private Button BtnReset;
         private Button BtnShowSectorMap;

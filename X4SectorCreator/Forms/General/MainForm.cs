@@ -930,12 +930,41 @@ namespace X4SectorCreator
             _ = TryImportModFromPath(folderBrowserDialog.SelectedPath, showSuccessMessage: true);
         }
 
+        private void BtnImportModMerge_Click(object sender, EventArgs e)
+        {
+            using FolderBrowserDialog folderBrowserDialog = new();
+            folderBrowserDialog.Description = "Select a folder containing one or more X4 extension folders to merge-import";
+            folderBrowserDialog.UseDescriptionForTitle = true;
+
+            string defaultExtensionsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Steam/steamapps/common/X4 Foundations/extensions");
+            if (Directory.Exists(defaultExtensionsPath))
+            {
+                folderBrowserDialog.SelectedPath = defaultExtensionsPath;
+            }
+
+            if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            _ = TryImportModFromPath(folderBrowserDialog.SelectedPath, showSuccessMessage: true);
+        }
+
         private bool TryImportModFromPath(string modPath, bool showSuccessMessage)
         {
             try
             {
-                var importedMod = ModImportService.Import(modPath, InitAllVanillaClusters(false));
-                ApplyImportedConfiguration(importedMod.Clusters, null, $"Imported mod \"{importedMod.ModName}\" succesfully.", showSuccessMessage);
+                ClusterCollection vanillaClusters = InitAllVanillaClusters(false);
+                ModImportResult importedMod = ModImportService.IsImportableModDirectory(modPath)
+                    ? ModImportService.Import(modPath, vanillaClusters)
+                    : ModImportService.ImportMerged(modPath, vanillaClusters);
+
+                ApplyImportedConfiguration(
+                    importedMod.Clusters,
+                    null,
+                    $"Imported mod \"{importedMod.ModName}\" succesfully.",
+                    showSuccessMessage,
+                    importedMod.Warnings);
                 return true;
             }
             catch (Exception ex)
@@ -943,13 +972,43 @@ namespace X4SectorCreator
 #if DEBUG
                 throw;
 #else
-                _ = MessageBox.Show(ex.Message, "Unable to import mod", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowCopyableMessage(ex.Message, ex.Message, "Unable to import mod", MessageBoxIcon.Error);
                 return false;
 #endif
             }
         }
 
-        private void ApplyImportedConfiguration(List<Cluster> clusters, VanillaChanges vanillaChanges, string successMessage, bool showSuccessMessage = true)
+        private bool TryImportAndFixSectorIslandsFromPath(string modPath, bool showSuccessMessage)
+        {
+            try
+            {
+                ClusterCollection vanillaClusters = InitAllVanillaClusters(false);
+                ModImportResult importedMod = ModImportService.IsImportableModDirectory(modPath)
+                    ? ModImportService.Import(modPath, vanillaClusters)
+                    : ModImportService.ImportMerged(modPath, vanillaClusters);
+                var fixSummary = SectorIslandFixService.Apply(importedMod.Clusters);
+
+                ApplyImportedConfiguration(
+                    importedMod.Clusters,
+                    null,
+                    $"Imported mod \"{importedMod.ModName}\" and fixed {fixSummary.IslandsFixed} of {fixSummary.IslandsDetected} isolated custom sector(s).",
+                    showSuccessMessage,
+                    importedMod.Warnings);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                throw;
+#else
+                ShowCopyableMessage(ex.Message, ex.Message, "Unable to import and fix sector islands", MessageBoxIcon.Error);
+                return false;
+#endif
+            }
+        }
+
+        private void ApplyImportedConfiguration(List<Cluster> clusters, VanillaChanges vanillaChanges, string successMessage, bool showSuccessMessage = true, List<string> warnings = null)
         {
             // Reset configuration
             Reset(true);
@@ -983,16 +1042,65 @@ namespace X4SectorCreator
             _currentConfiguration = ExportJsonConfig();
             if (showSuccessMessage)
                 _ = MessageBox.Show(successMessage, "Success");
+
+            if (warnings != null && warnings.Count > 0)
+            {
+                string fullWarningMessage = "Some import issues were detected:\n\n- " + string.Join("\n- ", warnings);
+                string warningMessage = "Some import issues were detected:\n\n- " + string.Join("\n- ", warnings.Take(20));
+                if (warnings.Count > 20)
+                {
+                    warningMessage += $"\n\n...and {warnings.Count - 20} more.";
+                }
+
+                ShowCopyableMessage(warningMessage, fullWarningMessage, "Import warnings", MessageBoxIcon.Warning);
+            }
+        }
+
+        private static void ShowCopyableMessage(string displayMessage, string fullMessage, string caption, MessageBoxIcon icon)
+        {
+            bool copied = TryCopyMessageToClipboard(fullMessage);
+            string message = copied
+                ? displayMessage + Environment.NewLine + Environment.NewLine + "The full message was copied to your clipboard."
+                : displayMessage;
+
+            _ = MessageBox.Show(message, caption, MessageBoxButtons.OK, icon);
+        }
+
+        private static bool TryCopyMessageToClipboard(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+                return false;
+
+            try
+            {
+                Clipboard.SetText(message);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void ProcessStartupOptions()
         {
-            if (!string.IsNullOrWhiteSpace(_startupOptions.ImportModPath))
+            bool shouldOpenGalaxyView = _startupOptions.OpenGalaxyView;
+
+            if (!string.IsNullOrWhiteSpace(_startupOptions.FixSectorIslandsPath))
+            {
+                _ = TryImportAndFixSectorIslandsFromPath(_startupOptions.FixSectorIslandsPath, showSuccessMessage: true);
+                shouldOpenGalaxyView = true;
+            }
+            else if (!string.IsNullOrWhiteSpace(_startupOptions.ImportModMergePath))
+            {
+                _ = TryImportModFromPath(_startupOptions.ImportModMergePath, showSuccessMessage: false);
+            }
+            else if (!string.IsNullOrWhiteSpace(_startupOptions.ImportModPath))
             {
                 _ = TryImportModFromPath(_startupOptions.ImportModPath, showSuccessMessage: false);
             }
 
-            if (_startupOptions.OpenGalaxyView)
+            if (shouldOpenGalaxyView)
             {
                 OpenSectorMap();
             }

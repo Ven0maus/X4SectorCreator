@@ -2645,9 +2645,8 @@ namespace X4SectorCreator
 
         private IEnumerable<GateConnection> CollectConnectionsFromGateData(List<GateData> gatesData)
         {
-            Dictionary<string, GateData[]> sectorGrouping = gatesData
-                .GroupBy(a => a.Sector.Name)
-                .ToDictionary(a => a.Key, a => a.ToArray(), StringComparer.OrdinalIgnoreCase);
+            Dictionary<string, GateData> sourcePathLookup = GateConnectionResolver
+                .BuildSourcePathLookup(gatesData, a => a.Gate.SourcePath);
 
             // Make sure we don't double process target gates we already processed
             // We still have an issue with highway type gates showing as a double because they have different paths
@@ -2663,13 +2662,17 @@ namespace X4SectorCreator
                     continue;
 
                 // Find the connection with the matching path
-                if (processedTargets.Contains(sourceGateData.Gate) || !sectorGrouping.TryGetValue(sourceGateData.Gate.DestinationSectorName, out GateData[] availableGateData))
+                if (processedTargets.Contains(sourceGateData.Gate))
                 {
                     continue;
                 }
 
-                GateData targetGateData = availableGateData
-                    .FirstOrDefault(a => a.Zone.Gates.Any(b => b.SourcePath == sourceGateData.Gate.DestinationPath));
+                if (!GateConnectionResolver.TryResolveTarget(sourcePathLookup, sourceGateData.Gate.DestinationPath, out GateData targetGateData))
+                {
+                    invalidConnections.Add(sourceGateData);
+                    continue;
+                }
+
                 if (targetGateData.Cluster == null) //Default
                 {
                     invalidConnections.Add(sourceGateData);
@@ -2702,11 +2705,59 @@ namespace X4SectorCreator
 
             if (invalidConnections.Count > 0)
             {
+                string message = BuildInvalidGateMessage(invalidConnections);
+                bool copiedToClipboard = TryCopyInvalidGateMessageToClipboard(message);
+                string logPath = TryWriteInvalidGateMessageLog(message);
+
+                if (!string.IsNullOrWhiteSpace(logPath))
+                {
+                    message += Environment.NewLine + Environment.NewLine + $"A log file was written to:{Environment.NewLine}{logPath}";
+                }
+
                 _ = MessageBox.Show(
-                    BuildInvalidGateMessage(invalidConnections),
+                    copiedToClipboard
+                        ? message + Environment.NewLine + Environment.NewLine + "The full error details were copied to your clipboard."
+                        : message,
                     $"Invalid gate connections ({invalidConnections.Count})",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
+            }
+        }
+
+        private static string TryWriteInvalidGateMessageLog(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+                return null;
+
+            try
+            {
+                string logsDirectory = Path.Combine(Application.StartupPath, "logs");
+                _ = Directory.CreateDirectory(logsDirectory);
+
+                string fileName = $"invalid-gate-connections-{DateTime.Now:yyyyMMdd-HHmmss}.log";
+                string fullPath = Path.Combine(logsDirectory, fileName);
+                File.WriteAllText(fullPath, message);
+                return fullPath;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static bool TryCopyInvalidGateMessageToClipboard(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+                return false;
+
+            try
+            {
+                Clipboard.SetText(message);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 
