@@ -29,6 +29,7 @@
     <Compile Include="..\X4SectorCreator\Helpers\ImportTranslationTextHelper.cs" Link="Helpers\ImportTranslationTextHelper.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\ImportSectorMetadataResolver.cs" Link="Helpers\ImportSectorMetadataResolver.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\SectorMapInteractionRules.cs" Link="Helpers\SectorMapInteractionRules.cs" />
+    <Compile Include="..\X4SectorCreator\Helpers\SectorIslandReportBuilder.cs" Link="Helpers\SectorIslandReportBuilder.cs" />
     <Compile Include="..\X4SectorCreator\Objects\Resource.cs" Link="Objects\Resource.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\SectorIslandAnalyzer.cs" Link="Helpers\SectorIslandAnalyzer.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\SectorIslandFixerRules.cs" Link="Helpers\SectorIslandFixerRules.cs" />

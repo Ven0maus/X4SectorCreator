@@ -61,6 +61,7 @@ namespace X4SectorCreator
 
         public MainForm(StartupOptions startupOptions = null)
         {
+            LogFileHelper.AppendToSessionLog("MainForm", "Constructor start.");
             InitializeComponent();
 
             _startupOptions = startupOptions ?? new StartupOptions();
@@ -83,6 +84,7 @@ namespace X4SectorCreator
             TxtSearch.EnableTextSearch(() => AllClusters.Values.ToList(), a => a.Name, ApplyFilter);
             Disposed += MainForm_Disposed;
             ClusterCollection clusterCollection = InitAllVanillaClusters();
+            LogFileHelper.AppendToSessionLog("MainForm", $"Loaded vanilla clusters: {clusterCollection?.Clusters?.Count ?? 0}.");
 
             // Set background visual mapping
             BackgroundVisualMapping = AllClusters
@@ -542,7 +544,9 @@ namespace X4SectorCreator
                     "Please change your screen scale setting to 100% to be able to properly use this tool.", "Incompatible DPI warning", MessageBoxButtons.OK);
             }
 
+            LogFileHelper.AppendToSessionLog("MainForm", "Invoking ProcessStartupOptions.");
             ProcessStartupOptions();
+            LogFileHelper.AppendToSessionLog("MainForm", "Constructor complete.");
         }
         #endregion
 
@@ -1573,22 +1577,52 @@ namespace X4SectorCreator
         {
             try
             {
+                LogFileHelper.AppendToSessionLog("Import/Fix islands", $"Begin import/fix for path: {modPath}");
                 ClusterCollection vanillaClusters = InitAllVanillaClusters(false);
                 ModImportResult importedMod = ImportModWithOptionalBase(modPath, vanillaClusters);
+                LogFileHelper.AppendToSessionLog("Import/Fix islands", $"Import complete for mod: {importedMod.ModName}. Clusters: {importedMod.Clusters?.Count ?? 0}. Warnings: {importedMod.Warnings?.Count ?? 0}.");
+
+                LogFileHelper.AppendToSessionLog("Import/Fix islands", "Running SectorIslandFixService.Apply.");
                 var fixSummary = SectorIslandFixService.Apply(importedMod.Clusters);
+                LogFileHelper.AppendToSessionLog("Import/Fix islands", $"SectorIslandFixService complete. Detected: {fixSummary.IslandsDetected}. Fixed: {fixSummary.IslandsFixed}. Remaining: {fixSummary.RemainingIslands.Count}.");
                 ReversePathFixService.ReversePathFixSummary reversePathFixSummary = null;
                 if (_startupOptions.FixReversePathsOnImport)
                 {
+                    LogFileHelper.AppendToSessionLog("Import/Fix islands", "Running ReversePathFixService.Apply.");
                     reversePathFixSummary = ReversePathFixService.Apply(importedMod.Clusters);
+                    LogFileHelper.AppendToSessionLog("Import/Fix islands", $"ReversePathFixService complete. Paths normalized: {reversePathFixSummary.PathsNormalized}. Reverse gates created: {reversePathFixSummary.ReverseGatesCreated}.");
                 }
 
                 List<string> islandWarnings = fixSummary.RemainingIslands
                     .Select(a => $"Sector island auto-fix could not resolve sector '{a.SectorName}' in cluster '{a.ClusterName}'.")
                     .ToList();
+
+                string islandLogPath = null;
+                if (fixSummary.RemainingIslands.Count > 0)
+                {
+                    string islandReport = SectorIslandReportBuilder.BuildUnresolvedIslandReport(
+                        importedMod.ModName,
+                        fixSummary.IslandsDetected,
+                        fixSummary.IslandsFixed,
+                        fixSummary.RemainingIslands);
+                    islandLogPath = TryWriteImportErrorLog("unresolved-sector-islands", islandReport);
+                    if (!string.IsNullOrWhiteSpace(islandLogPath))
+                    {
+                        LogFileHelper.AppendToSessionLog("Import/Fix islands", $"Wrote unresolved island report: {islandLogPath}");
+                        islandWarnings.Insert(0, $"Unresolved sector islands were written to: {islandLogPath}");
+                    }
+                    else
+                    {
+                        LogFileHelper.AppendToSessionLog("Import/Fix islands", "Unresolved island report generation succeeded but no log path was returned.");
+                    }
+                }
+
                 List<string> warnings = importedMod.Warnings == null
                     ? []
                     : [.. importedMod.Warnings];
                 warnings.InsertRange(0, islandWarnings);
+
+                LogFileHelper.AppendToSessionLog("Import/Fix islands", $"Applying imported configuration with {warnings.Count} warning(s).");
 
                 ApplyImportedConfiguration(
                     importedMod.Clusters,
@@ -1599,10 +1633,13 @@ namespace X4SectorCreator
                     showSuccessMessage,
                     warnings);
 
+                LogFileHelper.AppendToSessionLog("Import/Fix islands", "Import/fix flow completed successfully.");
+
                 return true;
             }
             catch (Exception ex)
             {
+                LogFileHelper.AppendToSessionLog("Import/Fix islands failed", ex.ToString());
 #if DEBUG
                 throw;
 #else
@@ -1750,35 +1787,43 @@ namespace X4SectorCreator
 
         private void ProcessStartupOptions()
         {
+            LogFileHelper.AppendToSessionLog("Startup options", $"OpenGalaxyView={_startupOptions.OpenGalaxyView}, ImportModPath={_startupOptions.ImportModPath ?? "<none>"}, ImportModMergePath={_startupOptions.ImportModMergePath ?? "<none>"}, FixSectorIslandsPath={_startupOptions.FixSectorIslandsPath ?? "<none>"}, FixReversePaths={_startupOptions.FixReversePathsOnImport}, ExitAfterImport={_startupOptions.ExitAfterImport}.");
             bool shouldOpenGalaxyView = _startupOptions.OpenGalaxyView;
             bool importedFromStartup = false;
 
             if (!string.IsNullOrWhiteSpace(_startupOptions.FixSectorIslandsPath))
             {
+                LogFileHelper.AppendToSessionLog("Startup options", "Dispatching to TryImportAndFixSectorIslandsFromPath.");
                 _ = TryImportAndFixSectorIslandsFromPath(_startupOptions.FixSectorIslandsPath, showSuccessMessage: true);
                 shouldOpenGalaxyView = true;
                 importedFromStartup = true;
             }
             else if (!string.IsNullOrWhiteSpace(_startupOptions.ImportModMergePath))
             {
+                LogFileHelper.AppendToSessionLog("Startup options", "Dispatching to TryImportModFromPath with merged import path.");
                 _ = TryImportModFromPath(_startupOptions.ImportModMergePath, showSuccessMessage: false);
                 importedFromStartup = true;
             }
             else if (!string.IsNullOrWhiteSpace(_startupOptions.ImportModPath))
             {
+                LogFileHelper.AppendToSessionLog("Startup options", "Dispatching to TryImportModFromPath with import path.");
                 _ = TryImportModFromPath(_startupOptions.ImportModPath, showSuccessMessage: false);
                 importedFromStartup = true;
             }
 
             if (shouldOpenGalaxyView)
             {
+                LogFileHelper.AppendToSessionLog("Startup options", "Opening galaxy view.");
                 OpenSectorMap();
             }
 
             if (importedFromStartup && _startupOptions.ExitAfterImport && !shouldOpenGalaxyView)
             {
+                LogFileHelper.AppendToSessionLog("Startup options", "Scheduling close after import.");
                 BeginInvoke(new Action(Close));
             }
+
+            LogFileHelper.AppendToSessionLog("Startup options", "ProcessStartupOptions complete.");
         }
 
         private ModImportResult ImportModWithOptionalBase(string modPath, ClusterCollection vanillaClusters)

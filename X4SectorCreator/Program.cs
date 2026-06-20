@@ -107,6 +107,7 @@ namespace X4SectorCreator
                     }
                 };
 
+                LogFileHelper.AppendToSessionLog("Program", "Starting WinForms application.");
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm(startupOptions));

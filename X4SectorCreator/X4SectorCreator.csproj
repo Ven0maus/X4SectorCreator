@@ -5,6 +5,7 @@
     <TargetFrameworks>net9.0;net9.0-windows</TargetFrameworks>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<NoWarn>$(NoWarn);CA1416</NoWarn>
 	<DebugType>embedded</DebugType>
   </PropertyGroup>
 
