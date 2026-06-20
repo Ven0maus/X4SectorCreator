@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\GateConnectionResolver.cs" Link="Helpers\GateConnectionResolver.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\GodStationImportHelper.cs" Link="Helpers\GodStationImportHelper.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\ImportedSectorOffsetHelper.cs" Link="Helpers\ImportedSectorOffsetHelper.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\ImportFileDiscoveryHelper.cs" Link="Helpers\ImportFileDiscoveryHelper.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\ImportFileScanReportBuilder.cs" Link="Helpers\ImportFileScanReportBuilder.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\LogFileHelper.cs" Link="Helpers\LogFileHelper.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\ImportClusterMetadataResolver.cs" Link="Helpers\ImportClusterMetadataResolver.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\ImportIdentityAssigner.cs" Link="Helpers\ImportIdentityAssigner.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\ImportedGateSectorResolver.cs" Link="Helpers\ImportedGateSectorResolver.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\ImportNameNormalizer.cs" Link="Helpers\ImportNameNormalizer.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\ImportTranslationTextHelper.cs" Link="Helpers\ImportTranslationTextHelper.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\ImportSectorMetadataResolver.cs" Link="Helpers\ImportSectorMetadataResolver.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\SectorDetailsTextHelper.cs" Link="Helpers\SectorDetailsTextHelper.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\SectorMapInteractionRules.cs" Link="Helpers\SectorMapInteractionRules.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\SectorIslandReportBuilder.cs" Link="Helpers\SectorIslandReportBuilder.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Objects\Resource.cs" Link="Objects\Resource.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\SectorIslandAnalyzer.cs" Link="Helpers\SectorIslandAnalyzer.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\Helpers\SectorIslandFixerRules.cs" Link="Helpers\SectorIslandFixerRules.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\XmlGeneration\GalaxyGeneration.cs" Link="XmlGeneration\GalaxyGeneration.cs" />
+    <Compile Include="..\..\Programs\X4SectorCreator\XmlGeneration\SectorGeneration.cs" Link="XmlGeneration\SectorGeneration.cs" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,225 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">net9.0;net9.0-windows</TargetFrameworks>
+    <TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('windows'))">net9.0</TargetFrameworks>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<NoWarn>$(NoWarn);CA1416</NoWarn>
+	<DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-windows'">
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+	<PublishSingleFile>true</PublishSingleFile>
+	<SelfContained>true</SelfContained>
+	<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+	<EnableWindowsTargeting>true</EnableWindowsTargeting>
+	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+	<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <ProjectReference Include="../../../../../../../Linux_Project/X11Forms/System.Windows.Forms/System.Windows.Forms.csproj">
+      <AdditionalProperties>BuildingInsideX4SectorCreator=true</AdditionalProperties>
+    </ProjectReference>
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <Using Include="System.Drawing" />
+    <Using Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <RuntimeHostConfigurationOption Include="System.Drawing.EnableUnixSupport" Value="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Forms\Factories\FactoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Factories\FactoriesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\Factories\FactoryTemplatesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+	<None Remove="Data\**\*.*" />
+	<Content Include="Data\**\*.*">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+	  <TargetPath>Data\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+	</Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\Icons\defence.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Icons\equipmentdock.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Icons\faction_logic_disabled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Icons\factory.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Icons\region_resource.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Icons\piratebase.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Icons\shipyard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Icons\tradestation.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Icons\wharf.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\cluster_soundtrack_mappings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\custom_galaxy_gamestart.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\dlc_mappings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\modules_mappings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\predefinedfield_mappings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\sector_mappings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\vanilla_baskets.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\vanilla_connection_mappings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\vanilla_regions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\vanilla_stations.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Mappings\wares_mappings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Characters\characters_default.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\argon_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\boron_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\generic_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\paranid_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\split_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\teladi_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\terran_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Constructionplans\xenon_constructionplans.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\argon_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\boron_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\paranid_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\scaleplate_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\split_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\teladi_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\terran_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\ShipGroups\xenon_shipgroups.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\argon_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\boron_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\paranid_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\scaleplate_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\split_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\teladi_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\terran_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Presets\Ships\xenon_ships.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\TemplateFactories\Vanilla\god.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Update="Data\TemplateJobs\Deadair_Scripts\jobs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <TargetPath>Data\TemplateJobs\Deadair_Scripts\jobs.xml</TargetPath>
+    </Content>
+    <Content Update="Data\TemplateJobs\Vanilla\jobs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <TargetPath>Data\TemplateJobs\Vanilla\jobs.xml</TargetPath>
+    </Content>
+    <None Update="version.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\TemplateFactories\Vanilla\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Data\Mappings\vanilla_relations.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
