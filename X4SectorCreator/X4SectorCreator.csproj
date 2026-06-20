@@ -1,19 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net9.0;net9.0-windows</TargetFrameworks>
     <Nullable>disable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+	<DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-windows'">
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
 	<PublishSingleFile>true</PublishSingleFile>
 	<SelfContained>true</SelfContained>
 	<RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
 	<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-	<DebugType>embedded</DebugType>
 	<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <ProjectReference Include="../../../../../Linux_Project/X11Forms/System.Windows.Forms/System.Windows.Forms.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+    <RuntimeHostConfigurationOption Include="System.Drawing.EnableUnixSupport" Value="true" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Forms\Factories\FactoryForm.cs">
@@ -186,10 +198,6 @@
 
   <ItemGroup>
     <Folder Include="Data\TemplateFactories\Vanilla\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3351.48" />
   </ItemGroup>
 
   <ItemGroup>

@@ -314,7 +314,6 @@
             // 
             TxtPreferredHqSpace.Location = new Point(430, 214);
             TxtPreferredHqSpace.Name = "TxtPreferredHqSpace";
-            TxtPreferredHqSpace.PlaceholderText = "Select Preferred HeadQuaters";
             TxtPreferredHqSpace.ReadOnly = true;
             TxtPreferredHqSpace.Size = new Size(197, 23);
             TxtPreferredHqSpace.TabIndex = 18;
@@ -380,7 +379,6 @@
             // 
             TxtLawfulness.Location = new Point(141, 320);
             TxtLawfulness.Name = "TxtLawfulness";
-            TxtLawfulness.PlaceholderText = "(Between 0-1)";
             TxtLawfulness.Size = new Size(177, 23);
             TxtLawfulness.TabIndex = 9;
             // 

@@ -84,6 +84,7 @@
             // 
             ClustersListBox.FormattingEnabled = true;
             ClustersListBox.HorizontalScrollbar = true;
+            ClustersListBox.IntegralHeight = false;
             ClustersListBox.Location = new Point(13, 104);
             ClustersListBox.Name = "ClustersListBox";
             ClustersListBox.Size = new Size(156, 169);
@@ -125,6 +126,7 @@
             // 
             SectorsListBox.FormattingEnabled = true;
             SectorsListBox.HorizontalScrollbar = true;
+            SectorsListBox.IntegralHeight = false;
             SectorsListBox.Location = new Point(174, 75);
             SectorsListBox.Name = "SectorsListBox";
             SectorsListBox.Size = new Size(156, 199);
@@ -176,6 +178,7 @@
             // 
             GatesListBox.FormattingEnabled = true;
             GatesListBox.HorizontalScrollbar = true;
+            GatesListBox.IntegralHeight = false;
             GatesListBox.Location = new Point(336, 75);
             GatesListBox.Name = "GatesListBox";
             GatesListBox.Size = new Size(156, 199);
@@ -316,6 +319,7 @@
             // 
             RegionsListBox.FormattingEnabled = true;
             RegionsListBox.HorizontalScrollbar = true;
+            RegionsListBox.IntegralHeight = false;
             RegionsListBox.Location = new Point(335, 336);
             RegionsListBox.Name = "RegionsListBox";
             RegionsListBox.Size = new Size(156, 169);
@@ -368,6 +372,7 @@
             // 
             ListStations.FormattingEnabled = true;
             ListStations.HorizontalScrollbar = true;
+            ListStations.IntegralHeight = false;
             ListStations.Location = new Point(498, 75);
             ListStations.Name = "ListStations";
             ListStations.Size = new Size(156, 199);
@@ -428,7 +433,6 @@
             // 
             TxtSearch.Location = new Point(13, 77);
             TxtSearch.Name = "TxtSearch";
-            TxtSearch.PlaceholderText = "Search..";
             TxtSearch.Size = new Size(155, 23);
             TxtSearch.TabIndex = 51;
             // 
@@ -474,7 +478,7 @@
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(828, 596);
             Controls.Add(BtnGuide);
             Controls.Add(BtnSaveSectorMapping);
@@ -518,6 +522,7 @@
             Controls.Add(BtnRemoveCluster);
             FormBorderStyle = FormBorderStyle.Sizable;
             MaximizeBox = true;
+            MinimumSize = new Size(844, 635);
             Name = "MainForm";
             Text = "X4 Sector Creator";
             Load += MainForm_Load;

@@ -13,12 +13,17 @@ namespace X4SectorCreator.Configuration
         private const int ClusterPositionScaleX = 15000 * 1000;
         private const int ClusterPositionScaleY = 8660 * 1000;
 
-        public static ModImportResult Import(string modDirectory, ClusterCollection vanillaClusterData)
+        public static ModImportResult Import(string modDirectory, ClusterCollection vanillaClusterData, int clusterHexGap = 0)
         {
-            return ImportInternal([Path.GetFullPath(modDirectory)], vanillaClusterData, mergeDisplayName: null);
+            return ImportInternal([Path.GetFullPath(modDirectory)], vanillaClusterData, mergeDisplayName: null, includeTopology: true, clusterHexGap);
         }
 
-        public static ModImportResult ImportMerged(string rootDirectory, ClusterCollection vanillaClusterData)
+        public static ModImportResult ImportForNameResolution(string modDirectory, ClusterCollection vanillaClusterData, int clusterHexGap = 0)
+        {
+            return ImportInternal([Path.GetFullPath(modDirectory)], vanillaClusterData, mergeDisplayName: null, includeTopology: false, clusterHexGap);
+        }
+
+        public static ModImportResult ImportMerged(string rootDirectory, ClusterCollection vanillaClusterData, int clusterHexGap = 0)
         {
             List<string> modDirectories = DiscoverMergeImportDirectories(rootDirectory);
             if (modDirectories.Count == 0)
@@ -30,10 +35,25 @@ namespace X4SectorCreator.Configuration
                 ? null
                 : $"Merged import ({modDirectories.Count} mods)";
 
-            return ImportInternal(modDirectories, vanillaClusterData, mergeDisplayName);
+            return ImportInternal(modDirectories, vanillaClusterData, mergeDisplayName, includeTopology: true, clusterHexGap);
         }
 
-        public static ModImportResult ImportWithMerge(string baseModDirectory, string mergeRootDirectory, ClusterCollection vanillaClusterData)
+        public static ModImportResult ImportMergedForNameResolution(string rootDirectory, ClusterCollection vanillaClusterData, int clusterHexGap = 0)
+        {
+            List<string> modDirectories = DiscoverMergeImportDirectories(rootDirectory);
+            if (modDirectories.Count == 0)
+            {
+                throw new InvalidOperationException("No importable X4 extension folders were found in the selected directory.");
+            }
+
+            string mergeDisplayName = modDirectories.Count == 1
+                ? null
+                : $"Merged import ({modDirectories.Count} mods)";
+
+            return ImportInternal(modDirectories, vanillaClusterData, mergeDisplayName, includeTopology: false, clusterHexGap);
+        }
+
+        public static ModImportResult ImportWithMerge(string baseModDirectory, string mergeRootDirectory, ClusterCollection vanillaClusterData, int clusterHexGap = 0)
         {
             if (!IsImportableModDirectory(baseModDirectory))
             {
@@ -44,7 +64,21 @@ namespace X4SectorCreator.Configuration
             modDirectories.AddRange(DiscoverMergeImportDirectories(mergeRootDirectory)
                 .Where(a => !a.Equals(Path.GetFullPath(baseModDirectory), StringComparison.OrdinalIgnoreCase)));
 
-            return ImportInternal(modDirectories, vanillaClusterData, $"Merged import ({modDirectories.Count} mods)");
+            return ImportInternal(modDirectories, vanillaClusterData, $"Merged import ({modDirectories.Count} mods)", includeTopology: true, clusterHexGap);
+        }
+
+        public static ModImportResult ImportWithMergeForNameResolution(string baseModDirectory, string mergeRootDirectory, ClusterCollection vanillaClusterData, int clusterHexGap = 0)
+        {
+            if (!IsImportableModDirectory(baseModDirectory))
+            {
+                throw new InvalidOperationException("The selected base mod folder is not an importable X4 extension.");
+            }
+
+            List<string> modDirectories = [Path.GetFullPath(baseModDirectory)];
+            modDirectories.AddRange(DiscoverMergeImportDirectories(mergeRootDirectory)
+                .Where(a => !a.Equals(Path.GetFullPath(baseModDirectory), StringComparison.OrdinalIgnoreCase)));
+
+            return ImportInternal(modDirectories, vanillaClusterData, $"Merged import ({modDirectories.Count} mods)", includeTopology: false, clusterHexGap);
         }
 
         public static List<string> DiscoverMergeImportDirectories(string rootDirectory)
@@ -91,7 +125,7 @@ namespace X4SectorCreator.Configuration
                    Directory.Exists(Path.Combine(directory, "maps"));
         }
 
-        private static ModImportResult ImportInternal(IReadOnlyList<string> modDirectories, ClusterCollection vanillaClusterData, string mergeDisplayName)
+        private static ModImportResult ImportInternal(IReadOnlyList<string> modDirectories, ClusterCollection vanillaClusterData, string mergeDisplayName, bool includeTopology, int clusterHexGap)
         {
             if (modDirectories == null || modDirectories.Count == 0)
             {
@@ -168,13 +202,21 @@ namespace X4SectorCreator.Configuration
                 ApplyGodOwnership(modDirectory, importedClusters);
             }
 
-            HydrateReferencedVanillaGates(importedClusters, galaxyConnections, vanillaLookup);
+            if (includeTopology)
+            {
+                HydrateReferencedVanillaGates(importedClusters, galaxyConnections, vanillaLookup);
+            }
+
             ImportNameNormalizer.EnsureImportedSectorNamesPreservingIdentity(importedClusters);
-            ResolveCustomClusterPositionCollisions(importedClusters, vanillaLookup);
-            PairImportedGates(galaxyConnections, importedClusters);
-            AssignImportedIds(importedClusters, vanillaLookup);
-            RebuildImportedGatePaths(importedClusters);
-            AutoCorrectOneWayGates(importedClusters);
+
+            if (includeTopology)
+            {
+                ResolveCustomClusterPositionCollisions(importedClusters, vanillaLookup, clusterHexGap);
+                PairImportedGates(galaxyConnections, importedClusters);
+                AssignImportedIds(importedClusters, vanillaLookup);
+                RebuildImportedGatePaths(importedClusters);
+                AutoCorrectOneWayGates(importedClusters);
+            }
 
             return new ModImportResult(modName, importedClusters, importWarnings.Distinct(StringComparer.OrdinalIgnoreCase).ToList());
         }
@@ -577,32 +619,38 @@ namespace X4SectorCreator.Configuration
                 vanillaLookup.GetZoneId);
         }
 
-        private static void ResolveCustomClusterPositionCollisions(List<Cluster> importedClusters, VanillaLookup vanillaLookup)
+        private static void ResolveCustomClusterPositionCollisions(List<Cluster> importedClusters, VanillaLookup vanillaLookup, int clusterHexGap)
         {
-            var occupiedPositions = vanillaLookup.ClustersByMacroName.Values
-                .Select(a => (a.Position.X, a.Position.Y))
-                .ToHashSet();
+            clusterHexGap = Math.Max(0, clusterHexGap);
+
+            var occupiedPositions = new HashSet<(int X, int Y)>();
+
+            foreach (var vanillaCluster in vanillaLookup.ClustersByMacroName.Values)
+            {
+                ReserveClusterGap((vanillaCluster.Position.X, vanillaCluster.Position.Y), occupiedPositions, clusterHexGap);
+            }
 
             foreach (var cluster in importedClusters.Where(a => a.IsBaseGame))
             {
-                occupiedPositions.Add((cluster.Position.X, cluster.Position.Y));
+                ReserveClusterGap((cluster.Position.X, cluster.Position.Y), occupiedPositions, clusterHexGap);
             }
 
             foreach (var cluster in importedClusters.Where(a => !a.IsBaseGame).OrderBy(a => a.Name, StringComparer.OrdinalIgnoreCase))
             {
                 var desired = (cluster.Position.X, cluster.Position.Y);
-                if (IsValidClusterGridPosition(desired) && occupiedPositions.Add(desired))
+                if (IsValidClusterGridPosition(desired) && !occupiedPositions.Contains(desired))
                 {
+                    ReserveClusterGap(desired, occupiedPositions, clusterHexGap);
                     continue;
                 }
 
-                var resolved = FindNearestFreePosition(desired, occupiedPositions);
+                var resolved = FindNearestFreePosition(desired, occupiedPositions, clusterHexGap);
                 cluster.Position = new Point(resolved.X, resolved.Y);
-                occupiedPositions.Add(resolved);
+                ReserveClusterGap(resolved, occupiedPositions, clusterHexGap);
             }
         }
 
-        private static (int X, int Y) FindNearestFreePosition((int X, int Y) desired, HashSet<(int X, int Y)> occupiedPositions)
+        private static (int X, int Y) FindNearestFreePosition((int X, int Y) desired, HashSet<(int X, int Y)> occupiedPositions, int clusterHexGap)
         {
             for (var radius = 1; radius < 512; radius++)
             {
@@ -639,6 +687,53 @@ namespace X4SectorCreator.Configuration
         private static bool IsValidClusterGridPosition((int X, int Y) position)
         {
             return Math.Abs(position.X % 2) == Math.Abs(position.Y % 2);
+        }
+
+        private static void ReserveClusterGap((int X, int Y) center, HashSet<(int X, int Y)> occupiedPositions, int clusterHexGap)
+        {
+            foreach ((int X, int Y) candidate in EnumerateHexRadius(center, clusterHexGap))
+            {
+                occupiedPositions.Add(candidate);
+            }
+        }
+
+        private static IEnumerable<(int X, int Y)> EnumerateHexRadius((int X, int Y) center, int radius)
+        {
+            int minX = center.X - radius;
+            int maxX = center.X + radius;
+            int minY = center.Y - (radius * 2);
+            int maxY = center.Y + (radius * 2);
+
+            for (int x = minX; x <= maxX; x++)
+            {
+                for (int y = minY; y <= maxY; y++)
+                {
+                    (int X, int Y) candidate = (x, y);
+                    if (!IsValidClusterGridPosition(candidate))
+                        continue;
+
+                    if (GetHexDistance(center, candidate) <= radius)
+                        yield return candidate;
+                }
+            }
+        }
+
+        private static int GetHexDistance((int X, int Y) a, (int X, int Y) b)
+        {
+            (int qA, int rA) = ToAxial(a);
+            (int qB, int rB) = ToAxial(b);
+            int dq = qA - qB;
+            int dr = rA - rB;
+            return (Math.Abs(dq) + Math.Abs(dr) + Math.Abs(dq + dr)) / 2;
+        }
+
+        private static (int q, int r) ToAxial((int X, int Y) position)
+        {
+            int col = position.X;
+            int row = (position.Y - (col & 1)) / 2;
+            int q = col;
+            int r = row - ((col - (col & 1)) / 2);
+            return (q, r);
         }
 
         private static void HydrateReferencedVanillaGates(List<Cluster> importedClusters, List<ConnectionDefinition> galaxyConnections, VanillaLookup vanillaLookup)
@@ -1089,7 +1184,9 @@ namespace X4SectorCreator.Configuration
             {
                 string clusterConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_connection";
                 string sectorConnection = $"{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_connection";
-                string zoneConnection = $"PREFIX_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_z{zone.Id:D3}_connection";
+                string zoneConnection = !string.IsNullOrWhiteSpace(zone.Name)
+                    ? $"{zone.Name}_connection"
+                    : $"PREFIX_ZO_{cluster.BaseGameMapping.CapitalizeFirstLetter()}_{sector.BaseGameMapping.CapitalizeFirstLetter()}_z{zone.Id:D3}_connection";
                 return $"{clusterConnection}/{sectorConnection}/{zoneConnection}";
             }
 
@@ -1494,38 +1591,7 @@ namespace X4SectorCreator.Configuration
 
         private static string NormalizeTranslationText(string value)
         {
-            if (string.IsNullOrWhiteSpace(value))
-                return null;
-
-            string normalized = Regex.Replace(value, @"\{\d+,\d+\}", string.Empty);
-            normalized = normalized.Replace("\\(", "(");
-            normalized = normalized.Replace("\\)", ")");
-            normalized = normalized.Replace("()", string.Empty);
-            normalized = normalized.Replace("\t", " ");
-            normalized = Regex.Replace(normalized, "\\s+", " ").Trim();
-
-            if (normalized.StartsWith('(') && normalized.EndsWith(')'))
-            {
-                string inner = normalized[1..^1].Trim();
-                if (!string.IsNullOrWhiteSpace(inner) && inner.IndexOf('(') < 0)
-                    normalized = inner;
-            }
-
-            Match suffixDuplicate = Regex.Match(normalized, @"^(?<name>.+?)\((?<dup>.+)\)$");
-            if (suffixDuplicate.Success &&
-                string.Equals(suffixDuplicate.Groups["name"].Value.Trim(), suffixDuplicate.Groups["dup"].Value.Trim(), StringComparison.OrdinalIgnoreCase))
-            {
-                normalized = suffixDuplicate.Groups["name"].Value.Trim();
-            }
-
-            Match prefixDuplicate = Regex.Match(normalized, @"^\((?<dup>.+)\)(?<name>.+)$");
-            if (prefixDuplicate.Success &&
-                string.Equals(prefixDuplicate.Groups["name"].Value.Trim(), prefixDuplicate.Groups["dup"].Value.Trim(), StringComparison.OrdinalIgnoreCase))
-            {
-                normalized = prefixDuplicate.Groups["name"].Value.Trim();
-            }
-
-            return TrimToNull(normalized);
+            return ImportTranslationTextHelper.Normalize(value);
         }
 
         private static MacroDefinition GetOrCreateMacro(Dictionary<string, MacroDefinition> macros, string name)
@@ -1834,9 +1900,7 @@ namespace X4SectorCreator.Configuration
 
                     return TryResolveEntry(nestedPageId, nestedTextId, seen, out string nestedValue)
                         ? nestedValue
-                        : TryGetTitle(nestedPageId, out string nestedTitle)
-                            ? nestedTitle
-                            : string.Empty;
+                        : string.Empty;
                 });
 
                 value = NormalizeTranslationText(resolved);
@@ -1881,10 +1945,15 @@ namespace X4SectorCreator.Configuration
 
             public int GetSectorId(string clusterBaseGameMapping, string sectorBaseGameMapping)
             {
-                return SectorsByMacroName.Values
-                    .First(a => a.Cluster.BaseGameMapping.Equals(clusterBaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
-                                a.Sector.BaseGameMapping.Equals(sectorBaseGameMapping, StringComparison.OrdinalIgnoreCase))
-                    .Sector.Id;
+                VanillaSectorInfo match = SectorsByMacroName.Values
+                    .FirstOrDefault(a => a.Cluster.BaseGameMapping.Equals(clusterBaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
+                                         a.Sector.BaseGameMapping.Equals(sectorBaseGameMapping, StringComparison.OrdinalIgnoreCase));
+                if (match == null)
+                {
+                    throw new InvalidOperationException($"Unable to locate vanilla sector id for cluster '{clusterBaseGameMapping}' and sector '{sectorBaseGameMapping}'.");
+                }
+
+                return match.Sector.Id;
             }
 
             public int GetNextZoneId(string clusterBaseGameMapping, string sectorBaseGameMapping)
@@ -1894,11 +1963,16 @@ namespace X4SectorCreator.Configuration
 
             public int GetZoneId(string clusterBaseGameMapping, string sectorBaseGameMapping, string zoneName)
             {
-                return ZonesByMacroName.Values
-                    .First(a => a.Cluster.BaseGameMapping.Equals(clusterBaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
-                                a.Sector.BaseGameMapping.Equals(sectorBaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
-                                a.Zone.Name.Equals(zoneName, StringComparison.OrdinalIgnoreCase))
-                    .Zone.Id;
+                VanillaZoneInfo match = ZonesByMacroName.Values
+                    .FirstOrDefault(a => a.Cluster.BaseGameMapping.Equals(clusterBaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
+                                         a.Sector.BaseGameMapping.Equals(sectorBaseGameMapping, StringComparison.OrdinalIgnoreCase) &&
+                                         a.Zone.Name.Equals(zoneName, StringComparison.OrdinalIgnoreCase));
+                if (match == null)
+                {
+                    throw new InvalidOperationException($"Unable to locate vanilla zone id for cluster '{clusterBaseGameMapping}', sector '{sectorBaseGameMapping}', and zone '{zoneName}'.");
+                }
+
+                return match.Zone.Id;
             }
 
             public static VanillaLookup Create(ClusterCollection vanillaClusterData)

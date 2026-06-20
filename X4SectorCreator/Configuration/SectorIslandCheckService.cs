@@ -74,7 +74,9 @@ namespace X4SectorCreator.Configuration
                 {
                     string[] outboundSectorNames = sector.Zones
                         .SelectMany(a => a.Gates)
-                        .Where(a => a.IsInterSectorGate)
+                        .Where(a =>
+                            !string.IsNullOrWhiteSpace(a.DestinationSectorName) &&
+                            !a.DestinationSectorName.Equals(sector.Name, StringComparison.OrdinalIgnoreCase))
                         .Select(a => a.DestinationSectorName)
                         .Where(a => !string.IsNullOrWhiteSpace(a))
                         .Distinct(StringComparer.OrdinalIgnoreCase)

@@ -22,9 +22,11 @@
 
   <ItemGroup>
     <Compile Include="..\X4SectorCreator\Helpers\GateConnectionResolver.cs" Link="Helpers\GateConnectionResolver.cs" />
+    <Compile Include="..\X4SectorCreator\Helpers\LogFileHelper.cs" Link="Helpers\LogFileHelper.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\ImportClusterMetadataResolver.cs" Link="Helpers\ImportClusterMetadataResolver.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\ImportIdentityAssigner.cs" Link="Helpers\ImportIdentityAssigner.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\ImportNameNormalizer.cs" Link="Helpers\ImportNameNormalizer.cs" />
+    <Compile Include="..\X4SectorCreator\Helpers\ImportTranslationTextHelper.cs" Link="Helpers\ImportTranslationTextHelper.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\ImportSectorMetadataResolver.cs" Link="Helpers\ImportSectorMetadataResolver.cs" />
     <Compile Include="..\X4SectorCreator\Helpers\SectorMapInteractionRules.cs" Link="Helpers\SectorMapInteractionRules.cs" />
     <Compile Include="..\X4SectorCreator\Objects\Resource.cs" Link="Objects\Resource.cs" />

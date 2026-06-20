@@ -38,7 +38,6 @@ namespace X4SectorCreator
         private readonly LazyEvaluated<VersionUpdateForm> _versionUpdateForm = new(() => new VersionUpdateForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<StationForm> _stationForm = new(() => new StationForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ObjectOverviewForm> _objectOverviewForm = new(() => new ObjectOverviewForm(), a => !a.IsDisposed);
-        private readonly LazyEvaluated<TutorialVideoForm> _tutorialVideoForm = new(() => new TutorialVideoForm(), a => !a.IsDisposed);
         /* END OF FORMS */
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -211,7 +210,20 @@ namespace X4SectorCreator
 
         private void BtnGuide_Click(object sender, EventArgs e)
         {
-            _tutorialVideoForm.Value.Show();
+            const string tutorialUrl = "https://www.youtube.com/watch?v=CywvNiwQGTs";
+
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = tutorialUrl,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                _ = MessageBox.Show($"Unable to open the tutorial link.\n\n{tutorialUrl}\n\n{ex.Message}", "Tutorial / Guide");
+            }
         }
 
         #region Initialization
@@ -1490,7 +1502,6 @@ namespace X4SectorCreator
         {
             using FolderBrowserDialog folderBrowserDialog = new();
             folderBrowserDialog.Description = "Select an X4 extension folder to import";
-            folderBrowserDialog.UseDescriptionForTitle = true;
 
             var defaultExtensionsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Steam/steamapps/common/X4 Foundations/extensions");
             if (Directory.Exists(defaultExtensionsPath))
@@ -1510,7 +1521,6 @@ namespace X4SectorCreator
         {
             using FolderBrowserDialog folderBrowserDialog = new();
             folderBrowserDialog.Description = "Select a folder containing one or more X4 extension folders to merge-import";
-            folderBrowserDialog.UseDescriptionForTitle = true;
 
             string defaultExtensionsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Steam/steamapps/common/X4 Foundations/extensions");
             if (Directory.Exists(defaultExtensionsPath))
@@ -1532,11 +1542,18 @@ namespace X4SectorCreator
             {
                 ClusterCollection vanillaClusters = InitAllVanillaClusters(false);
                 ModImportResult importedMod = ImportModWithOptionalBase(modPath, vanillaClusters);
+                ReversePathFixService.ReversePathFixSummary reversePathFixSummary = null;
+                if (_startupOptions.FixReversePathsOnImport)
+                {
+                    reversePathFixSummary = ReversePathFixService.Apply(importedMod.Clusters);
+                }
 
                 ApplyImportedConfiguration(
                     importedMod.Clusters,
                     null,
-                    $"Imported mod \"{importedMod.ModName}\" succesfully.",
+                    reversePathFixSummary == null
+                        ? $"Imported mod \"{importedMod.ModName}\" succesfully."
+                        : $"Imported mod \"{importedMod.ModName}\" succesfully and fixed {reversePathFixSummary.PathsNormalized} normalized gate path(s) and {reversePathFixSummary.ReverseGatesCreated} missing reverse gate(s).",
                     showSuccessMessage,
                     importedMod.Warnings);
                 return true;
@@ -1559,13 +1576,28 @@ namespace X4SectorCreator
                 ClusterCollection vanillaClusters = InitAllVanillaClusters(false);
                 ModImportResult importedMod = ImportModWithOptionalBase(modPath, vanillaClusters);
                 var fixSummary = SectorIslandFixService.Apply(importedMod.Clusters);
+                ReversePathFixService.ReversePathFixSummary reversePathFixSummary = null;
+                if (_startupOptions.FixReversePathsOnImport)
+                {
+                    reversePathFixSummary = ReversePathFixService.Apply(importedMod.Clusters);
+                }
+
+                List<string> islandWarnings = fixSummary.RemainingIslands
+                    .Select(a => $"Sector island auto-fix could not resolve sector '{a.SectorName}' in cluster '{a.ClusterName}'.")
+                    .ToList();
+                List<string> warnings = importedMod.Warnings == null
+                    ? []
+                    : [.. importedMod.Warnings];
+                warnings.InsertRange(0, islandWarnings);
 
                 ApplyImportedConfiguration(
                     importedMod.Clusters,
                     null,
-                    $"Imported mod \"{importedMod.ModName}\" and fixed {fixSummary.IslandsFixed} of {fixSummary.IslandsDetected} isolated custom sector(s).",
+                    reversePathFixSummary == null
+                        ? $"Imported mod \"{importedMod.ModName}\" and fixed {fixSummary.IslandsFixed} of {fixSummary.IslandsDetected} isolated custom sector(s). {fixSummary.RemainingIslands.Count} unresolved sector island(s) remain."
+                        : $"Imported mod \"{importedMod.ModName}\", fixed {fixSummary.IslandsFixed} of {fixSummary.IslandsDetected} isolated custom sector(s), {fixSummary.RemainingIslands.Count} unresolved sector island(s) remain, and fixed {reversePathFixSummary.PathsNormalized} normalized gate path(s) and {reversePathFixSummary.ReverseGatesCreated} missing reverse gate(s).",
                     showSuccessMessage,
-                    importedMod.Warnings);
+                    warnings);
 
                 return true;
             }
@@ -1692,24 +1724,7 @@ namespace X4SectorCreator
 
             try
             {
-                string logsDirectory = Path.Combine(Application.StartupPath, "logs");
-                _ = Directory.CreateDirectory(logsDirectory);
-
-                string safeCaption = string.Concat(caption
-                    .Select(a => Path.GetInvalidFileNameChars().Contains(a) ? '-' : a))
-                    .Replace(' ', '-')
-                    .ToLowerInvariant();
-
-                string fileName = $"{safeCaption}-{DateTime.Now:yyyyMMdd-HHmmss}.log";
-                string fullPath = Path.Combine(logsDirectory, fileName);
-                string contents =
-                    $"{caption}{Environment.NewLine}" +
-                    $"Timestamp: {DateTime.Now:O}{Environment.NewLine}" +
-                    $"Command line: {Environment.CommandLine}{Environment.NewLine}{Environment.NewLine}" +
-                    fullMessage;
-
-                File.WriteAllText(fullPath, contents);
-                return fullPath;
+                return LogFileHelper.TryWriteDiagnosticLog(caption, caption, fullMessage);
             }
             catch
             {
@@ -1771,12 +1786,12 @@ namespace X4SectorCreator
             if (!string.IsNullOrWhiteSpace(_startupOptions.ImportModPath) &&
                 !string.Equals(Path.GetFullPath(_startupOptions.ImportModPath), Path.GetFullPath(modPath), StringComparison.OrdinalIgnoreCase))
             {
-                return ModImportService.ImportWithMerge(_startupOptions.ImportModPath, modPath, vanillaClusters);
+                return ModImportService.ImportWithMerge(_startupOptions.ImportModPath, modPath, vanillaClusters, _startupOptions.ClusterHexGap);
             }
 
             return ModImportService.IsImportableModDirectory(modPath)
-                ? ModImportService.Import(modPath, vanillaClusters)
-                : ModImportService.ImportMerged(modPath, vanillaClusters);
+                ? ModImportService.Import(modPath, vanillaClusters, _startupOptions.ClusterHexGap)
+                : ModImportService.ImportMerged(modPath, vanillaClusters, _startupOptions.ClusterHexGap);
         }
 
         private void SupportVanillaChangesInConfigImport((List<Cluster> clusters, VanillaChanges vanillaChanges) configuration)

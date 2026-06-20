@@ -103,7 +103,6 @@
             // 
             TxtLocation.Location = new Point(167, 261);
             TxtLocation.Name = "TxtLocation";
-            TxtLocation.PlaceholderText = "Select..";
             TxtLocation.ReadOnly = true;
             TxtLocation.Size = new Size(236, 23);
             TxtLocation.TabIndex = 6;
@@ -180,7 +179,6 @@
             // 
             TxtSoundtrack.Location = new Point(167, 291);
             TxtSoundtrack.Name = "TxtSoundtrack";
-            TxtSoundtrack.PlaceholderText = "Select..";
             TxtSoundtrack.ReadOnly = true;
             TxtSoundtrack.Size = new Size(236, 23);
             TxtSoundtrack.TabIndex = 37;

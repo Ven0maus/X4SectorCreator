@@ -72,7 +72,6 @@
             // 
             TxtSearch.Location = new Point(92, 6);
             TxtSearch.Name = "TxtSearch";
-            TxtSearch.PlaceholderText = "Search..";
             TxtSearch.Size = new Size(304, 23);
             TxtSearch.TabIndex = 12;
             // 

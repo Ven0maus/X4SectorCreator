@@ -5,11 +5,15 @@ namespace X4SectorCreator.Configuration
 {
     internal static class SectorIslandFixService
     {
-        internal sealed record SectorIslandFixSummary(int IslandsDetected, int IslandsFixed);
+        internal sealed record SectorIslandFixSummary(
+            int IslandsDetected,
+            int IslandsFixed,
+            IReadOnlyList<SectorIslandAnalyzer.SectorIslandResult> RemainingIslands);
 
         public static SectorIslandFixSummary Apply(List<Cluster> clusters)
         {
-            int initiallyDetected = SectorIslandAnalyzer.FindIsolatedSectors(BuildConnectivityEntries(clusters)).Count;
+            IReadOnlyList<SectorIslandAnalyzer.SectorIslandResult> initiallyDetectedEntries = SectorIslandAnalyzer.FindIsolatedSectors(BuildConnectivityEntries(clusters));
+            int initiallyDetected = initiallyDetectedEntries.Count;
             int fixedCount = 0;
 
             foreach (SectorRef source in GetAllSectorRefs(clusters).Where(a => !a.Sector.IsBaseGame).ToArray())
@@ -17,7 +21,7 @@ namespace X4SectorCreator.Configuration
                 if (!IsCurrentlyIsolated(source, clusters))
                     continue;
 
-                SectorRef target = FindClosestTarget(source, clusters);
+                SectorRef target = FindClosestTarget(source, clusters, preferDifferentCluster: false);
                 if (target == null)
                     continue;
 
@@ -25,7 +29,21 @@ namespace X4SectorCreator.Configuration
                 fixedCount++;
             }
 
-            return new SectorIslandFixSummary(initiallyDetected, fixedCount);
+            foreach (SectorRef source in GetAllSectorRefs(clusters).Where(a => !a.Sector.IsBaseGame).ToArray())
+            {
+                if (!IsCurrentlyIsolated(source, clusters))
+                    continue;
+
+                SectorRef target = FindClosestTarget(source, clusters, preferDifferentCluster: true);
+                if (target == null)
+                    continue;
+
+                CreateApproximateConnection(source, target);
+                fixedCount++;
+            }
+
+            IReadOnlyList<SectorIslandAnalyzer.SectorIslandResult> remainingIslands = SectorIslandAnalyzer.FindIsolatedSectors(BuildConnectivityEntries(clusters));
+            return new SectorIslandFixSummary(initiallyDetected, fixedCount, remainingIslands);
         }
 
         private static void CreateApproximateConnection(SectorRef source, SectorRef target)
@@ -89,7 +107,7 @@ namespace X4SectorCreator.Configuration
             target.Sector.Zones.Add(targetZone);
         }
 
-        private static SectorRef FindClosestTarget(SectorRef source, List<Cluster> clusters)
+        private static SectorRef FindClosestTarget(SectorRef source, List<Cluster> clusters, bool preferDifferentCluster)
         {
             HashSet<string> isolatedSectorNames = SectorIslandAnalyzer.FindIsolatedSectors(BuildConnectivityEntries(clusters))
                 .Select(a => a.SectorName)
@@ -97,8 +115,17 @@ namespace X4SectorCreator.Configuration
 
             Point sourceCenter = SectorIslandFixerRules.GetSectorCenter(source.Cluster, source.Sector);
 
-            return GetAllSectorRefs(clusters)
+            IEnumerable<SectorRef> candidates = GetAllSectorRefs(clusters)
                 .Where(a => !ReferenceEquals(a.Sector, source.Sector))
+                .Where(a => !preferDifferentCluster || !ReferenceEquals(a.Cluster, source.Cluster));
+
+            if (!candidates.Any())
+            {
+                candidates = GetAllSectorRefs(clusters)
+                    .Where(a => !ReferenceEquals(a.Sector, source.Sector));
+            }
+
+            return candidates
                 .OrderBy(a => isolatedSectorNames.Contains(a.Sector.Name))
                 .ThenBy(a => DistanceSquared(sourceCenter, SectorIslandFixerRules.GetSectorCenter(a.Cluster, a.Sector)))
                 .FirstOrDefault();
@@ -118,7 +145,9 @@ namespace X4SectorCreator.Configuration
                 {
                     string[] outboundSectorNames = sector.Zones
                         .SelectMany(a => a.Gates)
-                        .Where(a => a.IsInterSectorGate)
+                        .Where(a =>
+                            !string.IsNullOrWhiteSpace(a.DestinationSectorName) &&
+                            !a.DestinationSectorName.Equals(sector.Name, StringComparison.OrdinalIgnoreCase))
                         .Select(a => a.DestinationSectorName)
                         .Where(a => !string.IsNullOrWhiteSpace(a))
                         .Distinct(StringComparer.OrdinalIgnoreCase)

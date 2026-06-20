@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -7,6 +8,100 @@ namespace X4SectorCreator.Configuration
 {
     internal static class ImportAuditService
     {
+        public static int RunIncludedFiles(string targetPath, string attachedBaseModDirectory)
+        {
+            try
+            {
+                ImportInclusionReport report = BuildInclusionReport(targetPath, attachedBaseModDirectory);
+
+                Console.WriteLine("Import inclusion audit:");
+                Console.WriteLine($"Target: {targetPath}");
+                if (!string.IsNullOrWhiteSpace(report.AttachedBaseModDirectory))
+                    Console.WriteLine($"Attached base: {report.AttachedBaseModDirectory}");
+                Console.WriteLine();
+
+                Console.WriteLine($"Included mod directories: {report.IncludedMods.Count}");
+                foreach (IncludedModReport mod in report.IncludedMods)
+                {
+                    Console.WriteLine($"- {mod.ModDirectory}");
+                    if (mod.IsAttachedBase)
+                        Console.WriteLine("  role: attached base");
+                    Console.WriteLine($"  content.xml: {mod.ContentXmlPath}");
+                    Console.WriteLine($"  mapdefaults: {(mod.MapDefaultsPath ?? "<none>")}");
+                    Console.WriteLine($"  included map XML files: {mod.MapXmlFiles.Count}");
+                    foreach (string file in mod.MapXmlFiles)
+                        Console.WriteLine($"    map: {file}");
+                    Console.WriteLine($"  included translation XML files: {mod.TranslationXmlFiles.Count}");
+                    foreach (string file in mod.TranslationXmlFiles)
+                        Console.WriteLine($"    translation: {file}");
+
+                    if (mod.IgnoredXmlFiles.Count > 0)
+                    {
+                        Console.WriteLine($"  ignored XML files: {mod.IgnoredXmlFiles.Count}");
+                        foreach (string file in mod.IgnoredXmlFiles)
+                            Console.WriteLine($"    ignored: {file}");
+                    }
+                }
+
+                Console.WriteLine();
+                Console.WriteLine($"Ignored nested/duplicate mod directories: {report.IgnoredModDirectories.Count}");
+                foreach (string ignored in report.IgnoredModDirectories)
+                    Console.WriteLine($"- {ignored}");
+
+                return report.IgnoredModDirectories.Count > 0 || report.IncludedMods.Any(a => a.IgnoredXmlFiles.Count > 0) ? 1 : 0;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("Import inclusion audit failed:");
+                Console.Error.WriteLine(ex.Message);
+                return 2;
+            }
+        }
+
+        public static int RunSectorNameList(string modDirectory, string attachedBaseModDirectory)
+        {
+            try
+            {
+                ClusterCollection vanillaClusterData = LoadVanillaClusters();
+                ModImportResult importedMod = ImportForAudit(modDirectory, attachedBaseModDirectory, vanillaClusterData);
+
+                Console.WriteLine($"Imported sector names: {importedMod.ModName}");
+                Console.WriteLine($"Path: {modDirectory}");
+                if (!string.IsNullOrWhiteSpace(attachedBaseModDirectory) &&
+                    !string.Equals(Path.GetFullPath(attachedBaseModDirectory), Path.GetFullPath(modDirectory), StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"Attached base: {attachedBaseModDirectory}");
+                }
+                Console.WriteLine();
+
+                foreach (Cluster cluster in importedMod.Clusters.OrderBy(a => a.Name ?? a.ImportedMacroName, StringComparer.OrdinalIgnoreCase))
+                {
+                    string clusterDisplayName = cluster.Name ?? ModImportService.MissingTranslationDisplayName;
+                    string clusterMacro = cluster.ImportedMacroName ?? cluster.BaseGameMapping ?? "<unknown>";
+                    Console.WriteLine($"[Cluster] {clusterDisplayName}");
+                    Console.WriteLine($"  macro: {clusterMacro}");
+
+                    foreach (Sector sector in cluster.Sectors.OrderBy(a => a.Name ?? a.ImportedMacroName, StringComparer.OrdinalIgnoreCase))
+                    {
+                        string sectorDisplayName = sector.Name ?? ModImportService.MissingTranslationDisplayName;
+                        string sectorMacro = sector.ImportedMacroName ?? sector.BaseGameMapping ?? "<unknown>";
+                        Console.WriteLine($"  - {sectorDisplayName}");
+                        Console.WriteLine($"    macro: {sectorMacro}");
+                    }
+
+                    Console.WriteLine();
+                }
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("Sector name list failed:");
+                Console.Error.WriteLine(ex.Message);
+                return 2;
+            }
+        }
+
         private static ModImportResult ImportForAudit(string modDirectory, string attachedBaseModDirectory, ClusterCollection vanillaClusterData)
         {
             if (!string.IsNullOrWhiteSpace(attachedBaseModDirectory) &&
@@ -16,6 +111,17 @@ namespace X4SectorCreator.Configuration
             return ModImportService.IsImportableModDirectory(modDirectory)
                 ? ModImportService.Import(modDirectory, vanillaClusterData)
                 : ModImportService.ImportMerged(modDirectory, vanillaClusterData);
+        }
+
+        private static ModImportResult ImportForNameAudit(string modDirectory, string attachedBaseModDirectory, ClusterCollection vanillaClusterData)
+        {
+            if (!string.IsNullOrWhiteSpace(attachedBaseModDirectory) &&
+                !string.Equals(Path.GetFullPath(attachedBaseModDirectory), Path.GetFullPath(modDirectory), StringComparison.OrdinalIgnoreCase))
+                return ModImportService.ImportWithMergeForNameResolution(attachedBaseModDirectory, modDirectory, vanillaClusterData);
+
+            return ModImportService.IsImportableModDirectory(modDirectory)
+                ? ModImportService.ImportForNameResolution(modDirectory, vanillaClusterData)
+                : ModImportService.ImportMergedForNameResolution(modDirectory, vanillaClusterData);
         }
 
         public static int RunNameResolution(string modDirectory)
@@ -28,7 +134,8 @@ namespace X4SectorCreator.Configuration
             try
             {
                 ClusterCollection vanillaClusterData = LoadVanillaClusters();
-                ModImportResult importedMod = ImportForAudit(modDirectory, attachedBaseModDirectory, vanillaClusterData);
+                ModImportResult importedMod = ImportForNameAudit(modDirectory, attachedBaseModDirectory, vanillaClusterData);
+                Dictionary<string, NameResolutionTrace> traces = BuildNameResolutionTraces(modDirectory);
 
                 List<string> unresolvedWarnings = importedMod.Warnings
                     .Where(a => a.StartsWith("Unresolved sector/cluster name reference", StringComparison.OrdinalIgnoreCase) ||
@@ -59,6 +166,26 @@ namespace X4SectorCreator.Configuration
                     Console.WriteLine($"- {warning}");
                 }
 
+                Console.WriteLine();
+                Console.WriteLine("Name resolution trace:");
+                foreach ((string macroName, string finalName) in importedMod.Clusters
+                    .SelectMany(cluster =>
+                        cluster.Sectors.Select(sector => (sector.ImportedMacroName, sector.Name))
+                            .Append((cluster.ImportedMacroName, cluster.Name)))
+                    .Where(a => !string.IsNullOrWhiteSpace(a.ImportedMacroName))
+                    .DistinctBy(a => a.ImportedMacroName, StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(a => a.ImportedMacroName, StringComparer.OrdinalIgnoreCase))
+                {
+                    if (!traces.TryGetValue(macroName, out NameResolutionTrace trace))
+                        continue;
+
+                    Console.WriteLine($"- macro: {macroName}");
+                    Console.WriteLine($"  name ref: {trace.NameReference ?? "<none>"}");
+                    Console.WriteLine($"  local entry: {trace.LocalTranslationEntry ?? "<none>"}");
+                    Console.WriteLine($"  resolved text: {trace.ResolvedTranslationText ?? "<none>"}");
+                    Console.WriteLine($"  imported/displayed: {finalName ?? "<null>"}");
+                }
+
                 return 1;
             }
             catch (Exception ex)
@@ -79,7 +206,7 @@ namespace X4SectorCreator.Configuration
             try
             {
                 ClusterCollection vanillaClusterData = LoadVanillaClusters();
-                ModImportResult importedMod = ImportForAudit(modDirectory, attachedBaseModDirectory, vanillaClusterData);
+                ModImportResult importedMod = ImportForNameAudit(modDirectory, attachedBaseModDirectory, vanillaClusterData);
 
                 SourceAuditSummary sourceSummary = AnalyzeSourceMod(modDirectory);
                 ImportedAuditSummary importedSummary = AnalyzeImportedMod(importedMod);
@@ -158,6 +285,101 @@ namespace X4SectorCreator.Configuration
             string json = File.ReadAllText(Constants.DataPaths.SectorMappingFilePath);
             return JsonSerializer.Deserialize<ClusterCollection>(json, ConfigSerializer.JsonSerializerOptions)
                 ?? throw new InvalidOperationException("Unable to load vanilla sector mapping data.");
+        }
+
+        private static ImportInclusionReport BuildInclusionReport(string targetPath, string attachedBaseModDirectory)
+        {
+            string fullTargetPath = Path.GetFullPath(targetPath);
+            string fullAttachedBasePath = string.IsNullOrWhiteSpace(attachedBaseModDirectory)
+                ? null
+                : Path.GetFullPath(attachedBaseModDirectory);
+
+            List<string> targetIncludedMods = ModImportService.DiscoverMergeImportDirectories(fullTargetPath);
+            List<string> includedMods = [];
+            if (!string.IsNullOrWhiteSpace(fullAttachedBasePath) &&
+                ModImportService.IsImportableModDirectory(fullAttachedBasePath) &&
+                !targetIncludedMods.Contains(fullAttachedBasePath, StringComparer.OrdinalIgnoreCase))
+            {
+                includedMods.Add(fullAttachedBasePath);
+            }
+            includedMods.AddRange(targetIncludedMods);
+
+            List<string> targetCandidates = FindAllImportableModDirectories(fullTargetPath);
+            List<string> ignoredModDirectories = targetCandidates
+                .Where(a => !targetIncludedMods.Contains(a, StringComparer.OrdinalIgnoreCase))
+                .OrderBy(a => a, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            List<IncludedModReport> includedModReports = includedMods
+                .Select(a => BuildIncludedModReport(a, string.Equals(a, fullAttachedBasePath, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+
+            return new ImportInclusionReport(includedModReports, ignoredModDirectories, fullAttachedBasePath);
+        }
+
+        private static IncludedModReport BuildIncludedModReport(string modDirectory, bool isAttachedBase)
+        {
+            string fullModDirectory = Path.GetFullPath(modDirectory);
+            string contentXmlPath = Path.Combine(fullModDirectory, "content.xml");
+            string mapDefaultsPath = Path.Combine(fullModDirectory, "libraries", "mapdefaults.xml");
+            string mapsRoot = Path.Combine(fullModDirectory, "maps");
+            string tRoot = Path.Combine(fullModDirectory, "t");
+
+            List<string> mapXmlFiles = Directory.Exists(mapsRoot)
+                ? Directory.GetFiles(mapsRoot, "*.xml", SearchOption.AllDirectories)
+                    .OrderBy(a => a, StringComparer.OrdinalIgnoreCase)
+                    .ToList()
+                : [];
+            List<string> translationXmlFiles = Directory.Exists(tRoot)
+                ? Directory.GetFiles(tRoot, "*.xml", SearchOption.AllDirectories)
+                    .OrderBy(a => a, StringComparer.OrdinalIgnoreCase)
+                    .ToList()
+                : [];
+
+            HashSet<string> includedXmlFiles = new(StringComparer.OrdinalIgnoreCase);
+            if (File.Exists(contentXmlPath))
+                includedXmlFiles.Add(contentXmlPath);
+            if (File.Exists(mapDefaultsPath))
+                includedXmlFiles.Add(mapDefaultsPath);
+            foreach (string file in mapXmlFiles)
+                includedXmlFiles.Add(file);
+            foreach (string file in translationXmlFiles)
+                includedXmlFiles.Add(file);
+
+            List<string> ignoredXmlFiles = Directory.GetFiles(fullModDirectory, "*.xml", SearchOption.AllDirectories)
+                .Where(a => !includedXmlFiles.Contains(a))
+                .OrderBy(a => a, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            return new IncludedModReport(
+                fullModDirectory,
+                isAttachedBase,
+                contentXmlPath,
+                File.Exists(mapDefaultsPath) ? mapDefaultsPath : null,
+                mapXmlFiles,
+                translationXmlFiles,
+                ignoredXmlFiles);
+        }
+
+        private static List<string> FindAllImportableModDirectories(string rootDirectory)
+        {
+            if (!Directory.Exists(rootDirectory))
+                return [];
+
+            List<string> candidates = [];
+            if (ModImportService.IsImportableModDirectory(rootDirectory))
+                candidates.Add(Path.GetFullPath(rootDirectory));
+
+            candidates.AddRange(Directory
+                .EnumerateFiles(rootDirectory, "content.xml", SearchOption.AllDirectories)
+                .Select(Path.GetDirectoryName)
+                .Where(a => !string.IsNullOrWhiteSpace(a) && ModImportService.IsImportableModDirectory(a))
+                .Select(Path.GetFullPath));
+
+            return candidates
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(a => a, StringComparer.OrdinalIgnoreCase)
+                .ToList();
         }
 
         private static SourceAuditSummary AnalyzeSourceMod(string modDirectory)
@@ -312,6 +534,103 @@ namespace X4SectorCreator.Configuration
             return new GateValidationSummary(invalid.Count, invalid);
         }
 
+        private static Dictionary<string, NameResolutionTrace> BuildNameResolutionTraces(string modDirectory)
+        {
+            Dictionary<string, NameResolutionTrace> traces = new(StringComparer.OrdinalIgnoreCase);
+            string mapDefaultsPath = Path.Combine(modDirectory, "libraries", "mapdefaults.xml");
+            if (!File.Exists(mapDefaultsPath))
+                return traces;
+
+            Dictionary<(int pageId, int textId), string> localEntries = LoadLocalTranslationEntries(modDirectory);
+            XDocument document = XDocument.Load(mapDefaultsPath);
+
+            foreach (XElement dataset in document.Descendants("dataset"))
+            {
+                string macroName = (string)dataset.Attribute("macro");
+                if (string.IsNullOrWhiteSpace(macroName))
+                    continue;
+
+                string nameRef = (string)dataset.Element("properties")?.Element("identification")?.Attribute("name");
+                if (string.IsNullOrWhiteSpace(nameRef))
+                    continue;
+
+                string localEntry = null;
+                string resolvedText = null;
+                if (TryParseTranslationReference(nameRef, out int pageId, out int textId) && localEntries.TryGetValue((pageId, textId), out string rawEntry))
+                {
+                    localEntry = rawEntry;
+                    resolvedText = ResolveLocalTranslationEntry(pageId, textId, localEntries);
+                }
+                else
+                {
+                    resolvedText = ImportTranslationTextHelper.Normalize(nameRef);
+                }
+
+                traces[macroName] = new NameResolutionTrace(nameRef, localEntry, resolvedText);
+            }
+
+            return traces;
+        }
+
+        private static Dictionary<(int pageId, int textId), string> LoadLocalTranslationEntries(string modDirectory)
+        {
+            Dictionary<(int pageId, int textId), string> entries = new();
+            string translationsPath = Path.Combine(modDirectory, "t");
+            if (!Directory.Exists(translationsPath))
+                return entries;
+
+            foreach (string file in Directory.GetFiles(translationsPath, "*.xml", SearchOption.TopDirectoryOnly).OrderBy(a => a, StringComparer.OrdinalIgnoreCase))
+            {
+                XDocument document = XDocument.Load(file);
+                foreach (XElement page in document.Descendants("page"))
+                {
+                    if (!int.TryParse((string)page.Attribute("id"), out int pageId))
+                        continue;
+
+                    foreach (XElement text in page.Elements("t"))
+                    {
+                        if (!int.TryParse((string)text.Attribute("id"), out int textId))
+                            continue;
+
+                        string value = string.Concat(text.Nodes().OfType<XText>().Select(a => a.Value));
+                        value = text.Value + value;
+                        if (!string.IsNullOrWhiteSpace(value))
+                            entries[(pageId, textId)] = value;
+                    }
+                }
+            }
+
+            return entries;
+        }
+
+        private static string ResolveLocalTranslationEntry(int pageId, int textId, Dictionary<(int pageId, int textId), string> entries)
+        {
+            return ResolveLocalTranslationEntry(pageId, textId, entries, new HashSet<(int pageId, int textId)>());
+        }
+
+        private static string ResolveLocalTranslationEntry(int pageId, int textId, Dictionary<(int pageId, int textId), string> entries, HashSet<(int pageId, int textId)> seen)
+        {
+            if (!entries.TryGetValue((pageId, textId), out string raw) || !seen.Add((pageId, textId)))
+                return null;
+
+            string resolved = Regex.Replace(raw, "\\{\\s*(\\d+)\\s*,\\s*(\\d+)\\s*\\}", match =>
+            {
+                int nestedPage = int.Parse(match.Groups[1].Value);
+                int nestedText = int.Parse(match.Groups[2].Value);
+                return ResolveLocalTranslationEntry(nestedPage, nestedText, entries, seen) ?? string.Empty;
+            });
+
+            return ImportTranslationTextHelper.Normalize(resolved);
+        }
+
+        private static bool TryParseTranslationReference(string reference, out int pageId, out int textId)
+        {
+            pageId = 0;
+            textId = 0;
+            Match match = Regex.Match(reference ?? string.Empty, @"^\s*\{\s*(\d+)\s*,\s*(\d+)\s*\}\s*$");
+            return match.Success && int.TryParse(match.Groups[1].Value, out pageId) && int.TryParse(match.Groups[2].Value, out textId);
+        }
+
         private sealed record SourceAuditSummary(
             int DatasetCount,
             int ImageRefCount,
@@ -340,5 +659,18 @@ namespace X4SectorCreator.Configuration
             int SectorsWithResourceAreas);
 
         private sealed record GateValidationSummary(int InvalidGateCount, List<Gate> InvalidGates);
+
+        private sealed record NameResolutionTrace(string NameReference, string LocalTranslationEntry, string ResolvedTranslationText);
+
+        private sealed record ImportInclusionReport(List<IncludedModReport> IncludedMods, List<string> IgnoredModDirectories, string AttachedBaseModDirectory);
+
+        private sealed record IncludedModReport(
+            string ModDirectory,
+            bool IsAttachedBase,
+            string ContentXmlPath,
+            string MapDefaultsPath,
+            List<string> MapXmlFiles,
+            List<string> TranslationXmlFiles,
+            List<string> IgnoredXmlFiles);
     }
 }

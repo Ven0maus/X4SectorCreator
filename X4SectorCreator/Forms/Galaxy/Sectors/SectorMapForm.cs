@@ -41,6 +41,7 @@ namespace X4SectorCreator
         private static PointF _offset;
         private const float KeyboardPanStep = 50f;
         private const int EditModeBorderThickness = 10;
+        private const float RenderButterZone = 300f;
         private bool _editModeEnabled = false;
         private string _transientStatusMessage;
         private DateTime _transientStatusExpiresAtUtc = DateTime.MinValue;
@@ -1289,7 +1290,6 @@ namespace X4SectorCreator
             {
                 if (!_editModeEnabled)
                 {
-                    _ = MessageBox.Show("Edit mode is locked. Press Space in Galaxy View to unlock editing.");
                     return;
                 }
 
@@ -1835,6 +1835,42 @@ namespace X4SectorCreator
             return brush;
         }
 
+        private static RectangleF GetExpandedVisibleBounds(PaintEventArgs e)
+        {
+            RectangleF bounds = e.Graphics.VisibleClipBounds;
+            bounds.Inflate(RenderButterZone, RenderButterZone);
+            return bounds;
+        }
+
+        private static bool IsPolygonVisible(PointF[] points, RectangleF visibleBounds)
+        {
+            if (points == null || points.Length == 0)
+                return false;
+
+            float minX = points.Min(a => a.X);
+            float maxX = points.Max(a => a.X);
+            float minY = points.Min(a => a.Y);
+            float maxY = points.Max(a => a.Y);
+            return visibleBounds.IntersectsWith(RectangleF.FromLTRB(minX, minY, maxX, maxY));
+        }
+
+        private static bool IsCircleVisible(PointF center, float radius, RectangleF visibleBounds)
+        {
+            Rectangle rect = Rectangle.Round(new RectangleF(center.X - radius / 2f, center.Y - radius / 2f, radius, radius));
+            return visibleBounds.IntersectsWith(rect);
+        }
+
+        private static bool IsLineVisible(PointF source, PointF target, RectangleF visibleBounds)
+        {
+            RectangleF rect = RectangleF.FromLTRB(
+                Math.Min(source.X, target.X),
+                Math.Min(source.Y, target.Y),
+                Math.Max(source.X, target.X),
+                Math.Max(source.Y, target.Y));
+            rect.Inflate(_gateSizeRadius * 2f, _gateSizeRadius * 2f);
+            return visibleBounds.IntersectsWith(rect);
+        }
+
         private void RenderRegionCircles(PaintEventArgs e)
         {
             if (!IsMapOptionChecked(MapOption.Visualize_Regions))
@@ -1857,6 +1893,7 @@ namespace X4SectorCreator
             // Calculate hex size and radius based on zoom and sector size
             float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+            RectangleF visibleBounds = GetExpandedVisibleBounds(e);
 
             // Setup color mapping based on resources of region definitions
             var colorMappings = clusters
@@ -1888,6 +1925,12 @@ namespace X4SectorCreator
                 {
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                    if (!IsPolygonVisible(childHexagon.Points, visibleBounds))
+                    {
+                        sectorIndex++;
+                        continue;
+                    }
+
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
                     float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : cluster.Sectors.Count == 4 ? hexRadius / 2f / 1.25f : hexRadius / 2f;
 
@@ -1928,6 +1971,9 @@ namespace X4SectorCreator
                         regionScreenPosition.X += hexCenter.X;
                         regionScreenPosition.Y += hexCenter.Y;
 
+                        if (!IsCircleVisible(regionScreenPosition, screenRadius, visibleBounds))
+                            continue;
+
                         // Determine region color
                         var regionColors = colorMappings[region.Definition];
 
@@ -1967,7 +2013,7 @@ namespace X4SectorCreator
             if (colors == null || colors.Length == 0)
                 return;
 
-            RectangleF rect = new(center.X - radius / 2f, center.Y - radius / 2f, radius, radius);
+            Rectangle rect = Rectangle.Round(new RectangleF(center.X - radius / 2f, center.Y - radius / 2f, radius, radius));
 
             float startAngle = 0f;
             float sweepAngle = 360f / colors.Length;
@@ -1981,7 +2027,7 @@ namespace X4SectorCreator
             }
 
             // Draw lighter outline (edge)
-            g.DrawEllipse(_edgePen, rect);
+            g.DrawEllipse(_edgePen, rect.X, rect.Y, rect.Width, rect.Height);
         }
 
         private static int ConvertFromWorldRadius(int worldRadius, float hexRadius, float diameterRadius)
@@ -2027,8 +2073,8 @@ namespace X4SectorCreator
                 return _transientStatusMessage;
 
             return _editModeEnabled
-                ? "Edit mode unlocked: Right drag moves clusters, sectors, and gate nodes. Press Space to lock editing."
-                : "Edit mode locked: Press Space to unlock editing. WASD pans the map.";
+                ? "Press Space to exit edit mode. Right drag moves clusters, sectors, and gate nodes."
+                : "Press Space to enter edit mode. WASD pans the map.";
         }
 
         private void RenderHexIcons(PaintEventArgs e)
@@ -2057,6 +2103,7 @@ namespace X4SectorCreator
             // Calculate hex size and radius based on zoom and sector size
             float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+            RectangleF visibleBounds = GetExpandedVisibleBounds(e);
 
             // Each icon is rendered in the cluster or sector bottom right corner
             foreach (var group in iconDatas
@@ -2084,6 +2131,9 @@ namespace X4SectorCreator
 
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                    if (!IsPolygonVisible(childHexagon.Points, visibleBounds))
+                        continue;
+
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
                     float correctHexHeight = cluster.Sectors.Count == 1 ? hexHeight : cluster.Sectors.Count == 4 ? hexHeight / 2f / 1.25f : hexHeight / 2f;
 
@@ -2245,6 +2295,7 @@ namespace X4SectorCreator
             // Calculate hex size and radius based on zoom and sector size
             float hexHeight = (float)(Math.Sqrt(3) * _hexSize) * _defaultZoom; // Height for flat-top hexes, applying zoom
             float hexRadius = (float)(hexHeight / Math.Sqrt(3)); // Recalculate radius based on zoom
+            RectangleF visibleBounds = GetExpandedVisibleBounds(e);
 
             foreach (Cluster cluster in relevantClusters)
             {
@@ -2266,6 +2317,12 @@ namespace X4SectorCreator
 
                     // Collect the child hexagon points
                     Hexagon childHexagon = cluster.Sectors.Count == 1 ? cluster.Hexagon : cluster.Hexagon.Children[sectorIndex];
+                    if (!IsPolygonVisible(childHexagon.Points, visibleBounds))
+                    {
+                        sectorIndex++;
+                        continue;
+                    }
+
                     PointF hexCenter = GetHexCenter(childHexagon.Points);
                     float correctHexRadius = cluster.Sectors.Count == 1 ? hexRadius : cluster.Sectors.Count == 4 ? hexRadius / 2f / 1.25f : hexRadius / 2f;
 
@@ -2369,13 +2426,15 @@ namespace X4SectorCreator
         private void RenderAllHexes(PaintEventArgs e, out bool invalid)
         {
             invalid = false;
+            RectangleF visibleBounds = GetExpandedVisibleBounds(e);
             // First step render non existant hexagons
             Color nonExistantHexColor = "#121212".HexToColor();
             using SolidBrush mainBrush = new(Color.Black);
             using Pen mainPen = new(nonExistantHexColor, 4);
             foreach (KeyValuePair<(int, int), Hexagon> hex in _hexagons)
             {
-                RenderNonSectorGrid(e, mainBrush, mainPen, hex);
+                if (IsPolygonVisible(hex.Value.Points, visibleBounds))
+                    RenderNonSectorGrid(e, mainBrush, mainPen, hex);
             }
 
             // Next step render the game clusters on top
@@ -2411,12 +2470,14 @@ namespace X4SectorCreator
 
         private void RenderAllHexNames(PaintEventArgs e)
         {
+            RectangleF visibleBounds = GetExpandedVisibleBounds(e);
             if (IsMapOptionChecked(MapOption.Show_Custom_Sectors))
             {
                 // Next step render names
                 foreach (Cluster cluster in _customClusters)
                 {
-                    RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                    if (IsPolygonVisible(cluster.Hexagon.Points, visibleBounds))
+                        RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
                 }
             }
 
@@ -2432,7 +2493,8 @@ namespace X4SectorCreator
                     continue;
                 }
 
-                RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
+                if (IsPolygonVisible(cluster.Hexagon.Points, visibleBounds))
+                    RenderHexNames(e, new KeyValuePair<(int, int), Hexagon>((cluster.Position.X, cluster.Position.Y), cluster.Hexagon));
             }
         }
 
@@ -2500,10 +2562,12 @@ namespace X4SectorCreator
         private void RenderGateConnections(PaintEventArgs e)
         {
             GateConnection[] connections = GetVisibleGateConnections();
+            RectangleF visibleBounds = GetExpandedVisibleBounds(e);
 
             foreach (GateConnection connection in connections)
             {
-                PaintConnection(connection, e);
+                if (IsLineVisible(new PointF(connection.Source.ScreenX, connection.Source.ScreenY), new PointF(connection.Target.ScreenX, connection.Target.ScreenY), visibleBounds))
+                    PaintConnection(connection, e);
             }
         }
 
@@ -2745,6 +2809,11 @@ namespace X4SectorCreator
                     continue;
                 }
 
+                if (string.IsNullOrWhiteSpace(sourceGateData.Gate.DestinationPath))
+                {
+                    continue;
+                }
+
                 if (!GateConnectionResolver.TryResolveTarget(sourcePathLookup, sourceGateData.Gate.DestinationPath, out GateData targetGateData))
                 {
                     invalidConnections.Add(sourceGateData);
@@ -2811,13 +2880,7 @@ namespace X4SectorCreator
 
             try
             {
-                string logsDirectory = Path.Combine(Application.StartupPath, "logs");
-                _ = Directory.CreateDirectory(logsDirectory);
-
-                string fileName = $"invalid-gate-connections-{DateTime.Now:yyyyMMdd-HHmmss}.log";
-                string fullPath = Path.Combine(logsDirectory, fileName);
-                File.WriteAllText(fullPath, message);
-                return fullPath;
+                return LogFileHelper.TryWriteDiagnosticLog("invalid-gate-connections", "Invalid gate connections", message);
             }
             catch
             {
@@ -3041,6 +3104,9 @@ namespace X4SectorCreator
                 return;
             }
 
+            if (!IsPolygonVisible(hex.Value.Points, GetExpandedVisibleBounds(e)))
+                return;
+
             bool render = true;
             Color color = GetClusterOwnershipColor(cluster);
 
@@ -3140,6 +3206,10 @@ namespace X4SectorCreator
                 return;
             }
 
+            RectangleF visibleBounds = GetExpandedVisibleBounds(e);
+            if (!IsPolygonVisible(hex.Value.Points, visibleBounds))
+                return;
+
             PointF hexCenter = GetHexCenter(hex.Value.Points);
             SizeF hexSize = GetHexSize(hex.Value.Points);
 
@@ -3181,6 +3251,12 @@ namespace X4SectorCreator
                     continue;
                 }
                 if (_visibleSectorsFromSearch.Count > 0 && !_visibleSectorsFromSearch.Contains(sector))
+                {
+                    index++;
+                    continue;
+                }
+
+                if (!IsPolygonVisible(child.Points, visibleBounds))
                 {
                     index++;
                     continue;
