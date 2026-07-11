@@ -50,7 +50,7 @@ namespace X4SectorCreator.XmlGeneration
         private static IEnumerable<XElement> GetRegions(string modPrefix, List<Cluster> clusters)
         {
             // Keep a cache to prevent duplication of definitions
-            var cache = new Dictionary<string, XElement>(StringComparer.OrdinalIgnoreCase);
+            var cache = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             foreach (Cluster cluster in clusters)
             {
@@ -62,34 +62,33 @@ namespace X4SectorCreator.XmlGeneration
 
                         string identifier = region.GetIdentifier(modPrefix);
 
-                        if (!cache.TryGetValue(identifier, out var regionDefinitionElement))
-                        {
-                            cache[identifier] = regionDefinitionElement = new XElement("region",
-                                new XAttribute("name", identifier.ToLower()),
-                                new XAttribute("density", region.Definition.Density),
-                                new XAttribute("rotation", region.Definition.Rotation),
-                                new XAttribute("noisescale", region.Definition.NoiseScale),
-                                new XAttribute("seed", region.Definition.Seed),
-                                new XAttribute("minnoisevalue", region.Definition.MinNoiseValue),
-                                new XAttribute("maxnoisevalue", region.Definition.MaxNoiseValue),
-                                new XElement("boundary",
-                                    new XAttribute("class", $"{region.Definition.BoundaryType}"),
-                                    new XElement("size",
-                                        new XAttribute("r", region.BoundaryRadius),
-                                        region.Definition.BoundaryType.Equals("Sphere", StringComparison.OrdinalIgnoreCase) ? null : new XAttribute("linear", region.BoundaryLinear)
-                                    )
-                                ),
-                                new XElement("falloff",
-                                    GenerateLateralRadialSteps(region)
-                                ),
-                                new XElement("fields",
-                                    GenerateFields(region)
-                                )
-                            );
-                        }
+                        if (cache.Contains(identifier))
+                            continue;
+                        cache.Add(identifier);
 
                         // Region definition name needs to be fully lowercase else it will NOT work!!!!!!!!
-                        yield return regionDefinitionElement;
+                        yield return new XElement("region",
+                            new XAttribute("name", identifier.ToLower()),
+                            new XAttribute("density", region.Definition.Density),
+                            new XAttribute("rotation", region.Definition.Rotation),
+                            new XAttribute("noisescale", region.Definition.NoiseScale),
+                            new XAttribute("seed", region.Definition.Seed),
+                            new XAttribute("minnoisevalue", region.Definition.MinNoiseValue),
+                            new XAttribute("maxnoisevalue", region.Definition.MaxNoiseValue),
+                            new XElement("boundary",
+                                new XAttribute("class", $"{region.Definition.BoundaryType}"),
+                                new XElement("size",
+                                    new XAttribute("r", region.BoundaryRadius),
+                                    region.Definition.BoundaryType.Equals("Sphere", StringComparison.OrdinalIgnoreCase) ? null : new XAttribute("linear", region.BoundaryLinear)
+                                )
+                            ),
+                            new XElement("falloff",
+                                GenerateLateralRadialSteps(region)
+                            ),
+                            new XElement("fields",
+                                GenerateFields(region)
+                            )
+                        );
                     }
                 }
             }

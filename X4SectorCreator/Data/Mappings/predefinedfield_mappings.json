@@ -60,6 +60,30 @@
   },
   {
     "Type": "debris",
+    "GroupRef": "debris_khaak_m",
+    "DensityFactor": 4.0,
+    "Rotation": 360,
+    "RotationVariation": 10,
+    "NoiseScale": 10000,
+    "Seed": 32,
+    "MinNoiseValue": 0.5,
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
+  },
+  {
+    "Type": "debris",
+    "GroupRef": "debris_khaak_s",
+    "DensityFactor": 0.4,
+    "Rotation": 360,
+    "RotationVariation": 10,
+    "NoiseScale": 10000,
+    "Seed": 32,
+    "MinNoiseValue": 0.5,
+    "MaxNoiseValue": 1.0,
+    "DistanceFactor": 2.0
+  },
+  {
+    "Type": "debris",
     "GroupRef": "debris_xl",
     "DensityFactor": 0.05,
     "Rotation": 360,

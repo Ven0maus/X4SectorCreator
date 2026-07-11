@@ -146,6 +146,28 @@ namespace X4SectorCreator.Objects
             return (Job)serializer.Deserialize(stringReader);
         }
 
+        public bool FactionRelated(Faction faction)
+        {
+            if (Category != null && Category.Faction != null && Category.Faction.Contains(faction.Id, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (Location != null)
+            {
+                if (Location.Faction != null && Location.Faction.Contains(faction.Id, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (Location.Policefaction != null && Location.Policefaction.Contains(faction.Id, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            if (Ship != null)
+            {
+                if (Ship.Select != null && Ship.Select.Faction != null && Ship.Select.Faction.Contains(faction.Id, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (Ship.Owner != null && Ship.Owner.Exact != null && Ship.Owner.Exact.Contains(faction.Id, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+
+            return false;
+        }
+
         public override string ToString()
         {
             return Id ?? Name ?? GetHashCode().ToString();
