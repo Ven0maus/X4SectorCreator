@@ -46,7 +46,7 @@
             // cmbWare
             // 
             cmbWare.FormattingEnabled = true;
-            cmbWare.Items.AddRange(new object[] { "ore", "silicon", "ice", "nividium", "hydrogen", "helium", "methane", "rawscrap" });
+            cmbWare.Items.AddRange(new object[] { "ore", "silicon", "ice", "nividium", "hydrogen", "helium", "methane", "rawscrap", "rawkhaakscrap" });
             cmbWare.Location = new Point(91, 12);
             cmbWare.Name = "cmbWare";
             cmbWare.Size = new Size(174, 23);
