@@ -122,6 +122,15 @@ namespace X4SectorCreator.Objects
             return (Factory)serializer.Deserialize(stringReader);
         }
 
+        public bool FactionRelation(Faction faction)
+        {
+            if (Location != null && Location.Faction != null && Location.Faction.Contains(faction.Id, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (Owner != null && Owner.Equals(faction.Id, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        }
+
         public override string ToString()
         {
             return Id ?? GetHashCode().ToString();

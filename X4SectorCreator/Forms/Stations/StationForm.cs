@@ -75,7 +75,7 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             // Init factions and races
-            foreach (var faction in FactionsForm.GetAllFactions(true, false)
+            foreach (var faction in FactionsForm.GetAllFactions(true, true)
                 .OrderBy(a => a))
             {
                 _ = cmbFaction.Items.Add(faction);

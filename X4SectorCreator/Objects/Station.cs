@@ -36,6 +36,12 @@ namespace X4SectorCreator.Objects
             };
         }
 
+        public bool FactionRelated(Faction faction)
+        {
+            return Owner.Equals(faction.Id, StringComparison.OrdinalIgnoreCase) ||
+                Faction.Equals(faction.Id, StringComparison.OrdinalIgnoreCase);
+        }
+
         public override string ToString()
         {
             return Name;
