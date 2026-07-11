@@ -8,6 +8,8 @@ namespace X4SectorCreator.Forms
     {
         public readonly LazyEvaluated<ResourceAreaForm> ResourceAreaForm = new(() => new ResourceAreaForm(), a => !a.IsDisposed);
 
+        private static int _largestSectorRadius;
+
         private Sector _sector;
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Sector Sector
@@ -15,6 +17,13 @@ namespace X4SectorCreator.Forms
             get => _sector;
             set
             {
+                // Calculate once
+                _largestSectorRadius = (int)(MainForm.Instance.AllClusters
+                    .SelectMany(a => a.Value.Sectors)
+                    .Select(a => a.DiameterRadius)
+                    .DefaultIfEmpty(2412428) // = 1206 radius (seems to be the biggest atm (nop fortune))
+                    .Max() / 1000f / 2f);
+
                 _sector = value;
                 if (_sector != null)
                 {
@@ -203,9 +212,9 @@ namespace X4SectorCreator.Forms
             }
 
             // Validate sector radius
-            if (!int.TryParse(txtSectorRadius.Text, out int sectorRadius) || sectorRadius <= 0 || sectorRadius > 999)
+            if (!int.TryParse(txtSectorRadius.Text, out int sectorRadius) || sectorRadius <= 0 || sectorRadius > _largestSectorRadius)
             {
-                _ = MessageBox.Show($"Please use a valid numerical value for the sector radius, and specify a value between 1 and 999.");
+                _ = MessageBox.Show($"Please use a valid numerical value for the sector radius, and specify a value between 1 and {_largestSectorRadius}.");
                 return;
             }
 
@@ -338,9 +347,9 @@ namespace X4SectorCreator.Forms
                 lblRadiusUnderText.Text = $"(Please enter a valid numerical value for radius.)";
                 lblRadiusUnderText.ForeColor = Color.Red;
             }
-            else if (radius is <= 0 or > 999)
+            else if (radius <= 0 || radius > _largestSectorRadius)
             {
-                lblRadiusUnderText.Text = $"(Maximum radius must be between 1 and 999)";
+                lblRadiusUnderText.Text = $"(Maximum radius must be between 1 and {_largestSectorRadius})";
                 lblRadiusUnderText.ForeColor = Color.Red;
             }
             else

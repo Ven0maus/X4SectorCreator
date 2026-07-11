@@ -9,7 +9,7 @@ namespace X4SectorCreator.Forms
         public static readonly Dictionary<string, Faction> AllCustomFactions = new(StringComparer.OrdinalIgnoreCase);
         private readonly LazyEvaluated<FactionForm> _factionForm = new(() => new FactionForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<Factions.FactionCreationHelpForm> _factionCreationHelpForm = new(() => new Factions.FactionCreationHelpForm(), a => !a.IsDisposed);
-        
+
         public FactionsForm()
         {
             InitializeComponent();
@@ -80,6 +80,7 @@ namespace X4SectorCreator.Forms
         {
             if (CustomFactionsListBox.SelectedItem is Faction selectedFaction)
             {
+                CleanupCustomFaction(selectedFaction);
                 AllCustomFactions.Remove(selectedFaction.Id);
                 FactionRelationsForm.DeleteFaction(selectedFaction);
 
@@ -91,6 +92,42 @@ namespace X4SectorCreator.Forms
                 index = Math.Max(0, index);
                 CustomFactionsListBox.SelectedItem = index >= 0 && CustomFactionsListBox.Items.Count > 0 ?
                     CustomFactionsListBox.Items[index] : null;
+            }
+        }
+
+        private void CleanupCustomFaction(Faction faction)
+        {
+            // Remove jobs related to this faction
+            var factionRelatedJobs = JobsForm.AllJobs
+                .Where(a => a.Value.FactionRelated(faction))
+                .Select(a => a.Key)
+                .ToArray();
+            foreach (var jobId in factionRelatedJobs)
+                JobsForm.AllJobs.Remove(jobId);
+
+            // Remove factories related to this faction
+            var factionRelatedFactories = FactoriesForm.AllFactories
+                .Where(a => a.Value.FactionRelation(faction))
+                .Select(a => a.Key)
+                .ToArray();
+            foreach (var factoryId in factionRelatedFactories)
+                FactoriesForm.AllFactories.Remove(factoryId);
+
+            // Change stations ownership to ownerless
+            var factionRelatedStations = MainForm.Instance.AllClusters
+                .SelectMany(a => a.Value.Sectors)
+                .SelectMany(a => a.Zones)
+                .SelectMany(a => a.Stations)
+                .Where(a => a.FactionRelated(faction))
+                .ToArray();
+            foreach (var station in factionRelatedStations)
+            {
+                station.Owner = "ownerless";
+
+                // Set base faction of the custom faction for blueprint selection
+                station.Faction = faction.Primaryrace;
+                if (station.Faction == "split")
+                    station.Faction = "zyarth";
             }
         }
 
