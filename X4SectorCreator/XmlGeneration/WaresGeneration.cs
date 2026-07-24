@@ -111,6 +111,8 @@ namespace X4SectorCreator.XmlGeneration
                     TrackWare(trackedWares, wareElements, matchingShipWare, faction);
                 }
 
+                // TODO: FIX: if using ships of other factions, we need also their weapons.
+
                 // Collect equipment wares for the primary faction
                 var turrets = CollectGroupWaresFromFaction(allWares, "turrets", faction.Primaryrace);
                 var shields = CollectGroupWaresFromFaction(allWares, "shields", faction.Primaryrace);
