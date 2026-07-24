@@ -516,7 +516,7 @@ namespace X4SectorCreator.Forms
         }
 
         private void BtnEditXml_Click(object sender, EventArgs e)
-        
+
         {
             // Apply all field data to the XML
             if (!ApplyFieldsContentToFactionXml())
