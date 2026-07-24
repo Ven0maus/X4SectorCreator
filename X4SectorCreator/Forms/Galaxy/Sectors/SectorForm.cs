@@ -81,6 +81,11 @@ namespace X4SectorCreator.Forms
             _selectedCluster = MainForm.Instance.AllClusters
                 .First(a => a.Value.Name.Equals(selectedClusterName, StringComparison.OrdinalIgnoreCase))
                 .Value;
+
+            // Tooltips
+            Tooltip.SetToolTip(txtEconomy, "Is mainly used to define how economically viable the sector is for jobs(npc ships) and stations to spawn.\n" +
+                "It may also be used for the faction to determine how much and what type of production they can expand into the sector.");
+            Tooltip.SetToolTip(txtSecurity, "Affects crime, piracy, policing: how many patrols spawn, defense forces, and amount of smugglers/pirates.");
         }
 
         public void Init()

@@ -197,6 +197,18 @@ namespace X4SectorCreator.Forms
             CmbPoliceFaction.SelectedItem = "self"; //Default value
 
             TagsListBox.Items.Add("custom");
+
+            // Tooltips
+            Tooltip.SetToolTip(CmbAggression, "Aggression controls how willing the faction is to use force.\n" +
+                "Higher aggression means the faction is more likely to:\n" +
+                "start wars, attack enemies, create military fleets,\n" +
+                "push invasions and respond aggressively to threats.");
+            Tooltip.SetToolTip(CmbAvarice, "Avarice controls how greedy/resource hungry a faction is.\n" +
+                "Higher avarice means the faction is more interested in:\n" +
+                "more stations, more mining/trading focus and stronger economy.");
+            Tooltip.SetToolTip(TxtLawfulness, "Lawfulness controls how much a faction follows rules, respects authority, and maintains order.\n" +
+                "Higher lawfulness makes the faction more likely to:\n" +
+                "enforce laws, maintain stability, avoid criminal behaviour, prefer diplomacy and structured relations.");
         }
 
         public static List<Faction.Licence> GetPlaceholderLicenses()

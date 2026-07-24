@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             TxtName = new TextBox();
             BtnCancel = new Button();
@@ -55,6 +56,7 @@
             BtnAddRA = new Button();
             BtnDeleteRA = new Button();
             label12 = new Label();
+            Tooltip = new ToolTip(components);
             SuspendLayout();
             // 
             // label1
@@ -387,5 +389,6 @@
         internal Button BtnDeleteRA;
         public ListBox RAListBox;
         private Label label12;
+        private ToolTip Tooltip;
     }
 }

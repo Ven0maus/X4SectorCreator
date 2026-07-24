@@ -111,35 +111,25 @@ namespace X4SectorCreator.XmlGeneration
                     TrackWare(trackedWares, wareElements, matchingShipWare, faction);
                 }
 
-                var equipmentRequiredFromFactions = matchingShipWares
-                    .Where(a => a.OwnerObj != null)
-                    .SelectMany(a => a.OwnerObj)
-                    .Select(a => a.Faction)
-                    .Where(a => a != null)
-                    .ToHashSet(StringComparer.OrdinalIgnoreCase);
+                // Collect equipment wares for the primary faction
+                var turrets = CollectGroupWaresFromFaction(allWares, "turrets", faction.Primaryrace);
+                var shields = CollectGroupWaresFromFaction(allWares, "shields", faction.Primaryrace);
+                var weapons = CollectGroupWaresFromFaction(allWares, "weapons", faction.Primaryrace);
+                var engines = CollectGroupWaresFromFaction(allWares, "engines", faction.Primaryrace);
 
-                // Collect all equipment (turrets, shields, weapons, engines) for the given factions, and add the current custom faction to it
-                foreach (var eqFaction in equipmentRequiredFromFactions)
+                var allEquipmentWares = turrets
+                    .Concat(shields)
+                    .Concat(weapons)
+                    .Concat(engines)
+                    .ToHashSet();
+
+                foreach (var equipmentWare in allEquipmentWares)
                 {
-                    // Collect equipment wares for eqFaction
-                    var turrets = CollectGroupWaresFromFaction(allWares, "turrets", eqFaction);
-                    var shields = CollectGroupWaresFromFaction(allWares, "shields", eqFaction);
-                    var weapons = CollectGroupWaresFromFaction(allWares, "weapons", eqFaction);
-                    var engines = CollectGroupWaresFromFaction(allWares, "engines", eqFaction);
-
-                    var allEquipmentWares = turrets
-                        .Concat(shields)
-                        .Concat(weapons)
-                        .Concat(engines)
-                        .ToHashSet();
-                    foreach (var equipmentWare in allEquipmentWares)
+                    if (trackedWares.TryGetValue(equipmentWare, out var factions))
                     {
-                        if (trackedWares.TryGetValue(equipmentWare, out var factions))
-                        {
-                            if (factions.Contains(faction)) continue;
-                        }
-                        TrackWare(trackedWares, wareElements, equipmentWare, faction);
+                        if (factions.Contains(faction)) continue;
                     }
+                    TrackWare(trackedWares, wareElements, equipmentWare, faction);
                 }
 
                 // Include sojabeans and sojahusk if faction has a freeport or piratedock station
@@ -148,7 +138,7 @@ namespace X4SectorCreator.XmlGeneration
                     .SelectMany(a => a.Zones)
                     .SelectMany(a => a.Stations)
                     .Where(a => a.Owner == faction.Id)
-                    .Any(a => a.Type.Equals("piratedock", StringComparison.OrdinalIgnoreCase) || 
+                    .Any(a => a.Type.Equals("piratedock", StringComparison.OrdinalIgnoreCase) ||
                         a.Type.Equals("freeport", StringComparison.OrdinalIgnoreCase));
                 if (requiresSojabeansAndHusk)
                 {

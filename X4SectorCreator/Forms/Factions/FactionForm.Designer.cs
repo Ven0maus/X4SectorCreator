@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             TxtFactionName = new TextBox();
             BtnPickColor = new Button();
@@ -63,6 +64,7 @@
             label11 = new Label();
             TxtLawfulness = new TextBox();
             BtnGenRandomIcon = new Button();
+            Tooltip = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -482,5 +484,6 @@
         private Label label11;
         private TextBox TxtLawfulness;
         private Button BtnGenRandomIcon;
+        private ToolTip Tooltip;
     }
 }
