@@ -15,6 +15,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -28,6 +29,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -41,6 +43,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -67,7 +70,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "417a780d-e554-448c-bdf7-4fe3eb53cdb5",
+              "Name": "e2fa8539-979e-4595-9665-0303f7d7241a",
               "Position": {
                 "IsEmpty": false,
                 "X": -44800,
@@ -93,7 +96,7 @@
             },
             {
               "Id": 0,
-              "Name": "595f6301-30ce-4e71-8717-c3278e2b2035",
+              "Name": "f15a1212-d54c-473f-9e58-87670dd3a421",
               "Position": {
                 "IsEmpty": false,
                 "X": 30200,
@@ -119,6 +122,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -144,6 +148,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -169,6 +174,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -182,6 +188,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -207,6 +214,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -233,7 +241,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "12f33a4e-0bd5-40a9-b5cd-44ecfd7ac828",
+              "Name": "cfc3835d-0506-47c5-93f8-244b7896b2d6",
               "Position": {
                 "IsEmpty": false,
                 "X": 165479,
@@ -259,6 +267,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -273,7 +282,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "83397f79-8ffc-4bed-931c-71975547cbcf",
+              "Name": "754c5f88-f426-4202-a3e4-3da5bd0d7263",
               "Position": {
                 "IsEmpty": false,
                 "X": -48800,
@@ -299,6 +308,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -324,6 +334,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -347,8 +358,36 @@
           "Security": 1,
           "DiameterRadius": 500000,
           "AllowRandomAnomalies": true,
-          "Zones": [],
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "95c1995c-dc79-4543-a786-c71c16a7aca0",
+              "Position": {
+                "IsEmpty": false,
+                "X": 14000,
+                "Y": -26500
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "tradestation_argon_02",
+                  "Type": "tradestation",
+                  "Faction": "argon",
+                  "Owner": "argon",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": 14000,
+                    "Y": -26500
+                  }
+                }
+              ]
+            }
+          ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -375,7 +414,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "cfc0b54c-320d-4bd7-8610-b150e890a3e9",
+              "Name": "9f68c1f9-2671-4fb1-aa91-dafd3ed538c9",
               "Position": {
                 "IsEmpty": false,
                 "X": 13600,
@@ -401,6 +440,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -426,6 +466,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -451,6 +492,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -476,6 +518,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -501,6 +544,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -527,7 +571,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "cfeb172e-77e0-4e51-a8fd-d13c516786c4",
+              "Name": "b67862ca-ec05-4b40-bf39-e3d9914f7500",
               "Position": {
                 "IsEmpty": false,
                 "X": -57062,
@@ -553,7 +597,7 @@
             },
             {
               "Id": 0,
-              "Name": "b4fb95c4-7108-4a67-8b04-4f3b2fdfbff1",
+              "Name": "e1c44b50-e028-4063-a5ec-f3cc1c652ba6",
               "Position": {
                 "IsEmpty": false,
                 "X": 75500,
@@ -579,6 +623,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -604,6 +649,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -617,6 +663,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -642,6 +689,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -668,7 +716,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "9ccc9f6b-0d2a-4b5b-8299-fe77625227d9",
+              "Name": "8294a047-8ad1-4a40-ab9e-bc36dac61ae5",
               "Position": {
                 "IsEmpty": false,
                 "X": -102000,
@@ -694,7 +742,7 @@
             },
             {
               "Id": 0,
-              "Name": "579fa26a-a816-493b-99c2-66a921cd3795",
+              "Name": "eb4eab85-9f02-45be-8b27-e4f45f4dbc20",
               "Position": {
                 "IsEmpty": false,
                 "X": -110507,
@@ -720,6 +768,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -746,7 +795,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "67cc24f5-0456-43b4-8522-7c43f0f644fa",
+              "Name": "5050fd4b-981a-460b-9148-c4914cd6d24e",
               "Position": {
                 "IsEmpty": false,
                 "X": 74300,
@@ -772,7 +821,7 @@
             },
             {
               "Id": 0,
-              "Name": "ebca811f-10c0-4388-b539-050643a622d8",
+              "Name": "a576f71b-ad5c-464e-b482-4d215ff4247b",
               "Position": {
                 "IsEmpty": false,
                 "X": -27200,
@@ -798,6 +847,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -823,6 +873,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -836,6 +887,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -862,7 +914,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "c9ee21b3-0762-40c3-9549-4bd50655cc4b",
+              "Name": "5261296d-1eb0-427c-9a74-94d902d92010",
               "Position": {
                 "IsEmpty": false,
                 "X": 3879,
@@ -888,6 +940,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -914,7 +967,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "dc83faf8-e0a0-4edc-a934-f613906018cc",
+              "Name": "22adf82a-8314-4a98-aa2c-c545a9444fb8",
               "Position": {
                 "IsEmpty": false,
                 "X": 35000,
@@ -940,7 +993,7 @@
             },
             {
               "Id": 0,
-              "Name": "857deb83-19c0-44fe-bf60-c0c334d03e62",
+              "Name": "9bf8d244-7aa1-47da-b393-1297b3a5c9e3",
               "Position": {
                 "IsEmpty": false,
                 "X": 167700,
@@ -966,6 +1019,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -979,6 +1033,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1005,7 +1060,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "3680562a-2d1d-4b73-b053-b4532c2ceff2",
+              "Name": "5a570790-0a34-445e-8292-fe2b3b8e9ee2",
               "Position": {
                 "IsEmpty": false,
                 "X": 87200,
@@ -1031,7 +1086,7 @@
             },
             {
               "Id": 0,
-              "Name": "4ae23dce-b697-4078-9854-a5ad9f36b0a3",
+              "Name": "47962b94-cfac-4818-9bf0-d8fabe63501d",
               "Position": {
                 "IsEmpty": false,
                 "X": -38500,
@@ -1057,6 +1112,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1083,7 +1139,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "66bef7bc-5819-4b90-b9b1-fc1b8c405b78",
+              "Name": "2d41ca72-a0bc-41e1-bc17-01d999d74cf7",
               "Position": {
                 "IsEmpty": false,
                 "X": -114153,
@@ -1109,6 +1165,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1135,7 +1192,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "e7f1698c-d5fe-4745-b659-d3c680a02ef3",
+              "Name": "3d4d7452-f94d-44b7-8015-ad469e1885d4",
               "Position": {
                 "IsEmpty": false,
                 "X": 142300,
@@ -1161,7 +1218,7 @@
             },
             {
               "Id": 0,
-              "Name": "462710ee-493f-4d73-acee-5167c23cce95",
+              "Name": "024393fd-6ed6-446f-9e6a-fae8b3d4733d",
               "Position": {
                 "IsEmpty": false,
                 "X": 0,
@@ -1187,7 +1244,7 @@
             },
             {
               "Id": 0,
-              "Name": "d85e16ce-8157-40f1-bb21-e2593db702ae",
+              "Name": "f03e7f61-3302-478e-aa9c-00d0ea350216",
               "Position": {
                 "IsEmpty": false,
                 "X": 72500,
@@ -1213,6 +1270,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1238,6 +1296,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -1251,6 +1310,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1277,7 +1337,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "ea1d4362-a649-4cdd-b30b-e5e024333645",
+              "Name": "49690e5a-9ae7-4ab2-b363-a606b20faf8f",
               "Position": {
                 "IsEmpty": false,
                 "X": -75651,
@@ -1303,7 +1363,7 @@
             },
             {
               "Id": 0,
-              "Name": "24ff39a7-5e2a-4abb-98b1-10508c5dab11",
+              "Name": "4472d44c-83ae-48f6-9489-a4c10a106f7e",
               "Position": {
                 "IsEmpty": false,
                 "X": 167700,
@@ -1329,6 +1389,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -1342,6 +1403,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1368,7 +1430,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "9f34d8ff-e0eb-4420-824b-804f0a0ac18d",
+              "Name": "3732548e-9244-4591-9e0d-d4811a6eb03b",
               "Position": {
                 "IsEmpty": false,
                 "X": 103700,
@@ -1379,7 +1441,7 @@
               "Stations": [
                 {
                   "Id": 0,
-                  "Name": "tradestation_antigone",
+                  "Name": "tradestation_antigone_01",
                   "Type": "tradestation",
                   "Faction": "antigone",
                   "Owner": "antigone",
@@ -1394,6 +1456,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1420,7 +1483,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "2415d961-3514-4563-bcb7-ab74af41ecb4",
+              "Name": "b6b74db5-ba53-4321-a261-1de832200fde",
               "Position": {
                 "IsEmpty": false,
                 "X": -33600,
@@ -1446,11 +1509,11 @@
             },
             {
               "Id": 0,
-              "Name": "c22457b0-100c-44e6-9e14-d9168e0eecb2",
+              "Name": "d0cad736-54e9-40ce-943a-086ee2671b59",
               "Position": {
                 "IsEmpty": false,
-                "X": 105000,
-                "Y": 12300
+                "X": 92500,
+                "Y": 22800
               },
               "IsGeneratedZone": false,
               "Gates": [],
@@ -1464,14 +1527,15 @@
                   "Race": "argon",
                   "Position": {
                     "IsEmpty": false,
-                    "X": 105000,
-                    "Y": 12300
+                    "X": 92500,
+                    "Y": 22800
                   }
                 }
               ]
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1498,7 +1562,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "8c56c816-1ea7-4ce9-b743-ab86894364b1",
+              "Name": "ed261724-e55d-4184-bd34-5f5f058e0064",
               "Position": {
                 "IsEmpty": false,
                 "X": 2506,
@@ -1524,6 +1588,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -1538,7 +1603,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "5ed34d8f-6d47-4d2a-b5cb-1d68f7361700",
+              "Name": "30dd449f-2bf7-42c8-baee-b98f202cdbe2",
               "Position": {
                 "IsEmpty": false,
                 "X": 95609,
@@ -1564,6 +1629,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1589,6 +1655,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1614,6 +1681,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1639,6 +1707,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -1652,6 +1721,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1678,7 +1748,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "4fac2c8d-35fd-4e86-9e80-1645b8c607db",
+              "Name": "38c16c75-f63a-4c1a-ba7b-62b62fe55402",
               "Position": {
                 "IsEmpty": false,
                 "X": -91471,
@@ -1704,7 +1774,7 @@
             },
             {
               "Id": 0,
-              "Name": "eab75bd3-6f51-4cf9-b24d-10bb414a9145",
+              "Name": "28e47107-b84f-4504-aea3-8347f9cf245a",
               "Position": {
                 "IsEmpty": false,
                 "X": 111385,
@@ -1730,6 +1800,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1756,7 +1827,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "3f0b3b2a-7074-40c5-8e4e-76706de6aba8",
+              "Name": "cde876ef-9bf5-4ec9-8f57-1ebad1d577f9",
               "Position": {
                 "IsEmpty": false,
                 "X": -49600,
@@ -1782,7 +1853,7 @@
             },
             {
               "Id": 0,
-              "Name": "a2847d0c-777f-423c-9a04-ff3b076fd502",
+              "Name": "e05e437e-a7ce-4967-9c41-4a0595ca39ea",
               "Position": {
                 "IsEmpty": false,
                 "X": -10700,
@@ -1808,6 +1879,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1834,7 +1906,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "862ce8f2-e266-47ab-94d8-a3c49096e010",
+              "Name": "7a22730a-5321-4adc-ad14-a3b04be5db3e",
               "Position": {
                 "IsEmpty": false,
                 "X": 0,
@@ -1860,6 +1932,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1885,6 +1958,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1910,6 +1984,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1935,6 +2010,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1960,6 +2036,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -1983,8 +2060,36 @@
           "Security": 1,
           "DiameterRadius": 500000,
           "AllowRandomAnomalies": true,
-          "Zones": [],
+          "Zones": [
+            {
+              "Id": 0,
+              "Name": "10d12491-1af5-45e3-b47b-5f267e963162",
+              "Position": {
+                "IsEmpty": false,
+                "X": -33700,
+                "Y": 47500
+              },
+              "IsGeneratedZone": false,
+              "Gates": [],
+              "Stations": [
+                {
+                  "Id": 0,
+                  "Name": "tradestation_antigone_02",
+                  "Type": "tradestation",
+                  "Faction": "antigone",
+                  "Owner": "antigone",
+                  "Race": "argon",
+                  "Position": {
+                    "IsEmpty": false,
+                    "X": -33700,
+                    "Y": 47500
+                  }
+                }
+              ]
+            }
+          ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2011,7 +2116,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "42fc1834-5e70-4196-9580-470bf017b34b",
+              "Name": "6109ffd3-5c78-40c5-b1e4-47ce24a3a256",
               "Position": {
                 "IsEmpty": false,
                 "X": 0,
@@ -2037,6 +2142,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2062,6 +2168,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -2075,6 +2182,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2100,6 +2208,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2125,6 +2234,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2150,6 +2260,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2175,6 +2286,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2201,7 +2313,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "dcd81290-1f40-47c1-9efa-2ce3bbd46dea",
+              "Name": "b29c71e5-6048-4689-b78a-a6a5a66efd10",
               "Position": {
                 "IsEmpty": false,
                 "X": -27500,
@@ -2227,6 +2339,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2252,6 +2365,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2277,6 +2391,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2302,6 +2417,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -2315,6 +2431,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2340,6 +2457,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2365,6 +2483,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2390,6 +2509,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2415,6 +2535,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2440,6 +2561,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2465,6 +2587,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2490,6 +2613,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2515,6 +2639,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2540,6 +2665,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2565,6 +2691,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2590,6 +2717,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2615,6 +2743,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2640,6 +2769,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2666,7 +2796,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "470cdd97-919e-42bf-83a4-005c718e8abd",
+              "Name": "2619a366-b2d2-4c0a-9ef2-19922e8b3579",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -2692,6 +2822,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2717,6 +2848,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2743,7 +2875,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "c958c7ae-8149-437a-8fde-33466677c512",
+              "Name": "cc9a71bd-51df-4db6-b661-e2b405abc764",
               "Position": {
                 "IsEmpty": false,
                 "X": -107418,
@@ -2769,6 +2901,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2794,6 +2927,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2819,6 +2953,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -2832,6 +2967,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2858,7 +2994,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "74b1ee24-fdf5-4705-8775-e185db7b7672",
+              "Name": "0bd45e9b-4098-44d3-8b62-220c29f25c1e",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -2884,6 +3020,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2909,6 +3046,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2935,7 +3073,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "3d84c19f-0da8-438e-b65f-7e658069eef2",
+              "Name": "7ac26084-5ea7-43ad-972a-aa732d1a5b95",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -2961,6 +3099,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -2987,7 +3126,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "69a89beb-0e6e-47d7-8be6-8bde3d2d7215",
+              "Name": "d223cbf5-e82f-4003-91b5-04219c2e4577",
               "Position": {
                 "IsEmpty": false,
                 "X": -162274,
@@ -3013,7 +3152,7 @@
             },
             {
               "Id": 0,
-              "Name": "0dd7bbed-b1e0-41d5-968b-143e38d4c7bf",
+              "Name": "31bc6fb1-019e-478a-bf66-4da5c0435562",
               "Position": {
                 "IsEmpty": false,
                 "X": -31493,
@@ -3039,6 +3178,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3065,7 +3205,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "f025fcca-560f-4a7a-b77f-3b1a5c3af3e5",
+              "Name": "8e1bd3f0-1e20-4a23-8fe1-a7e9b0cb9f67",
               "Position": {
                 "IsEmpty": false,
                 "X": 188010,
@@ -3091,7 +3231,7 @@
             },
             {
               "Id": 0,
-              "Name": "0b875412-0964-44f8-a9ce-a784a938c52f",
+              "Name": "e44496eb-b4e7-4574-8528-0fbc9278d953",
               "Position": {
                 "IsEmpty": false,
                 "X": 183900,
@@ -3117,7 +3257,7 @@
             },
             {
               "Id": 0,
-              "Name": "82b4313b-9dfe-4797-a2ca-ec5c4ba59432",
+              "Name": "728f3def-b98d-43a9-8705-a5dfb0ff6050",
               "Position": {
                 "IsEmpty": false,
                 "X": -107418,
@@ -3143,6 +3283,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3169,7 +3310,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "bcdea94c-a045-4843-8c91-9f66fa92b4b8",
+              "Name": "453b0bd8-9de4-4488-8590-778d759947d2",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -3195,6 +3336,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3221,7 +3363,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "20ff812e-e5ce-491a-a912-4ad51f2c39a6",
+              "Name": "afa9ad66-d8cf-4880-a01d-66a3fd8f16c6",
               "Position": {
                 "IsEmpty": false,
                 "X": 48012,
@@ -3247,6 +3389,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3272,6 +3415,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3297,6 +3441,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3322,6 +3467,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3347,6 +3493,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -3361,7 +3508,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "94942156-e17a-4d39-8365-94260ac3fe7b",
+              "Name": "2d23f197-18eb-4ed4-a86b-d6cfd4202c1f",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -3387,6 +3534,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3412,6 +3560,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3437,6 +3586,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3463,7 +3613,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "58a79988-441b-41eb-bdee-a52c1fab3b04",
+              "Name": "5b697dc4-fa82-41ef-845c-8c6ac69da7dd",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -3489,6 +3639,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3514,6 +3665,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -3527,6 +3679,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3553,7 +3706,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "64697b88-c2d1-4800-94b1-2f738774ffd4",
+              "Name": "6ffdc5c5-c593-4ae1-9a5d-18e0662a874d",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -3579,6 +3732,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3604,6 +3758,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3629,6 +3784,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3655,7 +3811,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "ac1e9a54-3be7-44c9-a985-dfc3efae9c8c",
+              "Name": "34a32247-c968-4072-bf4b-d886fa17704e",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -3681,7 +3837,7 @@
             },
             {
               "Id": 0,
-              "Name": "150a978d-638b-49c3-b077-1ca1c2e73ed4",
+              "Name": "5a4c380e-5d58-434c-b393-0ef565b84bbe",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -3707,6 +3863,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3732,6 +3889,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -3746,7 +3904,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "832d20fe-8f1d-4cd9-98c9-93f60dc339ac",
+              "Name": "836df24e-83c1-4122-9982-91c2a401dd76",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -3772,7 +3930,7 @@
             },
             {
               "Id": 0,
-              "Name": "9b04c88e-ba8c-417a-9ee1-615b02b4e97f",
+              "Name": "0efb7082-fcbc-4d50-987b-c5242ba159f6",
               "Position": {
                 "IsEmpty": true,
                 "X": 0,
@@ -3798,6 +3956,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3823,6 +3982,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3848,6 +4008,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3874,7 +4035,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "83bedac4-e47b-48b3-9142-23aba0de1074",
+              "Name": "1c20d1bc-950d-4655-a4c1-3124b239e78f",
               "Position": {
                 "IsEmpty": false,
                 "X": 38168,
@@ -3900,6 +4061,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3925,6 +4087,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -3950,6 +4113,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -3964,7 +4128,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "5a688492-8df1-49f7-b6e9-0655d63ecfe5",
+              "Name": "4d737e80-9210-4daa-b66f-8831aa8b5ee9",
               "Position": {
                 "IsEmpty": false,
                 "X": 76577,
@@ -3990,6 +4154,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4015,6 +4180,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4041,7 +4207,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "8049cb0e-bfc0-46fb-aca5-c8d1dc5ba4d9",
+              "Name": "0604f7a9-b320-4de7-b50a-305fd1e5ac8f",
               "Position": {
                 "IsEmpty": false,
                 "X": 89031,
@@ -4067,6 +4233,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4092,6 +4259,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -4105,6 +4273,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -4118,6 +4287,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4143,6 +4313,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4168,6 +4339,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4193,6 +4365,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4219,7 +4392,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "3706696c-eccc-47ab-adb7-af7dc65b617a",
+              "Name": "513e1187-07e4-41db-9d07-e1cde5dc317f",
               "Position": {
                 "IsEmpty": false,
                 "X": -71305,
@@ -4245,7 +4418,7 @@
             },
             {
               "Id": 0,
-              "Name": "5c3bb1a4-d507-4eab-ba9e-9d9583c52fa1",
+              "Name": "fafdfa68-dfcb-4d9f-a155-e2059bf5a565",
               "Position": {
                 "IsEmpty": false,
                 "X": 75408,
@@ -4271,7 +4444,7 @@
             },
             {
               "Id": 0,
-              "Name": "1d8f0ff1-06b0-4de6-a576-c3f771d5fffb",
+              "Name": "ab8423f6-36c3-4575-a834-025d01aa55e1",
               "Position": {
                 "IsEmpty": false,
                 "X": -114153,
@@ -4297,6 +4470,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -4310,6 +4484,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4336,7 +4511,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "7836b36d-ece6-4ce7-b442-1c9ad0600208",
+              "Name": "2f428c03-b844-4eba-8e11-ce5079f44cee",
               "Position": {
                 "IsEmpty": false,
                 "X": -85829,
@@ -4362,6 +4537,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4387,6 +4563,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4413,7 +4590,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "9c64c3e9-a81d-4e35-a934-a0ff574d05ee",
+              "Name": "b3540b18-3ed8-4f93-a64d-6fc79669db06",
               "Position": {
                 "IsEmpty": false,
                 "X": 54808,
@@ -4439,7 +4616,7 @@
             },
             {
               "Id": 0,
-              "Name": "011bbe18-2fb3-494f-b33d-5527435b3bc1",
+              "Name": "efc3ccad-64b7-4cab-96fc-31dc2a275f44",
               "Position": {
                 "IsEmpty": false,
                 "X": -47264,
@@ -4465,6 +4642,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4490,6 +4668,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4516,7 +4695,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "f7817bd6-0f20-4baf-baae-4a93e53e04c0",
+              "Name": "50b50d85-9d5c-48e0-adaa-b113ec08cd87",
               "Position": {
                 "IsEmpty": false,
                 "X": 103164,
@@ -4542,7 +4721,7 @@
             },
             {
               "Id": 0,
-              "Name": "5a70df60-8432-4af2-b00c-54bfb6bcf71d",
+              "Name": "cb1933e3-21fa-4328-8cc4-09784172fe79",
               "Position": {
                 "IsEmpty": false,
                 "X": -114265,
@@ -4568,6 +4747,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -4581,6 +4761,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -4594,6 +4775,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4620,7 +4802,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "4331c793-7a24-40e0-baab-e28a6cb6bd17",
+              "Name": "1726043b-98ad-487b-96cb-dc38681a9f56",
               "Position": {
                 "IsEmpty": false,
                 "X": -102337,
@@ -4646,7 +4828,7 @@
             },
             {
               "Id": 0,
-              "Name": "065d2245-67a8-4aeb-848a-b76f46fe6c0c",
+              "Name": "3cbe3494-0ee4-4c77-9a92-3afd4542a5b7",
               "Position": {
                 "IsEmpty": false,
                 "X": -29810,
@@ -4672,6 +4854,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4697,6 +4880,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4722,6 +4906,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4747,6 +4932,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4773,7 +4959,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "3c0ed106-28da-4ea2-8e33-958844c9f2bd",
+              "Name": "a610b9d2-9e83-4b8f-8876-7e85cf84624d",
               "Position": {
                 "IsEmpty": false,
                 "X": -45000,
@@ -4799,6 +4985,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4825,7 +5012,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "10d8941d-d5a0-4517-b8d8-34cc2a38dc27",
+              "Name": "8956885d-b8a4-4feb-9f6c-f5ced6646ecf",
               "Position": {
                 "IsEmpty": false,
                 "X": -55700,
@@ -4851,6 +5038,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4876,6 +5064,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -4902,7 +5091,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "cc7ff8ee-7b6f-4804-89f8-a493a4cb1567",
+              "Name": "4cf40fc0-4a58-4798-a7be-bb1daa080232",
               "Position": {
                 "IsEmpty": false,
                 "X": 54300,
@@ -4928,7 +5117,7 @@
             },
             {
               "Id": 0,
-              "Name": "efbe4987-a01d-4f5c-b42f-b28a5b33011f",
+              "Name": "f454cb8d-4fa8-47a7-95e3-e96fd596d0d3",
               "Position": {
                 "IsEmpty": false,
                 "X": 51992,
@@ -4954,6 +5143,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -4967,6 +5157,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         },
         {
@@ -4980,6 +5171,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5006,7 +5198,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "d7b4a109-f7e9-4801-924b-0f3477d3f9fc",
+              "Name": "deb34c25-c78b-4c2d-9650-0fbc4d041475",
               "Position": {
                 "IsEmpty": false,
                 "X": 2000,
@@ -5032,6 +5224,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5057,6 +5250,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5082,6 +5276,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5107,6 +5302,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5133,7 +5329,7 @@
           "Zones": [
             {
               "Id": 0,
-              "Name": "eb1fd328-c51b-423a-b523-018250302ab3",
+              "Name": "698f388e-f0b8-49dc-a04b-ccbf297bcb0d",
               "Position": {
                 "IsEmpty": false,
                 "X": -60807,
@@ -5159,6 +5355,7 @@
             }
           ],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5184,6 +5381,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5209,6 +5407,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5234,6 +5433,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5259,6 +5459,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5284,6 +5485,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5309,6 +5511,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5334,6 +5537,7 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],
@@ -5359,6 +5563,33 @@
           "AllowRandomAnomalies": true,
           "Zones": [],
           "Regions": [],
+          "ResourceAreas": [],
+          "Placement": "TopLeft"
+        }
+      ],
+      "Position": {
+        "IsEmpty": true,
+        "X": 0,
+        "Y": 0
+      },
+      "CustomSectorPositioning": false
+    },
+    {
+      "Id": 0,
+      "BaseGameMapping": "Cluster_740",
+      "Sectors": [
+        {
+          "Id": 0,
+          "BaseGameMapping": "Sector001",
+          "DisableFactionLogic": false,
+          "Sunlight": 1,
+          "Economy": 1,
+          "Security": 1,
+          "DiameterRadius": 500000,
+          "AllowRandomAnomalies": true,
+          "Zones": [],
+          "Regions": [],
+          "ResourceAreas": [],
           "Placement": "TopLeft"
         }
       ],

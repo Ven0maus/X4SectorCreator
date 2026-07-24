@@ -47,7 +47,8 @@ namespace X4SectorCreator
             { "Cradle Of Humanity", "ego_dlc_terran" },
             { "Kingdom End", "ego_dlc_boron" },
             { "Timelines", "ego_dlc_timelines" },
-            { "Hyperion Pack", "ego_dlc_mini_01" }
+            { "Hyperion Pack", "ego_dlc_mini_01" },
+            { "Envoy Pack", "ego_dlc_mini_02" }
         };
 
         private static readonly Dictionary<string, int> _selectedDlcMapping = _dlcMapping
@@ -933,11 +934,8 @@ namespace X4SectorCreator
                         {
                             if (string.IsNullOrWhiteSpace(a.BoundaryRadius) || !int.TryParse(a.BoundaryRadius, out var radius))
                             {
-#if DEBUG
-                                throw new Exception("No boundary radius defined: " + sector.Name + " | " + a.Name + " | " + a.BoundaryRadius);
-#else
+                                //Debug.WriteLine("No boundary radius defined: " + sector.Name + " | " + a.Name + " | " + a.BoundaryRadius);
                                 return null;
-#endif
                             }
                             return new { Boundary = radius, Region = a };
                         })

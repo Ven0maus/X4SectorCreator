@@ -270,6 +270,13 @@
 			<production ware="weaponcomponents" chance="65" />
 		</compatibilities>
 	</module>
+	<module id="prod_gen_khaakscrapmetal" group="processing_kha">
+		<category ware="khaakscrapmetal" tags="[processing, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, buccaneers, ministry, hatikvah, alliance, scaleplate]" />
+		<compatibilities>
+			<production ref="recycling_kha" chance="100" />
+			<production ware="energycells" chance="100" />
+		</compatibilities>
+	</module>
 	<!-- Argon Production Modules -->
 	<module id="prod_arg_meat" group="prod_arg_meat">
 		<category ware="meat" tags="[production, module]" race="argon" faction="[argon, antigone, hatikvah]" />
@@ -647,14 +654,27 @@
 	<module id="processing_gen" group="processing_gen">
 		<category ware="scrapmetal" tags="[processing, module]" race="[argon, paranid, split, teladi]" faction="[teladi, ministry, hatikvah, alliance, scaleplate]" />
 	</module>
+	<module id="processing_kha" group="processing_kha">
+		<category ware="khaakscrapmetal" tags="[processing, module]" race="[argon, paranid, split, teladi]" faction="[argon, paranid, teladi, antigone, holyorder, trinity, ministry, alliance]">
+			<extension race="terran" faction="pioneers" />
+			<extension race="boron" faction="[boron]" />
+		</category>
+	</module>
 	<!-- Recycling Modules -->
 	<!--Very generic definition without faction data so faction selects it, but can be referenced directly-->
 	<module id="recycling_gen" group="recycling_gen">
 		<category tags="[recycling, module]" />
 	</module>
+	<module id="recycling_kha" group="recycling_kha">
+		<category tags="[recycling, module]" />
+	</module>
 	<!-- Radar Modules -->
 	<module id="radar_gen" group="radar_gen">
 		<category tags="[radar, module]" />
+	</module>
+	<!-- Showroom Modules -->
+	<module id="showroom_gen" group="showroom_gen">
+		<category tags="[showroom, module]" />
 	</module>
 	<module id="prod_spl_medicalsupplies" group="prod_spl_medicalsupplies">
 		<!-- need Split version due to different build method using Scruffin Fruits -->
@@ -806,8 +826,8 @@
 	<module id="conn_ter" group="conn_ter">
 		<category tags="[connection, module]" race="terran" faction="[pioneers, terran]" />
 	</module>
-	<module id="processing_ter" group="processing_ter">
-		<category tags="[processing, module]" race="terran" faction="[pioneers, terran]" />
+	<module id="recycling_ter" group="recycling_ter">
+		<category tags="[recycling, module]" race="terran" faction="[pioneers, terran]" />
 	</module>
 	<module id="welfare_pir" group="welfare_pir">
 		<category tags="[welfare, module]" faction="[scavenger, loanshark]" />
@@ -818,7 +838,7 @@
 	<module id="stor_condensate" group="stor_condensate">
 		<category tags="[storage, module, condensate]" faction="[scavenger]" />
 	</module>
-	<module id="processing_pir_scrap_with_condensate" group="processing_gen" base="pir_factory_base_with_condensate">
+	<module id="processing_pir_scrap_with_condensate" group="processing_gen" base="['pir_factory_base_with_condensate_1', 'pir_factory_base_with_condensate_1', 'pir_factory_base_with_condensate_2', 'pir_factory_base_with_condensate_2', 'pir_factory_base_with_condensate_3', 'pir_factory_base_with_condensate_4']">
 		<category ware="scrapmetal" tags="[processing, module, condensate]" faction="scavenger" />
 		<compatibilities>
 			<production ref="recycling_gen" chance="100" respectquota="false" />
@@ -832,7 +852,7 @@
 			<production ware="energycells" chance="100" />
 		</compatibilities>
 	</module>
-	<module id="prod_pir_energycells_with_condensate" group="prod_gen_energycells" base="pir_factory_base_with_condensate">
+	<module id="prod_pir_energycells_with_condensate" group="prod_gen_energycells" base="['pir_factory_base_with_condensate_1', 'pir_factory_base_with_condensate_1', 'pir_factory_base_with_condensate_2', 'pir_factory_base_with_condensate_2', 'pir_factory_base_with_condensate_3', 'pir_factory_base_with_condensate_4']">
 		<category ware="energycells" tags="[production, module, condensate]" faction="scavenger" />
 		<compatibilities>
 			<production ware="energycells" chance="45" />
@@ -983,5 +1003,8 @@
 			<limits production="4" />
 			<production ware="siliconwafers" chance="50" />
 		</compatibilities>
+	</module>
+	<module id="welfare_bor" group="welfare_bor">
+		<category tags="[welfare, module]" race="boron" faction="[boron]" />
 	</module>
 </modules>
