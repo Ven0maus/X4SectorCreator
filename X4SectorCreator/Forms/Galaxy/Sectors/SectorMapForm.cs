@@ -1752,6 +1752,7 @@ namespace X4SectorCreator
                 .Where(a => !a.IsBaseGame)
                 .SelectMany(a => a.Stations)
                 .Select(a => a.Faction)
+                .Where(a => a != null)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
             var color = MainForm.Instance.FactionColorMapping["None"];
