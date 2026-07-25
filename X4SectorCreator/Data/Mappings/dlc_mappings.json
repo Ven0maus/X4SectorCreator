@@ -22,5 +22,9 @@
   {
     "Dlc": "ego_dlc_mini_01",
     "Prefix": "dlc_mini_01"
+  },
+  {
+    "Dlc": "ego_dlc_mini_02",
+    "Prefix": "dlc_mini_02"
   }
 ]

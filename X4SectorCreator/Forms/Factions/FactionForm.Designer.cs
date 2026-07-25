@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             TxtFactionName = new TextBox();
             BtnPickColor = new Button();
@@ -63,6 +64,7 @@
             label11 = new Label();
             TxtLawfulness = new TextBox();
             BtnGenRandomIcon = new Button();
+            Tooltip = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)IconBox).BeginInit();
             SuspendLayout();
             // 
@@ -314,7 +316,7 @@
             // 
             TxtPreferredHqSpace.Location = new Point(430, 214);
             TxtPreferredHqSpace.Name = "TxtPreferredHqSpace";
-            TxtPreferredHqSpace.PlaceholderText = "Select Preferred HeadQuaters";
+            TxtPreferredHqSpace.PlaceholderText = "Select Preferred Headquarters";
             TxtPreferredHqSpace.ReadOnly = true;
             TxtPreferredHqSpace.Size = new Size(197, 23);
             TxtPreferredHqSpace.TabIndex = 18;
@@ -326,9 +328,9 @@
             label8.Font = new Font("Segoe UI", 11F);
             label8.Location = new Point(429, 191);
             label8.Name = "label8";
-            label8.Size = new Size(169, 20);
+            label8.Size = new Size(167, 20);
             label8.TabIndex = 37;
-            label8.Text = "Preferred HeadQuarters:";
+            label8.Text = "Preferred Headquarters:";
             // 
             // label9
             // 
@@ -482,5 +484,6 @@
         private Label label11;
         private TextBox TxtLawfulness;
         private Button BtnGenRandomIcon;
+        private ToolTip Tooltip;
     }
 }

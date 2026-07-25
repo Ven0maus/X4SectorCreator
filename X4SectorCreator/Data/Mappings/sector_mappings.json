@@ -2629,6 +2629,25 @@
         "X": -14,
         "Y": 8
       }
+    },
+    {
+      "Name": "Scarlet Star",
+      "BaseGameMapping": "Cluster_740",
+	  "Dlc": "ego_dlc_mini_02",
+      "Soundtrack": "music_dlc_mini_02_cluster_scarlet_star",
+      "Sectors": [
+        {
+          "Name": "Scarlet Star",
+          "Owner": "None",
+          "Sunlight": 2.66,
+          "Economy": 0.25,
+          "Security": 0.25
+        }
+      ],
+      "Position": {
+        "X": -3,
+        "Y": -1
+      }
     }
   ]
 }

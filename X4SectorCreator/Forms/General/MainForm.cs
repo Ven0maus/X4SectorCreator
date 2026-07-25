@@ -1812,6 +1812,7 @@ namespace X4SectorCreator
                     _ = factions.Count > 1 ? sb.AppendLine($"Ownership: (cannot be determined)") : sb.AppendLine($"Ownership: ownerless");
                 }
             }
+            _ = sb.AppendLine("(Ownership may not be accurate in-game)");
         }
 
         public void UpdateDetailsText()

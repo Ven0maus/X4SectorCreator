@@ -32,6 +32,9 @@ namespace X4SectorCreator.XmlGeneration
                 // Hyperion Pack
                 CreateReplacementMdForDlc(folder, SectorMapForm.DlcMapping["Hyperion Pack"], "setup_dlc_mini_01", "story_hyperion", "gs_hyperion");
 
+                // Envoy Pack
+                CreateReplacementMdForDlc(folder, SectorMapForm.DlcMapping["Envoy Pack"], "gs_dlc_mini_02", "setup_dlc_mini_02", "story_research_cypher", "story_unbihexium");
+
                 // Base Game
                 List<string> baseGameMds = ["story_diplomacy_intro", "npc_agent", "story_buccaneers", "story_diplomacy_intro", "story_paranid", "story_research_welfare_1", "story_ventures", "terraforming"];
 
