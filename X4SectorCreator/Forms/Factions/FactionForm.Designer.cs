@@ -314,7 +314,7 @@
             // 
             TxtPreferredHqSpace.Location = new Point(430, 214);
             TxtPreferredHqSpace.Name = "TxtPreferredHqSpace";
-            TxtPreferredHqSpace.PlaceholderText = "Select Preferred HeadQuaters";
+            TxtPreferredHqSpace.PlaceholderText = "Select Preferred Headquarters";
             TxtPreferredHqSpace.ReadOnly = true;
             TxtPreferredHqSpace.Size = new Size(197, 23);
             TxtPreferredHqSpace.TabIndex = 18;
