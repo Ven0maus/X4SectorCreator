@@ -111,27 +111,35 @@ namespace X4SectorCreator.XmlGeneration
                     TrackWare(trackedWares, wareElements, matchingShipWare, faction);
                 }
 
-                // TODO: FIX: if using ships of other factions, we need also their weapons.
+                var equipmentRequiredFromFactions = matchingShipWares
+                    .Where(a => a.OwnerObj != null)
+                    .SelectMany(a => a.OwnerObj)
+                    .Select(a => a.Faction)
+                    .Where(a => a != null)
+                    .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-                // Collect equipment wares for the primary faction
-                var turrets = CollectGroupWaresFromFaction(allWares, "turrets", faction.Primaryrace);
-                var shields = CollectGroupWaresFromFaction(allWares, "shields", faction.Primaryrace);
-                var weapons = CollectGroupWaresFromFaction(allWares, "weapons", faction.Primaryrace);
-                var engines = CollectGroupWaresFromFaction(allWares, "engines", faction.Primaryrace);
-
-                var allEquipmentWares = turrets
-                    .Concat(shields)
-                    .Concat(weapons)
-                    .Concat(engines)
-                    .ToHashSet();
-
-                foreach (var equipmentWare in allEquipmentWares)
+                // Collect all equipment (turrets, shields, weapons, engines) for the given factions, and add the current custom faction to it
+                foreach (var eqFaction in equipmentRequiredFromFactions)
                 {
-                    if (trackedWares.TryGetValue(equipmentWare, out var factions))
+                    // Collect equipment wares for eqFaction
+                    var turrets = CollectGroupWaresFromFaction(allWares, "turrets", eqFaction);
+                    var shields = CollectGroupWaresFromFaction(allWares, "shields", eqFaction);
+                    var weapons = CollectGroupWaresFromFaction(allWares, "weapons", eqFaction);
+                    var engines = CollectGroupWaresFromFaction(allWares, "engines", eqFaction);
+
+                    var allEquipmentWares = turrets
+                        .Concat(shields)
+                        .Concat(weapons)
+                        .Concat(engines)
+                        .ToHashSet();
+                    foreach (var equipmentWare in allEquipmentWares)
                     {
-                        if (factions.Contains(faction)) continue;
+                        if (trackedWares.TryGetValue(equipmentWare, out var factions))
+                        {
+                            if (factions.Contains(faction)) continue;
+                        }
+                        TrackWare(trackedWares, wareElements, equipmentWare, faction);
                     }
-                    TrackWare(trackedWares, wareElements, equipmentWare, faction);
                 }
 
                 // Include sojabeans and sojahusk if faction has a freeport or piratedock station
