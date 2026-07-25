@@ -106,11 +106,11 @@
 			<ware ware="missilecomponents" />
 		</wares>
 	</basket>
-	<!--<basket id="nividium">
-    <wares>
-      <ware ware="nividium" />
-    </wares>
-  </basket>-->
+	<basket id="nividium">
+		<wares>
+			<ware ware="nividium" />
+		</wares>
+	</basket>
 	<basket id="nostropoil">
 		<wares>
 			<ware ware="nostropoil" />
@@ -236,6 +236,21 @@
 			<ware ware="rawscrap" />
 		</wares>
 	</basket>
+	<basket id="khaakscrapmetal">
+		<wares>
+			<ware ware="khaakscrapmetal" />
+		</wares>
+	</basket>
+	<basket id="rawkhaakscrap">
+		<wares>
+			<ware ware="rawkhaakscrap" />
+		</wares>
+	</basket>
+	<basket id="khaakalloy">
+		<wares>
+			<ware ware="khaakalloy" />
+		</wares>
+	</basket>
 	<!-- Ware Group Baskets -->
 	<basket id="bio" name="Bio Wares" description="Basket for all tradable bio-level wares">
 		<wares>
@@ -281,9 +296,10 @@
 			<ware ware="hullparts" />
 			<ware ware="smartchips" />
 			<ware ware="weaponcomponents" />
+			<ware ware="khaakalloy" />
 		</wares>
 	</basket>
-	<basket id="construction_ships_expended" name="Ship Construction Wares Expanded" description="Basket for wares necessary for ship construction">
+	<basket id="construction_ships_expanded" name="Ship Construction Wares Expanded" description="Basket for wares necessary for ship construction">
 		<wares>
 			<ware ware="advancedelectronics" />
 			<ware ware="antimatterconverters" />
@@ -297,6 +313,7 @@
 			<ware ware="fieldcoils" />
 			<ware ware="missilecomponents" />
 			<ware ware="scanningarrays" />
+			<ware ware="khaakalloy" />
 		</wares>
 	</basket>
 	<basket id="construction_stations" name="Station Construction Wares" description="Basket for wares necessary for station construction">
@@ -327,6 +344,7 @@
 			<ware ware="smartchips" />
 			<ware ware="turretcomponents" />
 			<ware ware="weaponcomponents" />
+			<ware ware="khaakalloy" />
 			<ware ware="computronicsubstrate" />
 			<ware ware="metallicmicrolattice" />
 			<ware ware="siliconcarbide" />
@@ -389,7 +407,9 @@
 	<basket id="minerals" name="Mineral Wares" description="Basket for all mineral wares (mined from asteroids)">
 		<wares>
 			<ware ware="ice" />
-			<!--<ware ware="nividium" />-->
+			<!-- removed to keep nividium demand
+      <ware ware="nividium" />
+      -->
 			<ware ware="ore" />
 			<ware ware="silicon" />
 		</wares>
@@ -403,7 +423,6 @@
 	<basket id="refined" name="Refined Wares" description="Basket for all tradable refined-level wares">
 		<wares>
 			<ware ware="antimattercells" />
-			<ware ware="energycells" />
 			<ware ware="graphene" />
 			<ware ware="superfluidcoolant" />
 			<ware ware="refinedmetals" />
@@ -430,7 +449,6 @@
 			<ware ware="advancedelectronics" />
 			<ware ware="antimatterconverters" />
 			<ware ware="dronecomponents" />
-			<ware ware="energycells" />
 			<ware ware="engineparts" />
 			<ware ware="fieldcoils" />
 			<ware ware="microchips" />
@@ -559,7 +577,7 @@
 			<ware ware="methane" />
 			<ware ware="microchips" />
 			<ware ware="missilecomponents" />
-			<!--<ware ware="nividium" />-->
+			<ware ware="nividium" />
 			<ware ware="nostropoil" />
 			<ware ware="ore" />
 			<ware ware="plasmaconductors" />
@@ -648,7 +666,7 @@
 	<basket id="all_solid" name="All Solid Wares" description="Basket for all solid wares">
 		<wares>
 			<ware ware="ice" />
-			<!--<ware ware="nividium" />-->
+			<ware ware="nividium" />
 			<ware ware="ore" />
 			<ware ware="silicon" />
 		</wares>
@@ -658,6 +676,12 @@
 			<ware ware="helium" />
 			<ware ware="hydrogen" />
 			<ware ware="methane" />
+		</wares>
+	</basket>
+	<basket id="all_scrap" name="All Scrap Wares" description="Basket for all scrap wares">
+		<wares>
+			<ware ware="rawscrap" />
+			<ware ware="rawkhaakscrap" />
 		</wares>
 	</basket>
 	<basket id="research_gamestart_common">
@@ -716,7 +740,6 @@
 			<ware ware="inv_algaescrubber" />
 			<ware ware="inv_rapidsandfilter" />
 			<ware ware="inv_carbonfilter" />
-			<ware ware="inv_micromotor" />
 			<ware ware="inv_herbicide" />
 		</wares>
 	</basket>
@@ -760,7 +783,7 @@
 	<basket id="curiosities_crafted" name="Curiosities Crafted" description="Curiosities items that can be crafted">
 		<wares>
 			<ware ware="inv_rareartefact" />
-			<ware ware="inv_xenotexts" />
+			<ware ware="inv_xenotext" />
 		</wares>
 	</basket>
 	<!-- Hardware -->
@@ -778,7 +801,7 @@
 			<ware ware="inv_remotedetonator" />
 			<ware ware="inv_modulartrigger" />
 			<ware ware="inv_datafragment" />
-			<ware ware="inv_capacitator" />
+			<ware ware="inv_capacitor" />
 		</wares>
 	</basket>
 	<basket id="hardware_crafted" name="Hardware Crafted" description="Hardware items that can be crafted">
@@ -812,12 +835,12 @@
 			<ware ware="inv_majaglit" />
 			<ware ware="inv_spaceflycaviar" />
 			<ware ware="inv_finemeal" />
-			<ware ware="inv_nividiumjewels" />
-			<ware ware="inv_harmonicresonators" />
+			<ware ware="inv_nividiumjewel" />
+			<ware ware="inv_harmonicresonator" />
 			<ware ware="inv_spacedyepizza" />
 			<ware ware="inv_infusedbeverage" />
 			<ware ware="inv_microbrewdrink" />
-			<ware ware="in_aquaponicvegetables" />
+			<ware ware="inv_aquaponicvegetables" />
 		</wares>
 	</basket>
 	<!-- Equipment -->
@@ -1002,6 +1025,7 @@
 			<ware ware="computronicsubstrate" />
 			<ware ware="metallicmicrolattice" />
 			<ware ware="siliconcarbide" />
+			<ware ware="khaakalloy" />
 		</wares>
 	</basket>
 	<basket id="construction_stations_terran" name="Station Construction Wares" description="Basket for wares necessary for Terran station construction">

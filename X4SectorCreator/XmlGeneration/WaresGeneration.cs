@@ -148,7 +148,7 @@ namespace X4SectorCreator.XmlGeneration
                     .SelectMany(a => a.Zones)
                     .SelectMany(a => a.Stations)
                     .Where(a => a.Owner == faction.Id)
-                    .Any(a => a.Type.Equals("piratedock", StringComparison.OrdinalIgnoreCase) || 
+                    .Any(a => a.Type.Equals("piratedock", StringComparison.OrdinalIgnoreCase) ||
                         a.Type.Equals("freeport", StringComparison.OrdinalIgnoreCase));
                 if (requiresSojabeansAndHusk)
                 {

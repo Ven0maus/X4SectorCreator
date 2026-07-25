@@ -6394,4 +6394,30 @@ Resource Area Yield level
 			<area sunlight="1" economy="0.25" security="0.25" tags="noaggressivespawn" jobs="false" />
 		</properties>
 	</dataset>
+	<dataset macro="Cluster_740_macro">
+		<properties>
+			<identification name="{20003,7400001}" description="{20003,7400002}" image="enc_cluster740" system="740" />
+			<sounds>
+				<music ref="music_dlc_mini_02_cluster_scarlet_star" />
+			</sounds>
+			<system>
+				<space environment="{1042,12071}(Emission Nebula)" />
+				<suns>
+					<sun class="{1042,13041}(White Dwarf)" />
+				</suns>
+			</system>
+		</properties>
+	</dataset>
+	<dataset macro="Cluster_740_Sector001_macro">
+		<properties>
+			<identification name="{20004,7400011}" description="{20004,7400012}" />
+			<resourceareas>
+				<resourcearea amount="2" ref="sphere_small_helium_low_veryslow" />
+				<resourcearea amount="2" ref="sphere_large_ore_high_slow" />
+				<resourcearea amount="4" ref="sphere_medium_ore_medium_average" />
+				<resourcearea amount="1" ref="sphere_large_rawscrap_low_slow" />
+			</resourceareas>
+			<area sunlight="2.66" economy="0.25" security="0.25" tags="noaggressivespawn" jobs="false" />
+		</properties>
+	</dataset>
 </defaults>

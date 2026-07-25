@@ -34,6 +34,7 @@ namespace X4SectorCreator.Configuration
                 ("dlc_boron_", GetFile(SectorMapForm.DlcMapping["Kingdom End"])),
                 ("dlc7_", GetFile(SectorMapForm.DlcMapping["Timelines"])),
                 ("dlc_mini_01_", GetFile(SectorMapForm.DlcMapping["Hyperion Pack"])),
+                ("dlc_mini_02_", GetFile(SectorMapForm.DlcMapping["Envoy Pack"]))
             ];
 
             // Verify existance
