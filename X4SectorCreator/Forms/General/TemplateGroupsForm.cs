@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.ComponentModel;
-using System.Linq;
-using System.Windows.Forms;
 using System.Xml.Linq;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
@@ -29,7 +27,7 @@ namespace X4SectorCreator.Forms.General
         private readonly List<object> _currentSelection = [];
         private readonly static HashSet<string> _defaultGroups = new(StringComparer.OrdinalIgnoreCase)
         {
-            "Vanilla", "Deadair_Scripts"
+            "Vanilla"
         };
 
         public TemplateGroupsForm()
@@ -391,8 +389,8 @@ namespace X4SectorCreator.Forms.General
             _currentSelection.Clear();
 
             if (TemplateGroupsListBox.SelectedIndex == -1) return;
-                if (TemplateGroupsListBox.SelectedItem is string group &&
-                !string.IsNullOrWhiteSpace(group))
+            if (TemplateGroupsListBox.SelectedItem is string group &&
+            !string.IsNullOrWhiteSpace(group))
             {
                 // Disable functions for vanilla group
                 if (_defaultGroups.Contains(group))

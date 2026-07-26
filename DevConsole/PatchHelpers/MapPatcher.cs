@@ -58,6 +58,7 @@ namespace DevConsole.PatchHelpers
             PatchFile(directories, vanillaFilesPath, "libraries", "factions.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "region_definitions.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "god.xml");
+            PatchFile(directories, vanillaFilesPath, "libraries", "jobs.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "wares.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "baskets.xml");
             PatchFile(directories, vanillaFilesPath, "libraries", "modules.xml");
