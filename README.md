@@ -34,6 +34,11 @@ A tool to help mod new sectors and gate connections in *X4: Foundations*. This t
 
 Add the resulting folder of your chosen name in your **gamedirectory/extensions folder** and enable it in-game to see the results.
 
+## Contribution
+
+Using AI as a proofreading or brainstorming tool is acceptable. However, AI-generated code, documentation, or pull requests are not accepted.
+Contributors must author the submission themselves and be able to explain and justify every change.
+
 ## License
 This project is licensed under the GNU V2.0 License.
 
