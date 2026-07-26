@@ -350,28 +350,43 @@ namespace X4SectorCreator.Objects
             public string Size { get; set; }
         }
 
-        [XmlRoot(ElementName = "level")]
-        public class Level
+        [XmlRoot(ElementName = "quantity")]
+        public class Quantity
         {
-            [XmlAttribute(AttributeName = "min")]
-            public string Min { get; set; }
+            [XmlAttribute(AttributeName = "exact")]
+            public double Exact { get; set; }
+        }
 
-            [XmlAttribute(AttributeName = "max")]
-            public string Max { get; set; }
+        [XmlRoot(ElementName = "variation")]
+        public class Variation
+        {
+            [XmlAttribute(AttributeName = "exact")]
+            public double Exact { get; set; }
+        }
+
+        [XmlRoot(ElementName = "quality")]
+        public class Quality
+        {
+            [XmlElement(ElementName = "variation")]
+            public Variation Variation { get; set; }
 
             [XmlAttribute(AttributeName = "exact")]
-            public string Exact { get; set; }
+            public double Exact { get; set; }
         }
 
         [XmlRoot(ElementName = "loadout")]
         public class Loadout
         {
-            [XmlElement(ElementName = "level")]
-            public Level Level { get; set; }
+            [XmlElement(ElementName = "quantity")]
+            public Quantity Quantity { get; set; }
 
             [XmlElement(ElementName = "variation")]
             public Variation Variation { get; set; }
+
+            [XmlElement(ElementName = "quality")]
+            public Quality Quality { get; set; }
         }
+
 
         [XmlRoot(ElementName = "owner")]
         public class Owner
@@ -433,13 +448,6 @@ namespace X4SectorCreator.Objects
         {
             [XmlElement(ElementName = "wares")]
             public Wares Wares { get; set; }
-        }
-
-        [XmlRoot(ElementName = "variation")]
-        public class Variation
-        {
-            [XmlAttribute(AttributeName = "exact")]
-            public string Exact { get; set; }
         }
 
         [XmlRoot(ElementName = "subordinate")]
