@@ -374,6 +374,13 @@ namespace X4SectorCreator.Objects
             public double Exact { get; set; }
         }
 
+        [XmlRoot(ElementName = "level")]
+        public class Level
+        {
+            [XmlAttribute(AttributeName = "faction")]
+            public string Faction { get; set; }
+        }
+
         [XmlRoot(ElementName = "loadout")]
         public class Loadout
         {
@@ -385,8 +392,10 @@ namespace X4SectorCreator.Objects
 
             [XmlElement(ElementName = "quality")]
             public Quality Quality { get; set; }
-        }
 
+            [XmlElement(ElementName = "level")]
+            public Level Level { get; set; }
+        }
 
         [XmlRoot(ElementName = "owner")]
         public class Owner
