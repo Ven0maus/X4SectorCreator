@@ -34,6 +34,7 @@
             txtRegionRadius = new TextBox();
             label7 = new Label();
             txtRegionPosition = new TextBox();
+            txtRegionHeight = new TextBox();
             label5 = new Label();
             label14 = new Label();
             txtRegionName = new TextBox();
@@ -53,7 +54,7 @@
             label15.Location = new Point(10, 63);
             label15.Name = "label15";
             label15.Size = new Size(109, 21);
-            label15.TabIndex = 91;
+            label15.TabIndex = 92;
             label15.Text = "Region Linear:";
             // 
             // txtRegionLinear
@@ -62,7 +63,7 @@
             txtRegionLinear.Location = new Point(10, 87);
             txtRegionLinear.Name = "txtRegionLinear";
             txtRegionLinear.Size = new Size(230, 23);
-            txtRegionLinear.TabIndex = 90;
+            txtRegionLinear.TabIndex = 91;
             txtRegionLinear.TextAlign = HorizontalAlignment.Center;
             // 
             // label8
@@ -72,7 +73,7 @@
             label8.Location = new Point(10, 164);
             label8.Name = "label8";
             label8.Size = new Size(113, 21);
-            label8.TabIndex = 89;
+            label8.TabIndex = 90;
             label8.Text = "Region Radius:";
             // 
             // txtRegionRadius
@@ -81,7 +82,7 @@
             txtRegionRadius.Name = "txtRegionRadius";
             txtRegionRadius.ReadOnly = true;
             txtRegionRadius.Size = new Size(230, 23);
-            txtRegionRadius.TabIndex = 88;
+            txtRegionRadius.TabIndex = 89;
             txtRegionRadius.TextAlign = HorizontalAlignment.Center;
             // 
             // label7
@@ -91,15 +92,24 @@
             label7.Location = new Point(10, 113);
             label7.Name = "label7";
             label7.Size = new Size(121, 21);
-            label7.TabIndex = 87;
+            label7.TabIndex = 88;
             label7.Text = "Region Position:";
+            // 
+            // txtRegionPositionY
+            // 
+            txtRegionHeight.Location = new Point(150, 137);
+            txtRegionHeight.Name = "txtRegionPositionY";
+            txtRegionHeight.ReadOnly = false;
+            txtRegionHeight.Size = new Size(90, 23);
+            txtRegionHeight.TabIndex = 87;
+            txtRegionHeight.TextAlign = HorizontalAlignment.Center;
             // 
             // txtRegionPosition
             // 
             txtRegionPosition.Location = new Point(10, 137);
             txtRegionPosition.Name = "txtRegionPosition";
             txtRegionPosition.ReadOnly = true;
-            txtRegionPosition.Size = new Size(230, 23);
+            txtRegionPosition.Size = new Size(140, 23);
             txtRegionPosition.TabIndex = 86;
             txtRegionPosition.TextAlign = HorizontalAlignment.Center;
             // 
@@ -201,6 +211,7 @@
             Controls.Add(label8);
             Controls.Add(txtRegionRadius);
             Controls.Add(label7);
+            Controls.Add(txtRegionHeight);
             Controls.Add(txtRegionPosition);
             Controls.Add(label5);
             Controls.Add(label14);
@@ -224,6 +235,7 @@
         private TextBox txtRegionRadius;
         private Label label7;
         private TextBox txtRegionPosition;
+        private TextBox txtRegionHeight;
         private Label label5;
         private Label label14;
         private TextBox txtRegionName;
