@@ -118,7 +118,7 @@ namespace X4SectorCreator.XmlGeneration
                         new XElement("offset",
                             new XElement("position",
                                 new XAttribute("x", (sector.IsBaseGame ? sector.SectorRealOffset.X : sector.Offset.X) + region.Position.X),
-                                new XAttribute("y", 0),
+                                new XAttribute("y", region.Height),
                                 new XAttribute("z", (sector.IsBaseGame ? sector.SectorRealOffset.Y : sector.Offset.Y) + region.Position.Y)
                             )
                         ),
@@ -270,7 +270,7 @@ namespace X4SectorCreator.XmlGeneration
                                 new XElement("offset",
                                     new XElement("position",
                                         new XAttribute("x", sector.Offset.X + region.Position.X),
-                                        new XAttribute("y", 0),
+                                        new XAttribute("y", region.Height),
                                         new XAttribute("z", sector.Offset.Y + region.Position.Y)
                                     )
                                 ),
@@ -330,7 +330,7 @@ namespace X4SectorCreator.XmlGeneration
                                 new XElement("offset",
                                     new XElement("position",
                                         new XAttribute("x", sector.Offset.X + region.Position.X),
-                                        new XAttribute("y", 0),
+                                        new XAttribute("y", region.Height),
                                         new XAttribute("z", sector.Offset.Y + region.Position.Y)
                                     )
                                 ),

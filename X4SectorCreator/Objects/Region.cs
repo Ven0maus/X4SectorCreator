@@ -3,6 +3,7 @@ using X4SectorCreator.Helpers;
 
 namespace X4SectorCreator.Objects
 {
+
     public class Region : ICloneable
     {
         public int Id { get; set; }
@@ -11,6 +12,7 @@ namespace X4SectorCreator.Objects
         public string BoundaryRadius { get; set; }
         public string BoundaryLinear { get; set; }
         public Point Position { get; set; }
+        public int Height { get; set; }
 
         [JsonIgnore]
         public bool IsBaseGame { get; set; } = false;
@@ -25,6 +27,7 @@ namespace X4SectorCreator.Objects
                 Id = Id,
                 Name = Name,
                 Position = Position,
+                Height = Height,
                 IsBaseGame = IsBaseGame
             };
         }

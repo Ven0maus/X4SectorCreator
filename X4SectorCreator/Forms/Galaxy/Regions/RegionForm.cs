@@ -39,6 +39,7 @@ namespace X4SectorCreator.Forms
                     txtRegionName.Text = CustomRegion.Name;
                     txtRegionLinear.Text = CustomRegion.BoundaryLinear;
                     txtRegionPosition.Text = (CustomRegion.Position.X, CustomRegion.Position.Y).ToString();
+                    txtRegionHeight.Text = CustomRegion.Height.ToString();
                     txtRegionRadius.Text = _circleRadius.ToString();
 
                     // Just incase it is somehow deleted, we must still display it here
@@ -305,7 +306,8 @@ namespace X4SectorCreator.Forms
                         Definition = selectedRegionDefinition,
                         BoundaryLinear = regionLinear.ToString(),
                         BoundaryRadius = ConvertScreenRadiusToWorld(_circleRadius).ToString(),
-                        Position = ConvertScreenToWorld(_circlePosition)
+                        Position = ConvertScreenToWorld(_circlePosition),
+                        Height = Convert.ToInt32(txtRegionHeight.Text)
                     };
 
                     // Add region to sector
@@ -319,6 +321,7 @@ namespace X4SectorCreator.Forms
                     CustomRegion.BoundaryLinear = regionLinear.ToString();
                     CustomRegion.BoundaryRadius = ConvertScreenRadiusToWorld(_circleRadius).ToString();
                     CustomRegion.Position = ConvertScreenToWorld(_circlePosition);
+                    CustomRegion.Height = Convert.ToInt32(txtRegionHeight.Text);
                     CustomRegion.Definition = selectedRegionDefinition;
 
                     int index = MainForm.Instance.RegionsListBox.SelectedIndex;
