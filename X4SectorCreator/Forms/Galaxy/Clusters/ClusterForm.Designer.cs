@@ -49,12 +49,31 @@
             BtnSector3 = new RadioButton();
             BtnSector2 = new RadioButton();
             BtnSector1 = new RadioButton();
+            panel2 = new Panel();
+            label8 = new Label();
+            ListBoxSuns = new ListBox();
+            label9 = new Label();
+            BtnCreateSun = new Button();
+            BtnRemoveSun = new Button();
+            BtnRemovePlanet = new Button();
+            BtnCreatePlanet = new Button();
+            label10 = new Label();
+            ListBoxPlanets = new ListBox();
+            BtnRemoveMoon = new Button();
+            BtnCreateMoon = new Button();
+            label11 = new Label();
+            ListBoxMoons = new ListBox();
+            label12 = new Label();
+            TxtSpaceEnvironmentName = new TextBox();
+            label13 = new Label();
+            label14 = new Label();
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(166, 388);
+            BtnCreate.Location = new Point(167, 452);
             BtnCreate.Name = "BtnCreate";
             BtnCreate.Size = new Size(236, 30);
             BtnCreate.TabIndex = 0;
@@ -64,7 +83,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(11, 388);
+            BtnCancel.Location = new Point(12, 452);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(149, 30);
             BtnCancel.TabIndex = 1;
@@ -188,11 +207,11 @@
             // 
             // BtnEditClusterXml
             // 
-            BtnEditClusterXml.Location = new Point(166, 356);
+            BtnEditClusterXml.Location = new Point(166, 406);
             BtnEditClusterXml.Name = "BtnEditClusterXml";
-            BtnEditClusterXml.Size = new Size(236, 30);
+            BtnEditClusterXml.Size = new Size(236, 40);
             BtnEditClusterXml.TabIndex = 38;
-            BtnEditClusterXml.Text = "Edit Cluster XML (Advanced)";
+            BtnEditClusterXml.Text = "Edit Cluster Assets XML (Advanced)";
             BtnEditClusterXml.UseVisualStyleBackColor = true;
             BtnEditClusterXml.Click += BtnEditClusterXml_Click;
             // 
@@ -259,11 +278,194 @@
             BtnSector1.Text = "1";
             BtnSector1.UseVisualStyleBackColor = true;
             // 
+            // panel2
+            // 
+            panel2.BackColor = SystemColors.ControlLight;
+            panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.Controls.Add(label13);
+            panel2.Controls.Add(TxtSpaceEnvironmentName);
+            panel2.Controls.Add(label12);
+            panel2.Controls.Add(BtnRemoveMoon);
+            panel2.Controls.Add(BtnCreateMoon);
+            panel2.Controls.Add(label11);
+            panel2.Controls.Add(ListBoxMoons);
+            panel2.Controls.Add(BtnRemovePlanet);
+            panel2.Controls.Add(BtnCreatePlanet);
+            panel2.Controls.Add(label10);
+            panel2.Controls.Add(ListBoxPlanets);
+            panel2.Controls.Add(BtnRemoveSun);
+            panel2.Controls.Add(BtnCreateSun);
+            panel2.Controls.Add(label9);
+            panel2.Controls.Add(ListBoxSuns);
+            panel2.Controls.Add(label8);
+            panel2.Location = new Point(409, 12);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(390, 470);
+            panel2.TabIndex = 41;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label8.Location = new Point(83, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(263, 30);
+            label8.TabIndex = 0;
+            label8.Text = "Star System Information";
+            // 
+            // ListBoxSuns
+            // 
+            ListBoxSuns.FormattingEnabled = true;
+            ListBoxSuns.Location = new Point(14, 116);
+            ListBoxSuns.Name = "ListBoxSuns";
+            ListBoxSuns.Size = new Size(253, 94);
+            ListBoxSuns.TabIndex = 1;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F);
+            label9.Location = new Point(14, 92);
+            label9.Name = "label9";
+            label9.Size = new Size(47, 21);
+            label9.TabIndex = 42;
+            label9.Text = "Suns:";
+            // 
+            // BtnCreateSun
+            // 
+            BtnCreateSun.Location = new Point(273, 116);
+            BtnCreateSun.Name = "BtnCreateSun";
+            BtnCreateSun.Size = new Size(75, 23);
+            BtnCreateSun.TabIndex = 43;
+            BtnCreateSun.Text = "Create";
+            BtnCreateSun.UseVisualStyleBackColor = true;
+            // 
+            // BtnRemoveSun
+            // 
+            BtnRemoveSun.Location = new Point(273, 145);
+            BtnRemoveSun.Name = "BtnRemoveSun";
+            BtnRemoveSun.Size = new Size(75, 23);
+            BtnRemoveSun.TabIndex = 44;
+            BtnRemoveSun.Text = "Remove Sun";
+            BtnRemoveSun.UseVisualStyleBackColor = true;
+            // 
+            // BtnRemovePlanet
+            // 
+            BtnRemovePlanet.Location = new Point(273, 263);
+            BtnRemovePlanet.Name = "BtnRemovePlanet";
+            BtnRemovePlanet.Size = new Size(75, 23);
+            BtnRemovePlanet.TabIndex = 48;
+            BtnRemovePlanet.Text = "Remove Sun";
+            BtnRemovePlanet.UseVisualStyleBackColor = true;
+            // 
+            // BtnCreatePlanet
+            // 
+            BtnCreatePlanet.Location = new Point(273, 234);
+            BtnCreatePlanet.Name = "BtnCreatePlanet";
+            BtnCreatePlanet.Size = new Size(75, 23);
+            BtnCreatePlanet.TabIndex = 47;
+            BtnCreatePlanet.Text = "Create";
+            BtnCreatePlanet.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 12F);
+            label10.Location = new Point(14, 211);
+            label10.Name = "label10";
+            label10.Size = new Size(63, 21);
+            label10.TabIndex = 46;
+            label10.Text = "Planets:";
+            // 
+            // ListBoxPlanets
+            // 
+            ListBoxPlanets.FormattingEnabled = true;
+            ListBoxPlanets.Location = new Point(14, 234);
+            ListBoxPlanets.Name = "ListBoxPlanets";
+            ListBoxPlanets.Size = new Size(253, 94);
+            ListBoxPlanets.TabIndex = 45;
+            // 
+            // BtnRemoveMoon
+            // 
+            BtnRemoveMoon.Location = new Point(273, 383);
+            BtnRemoveMoon.Name = "BtnRemoveMoon";
+            BtnRemoveMoon.Size = new Size(75, 23);
+            BtnRemoveMoon.TabIndex = 52;
+            BtnRemoveMoon.Text = "Remove Sun";
+            BtnRemoveMoon.UseVisualStyleBackColor = true;
+            // 
+            // BtnCreateMoon
+            // 
+            BtnCreateMoon.Location = new Point(273, 354);
+            BtnCreateMoon.Name = "BtnCreateMoon";
+            BtnCreateMoon.Size = new Size(75, 23);
+            BtnCreateMoon.TabIndex = 51;
+            BtnCreateMoon.Text = "Create";
+            BtnCreateMoon.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 12F);
+            label11.Location = new Point(14, 330);
+            label11.Name = "label11";
+            label11.Size = new Size(61, 21);
+            label11.TabIndex = 50;
+            label11.Text = "Moons:";
+            // 
+            // ListBoxMoons
+            // 
+            ListBoxMoons.FormattingEnabled = true;
+            ListBoxMoons.Location = new Point(14, 354);
+            ListBoxMoons.Name = "ListBoxMoons";
+            ListBoxMoons.Size = new Size(253, 94);
+            ListBoxMoons.TabIndex = 49;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 12F);
+            label12.Location = new Point(14, 40);
+            label12.Name = "label12";
+            label12.Size = new Size(193, 21);
+            label12.TabIndex = 53;
+            label12.Text = "Space Environment Name:";
+            // 
+            // TxtSpaceEnvironmentName
+            // 
+            TxtSpaceEnvironmentName.Location = new Point(14, 64);
+            TxtSpaceEnvironmentName.Name = "TxtSpaceEnvironmentName";
+            TxtSpaceEnvironmentName.Size = new Size(253, 23);
+            TxtSpaceEnvironmentName.TabIndex = 54;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 11F);
+            label13.Location = new Point(0, 2);
+            label13.Name = "label13";
+            label13.Size = new Size(77, 20);
+            label13.TabIndex = 55;
+            label13.Text = "(Optional)";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 11F);
+            label14.Location = new Point(16, 358);
+            label14.Name = "label14";
+            label14.Size = new Size(388, 40);
+            label14.TabIndex = 56;
+            label14.Text = "Note: for a workforce bonus in this cluster you must setup\r\nthe star system information with atleast one planet.";
+            label14.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // ClusterForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(415, 422);
+            ClientSize = new Size(811, 489);
+            Controls.Add(label14);
+            Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(label7);
             Controls.Add(BtnEditClusterXml);
@@ -288,6 +490,8 @@
             Text = "Cluster Editor";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -314,5 +518,23 @@
         internal RadioButton BtnSector3;
         internal RadioButton BtnSector2;
         internal RadioButton BtnSector1;
+        private Panel panel2;
+        private Label label8;
+        private Button BtnRemoveMoon;
+        private Button BtnCreateMoon;
+        private Label label11;
+        private ListBox ListBoxMoons;
+        private Button BtnRemovePlanet;
+        private Button BtnCreatePlanet;
+        private Label label10;
+        private ListBox ListBoxPlanets;
+        private Button BtnRemoveSun;
+        private Button BtnCreateSun;
+        private Label label9;
+        private ListBox ListBoxSuns;
+        private TextBox TxtSpaceEnvironmentName;
+        private Label label12;
+        private Label label13;
+        private Label label14;
     }
 }
