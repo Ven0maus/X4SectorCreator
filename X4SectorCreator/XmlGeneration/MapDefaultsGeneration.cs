@@ -8,7 +8,7 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class MapDefaultsGeneration
     {
-        private static readonly Dictionary<string, string> _spaceTypeMappings = new()
+        public static readonly IReadOnlyDictionary<string, string> SpaceTypeMappings = new Dictionary<string, string>()
         {
             { "Clear Space", "{1042,12011}(Clear Space)" },
             { "Thin Nebula", "{1042,12021}(Thin Nebula)" },
@@ -19,7 +19,7 @@ namespace X4SectorCreator.XmlGeneration
             { "Emission Nebula", "{1042,12071}(Emission Nebula)" }
         };
 
-        private static readonly Dictionary<string, string> _atmosphereTypeMappings = new()
+        public static readonly IReadOnlyDictionary<string, string> AtmosphereTypeMappings = new Dictionary<string, string>()
         {
             { "None", "{1042,10011}(None)" },
             { "Methane", "{1042,11011}(Methane)" },
@@ -35,7 +35,7 @@ namespace X4SectorCreator.XmlGeneration
             { "Hydrogen/Helium", "{1042,11111}(Hydrogen/Helium)" }
         };
 
-        private static readonly Dictionary<string, string> _sunTypeMappings = new()
+        public static readonly IReadOnlyDictionary<string, string> SunTypeMappings = new Dictionary<string, string>()
         {
             { "Red Dwarf", "{1042,13011}(Red Dwarf)" },
             { "Yellow Dwarf", "{1042,13021}(Yellow Dwarf)" },
@@ -58,7 +58,7 @@ namespace X4SectorCreator.XmlGeneration
             { "Black Hole", "{1042,13191}(Black Hole)" },
         };
 
-        private static readonly Dictionary<string, string> _planetTypeMappings = new()
+        public static readonly IReadOnlyDictionary<string, string> PlanetTypeMappings = new Dictionary<string, string>()
         {
             { "Super Earth", "{1042,14011}(Super Earth)" },
             { "Ringed Super Earth", "{1042,14021}(Ringed Super Earth)" },
@@ -76,7 +76,7 @@ namespace X4SectorCreator.XmlGeneration
             { "Ringed Ice Giant", "{1042,14141}(Ringed Ice Giant)" },
         };
 
-        private static readonly Dictionary<string, string> _geologyTypeMappings = new()
+        public static readonly IReadOnlyDictionary<string, string> GeologyTypeMappings = new Dictionary<string, string>()
         {
             { "None", "{1042,10011}(None)" },
             { "Tundra", "{1042,15011}(Tundra)" },
@@ -96,7 +96,7 @@ namespace X4SectorCreator.XmlGeneration
             { "Polar", "{1042,15151}(Polar)" },
         };
 
-        private static readonly Dictionary<string, string> _settlementTypeMappings = new()
+        public static readonly IReadOnlyDictionary<string, string> SettlementTypeMappings = new Dictionary<string, string>()
         {
             { "None", "{1042,10011}(None)" },
             { "Uninhabited", "{1042,16011}(Uninhabited)" },

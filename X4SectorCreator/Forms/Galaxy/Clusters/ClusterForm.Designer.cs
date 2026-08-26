@@ -310,7 +310,6 @@
             // CmbSpaceEnvironment
             // 
             CmbSpaceEnvironment.FormattingEnabled = true;
-            CmbSpaceEnvironment.Items.AddRange(new object[] { "Clear Space", "Thin Nebula", "Nebula", "Asteroids", "Protoplanetary Disc", "Heavy Radiation", "Emission Nebula" });
             CmbSpaceEnvironment.Location = new Point(14, 64);
             CmbSpaceEnvironment.Name = "CmbSpaceEnvironment";
             CmbSpaceEnvironment.Size = new Size(253, 23);

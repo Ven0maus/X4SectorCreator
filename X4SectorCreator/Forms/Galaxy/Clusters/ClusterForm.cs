@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using X4SectorCreator.Forms.Galaxy.Clusters;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
+using X4SectorCreator.XmlGeneration;
 
 namespace X4SectorCreator.Forms
 {
@@ -22,9 +23,10 @@ namespace X4SectorCreator.Forms
             InitializeComponent();
 
             foreach (KeyValuePair<string, string> mapping in MainForm.Instance.BackgroundVisualMapping.OrderBy(a => a.Key))
-            {
                 _ = cmbBackgroundVisual.Items.Add(mapping.Key);
-            }
+
+            foreach (var mapping in MapDefaultsGeneration.SpaceTypeMappings.OrderBy(a => a.Key))
+                _ = CmbSpaceEnvironment.Items.Add(mapping.Key);
 
             Tooltip.SetToolTip(CmbSpaceEnvironment, "Determines how the space environment will look like in-game.");
         }
