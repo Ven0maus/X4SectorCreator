@@ -256,11 +256,23 @@ namespace X4SectorCreator
 
             InitializeVanillaRegionsAndStations(clusterLookup);
             InitializeVanillaResourceAreas(clusterLookup);
+            InitializeVanillaStarSystemInformation(clusterLookup);
 
             // Create also the required connections for vanilla
             VanillaGateConnectionParser.CreateVanillaGateConnections(clusterLookup);
 
             return clusterCollection;
+        }
+
+        private static void InitializeVanillaStarSystemInformation(Dictionary<(int x, int y), Cluster> allClusters)
+        {
+            var doc = XDocument.Load(Constants.DataPaths.VanillaMapDefaultsFilePath);
+            var datasets = doc.Element("defaults").Elements("dataset")
+                .GroupBy(a => a.Attribute("macro").Value.Replace("_macro", string.Empty), StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(a => a.Key, a => a.First(), StringComparer.OrdinalIgnoreCase);
+
+            foreach (var cluster in allClusters.Values)
+                cluster.ClusterSystem = ClusterSystem.ConvertFrom(cluster, datasets);
         }
 
         private static void InitializeVanillaRegionsAndStations(Dictionary<(int x, int y), Cluster> allClusters)
@@ -1459,6 +1471,7 @@ namespace X4SectorCreator
             ClusterForm.Value.txtDescription.Text = string.Empty;
             ClusterForm.Value.cmbBackgroundVisual.SelectedItem = ClusterForm.Value.cmbBackgroundVisual.Items[0];
             ClusterForm.Value.TxtLocation.Text = string.Empty;
+            ClusterForm.Value.ResetStarSystemInformation();
 
             // Make sure these buttons are enabled for creation
             ClusterForm.Value.BtnSector1.Enabled = true;
@@ -1579,6 +1592,7 @@ namespace X4SectorCreator
             ClusterForm.Value.cmbBackgroundVisual.SelectedItem = Forms.ClusterForm.FindBackgroundVisualMappingByCode(cluster.Value.BackgroundVisualMapping ?? cluster.Value.BaseGameMapping);
             ClusterForm.Value.TxtLocation.Text = cluster.Key.ToString();
             ClusterForm.Value.ChkAutoPlacement.Checked = !cluster.Value.CustomSectorPositioning;
+            ClusterForm.Value.ResetStarSystemInformation();
 
             // Disable these buttons, they cannot be modified anymore
             ClusterForm.Value.BtnSector1.Enabled = false;

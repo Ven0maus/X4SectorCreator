@@ -252,6 +252,40 @@ namespace X4SectorCreator.Forms
             _clusterXmlEditorForm.Value.Show();
         }
 
+        public void ResetStarSystemInformation()
+        {
+            // TODO: Setup star system info properly
+            if (Cluster?.ClusterSystem != null)
+            {
+                var clusterSystem = Cluster.ClusterSystem;
+                if (clusterSystem.SpaceEnvironment != null)
+                {
+                    var spaceType = MapDefaultsGeneration.GetReverseLookup(
+                        nameof(MapDefaultsGeneration.SpaceTypeMappings),
+                        clusterSystem.SpaceEnvironment);
+                    CmbSpaceEnvironment.SelectedItem = spaceType;
+                }
+
+                foreach (var sun in clusterSystem.Suns)
+                    ListBoxSuns.Items.Add(sun);
+
+                foreach (var planet in clusterSystem.Planets)
+                {
+                    ListBoxPlanets.Items.Add(planet);
+
+                    foreach (var moon in planet.Moons)
+                        ListBoxMoons.Items.Add(moon);
+                }
+            }
+            else
+            {
+                CmbSpaceEnvironment.SelectedIndex = -1;
+                ListBoxSuns.Items.Clear();
+                ListBoxPlanets.Items.Clear();
+                ListBoxMoons.Items.Clear();
+            }
+        }
+
         public static string GetTemplateXml(Cluster cluster)
         {
             return Cluster.TemplateClusterXml.Replace("{CLUSTERCODE}", GetClusterCode(cluster));

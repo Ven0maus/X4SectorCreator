@@ -111,6 +111,26 @@ namespace X4SectorCreator.XmlGeneration
             { "Small Settlements", "{1042,16101}(Small Settlements)" },
         };
 
+        public static readonly IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> ReverseLookupStarSystemInfos =
+            new Dictionary<string, IReadOnlyDictionary<string, string>>
+            {
+                { nameof(SpaceTypeMappings), SpaceTypeMappings.ToDictionary(a => a.Value, a => a.Key) },
+                { nameof(AtmosphereTypeMappings), AtmosphereTypeMappings.ToDictionary(a => a.Value, a => a.Key) },
+                { nameof(SunTypeMappings), SunTypeMappings.ToDictionary(a => a.Value, a => a.Key) },
+                { nameof(PlanetTypeMappings), PlanetTypeMappings.ToDictionary(a => a.Value, a => a.Key) },
+                { nameof(GeologyTypeMappings), GeologyTypeMappings.ToDictionary(a => a.Value, a => a.Key) },
+                { nameof(SettlementTypeMappings), SettlementTypeMappings.ToDictionary(a => a.Value, a => a.Key) },
+            };
+
+        public static string GetReverseLookup(string dict, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return null;
+            if (ReverseLookupStarSystemInfos.TryGetValue(dict, out var dictionary) &&
+                dictionary.TryGetValue(value, out var key))
+                return key;
+            throw new Exception($"Unable to find key \"{value}\" in dictionary \"{dict}\".");
+        }
+
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             IGrouping<string, (string dlc, XElement element)>[] groups = GenerateVanillaChanges(vanillaChanges, clusters)
