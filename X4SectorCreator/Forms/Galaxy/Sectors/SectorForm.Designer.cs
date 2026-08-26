@@ -374,6 +374,7 @@
             BtnDeleteWorldLink.TabIndex = 2;
             BtnDeleteWorldLink.Text = "Delete Link";
             BtnDeleteWorldLink.UseVisualStyleBackColor = true;
+            BtnDeleteWorldLink.Click += BtnDeleteWorldLink_Click;
             // 
             // BtnLinkWorld
             // 
@@ -383,6 +384,7 @@
             BtnLinkWorld.TabIndex = 1;
             BtnLinkWorld.Text = "Link World";
             BtnLinkWorld.UseVisualStyleBackColor = true;
+            BtnLinkWorld.Click += BtnLinkWorld_Click;
             // 
             // ListBoxWorlds
             // 
@@ -391,6 +393,7 @@
             ListBoxWorlds.Name = "ListBoxWorlds";
             ListBoxWorlds.Size = new Size(323, 259);
             ListBoxWorlds.TabIndex = 0;
+            ListBoxWorlds.DoubleClick += ListBoxWorlds_DoubleClick;
             // 
             // SectorForm
             // 
@@ -467,8 +470,8 @@
         private TabPage Resources;
         private TabPage Worlds;
         private Button BtnLinkWorld;
-        private ListBox ListBoxWorlds;
         private Label label5;
         private Button BtnDeleteWorldLink;
+        public ListBox ListBoxWorlds;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using X4SectorCreator.Forms.Galaxy.Sectors;
 using X4SectorCreator.Helpers;
 using X4SectorCreator.Objects;
 
@@ -423,6 +424,60 @@ namespace X4SectorCreator.Forms
             }
 
             e.DrawFocusRectangle();
+        }
+
+        private SectorWorldForm _sectorWorldForm;
+        private void BtnLinkWorld_Click(object sender, EventArgs e)
+        {
+            if (_sectorWorldForm != null && !_sectorWorldForm.IsDisposed) return;
+
+            // Check if cluster has parts
+            if (_selectedCluster.WorldParts.Count == 0)
+            {
+                MessageBox.Show("The cluster must have atleast one planet in its Star System Information section.",
+                    "Missing Star System Information", MessageBoxButtons.OK);
+                return;
+            }
+
+            _sectorWorldForm = new SectorWorldForm
+            {
+                Cluster = _selectedCluster
+            };
+            if (ListBoxWorlds.SelectedIndex != -1)
+                _sectorWorldForm.SectorWorld = (SectorWorld)ListBoxWorlds.SelectedItem;
+            _sectorWorldForm.Show();
+        }
+
+        private void BtnDeleteWorldLink_Click(object sender, EventArgs e)
+        {
+            if (ListBoxWorlds.SelectedItem is not SectorWorld sectorWorld)
+            {
+                return;
+            }
+
+            int index = ListBoxWorlds.Items.IndexOf(sectorWorld);
+            ListBoxWorlds.Items.Remove(sectorWorld);
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            ListBoxWorlds.SelectedItem = index >= 0 && ListBoxWorlds.Items.Count > 0 ? ListBoxWorlds.Items[index] : null;
+        }
+
+        private void ListBoxWorlds_DoubleClick(object sender, EventArgs e)
+        {
+            if (_sectorWorldForm != null && !_sectorWorldForm.IsDisposed) return;
+            if (ListBoxWorlds.SelectedItem is not SectorWorld sectorWorld)
+            {
+                return;
+            }
+
+            _sectorWorldForm = new SectorWorldForm
+            {
+                Cluster = _selectedCluster,
+                SectorWorld = sectorWorld
+            };
+            _sectorWorldForm.Show();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace X4SectorCreator.Objects
         public List<Region> Regions { get; set; } = [];
         public List<Resource> ResourceAreas { get; set; } = [];
         public SectorPlacement Placement { get; set; }
+        public List<SectorWorld> Worlds { get; set; } = [];
 
         [JsonIgnore]
         public Point PlacementDirection => DeterminePlacementDirection();
@@ -143,7 +144,8 @@ namespace X4SectorCreator.Objects
                 Tags = Tags,
                 Zones = Zones.Select(a => (Zone)a.Clone()).ToList(),
                 Regions = Regions.Select(a => (Region)a.Clone()).ToList(),
-                ResourceAreas = ResourceAreas.Select(a => (Resource)a.Clone()).ToList()
+                ResourceAreas = ResourceAreas.Select(a => (Resource)a.Clone()).ToList(),
+                Worlds = Worlds.Select(a => (SectorWorld)a.Clone()).ToList()
             };
         }
 
