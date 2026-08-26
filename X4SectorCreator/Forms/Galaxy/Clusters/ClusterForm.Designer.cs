@@ -51,6 +51,7 @@
             BtnSector2 = new RadioButton();
             BtnSector1 = new RadioButton();
             panel2 = new Panel();
+            CmbSpaceEnvironment = new ComboBox();
             label15 = new Label();
             label13 = new Label();
             label12 = new Label();
@@ -69,7 +70,6 @@
             label8 = new Label();
             label14 = new Label();
             Tooltip = new ToolTip(components);
-            CmbSpaceEnvironment = new ComboBox();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -307,6 +307,15 @@
             panel2.Size = new Size(390, 470);
             panel2.TabIndex = 41;
             // 
+            // CmbSpaceEnvironment
+            // 
+            CmbSpaceEnvironment.FormattingEnabled = true;
+            CmbSpaceEnvironment.Items.AddRange(new object[] { "Clear Space", "Thin Nebula", "Nebula", "Asteroids", "Protoplanetary Disc", "Heavy Radiation", "Emission Nebula" });
+            CmbSpaceEnvironment.Location = new Point(14, 64);
+            CmbSpaceEnvironment.Name = "CmbSpaceEnvironment";
+            CmbSpaceEnvironment.Size = new Size(253, 23);
+            CmbSpaceEnvironment.TabIndex = 57;
+            // 
             // label15
             // 
             label15.AutoSize = true;
@@ -465,14 +474,6 @@
             label14.TabIndex = 56;
             label14.Text = "Note: for a workforce bonus in this cluster you must setup\r\nthe star system information with atleast one planet.";
             label14.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // CmbSpaceEnvironment
-            // 
-            CmbSpaceEnvironment.FormattingEnabled = true;
-            CmbSpaceEnvironment.Location = new Point(14, 64);
-            CmbSpaceEnvironment.Name = "CmbSpaceEnvironment";
-            CmbSpaceEnvironment.Size = new Size(253, 23);
-            CmbSpaceEnvironment.TabIndex = 57;
             // 
             // ClusterForm
             // 

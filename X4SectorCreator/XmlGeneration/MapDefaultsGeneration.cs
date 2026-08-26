@@ -8,6 +8,109 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class MapDefaultsGeneration
     {
+        private static readonly Dictionary<string, string> _spaceTypeMappings = new()
+        {
+            { "Clear Space", "{1042,12011}(Clear Space)" },
+            { "Thin Nebula", "{1042,12021}(Thin Nebula)" },
+            { "Nebula", "{1042,12031}(Nebula)" },
+            { "Asteroids", "{1042,12041}(Asteroids)" },
+            { "Protoplanetary Disc", "{1042,12051}(Protoplanetary Disc)" },
+            { "Heavy Radiation", "{1042,12061}(Heavy Radiation)" },
+            { "Emission Nebula", "{1042,12071}(Emission Nebula)" }
+        };
+
+        private static readonly Dictionary<string, string> _atmosphereTypeMappings = new()
+        {
+            { "None", "{1042,10011}(None)" },
+            { "Methane", "{1042,11011}(Methane)" },
+            { "Hydrogen", "{1042,11021}(Hydrogen)" },
+            { "Oxygen", "{1042,11031}(Oxygen)" },
+            { "Nitrogen", "{1042,11041}(Nitrogen)" },
+            { "Helium", "{1042,11051}(Helium)" },
+            { "Carbon Dioxide", "{1042,11081}(Carbon Dioxide)" },
+            { "Sulphur Dioxide", "{1042,11091}(Sulphur Dioxide)" },
+            { "Methane/Hydrogen", "{1042,11061}(Methane/Hydrogen)" },
+            { "Nitrogen/Oxygen", "{1042,11071}(Nitrogen/Oxygen)" },
+            { "Nitrogen/Hydrogen", "{1042,11101}(Nitrogen/Hydrogen)" },
+            { "Hydrogen/Helium", "{1042,11111}(Hydrogen/Helium)" }
+        };
+
+        private static readonly Dictionary<string, string> _sunTypeMappings = new()
+        {
+            { "Red Dwarf", "{1042,13011}(Red Dwarf)" },
+            { "Yellow Dwarf", "{1042,13021}(Yellow Dwarf)" },
+            { "Orange Dwarf", "{1042,13031}(Orange Dwarf)" },
+            { "White Dwarf", "{1042,13041}(White Dwarf)" },
+            { "Blue Dwarf", "{1042,13051}(Blue Dwarf)" },
+            { "Brown Dwarf", "{1042,13061}(Brown Dwarf)" },
+            { "Black Dwarf", "{1042,13071}(Black Dwarf)" },
+            { "Red Giant", "{1042,13081}(Red Giant)" },
+            { "Yellow Giant", "{1042,13091}(Yellow Giant)" },
+            { "Orange Giant", "{1042,13101}(Orange Giant)" },
+            { "White Giant", "{1042,13111}(White Giant)" },
+            { "Blue Giant", "{1042,13121}(Blue Giant)" },
+            { "Red Supergiant", "{1042,13131}(Red Supergiant)" },
+            { "Yellow Supergiant", "{1042,13141}(Yellow Supergiant)" },
+            { "Orange Supergiant", "{1042,13151}(Orange Supergiant)" },
+            { "White Supergiant", "{1042,13161}(White Supergiant)" },
+            { "Blue Supergiant", "{1042,13171}(Blue Supergiant)" },
+            { "Neutron Star", "{1042,13181}(Neutron Star)" },
+            { "Black Hole", "{1042,13191}(Black Hole)" },
+        };
+
+        private static readonly Dictionary<string, string> _planetTypeMappings = new()
+        {
+            { "Super Earth", "{1042,14011}(Super Earth)" },
+            { "Ringed Super Earth", "{1042,14021}(Ringed Super Earth)" },
+            { "Terrestrial", "{1042,14031}(Terrestrial)" },
+            { "Ringed Terrestrial", "{1042,14041}(Ringed Terrestrial)" },
+            { "Moon", "{1042,14051}(Moon)" },
+            { "Planet", "{1042,14061}(Planet)" },
+            { "Ringed Planet", "{1042,14071}(Ringed Planet)" },
+            { "Gas Giant", "{1042,14081}(Gas Giant)" },
+            { "Ringed Gas Giant", "{1042,14091}(Ringed Gas Giant)" },
+            { "Earth Analog", "{1042,14101}(Earth Analog)" },
+            { "Ringed Earth Analog", "{1042,14111}(Ringed Earth Analog)" },
+            { "Dwarf Planet", "{1042,14121}(Dwarf Planet)" },
+            { "Ice Giant", "{1042,14131}(Ice Giant)" },
+            { "Ringed Ice Giant", "{1042,14141}(Ringed Ice Giant)" },
+        };
+
+        private static readonly Dictionary<string, string> _geologyTypeMappings = new()
+        {
+            { "None", "{1042,10011}(None)" },
+            { "Tundra", "{1042,15011}(Tundra)" },
+            { "Mountains", "{1042,15021}(Mountains)" },
+            { "Volcanic", "{1042,15031}(Volcanic)" },
+            { "Xenon Structures", "{1042,15041}(Xenon Structures)" },
+            { "Rocks&Ice", "{1042,15051}(Rocks/Ice)" },
+            { "Canyons", "{1042,15061}(Canyons)" },
+            { "Rocks", "{1042,15071}(Rocks)" },
+            { "Ice", "{1042,15081}(Ice)" },
+            { "Craters", "{1042,15091}(Craters)" },
+            { "Barren", "{1042,15101}(Barren)" },
+            { "Desert", "{1042,15111}(Desert)" },
+            { "Swamp", "{1042,15121}(Swamp)" },
+            { "Forest", "{1042,15131}(Forest)" },
+            { "Ocean", "{1042,15141}(Ocean)" },
+            { "Polar", "{1042,15151}(Polar)" },
+        };
+
+        private static readonly Dictionary<string, string> _settlementTypeMappings = new()
+        {
+            { "None", "{1042,10011}(None)" },
+            { "Uninhabited", "{1042,16011}(Uninhabited)" },
+            { "Mining Colonies", "{1042,16021}(Mining Colonies)" },
+            { "Research Outpost", "{1042,16031}(Research Outpost)" },
+            { "Multiple Cities", "{1042,16041}(Multiple Cities)" },
+            { "Densely Populated", "{1042,16051}(Densely Populated)" },
+            { "Xenon Structures", "{1042,16061}(Xenon Structures)" },
+            { "Megalopolis", "{1042,16071}(Megalopolis)" },
+            { "Sky City", "{1042,16081}(Sky City)" },
+            { "Agora Ouranos", "{1042,16091}(Agora Ouranos)" },
+            { "Small Settlements", "{1042,16101}(Small Settlements)" },
+        };
+
         public static void Generate(string folder, string modPrefix, List<Cluster> clusters, VanillaChanges vanillaChanges)
         {
             IGrouping<string, (string dlc, XElement element)>[] groups = GenerateVanillaChanges(vanillaChanges, clusters)
