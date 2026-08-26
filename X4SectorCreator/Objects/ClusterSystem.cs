@@ -4,10 +4,11 @@ namespace X4SectorCreator.Objects
 {
     public class ClusterSystem
     {
-        public string Template { get; set; }
+        public string DatasetMacro { get; set; }
         public string SpaceEnvironment { get; set; }
         public List<Sun> Suns { get; set; } = [];
         public List<Planet> Planets { get; set; } = [];
+        public ClusterSystem SharedData { get; set; }
 
         public static ClusterSystem ConvertFrom(Cluster cluster, Dictionary<string, XElement> datasets)
         {
@@ -20,7 +21,7 @@ namespace X4SectorCreator.Objects
             // System a has a system tag
             // B and Template both get the system for A
             // If we add System C with its own system tag, both A and C system is combined into one
-            // Which all A, B, C, Template will use
+            // Which all A, B, C and Template will use
 
             if (datasets.TryGetValue(cluster.BaseGameMapping, out var dataset))
             {
@@ -29,12 +30,15 @@ namespace X4SectorCreator.Objects
                     .Element("identification")?
                     .Attribute("system")?.Value;
 
-                var clusterSystem = new ClusterSystem();
+                var clusterSystem = new ClusterSystem
+                {
+                    DatasetMacro = dataset.Attribute("macro").Value
+                };
 
                 // We have a system id, meaning we need to look through all matching systems
                 if (!string.IsNullOrWhiteSpace(systemValue))
                 {
-                    clusterSystem.Template = systemValue;
+                    clusterSystem.SharedData = new ClusterSystem();
 
                     // Collect all mapdefaults with matching clusterid
                     var matchingDatasets = datasets.Values
@@ -52,13 +56,15 @@ namespace X4SectorCreator.Objects
                     var allDatasetsDistincted = matchingDatasets
                         .DistinctBy(a => a.Attribute("macro").Value, StringComparer.OrdinalIgnoreCase);
 
+                    // Collect all shared data but store it seperately
                     foreach (var datasetDistinct in allDatasetsDistincted)
-                        SetupClusterSystemByDataset(clusterSystem, datasetDistinct);
+                        SetupClusterSystemByDataset(clusterSystem.SharedData, datasetDistinct);
                 }
-                else
-                {
-                    SetupClusterSystemByDataset(clusterSystem, dataset);
-                }
+
+                SetupClusterSystemByDataset(clusterSystem, dataset);
+
+                // Take the space environment from the shared if not set, i think this one is relatively unique
+                clusterSystem.SpaceEnvironment ??= clusterSystem.SharedData?.SpaceEnvironment;
 
                 return clusterSystem;
             }
