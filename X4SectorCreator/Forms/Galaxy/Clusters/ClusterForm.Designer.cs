@@ -67,6 +67,7 @@
             TxtSpaceEnvironmentName = new TextBox();
             label13 = new Label();
             label14 = new Label();
+            label15 = new Label();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -282,6 +283,7 @@
             // 
             panel2.BackColor = SystemColors.ControlLight;
             panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.Controls.Add(label15);
             panel2.Controls.Add(label13);
             panel2.Controls.Add(TxtSpaceEnvironmentName);
             panel2.Controls.Add(label12);
@@ -459,6 +461,16 @@
             label14.Text = "Note: for a workforce bonus in this cluster you must setup\r\nthe star system information with atleast one planet.";
             label14.TextAlign = ContentAlignment.MiddleRight;
             // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 8F);
+            label15.Location = new Point(25, 451);
+            label15.Name = "label15";
+            label15.Size = new Size(242, 13);
+            label15.TabIndex = 56;
+            label15.Text = "(Moons shown belong to the selected planet)";
+            // 
             // ClusterForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -536,5 +548,6 @@
         private Label label12;
         private Label label13;
         private Label label14;
+        private Label label15;
     }
 }
