@@ -53,7 +53,6 @@
             panel2 = new Panel();
             label15 = new Label();
             label13 = new Label();
-            TxtSpaceEnvironmentName = new TextBox();
             label12 = new Label();
             BtnRemoveMoon = new Button();
             BtnCreateMoon = new Button();
@@ -70,6 +69,7 @@
             label8 = new Label();
             label14 = new Label();
             Tooltip = new ToolTip(components);
+            CmbSpaceEnvironment = new ComboBox();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -285,9 +285,9 @@
             // 
             panel2.BackColor = SystemColors.ControlLight;
             panel2.BorderStyle = BorderStyle.Fixed3D;
+            panel2.Controls.Add(CmbSpaceEnvironment);
             panel2.Controls.Add(label15);
             panel2.Controls.Add(label13);
-            panel2.Controls.Add(TxtSpaceEnvironmentName);
             panel2.Controls.Add(label12);
             panel2.Controls.Add(BtnRemoveMoon);
             panel2.Controls.Add(BtnCreateMoon);
@@ -327,22 +327,15 @@
             label13.TabIndex = 55;
             label13.Text = "(Optional)";
             // 
-            // TxtSpaceEnvironmentName
-            // 
-            TxtSpaceEnvironmentName.Location = new Point(14, 64);
-            TxtSpaceEnvironmentName.Name = "TxtSpaceEnvironmentName";
-            TxtSpaceEnvironmentName.Size = new Size(253, 23);
-            TxtSpaceEnvironmentName.TabIndex = 54;
-            // 
             // label12
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 12F);
             label12.Location = new Point(14, 40);
             label12.Name = "label12";
-            label12.Size = new Size(193, 21);
+            label12.Size = new Size(147, 21);
             label12.TabIndex = 53;
-            label12.Text = "Space Environment Name:";
+            label12.Text = "Space Environment:";
             // 
             // BtnRemoveMoon
             // 
@@ -473,6 +466,14 @@
             label14.Text = "Note: for a workforce bonus in this cluster you must setup\r\nthe star system information with atleast one planet.";
             label14.TextAlign = ContentAlignment.MiddleRight;
             // 
+            // CmbSpaceEnvironment
+            // 
+            CmbSpaceEnvironment.FormattingEnabled = true;
+            CmbSpaceEnvironment.Location = new Point(14, 64);
+            CmbSpaceEnvironment.Name = "CmbSpaceEnvironment";
+            CmbSpaceEnvironment.Size = new Size(253, 23);
+            CmbSpaceEnvironment.TabIndex = 57;
+            // 
             // ClusterForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -546,11 +547,11 @@
         private Button BtnCreateSun;
         private Label label9;
         private ListBox ListBoxSuns;
-        private TextBox TxtSpaceEnvironmentName;
         private Label label12;
         private Label label13;
         private Label label14;
         private Label label15;
         private ToolTip Tooltip;
+        private ComboBox CmbSpaceEnvironment;
     }
 }

@@ -26,7 +26,7 @@ namespace X4SectorCreator.Forms
                 _ = cmbBackgroundVisual.Items.Add(mapping.Key);
             }
 
-            Tooltip.SetToolTip(TxtSpaceEnvironmentName, "Describes the space environment, example: Clear Space, Asteroids, Thin Nebula");
+            Tooltip.SetToolTip(CmbSpaceEnvironment, "Determines how the space environment will look like in-game.");
         }
 
         private void BtnCreate_Click(object sender, EventArgs e)
