@@ -63,6 +63,8 @@
             BtnDeleteWorldLink = new Button();
             BtnLinkWorld = new Button();
             ListBoxWorlds = new ListBox();
+            label13 = new Label();
+            label14 = new Label();
             tabControl1.SuspendLayout();
             Resources.SuspendLayout();
             Worlds.SuspendLayout();
@@ -281,9 +283,9 @@
             // 
             RAListBox.DrawMode = DrawMode.OwnerDrawFixed;
             RAListBox.FormattingEnabled = true;
-            RAListBox.Location = new Point(6, 6);
+            RAListBox.Location = new Point(6, 22);
             RAListBox.Name = "RAListBox";
-            RAListBox.Size = new Size(318, 244);
+            RAListBox.Size = new Size(318, 228);
             RAListBox.TabIndex = 31;
             RAListBox.DrawItem += RAListBox_DrawItem;
             RAListBox.DoubleClick += RAListBox_DoubleClick;
@@ -330,6 +332,7 @@
             // 
             // Resources
             // 
+            Resources.Controls.Add(label14);
             Resources.Controls.Add(RAListBox);
             Resources.Controls.Add(BtnAddRA);
             Resources.Controls.Add(label12);
@@ -344,6 +347,7 @@
             // 
             // Worlds
             // 
+            Worlds.Controls.Add(label13);
             Worlds.Controls.Add(label5);
             Worlds.Controls.Add(BtnDeleteWorldLink);
             Worlds.Controls.Add(BtnLinkWorld);
@@ -389,11 +393,31 @@
             // ListBoxWorlds
             // 
             ListBoxWorlds.FormattingEnabled = true;
-            ListBoxWorlds.Location = new Point(6, 6);
+            ListBoxWorlds.Location = new Point(6, 21);
             ListBoxWorlds.Name = "ListBoxWorlds";
-            ListBoxWorlds.Size = new Size(323, 259);
+            ListBoxWorlds.Size = new Size(323, 244);
             ListBoxWorlds.TabIndex = 0;
             ListBoxWorlds.DoubleClick += ListBoxWorlds_DoubleClick;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 9F);
+            label13.Location = new Point(6, 3);
+            label13.Name = "label13";
+            label13.Size = new Size(61, 15);
+            label13.TabIndex = 37;
+            label13.Text = "(Optional)";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 9F);
+            label14.Location = new Point(6, 4);
+            label14.Name = "label14";
+            label14.Size = new Size(61, 15);
+            label14.TabIndex = 38;
+            label14.Text = "(Optional)";
             // 
             // SectorForm
             // 
@@ -473,5 +497,7 @@
         private Label label5;
         private Button BtnDeleteWorldLink;
         public ListBox ListBoxWorlds;
+        private Label label13;
+        private Label label14;
     }
 }
