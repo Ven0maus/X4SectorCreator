@@ -426,6 +426,7 @@
             BtnRemoveSun.TabIndex = 44;
             BtnRemoveSun.Text = "Remove Sun";
             BtnRemoveSun.UseVisualStyleBackColor = true;
+            BtnRemoveSun.Click += BtnRemoveSun_Click;
             // 
             // BtnCreateSun
             // 
@@ -435,6 +436,7 @@
             BtnCreateSun.TabIndex = 43;
             BtnCreateSun.Text = "Create";
             BtnCreateSun.UseVisualStyleBackColor = true;
+            BtnCreateSun.Click += BtnCreateSun_Click;
             // 
             // label9
             // 
@@ -453,6 +455,7 @@
             ListBoxSuns.Name = "ListBoxSuns";
             ListBoxSuns.Size = new Size(288, 94);
             ListBoxSuns.TabIndex = 1;
+            ListBoxSuns.DoubleClick += ListBoxSuns_DoubleClick;
             // 
             // label8
             // 
@@ -539,20 +542,20 @@
         private Button BtnRemoveMoon;
         private Button BtnCreateMoon;
         private Label label11;
-        private ListBox ListBoxMoons;
         private Button BtnRemovePlanet;
         private Button BtnCreatePlanet;
         private Label label10;
-        private ListBox ListBoxPlanets;
         private Button BtnRemoveSun;
         private Button BtnCreateSun;
         private Label label9;
-        private ListBox ListBoxSuns;
         private Label label12;
         private Label label13;
         private Label label14;
         private Label label15;
         private ToolTip Tooltip;
         private ComboBox CmbSpaceEnvironment;
+        public ListBox ListBoxMoons;
+        public ListBox ListBoxPlanets;
+        public ListBox ListBoxSuns;
     }
 }

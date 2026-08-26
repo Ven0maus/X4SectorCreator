@@ -476,7 +476,7 @@ namespace X4SectorCreator.Forms
         private void ListBoxWorlds_DoubleClick(object sender, EventArgs e)
         {
             if (_sectorWorldForm != null && !_sectorWorldForm.IsDisposed) return;
-            if (ListBoxWorlds.SelectedItem is not SectorWorld sectorWorld)
+            if (ListBoxWorlds.SelectedIndex == -1 || ListBoxWorlds.SelectedItem is not SectorWorld sectorWorld)
             {
                 return;
             }

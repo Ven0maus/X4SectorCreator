@@ -17,6 +17,7 @@ namespace X4SectorCreator.Forms
 
         private readonly LazyEvaluated<SoundtrackSelectorForm> _soundtrackSelectorForm = new(() => new SoundtrackSelectorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ClusterXmlEditorForm> _clusterXmlEditorForm = new(() => new ClusterXmlEditorForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<SunForm> _sunForm = new(() => new SunForm(), a => !a.IsDisposed);
 
         public ClusterForm()
         {
@@ -328,6 +329,38 @@ namespace X4SectorCreator.Forms
 
             if (ListBoxMoons.Items.Count > 0)
                 ListBoxMoons.SelectedIndex = 0;
+        }
+
+        private void BtnCreateSun_Click(object sender, EventArgs e)
+        {
+            _sunForm.Value.Sun = null;
+            _sunForm.Value.Show();
+        }
+
+        private void BtnRemoveSun_Click(object sender, EventArgs e)
+        {
+            if (ListBoxSuns.SelectedItem is not ClusterSystem.Sun sun)
+            {
+                return;
+            }
+
+            int index = ListBoxSuns.Items.IndexOf(sun);
+            ListBoxSuns.Items.Remove(sun);
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            ListBoxSuns.SelectedItem = index >= 0 && ListBoxSuns.Items.Count > 0 ? ListBoxSuns.Items[index] : null;
+        }
+
+        private void ListBoxSuns_DoubleClick(object sender, EventArgs e)
+        {
+            if (ListBoxSuns.SelectedIndex == -1) return;
+
+            var sun = ListBoxSuns.SelectedItem as ClusterSystem.Sun;
+
+            _sunForm.Value.Sun = sun;
+            _sunForm.Value.Show();
         }
     }
 

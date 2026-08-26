@@ -13,6 +13,7 @@ namespace X4SectorCreator.Forms.Galaxy.Sectors
             set
             {
                 _sectorWorld = value;
+                BtnCreate.Text = "Update";
                 CmbPartSelection.SelectedItem = _sectorWorld.Part;
                 NrFactor.Value = _sectorWorld.Factor;
             }
