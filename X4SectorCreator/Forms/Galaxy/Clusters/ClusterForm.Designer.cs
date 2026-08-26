@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             BtnCreate = new Button();
             BtnCancel = new Button();
             TxtName = new TextBox();
@@ -50,24 +51,25 @@
             BtnSector2 = new RadioButton();
             BtnSector1 = new RadioButton();
             panel2 = new Panel();
-            label8 = new Label();
-            ListBoxSuns = new ListBox();
-            label9 = new Label();
-            BtnCreateSun = new Button();
-            BtnRemoveSun = new Button();
-            BtnRemovePlanet = new Button();
-            BtnCreatePlanet = new Button();
-            label10 = new Label();
-            ListBoxPlanets = new ListBox();
+            label15 = new Label();
+            label13 = new Label();
+            TxtSpaceEnvironmentName = new TextBox();
+            label12 = new Label();
             BtnRemoveMoon = new Button();
             BtnCreateMoon = new Button();
             label11 = new Label();
             ListBoxMoons = new ListBox();
-            label12 = new Label();
-            TxtSpaceEnvironmentName = new TextBox();
-            label13 = new Label();
+            BtnRemovePlanet = new Button();
+            BtnCreatePlanet = new Button();
+            label10 = new Label();
+            ListBoxPlanets = new ListBox();
+            BtnRemoveSun = new Button();
+            BtnCreateSun = new Button();
+            label9 = new Label();
+            ListBoxSuns = new ListBox();
+            label8 = new Label();
             label14 = new Label();
-            label15 = new Label();
+            Tooltip = new ToolTip(components);
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -305,87 +307,42 @@
             panel2.Size = new Size(390, 470);
             panel2.TabIndex = 41;
             // 
-            // label8
+            // label15
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            label8.Location = new Point(83, 0);
-            label8.Name = "label8";
-            label8.Size = new Size(263, 30);
-            label8.TabIndex = 0;
-            label8.Text = "Star System Information";
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 8F);
+            label15.Location = new Point(25, 451);
+            label15.Name = "label15";
+            label15.Size = new Size(242, 13);
+            label15.TabIndex = 56;
+            label15.Text = "(Moons shown belong to the selected planet)";
             // 
-            // ListBoxSuns
+            // label13
             // 
-            ListBoxSuns.FormattingEnabled = true;
-            ListBoxSuns.Location = new Point(14, 116);
-            ListBoxSuns.Name = "ListBoxSuns";
-            ListBoxSuns.Size = new Size(253, 94);
-            ListBoxSuns.TabIndex = 1;
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 11F);
+            label13.Location = new Point(0, 2);
+            label13.Name = "label13";
+            label13.Size = new Size(77, 20);
+            label13.TabIndex = 55;
+            label13.Text = "(Optional)";
             // 
-            // label9
+            // TxtSpaceEnvironmentName
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(14, 92);
-            label9.Name = "label9";
-            label9.Size = new Size(47, 21);
-            label9.TabIndex = 42;
-            label9.Text = "Suns:";
+            TxtSpaceEnvironmentName.Location = new Point(14, 64);
+            TxtSpaceEnvironmentName.Name = "TxtSpaceEnvironmentName";
+            TxtSpaceEnvironmentName.Size = new Size(253, 23);
+            TxtSpaceEnvironmentName.TabIndex = 54;
             // 
-            // BtnCreateSun
+            // label12
             // 
-            BtnCreateSun.Location = new Point(273, 116);
-            BtnCreateSun.Name = "BtnCreateSun";
-            BtnCreateSun.Size = new Size(75, 23);
-            BtnCreateSun.TabIndex = 43;
-            BtnCreateSun.Text = "Create";
-            BtnCreateSun.UseVisualStyleBackColor = true;
-            // 
-            // BtnRemoveSun
-            // 
-            BtnRemoveSun.Location = new Point(273, 145);
-            BtnRemoveSun.Name = "BtnRemoveSun";
-            BtnRemoveSun.Size = new Size(75, 23);
-            BtnRemoveSun.TabIndex = 44;
-            BtnRemoveSun.Text = "Remove Sun";
-            BtnRemoveSun.UseVisualStyleBackColor = true;
-            // 
-            // BtnRemovePlanet
-            // 
-            BtnRemovePlanet.Location = new Point(273, 263);
-            BtnRemovePlanet.Name = "BtnRemovePlanet";
-            BtnRemovePlanet.Size = new Size(75, 23);
-            BtnRemovePlanet.TabIndex = 48;
-            BtnRemovePlanet.Text = "Remove Sun";
-            BtnRemovePlanet.UseVisualStyleBackColor = true;
-            // 
-            // BtnCreatePlanet
-            // 
-            BtnCreatePlanet.Location = new Point(273, 234);
-            BtnCreatePlanet.Name = "BtnCreatePlanet";
-            BtnCreatePlanet.Size = new Size(75, 23);
-            BtnCreatePlanet.TabIndex = 47;
-            BtnCreatePlanet.Text = "Create";
-            BtnCreatePlanet.UseVisualStyleBackColor = true;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 12F);
-            label10.Location = new Point(14, 211);
-            label10.Name = "label10";
-            label10.Size = new Size(63, 21);
-            label10.TabIndex = 46;
-            label10.Text = "Planets:";
-            // 
-            // ListBoxPlanets
-            // 
-            ListBoxPlanets.FormattingEnabled = true;
-            ListBoxPlanets.Location = new Point(14, 234);
-            ListBoxPlanets.Name = "ListBoxPlanets";
-            ListBoxPlanets.Size = new Size(253, 94);
-            ListBoxPlanets.TabIndex = 45;
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 12F);
+            label12.Location = new Point(14, 40);
+            label12.Name = "label12";
+            label12.Size = new Size(193, 21);
+            label12.TabIndex = 53;
+            label12.Text = "Space Environment Name:";
             // 
             // BtnRemoveMoon
             // 
@@ -423,32 +380,87 @@
             ListBoxMoons.Size = new Size(253, 94);
             ListBoxMoons.TabIndex = 49;
             // 
-            // label12
+            // BtnRemovePlanet
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 12F);
-            label12.Location = new Point(14, 40);
-            label12.Name = "label12";
-            label12.Size = new Size(193, 21);
-            label12.TabIndex = 53;
-            label12.Text = "Space Environment Name:";
+            BtnRemovePlanet.Location = new Point(273, 263);
+            BtnRemovePlanet.Name = "BtnRemovePlanet";
+            BtnRemovePlanet.Size = new Size(75, 23);
+            BtnRemovePlanet.TabIndex = 48;
+            BtnRemovePlanet.Text = "Remove Sun";
+            BtnRemovePlanet.UseVisualStyleBackColor = true;
             // 
-            // TxtSpaceEnvironmentName
+            // BtnCreatePlanet
             // 
-            TxtSpaceEnvironmentName.Location = new Point(14, 64);
-            TxtSpaceEnvironmentName.Name = "TxtSpaceEnvironmentName";
-            TxtSpaceEnvironmentName.Size = new Size(253, 23);
-            TxtSpaceEnvironmentName.TabIndex = 54;
+            BtnCreatePlanet.Location = new Point(273, 234);
+            BtnCreatePlanet.Name = "BtnCreatePlanet";
+            BtnCreatePlanet.Size = new Size(75, 23);
+            BtnCreatePlanet.TabIndex = 47;
+            BtnCreatePlanet.Text = "Create";
+            BtnCreatePlanet.UseVisualStyleBackColor = true;
             // 
-            // label13
+            // label10
             // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 11F);
-            label13.Location = new Point(0, 2);
-            label13.Name = "label13";
-            label13.Size = new Size(77, 20);
-            label13.TabIndex = 55;
-            label13.Text = "(Optional)";
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 12F);
+            label10.Location = new Point(14, 211);
+            label10.Name = "label10";
+            label10.Size = new Size(63, 21);
+            label10.TabIndex = 46;
+            label10.Text = "Planets:";
+            // 
+            // ListBoxPlanets
+            // 
+            ListBoxPlanets.FormattingEnabled = true;
+            ListBoxPlanets.Location = new Point(14, 234);
+            ListBoxPlanets.Name = "ListBoxPlanets";
+            ListBoxPlanets.Size = new Size(253, 94);
+            ListBoxPlanets.TabIndex = 45;
+            // 
+            // BtnRemoveSun
+            // 
+            BtnRemoveSun.Location = new Point(273, 145);
+            BtnRemoveSun.Name = "BtnRemoveSun";
+            BtnRemoveSun.Size = new Size(75, 23);
+            BtnRemoveSun.TabIndex = 44;
+            BtnRemoveSun.Text = "Remove Sun";
+            BtnRemoveSun.UseVisualStyleBackColor = true;
+            // 
+            // BtnCreateSun
+            // 
+            BtnCreateSun.Location = new Point(273, 116);
+            BtnCreateSun.Name = "BtnCreateSun";
+            BtnCreateSun.Size = new Size(75, 23);
+            BtnCreateSun.TabIndex = 43;
+            BtnCreateSun.Text = "Create";
+            BtnCreateSun.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F);
+            label9.Location = new Point(14, 92);
+            label9.Name = "label9";
+            label9.Size = new Size(47, 21);
+            label9.TabIndex = 42;
+            label9.Text = "Suns:";
+            // 
+            // ListBoxSuns
+            // 
+            ListBoxSuns.FormattingEnabled = true;
+            ListBoxSuns.Location = new Point(14, 116);
+            ListBoxSuns.Name = "ListBoxSuns";
+            ListBoxSuns.Size = new Size(253, 94);
+            ListBoxSuns.TabIndex = 1;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            label8.Location = new Point(83, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(263, 30);
+            label8.TabIndex = 0;
+            label8.Text = "Star System Information";
             // 
             // label14
             // 
@@ -460,16 +472,6 @@
             label14.TabIndex = 56;
             label14.Text = "Note: for a workforce bonus in this cluster you must setup\r\nthe star system information with atleast one planet.";
             label14.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Font = new Font("Segoe UI", 8F);
-            label15.Location = new Point(25, 451);
-            label15.Name = "label15";
-            label15.Size = new Size(242, 13);
-            label15.TabIndex = 56;
-            label15.Text = "(Moons shown belong to the selected planet)";
             // 
             // ClusterForm
             // 
@@ -549,5 +551,6 @@
         private Label label13;
         private Label label14;
         private Label label15;
+        private ToolTip Tooltip;
     }
 }
