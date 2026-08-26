@@ -54,13 +54,15 @@ namespace X4SectorCreator.Forms.Galaxy.Sectors
             switch (BtnCreate.Text)
             {
                 case "Create":
-                    var sectorWorld = new SectorWorld
-                    {
-                        Part = CmbPartSelection.SelectedItem.ToString(),
-                        Factor = NrFactor.Value
-                    };
                     if (MainForm.Instance.SectorForm.IsInitialized && MainForm.Instance.SectorForm.Value.Visible)
+                    {
+                        var sectorWorld = new SectorWorld
+                        {
+                            Part = CmbPartSelection.SelectedItem.ToString(),
+                            Factor = NrFactor.Value
+                        };
                         MainForm.Instance.SectorForm.Value.ListBoxWorlds.Items.Add(sectorWorld);
+                    }
                     break;
                 case "Update":
                     if (MainForm.Instance.SectorForm.IsInitialized &&
