@@ -63,9 +63,6 @@ namespace X4SectorCreator.Objects
 
                 SetupClusterSystemByDataset(clusterSystem, dataset);
 
-                // Take the space environment from the shared if not set, i think this one is relatively unique
-                clusterSystem.SpaceEnvironment ??= clusterSystem.SharedData?.SpaceEnvironment;
-
                 return clusterSystem;
             }
             else

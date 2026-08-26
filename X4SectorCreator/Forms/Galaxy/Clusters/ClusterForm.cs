@@ -258,11 +258,11 @@ namespace X4SectorCreator.Forms
             if (Cluster?.ClusterSystem != null)
             {
                 var clusterSystem = Cluster.ClusterSystem;
-                if (clusterSystem.SpaceEnvironment != null)
+                var spaceEnv = clusterSystem.SpaceEnvironment ?? clusterSystem.SharedData?.SpaceEnvironment;
+                if (spaceEnv != null)
                 {
                     var spaceType = MapDefaultsGeneration.GetReverseLookup(
-                        nameof(MapDefaultsGeneration.SpaceTypeMappings),
-                        clusterSystem.SpaceEnvironment);
+                        nameof(MapDefaultsGeneration.SpaceTypeMappings), spaceEnv);
                     CmbSpaceEnvironment.SelectedItem = spaceType;
                 }
 
