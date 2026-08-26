@@ -52,11 +52,20 @@
             cmbPlacement = new ComboBox();
             label11 = new Label();
             RAListBox = new ListBox();
-            label5 = new Label();
             BtnAddRA = new Button();
             BtnDeleteRA = new Button();
             label12 = new Label();
             Tooltip = new ToolTip(components);
+            tabControl1 = new TabControl();
+            Resources = new TabPage();
+            Worlds = new TabPage();
+            label5 = new Label();
+            BtnDeleteWorldLink = new Button();
+            BtnLinkWorld = new Button();
+            ListBoxWorlds = new ListBox();
+            tabControl1.SuspendLayout();
+            Resources.SuspendLayout();
+            Worlds.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -78,9 +87,9 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(13, 400);
+            BtnCancel.Location = new Point(10, 404);
             BtnCancel.Name = "BtnCancel";
-            BtnCancel.Size = new Size(97, 30);
+            BtnCancel.Size = new Size(138, 30);
             BtnCancel.TabIndex = 8;
             BtnCancel.Text = "Cancel";
             BtnCancel.UseVisualStyleBackColor = true;
@@ -88,9 +97,9 @@
             // 
             // BtnCreate
             // 
-            BtnCreate.Location = new Point(116, 400);
+            BtnCreate.Location = new Point(154, 404);
             BtnCreate.Name = "BtnCreate";
-            BtnCreate.Size = new Size(535, 30);
+            BtnCreate.Size = new Size(516, 30);
             BtnCreate.TabIndex = 7;
             BtnCreate.Text = "Create";
             BtnCreate.UseVisualStyleBackColor = true;
@@ -131,7 +140,7 @@
             chkAllowRandomAnomalies.AutoSize = true;
             chkAllowRandomAnomalies.Checked = true;
             chkAllowRandomAnomalies.CheckState = CheckState.Checked;
-            chkAllowRandomAnomalies.Location = new Point(122, 354);
+            chkAllowRandomAnomalies.Location = new Point(19, 358);
             chkAllowRandomAnomalies.Name = "chkAllowRandomAnomalies";
             chkAllowRandomAnomalies.Size = new Size(199, 19);
             chkAllowRandomAnomalies.TabIndex = 14;
@@ -184,7 +193,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(303, 270);
+            label7.Location = new Point(307, 269);
             label7.Name = "label7";
             label7.Size = new Size(23, 21);
             label7.TabIndex = 22;
@@ -194,7 +203,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(303, 298);
+            label8.Location = new Point(307, 297);
             label8.Name = "label8";
             label8.Size = new Size(23, 21);
             label8.TabIndex = 23;
@@ -204,7 +213,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(303, 327);
+            label9.Location = new Point(307, 326);
             label9.Name = "label9";
             label9.Size = new Size(23, 21);
             label9.TabIndex = 24;
@@ -213,7 +222,7 @@
             // chkDisableFactionLogic
             // 
             chkDisableFactionLogic.AutoSize = true;
-            chkDisableFactionLogic.Location = new Point(122, 375);
+            chkDisableFactionLogic.Location = new Point(19, 379);
             chkDisableFactionLogic.Name = "chkDisableFactionLogic";
             chkDisableFactionLogic.Size = new Size(303, 19);
             chkDisableFactionLogic.TabIndex = 25;
@@ -242,7 +251,7 @@
             // lblRadiusUnderText
             // 
             lblRadiusUnderText.Font = new Font("Segoe UI", 8F);
-            lblRadiusUnderText.Location = new Point(110, 238);
+            lblRadiusUnderText.Location = new Point(110, 237);
             lblRadiusUnderText.Name = "lblRadiusUnderText";
             lblRadiusUnderText.Size = new Size(201, 32);
             lblRadiusUnderText.TabIndex = 28;
@@ -272,40 +281,30 @@
             // 
             RAListBox.DrawMode = DrawMode.OwnerDrawFixed;
             RAListBox.FormattingEnabled = true;
-            RAListBox.Location = new Point(333, 42);
+            RAListBox.Location = new Point(6, 6);
             RAListBox.Name = "RAListBox";
-            RAListBox.Size = new Size(318, 228);
+            RAListBox.Size = new Size(318, 244);
             RAListBox.TabIndex = 31;
             RAListBox.DrawItem += RAListBox_DrawItem;
             RAListBox.DoubleClick += RAListBox_DoubleClick;
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(333, 17);
-            label5.Name = "label5";
-            label5.Size = new Size(120, 21);
-            label5.TabIndex = 32;
-            label5.Text = "Resource Areas:";
-            // 
             // BtnAddRA
             // 
-            BtnAddRA.Location = new Point(446, 273);
+            BtnAddRA.Location = new Point(119, 253);
             BtnAddRA.Name = "BtnAddRA";
             BtnAddRA.Size = new Size(205, 30);
             BtnAddRA.TabIndex = 33;
-            BtnAddRA.Text = "Add";
+            BtnAddRA.Text = "Add Resource Area";
             BtnAddRA.UseVisualStyleBackColor = true;
             BtnAddRA.Click += BtnAddRA_Click;
             // 
             // BtnDeleteRA
             // 
-            BtnDeleteRA.Location = new Point(333, 274);
+            BtnDeleteRA.Location = new Point(6, 253);
             BtnDeleteRA.Name = "BtnDeleteRA";
             BtnDeleteRA.Size = new Size(107, 30);
             BtnDeleteRA.TabIndex = 34;
-            BtnDeleteRA.Text = "Delete";
+            BtnDeleteRA.Text = "Delete Area";
             BtnDeleteRA.UseVisualStyleBackColor = true;
             BtnDeleteRA.Click += BtnDeleteRA_Click;
             // 
@@ -313,22 +312,92 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 9F);
-            label12.Location = new Point(343, 306);
+            label12.Location = new Point(16, 288);
             label12.Name = "label12";
             label12.Size = new Size(297, 45);
             label12.TabIndex = 35;
             label12.Text = "Note: For each resource type a matching region \r\nneeds to be defined with the correct mineral/gas fields.\r\nVanilla resource areas are colored cyan.";
             // 
+            // tabControl1
+            // 
+            tabControl1.Controls.Add(Resources);
+            tabControl1.Controls.Add(Worlds);
+            tabControl1.Location = new Point(331, 17);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(343, 372);
+            tabControl1.TabIndex = 38;
+            // 
+            // Resources
+            // 
+            Resources.Controls.Add(RAListBox);
+            Resources.Controls.Add(BtnAddRA);
+            Resources.Controls.Add(label12);
+            Resources.Controls.Add(BtnDeleteRA);
+            Resources.Location = new Point(4, 24);
+            Resources.Name = "Resources";
+            Resources.Padding = new Padding(3);
+            Resources.Size = new Size(335, 344);
+            Resources.TabIndex = 0;
+            Resources.Text = "Resources";
+            Resources.UseVisualStyleBackColor = true;
+            // 
+            // Worlds
+            // 
+            Worlds.Controls.Add(label5);
+            Worlds.Controls.Add(BtnDeleteWorldLink);
+            Worlds.Controls.Add(BtnLinkWorld);
+            Worlds.Controls.Add(ListBoxWorlds);
+            Worlds.Location = new Point(4, 24);
+            Worlds.Name = "Worlds";
+            Worlds.Padding = new Padding(3);
+            Worlds.Size = new Size(335, 344);
+            Worlds.TabIndex = 1;
+            Worlds.Text = "Worlds";
+            Worlds.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 9F);
+            label5.Location = new Point(12, 306);
+            label5.Name = "label5";
+            label5.Size = new Size(310, 30);
+            label5.TabIndex = 36;
+            label5.Text = "Note: Star System Information on the cluster\r\nmust have atleast one planet to link a world to this sector.";
+            // 
+            // BtnDeleteWorldLink
+            // 
+            BtnDeleteWorldLink.Location = new Point(6, 268);
+            BtnDeleteWorldLink.Name = "BtnDeleteWorldLink";
+            BtnDeleteWorldLink.Size = new Size(103, 33);
+            BtnDeleteWorldLink.TabIndex = 2;
+            BtnDeleteWorldLink.Text = "Delete Link";
+            BtnDeleteWorldLink.UseVisualStyleBackColor = true;
+            // 
+            // BtnLinkWorld
+            // 
+            BtnLinkWorld.Location = new Point(115, 268);
+            BtnLinkWorld.Name = "BtnLinkWorld";
+            BtnLinkWorld.Size = new Size(214, 33);
+            BtnLinkWorld.TabIndex = 1;
+            BtnLinkWorld.Text = "Link World";
+            BtnLinkWorld.UseVisualStyleBackColor = true;
+            // 
+            // ListBoxWorlds
+            // 
+            ListBoxWorlds.FormattingEnabled = true;
+            ListBoxWorlds.Location = new Point(6, 6);
+            ListBoxWorlds.Name = "ListBoxWorlds";
+            ListBoxWorlds.Size = new Size(323, 259);
+            ListBoxWorlds.TabIndex = 0;
+            // 
             // SectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(663, 434);
-            Controls.Add(label12);
-            Controls.Add(BtnDeleteRA);
-            Controls.Add(BtnAddRA);
-            Controls.Add(label5);
-            Controls.Add(RAListBox);
+            ClientSize = new Size(681, 445);
+            Controls.Add(tabControl1);
             Controls.Add(label11);
             Controls.Add(cmbPlacement);
             Controls.Add(lblRadiusUnderText);
@@ -356,6 +425,11 @@
             MinimizeBox = false;
             Name = "SectorForm";
             Text = "Sector Editor";
+            tabControl1.ResumeLayout(false);
+            Resources.ResumeLayout(false);
+            Resources.PerformLayout();
+            Worlds.ResumeLayout(false);
+            Worlds.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -384,11 +458,17 @@
         private Label lblRadiusUnderText;
         private ComboBox cmbPlacement;
         private Label label11;
-        private Label label5;
         internal Button BtnAddRA;
         internal Button BtnDeleteRA;
         public ListBox RAListBox;
         private Label label12;
         private ToolTip Tooltip;
+        private TabControl tabControl1;
+        private TabPage Resources;
+        private TabPage Worlds;
+        private Button BtnLinkWorld;
+        private ListBox ListBoxWorlds;
+        private Label label5;
+        private Button BtnDeleteWorldLink;
     }
 }
