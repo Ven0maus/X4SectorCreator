@@ -43,6 +43,12 @@ namespace X4SectorCreator.Forms
                         RAListBox.Items.Add(ra);
                     }
 
+                    ListBoxWorlds.Items.Clear();
+                    foreach (var world in _sector.Worlds)
+                    {
+                        ListBoxWorlds.Items.Add(world);
+                    }
+
                     Init();
                 }
                 else
@@ -56,6 +62,7 @@ namespace X4SectorCreator.Forms
                     chkAllowRandomAnomalies.Checked = true;
                     chkDisableFactionLogic.Checked = false;
                     RAListBox.Items.Clear();
+                    ListBoxWorlds.Items.Clear();
                 }
             }
         }
@@ -258,7 +265,8 @@ namespace X4SectorCreator.Forms
                         AllowRandomAnomalies = chkAllowRandomAnomalies.Checked,
                         DisableFactionLogic = chkDisableFactionLogic.Checked,
                         Placement = sectorPlacement,
-                        ResourceAreas = RAListBox.Items.Cast<Resource>().ToList()
+                        ResourceAreas = [.. RAListBox.Items.Cast<Resource>()],
+                        Worlds = [.. ListBoxWorlds.Items.Cast<SectorWorld>()]
                     };
 
                     // Create new sector in selected cluster
@@ -300,7 +308,8 @@ namespace X4SectorCreator.Forms
                     sectorValue.DisableFactionLogic = chkDisableFactionLogic.Checked;
                     sectorValue.DiameterRadius = sectorRadius * 2 * 1000; // Convert to diameter + km
                     sectorValue.Placement = sectorPlacement;
-                    sectorValue.ResourceAreas = RAListBox.Items.Cast<Resource>().ToList();
+                    sectorValue.ResourceAreas = [.. RAListBox.Items.Cast<Resource>()];
+                    sectorValue.Worlds = [.. ListBoxWorlds.Items.Cast<SectorWorld>()];
 
                     // Update zones based on the sector range if modified
                     if (!sectorValue.IsBaseGame)
