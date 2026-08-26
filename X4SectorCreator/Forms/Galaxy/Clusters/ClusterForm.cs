@@ -254,7 +254,7 @@ namespace X4SectorCreator.Forms
 
         public void ResetStarSystemInformation()
         {
-            // TODO: Setup star system info properly
+            // Setup star system info properly
             if (Cluster?.ClusterSystem != null)
             {
                 var clusterSystem = Cluster.ClusterSystem;
@@ -269,12 +269,20 @@ namespace X4SectorCreator.Forms
                 foreach (var sun in clusterSystem.Suns)
                     ListBoxSuns.Items.Add(sun);
 
+                if (ListBoxSuns.Items.Count > 0)
+                    ListBoxSuns.SelectedIndex = 0;
+
                 foreach (var planet in clusterSystem.Planets)
                 {
                     ListBoxPlanets.Items.Add(planet);
+                }
 
-                    foreach (var moon in planet.Moons)
-                        ListBoxMoons.Items.Add(moon);
+                if (ListBoxPlanets.Items.Count > 0)
+                {
+                    ListBoxPlanets.SelectedIndex = 0;
+                    var planet = (ClusterSystem.Planet)ListBoxPlanets.Items[0];
+                    if (planet.Moons.Count > 0)
+                        ListBoxMoons.SelectedIndex = 0;
                 }
             }
             else
@@ -305,6 +313,21 @@ namespace X4SectorCreator.Forms
                 id = cluster.Id;
             }
             return $"PREFIX_CL_c{id:D3}";
+        }
+
+        private void ListBoxPlanets_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListBoxMoons.Items.Clear();
+
+            if (ListBoxPlanets.SelectedIndex == -1)
+                return;
+
+            var planet = ListBoxPlanets.SelectedItem as ClusterSystem.Planet;
+            foreach (var moon in planet.Moons)
+                ListBoxMoons.Items.Add(moon);
+
+            if (ListBoxMoons.Items.Count > 0)
+                ListBoxMoons.SelectedIndex = 0;
         }
     }
 

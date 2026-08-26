@@ -347,7 +347,7 @@
             // 
             // BtnRemoveMoon
             // 
-            BtnRemoveMoon.Location = new Point(273, 383);
+            BtnRemoveMoon.Location = new Point(308, 385);
             BtnRemoveMoon.Name = "BtnRemoveMoon";
             BtnRemoveMoon.Size = new Size(75, 23);
             BtnRemoveMoon.TabIndex = 52;
@@ -356,7 +356,7 @@
             // 
             // BtnCreateMoon
             // 
-            BtnCreateMoon.Location = new Point(273, 354);
+            BtnCreateMoon.Location = new Point(308, 356);
             BtnCreateMoon.Name = "BtnCreateMoon";
             BtnCreateMoon.Size = new Size(75, 23);
             BtnCreateMoon.TabIndex = 51;
@@ -378,12 +378,12 @@
             ListBoxMoons.FormattingEnabled = true;
             ListBoxMoons.Location = new Point(14, 354);
             ListBoxMoons.Name = "ListBoxMoons";
-            ListBoxMoons.Size = new Size(253, 94);
+            ListBoxMoons.Size = new Size(288, 94);
             ListBoxMoons.TabIndex = 49;
             // 
             // BtnRemovePlanet
             // 
-            BtnRemovePlanet.Location = new Point(273, 263);
+            BtnRemovePlanet.Location = new Point(308, 265);
             BtnRemovePlanet.Name = "BtnRemovePlanet";
             BtnRemovePlanet.Size = new Size(75, 23);
             BtnRemovePlanet.TabIndex = 48;
@@ -392,7 +392,7 @@
             // 
             // BtnCreatePlanet
             // 
-            BtnCreatePlanet.Location = new Point(273, 234);
+            BtnCreatePlanet.Location = new Point(308, 236);
             BtnCreatePlanet.Name = "BtnCreatePlanet";
             BtnCreatePlanet.Size = new Size(75, 23);
             BtnCreatePlanet.TabIndex = 47;
@@ -414,12 +414,13 @@
             ListBoxPlanets.FormattingEnabled = true;
             ListBoxPlanets.Location = new Point(14, 234);
             ListBoxPlanets.Name = "ListBoxPlanets";
-            ListBoxPlanets.Size = new Size(253, 94);
+            ListBoxPlanets.Size = new Size(288, 94);
             ListBoxPlanets.TabIndex = 45;
+            ListBoxPlanets.SelectedIndexChanged += ListBoxPlanets_SelectedIndexChanged;
             // 
             // BtnRemoveSun
             // 
-            BtnRemoveSun.Location = new Point(273, 145);
+            BtnRemoveSun.Location = new Point(308, 147);
             BtnRemoveSun.Name = "BtnRemoveSun";
             BtnRemoveSun.Size = new Size(75, 23);
             BtnRemoveSun.TabIndex = 44;
@@ -428,7 +429,7 @@
             // 
             // BtnCreateSun
             // 
-            BtnCreateSun.Location = new Point(273, 116);
+            BtnCreateSun.Location = new Point(308, 118);
             BtnCreateSun.Name = "BtnCreateSun";
             BtnCreateSun.Size = new Size(75, 23);
             BtnCreateSun.TabIndex = 43;
@@ -450,7 +451,7 @@
             ListBoxSuns.FormattingEnabled = true;
             ListBoxSuns.Location = new Point(14, 116);
             ListBoxSuns.Name = "ListBoxSuns";
-            ListBoxSuns.Size = new Size(253, 94);
+            ListBoxSuns.Size = new Size(288, 94);
             ListBoxSuns.TabIndex = 1;
             // 
             // label8
