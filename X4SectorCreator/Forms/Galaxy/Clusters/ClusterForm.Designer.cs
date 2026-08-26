@@ -389,6 +389,7 @@
             BtnRemovePlanet.TabIndex = 48;
             BtnRemovePlanet.Text = "Remove Sun";
             BtnRemovePlanet.UseVisualStyleBackColor = true;
+            BtnRemovePlanet.Click += BtnRemovePlanet_Click;
             // 
             // BtnCreatePlanet
             // 
@@ -398,6 +399,7 @@
             BtnCreatePlanet.TabIndex = 47;
             BtnCreatePlanet.Text = "Create";
             BtnCreatePlanet.UseVisualStyleBackColor = true;
+            BtnCreatePlanet.Click += BtnCreatePlanet_Click;
             // 
             // label10
             // 
@@ -417,6 +419,7 @@
             ListBoxPlanets.Size = new Size(288, 94);
             ListBoxPlanets.TabIndex = 45;
             ListBoxPlanets.SelectedIndexChanged += ListBoxPlanets_SelectedIndexChanged;
+            ListBoxPlanets.DoubleClick += ListBoxPlanets_DoubleClick;
             // 
             // BtnRemoveSun
             // 

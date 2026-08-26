@@ -362,6 +362,21 @@ namespace X4SectorCreator.Forms
             _sunForm.Value.Sun = sun;
             _sunForm.Value.Show();
         }
+
+        private void BtnCreatePlanet_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnRemovePlanet_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ListBoxPlanets_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public partial class RegexHelper

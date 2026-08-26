@@ -8,6 +8,12 @@ namespace X4SectorCreator.XmlGeneration
 {
     internal static class MapDefaultsGeneration
     {
+        public static readonly IReadOnlyDictionary<string, string> PopulationMappings = new Dictionary<string, string>()
+        {
+            { "None", "{1042,10011}(None)" },
+            { "$POPULATION$", "{1042,10021}" }
+        };
+
         public static readonly IReadOnlyDictionary<string, string> SpaceTypeMappings = new Dictionary<string, string>()
         {
             { "Clear Space", "{1042,12011}(Clear Space)" },
@@ -120,6 +126,7 @@ namespace X4SectorCreator.XmlGeneration
                 { nameof(PlanetTypeMappings), PlanetTypeMappings.ToDictionary(a => a.Value, a => a.Key) },
                 { nameof(GeologyTypeMappings), GeologyTypeMappings.ToDictionary(a => a.Value, a => a.Key) },
                 { nameof(SettlementTypeMappings), SettlementTypeMappings.ToDictionary(a => a.Value, a => a.Key) },
+                { nameof(PopulationMappings), PopulationMappings.ToDictionary(a => a.Value, a => a.Key) }
             };
 
         public static string GetReverseLookup(string dict, string value)
