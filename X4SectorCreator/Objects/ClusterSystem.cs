@@ -110,7 +110,7 @@ namespace X4SectorCreator.Objects
                 var moons = planet.Element("moons")?.Elements("moon") ?? [];
                 foreach (var moon in moons)
                 {
-                    planetObj.Moons.Add(new Planet.Moon
+                    planetObj.Moons.Add(new Moon
                     {
                         Name = moon.Attribute("name")?.Value,
                         Geology = moon.Attribute("geology")?.Value,
@@ -136,9 +136,20 @@ namespace X4SectorCreator.Objects
             }
         }
 
-        public class Planet
+        public class Planet : Moon
         {
             public string Class { get; set; }
+
+            public List<Moon> Moons { get; set; } = [];
+
+            public override string ToString()
+            {
+                return $"{Name}";
+            }
+        }
+
+        public class Moon
+        {
             public string Name { get; set; }
             public string Geology { get; set; }
             public string Atmosphere { get; set; }
@@ -148,28 +159,9 @@ namespace X4SectorCreator.Objects
             public string Part { get; set; }
             public string Atmopart { get; set; }
 
-            public List<Moon> Moons { get; set; } = [];
-
             public override string ToString()
             {
                 return $"{Name}";
-            }
-
-            public class Moon
-            {
-                public string Name { get; set; }
-                public string Geology { get; set; }
-                public string Atmosphere { get; set; }
-                public string Population { get; set; }
-                public string MaxPopulation { get; set; }
-                public string Settlements { get; set; }
-                public string Part { get; set; }
-                public string Atmopart { get; set; }
-
-                public override string ToString()
-                {
-                    return $"{Name}";
-                }
             }
         }
     }

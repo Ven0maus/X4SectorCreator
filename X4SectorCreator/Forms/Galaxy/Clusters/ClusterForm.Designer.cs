@@ -353,6 +353,7 @@
             BtnRemoveMoon.TabIndex = 52;
             BtnRemoveMoon.Text = "Remove Sun";
             BtnRemoveMoon.UseVisualStyleBackColor = true;
+            BtnRemoveMoon.Click += BtnRemoveMoon_Click;
             // 
             // BtnCreateMoon
             // 
@@ -362,6 +363,7 @@
             BtnCreateMoon.TabIndex = 51;
             BtnCreateMoon.Text = "Create";
             BtnCreateMoon.UseVisualStyleBackColor = true;
+            BtnCreateMoon.Click += BtnCreateMoon_Click;
             // 
             // label11
             // 
@@ -380,6 +382,7 @@
             ListBoxMoons.Name = "ListBoxMoons";
             ListBoxMoons.Size = new Size(288, 94);
             ListBoxMoons.TabIndex = 49;
+            ListBoxMoons.DoubleClick += ListBoxMoons_DoubleClick;
             // 
             // BtnRemovePlanet
             // 

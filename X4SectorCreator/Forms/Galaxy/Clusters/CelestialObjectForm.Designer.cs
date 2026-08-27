@@ -1,6 +1,6 @@
 ﻿namespace X4SectorCreator.Forms.Galaxy.Clusters
 {
-    partial class PlanetForm
+    partial class CelestialObjectForm
     {
         /// <summary>
         /// Required designer variable.
@@ -43,12 +43,11 @@
             CmbSettlements = new ComboBox();
             label6 = new Label();
             label7 = new Label();
-            NrMaxPopulation = new NumericUpDown();
             CmbPart = new ComboBox();
             label8 = new Label();
             CmbAtmopart = new ComboBox();
             label9 = new Label();
-            ((System.ComponentModel.ISupportInitialize)NrMaxPopulation).BeginInit();
+            TxtMaxPopulation = new TextBox();
             SuspendLayout();
             // 
             // BtnCreate
@@ -188,14 +187,6 @@
             label7.TabIndex = 14;
             label7.Text = "Max Population:";
             // 
-            // NrMaxPopulation
-            // 
-            NrMaxPopulation.Location = new Point(12, 341);
-            NrMaxPopulation.Maximum = new decimal(new int[] { 50000000, 0, 0, 0 });
-            NrMaxPopulation.Name = "NrMaxPopulation";
-            NrMaxPopulation.Size = new Size(300, 23);
-            NrMaxPopulation.TabIndex = 15;
-            // 
             // CmbPart
             // 
             CmbPart.FormattingEnabled = true;
@@ -232,16 +223,23 @@
             label9.TabIndex = 18;
             label9.Text = "Atmopart:";
             // 
-            // PlanetForm
+            // TxtMaxPopulation
+            // 
+            TxtMaxPopulation.Location = new Point(12, 342);
+            TxtMaxPopulation.Name = "TxtMaxPopulation";
+            TxtMaxPopulation.Size = new Size(300, 23);
+            TxtMaxPopulation.TabIndex = 20;
+            // 
+            // CelestialObjectForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(331, 511);
+            Controls.Add(TxtMaxPopulation);
             Controls.Add(CmbAtmopart);
             Controls.Add(label9);
             Controls.Add(CmbPart);
             Controls.Add(label8);
-            Controls.Add(NrMaxPopulation);
             Controls.Add(label7);
             Controls.Add(CmbSettlements);
             Controls.Add(label6);
@@ -257,9 +255,8 @@
             Controls.Add(label1);
             Controls.Add(BtnCancel);
             Controls.Add(BtnCreate);
-            Name = "PlanetForm";
-            Text = "Cluster Planet Editor";
-            ((System.ComponentModel.ISupportInitialize)NrMaxPopulation).EndInit();
+            Name = "CelestialObjectForm";
+            Text = "Cluster Celestial Object Editor";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -281,10 +278,10 @@
         private ComboBox CmbSettlements;
         private Label label6;
         private Label label7;
-        private NumericUpDown NrMaxPopulation;
         private ComboBox CmbPart;
         private Label label8;
         private ComboBox CmbAtmopart;
         private Label label9;
+        private TextBox TxtMaxPopulation;
     }
 }

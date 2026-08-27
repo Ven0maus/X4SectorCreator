@@ -18,6 +18,21 @@ namespace X4SectorCreator.Forms
         private readonly LazyEvaluated<SoundtrackSelectorForm> _soundtrackSelectorForm = new(() => new SoundtrackSelectorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<ClusterXmlEditorForm> _clusterXmlEditorForm = new(() => new ClusterXmlEditorForm(), a => !a.IsDisposed);
         private readonly LazyEvaluated<SunForm> _sunForm = new(() => new SunForm(), a => !a.IsDisposed);
+        private readonly LazyEvaluated<CelestialObjectForm> _celestialObjectForm = new(() => new CelestialObjectForm(), a => !a.IsDisposed);
+
+        private ClusterSystem ClusterSystem
+        {
+            get
+            {
+                var cs = new ClusterSystem
+                {
+                    SpaceEnvironment = MapDefaultsGeneration.SpaceTypeMappings[CmbSpaceEnvironment.SelectedItem?.ToString()]
+                };
+                cs.Planets.AddRange(ListBoxPlanets.Items.Cast<ClusterSystem.Planet>());
+
+                return cs;
+            }
+        }
 
         public ClusterForm()
         {
@@ -365,17 +380,74 @@ namespace X4SectorCreator.Forms
 
         private void BtnCreatePlanet_Click(object sender, EventArgs e)
         {
-
+            _celestialObjectForm.Value.CelestialType = CelestialObjectForm.Type.Planet;
+            _celestialObjectForm.Value.CelestialObject = null;
+            _celestialObjectForm.Value.ClusterSystem = ClusterSystem;
+            _celestialObjectForm.Value.Show();
         }
 
         private void BtnRemovePlanet_Click(object sender, EventArgs e)
         {
+            if (ListBoxPlanets.SelectedItem is not ClusterSystem.Planet planet)
+            {
+                return;
+            }
 
+            int index = ListBoxPlanets.Items.IndexOf(planet);
+            ListBoxPlanets.Items.Remove(planet);
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            ListBoxPlanets.SelectedItem = index >= 0 && ListBoxPlanets.Items.Count > 0 ? ListBoxPlanets.Items[index] : null;
         }
 
         private void ListBoxPlanets_DoubleClick(object sender, EventArgs e)
         {
+            if (ListBoxPlanets.SelectedIndex == -1) return;
 
+            var planet = ListBoxPlanets.SelectedItem as ClusterSystem.Planet;
+
+            _celestialObjectForm.Value.CelestialType = CelestialObjectForm.Type.Planet;
+            _celestialObjectForm.Value.ClusterSystem = ClusterSystem;
+            _celestialObjectForm.Value.CelestialObject = planet;
+            _celestialObjectForm.Value.Show();
+        }
+
+        private void BtnCreateMoon_Click(object sender, EventArgs e)
+        {
+            _celestialObjectForm.Value.CelestialType = CelestialObjectForm.Type.Moon;
+            _celestialObjectForm.Value.CelestialObject = null;
+            _celestialObjectForm.Value.ClusterSystem = ClusterSystem;
+            _celestialObjectForm.Value.Show();
+        }
+
+        private void BtnRemoveMoon_Click(object sender, EventArgs e)
+        {
+            if (ListBoxMoons.SelectedItem is not ClusterSystem.Moon moon)
+            {
+                return;
+            }
+
+            int index = ListBoxMoons.Items.IndexOf(moon);
+            ListBoxMoons.Items.Remove(moon);
+
+            // Ensure index is within valid range
+            index--;
+            index = Math.Max(0, index);
+            ListBoxMoons.SelectedItem = index >= 0 && ListBoxMoons.Items.Count > 0 ? ListBoxMoons.Items[index] : null;
+        }
+
+        private void ListBoxMoons_DoubleClick(object sender, EventArgs e)
+        {
+            if (ListBoxMoons.SelectedIndex == -1) return;
+
+            var moon = ListBoxMoons.SelectedItem as ClusterSystem.Moon;
+
+            _celestialObjectForm.Value.CelestialType = CelestialObjectForm.Type.Moon;
+            _celestialObjectForm.Value.ClusterSystem = ClusterSystem;
+            _celestialObjectForm.Value.CelestialObject = moon;
+            _celestialObjectForm.Value.Show();
         }
     }
 
