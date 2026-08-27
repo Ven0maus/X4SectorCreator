@@ -28,6 +28,7 @@ namespace X4SectorCreator.Forms
                 {
                     SpaceEnvironment = MapDefaultsGeneration.SpaceTypeMappings[CmbSpaceEnvironment.SelectedItem?.ToString()]
                 };
+                cs.Suns.AddRange(ListBoxSuns.Items.Cast<ClusterSystem.Sun>());
                 cs.Planets.AddRange(ListBoxPlanets.Items.Cast<ClusterSystem.Planet>());
 
                 return cs;
