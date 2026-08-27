@@ -441,7 +441,7 @@ namespace X4SectorCreator.Forms
             if (_sectorWorldForm != null && !_sectorWorldForm.IsDisposed) return;
 
             // Check if cluster has parts
-            if (_selectedCluster.WorldParts.Count == 0)
+            if (_selectedCluster.ClusterSystem.Parts.Count == 0)
             {
                 MessageBox.Show("The cluster must have atleast one planet in its Star System Information section.",
                     "Missing Star System Information", MessageBoxButtons.OK);

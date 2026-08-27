@@ -13,5 +13,10 @@
                 Factor = Factor
             };
         }
+
+        public override string ToString()
+        {
+            return $"{(Part ?? "")} | {Factor}";
+        }
     }
 }

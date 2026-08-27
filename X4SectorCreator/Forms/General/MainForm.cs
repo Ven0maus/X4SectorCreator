@@ -272,7 +272,33 @@ namespace X4SectorCreator
                 .ToDictionary(a => a.Key, a => a.First(), StringComparer.OrdinalIgnoreCase);
 
             foreach (var cluster in allClusters.Values)
+            {
                 cluster.ClusterSystem = ClusterSystem.ConvertFrom(cluster, datasets);
+                foreach (var sector in cluster.Sectors)
+                {
+                    // Add worlds
+                    var basegameMapping = $"{cluster.BaseGameMapping}_{sector.BaseGameMapping}";
+                    if (datasets.TryGetValue(basegameMapping, out var dataset))
+                    {
+                        var worlds = dataset.Element("properties")?.Element("worlds")?.Elements("world") ?? Array.Empty<XElement>();
+                        foreach (var world in worlds)
+                        {
+                            var factor = decimal.Parse(world.Attribute("factor")?.Value ?? "1");
+                            var part = world.Attribute("part")?.Value;
+                            if (part == null) continue;
+
+                            // Also check if part is actually part of the cluster system else skip
+                            if (!cluster.ClusterSystem.Parts.Contains(part)) continue;
+
+                            sector.Worlds.Add(new SectorWorld
+                            {
+                                Part = world.Attribute("part")?.Value,
+                                Factor = factor
+                            });
+                        }
+                    }
+                }
+            }
         }
 
         private static void InitializeVanillaRegionsAndStations(Dictionary<(int x, int y), Cluster> allClusters)

@@ -64,18 +64,12 @@ namespace X4SectorCreator.Forms.Galaxy.Clusters
                 CmbPart.Items.Clear();
                 CmbAtmopart.Items.Clear();
 
-                var parts = GetParts(_clusterSystem);
-                if (_clusterSystem.SharedData != null)
-                    parts = parts.Concat(GetAtmoParts(_clusterSystem.SharedData));
-
-                foreach (var part in parts.Distinct())
+                var parts = _clusterSystem.Parts;
+                foreach (var part in parts)
                     CmbPart.Items.Add(part);
 
-                var atmoParts = GetParts(_clusterSystem);
-                if (_clusterSystem.SharedData != null)
-                    atmoParts = atmoParts.Concat(GetAtmoParts(_clusterSystem.SharedData));
-
-                foreach (var atmoPart in atmoParts.Distinct())
+                var atmoParts = _clusterSystem.AtmoParts;
+                foreach (var atmoPart in atmoParts)
                     CmbAtmopart.Items.Add(atmoPart);
             }
         }
@@ -184,18 +178,6 @@ namespace X4SectorCreator.Forms.Galaxy.Clusters
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private static IEnumerable<string> GetParts(ClusterSystem cs)
-        {
-            return cs.Planets.Select(a => a.Part)
-                    .Concat(cs.Planets.SelectMany(a => a.Moons).Select(a => a.Part));
-        }
-
-        private static IEnumerable<string> GetAtmoParts(ClusterSystem cs)
-        {
-            return cs.Planets.Select(a => a.Atmopart)
-                    .Concat(cs.Planets.SelectMany(a => a.Moons).Select(a => a.Atmopart));
         }
     }
 }

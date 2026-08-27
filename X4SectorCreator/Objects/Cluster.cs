@@ -18,7 +18,6 @@ namespace X4SectorCreator.Objects
         public bool CustomSectorPositioning { get; set; } = false;
         public string CustomClusterXml { get; set; }
         public ClusterSystem ClusterSystem { get; set; }
-        public List<string> WorldParts { get; set; } = [];
 
         public const string TemplateClusterXml = @"<?xml version=""1.0""?>
 <components>

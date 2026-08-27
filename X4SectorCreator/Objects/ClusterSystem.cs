@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 namespace X4SectorCreator.Objects
 {
@@ -9,6 +10,30 @@ namespace X4SectorCreator.Objects
         public List<Sun> Suns { get; set; } = [];
         public List<Planet> Planets { get; set; } = [];
         public ClusterSystem SharedData { get; set; }
+
+        [JsonIgnore]
+        public HashSet<string> Parts
+        {
+            get
+            {
+                var parts = GetParts();
+                if (SharedData != null)
+                    parts = parts.Concat(SharedData.GetParts()).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                return parts;
+            }
+        }
+
+        [JsonIgnore]
+        public HashSet<string> AtmoParts
+        {
+            get
+            {
+                var parts = GetAtmoParts();
+                if (SharedData != null)
+                    parts = parts.Concat(SharedData.GetAtmoParts()).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                return parts;
+            }
+        }
 
         public static ClusterSystem ConvertFrom(Cluster cluster, Dictionary<string, XElement> datasets)
         {
@@ -69,6 +94,20 @@ namespace X4SectorCreator.Objects
             {
                 return null;
             }
+        }
+
+        public HashSet<string> GetParts()
+        {
+            return Planets.Select(a => a.Part)
+                .Concat(Planets.SelectMany(a => a.Moons).Select(a => a.Part))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        }
+
+        public HashSet<string> GetAtmoParts()
+        {
+            return Planets.Select(a => a.Atmopart)
+                .Concat(Planets.SelectMany(a => a.Moons).Select(a => a.Atmopart))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
         }
 
         private static void SetupClusterSystemByDataset(ClusterSystem clusterSystem, XElement dataset)

@@ -30,7 +30,7 @@ namespace X4SectorCreator.Forms.Galaxy.Sectors
                 CmbPartSelection.Items.Clear();
 
                 // Populate from cluster
-                foreach (var worldPart in _cluster.WorldParts)
+                foreach (var worldPart in _cluster.ClusterSystem.Parts)
                     CmbPartSelection.Items.Add(worldPart);
 
                 // Select the first item by default
